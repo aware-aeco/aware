@@ -99,7 +99,10 @@ internal sealed class RhinocodeClient
         return (p.ExitCode, stdoutTask.GetAwaiter().GetResult(), stderrTask.GetAwaiter().GetResult());
     }
 
-    // Naive PATH lookup using `where` shipped with Windows.
+    // Naive PATH lookup using `where` shipped with Windows. Synchronous read
+    // is safe here because `where`'s output is bounded (one path per match,
+    // typically 1-2 matches). Run() above uses the async pattern for the
+    // larger rhinocode payloads.
     static string? WhereExe(string name)
     {
         try

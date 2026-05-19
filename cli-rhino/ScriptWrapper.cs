@@ -12,6 +12,13 @@ internal static class ScriptWrapper
 {
     // Matches `using <id>(.<id>)*;` and `using <alias> = <id>(.<id>)*;`
     // but NOT `using (var x = ...)` statement form.
+    //
+    // Caveat: user scripts that wrap usings in #if / #region preprocessor
+    // blocks will be mis-split — the using gets pulled to the top, but the
+    // surrounding #if stays in the body, so the directive becomes
+    // unconditional. The AI orchestrators that generate exec scripts don't
+    // use preprocessor directives; document this in the agent's exec command
+    // description if that ever changes.
     static readonly Regex UsingDirectiveRe = new(
         @"^\s*using\s+(?:[A-Za-z_][A-Za-z0-9_]*\s*=\s*)?[A-Za-z_][A-Za-z0-9_.]*\s*;\s*$",
         RegexOptions.Compiled);

@@ -10,9 +10,11 @@ The `aware-rhino` runtime sidecar is built, tested, and waiting on the
   `exec`, `list-instances`, `send-status`. Wraps McNeel's `rhinocode` CLI
   rather than rebuilding the in-Rhino Roslyn bridge ourselves (decisive
   architectural win vs cli-tekla — ~⅓ the code).
-- **21 unit + integration tests, all green** (12 ScriptWrapper + 6 RhinocodeClient + 3 Exec).
+- **22 unit + integration tests, all green** (12 ScriptWrapper + 6 RhinocodeClient + 4 Exec including one end-to-end through the stub binary).
   Tests run without Rhino installed via a stub `rhinocode.cmd` under
   `cli-rhino/Tests/stub-rhinocode/` that echoes a canned sentinel block.
+  Test parallelism is disabled (the stub coordinates with tests via a shared
+  env var, so concurrent test classes would race).
 - **End-to-end stub validation** — the full pipeline (Program → ScriptWrapper →
   RhinocodeClient → stub → sentinel parse → receipt envelope) was exercised
   against all 20 prompt fixtures via `run-drill.ps1`. 20/20 PASS through the
@@ -75,6 +77,22 @@ behavior. Same scoring approach as v0.31 tekla.exec.
 Prompts 02, 12-17, 19 require selected objects in the doc. Select something
 appropriate before running each, or accept the "no objects selected" /
 "need at least 2 selected breps" graceful failures as the expected result.
+
+## Receipt shape divergence from cli-tekla (intentional)
+
+cli-tekla's exec receipt is `{ok, result, host, verb, delivered_at}`. Rhino's
+adds `host_version`, `host_pid`, `rhino_id`, and `stdout_log` — strictly
+additive (no removed fields), so downstream orchestrators reading the
+cli-tekla shape see new optional fields rather than breakage. The enrichment
+falls out naturally from rhinocode's first-class multi-instance routing
+(unlike Tekla Open API). Recommendation for v0.33: backport these fields to
+cli-tekla so the shapes converge fully.
+
+Metadata population: when the caller supplies either `version` or `rhino_id`,
+aware-rhino runs `rhinocode list --json` to populate `host_version` and
+`host_pid` in the receipt. If list fails, exec still proceeds; metadata is
+left null and a diagnostic line goes to stderr. When neither is supplied,
+no list call is made (rhinocode picks the default instance silently).
 
 ## Architectural notes (for the v0.33 planning session)
 

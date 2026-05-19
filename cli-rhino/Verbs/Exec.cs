@@ -24,32 +24,53 @@ internal static class Exec
         var argsObj = input?["args"] as JsonObject;
         var argsJson = (argsObj ?? new JsonObject()).ToJsonString();
 
-        // If no rhino_id supplied but version is, resolve via list and pick first match.
-        // (If neither, rhinocode picks the default.)
+        // Resolve metadata (pid + version) so the receipt is informative even
+        // when the caller supplies an explicit rhino_id. The resolution is
+        // best-effort: if `rhinocode list` fails, the exec still proceeds and
+        // we just leave pid/version null in the receipt.
+        //
+        // Cases:
+        //   (a) version supplied, rhino_id absent → list to pick first match
+        //   (b) rhino_id supplied (with or without version) → list to enrich
+        //   (c) neither supplied → no list (rhinocode picks the default)
         int? resolvedPid = null;
         string? resolvedVersion = null;
-        if (string.IsNullOrEmpty(rhinoId) && !string.IsNullOrEmpty(version))
+        if (!string.IsNullOrEmpty(version) || !string.IsNullOrEmpty(rhinoId))
         {
             try
             {
-                var resolved = ResolveByVersion(client, version!);
-                if (resolved is null)
+                var resolved = ResolveInstance(client, version, rhinoId);
+                if (resolved is null && !string.IsNullOrEmpty(version) && string.IsNullOrEmpty(rhinoId))
                 {
+                    // Case (a) with no match is a hard error — caller asked for
+                    // a specific version and we can't find one.
                     Console.WriteLine(Receipts.ExecFail(
                         $"no running Rhino instance matches version='{version}'",
                         "", "").ToJsonString());
                     return 1;
                 }
-                rhinoId          = resolved.Value.rhinoId;
-                resolvedPid      = resolved.Value.pid;
-                resolvedVersion  = resolved.Value.version;
+                if (resolved is not null)
+                {
+                    rhinoId          = resolved.Value.rhinoId;
+                    resolvedPid      = resolved.Value.pid;
+                    resolvedVersion  = resolved.Value.version;
+                }
+                // else: caller supplied rhino_id but list didn't surface it (e.g.
+                // the instance died between calls). Proceed best-effort.
             }
             catch (Exception e)
             {
-                Console.WriteLine(Receipts.ExecFail(
-                    $"version lookup via rhinocode list failed: {e.Message}", "", "")
-                    .ToJsonString());
-                return 2;
+                // Hard error only if caller specifically requested a version
+                // (case a). Otherwise log to stderr and proceed with nulls.
+                if (!string.IsNullOrEmpty(version) && string.IsNullOrEmpty(rhinoId))
+                {
+                    Console.WriteLine(Receipts.ExecFail(
+                        $"version lookup via rhinocode list failed: {e.Message}", "", "")
+                        .ToJsonString());
+                    return 2;
+                }
+                Console.Error.WriteLine(
+                    $"aware-rhino exec: rhinocode list (for metadata enrichment) failed: {e.Message}. Proceeding.");
             }
         }
 
@@ -132,7 +153,11 @@ internal static class Exec
         return (json, string.Join("\n", rest).Trim());
     }
 
-    static (string rhinoId, int? pid, string version)? ResolveByVersion(RhinocodeClient client, string version)
+    // Picks one entry from `rhinocode list --json`. If `rhinoId` is supplied,
+    // match by pipeId (exact). Else if `version` is supplied, match by
+    // processVersion startswith. Else null.
+    internal static (string rhinoId, int? pid, string version)? ResolveInstance(
+        RhinocodeClient client, string? version, string? rhinoId)
     {
         var (exit, stdout, _) = client.RunListJson();
         if (exit != 0) throw new InvalidOperationException($"rhinocode list exited {exit}");
@@ -142,11 +167,17 @@ internal static class Exec
         {
             if (item is not JsonObject jo) continue;
             var procVersion = jo["processVersion"]?.GetValue<string>() ?? "";
-            // Accept "8" matching "8.13.24296.13001" — startswith.
-            if (procVersion.StartsWith(version, StringComparison.Ordinal))
+            var pipeId      = jo["pipeId"]?.GetValue<string>() ?? "";
+
+            bool matchById      = !string.IsNullOrEmpty(rhinoId) && pipeId == rhinoId;
+            bool matchByVersion = string.IsNullOrEmpty(rhinoId)
+                                  && !string.IsNullOrEmpty(version)
+                                  && procVersion.StartsWith(version!, StringComparison.Ordinal);
+
+            if (matchById || matchByVersion)
             {
                 return (
-                    rhinoId: jo["pipeId"]!.GetValue<string>(),
+                    rhinoId: pipeId,
                     pid: jo["processId"]?.GetValue<int?>(),
                     version: TrimVersion(procVersion));
             }
