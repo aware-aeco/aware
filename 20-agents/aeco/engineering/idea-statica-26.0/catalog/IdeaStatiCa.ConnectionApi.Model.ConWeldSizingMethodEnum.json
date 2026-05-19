@@ -1,0 +1,30 @@
+{
+  "name": "ConWeldSizingMethodEnum",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConWeldSizingMethodEnum.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConWeldSizingMethodEnum.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "fullStrength",
+      "value": "fullStrength"
+    },
+    {
+      "name": "minimumDuctility",
+      "value": "minimumDuctility"
+    },
+    {
+      "name": "overStrengthFactor",
+      "value": "overStrengthFactor"
+    },
+    {
+      "name": "capacityEstimation",
+      "value": "capacityEstimation"
+    }
+  ]
+}

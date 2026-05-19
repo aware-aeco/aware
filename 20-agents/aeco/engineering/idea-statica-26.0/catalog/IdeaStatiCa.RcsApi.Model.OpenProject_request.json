@@ -1,0 +1,22 @@
+{
+  "name": "OpenProject_request",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.OpenProject_request.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "RcsFile",
+      "type": "Stream",
+      "getter": true,
+      "setter": true,
+      "summary": "Rcs file",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/OpenProject_request.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

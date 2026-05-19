@@ -1,0 +1,22 @@
+{
+  "name": "ConMprlElement",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConMprlElement.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConMprlElement.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "MprlName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConMprlElement.mprlName.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConMprlElement.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+﻿
+idx ns                              name                                 kind  result issues
+--- --                              ----                                 ----  ------ ------
+ 77 IdeaStatiCa.ConnectionApi.Model OpenMessages                         class PASS         
+ 80 IdeaStatiCa.ConnectionApi.Model PlateData                            class PASS         
+145 IdeaStatiCa.RcsApi.Model        RcsResultParameters                  class PASS         
+  6 IdeaStatiCa.ConnectionApi.Model BoltShearType                        enum  PASS         
+146 IdeaStatiCa.RcsApi.Model        RcsSection                           class PASS         
+ 11 IdeaStatiCa.ConnectionApi.Model CheckResPlate                        class PASS         
+ 37 IdeaStatiCa.ConnectionApi.Model ConMprlCrossSection                  class PASS         
+159 IdeaStatiCa.RcsApi.Model        ResultOfInternalForces               class PASS         
+ 42 IdeaStatiCa.ConnectionApi.Model ConOperationCommonProperties         class PASS         
+ 98 IdeaStatiCa.ConnectionApi.Model ImportIOM_request                    class PASS         
+148 IdeaStatiCa.RcsApi.Model        RcsSectionResultDetailed             class PASS         
+101 IdeaStatiCa.ConnectionApi.Api   ClientApi                            class PASS         
+ 28 IdeaStatiCa.ConnectionApi.Model ConLoadEffectSectionLoad             class PASS         
+ 79 IdeaStatiCa.ConnectionApi.Model PinGrid                              class PASS         
+ 40 IdeaStatiCa.ConnectionApi.Model ConNonConformityIssueSeverity        enum  PASS         
+ 94 IdeaStatiCa.ConnectionApi.Model WeldData                             class PASS         
+ 96 IdeaStatiCa.ConnectionApi.Model WeldType                             enum  PASS         
+  7 IdeaStatiCa.ConnectionApi.Model BucklingRes                          class PASS         
+ 67 IdeaStatiCa.ConnectionApi.Model IGroup                               class PASS         
+169 IdeaStatiCa.RcsApi.Model        ImportIOMFile_request                class PASS         
+123 IdeaStatiCa.RcsApi.Model        ConcreteCheckResults                 class PASS         
+ 89 IdeaStatiCa.ConnectionApi.Model SelectedType                         class PASS         
+  4 IdeaStatiCa.ConnectionApi.Model BendData                             class PASS         
+ 29 IdeaStatiCa.ConnectionApi.Model ConLoadSettings                      class PASS         
+168 IdeaStatiCa.RcsApi.Model        OpenProject_request                  class PASS         
+ 73 IdeaStatiCa.ConnectionApi.Model Line                                 class PASS         
+ 57 IdeaStatiCa.ConnectionApi.Model ConversionMapping                    class PASS         
+ 47 IdeaStatiCa.ConnectionApi.Model ConStiffnessAnalysis                 class PASS         
+ 53 IdeaStatiCa.ConnectionApi.Model ConcreteBlock                        class PASS         
+ 92 IdeaStatiCa.ConnectionApi.Model TextPosition                         class PASS         
+153 IdeaStatiCa.RcsApi.Model        RcsTendonDuctData                    class PASS         
+ 18 IdeaStatiCa.ConnectionApi.Model ConConnectionLibrarySearchParameters class PASS         
+  8 IdeaStatiCa.ConnectionApi.Model CheckResAnchor                       class PASS         
+107 IdeaStatiCa.ConnectionApi.Api   MaterialApi                          class PASS         
+  2 IdeaStatiCa.ConnectionApi.Model BaseTemplateConversion               class PASS         
+ 72 IdeaStatiCa.ConnectionApi.Model InstallationProcessTypeEnum          enum  PASS         
+121 IdeaStatiCa.RcsApi.Model        ConcreteCheckResultOverall           class PASS         
+  1 IdeaStatiCa.ConnectionApi.Model AnchorType                           enum  PASS         
+ 17 IdeaStatiCa.ConnectionApi.Model ConConnection                        class PASS         
+170 IdeaStatiCa.RcsApi.Api          CalculationApi                       class PASS         
+ 30 IdeaStatiCa.ConnectionApi.Model ConMember                            class PASS         
+ 51 IdeaStatiCa.ConnectionApi.Model ConTemplatePublishParam              class PASS         
+ 76 IdeaStatiCa.ConnectionApi.Model OpenMessage                          class PASS         
+138 IdeaStatiCa.RcsApi.Model        RcsMprlElement                       class PASS         
+126 IdeaStatiCa.RcsApi.Model        LoadingType                          enum  PASS         
+ 27 IdeaStatiCa.ConnectionApi.Model ConLoadEffectPositionEnum            enum  PASS         
+ 68 IdeaStatiCa.ConnectionApi.Model IdeaParameter                        class PASS         
+ 33 IdeaStatiCa.ConnectionApi.Model ConMemberModel                       class PASS         
+ 65 IdeaStatiCa.ConnectionApi.Model DrawData                             class PASS         
+ 99 IdeaStatiCa.ConnectionApi.Model UpdateFromIOM_request                class PASS         
+
+
+

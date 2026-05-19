@@ -1,0 +1,86 @@
+{
+  "name": "TendonBar",
+  "namespace": "IdeaStatiCa.RcsApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.RcsApi.Model.TendonBar.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.id.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "TendonType",
+      "type": "TendonBarType",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.tendonType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "Point",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.point.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "Material",
+      "type": "ReferenceElement",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.material.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "PrestressingOrder",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.prestressingOrder.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "NumStrandsInTendon",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.numStrandsInTendon.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "PrestressReinforcementType",
+      "type": "FatigueTypeOfPrestressingSteel",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.prestressReinforcementType.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "Phase",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.phase.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    },
+    {
+      "name": "TendonDuct",
+      "type": "TendonDuct",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for TendonBar.tendonDuct.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/docs/TendonBar.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

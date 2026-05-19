@@ -1,0 +1,30 @@
+{
+  "name": "ConLoadSettings",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConLoadSettings.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConLoadSettings.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LoadsInEquilibrium",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadSettings.loadsInEquilibrium.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConLoadSettings.md"
+    },
+    {
+      "name": "LoadsInPercentage",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConLoadSettings.loadsInPercentage.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConLoadSettings.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

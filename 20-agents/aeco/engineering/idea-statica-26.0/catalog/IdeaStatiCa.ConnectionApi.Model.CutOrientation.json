@@ -1,0 +1,26 @@
+{
+  "name": "CutOrientation",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.CutOrientation.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/CutOrientation.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "default",
+      "value": "default"
+    },
+    {
+      "name": "parallel",
+      "value": "parallel"
+    },
+    {
+      "name": "perpendicular",
+      "value": "perpendicular"
+    }
+  ]
+}

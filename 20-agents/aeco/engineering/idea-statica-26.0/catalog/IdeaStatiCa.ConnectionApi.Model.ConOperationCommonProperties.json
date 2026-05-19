@@ -1,0 +1,38 @@
+{
+  "name": "ConOperationCommonProperties",
+  "namespace": "IdeaStatiCa.ConnectionApi.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for IdeaStatiCa.ConnectionApi.Model.ConOperationCommonProperties.)",
+  "interfaces": [],
+  "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConOperationCommonProperties.md",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "WeldMaterialId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperationCommonProperties.weldMaterialId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConOperationCommonProperties.md"
+    },
+    {
+      "name": "PlateMaterialId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperationCommonProperties.plateMaterialId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConOperationCommonProperties.md"
+    },
+    {
+      "name": "BoltAssemblyId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for ConOperationCommonProperties.boltAssemblyId.)",
+      "doc_url": "https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/docs/ConOperationCommonProperties.md"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
