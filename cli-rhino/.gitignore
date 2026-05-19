@@ -1,3 +1,5 @@
 bin/
 obj/
 *.user
+# Runtime artifacts written by Ingest/run-drill.ps1 (regenerated on each drill).
+Ingest/Output/drill-summary.md
