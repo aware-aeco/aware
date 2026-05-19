@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026.0",
+  "code": "string catalogDir = @\"C:\\Users\\bimst\\source\\repos\\aware\\20-agents\\aeco\\engineering\\tekla-2026\\catalog\";\nstring binDir = @\"C:\\Program Files\\Tekla Structures\\2026.0\\bin\";\nvar allTypes = new System.Collections.Generic.HashSet<string>();\nforeach (var sub in new[] { \"\", \"Net48Runtime\" }) {\n    string dir = sub == \"\" ? binDir : System.IO.Path.Combine(binDir, sub);\n    if (!System.IO.Directory.Exists(dir)) continue;\n    foreach (var f in System.IO.Directory.GetFiles(dir, \"Tekla.Structures*.dll\")) {\n        try {\n            var asm = System.Reflection.Assembly.LoadFrom(f);\n            foreach (var t in asm.GetExportedTypes()) {\n                allTypes.Add(t.FullName);\n                allTypes.Add(t.FullName.Replace('+', '.'));\n            }\n        } catch { }\n    }\n}\nvar stale = new System.Collections.Generic.List<string>();\nforeach (var fn in System.IO.Directory.GetFiles(catalogDir, \"*.json\")) {\n    string fqn = System.IO.Path.GetFileNameWithoutExtension(fn);\n    if (!allTypes.Contains(fqn)) stale.Add(fqn);\n}\nreturn stale;",
+  "args": {}
+}
