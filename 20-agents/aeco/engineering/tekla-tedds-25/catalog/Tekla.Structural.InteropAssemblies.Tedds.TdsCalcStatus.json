@@ -1,0 +1,34 @@
+{
+  "name": "TdsCalcStatus",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "enum",
+  "summary": "Calculation status",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-tdscalcstatus-41841",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Aborted",
+      "value": -1,
+      "summary": "Calculation process was aborted"
+    },
+    {
+      "name": "Interrupted",
+      "value": 2,
+      "summary": "The calculation process was interrupted by the user"
+    },
+    {
+      "name": "NotInitialized",
+      "value": 0,
+      "summary": "The Tedds Calculator has not been initialized"
+    },
+    {
+      "name": "Ok",
+      "value": 1,
+      "summary": "Calculating completed successfully"
+    }
+  ]
+}

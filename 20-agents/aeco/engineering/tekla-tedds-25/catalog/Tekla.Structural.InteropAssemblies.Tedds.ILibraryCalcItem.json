@@ -1,0 +1,38 @@
+{
+  "name": "ILibraryCalcItem",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a library calc item",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-ilibrarycalcitem-41833",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CalcName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Calculation name",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/667bf436285161868bbb694115f747555f7e9fa9480cad250eb3d09955a078f7"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Calc library file name including the path which may contain placeholders",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/180c6cd5553e983f784495830ad2524ebdfa29cdbfe9fcea7f712e657df12d36"
+    },
+    {
+      "name": "ItemName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Calc library item name",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/6b1af2005cd8bc71ad9325750bd07e13c50dedcdca550e5c24dc8a08166618eb"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

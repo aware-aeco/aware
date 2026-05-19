@@ -19,6 +19,10 @@
       <Link>host-coverage.schema.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="..\..\Schema\host-coverage-type.schema.json">
+      <Link>host-coverage-type.schema.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,49 @@
+{
+  "name": "IProjectItem",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a project item",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectitem-41836",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Remove()",
+      "signature": "void Remove()",
+      "summary": "Remove project item from the project",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/6823224116e6c65be115e853c5da1bfe4de5eafdb5058ca68a887e6566bcd086"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsFolder",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether the object is a folder",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/04dd2d28851d47fce4425742bcc2e0ae5a2c613780a45c6fcde83db02bf9ddec"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the project item",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/dc3bc6ec412be8101fd9956af3830feab881be4853e2527dc352be3460d758ce"
+    },
+    {
+      "name": "ParentFolder",
+      "type": "IProjectFolderItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Parent folder in the project hierarchy",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/67077060c2450c1e09ad2a69f1d97fee824f9039e2362ed2df90a5638582e06b"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

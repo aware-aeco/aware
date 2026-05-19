@@ -57,16 +57,34 @@ foreach ($i in $sampleIdx) {
     try {
         $r = Invoke-WebRequest -Uri $url -UseBasicParsing -UserAgent "AWARE-coverage-verify/0.30" -ErrorAction Stop
         $html = $r.Content
-        $kindWord = switch ($t.kind) {
-            "class" { "Class" }
-            "struct" { "Structure" }
-            "interface" { "Interface" }
-            "enum" { "Enumeration" }
-            "delegate" { "Delegate" }
-            default { "" }
+        # Two doc-site conventions in the wild:
+        #   - Sandcastle (Tekla Structures): "<Name> Class" / "<Name> Enumeration" — kind word trails.
+        #   - DocFX (Tekla Tedds, ArchiCAD, etc.): "Class <Name>" / "Enum <Name>"  — kind word leads.
+        # We accept EITHER ordering, plus the alternate enum spelling ("Enum" vs "Enumeration") and
+        # struct spelling ("Struct" vs "Structure") that DocFX uses.
+        $kindWords = switch ($t.kind) {
+            "class" { @("Class") }
+            "struct" { @("Structure", "Struct") }
+            "interface" { @("Interface") }
+            "enum" { @("Enumeration", "Enum") }
+            "delegate" { @("Delegate") }
+            default { @() }
         }
         if (-not $html.Contains($bareName)) { $issues += "type-name-missing" }
-        if ($kindWord -ne "" -and -not $html.Contains("$bareName $kindWord") -and -not ($t.name -ne $bareName -and $html.Contains("$kindWord"))) {
+        $kindMatched = $kindWords.Count -eq 0
+        foreach ($kw in $kindWords) {
+            if ($html.Contains("$bareName $kw") -or $html.Contains("$kw $bareName")) {
+                $kindMatched = $true
+                break
+            }
+            # Generic types: bare name may not appear adjacent to kind word — fall back to
+            # kind word presence alongside any rendering of the type name elsewhere.
+            if ($t.name -ne $bareName -and $html.Contains($kw)) {
+                $kindMatched = $true
+                break
+            }
+        }
+        if (-not $kindMatched) {
             $issues += "kind-word-missing"
         }
     } catch {

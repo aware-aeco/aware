@@ -1,0 +1,138 @@
+{
+  "name": "IProjectItems",
+  "namespace": "Tekla.Structural.InteropAssemblies.Tedds",
+  "kind": "interface",
+  "summary": "Interface for a collection of Project items",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/doc/tekla-tedds/2025/tekla-structural-interopassemblies-tedds-iprojectitems-41837",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddDocument(ITeddsDocument)",
+      "signature": "IProjectFileItem AddDocument(ITeddsDocument Document)",
+      "summary": "Add an existing open document to the end of the collection of project items",
+      "params": [
+        {
+          "name": "Document",
+          "type": "ITeddsDocument",
+          "doc": "Document to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IProjectFileItem",
+        "doc": "New project file object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/d9162bd93cb1943d2e30b75278a028c2388e9fda3a7fb8eea3a44bb308ac3747"
+    },
+    {
+      "name": "AddFile(string)",
+      "signature": "IProjectFileItem AddFile(string FilePath)",
+      "summary": "Add a reference to a Tedds document file to the end of the collection of project items",
+      "params": [
+        {
+          "name": "FilePath",
+          "type": "string",
+          "doc": "Full file path of the file to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IProjectFileItem",
+        "doc": "New project file object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/948a05bcc216da51464939cae5218447eda15f85a15a86dae7d1f1eb750c92ca"
+    },
+    {
+      "name": "AddFolder(string)",
+      "signature": "IProjectFolderItem AddFolder(string Name)",
+      "summary": "Add a new folder to the end of the collection of project items",
+      "params": [
+        {
+          "name": "Name",
+          "type": "string",
+          "doc": "Name of the folder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IProjectFolderItem",
+        "doc": "New project folder object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/f6fa5a8682001a1e694926f8c31413572e3c9667a95a0c02514408c2a56948b5"
+    },
+    {
+      "name": "AddFromPath(string)",
+      "signature": "void AddFromPath(string FilePath)",
+      "summary": "Add a single Tedds project file or a complete folder hierarchy from a full file path",
+      "params": [
+        {
+          "name": "FilePath",
+          "type": "string",
+          "doc": "Full path to a file or folder",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/c3cbc28e95402a077dfc2000cc1f079458a4dfb8a224091fd1829f371e0c14cb"
+    },
+    {
+      "name": "GetEnumerator()",
+      "signature": "IEnumerator GetEnumerator()",
+      "summary": "Enumeration interface for iterating the items in the collection",
+      "params": [],
+      "returns": {
+        "type": "IEnumerator",
+        "doc": "Enumeration interface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/b8ec794715b4ea12de62b8e45f468a7f59bf11908c2e701720e095b30a8ee7a8"
+    },
+    {
+      "name": "Remove(object)",
+      "signature": "void Remove(object Item)",
+      "summary": "Remove a project item from the collection",
+      "params": [
+        {
+          "name": "Item",
+          "type": "object",
+          "doc": "Item Identifier of the project item to remove which is either a one based index of the item in the",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/3f9a6fc64aed8addaa5c1d92c1a6243a15f0780c2e09812e2f85fe46b10b00ce"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the number of items in the collection",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/185f639e0a991c756b8905db91d496213bb857645de11076af262bfb6637ed32"
+    },
+    {
+      "name": "this[object]",
+      "type": "IProjectItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a single item in the collection",
+      "doc_url": "https://developer.tekla.com/topic/en/20/45/8ff7e714f0d9b473341976d79abc0a72dd4506b96b304b1a7884491ec4bfd94a"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
