@@ -45,6 +45,15 @@ foreach ($i in $sampleIdx) {
     $issues = @()
 
     # Type-page check: name + kind present in HTML.
+    #
+    # Generic types (e.g. `Enum<E>`, `CustomObservableCollection<T>`) render their
+    # type-parameter list via LST script substitution in the HTML, so the literal
+    # substring `Enum<E>` does NOT appear in the raw HTML — it's spread across
+    # `Enum<span>...<script cs=&lt;>...<span typeparameter>E</span>...<script cs=&gt;>`.
+    # We strip the generic-parameter suffix before the contains check so generic
+    # types pass when their bare name (`Enum`) appears alongside the kind word
+    # (`Structure`). The catalog JSON itself still carries the real generic name.
+    $bareName = $t.name -replace '<[^>]+>$', ''
     try {
         $r = Invoke-WebRequest -Uri $url -UseBasicParsing -UserAgent "AWARE-coverage-verify/0.30" -ErrorAction Stop
         $html = $r.Content
@@ -56,8 +65,8 @@ foreach ($i in $sampleIdx) {
             "delegate" { "Delegate" }
             default { "" }
         }
-        if (-not $html.Contains($t.name)) { $issues += "type-name-missing" }
-        if ($kindWord -ne "" -and -not $html.Contains("$($t.name) $kindWord")) {
+        if (-not $html.Contains($bareName)) { $issues += "type-name-missing" }
+        if ($kindWord -ne "" -and -not $html.Contains("$bareName $kindWord") -and -not ($t.name -ne $bareName -and $html.Contains("$kindWord"))) {
             $issues += "kind-word-missing"
         }
     } catch {

@@ -117,6 +117,36 @@ public class SchemaTests
     }
 
     [Fact]
+    public void Schema_Rejects_Method_Missing_Returns_Key()
+    {
+        // Defect 3 — codex-coverage FAIL 2026-05-19: System.Text.Json was dropping
+        // the `returns` key entirely on void methods + ctors, but the schema requires
+        // the key to be present (as null or as ReturnInfo). This test pins that the
+        // schema actually does reject the omitted-key shape — otherwise the
+        // Catalog_Json_Method/Ctor_Emits_Returns tests in CatalogWriterTests would be
+        // testing a schema that no longer enforces the requirement.
+        var schema = LoadSchema();
+        var ir = JsonDocument.Parse("""
+        {
+          "host": "test", "host_version": "1.0",
+          "source": { "kind": "scrape", "urls": [], "extracted_at": "2026-01-01T00:00:00Z" },
+          "types": [{
+            "name": "T", "namespace": "N", "kind": "class", "summary": "s", "doc_url": "https://x.example/T",
+            "interfaces": [], "constructors": [], "properties": [], "events": [], "enum_values": [],
+            "methods": [{
+              "name": "M", "signature": "void M()", "summary": "s", "params": [],
+              "throws": [], "events_related": [],
+              "doc_url": "https://x.example/T.M"
+            }]
+          }],
+          "metadata": { "page_count": 0, "type_count": 1, "method_count": 1, "event_count": 0, "property_count": 0 }
+        }
+        """);
+        var result = schema.Evaluate(ir.RootElement);
+        Assert.False(result.IsValid, "schema should reject Method that omits the `returns` key entirely (schema requires it as null or ReturnInfo)");
+    }
+
+    [Fact]
     public void Schema_Rejects_Event_Without_HandlerThread()
     {
         var schema = LoadSchema();

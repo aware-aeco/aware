@@ -19,8 +19,17 @@
 // generator can emit a typed `JsonTypeInfo` for it. The schema constrains the
 // field to `integer | string` (oneOf), both of which round-trip cleanly through
 // JsonElement.
+//
+// MethodInfo.returns carries an explicit `[property: JsonIgnore(Condition =
+// JsonIgnoreCondition.Never)]` override because the IR schema requires the
+// `returns` key on every Method (as `null` for void methods/ctors, or a
+// `ReturnInfo` object). The IrJsonContext sets `WhenWritingNull` globally to
+// keep nullable optional fields compact; this per-property override forces
+// `returns` to always emit. Without it, every void method + every ctor would
+// drop the `returns` key entirely and fail schema validation downstream.
 
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace AwareSidecar.Ingest;
 
@@ -65,7 +74,7 @@ public record MethodInfo(
     string summary,
     string? remarks,
     List<ParamInfo> @params,
-    ReturnInfo? returns,
+    [property: JsonIgnore(Condition = JsonIgnoreCondition.Never)] ReturnInfo? returns,
     List<ThrowsInfo> throws,
     List<string> events_related,
     string doc_url,

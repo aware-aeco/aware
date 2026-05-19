@@ -10,6 +10,13 @@
 // generated IrJsonContext). The IR's deserializer treats absent fields as null
 // by default, so this is a lossless space optimization.
 //
+// Filename sanitization: vendor type names can contain characters that Windows
+// (and POSIX, in NTFS-on-Linux scenarios) rejects in filenames — most notably
+// the generic-parameter angle brackets in names like `Enum<E>` and
+// `CustomObservableCollection<T>`. We rewrite `<` → `_of_` and `>` → `` so
+// the filename is portable on every filesystem. The JSON body inside the file
+// preserves the real type name verbatim — only the filename is sanitized.
+//
 // Uses the source-generated IrJsonContext: zero reflection, no trimmer hazard,
 // fully NativeAOT-compatible. No `[Requires*]` attributes, no runtime
 // `DefaultJsonTypeInfoResolver` — the serializer reads typed `JsonTypeInfo<T>`
@@ -29,9 +36,31 @@ public static class CatalogWriter
         var result = new Dictionary<string, string>();
         foreach (var t in ir.types)
         {
-            var filename = $"{t.@namespace}.{t.name}.json";
+            var safeName = SanitizeForFilename(t.name);
+            var filename = $"{t.@namespace}.{safeName}.json";
             result[filename] = JsonSerializer.Serialize(t, IrJsonContext.Default.TypeInfo);
         }
         return result;
     }
+
+    /// <summary>
+    /// Rewrite a vendor type name into a filesystem-safe variant for use as a catalog
+    /// filename. Replaces the Windows-forbidden + POSIX-fragile characters that can
+    /// appear in generic-parameter type names (`Foo&lt;T&gt;`) and a handful of
+    /// other shapes vendor docs may emit. The JSON body inside the catalog still
+    /// carries the real type name; only the filename is sanitized.
+    ///
+    /// Substitutions (deliberate, readable — not URL-encoded):
+    ///   `&lt;` → `_of_`   so `Enum&lt;E&gt;` becomes `Enum_of_E`
+    ///   `&gt;` → ``       (the close-bracket terminator is dropped — `Enum_of_E`
+    ///                     is unambiguous; trailing markers add noise)
+    ///   `,`  → `__`       multi-arg generics become `Dict_of_K__V`
+    ///   ` `  → `_`        (defensive — type names normally have no spaces)
+    /// </summary>
+    static string SanitizeForFilename(string name) =>
+        name.Replace("<", "_of_", StringComparison.Ordinal)
+            .Replace(">", "", StringComparison.Ordinal)
+            .Replace(", ", "__", StringComparison.Ordinal)
+            .Replace(",", "__", StringComparison.Ordinal)
+            .Replace(" ", "_", StringComparison.Ordinal);
 }
