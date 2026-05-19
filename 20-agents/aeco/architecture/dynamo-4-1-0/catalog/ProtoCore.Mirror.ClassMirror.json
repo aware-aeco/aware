@@ -1,0 +1,230 @@
+{
+  "name": "ClassMirror",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "A ClassMirror object reflects upon the type of a single designscript variable The information here is populated during the code generation phase",
+  "base": "ProtoCore.Mirror.StaticMirror",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [
+    {
+      "name": "ClassMirror(string, ProtoCore.Core)",
+      "signature": "void ClassMirror(string className, ProtoCore.Core core)",
+      "summary": "Constructor to construct ClassMirror from runtime data i.e. StackValue",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "doc": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetClassAttributes",
+      "signature": "ProtoCore.AST.AssociativeAST.ClassAttributes GetClassAttributes()",
+      "summary": "ClassMirror.GetClassAttributes",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.ClassAttributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetClassHierarchy",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.ClassMirror\u003E GetClassHierarchy()",
+      "summary": "Returns the base class hierarchy for the given class",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.ClassMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetConstructors",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetConstructors()",
+      "summary": "Returns the list of constructors defined for the given class",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetFunctions",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetFunctions()",
+      "summary": "Returns the list of functions of the class only",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": "function nodes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetInstanceMembers",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.StaticMirror\u003E GetInstanceMembers()",
+      "summary": "Returns the instance methods and properties belonging to the type and its base types. Filters out repeating names.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.StaticMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetMembers",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.StaticMirror\u003E GetMembers()",
+      "summary": "Returns a list of constructors and static methods and properties belonging to the type and its base types. Filters out repeating names.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.StaticMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetOverloads(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetOverloads(string methodName)",
+      "summary": "Given the method name, return the list of all matching constructors and member functions of this type only",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetOverloadsOnInstance(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetOverloadsOnInstance(string methodName)",
+      "summary": "Given a method name, return the matching list of instance methods on this type and its base types",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetOverloadsOnType(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E GetOverloadsOnType(string methodName)",
+      "summary": "Given a method name, return the matching list of constructors or static methods on this type and its base types Excludes hidden methods from base types.",
+      "params": [
+        {
+          "name": "methodName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.MethodMirror\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetProperties",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.PropertyMirror\u003E GetProperties()",
+      "summary": "Returns the list of class properties of this class",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.Mirror.PropertyMirror\u003E",
+        "doc": "symbol nodes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alias",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Class name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "ClassName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Fully qualified class name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "ClassNodeID",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The ID of the underlying ClassNode. This is only valid if a known imported type was found in the vm. Returns -1 if there is no valid underlying classNode this mirror reflects.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "True if the class is a dummy, placeholder class",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "IsHiddenInLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassMirror.IsHiddenInLibrary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

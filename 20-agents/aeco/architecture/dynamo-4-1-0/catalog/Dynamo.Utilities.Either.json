@@ -1,0 +1,135 @@
+{
+  "name": "Either",
+  "namespace": "Dynamo.Utilities",
+  "kind": "static-class",
+  "summary": "Utility methods for working with Either instances.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Left(TLeft)",
+      "signature": "Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E Left\u003CTLeft, TRight\u003E(TLeft value)",
+      "summary": "Creates a new IEither(TLeft, TRight) instance containing a Left value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "TLeft",
+          "doc": "Left value to be stored in the new IEither(TLeft, TRight) instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Match(Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E, System.Action\u003CTLeft\u003E, System.Action\u003CTRight\u003E)",
+      "signature": "void Match\u003CTLeft, TRight\u003E(Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E either, System.Action\u003CTLeft\u003E leftAction, System.Action\u003CTRight\u003E rightAction)",
+      "summary": "Performs an given Action based on whether the IEither(TLeft, TRight) contains a Left or Right value.",
+      "params": [
+        {
+          "name": "either",
+          "type": "Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E",
+          "doc": "An IEither(TLeft, TRight) instance.",
+          "optional": false
+        },
+        {
+          "name": "leftAction",
+          "type": "System.Action\u003CTLeft\u003E",
+          "doc": "Action used for a Left value.",
+          "optional": false
+        },
+        {
+          "name": "rightAction",
+          "type": "System.Action\u003CTRight\u003E",
+          "doc": "Action used for a Right value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Right(TRight)",
+      "signature": "Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E Right\u003CTLeft, TRight\u003E(TRight value)",
+      "summary": "Creates a new IEither(TLeft, TRight) instance containing a Right value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "TRight",
+          "doc": "Right value to be stored in the new IEither(TLeft, TRight) instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTLeft, TRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "SelectLeft(Dynamo.Utilities.IEither\u003CTOldLeft, TRight\u003E, System.Func\u003CTOldLeft, TNewLeft\u003E)",
+      "signature": "Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E SelectLeft\u003CTOldLeft, TNewLeft, TRight\u003E(Dynamo.Utilities.IEither\u003CTOldLeft, TRight\u003E either, System.Func\u003CTOldLeft, TNewLeft\u003E selector)",
+      "summary": "Return an IEither(TNewLeft, TRight) instance by either passing the contained Left value to a conversion function, or propagating the Right value.",
+      "params": [
+        {
+          "name": "either",
+          "type": "Dynamo.Utilities.IEither\u003CTOldLeft, TRight\u003E",
+          "doc": "An IEither(TOldLeft, TRight) instance.",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTOldLeft, TNewLeft\u003E",
+          "doc": "Function used to convert a Left value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "SelectRight(Dynamo.Utilities.IEither\u003CTLeft, TOldRight\u003E, System.Func\u003CTOldRight, TNewRight\u003E)",
+      "signature": "Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E SelectRight\u003CTLeft, TOldRight, TNewRight\u003E(Dynamo.Utilities.IEither\u003CTLeft, TOldRight\u003E either, System.Func\u003CTOldRight, TNewRight\u003E selector)",
+      "summary": "Return an IEither(TLeft, TNewRight) instance by either passing the contained Right value to a conversion function, or propagating the Left value.",
+      "params": [
+        {
+          "name": "either",
+          "type": "Dynamo.Utilities.IEither\u003CTLeft, TOldRight\u003E",
+          "doc": "An IEither(TLeft, TOldRight) instance.",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTOldRight, TNewRight\u003E",
+          "doc": "Function used to convert a Right value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "WarningLevel",
+  "namespace": "Dynamo.Logging",
+  "kind": "enum",
+  "summary": "Specifies the warning level for log messages.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Logging/DynamoLogger.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Error",
+      "value": 2
+    },
+    {
+      "name": "Mild",
+      "value": 0
+    },
+    {
+      "name": "Moderate",
+      "value": 1
+    }
+  ]
+}

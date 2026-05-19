@@ -1,0 +1,153 @@
+{
+  "name": "FunctionDescriptorParams",
+  "namespace": "Dynamo.Engine",
+  "kind": "class",
+  "summary": "Contains parameters for function description.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs",
+  "constructors": [
+    {
+      "name": "FunctionDescriptorParams()",
+      "signature": "void FunctionDescriptorParams()",
+      "summary": "Initializes a new instance of the Dynamo.Engine.FunctionDescriptorParams class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns full path to the assembly the defined this function. This is not always an assembly path, it might be a path to a .ds file or builtin token like \u0027operators\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "CanUpdatePeriodically",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This attribute sets whether the function enables periodic update of the workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "ClassName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns class name of this function. If the functinon is global, return String.Empty.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "FunctionName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns function name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "FunctionType",
+      "type": "Dynamo.Engine.FunctionType",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes type of function",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "IsBuiltIn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if it is built-in function",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "IsLacingDisabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the lacing strategy is disabled on the function",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "IsPackageMember",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the function is packaged element (either zero-touch DLLs or DYFs)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "IsVarArg",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Does the function accept a variable number of arguments?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "IsVisibleInLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This attribute sets, if this function is shown in library or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "ObsoleteMsg",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Message specified if function is obsolete",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "Parameters",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Library.TypedParameter\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns function parameters data",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "PathManager",
+      "type": "Dynamo.Interfaces.IPathManager",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns instance of IPathManager",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "ReturnKeys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "If the function returns a dictionary, ReturnKeys is the key collection used in returned dictionary.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "ReturnType",
+      "type": "ProtoCore.Type",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes the type of object to return by the function",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    },
+    {
+      "name": "Summary",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns comment describing the function along with the signature",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionDescriptor.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,86 @@
+{
+  "name": "WarningID",
+  "namespace": "ProtoCore.BuildData",
+  "kind": "enum",
+  "summary": "Type WarningID",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AccessViolation",
+      "value": 0
+    },
+    {
+      "name": "CallingConstructorInConstructor",
+      "value": 1
+    },
+    {
+      "name": "CallingConstructorOnInstance",
+      "value": 2
+    },
+    {
+      "name": "CallingNonStaticMethodOnClass",
+      "value": 3
+    },
+    {
+      "name": "FileNotFound",
+      "value": 15
+    },
+    {
+      "name": "FunctionAbnormalExit",
+      "value": 4
+    },
+    {
+      "name": "FunctionAlreadyDefined",
+      "value": 5
+    },
+    {
+      "name": "FunctionNotFound",
+      "value": 6
+    },
+    {
+      "name": "IdUnboundIdentifier",
+      "value": 7
+    },
+    {
+      "name": "InvalidRangeExpression",
+      "value": 9
+    },
+    {
+      "name": "InvalidStaticCyclicDependency",
+      "value": 8
+    },
+    {
+      "name": "InvalidThis",
+      "value": 10
+    },
+    {
+      "name": "MissingReturnStatement",
+      "value": 11
+    },
+    {
+      "name": "MultipleSymbolFound",
+      "value": 16
+    },
+    {
+      "name": "MultipleSymbolFoundFromName",
+      "value": 17
+    },
+    {
+      "name": "Parsing",
+      "value": 12
+    },
+    {
+      "name": "PropertyNotFound",
+      "value": 14
+    },
+    {
+      "name": "TypeUndefined",
+      "value": 13
+    }
+  ]
+}

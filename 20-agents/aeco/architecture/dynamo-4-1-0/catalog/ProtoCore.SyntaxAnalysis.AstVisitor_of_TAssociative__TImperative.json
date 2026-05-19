@@ -1,0 +1,1225 @@
+{
+  "name": "AstVisitor\u003CTAssociative, TImperative\u003E",
+  "namespace": "ProtoCore.SyntaxAnalysis",
+  "kind": "class",
+  "summary": "Type AstVisitor\u003CTAssociative, TImperative\u003E",
+  "interfaces": [
+    "ProtoCore.SyntaxAnalysis.Associative.IAstVisitor\u003CTAssociative\u003E",
+    "ProtoCore.SyntaxAnalysis.Imperative.IAstVisitor\u003CTImperative\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs",
+  "constructors": [
+    {
+      "name": "AstVisitor()",
+      "signature": "void AstVisitor()",
+      "summary": "AstVisitor.AstVisitor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "VisitArgumentSignatureNode(ProtoCore.AST.AssociativeAST.ArgumentSignatureNode)",
+      "signature": "TAssociative VisitArgumentSignatureNode(ProtoCore.AST.AssociativeAST.ArgumentSignatureNode node)",
+      "summary": "AstVisitor.VisitArgumentSignatureNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ArgumentSignatureNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitArrayNameNode(ProtoCore.AST.AssociativeAST.ArrayNameNode)",
+      "signature": "TAssociative VisitArrayNameNode(ProtoCore.AST.AssociativeAST.ArrayNameNode node)",
+      "summary": "AstVisitor.VisitArrayNameNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ArrayNameNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitArrayNameNode(ProtoCore.AST.ImperativeAST.ArrayNameNode)",
+      "signature": "TImperative VisitArrayNameNode(ProtoCore.AST.ImperativeAST.ArrayNameNode node)",
+      "summary": "AstVisitor.VisitArrayNameNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ArrayNameNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitArrayNode(ProtoCore.AST.AssociativeAST.ArrayNode)",
+      "signature": "TAssociative VisitArrayNode(ProtoCore.AST.AssociativeAST.ArrayNode node)",
+      "summary": "AstVisitor.VisitArrayNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ArrayNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitArrayNode(ProtoCore.AST.ImperativeAST.ArrayNode)",
+      "signature": "TImperative VisitArrayNode(ProtoCore.AST.ImperativeAST.ArrayNode node)",
+      "summary": "AstVisitor.VisitArrayNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ArrayNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitAssociativeNode(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "TAssociative VisitAssociativeNode(ProtoCore.AST.AssociativeAST.AssociativeNode node)",
+      "summary": "AstVisitor.VisitAssociativeNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitAtLevelNode(ProtoCore.AST.AssociativeAST.AtLevelNode)",
+      "signature": "TAssociative VisitAtLevelNode(ProtoCore.AST.AssociativeAST.AtLevelNode node)",
+      "summary": "AstVisitor.VisitAtLevelNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.AtLevelNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitBinaryExpressionNode(ProtoCore.AST.AssociativeAST.BinaryExpressionNode)",
+      "signature": "TAssociative VisitBinaryExpressionNode(ProtoCore.AST.AssociativeAST.BinaryExpressionNode node)",
+      "summary": "AstVisitor.VisitBinaryExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitBinaryExpressionNode(ProtoCore.AST.ImperativeAST.BinaryExpressionNode)",
+      "signature": "TImperative VisitBinaryExpressionNode(ProtoCore.AST.ImperativeAST.BinaryExpressionNode node)",
+      "summary": "AstVisitor.VisitBinaryExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BinaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitBooleanNode(ProtoCore.AST.AssociativeAST.BooleanNode)",
+      "signature": "TAssociative VisitBooleanNode(ProtoCore.AST.AssociativeAST.BooleanNode node)",
+      "summary": "AstVisitor.VisitBooleanNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.BooleanNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitBooleanNode(ProtoCore.AST.ImperativeAST.BooleanNode)",
+      "signature": "TImperative VisitBooleanNode(ProtoCore.AST.ImperativeAST.BooleanNode node)",
+      "summary": "AstVisitor.VisitBooleanNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BooleanNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitBreakNode(ProtoCore.AST.ImperativeAST.BreakNode)",
+      "signature": "TImperative VisitBreakNode(ProtoCore.AST.ImperativeAST.BreakNode node)",
+      "summary": "AstVisitor.VisitBreakNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.BreakNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitCharNode(ProtoCore.AST.AssociativeAST.CharNode)",
+      "signature": "TAssociative VisitCharNode(ProtoCore.AST.AssociativeAST.CharNode node)",
+      "summary": "AstVisitor.VisitCharNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.CharNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitCharNode(ProtoCore.AST.ImperativeAST.CharNode)",
+      "signature": "TImperative VisitCharNode(ProtoCore.AST.ImperativeAST.CharNode node)",
+      "summary": "AstVisitor.VisitCharNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.CharNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitClassDeclNode(ProtoCore.AST.AssociativeAST.ClassDeclNode)",
+      "signature": "TAssociative VisitClassDeclNode(ProtoCore.AST.AssociativeAST.ClassDeclNode node)",
+      "summary": "AstVisitor.VisitClassDeclNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ClassDeclNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitCodeBlockNode(ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "TAssociative VisitCodeBlockNode(ProtoCore.AST.AssociativeAST.CodeBlockNode node)",
+      "summary": "AstVisitor.VisitCodeBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitCodeBlockNode(ProtoCore.AST.ImperativeAST.CodeBlockNode)",
+      "signature": "TImperative VisitCodeBlockNode(ProtoCore.AST.ImperativeAST.CodeBlockNode node)",
+      "summary": "AstVisitor.VisitCodeBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitCommentNode(ProtoCore.AST.AssociativeAST.CommentNode)",
+      "signature": "TAssociative VisitCommentNode(ProtoCore.AST.AssociativeAST.CommentNode node)",
+      "summary": "AstVisitor.VisitCommentNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.CommentNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitConstructorDefinitionNode(ProtoCore.AST.AssociativeAST.ConstructorDefinitionNode)",
+      "signature": "TAssociative VisitConstructorDefinitionNode(ProtoCore.AST.AssociativeAST.ConstructorDefinitionNode node)",
+      "summary": "AstVisitor.VisitConstructorDefinitionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ConstructorDefinitionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitContinueNode(ProtoCore.AST.ImperativeAST.ContinueNode)",
+      "signature": "TImperative VisitContinueNode(ProtoCore.AST.ImperativeAST.ContinueNode node)",
+      "summary": "AstVisitor.VisitContinueNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ContinueNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitDefaultArgNode(ProtoCore.AST.AssociativeAST.DefaultArgNode)",
+      "signature": "TAssociative VisitDefaultArgNode(ProtoCore.AST.AssociativeAST.DefaultArgNode node)",
+      "summary": "AstVisitor.VisitDefaultArgNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.DefaultArgNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitDoubleNode(ProtoCore.AST.AssociativeAST.DoubleNode)",
+      "signature": "TAssociative VisitDoubleNode(ProtoCore.AST.AssociativeAST.DoubleNode node)",
+      "summary": "AstVisitor.VisitDoubleNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.DoubleNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitDoubleNode(ProtoCore.AST.ImperativeAST.DoubleNode)",
+      "signature": "TImperative VisitDoubleNode(ProtoCore.AST.ImperativeAST.DoubleNode node)",
+      "summary": "AstVisitor.VisitDoubleNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.DoubleNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitDynamicBlockNode(ProtoCore.AST.AssociativeAST.DynamicBlockNode)",
+      "signature": "TAssociative VisitDynamicBlockNode(ProtoCore.AST.AssociativeAST.DynamicBlockNode node)",
+      "summary": "AstVisitor.VisitDynamicBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.DynamicBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitDynamicNode(ProtoCore.AST.AssociativeAST.DynamicNode)",
+      "signature": "TAssociative VisitDynamicNode(ProtoCore.AST.AssociativeAST.DynamicNode node)",
+      "summary": "AstVisitor.VisitDynamicNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.DynamicNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitElseIfNode(ProtoCore.AST.ImperativeAST.ElseIfBlock)",
+      "signature": "TImperative VisitElseIfNode(ProtoCore.AST.ImperativeAST.ElseIfBlock node)",
+      "summary": "AstVisitor.VisitElseIfNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ElseIfBlock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitExprListNode(ProtoCore.AST.AssociativeAST.ExprListNode)",
+      "signature": "TAssociative VisitExprListNode(ProtoCore.AST.AssociativeAST.ExprListNode node)",
+      "summary": "AstVisitor.VisitExprListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ExprListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitExprListNode(ProtoCore.AST.ImperativeAST.ExprListNode)",
+      "signature": "TImperative VisitExprListNode(ProtoCore.AST.ImperativeAST.ExprListNode node)",
+      "summary": "AstVisitor.VisitExprListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ExprListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitForLoopNode(ProtoCore.AST.ImperativeAST.ForLoopNode)",
+      "signature": "TImperative VisitForLoopNode(ProtoCore.AST.ImperativeAST.ForLoopNode node)",
+      "summary": "AstVisitor.VisitForLoopNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ForLoopNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitFunctionCallNode(ProtoCore.AST.AssociativeAST.FunctionCallNode)",
+      "signature": "TAssociative VisitFunctionCallNode(ProtoCore.AST.AssociativeAST.FunctionCallNode node)",
+      "summary": "AstVisitor.VisitFunctionCallNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionCallNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitFunctionCallNode(ProtoCore.AST.ImperativeAST.FunctionCallNode)",
+      "signature": "TImperative VisitFunctionCallNode(ProtoCore.AST.ImperativeAST.FunctionCallNode node)",
+      "summary": "AstVisitor.VisitFunctionCallNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.FunctionCallNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitFunctionDefinitionNode(ProtoCore.AST.AssociativeAST.FunctionDefinitionNode)",
+      "signature": "TAssociative VisitFunctionDefinitionNode(ProtoCore.AST.AssociativeAST.FunctionDefinitionNode node)",
+      "summary": "AstVisitor.VisitFunctionDefinitionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionDefinitionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitFunctionDotCallNode(ProtoCore.AST.AssociativeAST.FunctionDotCallNode)",
+      "signature": "TAssociative VisitFunctionDotCallNode(ProtoCore.AST.AssociativeAST.FunctionDotCallNode node)",
+      "summary": "AstVisitor.VisitFunctionDotCallNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionDotCallNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitGroupExpressionNode(ProtoCore.AST.AssociativeAST.GroupExpressionNode)",
+      "signature": "TAssociative VisitGroupExpressionNode(ProtoCore.AST.AssociativeAST.GroupExpressionNode node)",
+      "summary": "AstVisitor.VisitGroupExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.GroupExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitGroupExpressionNode(ProtoCore.AST.ImperativeAST.GroupExpressionNode)",
+      "signature": "TImperative VisitGroupExpressionNode(ProtoCore.AST.ImperativeAST.GroupExpressionNode node)",
+      "summary": "AstVisitor.VisitGroupExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.GroupExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIdentifierListNode(ProtoCore.AST.AssociativeAST.IdentifierListNode)",
+      "signature": "TAssociative VisitIdentifierListNode(ProtoCore.AST.AssociativeAST.IdentifierListNode node)",
+      "summary": "AstVisitor.VisitIdentifierListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIdentifierListNode(ProtoCore.AST.ImperativeAST.IdentifierListNode)",
+      "signature": "TImperative VisitIdentifierListNode(ProtoCore.AST.ImperativeAST.IdentifierListNode node)",
+      "summary": "AstVisitor.VisitIdentifierListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IdentifierListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIdentifierNode(ProtoCore.AST.AssociativeAST.IdentifierNode)",
+      "signature": "TAssociative VisitIdentifierNode(ProtoCore.AST.AssociativeAST.IdentifierNode node)",
+      "summary": "AstVisitor.VisitIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIdentifierNode(ProtoCore.AST.ImperativeAST.IdentifierNode)",
+      "signature": "TImperative VisitIdentifierNode(ProtoCore.AST.ImperativeAST.IdentifierNode node)",
+      "summary": "AstVisitor.VisitIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIfStatementNode(ProtoCore.AST.ImperativeAST.IfStmtNode)",
+      "signature": "TImperative VisitIfStatementNode(ProtoCore.AST.ImperativeAST.IfStmtNode node)",
+      "summary": "AstVisitor.VisitIfStatementNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IfStmtNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIfStmtPositionNode(ProtoCore.AST.ImperativeAST.IfStmtPositionNode)",
+      "signature": "TImperative VisitIfStmtPositionNode(ProtoCore.AST.ImperativeAST.IfStmtPositionNode node)",
+      "summary": "AstVisitor.VisitIfStmtPositionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IfStmtPositionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitImperativeNode(ProtoCore.AST.ImperativeAST.ImperativeNode)",
+      "signature": "TImperative VisitImperativeNode(ProtoCore.AST.ImperativeAST.ImperativeNode node)",
+      "summary": "AstVisitor.VisitImperativeNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitImportNode(ProtoCore.AST.AssociativeAST.ImportNode)",
+      "signature": "TAssociative VisitImportNode(ProtoCore.AST.AssociativeAST.ImportNode node)",
+      "summary": "AstVisitor.VisitImportNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ImportNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitInlineConditionalNode(ProtoCore.AST.AssociativeAST.InlineConditionalNode)",
+      "signature": "TAssociative VisitInlineConditionalNode(ProtoCore.AST.AssociativeAST.InlineConditionalNode node)",
+      "summary": "AstVisitor.VisitInlineConditionalNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.InlineConditionalNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitInlineConditionalNode(ProtoCore.AST.ImperativeAST.InlineConditionalNode)",
+      "signature": "TImperative VisitInlineConditionalNode(ProtoCore.AST.ImperativeAST.InlineConditionalNode node)",
+      "summary": "AstVisitor.VisitInlineConditionalNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.InlineConditionalNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIntNode(ProtoCore.AST.AssociativeAST.IntNode)",
+      "signature": "TAssociative VisitIntNode(ProtoCore.AST.AssociativeAST.IntNode node)",
+      "summary": "AstVisitor.VisitIntNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.IntNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitIntNode(ProtoCore.AST.ImperativeAST.IntNode)",
+      "signature": "TImperative VisitIntNode(ProtoCore.AST.ImperativeAST.IntNode node)",
+      "summary": "AstVisitor.VisitIntNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.IntNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitLanguageBlockNode(ProtoCore.AST.AssociativeAST.LanguageBlockNode)",
+      "signature": "TAssociative VisitLanguageBlockNode(ProtoCore.AST.AssociativeAST.LanguageBlockNode node)",
+      "summary": "AstVisitor.VisitLanguageBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.LanguageBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitLanguageBlockNode(ProtoCore.AST.ImperativeAST.LanguageBlockNode)",
+      "signature": "TImperative VisitLanguageBlockNode(ProtoCore.AST.ImperativeAST.LanguageBlockNode node)",
+      "summary": "AstVisitor.VisitLanguageBlockNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.LanguageBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitNullNode(ProtoCore.AST.AssociativeAST.NullNode)",
+      "signature": "TAssociative VisitNullNode(ProtoCore.AST.AssociativeAST.NullNode node)",
+      "summary": "AstVisitor.VisitNullNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.NullNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitNullNode(ProtoCore.AST.ImperativeAST.NullNode)",
+      "signature": "TImperative VisitNullNode(ProtoCore.AST.ImperativeAST.NullNode node)",
+      "summary": "AstVisitor.VisitNullNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.NullNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitRangeExprNode(ProtoCore.AST.AssociativeAST.RangeExprNode)",
+      "signature": "TAssociative VisitRangeExprNode(ProtoCore.AST.AssociativeAST.RangeExprNode node)",
+      "summary": "AstVisitor.VisitRangeExprNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.RangeExprNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitRangeExprNode(ProtoCore.AST.ImperativeAST.RangeExprNode)",
+      "signature": "TImperative VisitRangeExprNode(ProtoCore.AST.ImperativeAST.RangeExprNode node)",
+      "summary": "AstVisitor.VisitRangeExprNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.RangeExprNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitReplicationGuideNode(ProtoCore.AST.AssociativeAST.ReplicationGuideNode)",
+      "signature": "TAssociative VisitReplicationGuideNode(ProtoCore.AST.AssociativeAST.ReplicationGuideNode node)",
+      "summary": "AstVisitor.VisitReplicationGuideNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ReplicationGuideNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitStringNode(ProtoCore.AST.AssociativeAST.StringNode)",
+      "signature": "TAssociative VisitStringNode(ProtoCore.AST.AssociativeAST.StringNode node)",
+      "summary": "AstVisitor.VisitStringNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.StringNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitStringNode(ProtoCore.AST.ImperativeAST.StringNode)",
+      "signature": "TImperative VisitStringNode(ProtoCore.AST.ImperativeAST.StringNode node)",
+      "summary": "AstVisitor.VisitStringNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.StringNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitThisPointerNode(ProtoCore.AST.AssociativeAST.ThisPointerNode)",
+      "signature": "TAssociative VisitThisPointerNode(ProtoCore.AST.AssociativeAST.ThisPointerNode node)",
+      "summary": "AstVisitor.VisitThisPointerNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.ThisPointerNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitTypedIdentifierNode(ProtoCore.AST.AssociativeAST.TypedIdentifierNode)",
+      "signature": "TAssociative VisitTypedIdentifierNode(ProtoCore.AST.AssociativeAST.TypedIdentifierNode node)",
+      "summary": "AstVisitor.VisitTypedIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.TypedIdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitTypedIdentifierNode(ProtoCore.AST.ImperativeAST.TypedIdentifierNode)",
+      "signature": "TImperative VisitTypedIdentifierNode(ProtoCore.AST.ImperativeAST.TypedIdentifierNode node)",
+      "summary": "AstVisitor.VisitTypedIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.TypedIdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitUnaryExpressionNode(ProtoCore.AST.AssociativeAST.UnaryExpressionNode)",
+      "signature": "TAssociative VisitUnaryExpressionNode(ProtoCore.AST.AssociativeAST.UnaryExpressionNode node)",
+      "summary": "AstVisitor.VisitUnaryExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.UnaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitUnaryExpressionNode(ProtoCore.AST.ImperativeAST.UnaryExpressionNode)",
+      "signature": "TImperative VisitUnaryExpressionNode(ProtoCore.AST.ImperativeAST.UnaryExpressionNode node)",
+      "summary": "AstVisitor.VisitUnaryExpressionNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.UnaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitVarDeclNode(ProtoCore.AST.AssociativeAST.VarDeclNode)",
+      "signature": "TAssociative VisitVarDeclNode(ProtoCore.AST.AssociativeAST.VarDeclNode node)",
+      "summary": "AstVisitor.VisitVarDeclNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.VarDeclNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TAssociative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    },
+    {
+      "name": "VisitWhileStatementNode(ProtoCore.AST.ImperativeAST.WhileStmtNode)",
+      "signature": "TImperative VisitWhileStatementNode(ProtoCore.AST.ImperativeAST.WhileStmtNode node)",
+      "summary": "AstVisitor.VisitWhileStatementNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.ImperativeAST.WhileStmtNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TImperative",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SyntaxAnalysis/AstVisitor.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

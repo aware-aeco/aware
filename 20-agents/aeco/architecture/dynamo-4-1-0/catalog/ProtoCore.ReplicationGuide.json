@@ -1,0 +1,52 @@
+{
+  "name": "ReplicationGuide",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Represents a single replication guide entity that is associated with an argument to a function Given: a = f(i\u003C1\u003E, j\u003C2L\u003E) \u003C1\u003E and \u003C2L\u003E are each represented by a ReplicationGuide instance",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Core.cs",
+  "constructors": [
+    {
+      "name": "ReplicationGuide(int, bool)",
+      "signature": "void ReplicationGuide(int guide, bool longest)",
+      "summary": "ReplicationGuide.ReplicationGuide",
+      "params": [
+        {
+          "name": "guide",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "longest",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "GuideNumber",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "ReplicationGuide.GuideNumber",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Core.cs"
+    },
+    {
+      "name": "IsLongest",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "ReplicationGuide.IsLongest",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Core.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "StackFrameType",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Stack frame type.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Stack.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Function",
+      "value": 0
+    },
+    {
+      "name": "LanguageBlock",
+      "value": 1
+    }
+  ]
+}

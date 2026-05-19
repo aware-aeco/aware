@@ -1,0 +1,53 @@
+{
+  "name": "CustomNodePackageLoadException",
+  "namespace": "Dynamo.Exceptions",
+  "kind": "class",
+  "summary": "Type CustomNodePackageLoadException",
+  "base": "Dynamo.Exceptions.LibraryLoadFailedException",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Exceptions/CustomNodePackageLoadException.cs",
+  "constructors": [
+    {
+      "name": "CustomNodePackageLoadException(string, string, string)",
+      "signature": "void CustomNodePackageLoadException(string path, string installedPath, string reason)",
+      "summary": "Constructor.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "File path of failing custom node package.",
+          "optional": false
+        },
+        {
+          "name": "installedPath",
+          "type": "string",
+          "doc": "File path of existing package.",
+          "optional": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "doc": "Failure reason.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Exceptions/CustomNodePackageLoadException.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "InstalledPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "File path of existing custom node package.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Exceptions/CustomNodePackageLoadException.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

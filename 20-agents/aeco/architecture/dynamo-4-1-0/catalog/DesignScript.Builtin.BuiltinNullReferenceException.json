@@ -1,0 +1,31 @@
+{
+  "name": "BuiltinNullReferenceException",
+  "namespace": "DesignScript.Builtin",
+  "kind": "class",
+  "summary": "Null reference exception thrown with null DS builtin types: lists, dictionaries and strings.",
+  "base": "System.NullReferenceException",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Libraries/DesignScriptBuiltin/IndexingExceptions.cs",
+  "constructors": [
+    {
+      "name": "BuiltinNullReferenceException(string)",
+      "signature": "void BuiltinNullReferenceException(string message)",
+      "summary": "BuiltinNullReferenceException.BuiltinNullReferenceException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Libraries/DesignScriptBuiltin/IndexingExceptions.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,94 @@
+{
+  "name": "DynamoScheduler",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "class",
+  "summary": "This class represents Dynamo scheduler. All the tasks are scheduled on the scheduler. Also, these tasks runs async.",
+  "interfaces": [
+    "Dynamo.Scheduler.IScheduler"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ProcessNextTask(bool)",
+      "signature": "bool ProcessNextTask(bool waitIfTaskQueueIsEmpty)",
+      "summary": "An ISchedulerThread implementation calls this method so scheduler starts to process the next task in the queue, if there is any. Note that this method is meant to process only one task in queue. The implementation of ISchedulerThread is free to call this method again in a fashion that matches its task fetching behavior.",
+      "params": [
+        {
+          "name": "waitIfTaskQueueIsEmpty",
+          "type": "bool",
+          "doc": "This parameter is only used if the task queue is empty at the time this method is invoked. When the task queue becomes empty, setting this to true will cause this call to block until either the next task becomes available, or when the scheduler is requested to shutdown.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "This method returns true if the task queue is not empty, or false otherwise. Note that this method returns false when scheduler begins to shutdown, even when the task queue is not empty."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "ScheduleForExecution(Dynamo.Scheduler.AsyncTask)",
+      "signature": "void ScheduleForExecution(Dynamo.Scheduler.AsyncTask asyncTask)",
+      "summary": "Callers of this method create an instance of AsyncTask derived class and call this method to schedule the task for execution.",
+      "params": [
+        {
+          "name": "asyncTask",
+          "type": "Dynamo.Scheduler.AsyncTask",
+          "doc": "The task to execute asynchronously.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasPendingTasks",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if task queue is not empty.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "HasTaskInProgress",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if a task is curently executing",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "NextTimeStamp",
+      "type": "Dynamo.Scheduler.TimeStamp",
+      "getter": true,
+      "setter": false,
+      "summary": "AsyncTask base class calls this to obtain the new time-stamp value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "ProcessMode",
+      "type": "Dynamo.Scheduler.TaskProcessMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Flag determining whether or not the scheduled task will be processed immediately or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "Tasks",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Scheduler.AsyncTask\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "DynamoScheduler.Tasks",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

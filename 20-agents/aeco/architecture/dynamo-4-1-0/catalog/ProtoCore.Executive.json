@@ -1,0 +1,74 @@
+{
+  "name": "Executive",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type Executive",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs",
+  "constructors": [
+    {
+      "name": "Executive(ProtoCore.RuntimeCore)",
+      "signature": "void Executive(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Executive.Executive",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Execute(int, int, bool, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E)",
+      "signature": "ProtoCore.DSASM.StackValue Execute(int codeblock, int entry, bool fepRun, System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E breakpoints)",
+      "summary": "Executive.Execute",
+      "params": [
+        {
+          "name": "codeblock",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "entry",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "fepRun",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "breakpoints",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentDSASMExec",
+      "type": "ProtoCore.DSASM.Executive",
+      "getter": true,
+      "setter": true,
+      "summary": "Executive.CurrentDSASMExec",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Executive.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

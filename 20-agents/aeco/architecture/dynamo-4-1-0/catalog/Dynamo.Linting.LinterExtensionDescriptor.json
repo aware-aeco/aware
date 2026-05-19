@@ -1,0 +1,86 @@
+{
+  "name": "LinterExtensionDescriptor",
+  "namespace": "Dynamo.Linting",
+  "kind": "class",
+  "summary": "Type LinterExtensionDescriptor",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/LinterExtensionDescriptor.cs",
+  "constructors": [
+    {
+      "name": "LinterExtensionDescriptor(string, string)",
+      "signature": "void LinterExtensionDescriptor(string id, string name)",
+      "summary": "LinterExtensionDescriptor.LinterExtensionDescriptor",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/LinterExtensionDescriptor.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "Checks whether two LinterExtensionDescriptor are equal They are equal if their Name and Id are equal",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/LinterExtensionDescriptor.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Gets the hashcode for this LinterExtensionDescriptor",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/LinterExtensionDescriptor.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Id of linter extension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/LinterExtensionDescriptor.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "LinterExtensionDescriptor.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/LinterExtensionDescriptor.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

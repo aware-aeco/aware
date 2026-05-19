@@ -1,0 +1,131 @@
+{
+  "name": "Buffer",
+  "namespace": "ProtoCore.DesignScriptParser",
+  "kind": "class",
+  "summary": "Type Buffer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs",
+  "constructors": [
+    {
+      "name": "Buffer(ProtoCore.DesignScriptParser.Buffer)",
+      "signature": "void Buffer(ProtoCore.DesignScriptParser.Buffer b)",
+      "summary": "Buffer.Buffer",
+      "params": [
+        {
+          "name": "b",
+          "type": "ProtoCore.DesignScriptParser.Buffer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "Buffer(System.IO.Stream, bool)",
+      "signature": "void Buffer(System.IO.Stream s, bool isUserStream)",
+      "summary": "Buffer.Buffer",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.IO.Stream",
+          "optional": false
+        },
+        {
+          "name": "isUserStream",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "void Close()",
+      "summary": "Buffer.Close",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "Finalize",
+      "signature": "void Finalize()",
+      "summary": "Buffer.Finalize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "GetString(int, int)",
+      "signature": "string GetString(int beg, int end)",
+      "summary": "Buffer.GetString",
+      "params": [
+        {
+          "name": "beg",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "Peek",
+      "signature": "int Peek()",
+      "summary": "Buffer.Peek",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "Read",
+      "signature": "int Read()",
+      "summary": "Buffer.Read",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Pos",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Buffer.Pos",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,220 @@
+{
+  "name": "LibraryServices",
+  "namespace": "Dynamo.Engine",
+  "kind": "class",
+  "summary": "LibraryServices is a singleton class which manages builtin libraries as well as imported libraries. It is across different sessions.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs",
+  "constructors": [
+    {
+      "name": "LibraryServices(ProtoCore.Core, Dynamo.Interfaces.IPathManager)",
+      "signature": "void LibraryServices(ProtoCore.Core libraryManagementCore, Dynamo.Interfaces.IPathManager pathManager)",
+      "summary": "Initializes a new instance of the Dynamo.Engine.LibraryServices class.",
+      "params": [
+        {
+          "name": "libraryManagementCore",
+          "type": "ProtoCore.Core",
+          "doc": "Core which is used for parsing code and loading libraries",
+          "optional": false
+        },
+        {
+          "name": "pathManager",
+          "type": "Dynamo.Interfaces.IPathManager",
+          "doc": "Instance of IPathManager containing neccessary Dynamo paths",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "LibraryServices(ProtoCore.Core, Dynamo.Interfaces.IPathManager, Dynamo.Interfaces.IPreferences)",
+      "signature": "void LibraryServices(ProtoCore.Core libraryManagementCore, Dynamo.Interfaces.IPathManager pathManager, Dynamo.Interfaces.IPreferences preferences)",
+      "summary": "Initializes a new instance of the Dynamo.Engine.LibraryServices class.",
+      "params": [
+        {
+          "name": "libraryManagementCore",
+          "type": "ProtoCore.Core",
+          "doc": "Core which is used for parsing code and loading libraries",
+          "optional": false
+        },
+        {
+          "name": "pathManager",
+          "type": "Dynamo.Interfaces.IPathManager",
+          "doc": "Instance of IPathManager containing neccessary Dynamo paths",
+          "optional": false
+        },
+        {
+          "name": "preferences",
+          "type": "Dynamo.Interfaces.IPreferences",
+          "doc": "The preference settings of the Dynamo instance",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "GetAllFunctionDescriptors(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Engine.FunctionDescriptor\u003E GetAllFunctionDescriptors(string qualifiedName)",
+      "summary": "Returns a list of function descriptors associated with the function name.",
+      "params": [
+        {
+          "name": "qualifiedName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Engine.FunctionDescriptor\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "GetFunctionDescriptor(string)",
+      "signature": "Dynamo.Engine.FunctionDescriptor GetFunctionDescriptor(string managledName)",
+      "summary": "Returns function descriptor from the managed function name.",
+      "params": [
+        {
+          "name": "managledName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Engine.FunctionDescriptor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "GetFunctionDescriptor(string, string)",
+      "signature": "Dynamo.Engine.FunctionDescriptor GetFunctionDescriptor(string library, string mangledName)",
+      "summary": "Returns function descriptor from the managled function name. name.",
+      "params": [
+        {
+          "name": "library",
+          "type": "string",
+          "doc": "Library path",
+          "optional": false
+        },
+        {
+          "name": "mangledName",
+          "type": "string",
+          "doc": "Mangled function name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Engine.FunctionDescriptor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "GetPriorNames",
+      "signature": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E GetPriorNames()",
+      "summary": "Returns a dictionary of old names vs. new names for node migration",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003Cstring, string\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BuiltinFunctionGroups",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Engine.FunctionGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns built-in function groups.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "ImportedFunctionGroups",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Engine.FunctionGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns all imported function groups.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "ImportedLibraries",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a list of imported libraries.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "LibraryManagementCore",
+      "type": "ProtoCore.Core",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns core which is used for parsing code and loading libraries",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "LibraryLoadFailed",
+      "delegate": "System.EventHandler\u003CDynamo.Engine.LibraryServices.LibraryLoadFailedEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Engine.LibraryServices.LibraryLoadFailedEventArgs\u003E LibraryLoadFailed",
+      "summary": "Occurs if a library cannot be loaded",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LibraryLoaded",
+      "delegate": "System.EventHandler\u003CDynamo.Engine.LibraryServices.LibraryLoadedEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Engine.LibraryServices.LibraryLoadedEventArgs\u003E LibraryLoaded",
+      "summary": "Occurs after a library is successfully loaded",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "LibraryLoading",
+      "delegate": "System.EventHandler\u003CDynamo.Engine.LibraryServices.LibraryLoadingEventArgs\u003E",
+      "signature": "public event System.EventHandler\u003CDynamo.Engine.LibraryServices.LibraryLoadingEventArgs\u003E LibraryLoading",
+      "summary": "Occurs before a library is loaded",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

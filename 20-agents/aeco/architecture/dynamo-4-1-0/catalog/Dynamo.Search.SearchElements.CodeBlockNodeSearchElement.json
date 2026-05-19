@@ -1,0 +1,50 @@
+{
+  "name": "CodeBlockNodeSearchElement",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "Search element for Code Block nodes.",
+  "base": "Dynamo.Search.SearchElements.NodeModelSearchElementBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/CodeBlockNodeSearchElement.cs",
+  "constructors": [
+    {
+      "name": "CodeBlockNodeSearchElement(Dynamo.Graph.Nodes.TypeLoadData, Dynamo.Engine.LibraryServices)",
+      "signature": "void CodeBlockNodeSearchElement(Dynamo.Graph.Nodes.TypeLoadData data, Dynamo.Engine.LibraryServices manager)",
+      "summary": "CodeBlockNodeSearchElement.CodeBlockNodeSearchElement",
+      "params": [
+        {
+          "name": "data",
+          "type": "Dynamo.Graph.Nodes.TypeLoadData",
+          "optional": false
+        },
+        {
+          "name": "manager",
+          "type": "Dynamo.Engine.LibraryServices",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/CodeBlockNodeSearchElement.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ConstructNewNodeModel",
+      "signature": "Dynamo.Graph.Nodes.NodeModel ConstructNewNodeModel()",
+      "summary": "CodeBlockNodeSearchElement.ConstructNewNodeModel",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/CodeBlockNodeSearchElement.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

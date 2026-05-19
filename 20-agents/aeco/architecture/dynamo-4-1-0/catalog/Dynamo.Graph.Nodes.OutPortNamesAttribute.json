@@ -1,0 +1,64 @@
+{
+  "name": "OutPortNamesAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Indicates output ports\u0027 names.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "OutPortNamesAttribute(System.Type, string[])",
+      "signature": "void OutPortNamesAttribute(System.Type resourceType, string[] resourceNames)",
+      "summary": "Loads ports names from resource.",
+      "params": [
+        {
+          "name": "resourceType",
+          "type": "System.Type",
+          "doc": "resource type, i.e. type of resource class specified in .resx file",
+          "optional": false
+        },
+        {
+          "name": "resourceNames",
+          "type": "string[]",
+          "doc": "resource names",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    },
+    {
+      "name": "OutPortNamesAttribute(string[])",
+      "signature": "void OutPortNamesAttribute(string[] names)",
+      "summary": "Loads ports names, that are specified directly in Attribute.",
+      "params": [
+        {
+          "name": "names",
+          "type": "string[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "PortNames",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Port titles, that are shown in Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

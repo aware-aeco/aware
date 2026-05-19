@@ -1,0 +1,245 @@
+{
+  "name": "StringUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type StringUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BreakTextIntoLines(string)",
+      "signature": "string[] BreakTextIntoLines(string text)",
+      "summary": "Following suggestions from stackoverflow, A reliable method for breaking text into lines using Regex is used. https://stackoverflow.com/questions/1508203/best-way-to-split-string-into-lines",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "text to break into lines",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string[]",
+        "doc": "text lines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "CompareString(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "int CompareString(ProtoCore.DSASM.StackValue s1, ProtoCore.DSASM.StackValue s2, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "StringUtils.CompareString",
+      "params": [
+        {
+          "name": "s1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "s2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "ConcatString(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue ConcatString(ProtoCore.DSASM.StackValue op1, ProtoCore.DSASM.StackValue op2, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "StringUtils.ConcatString",
+      "params": [
+        {
+          "name": "op1",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "op2",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "ConvertToString(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore, ProtoCore.Runtime.RuntimeMemory)",
+      "signature": "ProtoCore.DSASM.StackValue ConvertToString(ProtoCore.DSASM.StackValue sv, ProtoCore.RuntimeCore runtimeCore, ProtoCore.Runtime.RuntimeMemory rmem)",
+      "summary": "StringUtils.ConvertToString",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "rmem",
+          "type": "ProtoCore.Runtime.RuntimeMemory",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "GetStringValue(ProtoCore.DSASM.StackValue, ProtoCore.RuntimeCore)",
+      "signature": "string GetStringValue(ProtoCore.DSASM.StackValue sv, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "StringUtils.GetStringValue",
+      "params": [
+        {
+          "name": "sv",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "IsStringSpacesWithTabs(string)",
+      "signature": "bool IsStringSpacesWithTabs(string text)",
+      "summary": "StringUtils.IsStringSpacesWithTabs",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "ReplaceLineOfText(string, int, string)",
+      "signature": "string ReplaceLineOfText(string text, int lineNumber, string newLine)",
+      "summary": "StringUtils.ReplaceLineOfText",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "lineNumber",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "newLine",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "SpaceToTabConversion(string, int)",
+      "signature": "string SpaceToTabConversion(string text, int tabSpacingSize)",
+      "summary": "Replace all spaces with tabs given the text and tab spacing size",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "tabSpacingSize",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    },
+    {
+      "name": "TabToSpaceConversion(string, int)",
+      "signature": "string TabToSpaceConversion(string text, int tabSpacingSize)",
+      "summary": "Replace all tabs with spaces given the text and tab spacing size",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "tabSpacingSize",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/StringUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

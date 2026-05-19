@@ -1,0 +1,107 @@
+{
+  "name": "DynamicFunctionTable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type DynamicFunctionTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DynamicFunctionTable.cs",
+  "constructors": [
+    {
+      "name": "DynamicFunctionTable()",
+      "signature": "void DynamicFunctionTable()",
+      "summary": "DynamicFunctionTable.DynamicFunctionTable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddNewFunction(string, int, int)",
+      "signature": "ProtoCore.DSASM.DynamicFunction AddNewFunction(string name, int argumentNumber, int classIndex)",
+      "summary": "DynamicFunctionTable.AddNewFunction",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argumentNumber",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.DynamicFunction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    },
+    {
+      "name": "GetFunctionAtIndex(int)",
+      "signature": "ProtoCore.DSASM.DynamicFunction GetFunctionAtIndex(int index)",
+      "summary": "DynamicFunctionTable.GetFunctionAtIndex",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.DynamicFunction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    },
+    {
+      "name": "TryGetFunction(string, int, int, ref ProtoCore.DSASM.DynamicFunction)",
+      "signature": "bool TryGetFunction(string name, int argumentNumber, int classIndex, ref ProtoCore.DSASM.DynamicFunction func)",
+      "summary": "DynamicFunctionTable.TryGetFunction",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argumentNumber",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "func",
+          "type": "ref ProtoCore.DSASM.DynamicFunction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DynamicFunctionTable.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

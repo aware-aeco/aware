@@ -1,0 +1,62 @@
+{
+  "name": "Validity",
+  "namespace": "ProtoCore.Utils",
+  "kind": "class",
+  "summary": "Type Validity",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/Validity.cs",
+  "constructors": [
+    {
+      "name": "Validity()",
+      "signature": "void Validity()",
+      "summary": "Validity.Validity",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/Validity.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Assert(bool)",
+      "signature": "void Assert(bool cond)",
+      "summary": "Validity.Assert",
+      "params": [
+        {
+          "name": "cond",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/Validity.cs"
+    },
+    {
+      "name": "Assert(bool, string)",
+      "signature": "void Assert(bool cond, string message)",
+      "summary": "Validity.Assert",
+      "params": [
+        {
+          "name": "cond",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Utils/Validity.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

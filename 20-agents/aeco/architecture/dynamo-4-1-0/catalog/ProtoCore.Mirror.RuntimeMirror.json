@@ -1,0 +1,82 @@
+{
+  "name": "RuntimeMirror",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "A RuntimeMirror object is used to reflect on the runtime status of a single designsript variable",
+  "base": "ProtoCore.Mirror.MirrorObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [
+    {
+      "name": "RuntimeMirror(string, int, ProtoCore.RuntimeCore, ProtoCore.Core)",
+      "signature": "void RuntimeMirror(string varname, int blockDecl, ProtoCore.RuntimeCore runtimeCore, ProtoCore.Core staticCore)",
+      "summary": "RuntimeMirror.RuntimeMirror",
+      "params": [
+        {
+          "name": "varname",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "blockDecl",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "staticCore",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetData",
+      "signature": "ProtoCore.Mirror.MirrorData GetData()",
+      "summary": "Retrieve the data associated with this RuntimeMirror",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.Mirror.MirrorData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetStringData",
+      "signature": "string GetStringData()",
+      "summary": "This method will return the string representation of the mirror data if it is available",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TargetExecutive",
+      "type": "ProtoCore.DSASM.Executive",
+      "getter": true,
+      "setter": false,
+      "summary": "The runtime executive that we are reflecting on",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

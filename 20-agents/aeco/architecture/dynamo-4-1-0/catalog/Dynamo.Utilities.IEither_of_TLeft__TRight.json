@@ -1,0 +1,131 @@
+{
+  "name": "IEither\u003CTLeft, TRight\u003E",
+  "namespace": "Dynamo.Utilities",
+  "kind": "interface",
+  "summary": "Object containing an instance of one of two potential types, labeled \u0022Left\u0022 or \u0022Right\u0022.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BindLeft(System.Func\u003CTLeft, Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E\u003E)",
+      "signature": "Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E BindLeft\u003CTNewLeft\u003E(System.Func\u003CTLeft, Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E\u003E selector)",
+      "summary": "If the IEither(TLeft, TRight) instance contains a Left value, project the Left value into a new IEither(TNewLeft, TRight). If the instance contains a Right value, just return the instance.",
+      "params": [
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTLeft, Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E\u003E",
+          "doc": "Function used to project a Left value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTNewLeft, TRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "BindRight(System.Func\u003CTRight, Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E\u003E)",
+      "signature": "Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E BindRight\u003CTNewRight\u003E(System.Func\u003CTRight, Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E\u003E selector)",
+      "summary": "If the IEither(TLeft, TRight) instance contains a Right value, project the Right value into a new IEither(TLeft, TNewRight). If the instance contains a Left value, just return the instance.",
+      "params": [
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTRight, Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E\u003E",
+          "doc": "Function used to project a Right value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTLeft, TNewRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Match(System.Func\u003CTLeft, T\u003E, System.Func\u003CTRight, T\u003E)",
+      "signature": "T Match\u003CT\u003E(System.Func\u003CTLeft, T\u003E leftCase, System.Func\u003CTRight, T\u003E rightCase)",
+      "summary": "Produces a new value of type T using one of the given functions, based on whether the IEither(TLeft, TRight) contains a Left or Right value.",
+      "params": [
+        {
+          "name": "leftCase",
+          "type": "System.Func\u003CTLeft, T\u003E",
+          "doc": "Function used to create a result from a Left value.",
+          "optional": false
+        },
+        {
+          "name": "rightCase",
+          "type": "System.Func\u003CTRight, T\u003E",
+          "doc": "Function used to create a result from a Right value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Select(System.Func\u003CTLeft, TNewLeft\u003E, System.Func\u003CTRight, TNewRight\u003E)",
+      "signature": "Dynamo.Utilities.IEither\u003CTNewLeft, TNewRight\u003E Select\u003CTNewLeft, TNewRight\u003E(System.Func\u003CTLeft, TNewLeft\u003E leftSelector, System.Func\u003CTRight, TNewRight\u003E rightSelector)",
+      "summary": "Create a new IEither(TNewLeft, TNewRight) instance by passing the value the a conversion function. Which function is selected depends on whether it is a Right or Left value.",
+      "params": [
+        {
+          "name": "leftSelector",
+          "type": "System.Func\u003CTLeft, TNewLeft\u003E",
+          "doc": "Function used to convert a Left value.",
+          "optional": false
+        },
+        {
+          "name": "rightSelector",
+          "type": "System.Func\u003CTRight, TNewRight\u003E",
+          "doc": "Function used to convert a Right value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IEither\u003CTNewLeft, TNewRight\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsLeft",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Specifies if this instance contains a Left value. If true, it does. If false, it contains a Right value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "LeftValue",
+      "type": "TLeft",
+      "getter": true,
+      "setter": false,
+      "summary": "Attempts to get a Left value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "RightValue",
+      "type": "TRight",
+      "getter": true,
+      "setter": false,
+      "summary": "Attempts to get a Right value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Option.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

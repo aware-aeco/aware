@@ -1,0 +1,130 @@
+{
+  "name": "UpdateNodeRef",
+  "namespace": "ProtoCore.AssociativeGraph",
+  "kind": "class",
+  "summary": "Type UpdateNodeRef",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "UpdateNodeRef()",
+      "signature": "void UpdateNodeRef()",
+      "summary": "UpdateNodeRef.UpdateNodeRef",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "UpdateNodeRef(ProtoCore.AssociativeGraph.UpdateNodeRef)",
+      "signature": "void UpdateNodeRef(ProtoCore.AssociativeGraph.UpdateNodeRef rhs)",
+      "summary": "UpdateNodeRef.UpdateNodeRef",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "UpdateNodeRef.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetUntilFirstProc",
+      "signature": "ProtoCore.AssociativeGraph.UpdateNodeRef GetUntilFirstProc()",
+      "summary": "UpdateNodeRef.GetUntilFirstProc",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "PushUpdateNode(ProtoCore.AssociativeGraph.UpdateNode)",
+      "signature": "void PushUpdateNode(ProtoCore.AssociativeGraph.UpdateNode node)",
+      "summary": "UpdateNodeRef.PushUpdateNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AssociativeGraph.UpdateNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "PushUpdateNodeRef(ProtoCore.AssociativeGraph.UpdateNodeRef)",
+      "signature": "void PushUpdateNodeRef(ProtoCore.AssociativeGraph.UpdateNodeRef nodeRef)",
+      "summary": "UpdateNodeRef.PushUpdateNodeRef",
+      "params": [
+        {
+          "name": "nodeRef",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "block",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateNodeRef.block",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "nodeList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.UpdateNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateNodeRef.nodeList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "symbolData",
+      "type": "ProtoCore.DSASM.StackValue",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateNodeRef.symbolData",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "RuleEvaluationStatusEnum",
+  "namespace": "Dynamo.Linting.Interfaces",
+  "kind": "enum",
+  "summary": "Type RuleEvaluationStatusEnum",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Linting/Interfaces/RuleEvaluationStatusEnum.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Failed",
+      "value": 1
+    },
+    {
+      "name": "Passed",
+      "value": 0
+    }
+  ]
+}

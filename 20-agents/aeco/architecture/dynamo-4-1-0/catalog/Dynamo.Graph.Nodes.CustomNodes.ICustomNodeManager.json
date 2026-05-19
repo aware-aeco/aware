@@ -1,0 +1,91 @@
+{
+  "name": "ICustomNodeManager",
+  "namespace": "Dynamo.Graph.Nodes.CustomNodes",
+  "kind": "interface",
+  "summary": "Type ICustomNodeManager",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/ICustomNodeManager.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddUninitializedCustomNodesInPath(string, bool, bool)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeInfo\u003E AddUninitializedCustomNodesInPath(string path, bool isTestMode, bool isPackageMember)",
+      "summary": "ICustomNodeManager.AddUninitializedCustomNodesInPath",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "isPackageMember",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeInfo\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/ICustomNodeManager.cs"
+    },
+    {
+      "name": "GuidFromPath(string)",
+      "signature": "System.Guid GuidFromPath(string path)",
+      "summary": "ICustomNodeManager.GuidFromPath",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/ICustomNodeManager.cs"
+    },
+    {
+      "name": "TryGetFunctionWorkspace(System.Guid, bool, ref Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel)",
+      "signature": "bool TryGetFunctionWorkspace(System.Guid id, bool isTestMode, ref Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel ws)",
+      "summary": "ICustomNodeManager.TryGetFunctionWorkspace",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "ws",
+          "type": "ref Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/ICustomNodeManager.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

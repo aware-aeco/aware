@@ -162,6 +162,19 @@ internal static class Program
                             // slug collision. IR stamps host="tedds".
                             "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Dynamo extractor (Phase B B11) — hybrid NuGet (XML doc + DLL reflection)
+                            // + GitHub Trees API for source-file URLs. Versions 4.1.0.4845 + 4.1.1.4941
+                            // ship byte-identical XML docs (verified at build time), so both IRs are
+                            // produced from the same public API surface; the host_version field
+                            // distinguishes them along with the NuGet+GitHub source URLs. Dynamo has
+                            // no canonical hosted HTML reference site — the legacy dynamods.github.io
+                            // is 404 and Autodesk publishes no per-release docs site — so the NuGet
+                            // payload IS the canonical source (it's what any rendered docs site would
+                            // be built from). See cli-sidecar/Ingest/Extractors/Dynamo/Extractor.cs
+                            // for the source rationale + caveats. 4.1.1 has no GitHub tag yet so
+                            // doc_urls point at the master ref (documented in EXTRACTION-NOTES.md).
+                            "dynamo" => Ingest.Extractors.Dynamo.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

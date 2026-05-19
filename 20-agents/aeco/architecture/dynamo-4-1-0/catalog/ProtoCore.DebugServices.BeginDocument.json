@@ -1,0 +1,98 @@
+{
+  "name": "BeginDocument",
+  "namespace": "ProtoCore.DebugServices",
+  "kind": "delegate",
+  "summary": "Type BeginDocument",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [
+    {
+      "name": "BeginDocument(object, IntPtr)",
+      "signature": "void BeginDocument(object object, IntPtr method)",
+      "summary": "BeginDocument.BeginDocument",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(string, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(string script, System.AsyncCallback callback, object object)",
+      "summary": "BeginDocument.BeginInvoke",
+      "params": [
+        {
+          "name": "script",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "BeginDocument.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "Invoke(string)",
+      "signature": "void Invoke(string script)",
+      "summary": "BeginDocument.Invoke",
+      "params": [
+        {
+          "name": "script",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(string script)"
+}

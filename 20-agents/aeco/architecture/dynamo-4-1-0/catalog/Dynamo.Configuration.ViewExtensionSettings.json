@@ -1,0 +1,65 @@
+{
+  "name": "ViewExtensionSettings",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "Settings that apply to a view extension specifically.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs",
+  "constructors": [
+    {
+      "name": "ViewExtensionSettings()",
+      "signature": "void ViewExtensionSettings()",
+      "summary": "ViewExtensionSettings.ViewExtensionSettings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayMode",
+      "type": "Dynamo.Configuration.ViewExtensionDisplayMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies how an extension UI control should be displayed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "IsOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the extension was Open in the last session before closing Dynamo, if the property to remember view extension status was enabled.Default: False",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the view extension.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "UniqueId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "UniqueId of the view extension.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    },
+    {
+      "name": "WindowSettings",
+      "type": "Dynamo.Configuration.WindowSettings",
+      "getter": true,
+      "setter": true,
+      "summary": "Window settings for the extension control when displayed in FloatingWindow mode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/ViewExtensionSettings.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

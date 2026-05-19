@@ -1,0 +1,45 @@
+{
+  "name": "PropertyMirror",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "Type PropertyMirror",
+  "base": "ProtoCore.Mirror.StaticMirror",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "For an instance property of a class, called \u0022Property\u0022 this returns the string \u0022Property : \u0027return type\u0027 (this : \u0027class type\u0027).\u0022 For a static property of a class, this returns \u0022Property : \u0027return type\u0027.\u0022",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsStatic",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "PropertyMirror.IsStatic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "PropertyName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PropertyMirror.PropertyName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

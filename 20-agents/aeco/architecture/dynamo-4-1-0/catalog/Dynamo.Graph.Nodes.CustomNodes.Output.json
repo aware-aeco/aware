@@ -1,0 +1,157 @@
+{
+  "name": "Output",
+  "namespace": "Dynamo.Graph.Nodes.CustomNodes",
+  "kind": "class",
+  "summary": "Represents function output. It contains functionality to manage expressions and store function\u0027s node value to pass.",
+  "base": "Dynamo.Graph.Nodes.NodeModel",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs",
+  "constructors": [
+    {
+      "name": "Output()",
+      "signature": "void Output()",
+      "summary": "Create output node.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "Output(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E)",
+      "signature": "void Output(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E inPorts, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E outPorts)",
+      "summary": "Create output node.",
+      "params": [
+        {
+          "name": "inPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "outPorts",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.PortModel\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "Output.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "Output.SerializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "Output.UpdateValueCore",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ElementResolver",
+      "type": "ProtoCore.Namespace.ElementResolver",
+      "getter": true,
+      "setter": true,
+      "summary": "Element resolver",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "IsInputNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether node is input node. Used to bind visibility of UI for user selection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "IsOutputNode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether node is output node. Used to bind visibility of UI for user selection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "NodeType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The NodeType property provides a name which maps to the server type for the node. This property should only be used for serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "Return",
+      "type": "System.Tuple\u003Cstring, string\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Output name and its description tuple.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    },
+    {
+      "name": "Symbol",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Text in output node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CustomNodes/Function.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

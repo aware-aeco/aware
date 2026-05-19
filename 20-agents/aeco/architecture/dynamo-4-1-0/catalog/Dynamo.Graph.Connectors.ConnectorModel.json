@@ -1,0 +1,215 @@
+{
+  "name": "ConnectorModel",
+  "namespace": "Dynamo.Graph.Connectors",
+  "kind": "class",
+  "summary": "Represents a connector between nodes. Connector can be a bezier or polyline Dynamo.Graph.Connectors.ConnectorType.",
+  "base": "Dynamo.Graph.ModelBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs",
+  "constructors": [
+    {
+      "name": "ConnectorModel(Dynamo.Graph.Nodes.PortModel, Dynamo.Graph.Nodes.PortModel, System.Guid)",
+      "signature": "void ConnectorModel(Dynamo.Graph.Nodes.PortModel start, Dynamo.Graph.Nodes.PortModel end, System.Guid guid)",
+      "summary": "Constructor used when only the start and end Dynamo.Graph.Nodes.PortModel are known.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Dynamo.Graph.Nodes.PortModel",
+          "doc": "The start Dynamo.Graph.Nodes.PortModel.",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Dynamo.Graph.Nodes.PortModel",
+          "doc": "The end Dynamo.Graph.Nodes.PortModel.",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "The unique identifier for the Dynamo.Graph.Connectors.ConnectorModel.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "ConnectorModel.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "OnDeleted",
+      "signature": "void OnDeleted()",
+      "summary": "ConnectorModel.OnDeleted",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "ConnectorModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "ConnectorModel.UpdateValueCore",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "op_Equality(Dynamo.Graph.Connectors.ConnectorModel, Dynamo.Graph.Connectors.ConnectorModel)",
+      "signature": "bool op_Equality(Dynamo.Graph.Connectors.ConnectorModel lhs, Dynamo.Graph.Connectors.ConnectorModel rhs)",
+      "summary": "Overload for EQUAL operator.",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "op_Inequality(Dynamo.Graph.Connectors.ConnectorModel, Dynamo.Graph.Connectors.ConnectorModel)",
+      "signature": "bool op_Inequality(Dynamo.Graph.Connectors.ConnectorModel lhs, Dynamo.Graph.Connectors.ConnectorModel rhs)",
+      "summary": "Overload for NOT EQUAL operator.",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "Dynamo.Graph.Connectors.ConnectorModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConnectorPinModels",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Graph.ConnectorPinModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of ConnectorPinModels associated with this Connector.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "End",
+      "type": "Dynamo.Graph.Nodes.PortModel",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns end port model.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "ID of the Connector, which is unique within the graph.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "IsHidden",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IsHidden flag controlling the visibility of a connector",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    },
+    {
+      "name": "Start",
+      "type": "Dynamo.Graph.Nodes.PortModel",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns start port model.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "Deleted",
+      "delegate": "System.Action",
+      "signature": "public event System.Action Deleted",
+      "summary": "Occurs when deleting connector.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Connectors/ConnectorModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

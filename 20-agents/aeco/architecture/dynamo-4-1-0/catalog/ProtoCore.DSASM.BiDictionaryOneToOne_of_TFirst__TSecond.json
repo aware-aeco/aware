@@ -1,0 +1,112 @@
+{
+  "name": "BiDictionaryOneToOne\u003CTFirst, TSecond\u003E",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "This is a dictionary guaranteed to have only one of each value and key. It may be searched either by TFirst or by TSecond, giving a unique answer because it is 1 to 1.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs",
+  "constructors": [
+    {
+      "name": "BiDictionaryOneToOne()",
+      "signature": "void BiDictionaryOneToOne()",
+      "summary": "BiDictionaryOneToOne.BiDictionaryOneToOne",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryAdd(TFirst, TSecond)",
+      "signature": "bool TryAdd(TFirst first, TSecond second)",
+      "summary": "Tries to add the pair to the dictionary. Returns false if either element is already in the dictionary",
+      "params": [
+        {
+          "name": "first",
+          "type": "TFirst",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "second",
+          "type": "TSecond",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if successfully added, false if either element are already in the dictionary"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    },
+    {
+      "name": "TryGetByFirst(TFirst, ref TSecond)",
+      "signature": "bool TryGetByFirst(TFirst first, ref TSecond second)",
+      "summary": "Find the TSecond corresponding to the TFirst first. Returns false if first is not in the dictionary.",
+      "params": [
+        {
+          "name": "first",
+          "type": "TFirst",
+          "doc": "the key to search for",
+          "optional": false
+        },
+        {
+          "name": "second",
+          "type": "ref TSecond",
+          "doc": "the corresponding value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if first is in the dictionary, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    },
+    {
+      "name": "TryGetBySecond(TSecond, ref TFirst)",
+      "signature": "bool TryGetBySecond(TSecond second, ref TFirst first)",
+      "summary": "Find the TFirst corresponding to the TSecond second. Returns false if second is not in the dictionary.",
+      "params": [
+        {
+          "name": "second",
+          "type": "TSecond",
+          "doc": "the key to search for",
+          "optional": false
+        },
+        {
+          "name": "first",
+          "type": "ref TFirst",
+          "doc": "the corresponding value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if second is in the dictionary, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of pairs stored in the dictionary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FunctionPointerTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

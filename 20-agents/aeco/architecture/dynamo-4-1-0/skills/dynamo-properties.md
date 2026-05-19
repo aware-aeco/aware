@@ -1,9 +1,267 @@
 ---
-name: dynamo-applications-dynamo-properties
-description: API reference for namespace Dynamo.Properties from DynamoCore.dll
+name: dynamo-dynamo-properties
+description: This skill encodes the dynamo 4.1.0 surface of the Dynamo.Properties namespace — 1 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Resources.
 ---
 
 # Dynamo.Properties
 
-- **Resources**
-  - A strongly-typed resource class, for looking up localized strings, etc.
+Auto-generated from vendor docs for dynamo 4.1.0. 1 types in this namespace.
+
+## Resources (class)
+
+A strongly-typed resource class, for looking up localized strings, etc.
+
+[Vendor docs](https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Properties/Resources.Designer.cs)
+
+### Properties
+- `ArggOKButton` (string, get) — Looks up a localized string similar to Arrrrg, ok.
+- `ArgumentNullException` (string, get) — Looks up a localized string similar to Value cannot be null. Parameter name: {0}.
+- `Autocomplete` (string, get) — Looks up a localized string similar to Autocomplete.
+- `AutocompleteLowConfidenceMessage` (string, get) — Looks up a localized string similar to No confident suggestions available. The model is continuously improving - check back soon..
+- `AutocompleteLowConfidenceTitle` (string, get) — Looks up a localized string similar to Low confidence.
+- `AutocompleteLowConfidenceTooltip` (string, get) — Looks up a localized string similar to Show Recommendations that are below the confidence level..
+- `AutocompleteNoRecommendationsMessage` (string, get) — Looks up a localized string similar to The model is continuously improving - check back soon.
+- `AutocompleteNoRecommendationsTitle` (string, get) — Looks up a localized string similar to No suggestions available.
+- `AutocompleteSearchTextBlockText` (string, get) — Looks up a localized string similar to Search Autocomplete Results.
+- `BackUpOriginalFileMessage` (string, get) — Looks up a localized string similar to Original file '{0}' gets backed up at '{1}'.
+- `BackupSavedMsg` (string, get) — Looks up a localized string similar to Backup file is saved.
+- `BadIdentifierSyntax` (string, get) — Looks up a localized string similar to Bad identifier syntax: "{0}".
+- `BadRangeSyntax` (string, get) — Looks up a localized string similar to Bad range syntax: not of format \"start..end[..(increment|#count)]\".
+- `BuildSublistsDescription` (string, get) — Looks up a localized string similar to Build sublists from a list using DesignScript range syntax..
+- `ButtonDownloadLastest` (string, get) — Looks up a localized string similar to Download latest version.
+- `ButtonProcess` (string, get) — Looks up a localized string similar to Proceed anyway.
+- `CancelButton` (string, get) — Looks up a localized string similar to Cancel.
+- `CannotHave0Step` (string, get) — Looks up a localized string similar to Can't have 0 step..
+- `CannotOpenFile` (string, get) — Looks up a localized string similar to Your file cannot be opened.
+- `ClearingWorkSpace` (string, get) — Looks up a localized string similar to Clearing workspace....
+- `ClearingWorkflow` (string, get) — Looks up a localized string similar to Clearing workflow....
+- `CodeBlockDescription` (string, get) — Looks up a localized string similar to Allows for DesignScript code to be authored directly.
+- `CodeBlockNodeDescription` (string, get) — Looks up a localized string similar to Allows for DesignScript code to be authored directly.
+- `CodeBlockSearchTags` (string, get) — Looks up a localized string similar to codeblock;.
+- `CodeBlockTempIdentifierOutputLabel` (string, get) — Looks up a localized string similar to Value of expression at line {0}.
+- `ComposeFunctionNodeDescription` (string, get) — Looks up a localized string similar to Composes two single parameter functions into one function..
+- `ComposeFunctionPortDataFunctionToolTip` (string, get) — Looks up a localized string similar to A Function.
+- `ComposeFunctionPortDataResultToolTip` (string, get) — Looks up a localized string similar to Composed function: g(f(x)).
+- `CoreLibraryLoadFailureForBlockedAssembly` (string, get) — Looks up a localized string similar to {0} This assembly is likely blocked. Try restarting Dynamo after unblocking this assembly and all other core assemblies that might be blocked. If you are running a downloaded DynamoSandbox build that is extracted from a .zip file, try using 7zip to extract the Dynamo binaries and try again..
+- `CoreLibraryLoadFailureMessageBoxTitle` (string, get) — Looks up a localized string similar to Core library load failure.
+- `CouldNotCompressFile` (string, get) — Looks up a localized string similar to Could not compress file. Is the file in use?.
+- `CouldNotGetLatestBuild` (string, get) — Looks up a localized string similar to Couldn't get the latest build from S3.
+- `CouldNotGetUpdateData` (string, get) — Looks up a localized string similar to Couldn't get update data from {0}.
+- `CouldNotLoadTypes` (string, get) — Looks up a localized string similar to Could not load types..
+- `CouldNotRepairOneNodeHoles` (string, get) — Looks up a localized string similar to Could not repair 1-node holes.
+- `CreatingConnectorError` (string, get) — Looks up a localized string similar to ERROR : Could not create connector between {0} and {1}..
+- `Culture` (System.Globalization.CultureInfo, get/set) — Overrides the current thread's CurrentUICulture property for all resource lookups using this strongly typed resource class.
+- `CustomNodeCouldNotBeInitialized` (string, get) — Looks up a localized string similar to Custom node \"{0}\" could not be initialized..
+- `CustomNodeDesciption` (string, get) — Looks up a localized string similar to Instance of a Custom Node.
+- `CustomNodeFolderLoadFailure` (string, get) — Looks up a localized string similar to Failed to load custom node directory. Do you have permission to access {0}?.
+- `CustomNodeNotLoaded` (string, get) — Looks up a localized string similar to Custom node definition is not loaded! href=CustomNodeNotLoaded.html.
+- `DSFunctionNodeDescription` (string, get) — Looks up a localized string similar to DesignScript Builtin Functions.
+- `DefaultCustomNodeCategory` (string, get) — Looks up a localized string similar to Custom nodes.
+- `DefaultHomeWorkspaceName` (string, get) — Looks up a localized string similar to Home.
+- `DefaultValue` (string, get) — Looks up a localized string similar to Default value.
+- `DefaultValueDisabled` (string, get) — Looks up a localized string similar to (disabled).
+- `DescriptionResource1` (string, get) — Looks up a localized string similar to some description.
+- `DirectoryNotFound` (string, get) — Looks up a localized string similar to Directory not found : {0}.
+- `DisplayEngineFailureMessageDescription` (string, get) — Looks up a localized string similar to The virtual machine that powers Dynamo is experiencing some unexpected errors internally and is likely having great difficulties pulling itself together. It is recommended that you save your work now and reload the file. Giving the Dynamo VM a new lease of life can potentially make it feel happier and behave better. If you don't mind, it would be helpful for you to send us your file. That will make it quicker for us to get these issues fixed..
+- `DllLoadException` (string, get) — Looks up a localized string similar to Dll Load Exception:.
+- `DocsExperimentalPrefixMessage` (string, get) — Looks up a localized string similar to This node is currently experimental. Its behavior, name, and signature are subject to change..
+- `DownloadLatestButton` (string, get) — Looks up a localized string similar to Download latest version.
+- `DulicatedPackage` (string, get) — Looks up a localized string similar to A duplicate of the package called {0} was found at {1}. Ignoring it..
+- `DummyNodeDescription` (string, get) — Looks up a localized string similar to This is an obsolete node.
+- `DuplicateMigrationTypeRegistered` (string, get) — Looks up a localized string similar to Duplicate migration type registered for {0}.
+- `DuplicatedModelGuidError` (string, get) — Looks up a localized string similar to The map already contains a model with this id, the id must be unique for the workspace that is currently being deserialized: {0}.
+- `DuplicatedNewerPackage` (string, get) — Looks up a localized string similar to A newer version of the package called {0} version {2} was found at {1} with version {3}. The newer version has been ignored..
+- `DuplicatedOlderPackage` (string, get) — Looks up a localized string similar to An older version of the package called {0} version {2} was found at {1} with version {3}. The older version has been ignored..
+- `DynamoLanguages_noxlate` (string, get) — Looks up a localized string similar to Default,English,Čeština,Deutsch,Español,Français,Italiano,日本語,한국어,Polski,Português (Brasil),Русский,简体中文,繁體中文.
+- `DynamoUpToDate` (string, get) — Looks up a localized string similar to Dynamo is up to date..
+- `ElapsedWhenLoadingXml` (string, get) — Looks up a localized string similar to {0} elapsed for loading xml..
+- `EvaluationCompleted` (string, get) — Looks up a localized string similar to Evaluation completed in {0}.
+- `ExceptionEncountered` (string, get) — Looks up a localized string similar to Exception encountered scanning the package directory at {0}.
+- `FailedInsertFileNodeExistNotification` (string, get) — Looks up a localized string similar to Failed to insert the file as some of the nodes already exist in the current worspace..
+- `FailedToGetMirrorVariable` (string, get) — Looks up a localized string similar to Failed to get mirror for variable: {0}; reason: {1}..
+- `FailedToHandleReadyEvent` (string, get) — Looks up a localized string similar to Failed to call Ready() in extension: .
+- `FailedToLoad` (string, get) — Looks up a localized string similar to Failed to load {0}\n, Exception: {1}.
+- `FailedToLoadCustomNode` (string, get) — Looks up a localized string similar to Failed to load custom node: {0}. Replacing with proxy custom node..
+- `FailedToLoadHeader` (string, get) — Looks up a localized string similar to ERROR: The header for the custom node at {0} failed to load. It will be left out of search..
+- `FailedToLoadLibrary` (string, get) — Looks up a localized string similar to Failed to load library: {0}.
+- `FailedToLoadType` (string, get) — Looks up a localized string similar to Failed to load type from {0}. The type was {1}..
+- `FailedToSave` (string, get) — Looks up a localized string similar to Failed to save {0}\n, Exception: {1}.
+- `FileBackUpLocation` (string, get) — Looks up a localized string similar to Original file '{0}' gets backed up at '{1}'.
+- `FileCannotBeOpened` (string, get) — Looks up a localized string similar to Your file cannot be opened..
+- `FileLoadFailureMessageBoxTitle` (string, get) — Looks up a localized string similar to File load failure.
+- `FileNotOpenedCorrectly` (string, get) — Looks up a localized string similar to Your file may not open correctly.
+- `FormulaDSConversionFailure` (string, get) — Looks up a localized string similar to Formula failed to convert to DesignScript code. Please edit the formula manually to use it in a CodeBlock node..
+- `FormulaMigrated` (string, get) — Looks up a localized string similar to Formula node has been deprecated. It has been automatically migrated to a CodeBlock node. Note that results may vary after the migration depending on lacing options selected on the original Formula node. Appropriate replication guides might need to be applied to the CodeBlock node script..
+- `FunctionDefinitionOverwrittenMessage` (string, get) — Looks up a localized string similar to Attempting to load customNode {0} loaded by package {1}, but a previous definition named {2} exists with no associated package. The new customNode definition has been loaded, but Dynamo may be in an unstable state, please avoid loading multiple custom nodes with the id..
+- `FunctionDescription` (string, get) — Looks up a localized string similar to Instance of a Custom Node.
+- `FunctionNodeDescription` (string, get) — Looks up a localized string similar to DesignScript Builtin Functions.
+- `FutureFileDescription` (string, get) — Looks up a localized string similar to Your file '{0}' was created in future version '{1}' and may not open correctly in your installed version of Dynamo '{2}'.
+- `FutureFileSummary` (string, get) — Looks up a localized string similar to Your file may not open correctly.
+- `FutureFileTitle` (string, get) — Looks up a localized string similar to Future File.
+- `GoodByeLog` (string, get) — Looks up a localized string similar to Goodbye.
+- `GroupDefaultText` (string, get) — Looks up a localized string similar to Description <Double click here to edit group description>.
+- `GroupNameDefaultText` (string, get) — Looks up a localized string similar to Title <Double click here to edit group title>.
+- `GroupStyleDefaultActions` (string, get) — Looks up a localized string similar to Actions.
+- `GroupStyleDefaultActionsColor` (string, get) — Looks up a localized string similar to B9F9E1.
+- `GroupStyleDefaultInputs` (string, get) — Looks up a localized string similar to Inputs.
+- `GroupStyleDefaultInputsColor` (string, get) — Looks up a localized string similar to FFB8D8.
+- `GroupStyleDefaultOutputs` (string, get) — Looks up a localized string similar to Outputs.
+- `GroupStyleDefaultOutputsColor` (string, get) — Looks up a localized string similar to FFC999.
+- `GroupStyleDefaultReview` (string, get) — Looks up a localized string similar to Review.
+- `GroupStyleDefaultReviewColor` (string, get) — Looks up a localized string similar to A4E1FF.
+- `HeaderAction` (string, get) — Looks up a localized string similar to ACTIONS.
+- `HeaderCreate` (string, get) — Looks up a localized string similar to CREATE.
+- `HeaderQuery` (string, get) — Looks up a localized string similar to QUERY.
+- `IdentifiersNotFound` (string, get) — Looks up a localized string similar to No identifiers found..
+- `IncompatibleOfFileAndDynamo` (string, get) — Looks up a localized string similar to Your file '{0}' of version '{1}' cannot be opened by this version of Dynamo ({2}).
+- `IncorrectVersionToOpenFile` (string, get) — Looks up a localized string similar to Your file '{0}' was created in future version '{1}' and may not open correctly in your installed version of Dynamo '{2}'.
+- `IncorrectlyFormattedNodeLibraryDisplay` (string, get) — Looks up a localized string similar to This is the incorrectly formatted library name:.
+- `IncorrectlyFormattedNodeLibraryWarning` (string, get) — Looks up a localized string similar to Incorrectly formatted package node library encountered, this may result in a package assembly not being loaded!.
+- `InputLabel` (string, get) — Looks up a localized string similar to INPUT.
+- `InputNodeDescription` (string, get) — Looks up a localized string similar to A function parameter, use with custom nodes.
+- `InputNodeRenameHint` (string, get) — Looks up a localized string similar to default input name, rename me!.
+- `InputNodeSearchTags` (string, get) — Looks up a localized string similar to variable;argument;parameter.
+- `InputPortAlternativeName` (string, get) — Looks up a localized string similar to input.
+- `InsertDialogBoxText` (string, get) — Looks up a localized string similar to Insert Dynamo Graph....
+- `InsertGraphRunModeNotificationText` (string, get) — Looks up a localized string similar to Example file added to workspace. Run mode changed to Manual..
+- `InvalidCustomNodeFolderWarning` (string, get) — Looks up a localized string similar to The folder '{0}' does not exist.
+- `InvalidInputSymbolCustomNodeWarning` (string, get) — Looks up a localized string similar to This custom node contains an invalid input. Please fix the input before saving the custom node..
+- `InvalidInputSymbolErrorMessage` (string, get) — Looks up a localized string similar to This input symbol is not currently valid, and cannot be saved until it is fixed. Valid inputs take the form: name : type = defaultValue The input name should be a valid variable name, without spaces. An input type and default value are optional..
+- `InvalidInputSymbolWarningMessage` (string, get) — Looks up a localized string similar to This custom node currently contains some invalid inputs, and cannot be saved until the inputs are fixed. If the custom node is saved using SaveAs, the invalid inputs will revert to generic inputs. Valid inputs take the form: name : type = defaultValue The input name should be a valid variable name, without spaces. An input type and default value are optional..
+- `InvalidInputSymbolWarningShortMessage` (string, get) — Looks up a localized string similar to This custom node cannot be saved until invalid inputs are removed or fixed..
+- `InvalidInputSymbolWarningTitle` (string, get) — Looks up a localized string similar to Custom Node Contains Invalid Inputs and Cannot Be Saved..
+- `InvalidLibraryFormat` (string, get) — Looks up a localized string similar to Invalid library format..
+- `InvalidPackageVersion` (string, get) — Looks up a localized string similar to The version of the package called {0} found at {1} is invalid (version: "{2}"). Ignoring it..
+- `InvalidStartOrEndOfRange` (string, get) — Looks up a localized string similar to The start or end of a range is greater than the number of available elements in the list..
+- `LegacyTraceDataWarning` (string, get) — Looks up a localized string similar to This workspace contains element binding data in a legacy format that is no longer supported in Dynamo 3.0 and higher versions. Element binding data will be saved in the new format the next time you run and save this workspace..
+- `LibraryBuildError` (string, get) — Looks up a localized string similar to Build error for library: {0}.
+- `LibraryHasBeenLoaded` (string, get) — Looks up a localized string similar to Library {0} has been loaded..
+- `LibraryIsDumped` (string, get) — Looks up a localized string similar to Library is dumped to \"{0}\"..
+- `LibraryLoadFailureForBlockedAssembly` (string, get) — Looks up a localized string similar to {0} This assembly is likely blocked. Try importing it again after unblocking the assembly..
+- `LibraryLoadFailureMessageBoxTitle` (string, get) — Looks up a localized string similar to Library load failure.
+- `LibraryPathCannotBeFound` (string, get) — Looks up a localized string similar to Cannot find library path: {0}..
+- `LoadingNodeDefinition` (string, get) — Looks up a localized string similar to Loading node definition for "{0}" from: {1}.
+- `LocateInDisk` (string, get) — Looks up a localized string similar to Locate in Disk...
+- `LoginNeededMessage` (string, get) — Looks up a localized string similar to You need to login to your account to get recommendations. Please log in or switch to node type match autocomplete..
+- `LoginNeededTitle` (string, get) — Looks up a localized string similar to Not authenticated.
+- `MalformedHeaderPackage` (string, get) — Looks up a localized string similar to {0} contains a package with a malformed header. Ignoring it..
+- `MessageCustomNodePackageFailedToLoad` (string, get) — Looks up a localized string similar to {1} cannot be loaded. Installing it will conflict with one or more node definitions that already exist in {0}, which is currently loaded. To install {1}, Dynamo needs to first uninstall {0}. Restart Dynamo to complete the uninstall..
+- `MissingXmlTagConsoleMessage` (string, get) — Looks up a localized string similar to {0} is missing some XML documentation tags..
+- `ModelNotFoundError` (string, get) — Looks up a localized string similar to UpdateModelValue: Model not found.
+- `MoreButtonTextFormat` (string, get) — Looks up a localized string similar to SHOW MORE ({0}).
+- `MoveLabel` (string, get) — Looks up a localized string similar to Move.
+- `NewNoteString` (string, get) — Looks up a localized string similar to New Note.
+- `NoDescriptionAvailable` (string, get) — Looks up a localized string similar to No description available.
+- `NoHeaderPackage` (string, get) — Looks up a localized string similar to {0} contains a package without a header. Ignoring it..
+- `NoMatchesFound` (string, get) — Looks up a localized string similar to No matches found.
+- `NodeDeprecatedMsg` (string, get) — Looks up a localized string similar to Node '{0}' is now deprecated..
+- `NodeInformationalStateShowAllErrors` (string, get) — Looks up a localized string similar to Show all errors.
+- `NodeNotResolvedMsg` (string, get) — Looks up a localized string similar to Node '{0}' cannot be resolved..
+- `NodeOfTypeDeprecatedMsg` (string, get) — Looks up a localized string similar to Node of type '{0}',from assembly '{1}', is now deprecated..
+- `NodeOfTypeNotResolvedMsg` (string, get) — Looks up a localized string similar to Node of type '{0}', from assembly '{1}', cannot be resolved..
+- `NodeProblemEncountered` (string, get) — Looks up a localized string similar to Whilst preparing to run, this node encountered a problem. Please talk to the creators of the node, and give them this message:.
+- `NodeUnhandledMsg` (string, get) — Looks up a localized string similar to Unhandled 'DummyNode.NodeNature' value: {0}.
+- `NoneLinterDescriptorName` (string, get) — Looks up a localized string similar to None.
+- `NoneString` (string, get) — Looks up a localized string similar to none.
+- `NothingIsSelectedWarning` (string, get) — Looks up a localized string similar to Nothing is selected. href=NothingIsSelectedWarning.html.
+- `NumberNodeDescription` (string, get) — Looks up a localized string similar to Creates a number..
+- `OKButton` (string, get) — Looks up a localized string similar to OK.
+- `ObsoleteFileDescription` (string, get) — Looks up a localized string similar to Your file '{0}' of version '{1}' cannot be opened by this version of Dynamo ({2}).
+- `ObsoleteFileTitle` (string, get) — Looks up a localized string similar to Obsolete File.
+- `OpenWorkbenchError` (string, get) — Looks up a localized string similar to There was an error opening the workbench..
+- `OpenWorkspaceError` (string, get) — Looks up a localized string similar to There was an error opening the workspace..
+- `OpeningHomeWorkspace` (string, get) — Looks up a localized string similar to Opening home workspace {0}....
+- `OutputLabel` (string, get) — Looks up a localized string similar to OUTPUT.
+- `OutputNodeDescription` (string, get) — Looks up a localized string similar to A function output, use with custom nodes.
+- `OutputPortAlternativeName` (string, get) — Looks up a localized string similar to output.
+- `PackageEmpty` (string, get) — Looks up a localized string similar to The package was found to be empty and was not installed..
+- `PackageLoadFailureForBlockedAssembly` (string, get) — Looks up a localized string similar to {0} This package likely contains an assembly that is blocked. You will need to load the package again after unblocking the assembly. Restart Dynamo to reload the package..
+- `PackageManagerPackageAlreadyExists` (string, get) — Looks up a localized string similar to A package with the given name already exists..
+- `PackageManagerPackagePreviewCounter` (string, get) — Looks up a localized string similar to {0} files and {1} folders will be created..
+- `PackageManagerPackageSelectCounter` (string, get) — Looks up a localized string similar to {0} files and {1} folders loaded..
+- `PackageManagerUserIsNotAMaintainer` (string, get) — Looks up a localized string similar to The current user, '{0}', is not a maintainer of the package '{1}'..
+- `PackageStateError` (string, get) — Looks up a localized string similar to Error.
+- `PackageStateErrorTooltip` (string, get) — Looks up a localized string similar to Unloaded. This package has not been loaded due to an unexpected error..
+- `PackageStateLoaded` (string, get) — Looks up a localized string similar to Loaded.
+- `PackageStateLoadedTooltip` (string, get) — Looks up a localized string similar to Loaded. This package is loaded and ready to be used..
+- `PackageStatePendingUnload` (string, get) — Looks up a localized string similar to Scheduled to be unloaded.
+- `PackageStatePendingUnloadTooltip` (string, get) — Looks up a localized string similar to Scheduled to be unloaded. This package will be unloaded after the next Dynamo restart..
+- `PackageStateUnloaded` (string, get) — Looks up a localized string similar to Unloaded.
+- `PackageStateUnloadedTooltip` (string, get) — Looks up a localized string similar to Unloaded. This package has not been loaded because another conflicting package was loaded before it..
+- `PackageTooLarge` (string, get) — Looks up a localized string similar to The package is too large! The package must be less than 15 MB!.
+- `PathNotRegconizableAsStableOrDailyBuild` (string, get) — Looks up a localized string similar to The specified file path is not recognizable as a stable or a daily build.
+- `PortDataFunctionOutputToolTip` (string, get) — Looks up a localized string similar to function output.
+- `PortDataInputToolTip` (string, get) — Looks up a localized string similar to Input #{0}.
+- `PortDataOutputToolTip` (string, get) — Looks up a localized string similar to Output #{0}.
+- `PortDataParameterToolTip` (string, get) — Looks up a localized string similar to parameter.
+- `PortDataPathToFileToolTip` (string, get) — Looks up a localized string similar to Path to the file.
+- `PortDataReturnValueToolTip` (string, get) — Looks up a localized string similar to return value.
+- `PortDataSymbolToolTip` (string, get) — Looks up a localized string similar to Symbol.
+- `PortDataVariableToolTip` (string, get) — Looks up a localized string similar to variable.
+- `PortsNameDescriptionDoNotEqualWarningMessage` (string, get) — Looks up a localized string similar to Number of port names does not equal number of port descriptions..
+- `Preview3DOutageTitle` (string, get) — Looks up a localized string similar to 3D preview has been deactivated.
+- `ProceedButton` (string, get) — Looks up a localized string similar to Proceed anyway.
+- `PythonTemplateAppData` (string, get) — Looks up a localized string similar to Python template loaded from AppData.
+- `PythonTemplateDefaultFile` (string, get) — Looks up a localized string similar to Python template set to default..
+- `PythonTemplateDefinedByHost` (string, get) — Looks up a localized string similar to Python template set by host integrator.
+- `PythonTemplateUserFile` (string, get) — Looks up a localized string similar to Python template loaded from DynamoSettings.xml path.
+- `RangeEndCouldNotBeParsed` (string, get) — Looks up a localized string similar to Range end could not be parsed..
+- `RangeOrApprIdentifierAlrUsed` (string, get) — Looks up a localized string similar to Cannot use range or approx. identifier on increment field when one has already been used to specify a count..
+- `RangePortDataAmountToolTip` (string, get) — Looks up a localized string similar to Amount of numbers or letters in the sequence Default value: 10.
+- `RangePortDataEndToolTip` (string, get) — Looks up a localized string similar to Number or letter to end the sequence at Default value: 9.
+- `RangePortDataSeqToolTip` (string, get) — Looks up a localized string similar to New list of type: var[]..[].
+- `RangePortDataStartToolTip` (string, get) — Looks up a localized string similar to Number or letter to start the sequence at Default value: 0.
+- `RangePortDataStepToolTip` (string, get) — Looks up a localized string similar to Space between numbers or letters Default value: 1.
+- `RangeStepCouldNotBeParsed` (string, get) — Looks up a localized string similar to Range step could not be parsed..
+- `RangeValuesGreaterThanZero` (string, get) — Looks up a localized string similar to Range values must be greater than zero..
+- `RemoveLabel` (string, get) — Looks up a localized string similar to Remove.
+- `RequestingVersionUpdate` (string, get) — Looks up a localized string similar to Requesting version update info....
+- `ResourceManager` (System.Resources.ResourceManager, get) — Returns the cached ResourceManager instance used by this class.
+- `ResourcePropertyIsNotStringTypeMessage` (string, get) — Looks up a localized string similar to Resource Property is not String Type.
+- `ResourceTypeDoesNotHavePropertyMessage` (string, get) — Looks up a localized string similar to Resource Type does not have Property.
+- `RunTypeToolTipAutomatically` (string, get) — Looks up a localized string similar to Run whenever an input to the graph is updated..
+- `RunTypeToolTipManually` (string, get) — Looks up a localized string similar to Run when you click the Run button..
+- `RunTypeToolTipPeriodicallyDisabled` (string, get) — Looks up a localized string similar to Run Periodic is only available when there are nodes in the graph that support periodic update..
+- `RunTypeToolTipPeriodicallyEnabled` (string, get) — Looks up a localized string similar to Run at the specified interval..
+- `SavingInProgress` (string, get) — Looks up a localized string similar to Saving {0} ....
+- `SearchTextBlockText` (string, get) — Looks up a localized string similar to Search.
+- `SplashScreenInitPreferencesSettings` (string, get) — Looks up a localized string similar to Initializing preferences....
+- `SplashScreenLoadNodeLibrary` (string, get) — Looks up a localized string similar to Loading Node Library....
+- `StringNodeDescription` (string, get) — Looks up a localized string similar to Creates a string..
+- `SublistPortDataResultToolTip` (string, get) — Looks up a localized string similar to The sublists..
+- `SublistsPortDataListToolTip` (string, get) — Looks up a localized string similar to The list from which to create sublists..
+- `SublistsPortDataOffsetToolTip` (string, get) — Looks up a localized string similar to The offset to apply to the sub-list. Ex. The range "0..2" with an offset of 1 will yield sublists {0,1,2}{1,2,3}{2,3,4}....
+- `SubmitBugButton` (string, get) — Looks up a localized string similar to Submit Bug To Github.
+- `SubmitBugToGithub` (string, get) — Looks up a localized string similar to Submit Bug To Github.
+- `SymbolNodeDescription` (string, get) — Looks up a localized string similar to A function parameter, use with custom nodes. You can specify the type and default value for parameter. E.g., input : var[]..[] value : bool = false.
+- `SymbolSearchTags` (string, get) — Looks up a localized string similar to variable;argument;parameter.
+- `ToastFileNodeAutoCompleteDoubleClick` (string, get) — Looks up a localized string similar to Click on the sparkle icon next to the port to activate Node Autocomplete..
+- `ToolTipForTempVar` (string, get) — Looks up a localized string similar to Statement Output.
+- `ToolTipFunctionOutput` (string, get) — Looks up a localized string similar to function output.
+- `ToolTipInput` (string, get) — Looks up a localized string similar to Input #.
+- `ToolTipInputData` (string, get) — Looks up a localized string similar to Input Data.
+- `ToolTipOutput` (string, get) — Looks up a localized string similar to Output #.
+- `ToolTipOutputData` (string, get) — Looks up a localized string similar to Output Data.
+- `ToolTipReturnValue` (string, get) — Looks up a localized string similar to return value.
+- `TopResult` (string, get) — Looks up a localized string similar to Top Result.
+- `UnableToCreateCustomNodeID` (string, get) — Looks up a localized string similar to Unable to create instance of custom node with id: \".
+- `UnhandledExceptionInDynamoEngine` (string, get) — Looks up a localized string similar to Unhandled exception in Dynamo engine.
+- `UnhandledExceptionSummary` (string, get) — Looks up a localized string similar to Unhandled exception in Dynamo engine.
+- `UnhandledExceptionTitle` (string, get) — Looks up a localized string similar to Unhandled Exception.
+- `UnknownErrorProcessingFile` (string, get) — Looks up a localized string similar to An unknown error occurred while processing the file..
+- `UnknownVersion` (string, get) — Looks up a localized string similar to Unknown.
+- `UnresolvedNodesWarningMessage` (string, get) — Looks up a localized string similar to This may be caused by a missing package, incompatible package version, or missing host program. If you Save As, the unresolved nodes will be removed. Resolve or remove the unresolved nodes and try again..
+- `UnresolvedNodesWarningShortMessage` (string, get) — Looks up a localized string similar to The graph has unresolved nodes and cannot be saved..
+- `UnresolvedNodesWarningTitle` (string, get) — Looks up a localized string similar to Unable to save graph.
+- `UpdateAvailable` (string, get) — Looks up a localized string similar to Update available: {0}.
+- `UpdateDownloadComplete` (string, get) — Looks up a localized string similar to Update download complete..
+- `UpdateDownloadProgress` (string, get) — Looks up a localized string similar to Update download progress: {0}%.
+- `UpdateDownloadStarted` (string, get) — Looks up a localized string similar to Update download started....
+- `UsageReportingErrorMessage` (string, get) — Looks up a localized string similar to Uh oh... We're sorry - we tried to save your decisions, but something went wrong. The decision probably hasn't been saved. This really shouldn't have happened. Please get in touch via GitHub and send us this information. You can also try deleting [FILEPATH] and trying again. Depending on your previous choice, analytics may still be running, if you're worried about this, please consider not using Dynamo until we've got back to you to solve the problem. Sorry about that..
+- `WarningCannotFindType` (string, get) — Looks up a localized string similar to Cannot find type '{0}'.
+- `WarningInvalidInput` (string, get) — Looks up a localized string similar to Invalid input. The name of parameter should start with alphabetic character. You can specify its type and default value. E.g., input : var[]..[] value: bool = false.
+- `WarningInvalidOutput` (string, get) — Looks up a localized string similar to Only comments and single variable are allowed in output node..
+- `WatermarkLabelText` (string, get) — Looks up a localized string similar to Enter code here.
+- `WelcomeMessage` (string, get) — Looks up a localized string similar to Welcome to Dynamo!.
+- `WorkbenchNotOpen` (string, get) — Looks up a localized string similar to Workbench could not be opened..
+

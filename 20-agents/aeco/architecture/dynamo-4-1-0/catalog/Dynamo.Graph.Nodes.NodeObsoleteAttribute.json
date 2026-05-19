@@ -1,0 +1,52 @@
+{
+  "name": "NodeObsoleteAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The NodeObsoleteAttribute indicates this node is obsolete",
+  "base": "Autodesk.DesignScript.Runtime.IsObsoleteAttribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "NodeObsoleteAttribute(string)",
+      "signature": "void NodeObsoleteAttribute(string message)",
+      "summary": "NodeObsoleteAttribute.NodeObsoleteAttribute",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    },
+    {
+      "name": "NodeObsoleteAttribute(string, System.Type)",
+      "signature": "void NodeObsoleteAttribute(string descriptionResourceID, System.Type resourceType)",
+      "summary": "NodeObsoleteAttribute.NodeObsoleteAttribute",
+      "params": [
+        {
+          "name": "descriptionResourceID",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resourceType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,71 @@
+{
+  "name": "NotificationObject",
+  "namespace": "Dynamo.Core",
+  "kind": "class",
+  "summary": "This class notifies the View when there is a change.",
+  "interfaces": [
+    "System.ComponentModel.INotifyPropertyChanged"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NotificationObject.cs",
+  "constructors": [
+    {
+      "name": "NotificationObject()",
+      "signature": "void NotificationObject()",
+      "summary": "NotificationObject.NotificationObject",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NotificationObject.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "RaisePropertyChanged(string)",
+      "signature": "void RaisePropertyChanged(string propertyName)",
+      "summary": "Raises this object\u0027s PropertyChanged event.",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "doc": "The property that has a new value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NotificationObject.cs"
+    },
+    {
+      "name": "RaisePropertyChanged(string[])",
+      "signature": "void RaisePropertyChanged(string[] propertyNames)",
+      "summary": "Raises this object\u0027s PropertyChanged event for each of the properties.",
+      "params": [
+        {
+          "name": "propertyNames",
+          "type": "string[]",
+          "doc": "The properties that have a new value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NotificationObject.cs"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "PropertyChanged",
+      "delegate": "System.ComponentModel.PropertyChangedEventHandler",
+      "signature": "public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged",
+      "summary": "Raised when a property on this object has a new value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/NotificationObject.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,196 @@
+{
+  "name": "MutatingFileSystem",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "An IFileSystem that actually mutates the underlying file system",
+  "interfaces": [
+    "Dynamo.PackageManager.IFileSystem"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs",
+  "constructors": [
+    {
+      "name": "MutatingFileSystem()",
+      "signature": "void MutatingFileSystem()",
+      "summary": "MutatingFileSystem.MutatingFileSystem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CopyFile(string, string)",
+      "signature": "void CopyFile(string filePath, string destinationPath)",
+      "summary": "MutatingFileSystem.CopyFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "destinationPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "DeleteDirectory(string)",
+      "signature": "void DeleteDirectory(string directoryPath)",
+      "summary": "MutatingFileSystem.DeleteDirectory",
+      "params": [
+        {
+          "name": "directoryPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "DeleteFile(string)",
+      "signature": "void DeleteFile(string filePath)",
+      "summary": "MutatingFileSystem.DeleteFile",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "DirectoryExists(string)",
+      "signature": "bool DirectoryExists(string directoryPath)",
+      "summary": "MutatingFileSystem.DirectoryExists",
+      "params": [
+        {
+          "name": "directoryPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "FileExists(string)",
+      "signature": "bool FileExists(string filePath)",
+      "summary": "MutatingFileSystem.FileExists",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "GetDirectories(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetDirectories(string dir)",
+      "summary": "MutatingFileSystem.GetDirectories",
+      "params": [
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "GetFiles(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetFiles(string dir)",
+      "summary": "MutatingFileSystem.GetFiles",
+      "params": [
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "TryCreateDirectory(string)",
+      "signature": "Dynamo.PackageManager.Interfaces.IDirectoryInfo TryCreateDirectory(string path)",
+      "summary": "MutatingFileSystem.TryCreateDirectory",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.PackageManager.Interfaces.IDirectoryInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    },
+    {
+      "name": "WriteAllText(string, string)",
+      "signature": "void WriteAllText(string filePath, string content)",
+      "summary": "MutatingFileSystem.WriteAllText",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "content",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/MutatingFileSystem.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

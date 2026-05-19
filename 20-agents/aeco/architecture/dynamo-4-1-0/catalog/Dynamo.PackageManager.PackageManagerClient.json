@@ -1,0 +1,36 @@
+{
+  "name": "PackageManagerClient",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageManagerClient",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerClient.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetTermsOfUseAcceptanceStatus",
+      "signature": "bool SetTermsOfUseAcceptanceStatus()",
+      "summary": "PackageManagerClient.SetTermsOfUseAcceptanceStatus",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerClient.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BaseUrl",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The URL of the package manager website",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageManagerClient.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

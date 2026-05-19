@@ -1,0 +1,335 @@
+{
+  "name": "DebugProperties",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type DebugProperties",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [
+    {
+      "name": "DebugProperties()",
+      "signature": "void DebugProperties()",
+      "summary": "DebugProperties.DebugProperties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DebugStackFrameContains(ProtoCore.DebugProperties.StackFrameFlagOptions)",
+      "signature": "bool DebugStackFrameContains(ProtoCore.DebugProperties.StackFrameFlagOptions option)",
+      "summary": "DebugProperties.DebugStackFrameContains",
+      "params": [
+        {
+          "name": "option",
+          "type": "ProtoCore.DebugProperties.StackFrameFlagOptions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "RestoreCallrForNoBreak(ProtoCore.RuntimeCore, ProtoCore.DSASM.ProcedureNode, bool)",
+      "signature": "void RestoreCallrForNoBreak(ProtoCore.RuntimeCore runtimeCore, ProtoCore.DSASM.ProcedureNode fNode, bool isReplicating)",
+      "summary": "Called only when we step over a function (including replicated and external functions) Pops Debug stackframe and Restores breakpoints",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "fNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isReplicating",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "SetUpBounce(ProtoCore.DSASM.Executive, int, int)",
+      "signature": "void SetUpBounce(ProtoCore.DSASM.Executive exec, int exeblock, int returnAddr)",
+      "summary": "DebugProperties.SetUpBounce",
+      "params": [
+        {
+          "name": "exec",
+          "type": "ProtoCore.DSASM.Executive",
+          "optional": false
+        },
+        {
+          "name": "exeblock",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "returnAddr",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "SetUpCallrForDebug(ProtoCore.RuntimeCore, ProtoCore.DSASM.Executive, ProtoCore.DSASM.ProcedureNode, int, bool, ProtoCore.CallSite, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E, ProtoCore.DSASM.StackFrame, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, bool, bool, System.Nullable\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "void SetUpCallrForDebug(ProtoCore.RuntimeCore runtimeCore, ProtoCore.DSASM.Executive exec, ProtoCore.DSASM.ProcedureNode fNode, int pc, bool isBaseCall, ProtoCore.CallSite callsite, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E arguments, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E replicationGuides, ProtoCore.DSASM.StackFrame stackFrame, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E dotCallDimensions, bool hasDebugInfo, bool isMember, System.Nullable\u003CProtoCore.DSASM.StackValue\u003E thisPtr)",
+      "summary": "DebugProperties.SetUpCallrForDebug",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "exec",
+          "type": "ProtoCore.DSASM.Executive",
+          "optional": false
+        },
+        {
+          "name": "fNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        },
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "isBaseCall",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "callsite",
+          "type": "ProtoCore.CallSite",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationGuides",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.ReplicationGuide\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "dotCallDimensions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "hasDebugInfo",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "isMember",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "thisPtr",
+          "type": "System.Nullable\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "SetUpStepOverFunctionCalls(ProtoCore.RuntimeCore, ProtoCore.DSASM.ProcedureNode, ProtoCore.AssociativeGraph.GraphNode, bool)",
+      "signature": "void SetUpStepOverFunctionCalls(ProtoCore.RuntimeCore runtimeCore, ProtoCore.DSASM.ProcedureNode fNode, ProtoCore.AssociativeGraph.GraphNode graphNode, bool hasDebugInfo)",
+      "summary": "DebugProperties.SetUpStepOverFunctionCalls",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "fNode",
+          "type": "ProtoCore.DSASM.ProcedureNode",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "hasDebugInfo",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveBreakPoints",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.ActiveBreakPoints",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "AllbreakPoints",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.AllbreakPoints",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "CurrentBlockId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.CurrentBlockId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "CurrentSymbolName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.CurrentSymbolName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "DebugEntryPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the Program counter. This is only valid when the executive is suspended",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "DebugStackFrame",
+      "type": "System.Collections.Generic.Stack\u003CProtoCore.DebugFrame\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.DebugStackFrame",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "FRStack",
+      "type": "System.Collections.Generic.Stack\u003Cbool\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.FRStack",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "FirstStackFrame",
+      "type": "ProtoCore.DSASM.StackFrame",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.FirstStackFrame",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "IsPopmCall",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.IsPopmCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "ReturnPCFromDispose",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.ReturnPCFromDispose",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "RunMode",
+      "type": "ProtoCore.Runmode",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.RunMode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "StepOutReturnPC",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.StepOutReturnPC",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "breakOptions",
+      "type": "ProtoCore.DebugProperties.BreakpointOptions",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.breakOptions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "deferedGraphnodes",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.deferedGraphnodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "executingGraphNode",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.executingGraphNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    },
+    {
+      "name": "isResume",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DebugProperties.isResume",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

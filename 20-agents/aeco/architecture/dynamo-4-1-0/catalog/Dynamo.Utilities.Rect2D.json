@@ -1,0 +1,439 @@
+{
+  "name": "Rect2D",
+  "namespace": "Dynamo.Utilities",
+  "kind": "struct",
+  "summary": "Type Rect2D",
+  "interfaces": [
+    "System.IFormattable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs",
+  "constructors": [
+    {
+      "name": "Rect2D(Dynamo.Utilities.Point2D, Dynamo.Utilities.Point2D)",
+      "signature": "void Rect2D(Dynamo.Utilities.Point2D point1, Dynamo.Utilities.Point2D point2)",
+      "summary": "Rect2D.Rect2D",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Dynamo.Utilities.Point2D",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Dynamo.Utilities.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Rect2D(double, double, double, double)",
+      "signature": "void Rect2D(double x, double y, double width, double height)",
+      "summary": "Rect2D.Rect2D",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Contains(Dynamo.Utilities.Point2D)",
+      "signature": "bool Contains(Dynamo.Utilities.Point2D point)",
+      "summary": "Rect2D.Contains",
+      "params": [
+        {
+          "name": "point",
+          "type": "Dynamo.Utilities.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Contains(Dynamo.Utilities.Rect2D)",
+      "signature": "bool Contains(Dynamo.Utilities.Rect2D rect)",
+      "summary": "Rect2D.Contains",
+      "params": [
+        {
+          "name": "rect",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Contains(double, double)",
+      "signature": "bool Contains(double x, double y)",
+      "summary": "Rect2D.Contains",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Equals(Dynamo.Utilities.Rect2D)",
+      "signature": "bool Equals(Dynamo.Utilities.Rect2D value)",
+      "summary": "Rect2D.Equals",
+      "params": [
+        {
+          "name": "value",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Equals(Dynamo.Utilities.Rect2D, Dynamo.Utilities.Rect2D)",
+      "signature": "bool Equals(Dynamo.Utilities.Rect2D rect1, Dynamo.Utilities.Rect2D rect2)",
+      "summary": "Rect2D.Equals",
+      "params": [
+        {
+          "name": "rect1",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        },
+        {
+          "name": "rect2",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object o)",
+      "summary": "Rect2D.Equals",
+      "params": [
+        {
+          "name": "o",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Rect2D.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Intersect(Dynamo.Utilities.Rect2D)",
+      "signature": "void Intersect(Dynamo.Utilities.Rect2D rect)",
+      "summary": "Rect2D.Intersect",
+      "params": [
+        {
+          "name": "rect",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Intersect(Dynamo.Utilities.Rect2D, Dynamo.Utilities.Rect2D)",
+      "signature": "Dynamo.Utilities.Rect2D Intersect(Dynamo.Utilities.Rect2D rect1, Dynamo.Utilities.Rect2D rect2)",
+      "summary": "Rect2D.Intersect",
+      "params": [
+        {
+          "name": "rect1",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        },
+        {
+          "name": "rect2",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.Rect2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "IntersectsWith(Dynamo.Utilities.Rect2D)",
+      "signature": "bool IntersectsWith(Dynamo.Utilities.Rect2D rect)",
+      "summary": "Rect2D.IntersectsWith",
+      "params": [
+        {
+          "name": "rect",
+          "type": "Dynamo.Utilities.Rect2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Scale(double, double)",
+      "signature": "void Scale(double scaleX, double scaleY)",
+      "summary": "Rect2D.Scale",
+      "params": [
+        {
+          "name": "scaleX",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Rect2D.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "ToString(System.IFormatProvider)",
+      "signature": "string ToString(System.IFormatProvider provider)",
+      "summary": "Rect2D.ToString",
+      "params": [
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Bottom",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.Bottom",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "BottomLeft",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.BottomLeft",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "BottomRight",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.BottomRight",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Empty",
+      "type": "Dynamo.Utilities.Rect2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.Empty",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Rect2D.Height",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.IsEmpty",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Left",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.Left",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Location",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Rect2D.Location",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Right",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.Right",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Top",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.Top",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "TopLeft",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.TopLeft",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "TopRight",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Rect2D.TopRight",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Width",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Rect2D.Width",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Rect2D.X",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Rect2D.Y",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Rect2D.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

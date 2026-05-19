@@ -1,0 +1,26 @@
+{
+  "name": "AccessModifier",
+  "namespace": "ProtoCore.CompilerDefinitions",
+  "kind": "enum",
+  "summary": "Type AccessModifier",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/CompilerOptions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Private",
+      "value": 2
+    },
+    {
+      "name": "Protected",
+      "value": 1
+    },
+    {
+      "name": "Public",
+      "value": 0
+    }
+  ]
+}

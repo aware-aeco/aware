@@ -1,0 +1,26 @@
+{
+  "name": "AssemblyLoadingState",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "enum",
+  "summary": "Type AssemblyLoadingState",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/PackageLoader.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AlreadyLoaded",
+      "value": 2
+    },
+    {
+      "name": "NotManagedAssembly",
+      "value": 1
+    },
+    {
+      "name": "Success",
+      "value": 0
+    }
+  ]
+}

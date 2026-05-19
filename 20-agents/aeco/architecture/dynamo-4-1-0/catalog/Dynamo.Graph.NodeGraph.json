@@ -1,0 +1,199 @@
+{
+  "name": "NodeGraph",
+  "namespace": "Dynamo.Graph",
+  "kind": "class",
+  "summary": "This class is used to load workspace from xml file.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadConnectorFromXml(System.Xml.XmlElement, System.Collections.Generic.IDictionary\u003CSystem.Guid, Dynamo.Graph.Nodes.NodeModel\u003E)",
+      "signature": "Dynamo.Graph.Connectors.ConnectorModel LoadConnectorFromXml(System.Xml.XmlElement connEl, System.Collections.Generic.IDictionary\u003CSystem.Guid, Dynamo.Graph.Nodes.NodeModel\u003E nodes)",
+      "summary": "Creates and initializes a ConnectorModel from its Xml representation.",
+      "params": [
+        {
+          "name": "connEl",
+          "type": "System.Xml.XmlElement",
+          "doc": "XmlElement for a ConnectorModel.",
+          "optional": false
+        },
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IDictionary\u003CSystem.Guid, Dynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "Dictionary to be used for looking up a NodeModel by it\u0027s Guid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Connectors.ConnectorModel",
+        "doc": "Returns the new instance of ConnectorModel loaded from XmlElement."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "LoadGraphFromXml(System.Xml.XmlDocument, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory)",
+      "signature": "Dynamo.Graph.NodeGraph LoadGraphFromXml(System.Xml.XmlDocument xmlDoc, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory nodeFactory)",
+      "summary": "Loads NodeModels, ConnectorModels, and NoteModels from an XmlDocument.",
+      "params": [
+        {
+          "name": "xmlDoc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "An XmlDocument representing a serialized Dynamo workspace.",
+          "optional": false
+        },
+        {
+          "name": "nodeFactory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "A NodeFactory, used to load and instantiate nodes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.NodeGraph",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "LoadNodeFromXml(System.Xml.XmlElement, Dynamo.Graph.SaveContext, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, ProtoCore.Namespace.ElementResolver)",
+      "signature": "Dynamo.Graph.Nodes.NodeModel LoadNodeFromXml(System.Xml.XmlElement elNode, Dynamo.Graph.SaveContext context, Dynamo.Graph.Nodes.NodeLoaders.NodeFactory nodeFactory, ProtoCore.Namespace.ElementResolver resolver)",
+      "summary": "Creates and initializes a NodeModel from its Xml representation.",
+      "params": [
+        {
+          "name": "elNode",
+          "type": "System.Xml.XmlElement",
+          "doc": "XmlElement for a NodeModel.",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "doc": "The serialization context for initialization.",
+          "optional": false
+        },
+        {
+          "name": "nodeFactory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "A NodeFactory, to be used to create the node.",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "LoadNoteFromXml(System.Xml.XmlNode)",
+      "signature": "Dynamo.Graph.Notes.NoteModel LoadNoteFromXml(System.Xml.XmlNode note)",
+      "summary": "Creates and initializes a NoteModel from its Xml representation.",
+      "params": [
+        {
+          "name": "note",
+          "type": "System.Xml.XmlNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Notes.NoteModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "LoadPresetsFromXml(System.Xml.XmlDocument, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E LoadPresetsFromXml(System.Xml.XmlDocument xmlDoc, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodesInNodeGraph)",
+      "summary": "Loads presets from xml file.",
+      "params": [
+        {
+          "name": "xmlDoc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "xml file",
+          "optional": false
+        },
+        {
+          "name": "nodesInNodeGraph",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "node models",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+        "doc": "list of presets"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Annotations",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Dynamo.Graph.Annotations.AnnotationModel loaded from xml.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "Connectors",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Dynamo.Graph.Connectors.ConnectorModel loaded from xml.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "ElementResolver",
+      "type": "ProtoCore.Namespace.ElementResolver",
+      "getter": true,
+      "setter": false,
+      "summary": "Partial class name nodes loaded from xml. E.g. Range turns into DSCoreNodesUI.Range.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "Nodes",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Dynamo.Graph.Nodes.NodeModel loaded from xml.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "Notes",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.Notes.NoteModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Dynamo.Graph.Notes.NoteModel loaded from xml.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    },
+    {
+      "name": "Presets",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.Presets.PresetModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Dynamo.Graph.Presets.PresetModel loaded from xml.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/NodeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

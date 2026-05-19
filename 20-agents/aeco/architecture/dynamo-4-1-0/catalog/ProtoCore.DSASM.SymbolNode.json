@@ -1,0 +1,110 @@
+{
+  "name": "SymbolNode",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type SymbolNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SymbolTable.cs",
+  "constructors": [
+    {
+      "name": "SymbolNode()",
+      "signature": "void SymbolNode()",
+      "summary": "SymbolNode.SymbolNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SymbolTable.cs"
+    },
+    {
+      "name": "SymbolNode(string, int, int, ProtoCore.Type, bool, int, ProtoCore.DSASM.MemoryRegion, int, ProtoCore.CompilerDefinitions.AccessModifier, bool, int)",
+      "signature": "void SymbolNode(string name, int index, int functionIndex, ProtoCore.Type datatype, bool isArgument, int runtimeIndex, ProtoCore.DSASM.MemoryRegion memregion, int scope, ProtoCore.CompilerDefinitions.AccessModifier access, bool isStatic, int codeBlockId)",
+      "summary": "SymbolNode.SymbolNode",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "datatype",
+          "type": "ProtoCore.Type",
+          "optional": false
+        },
+        {
+          "name": "isArgument",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "runtimeIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "memregion",
+          "type": "ProtoCore.DSASM.MemoryRegion",
+          "optional": false
+        },
+        {
+          "name": "scope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "ProtoCore.CompilerDefinitions.AccessModifier",
+          "optional": false
+        },
+        {
+          "name": "isStatic",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "codeBlockId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SymbolTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "SymbolNode.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/SymbolTable.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

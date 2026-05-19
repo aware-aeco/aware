@@ -1,0 +1,26 @@
+{
+  "name": "RangeStepOperator",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type RangeStepOperator",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ApproximateSize",
+      "value": 2
+    },
+    {
+      "name": "Number",
+      "value": 1
+    },
+    {
+      "name": "StepSize",
+      "value": 0
+    }
+  ]
+}

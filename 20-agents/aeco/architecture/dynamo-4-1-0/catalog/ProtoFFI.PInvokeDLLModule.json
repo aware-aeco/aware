@@ -1,0 +1,90 @@
+{
+  "name": "PInvokeDLLModule",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type PInvokeDLLModule",
+  "base": "ProtoFFI.DLLModule",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs",
+  "constructors": [
+    {
+      "name": "PInvokeDLLModule(string)",
+      "signature": "void PInvokeDLLModule(string name)",
+      "summary": "PInvokeDLLModule.PInvokeDLLModule",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFunctionPointer(string, string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.Type)",
+      "signature": "ProtoFFI.FFIFunctionPointer GetFunctionPointer(string className, string name, System.Collections.Generic.List\u003CProtoCore.Type\u003E argTypes, ProtoCore.Type returnType)",
+      "summary": "PInvokeDLLModule.GetFunctionPointer",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argTypes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIFunctionPointer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    },
+    {
+      "name": "GetFunctionPointers(string, string)",
+      "signature": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E GetFunctionPointers(string className, string name)",
+      "summary": "PInvokeDLLModule.GetFunctionPointers",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

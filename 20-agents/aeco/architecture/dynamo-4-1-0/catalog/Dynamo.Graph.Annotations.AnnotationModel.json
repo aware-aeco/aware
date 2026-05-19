@@ -1,0 +1,462 @@
+{
+  "name": "AnnotationModel",
+  "namespace": "Dynamo.Graph.Annotations",
+  "kind": "class",
+  "summary": "This class contains methods and properties used for creating groups in Dynamo.",
+  "base": "Dynamo.Graph.ModelBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs",
+  "constructors": [
+    {
+      "name": "AnnotationModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E)",
+      "signature": "void AnnotationModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Annotations.AnnotationModel class.",
+      "params": [
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "The nodes.",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "doc": "The notes.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "AnnotationModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E)",
+      "signature": "void AnnotationModel(System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E nodes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E notes, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E groups)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Annotations.AnnotationModel class.",
+      "params": [
+        {
+          "name": "nodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "The nodes that belongs to this group.",
+          "optional": false
+        },
+        {
+          "name": "notes",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Notes.NoteModel\u003E",
+          "doc": "The notes that belongs to this group.",
+          "optional": false
+        },
+        {
+          "name": "groups",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Annotations.AnnotationModel\u003E",
+          "doc": "The groups that belongs to this group",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ContainsModel(Dynamo.Graph.ModelBase)",
+      "signature": "bool ContainsModel(Dynamo.Graph.ModelBase modelBase)",
+      "summary": "Checks if the provided modelbase belongs to this group.",
+      "params": [
+        {
+          "name": "modelBase",
+          "type": "Dynamo.Graph.ModelBase",
+          "doc": "modelbase to check if belongs to this group",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Deselect",
+      "signature": "void Deselect()",
+      "summary": "Overriding the Deselect behavior because deselecting the group should deselect the models within that group",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "AnnotationModel.DeserializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Implementation of Dispose method",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Select",
+      "signature": "void Select()",
+      "summary": "Overriding the Select behavior because selecting the group should select the models within that group",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "AnnotationModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "Group the Models based on Height and Width",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "the width and height of the last model"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AnnotationDescriptionText",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Group description text",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "AnnotationText",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns title of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Background",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns background of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "DeletedModelBases",
+      "type": "System.Collections.Generic.List\u003CDynamo.Graph.ModelBase\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "DeletedModelBases is used to keep track of deleted / ungrouped models. During Undo operations this is used to get those models that are deleted from the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "FontSize",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns font size of the text of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "ID of the AnnotationModel, which is unique within the graph.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "GroupState",
+      "type": "Dynamo.Graph.Nodes.ElementState",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether the group contains nodes that are in an info/warning/error state. This includes the state of any nodes that are in nested groups.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "GroupStyleId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the Groupstyle applied",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "HasNestedGroups",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Checks if this group contains any nested groups.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "HasToggledOptionalInPorts",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the user manually toggled the visibility of optional input ports. If true, this overrides the global preference setting.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "HasToggledUnconnectedOutPorts",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the user manually toggled the visibility of unconnected output ports. If true, this overrides the global preference setting.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the full height of the group. That means ModelAreaHeight \u002B TextBlockHeight",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "HeightAdjustment",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Adjustment margin to be added to the height of the group. When set the height of the group will always be set to Height \u002B heightAdjustment",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "InitialHeight",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Required to calculate the HEIGHT of a group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "InitialTop",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Required to calculate the TOP position in a group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "IsCollapsedToMinSize",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the group was manually resized while collapsed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "IsExpanded",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns whether or not the group is expanded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "IsFrozen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns whether or not all nodes in the group are frozen.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "IsOptionalInPortsCollapsed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether optional input ports were manually expanded or collapsed when the graph was last saved. Used only for serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "IsUnconnectedOutPortsCollapsed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether unconnected output ports were manually expanded or collapsed when the graph was last saved. Used only for serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "IsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Preview visibility of the nodes in a group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "MinWidthOnCollapsed",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the minimum width of the group when it is collapsed. This value equals the combined width of the group\u0027s proxy input and output ports.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "ModelAreaHeight",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the height of the area that all model belonging to this group is encapsulated in.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Nodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.ModelBase\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns collection of models (nodes and notes) which the group contains",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "PinnedNode",
+      "type": "Dynamo.Graph.Nodes.NodeModel",
+      "getter": true,
+      "setter": true,
+      "summary": "Optional reference to pinned node This reference will be used in note serialization as note is deserialized from an annotation model",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Rect",
+      "type": "Dynamo.Utilities.Rect2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Overriding the Rect from Modelbase This queries the actual RECT of the group. This is required to make the group as ILocatable.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns text of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "TextBlockHeight",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns height of the text area of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "TextMaxWidth",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the maxWidth of text area of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "UserSetHeight",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the height the user manually set using the resize thumb.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "UserSetWidth",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the height the user manually set using the resize thumb. Indicates the width the user manually set using the resize thumb. Not necessarily equal to the actual rendered width.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "Width",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns width of the group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "WidthAdjustment",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Adjustment margin to be added to the width of the group. When set the width of the group will always be set to Width \u002B widthAdjustment",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    },
+    {
+      "name": "loadFromXML",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if group properties should be read from xml data",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "ModelBaseRequested",
+      "delegate": "System.Func\u003CSystem.Guid, Dynamo.Graph.ModelBase\u003E",
+      "signature": "public event System.Func\u003CSystem.Guid, Dynamo.Graph.ModelBase\u003E ModelBaseRequested",
+      "summary": "Triggers when it needs to get the model to add from Workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Annotations/AnnotationModel.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

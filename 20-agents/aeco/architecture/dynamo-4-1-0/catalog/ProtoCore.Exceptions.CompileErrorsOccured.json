@@ -1,0 +1,41 @@
+{
+  "name": "CompileErrorsOccured",
+  "namespace": "ProtoCore.Exceptions",
+  "kind": "class",
+  "summary": "Type CompileErrorsOccured",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs",
+  "constructors": [
+    {
+      "name": "CompileErrorsOccured()",
+      "signature": "void CompileErrorsOccured()",
+      "summary": "CompileErrorsOccured.CompileErrorsOccured",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs"
+    },
+    {
+      "name": "CompileErrorsOccured(string)",
+      "signature": "void CompileErrorsOccured(string message)",
+      "summary": "CompileErrorsOccured.CompileErrorsOccured",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

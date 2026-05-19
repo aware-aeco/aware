@@ -1,0 +1,424 @@
+{
+  "name": "ExtensionMethods",
+  "namespace": "Dynamo.Utilities",
+  "kind": "static-class",
+  "summary": "Type ExtensionMethods",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddRange(System.Collections.ObjectModel.Collection\u003CT\u003E, System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "System.Collections.ObjectModel.Collection\u003CT\u003E AddRange\u003CT\u003E(System.Collections.ObjectModel.Collection\u003CT\u003E collection, System.Collections.Generic.IEnumerable\u003CT\u003E items)",
+      "summary": "ExtensionMethods.AddRange",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.ObjectModel.Collection\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.Collection\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "AsSingleton(T)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CT\u003E AsSingleton\u003CT\u003E(T o)",
+      "summary": "ExtensionMethods.AsSingleton",
+      "params": [
+        {
+          "name": "o",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "CartesianProduct(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E CartesianProduct\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E sequences)",
+      "summary": "ExtensionMethods.CartesianProduct",
+      "params": [
+        {
+          "name": "sequences",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "Enumerate(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Utilities.ExtensionMethods.IIndexed\u003CT\u003E\u003E Enumerate\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E seq)",
+      "summary": "ExtensionMethods.Enumerate",
+      "params": [
+        {
+          "name": "seq",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Utilities.ExtensionMethods.IIndexed\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "GetAllTags(Dynamo.Utilities.ITree\u003CTNodeTag, TLeaf\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CTNodeTag\u003E GetAllTags\u003CTNodeTag, TLeaf\u003E(Dynamo.Utilities.ITree\u003CTNodeTag, TLeaf\u003E tree)",
+      "summary": "Returns all the tags of an ITree.",
+      "params": [
+        {
+          "name": "tree",
+          "type": "Dynamo.Utilities.ITree\u003CTNodeTag, TLeaf\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTNodeTag\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "GetChildNodeDoubleValue(System.Xml.XmlNode)",
+      "signature": "string GetChildNodeDoubleValue(System.Xml.XmlNode nodeElement)",
+      "summary": "ExtensionMethods.GetChildNodeDoubleValue",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "GetChildNodeStringValue(System.Xml.XmlNode)",
+      "signature": "string GetChildNodeStringValue(System.Xml.XmlNode nodeElement)",
+      "summary": "ExtensionMethods.GetChildNodeStringValue",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "GetFullName(System.Delegate)",
+      "signature": "string GetFullName(System.Delegate del)",
+      "summary": "ExtensionMethods.GetFullName",
+      "params": [
+        {
+          "name": "del",
+          "type": "System.Delegate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "GroupByRecursive(System.Collections.Generic.IEnumerable\u003CTLeaf\u003E, System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeKey\u003E\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.Utilities.IRecursiveGrouping\u003CDynamo.Utilities.IEither\u003CTNodeKey, System.Collections.Generic.IEnumerable\u003CTLeaf\u003E\u003E\u003E\u003E GroupByRecursive\u003CTLeaf, TNodeKey\u003E(System.Collections.Generic.IEnumerable\u003CTLeaf\u003E allLeaves, System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeKey\u003E\u003E keySelector)",
+      "summary": "Contructs a tree by recursively grouping elements from a sequence. Essentially, performs a GroupBy operation, and then for each Grouping, performs another GroupBy, assuming there is a GroupBy key available for the sub-group.",
+      "params": [
+        {
+          "name": "allLeaves",
+          "type": "System.Collections.Generic.IEnumerable\u003CTLeaf\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "keySelector",
+          "type": "System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeKey\u003E\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Utilities.IRecursiveGrouping\u003CDynamo.Utilities.IEither\u003CTNodeKey, System.Collections.Generic.IEnumerable\u003CTLeaf\u003E\u003E\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "GroupByRecursive(System.Collections.Generic.IEnumerable\u003CTLeaf\u003E, System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeKey\u003E\u003E, System.Func\u003CTNodeKey, System.Collections.Generic.IEnumerable\u003CTTree\u003E, System.Collections.Generic.IEnumerable\u003CTLeaf\u003E, TTree\u003E, TNodeKey)",
+      "signature": "TTree GroupByRecursive\u003CTLeaf, TNodeKey, TTree\u003E(System.Collections.Generic.IEnumerable\u003CTLeaf\u003E allLeaves, System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeKey\u003E\u003E keySelector, System.Func\u003CTNodeKey, System.Collections.Generic.IEnumerable\u003CTTree\u003E, System.Collections.Generic.IEnumerable\u003CTLeaf\u003E, TTree\u003E treeCreator, TNodeKey rootKey)",
+      "summary": "Contructs a tree by recursively grouping elements from a sequence. Essentially, performs a GroupBy operation, and then for each Grouping, performs another GroupBy, assuming there is a GroupBy key available for the sub-group.",
+      "params": [
+        {
+          "name": "allLeaves",
+          "type": "System.Collections.Generic.IEnumerable\u003CTLeaf\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "keySelector",
+          "type": "System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeKey\u003E\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "treeCreator",
+          "type": "System.Func\u003CTNodeKey, System.Collections.Generic.IEnumerable\u003CTTree\u003E, System.Collections.Generic.IEnumerable\u003CTLeaf\u003E, TTree\u003E",
+          "optional": false
+        },
+        {
+          "name": "rootKey",
+          "type": "TNodeKey",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TTree",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "IndexOf(System.Collections.Generic.IEnumerable\u003CT\u003E, T)",
+      "signature": "int IndexOf\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E source, T value)",
+      "summary": "Returns the index of an element in an IEnumerable",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "The IEnumerable",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "T",
+          "doc": "The value for which the index is sought",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Zero or greater if in the IEnumerable, otherwise -1"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "LongestSet(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E LongestSet\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E sequences)",
+      "summary": "Returns the longest list of arguments. For a set List of Lists like {a} {b1,b2,b3} {c1,c2} This will return a List of Lists of objects like: {a,b1,c1} {a,b2,c2} {a,b3,c2}",
+      "params": [
+        {
+          "name": "sequences",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "RemoveAll(System.Collections.ObjectModel.ObservableCollection\u003CT\u003E, System.Predicate\u003CT\u003E)",
+      "signature": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E RemoveAll\u003CT\u003E(System.Collections.ObjectModel.ObservableCollection\u003CT\u003E coll, System.Predicate\u003CT\u003E predicate)",
+      "summary": "An extension to the ObservableCollection class which allows you to remove all objects which don\u0027t pass a predicate method.",
+      "params": [
+        {
+          "name": "coll",
+          "type": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+          "doc": "The observable collection.",
+          "optional": false
+        },
+        {
+          "name": "predicate",
+          "type": "System.Predicate\u003CT\u003E",
+          "doc": "The predicate method.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "RemoveRange(System.Collections.ObjectModel.ObservableCollection\u003CT\u003E, int, int)",
+      "signature": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E RemoveRange\u003CT\u003E(System.Collections.ObjectModel.ObservableCollection\u003CT\u003E coll, int index, int count)",
+      "summary": "ExtensionMethods.RemoveRange",
+      "params": [
+        {
+          "name": "coll",
+          "type": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "ShortestSet(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E ShortestSet\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E sequences)",
+      "summary": "ExtensionMethods.ShortestSet",
+      "params": [
+        {
+          "name": "sequences",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "SingleSet(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E SingleSet\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E sequences)",
+      "summary": "ExtensionMethods.SingleSet",
+      "params": [
+        {
+          "name": "sequences",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "ToObservableCollection(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E ToObservableCollection\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E coll)",
+      "summary": "ExtensionMethods.ToObservableCollection",
+      "params": [
+        {
+          "name": "coll",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "ToTree(System.Collections.Generic.IEnumerable\u003CTLeaf\u003E, System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeTag\u003E\u003E, TNodeTag)",
+      "signature": "Dynamo.Utilities.ITree\u003CTNodeTag, TLeaf\u003E ToTree\u003CTNodeTag, TLeaf\u003E(System.Collections.Generic.IEnumerable\u003CTLeaf\u003E entries, System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeTag\u003E\u003E categorySelector, TNodeTag rootTag)",
+      "summary": "Contructs a tree by recursively grouping elements from a sequence. Essentially, performs a GroupBy operation, and then for each Grouping, performs another GroupBy, assuming there is a GroupBy key available for the sub-group.",
+      "params": [
+        {
+          "name": "entries",
+          "type": "System.Collections.Generic.IEnumerable\u003CTLeaf\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "categorySelector",
+          "type": "System.Func\u003CTLeaf, System.Collections.Generic.ICollection\u003CTNodeTag\u003E\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "rootTag",
+          "type": "TNodeTag",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.ITree\u003CTNodeTag, TLeaf\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

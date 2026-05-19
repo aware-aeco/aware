@@ -1,0 +1,140 @@
+{
+  "name": "PInvokeFunctionPointer",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type PInvokeFunctionPointer",
+  "base": "ProtoFFI.FFIFunctionPointer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs",
+  "constructors": [
+    {
+      "name": "PInvokeFunctionPointer(ProtoFFI.PInvokeDLLModule, string)",
+      "signature": "void PInvokeFunctionPointer(ProtoFFI.PInvokeDLLModule module, string name)",
+      "summary": "PInvokeFunctionPointer.PInvokeFunctionPointer",
+      "params": [
+        {
+          "name": "module",
+          "type": "ProtoFFI.PInvokeDLLModule",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    },
+    {
+      "name": "PInvokeFunctionPointer(ProtoFFI.PInvokeDLLModule, string, ProtoCore.Type)",
+      "signature": "void PInvokeFunctionPointer(ProtoFFI.PInvokeDLLModule module, string name, ProtoCore.Type returnType)",
+      "summary": "PInvokeFunctionPointer.PInvokeFunctionPointer",
+      "params": [
+        {
+          "name": "module",
+          "type": "ProtoFFI.PInvokeDLLModule",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    },
+    {
+      "name": "PInvokeFunctionPointer(ProtoFFI.PInvokeDLLModule, string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.Type)",
+      "signature": "void PInvokeFunctionPointer(ProtoFFI.PInvokeDLLModule module, string name, System.Collections.Generic.List\u003CProtoCore.Type\u003E argTypes, ProtoCore.Type returnType)",
+      "summary": "PInvokeFunctionPointer.PInvokeFunctionPointer",
+      "params": [
+        {
+          "name": "module",
+          "type": "ProtoFFI.PInvokeDLLModule",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argTypes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Execute(ProtoCore.Runtime.Context, ProtoCore.DSASM.Interpreter, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "object Execute(ProtoCore.Runtime.Context context, ProtoCore.DSASM.Interpreter dsi, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E newStack)",
+      "summary": "PInvokeFunctionPointer.Execute",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "optional": false
+        },
+        {
+          "name": "newStack",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Module",
+      "type": "ProtoFFI.PInvokeDLLModule",
+      "getter": true,
+      "setter": false,
+      "summary": "PInvokeFunctionPointer.Module",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PInvokeFunctionPointer.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/PInvokeFFI.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

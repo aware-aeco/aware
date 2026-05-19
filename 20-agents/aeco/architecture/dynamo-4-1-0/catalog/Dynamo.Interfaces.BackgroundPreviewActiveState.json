@@ -1,0 +1,41 @@
+{
+  "name": "BackgroundPreviewActiveState",
+  "namespace": "Dynamo.Interfaces",
+  "kind": "class",
+  "summary": "Represents data about active state of preview background",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs",
+  "constructors": [
+    {
+      "name": "BackgroundPreviewActiveState()",
+      "signature": "void BackgroundPreviewActiveState()",
+      "summary": "Initializes a new instance of class",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsActive",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Flag which indicates if background preview is active",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of background preview",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/IPreferences.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

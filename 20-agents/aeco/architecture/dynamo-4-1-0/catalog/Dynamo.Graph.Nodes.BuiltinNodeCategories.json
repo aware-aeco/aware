@@ -1,0 +1,13 @@
+{
+  "name": "BuiltinNodeCategories",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "static-class",
+  "summary": "Built-in Dynamo Categories. If you want your node to appear in one of the existing Dynamo categories, then use these constants. This ensures that if the names of the categories change down the road, your node will still be placed there.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeCategories.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

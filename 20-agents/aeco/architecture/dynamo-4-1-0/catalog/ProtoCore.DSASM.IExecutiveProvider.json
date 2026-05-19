@@ -1,0 +1,38 @@
+{
+  "name": "IExecutiveProvider",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "interface",
+  "summary": "Type IExecutiveProvider",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/IExecutive.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateExecutive(ProtoCore.RuntimeCore, bool)",
+      "signature": "ProtoCore.DSASM.Executive CreateExecutive(ProtoCore.RuntimeCore runtimeCore, bool isFep)",
+      "summary": "IExecutiveProvider.CreateExecutive",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "isFep",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.Executive",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/IExecutive.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

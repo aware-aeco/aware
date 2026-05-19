@@ -1,0 +1,76 @@
+{
+  "name": "StackValueComparer",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type StackValueComparer",
+  "interfaces": [
+    "System.Collections.Generic.IEqualityComparer\u003CProtoCore.DSASM.StackValue\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Heap.cs",
+  "constructors": [
+    {
+      "name": "StackValueComparer(ProtoCore.RuntimeCore)",
+      "signature": "void StackValueComparer(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "StackValueComparer.StackValueComparer",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(ProtoCore.DSASM.StackValue, ProtoCore.DSASM.StackValue)",
+      "signature": "bool Equals(ProtoCore.DSASM.StackValue x, ProtoCore.DSASM.StackValue y)",
+      "summary": "StackValueComparer.Equals",
+      "params": [
+        {
+          "name": "x",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "GetHashCode(ProtoCore.DSASM.StackValue)",
+      "signature": "int GetHashCode(ProtoCore.DSASM.StackValue value)",
+      "summary": "StackValueComparer.GetHashCode",
+      "params": [
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

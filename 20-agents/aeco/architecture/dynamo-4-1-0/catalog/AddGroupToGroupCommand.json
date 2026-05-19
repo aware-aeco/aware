@@ -1,0 +1,126 @@
+{
+  "name": "AddGroupToGroupCommand",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type AddGroupToGroupCommand",
+  "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "AddGroupToGroupCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E, System.Guid)",
+      "signature": "void AddGroupToGroupCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E modelGuid, System.Guid hostModelGuid)",
+      "summary": "Creates a command to add a AnnotationModel object to another AnnotationModel.",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "The guid of the AnnotationModel to group",
+          "optional": false
+        },
+        {
+          "name": "hostModelGuid",
+          "type": "System.Guid",
+          "doc": "The guid of the host AnnotationModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "AddGroupToGroupCommand(System.Guid, System.Guid)",
+      "signature": "void AddGroupToGroupCommand(System.Guid modelGuid, System.Guid hostModelGuid)",
+      "summary": "Creates a command to add a AnnotationModel object to another AnnotationModel.",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "System.Guid",
+          "doc": "The guid of the AnnotationModel to group",
+          "optional": false
+        },
+        {
+          "name": "hostModelGuid",
+          "type": "System.Guid",
+          "doc": "The guid of the host AnnotationModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "AddGroupToGroupCommand(string, string)",
+      "signature": "void AddGroupToGroupCommand(string modelGuid, string hostModelGuid)",
+      "summary": "Creates a command to add a AnnotationModel object to another AnnotationModel.",
+      "params": [
+        {
+          "name": "modelGuid",
+          "type": "string",
+          "doc": "The guid of the AnnotationModel to group",
+          "optional": false
+        },
+        {
+          "name": "hostModelGuid",
+          "type": "string",
+          "doc": "The guid of the host AnnotationModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteCore(Dynamo.Models.DynamoModel)",
+      "signature": "void ExecuteCore(Dynamo.Models.DynamoModel dynamoModel)",
+      "summary": "AddGroupToGroupCommand.ExecuteCore",
+      "params": [
+        {
+          "name": "dynamoModel",
+          "type": "Dynamo.Models.DynamoModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "AddGroupToGroupCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HostGroupGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Id of the the group that should host the other group.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

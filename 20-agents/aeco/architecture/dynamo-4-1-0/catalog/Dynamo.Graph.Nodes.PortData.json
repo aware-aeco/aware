@@ -1,0 +1,107 @@
+{
+  "name": "PortData",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "PortData stores information for port. It\u0027s used for constructing PortModel.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs",
+  "constructors": [
+    {
+      "name": "PortData(string, string)",
+      "signature": "void PortData(string name, string toolTipString)",
+      "summary": "Creates PortData.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "name of the port",
+          "optional": false
+        },
+        {
+          "name": "toolTipString",
+          "type": "string",
+          "doc": "Tooltip of the port",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "PortData(string, string, ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "void PortData(string name, string toolTipString, ProtoCore.AST.AssociativeAST.AssociativeNode defaultValue)",
+      "summary": "Creates PortData.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "name of the port",
+          "optional": false
+        },
+        {
+          "name": "toolTipString",
+          "type": "string",
+          "doc": "Tooltip of the port",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "Default value of the port",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultValue",
+      "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Default value of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Height of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "LineIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "This property is used in code block nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "ToolTipString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Tooltip of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

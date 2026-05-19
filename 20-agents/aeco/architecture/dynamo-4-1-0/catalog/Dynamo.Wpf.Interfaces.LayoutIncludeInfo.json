@@ -1,0 +1,49 @@
+{
+  "name": "LayoutIncludeInfo",
+  "namespace": "Dynamo.Wpf.Interfaces",
+  "kind": "class",
+  "summary": "Represents the information about the data type that needs to be included under a given LayoutElement.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs",
+  "constructors": [
+    {
+      "name": "LayoutIncludeInfo()",
+      "signature": "void LayoutIncludeInfo()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "iconUrl",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Relative or absolute URL of the icon for the corresponding library item",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "inclusive",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Checks if a new category to be created for its path. If the include path is \u0022A.B.C\u0022 under an element say \u0022Root\u0022 and for two nodes fully qualified name is \u0022A.B.C.D\u0022 and \u0022A.B.C.E\u0022, then by default inclusive is true that means there we will get a category \u0022C\u0022 under \u0022Root\u0022 element as parent and \u0022D\u0022 and \u0022E\u0022 as children. If inclusive is false then both \u0022D\u0022 and \u0022E\u0022 will be direct children of \u0022Root\u0022 and there won\u0027t be any intermediate element \u0022C\u0022.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    },
+    {
+      "name": "path",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Partial or full namespace to be included under a given layout element",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,599 @@
+{
+  "name": "CustomNodeManager",
+  "namespace": "Dynamo.Core",
+  "kind": "class",
+  "summary": "Manages instantiation of custom nodes. All custom nodes known to Dynamo should be stored with this type. This object implements late initialization of custom nodes by providing a single interface to initialize custom nodes.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [
+    "Dynamo.Graph.Nodes.CustomNodes.ICustomNodeSource",
+    "Dynamo.Graph.Nodes.CustomNodes.ICustomNodeManager",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs",
+  "constructors": [
+    {
+      "name": "CustomNodeManager(Dynamo.Graph.Nodes.NodeLoaders.NodeFactory, Dynamo.Migration.MigrationManager, Dynamo.Engine.LibraryServices)",
+      "signature": "void CustomNodeManager(Dynamo.Graph.Nodes.NodeLoaders.NodeFactory nodeFactory, Dynamo.Migration.MigrationManager migrationManager, Dynamo.Engine.LibraryServices libraryServices)",
+      "summary": "This function creates CustomNodeManager",
+      "params": [
+        {
+          "name": "nodeFactory",
+          "type": "Dynamo.Graph.Nodes.NodeLoaders.NodeFactory",
+          "doc": "NodeFactory",
+          "optional": false
+        },
+        {
+          "name": "migrationManager",
+          "type": "Dynamo.Migration.MigrationManager",
+          "doc": "MigrationManager",
+          "optional": false
+        },
+        {
+          "name": "libraryServices",
+          "type": "Dynamo.Engine.LibraryServices",
+          "doc": "LibraryServices",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddUninitializedCustomNode(string, bool, ref Dynamo.CustomNodeInfo)",
+      "signature": "bool AddUninitializedCustomNode(string file, bool isTestMode, ref Dynamo.CustomNodeInfo info)",
+      "summary": "Import a dyf file for eventual initialization.",
+      "params": [
+        {
+          "name": "file",
+          "type": "string",
+          "doc": "Path to a custom node file on disk.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "ref Dynamo.CustomNodeInfo",
+          "doc": "If the info was successfully processed, this parameter will be set to it. Otherwise, it will be set to null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True on success, false if the file could not be read properly."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "AddUninitializedCustomNodesInPath(string, bool, Dynamo.Graph.Workspaces.PackageInfo)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeInfo\u003E AddUninitializedCustomNodesInPath(string path, bool isTestMode, Dynamo.Graph.Workspaces.PackageInfo packageInfo)",
+      "summary": "Scans the given path for custom node files, retaining their information in the manager for later potential initialization. Should be used when packages load or reload customNodes.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "Path on disk to scan for custom nodes.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "packageInfo",
+          "type": "Dynamo.Graph.Workspaces.PackageInfo",
+          "doc": "Info about the package that requested this customNode to be loaded or to which the customNode belongs. Is PackageMember property will be true if this property is not null.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeInfo\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "AddUninitializedCustomNodesInPath(string, bool, bool)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeInfo\u003E AddUninitializedCustomNodesInPath(string path, bool isTestMode, bool isPackageMember)",
+      "summary": "Scans the given path for custom node files, retaining their information in the manager for later potential initialization.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "Path on disk to scan for custom nodes.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "isPackageMember",
+          "type": "bool",
+          "doc": "Indicates whether custom node comes from package or not.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeInfo\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "Contains(System.Guid)",
+      "signature": "bool Contains(System.Guid guid)",
+      "summary": "Returns true if the custom node\u0027s unique identifier is inside of the manager (initialized or not)",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "The FunctionId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "Contains(string)",
+      "signature": "bool Contains(string name)",
+      "summary": "Returns true if the custom node\u0027s name is inside the manager (initialized or not)",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the custom node.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "CreateCustomNodeInstance(System.Guid, string, bool)",
+      "signature": "Dynamo.Graph.Nodes.CustomNodes.Function CreateCustomNodeInstance(System.Guid id, string name, bool isTestMode)",
+      "summary": "Creates a new Custom Node Instance.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Identifier referring to a custom node definition.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name for the custom node to be instantiated, used for error recovery if the given id could not be found.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.CustomNodes.Function",
+        "doc": "Custom Node Instance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "CreateCustomNodeInstance(System.Guid, string, bool, Dynamo.CustomNodeDefinition, Dynamo.CustomNodeInfo)",
+      "signature": "Dynamo.Graph.Nodes.CustomNodes.Function CreateCustomNodeInstance(System.Guid id, string name, bool isTestMode, Dynamo.CustomNodeDefinition def, Dynamo.CustomNodeInfo info)",
+      "summary": "Creates a new Custom Node Instance.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Identifier referring to a custom node definition.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name for the custom node to be instantiated, used for error recovery if the given id could not be found.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "def",
+          "type": "Dynamo.CustomNodeDefinition",
+          "doc": "Custom node definition data",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Dynamo.CustomNodeInfo",
+          "doc": "Custom node information data",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.CustomNodes.Function",
+        "doc": "Custom Node Instance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Call this method to uninitialize all loaded custom node functions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "GetWorkspaceById(System.Guid)",
+      "signature": "Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel GetWorkspaceById(System.Guid customNodeId)",
+      "summary": "Returns custom node workspace by a specified custom node ID",
+      "params": [
+        {
+          "name": "customNodeId",
+          "type": "System.Guid",
+          "doc": "Custom node ID of a requested workspace",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel",
+        "doc": "Custom node workspace by a specified ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "GuidFromPath(string)",
+      "signature": "System.Guid GuidFromPath(string path)",
+      "summary": "Returns a function id from a guid assuming that the file is already loaded.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "OnCustomNodeRemoved(System.Guid)",
+      "signature": "void OnCustomNodeRemoved(System.Guid functionId)",
+      "summary": "CustomNodeManager.OnCustomNodeRemoved",
+      "params": [
+        {
+          "name": "functionId",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "OnDefinitionUpdated(Dynamo.CustomNodeDefinition)",
+      "signature": "void OnDefinitionUpdated(Dynamo.CustomNodeDefinition obj)",
+      "summary": "CustomNodeManager.OnDefinitionUpdated",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.CustomNodeDefinition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "OnInfoUpdated(Dynamo.CustomNodeInfo)",
+      "signature": "void OnInfoUpdated(Dynamo.CustomNodeInfo obj)",
+      "summary": "CustomNodeManager.OnInfoUpdated",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.CustomNodeInfo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "OpenCustomNodeWorkspace(System.Xml.XmlDocument, Dynamo.Graph.Workspaces.WorkspaceInfo, bool, ref Dynamo.Graph.Workspaces.WorkspaceModel)",
+      "signature": "bool OpenCustomNodeWorkspace(System.Xml.XmlDocument xmlDoc, Dynamo.Graph.Workspaces.WorkspaceInfo workspaceInfo, bool isTestMode, ref Dynamo.Graph.Workspaces.WorkspaceModel workspace)",
+      "summary": "Opens a Custom Node workspace from an XmlDocument, given a pre-constructed WorkspaceInfo.",
+      "params": [
+        {
+          "name": "xmlDoc",
+          "type": "System.Xml.XmlDocument",
+          "doc": "Xml content of workspace",
+          "optional": false
+        },
+        {
+          "name": "workspaceInfo",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceInfo",
+          "doc": "Workspace header describing the custom node file.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "workspace",
+          "type": "ref Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Boolean indicating if Custom Node Workspace opened."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "Remove(System.Guid)",
+      "signature": "void Remove(System.Guid guid)",
+      "summary": "Attempts to remove all traces of a particular custom node from Dynamo, assuming the node is not in a loaded workspace.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "Custom node identifier.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "TryGetCustomNodeData(System.Guid, string, bool, ref Dynamo.CustomNodeDefinition, ref Dynamo.CustomNodeInfo)",
+      "signature": "bool TryGetCustomNodeData(System.Guid id, string name, bool isTestMode, ref Dynamo.CustomNodeDefinition def, ref Dynamo.CustomNodeInfo info)",
+      "summary": "Attempts to get custom node info and definition data.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Identifier referring to a custom node definition.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name for the custom node to be instantiated, used for error recovery if the given id could not be found.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "def",
+          "type": "ref Dynamo.CustomNodeDefinition",
+          "doc": "Custom node definition data",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "ref Dynamo.CustomNodeInfo",
+          "doc": "Custom node information data",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "TryGetFunctionDefinition(System.Guid, bool, ref Dynamo.CustomNodeDefinition)",
+      "signature": "bool TryGetFunctionDefinition(System.Guid id, bool isTestMode, ref Dynamo.CustomNodeDefinition definition)",
+      "summary": "Returns the function definition from a guid.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "Custom node identifier.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "definition",
+          "type": "ref Dynamo.CustomNodeDefinition",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Boolean indicating if Custom Node Workspace defination is loaded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "TryGetFunctionWorkspace(System.Guid, bool, ref Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel)",
+      "signature": "bool TryGetFunctionWorkspace(System.Guid id, bool isTestMode, ref Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel ws)",
+      "summary": "Returns the function workspace from a guid",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The unique id for the node.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "Flag specifying whether or not this should operate in \u0022test mode\u0022.",
+          "optional": false
+        },
+        {
+          "name": "ws",
+          "type": "ref Dynamo.Graph.Workspaces.CustomNodeWorkspaceModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "The path to the node or null if it wasn\u0027t found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "TryGetFunctionWorkspace(System.Guid, bool, ref Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel)",
+      "signature": "bool TryGetFunctionWorkspace(System.Guid id, bool isTestMode, ref Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel ws)",
+      "summary": "Returns the function workspace.",
+      "params": [
+        {
+          "name": "id",
+          "type": "System.Guid",
+          "doc": "The identifier.",
+          "optional": false
+        },
+        {
+          "name": "isTestMode",
+          "type": "bool",
+          "doc": "if set to true [is test mode].",
+          "optional": false
+        },
+        {
+          "name": "ws",
+          "type": "ref Dynamo.Graph.Workspaces.ICustomNodeWorkspaceModel",
+          "doc": "The workspace.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Boolean indicating if Custom Node Workspace defination is loaded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LoadedDefinitions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.CustomNodeDefinition\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "CustomNodeDefinitions for all loaded custom nodes, in load order.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    },
+    {
+      "name": "LoadedWorkspaces",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Workspaces.CustomNodeWorkspaceModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "All loaded custom node workspaces.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "CustomNodeRemoved",
+      "delegate": "System.Action\u003CSystem.Guid\u003E",
+      "signature": "public event System.Action\u003CSystem.Guid\u003E CustomNodeRemoved",
+      "summary": "An event that is fired when a custom node is removed from Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DefinitionUpdated",
+      "delegate": "System.Action\u003CDynamo.CustomNodeDefinition\u003E",
+      "signature": "public event System.Action\u003CDynamo.CustomNodeDefinition\u003E DefinitionUpdated",
+      "summary": "An event that is fired when a definition is updated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "InfoUpdated",
+      "delegate": "System.Action\u003CDynamo.CustomNodeInfo\u003E",
+      "signature": "public event System.Action\u003CDynamo.CustomNodeInfo\u003E InfoUpdated",
+      "summary": "An event that is fired when new or updated info is available for a custom node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,85 @@
+{
+  "name": "DelegateBasedAsyncTask",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "class",
+  "summary": "DelegateBasedAsyncTask allows for a delegate or System.Action object to be scheduled for asynchronous execution on the ISchedulerThread.",
+  "base": "Dynamo.Scheduler.AsyncTask",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DelegateBasedAsyncTask.cs",
+  "constructors": [
+    {
+      "name": "DelegateBasedAsyncTask(Dynamo.Scheduler.IScheduler)",
+      "signature": "void DelegateBasedAsyncTask(Dynamo.Scheduler.IScheduler scheduler)",
+      "summary": "construct a new empty DelegateBasedAsyncTask",
+      "params": [
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.IScheduler",
+          "doc": "the scheduler to run the task on",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DelegateBasedAsyncTask.cs"
+    },
+    {
+      "name": "DelegateBasedAsyncTask(Dynamo.Scheduler.IScheduler, System.Action)",
+      "signature": "void DelegateBasedAsyncTask(Dynamo.Scheduler.IScheduler scheduler, System.Action action)",
+      "summary": "construct a new DelegateBasedAsyncTask by supplying an action delegate that will run on the scheduler specified",
+      "params": [
+        {
+          "name": "scheduler",
+          "type": "Dynamo.Scheduler.IScheduler",
+          "doc": "the scheduler to run the task on",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action",
+          "doc": "the action to perform when this task is executed",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DelegateBasedAsyncTask.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "HandleTaskCompletionCore",
+      "signature": "void HandleTaskCompletionCore()",
+      "summary": "DelegateBasedAsyncTask.HandleTaskCompletionCore",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DelegateBasedAsyncTask.cs"
+    },
+    {
+      "name": "HandleTaskExecutionCore",
+      "signature": "void HandleTaskExecutionCore()",
+      "summary": "DelegateBasedAsyncTask.HandleTaskExecutionCore",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DelegateBasedAsyncTask.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Priority",
+      "type": "Dynamo.Scheduler.AsyncTask.TaskPriority",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns priority of the Dynamo.Scheduler.DelegateBasedAsyncTask.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Scheduler/DelegateBasedAsyncTask.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

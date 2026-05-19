@@ -1,0 +1,42 @@
+{
+  "name": "AssemblyConfiguration",
+  "namespace": "Dynamo.Utilities",
+  "kind": "class",
+  "summary": "A tool for obtaining configuration values from the current Library.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/AssemblyConfiguration.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAppSetting(string)",
+      "signature": "string GetAppSetting(string key)",
+      "summary": "AssemblyConfiguration.GetAppSetting",
+      "params": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/AssemblyConfiguration.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Instance",
+      "type": "Dynamo.Utilities.AssemblyConfiguration",
+      "getter": true,
+      "setter": false,
+      "summary": "AssemblyConfiguration.Instance",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/AssemblyConfiguration.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

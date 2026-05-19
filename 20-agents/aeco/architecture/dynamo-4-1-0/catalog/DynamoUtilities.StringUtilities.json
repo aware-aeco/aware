@@ -1,0 +1,45 @@
+{
+  "name": "StringUtilities",
+  "namespace": "DynamoUtilities",
+  "kind": "class",
+  "summary": "String utilities",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/StringUtilities.cs",
+  "constructors": [
+    {
+      "name": "StringUtilities()",
+      "signature": "void StringUtilities()",
+      "summary": "StringUtilities.StringUtilities",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/StringUtilities.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CapitalizeFirstLetter(string)",
+      "signature": "string CapitalizeFirstLetter(string word)",
+      "summary": "Return the string with the first letter capitalized",
+      "params": [
+        {
+          "name": "word",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/StringUtilities.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

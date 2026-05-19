@@ -1,0 +1,342 @@
+{
+  "name": "FunctionCallNodeController\u003CT\u003E",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "Controller for nodes that act as function calls.",
+  "base": "Dynamo.Logging.LogSourceBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs",
+  "constructors": [
+    {
+      "name": "FunctionCallNodeController(T)",
+      "signature": "void FunctionCallNodeController(T definition)",
+      "summary": "Default constructor.",
+      "params": [
+        {
+          "name": "definition",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AssignIdentifiersForFunctionCall(Dynamo.Graph.Nodes.NodeModel, ProtoCore.AST.AssociativeAST.AssociativeNode, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void AssignIdentifiersForFunctionCall(Dynamo.Graph.Nodes.NodeModel model, ProtoCore.AST.AssociativeAST.AssociativeNode rhs, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E resultAst)",
+      "summary": "Produces AST that assigns all necessary Identifiers for the given NodeModel from the produced function call AST.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Model to produce AST for.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "AST for the function call. This will need to be used to assign all output port identifiers.",
+          "optional": false
+        },
+        {
+          "name": "resultAst",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Result accumulator: add all new output AST to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "BuildAst(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E BuildAst(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes)",
+      "summary": "Produces AST for a function call. Takes into account multi-outputs and partial application.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "NodeModel to produce an AST for.",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Arguments to the function call.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "BuildAstForPartialMultiOutput(Dynamo.Graph.Nodes.NodeModel, ProtoCore.AST.AssociativeAST.AssociativeNode, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void BuildAstForPartialMultiOutput(Dynamo.Graph.Nodes.NodeModel model, ProtoCore.AST.AssociativeAST.AssociativeNode rhs, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E resultAst)",
+      "summary": "Produces AST for a partial function application of a multi-output function.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "NodeModel to produce AST for.",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "doc": "AST representing the partial application. This will need to be used to assign all output port identifiers.",
+          "optional": false
+        },
+        {
+          "name": "resultAst",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Result accumulator: add all new output AST to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "BuildOutputAst(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void BuildOutputAst(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E resultAst)",
+      "summary": "Produces AST for the given NodeModel that will call the underlying Function and assign all Identifiers for the node.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "NodeModel to produce AST for.",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Arguments to the function call.",
+          "optional": false
+        },
+        {
+          "name": "resultAst",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Result accumulator: add all new output AST to this list.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Deserializes Controller information from XML.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "GetFunctionApplication(Dynamo.Graph.Nodes.NodeModel, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode GetFunctionApplication(Dynamo.Graph.Nodes.NodeModel model, System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E inputAstNodes)",
+      "summary": "Produces AST representing a function application for the given NodeModel, using the given arguments. This should not assign any of the node\u0027s identifiers.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to produce a function application for.",
+          "optional": false
+        },
+        {
+          "name": "inputAstNodes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "Arguments to the function application.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "InitializeInputs(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void InitializeInputs(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "Initialize all input ports on the given node based on the underlying function.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to initialize.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "InitializeOutputs(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void InitializeOutputs(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "Initialize all output ports on the given node based on the underlying function.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to initialize.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "OnSyncWithDefinitionStart(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnSyncWithDefinitionStart(Dynamo.Graph.Nodes.NodeModel obj)",
+      "summary": "Start syncing with its definition.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "OnSyncWithDefintionEnd(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void OnSyncWithDefintionEnd(Dynamo.Graph.Nodes.NodeModel obj)",
+      "summary": "Finish syncing with its definition.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "Serializes Controller information from XML.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "SyncNodeWithDefinition(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void SyncNodeWithDefinition(Dynamo.Graph.Nodes.NodeModel model)",
+      "summary": "Synchronizes a node with this controller, based on the underlying function.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Node to sync.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Definition",
+      "type": "T",
+      "getter": true,
+      "setter": true,
+      "summary": "A FunctionDescriptor describing the function that this controller will call.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name for nodes using this controller, based on the underlying FunctionDescriptor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    },
+    {
+      "name": "ReturnKeys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ReturnKeys for multi-output functions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "SyncWithDefinitionEnd",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E SyncWithDefinitionEnd",
+      "summary": "Event handler for the event when node finishes syncing with its definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SyncWithDefinitionStart",
+      "delegate": "System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "signature": "public event System.Action\u003CDynamo.Graph.Nodes.NodeModel\u003E SyncWithDefinitionStart",
+      "summary": "Event handler for the event when node starts syncing with its definition.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/FunctionCallNodeController.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

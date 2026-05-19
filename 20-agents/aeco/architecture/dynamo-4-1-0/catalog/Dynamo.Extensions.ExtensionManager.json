@@ -1,0 +1,217 @@
+{
+  "name": "ExtensionManager",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "This class handles registration, lookup, and disposal of extensions.",
+  "interfaces": [
+    "Dynamo.Extensions.IExtensionManager",
+    "Dynamo.Extensions.IServiceManager",
+    "System.IServiceProvider",
+    "System.IDisposable",
+    "Dynamo.Logging.ILogSource"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs",
+  "constructors": [
+    {
+      "name": "ExtensionManager()",
+      "signature": "void ExtensionManager()",
+      "summary": "Creates ExtensionManager.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "ExtensionManager(System.Collections.Generic.IEnumerable\u003Cstring\u003E)",
+      "signature": "void ExtensionManager(System.Collections.Generic.IEnumerable\u003Cstring\u003E directoriesToVerify)",
+      "summary": "Creates ExtensionManager with directories which require package certificate verification.",
+      "params": [
+        {
+          "name": "directoriesToVerify",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(Dynamo.Extensions.IExtension)",
+      "signature": "void Add(Dynamo.Extensions.IExtension extension)",
+      "summary": "Adds an extension to the current session.",
+      "params": [
+        {
+          "name": "extension",
+          "type": "Dynamo.Extensions.IExtension",
+          "doc": "Extension",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Disposes all the loaded extensions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "GetService(System.Type)",
+      "signature": "object GetService(System.Type serviceType)",
+      "summary": "Gets the service object of the specified type.",
+      "params": [
+        {
+          "name": "serviceType",
+          "type": "System.Type",
+          "doc": "Type of the service",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "The service object if registered else null"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "RegisterService(T)",
+      "signature": "string RegisterService\u003CT\u003E(T service)",
+      "summary": "Allows extension applications to register some specific service by its type. Only one service of a given type can be registered.",
+      "params": [
+        {
+          "name": "service",
+          "type": "T",
+          "doc": "The service object to register",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "A key for the registered service if registeration is successful else null."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "Remove(Dynamo.Extensions.IExtension)",
+      "signature": "void Remove(Dynamo.Extensions.IExtension extension)",
+      "summary": "Removes an extension from the current session.",
+      "params": [
+        {
+          "name": "extension",
+          "type": "Dynamo.Extensions.IExtension",
+          "doc": "Extension",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "Service",
+      "signature": "T Service\u003CT\u003E()",
+      "summary": "Gets the service object of the specified type.",
+      "params": [],
+      "returns": {
+        "type": "T",
+        "doc": "The service object if registered else null"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "UnregisterService(string)",
+      "signature": "bool UnregisterService\u003CT\u003E(string serviceKey)",
+      "summary": "Unregisters a service of given type registered with given key.",
+      "params": [
+        {
+          "name": "serviceKey",
+          "type": "string",
+          "doc": "The service key to ensure that only authorized client is unregistering this service type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ExtensionLoader",
+      "type": "Dynamo.Extensions.IExtensionLoader",
+      "getter": true,
+      "setter": false,
+      "summary": "This loader loads extensions in Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "Extensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection of registered extensions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    },
+    {
+      "name": "StorageAccessExtensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtensionStorageAccess\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the collection of registered extensions implementing IExtensionStorageAccess",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "ExtensionAdded",
+      "delegate": "System.Action\u003CDynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.IExtension\u003E ExtensionAdded",
+      "summary": "This event is fired when a new extension is added.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ExtensionRemoved",
+      "delegate": "System.Action\u003CDynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.IExtension\u003E ExtensionRemoved",
+      "summary": "This event is fired when a new extension is removed,",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "This event is fired when a message is logged.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

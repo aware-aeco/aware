@@ -1,0 +1,66 @@
+{
+  "name": "LibraryLoadFailedEventArgs",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type LibraryLoadFailedEventArgs",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs",
+  "constructors": [
+    {
+      "name": "LibraryLoadFailedEventArgs(string, string, bool)",
+      "signature": "void LibraryLoadFailedEventArgs(string libraryPath, string reason, bool throwOnFailure)",
+      "summary": "LibraryLoadFailedEventArgs.LibraryLoadFailedEventArgs",
+      "params": [
+        {
+          "name": "libraryPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "reason",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "throwOnFailure",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LibraryPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The path to the library that failed to load",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "Reason",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The reason that the library failed to load",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    },
+    {
+      "name": "ThrowOnFailure",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if the failure should result in an exception being thrown",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/LibraryServices.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,155 @@
+{
+  "name": "LinterExtensionBase",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Base class for all LinterExtensions",
+  "interfaces": [
+    "Dynamo.Extensions.IExtension",
+    "System.IDisposable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs",
+  "constructors": [
+    {
+      "name": "LinterExtensionBase()",
+      "signature": "void LinterExtensionBase()",
+      "summary": "LinterExtensionBase.LinterExtensionBase",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddLinterRule(Dynamo.Linting.Rules.LinterRule)",
+      "signature": "void AddLinterRule(Dynamo.Linting.Rules.LinterRule linterRule)",
+      "summary": "Add a LinterRule",
+      "params": [
+        {
+          "name": "linterRule",
+          "type": "Dynamo.Linting.Rules.LinterRule",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "LinterExtensionBase.Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "Ready(Dynamo.Extensions.ReadyParams)",
+      "signature": "void Ready(Dynamo.Extensions.ReadyParams sp)",
+      "summary": "LinterExtensionBase.Ready",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Dynamo.Extensions.ReadyParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "RemoveLinterRule(Dynamo.Linting.Rules.LinterRule)",
+      "signature": "void RemoveLinterRule(Dynamo.Linting.Rules.LinterRule linterRule)",
+      "summary": "Remove a LinterRule",
+      "params": [
+        {
+          "name": "linterRule",
+          "type": "Dynamo.Linting.Rules.LinterRule",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "Shutdown",
+      "signature": "void Shutdown()",
+      "summary": "LinterExtensionBase.Shutdown",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "Startup(Dynamo.Extensions.StartupParams)",
+      "signature": "void Startup(Dynamo.Extensions.StartupParams sp)",
+      "summary": "LinterExtensionBase.Startup",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Dynamo.Extensions.StartupParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsActive",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this linter currently active for the active workspace.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "LinterRules",
+      "type": "System.Collections.Generic.HashSet\u003CDynamo.Linting.Rules.LinterRule\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of the rules in this extension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "LinterExtensionBase.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "ReadyParamsRef",
+      "type": "Dynamo.Extensions.ReadyParams",
+      "getter": true,
+      "setter": false,
+      "summary": "LinterExtensionBase.ReadyParamsRef",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    },
+    {
+      "name": "UniqueId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "LinterExtensionBase.UniqueId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/LinterExtensionBase.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

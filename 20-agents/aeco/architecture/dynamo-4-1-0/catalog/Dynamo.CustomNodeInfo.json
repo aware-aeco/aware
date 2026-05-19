@@ -1,0 +1,136 @@
+{
+  "name": "CustomNodeInfo",
+  "namespace": "Dynamo",
+  "kind": "class",
+  "summary": "Basic information about a custom node.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs",
+  "constructors": [
+    {
+      "name": "CustomNodeInfo()",
+      "signature": "void CustomNodeInfo()",
+      "summary": "This function creates CustomNodeInfo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "CustomNodeInfo(System.Guid, string, string, string, string, bool)",
+      "signature": "void CustomNodeInfo(System.Guid functionId, string name, string category, string description, string path, bool isVisibleInDynamoLibrary)",
+      "summary": "This function creates CustomNodeInfo.",
+      "params": [
+        {
+          "name": "functionId",
+          "type": "System.Guid",
+          "doc": "Custom node unique ID",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Custom node name",
+          "optional": false
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "doc": "Custom node category",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "doc": "Custom node description",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "doc": "Path to custom node",
+          "optional": false
+        },
+        {
+          "name": "isVisibleInDynamoLibrary",
+          "type": "bool",
+          "doc": "Bool value controls the visibility in library search",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns custom node category",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns custom node description",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "FunctionId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns custom node unique ID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "IsPackageMember",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if custom node is part of the package. If true, then custom node is part of package manager.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "IsVisibleInDynamoLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if custom node is part of the library search. If true, then custom node is part of library search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns custom node name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "PackageInfo",
+      "type": "Dynamo.Graph.Workspaces.PackageInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Only valid if IsPackageMember is true. Can be used to identify which package requested this CustomNode to load.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    },
+    {
+      "name": "Path",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns path to custom node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Core/CustomNodeDefinition.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

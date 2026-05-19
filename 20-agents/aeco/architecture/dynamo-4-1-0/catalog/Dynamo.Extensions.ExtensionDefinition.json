@@ -1,0 +1,41 @@
+{
+  "name": "ExtensionDefinition",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Type ExtensionDefinition",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionDefinition.cs",
+  "constructors": [
+    {
+      "name": "ExtensionDefinition()",
+      "signature": "void ExtensionDefinition()",
+      "summary": "ExtensionDefinition.ExtensionDefinition",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionDefinition.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AssemblyPath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ExtensionDefinition.AssemblyPath",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionDefinition.cs"
+    },
+    {
+      "name": "TypeName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ExtensionDefinition.TypeName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Extensions/ExtensionDefinition.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

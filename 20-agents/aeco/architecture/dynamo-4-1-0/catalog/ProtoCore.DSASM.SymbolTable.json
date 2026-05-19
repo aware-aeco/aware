@@ -1,0 +1,268 @@
+{
+  "name": "SymbolTable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type SymbolTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs",
+  "constructors": [
+    {
+      "name": "SymbolTable(string, int)",
+      "signature": "void SymbolTable(string scopeName, int runtimeIndex)",
+      "summary": "SymbolTable.SymbolTable",
+      "params": [
+        {
+          "name": "scopeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "runtimeIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Append(ProtoCore.DSASM.SymbolNode)",
+      "signature": "int Append(ProtoCore.DSASM.SymbolNode node)",
+      "summary": "SymbolTable.Append",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "GetGlobalSize",
+      "signature": "int GetGlobalSize()",
+      "summary": "SymbolTable.GetGlobalSize",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "GetNodeForName(string)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.SymbolNode\u003E GetNodeForName(string name)",
+      "summary": "SymbolTable.GetNodeForName",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.SymbolNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "IndexOf(ProtoCore.DSASM.SymbolNode)",
+      "signature": "int IndexOf(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "SymbolTable.IndexOf",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "IndexOf(string)",
+      "signature": "int IndexOf(string name)",
+      "summary": "SymbolTable.IndexOf",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "IndexOf(string, int)",
+      "signature": "int IndexOf(string name, int classScope)",
+      "summary": "SymbolTable.IndexOf",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "IndexOf(string, int, int)",
+      "signature": "int IndexOf(string name, int classScope, int functionindex)",
+      "summary": "SymbolTable.IndexOf",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionindex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "IndexOfClass(string, int, int)",
+      "signature": "int IndexOfClass(string name, int classScope, int functionindex)",
+      "summary": "SymbolTable.IndexOfClass",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "classScope",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "functionindex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "Remove(ProtoCore.DSASM.SymbolNode)",
+      "signature": "bool Remove(ProtoCore.DSASM.SymbolNode node)",
+      "summary": "SymbolTable.Remove",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "UndefineSymbol(ProtoCore.DSASM.SymbolNode)",
+      "signature": "void UndefineSymbol(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "Method to undefine a symbol from the symboltable entry and cache",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RuntimeIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "SymbolTable.RuntimeIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "ScopeName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SymbolTable.ScopeName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "symbolList",
+      "type": "System.Collections.Generic.IDictionary\u003Cint, ProtoCore.DSASM.SymbolNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "SymbolTable.symbolList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

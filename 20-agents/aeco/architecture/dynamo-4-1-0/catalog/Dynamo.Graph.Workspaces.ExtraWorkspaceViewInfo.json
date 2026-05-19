@@ -1,0 +1,24 @@
+{
+  "name": "ExtraWorkspaceViewInfo",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Non view-specific container for additional view information required to fully construct a WorkspaceModel from JSON",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "ExtraWorkspaceViewInfo()",
+      "signature": "void ExtraWorkspaceViewInfo()",
+      "summary": "ExtraWorkspaceViewInfo.ExtraWorkspaceViewInfo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

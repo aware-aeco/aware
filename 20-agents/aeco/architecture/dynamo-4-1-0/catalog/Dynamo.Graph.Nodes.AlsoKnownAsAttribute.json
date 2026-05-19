@@ -1,0 +1,41 @@
+{
+  "name": "AlsoKnownAsAttribute",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "The AlsoKnownAs attribute allows the node implementor to define an array of names that this node might have had in the past.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs",
+  "constructors": [
+    {
+      "name": "AlsoKnownAsAttribute(string[])",
+      "signature": "void AlsoKnownAsAttribute(string[] values)",
+      "summary": "Constructs AlsoKnownAsAttribute with defined old names.",
+      "params": [
+        {
+          "name": "values",
+          "type": "string[]",
+          "doc": "Old names, that node used to have.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Values",
+      "type": "string[]",
+      "getter": true,
+      "setter": true,
+      "summary": "Old names, that node used to have.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/Attributes.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

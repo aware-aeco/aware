@@ -1,0 +1,13 @@
+{
+  "name": "CodeBlockUtils",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "static-class",
+  "summary": "Contains helper methods to adjust the contents of codeblock node.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/CodeBlockUtils.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

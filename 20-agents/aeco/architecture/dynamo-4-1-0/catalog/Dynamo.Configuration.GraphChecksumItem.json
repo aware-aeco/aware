@@ -1,0 +1,41 @@
+{
+  "name": "GraphChecksumItem",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "Represents the stringified version of the nodes connections from a graph",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/GraphChecksumItem.cs",
+  "constructors": [
+    {
+      "name": "GraphChecksumItem()",
+      "signature": "void GraphChecksumItem()",
+      "summary": "GraphChecksumItem.GraphChecksumItem",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/GraphChecksumItem.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Checksum",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphChecksumItem.Checksum",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/GraphChecksumItem.cs"
+    },
+    {
+      "name": "GraphId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphChecksumItem.GraphId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/GraphChecksumItem.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

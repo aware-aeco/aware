@@ -1,0 +1,34 @@
+{
+  "name": "NameNotFoundException",
+  "namespace": "ProtoCore.DSASM.Mirror",
+  "kind": "class",
+  "summary": "Type NameNotFoundException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs",
+  "constructors": [
+    {
+      "name": "NameNotFoundException()",
+      "signature": "void NameNotFoundException()",
+      "summary": "NameNotFoundException.NameNotFoundException",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NameNotFoundException.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

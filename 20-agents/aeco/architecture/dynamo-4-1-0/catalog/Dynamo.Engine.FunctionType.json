@@ -1,0 +1,38 @@
+{
+  "name": "FunctionType",
+  "namespace": "Dynamo.Engine",
+  "kind": "enum",
+  "summary": "The type of a function.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Library/FunctionType.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Constructor",
+      "value": 1
+    },
+    {
+      "name": "GenericFunction",
+      "value": 0
+    },
+    {
+      "name": "InstanceMethod",
+      "value": 3
+    },
+    {
+      "name": "InstanceProperty",
+      "value": 5
+    },
+    {
+      "name": "StaticMethod",
+      "value": 2
+    },
+    {
+      "name": "StaticProperty",
+      "value": 4
+    }
+  ]
+}

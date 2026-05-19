@@ -1,0 +1,70 @@
+{
+  "name": "ExternalAttributes",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type ExternalAttributes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "ExternalAttributes()",
+      "signature": "void ExternalAttributes()",
+      "summary": "ExternalAttributes.ExternalAttributes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAttribute(string, object)",
+      "signature": "void AddAttribute(string attribute, object value)",
+      "summary": "ExternalAttributes.AddAttribute",
+      "params": [
+        {
+          "name": "attribute",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "TryGetAttribute(string, ref object)",
+      "signature": "bool TryGetAttribute(string attribute, ref object value)",
+      "summary": "ExternalAttributes.TryGetAttribute",
+      "params": [
+        {
+          "name": "attribute",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ref object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

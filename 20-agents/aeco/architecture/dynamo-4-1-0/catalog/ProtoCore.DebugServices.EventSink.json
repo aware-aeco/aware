@@ -1,0 +1,24 @@
+{
+  "name": "EventSink",
+  "namespace": "ProtoCore.DebugServices",
+  "kind": "class",
+  "summary": "Type EventSink",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs",
+  "constructors": [
+    {
+      "name": "EventSink()",
+      "signature": "void EventSink()",
+      "summary": "EventSink.EventSink",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DebuggerProperties.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

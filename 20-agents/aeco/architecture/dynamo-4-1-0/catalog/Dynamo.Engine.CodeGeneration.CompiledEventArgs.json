@@ -1,0 +1,31 @@
+{
+  "name": "CompiledEventArgs",
+  "namespace": "Dynamo.Engine.CodeGeneration",
+  "kind": "class",
+  "summary": "This event is triggered when a NodeModel has been compiled to a list of AST nodes.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/CompiledEventArgs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AstNodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Built AST nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/CompiledEventArgs.cs"
+    },
+    {
+      "name": "NodeId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Guid of node that has been built to AST nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/CompiledEventArgs.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

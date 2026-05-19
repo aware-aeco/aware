@@ -1,0 +1,60 @@
+{
+  "name": "PermuteUtils",
+  "namespace": "ProtoCore.Namespace",
+  "kind": "static-class",
+  "summary": "Type PermuteUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AllButLast(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CT\u003E AllButLast\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E source)",
+      "summary": "Given a generic enumerable collection of items, returns all but the last item in the collection",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "input collection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+        "doc": "new collection of all except the last item in the input collection"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    },
+    {
+      "name": "Permute(System.Collections.Generic.IEnumerable\u003CT\u003E, int)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E Permute\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E list, int count)",
+      "summary": "Returns an enumeration of enumerators, one for each permutation of the input. E.g. given an input array: {A, B, C, D, E}, and count of 2, this returns the following permutations in the same order: { AB, AC, AD, AE, BC, BD, BE, CD, CE, DE }",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "doc": "input collection to choose permutations from",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "doc": "Number of items to return permutations of",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003CT\u003E\u003E",
+        "doc": "All possible permuatations of the input list picking (count) items at a time"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Namespace/SymbolTable.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

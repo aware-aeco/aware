@@ -1,0 +1,41 @@
+{
+  "name": "DynamoPlayerFolderGroup",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "This class defines a group of folders associated with a Dynamo Player or Generative Design entry point.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/DynamoPlayerFolder.cs",
+  "constructors": [
+    {
+      "name": "DynamoPlayerFolderGroup()",
+      "signature": "void DynamoPlayerFolderGroup()",
+      "summary": "DynamoPlayerFolderGroup.DynamoPlayerFolderGroup",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EntryPoint",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The name of the Player entry point",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    },
+    {
+      "name": "Folders",
+      "type": "System.Collections.Generic.List\u003CDynamo.Configuration.DynamoPlayerFolder\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "The List of Folder Items for this group",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Configuration/DynamoPlayerFolder.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

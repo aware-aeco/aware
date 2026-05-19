@@ -1,0 +1,94 @@
+{
+  "name": "GuidUtility",
+  "namespace": "Dynamo.Utilities",
+  "kind": "static-class",
+  "summary": "Helper methods for working with System.Guid.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Guid.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create(System.Guid, string)",
+      "signature": "System.Guid Create(System.Guid namespaceId, string name)",
+      "summary": "Creates a name-based UUID using the algorithm from RFC 4122 \u00A74.3.",
+      "remarks": "See Generating a deterministic GUID.",
+      "params": [
+        {
+          "name": "namespaceId",
+          "type": "System.Guid",
+          "doc": "The ID of the namespace.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name (within that namespace).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": "A UUID derived from the namespace and name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Guid.cs"
+    },
+    {
+      "name": "Create(System.Guid, string, int)",
+      "signature": "System.Guid Create(System.Guid namespaceId, string name, int version)",
+      "summary": "Creates a name-based UUID using the algorithm from RFC 4122 \u00A74.3.",
+      "remarks": "See Generating a deterministic GUID.",
+      "params": [
+        {
+          "name": "namespaceId",
+          "type": "System.Guid",
+          "doc": "The ID of the namespace.",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name (within that namespace).",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "doc": "The version number of the UUID to create; this value must be either 3 (for MD5 hashing) or 5 (for SHA-1 hashing).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": "A UUID derived from the namespace and name."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Guid.cs"
+    },
+    {
+      "name": "tryParseOrCreateGuid(string)",
+      "signature": "System.Guid tryParseOrCreateGuid(string idstring)",
+      "summary": "attempts to parse a string into a guid - if this fails, uses the create method to create a deterministic UUID.",
+      "params": [
+        {
+          "name": "idstring",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Guid.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

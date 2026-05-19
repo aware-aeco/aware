@@ -1,0 +1,373 @@
+{
+  "name": "BuildStatus",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type BuildStatus",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [
+    {
+      "name": "BuildStatus(ProtoCore.Core, System.IO.TextWriter, bool)",
+      "signature": "void BuildStatus(ProtoCore.Core core, System.IO.TextWriter writer, bool errorAsWarning)",
+      "summary": "BuildStatus.BuildStatus",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        },
+        {
+          "name": "writer",
+          "type": "System.IO.TextWriter",
+          "optional": false
+        },
+        {
+          "name": "errorAsWarning",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClearErrors",
+      "signature": "void ClearErrors()",
+      "summary": "BuildStatus.ClearErrors",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "ClearWarnings",
+      "signature": "void ClearWarnings()",
+      "summary": "BuildStatus.ClearWarnings",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "ClearWarningsForAst(int)",
+      "signature": "void ClearWarningsForAst(int astID)",
+      "summary": "BuildStatus.ClearWarningsForAst",
+      "params": [
+        {
+          "name": "astID",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "ClearWarningsForGraph(System.Guid)",
+      "signature": "void ClearWarningsForGraph(System.Guid guid)",
+      "summary": "BuildStatus.ClearWarningsForGraph",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "LogDeprecatedMethodWarning(string, string)",
+      "signature": "void LogDeprecatedMethodWarning(string oldMethodName, string newMethodName)",
+      "summary": "BuildStatus.LogDeprecatedMethodWarning",
+      "params": [
+        {
+          "name": "oldMethodName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "newMethodName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "LogSemanticError(string, string, int, int, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void LogSemanticError(string msg, string fileName, int line, int col, ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "BuildStatus.LogSemanticError",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "LogSymbolConflictWarning(string, string[])",
+      "signature": "void LogSymbolConflictWarning(string symbolName, string[] collidingSymbolNames)",
+      "summary": "Logs the warning where the usage of a symbol (symbolName) cannot be resolved because it collides with multiple symbols(collidingSymbolNames)",
+      "params": [
+        {
+          "name": "symbolName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "collidingSymbolNames",
+          "type": "string[]",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "LogSyntaxError(string, string, int, int)",
+      "signature": "void LogSyntaxError(string msg, string fileName, int line, int col)",
+      "summary": "BuildStatus.LogSyntaxError",
+      "params": [
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "LogUnboundVariableWarning(ProtoCore.DSASM.SymbolNode, string, string, int, int, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void LogUnboundVariableWarning(ProtoCore.DSASM.SymbolNode unboundSymbol, string message, string fileName, int line, int col, ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "Logs the unbound variable warning and sets the unbound symbol",
+      "params": [
+        {
+          "name": "unboundSymbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "LogWarning(ProtoCore.BuildData.WarningID, string, string, int, int, ProtoCore.AssociativeGraph.GraphNode, ProtoCore.DSASM.SymbolNode)",
+      "signature": "void LogWarning(ProtoCore.BuildData.WarningID warningID, string message, string fileName, int line, int col, ProtoCore.AssociativeGraph.GraphNode graphNode, ProtoCore.DSASM.SymbolNode associatedSymbol)",
+      "summary": "BuildStatus.LogWarning",
+      "params": [
+        {
+          "name": "warningID",
+          "type": "ProtoCore.BuildData.WarningID",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "line",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        },
+        {
+          "name": "associatedSymbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "RemoveUnboundVariableWarnings(System.Collections.Generic.HashSet\u003CProtoCore.DSASM.SymbolNode\u003E)",
+      "signature": "void RemoveUnboundVariableWarnings(System.Collections.Generic.HashSet\u003CProtoCore.DSASM.SymbolNode\u003E symbolList)",
+      "summary": "Remove unbound variable warnings that match all symbols in the symbolList",
+      "params": [
+        {
+          "name": "symbolList",
+          "type": "System.Collections.Generic.HashSet\u003CProtoCore.DSASM.SymbolNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "ReportBuildResult",
+      "signature": "void ReportBuildResult()",
+      "summary": "BuildStatus.ReportBuildResult",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BuildSucceeded",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "BuildStatus.BuildSucceeded",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "ErrorCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "BuildStatus.ErrorCount",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "Errors",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.ErrorEntry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "BuildStatus.Errors",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "MessageHandler",
+      "type": "ProtoCore.IOutputStream",
+      "getter": true,
+      "setter": true,
+      "summary": "BuildStatus.MessageHandler",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "WarningCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "BuildStatus.WarningCount",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    },
+    {
+      "name": "Warnings",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.WarningEntry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "BuildStatus.Warnings",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

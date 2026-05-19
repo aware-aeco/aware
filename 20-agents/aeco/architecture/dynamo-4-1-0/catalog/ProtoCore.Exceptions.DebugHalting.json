@@ -1,0 +1,25 @@
+{
+  "name": "DebugHalting",
+  "namespace": "ProtoCore.Exceptions",
+  "kind": "class",
+  "summary": "Type DebugHalting",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/DebugHalting.cs",
+  "constructors": [
+    {
+      "name": "DebugHalting()",
+      "signature": "void DebugHalting()",
+      "summary": "DebugHalting.DebugHalting",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Exceptions/DebugHalting.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

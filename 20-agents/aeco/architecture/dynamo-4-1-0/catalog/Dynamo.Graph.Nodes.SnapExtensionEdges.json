@@ -1,0 +1,26 @@
+{
+  "name": "SnapExtensionEdges",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Returns one of the possible values(none, top, bottom) where a port can be snapped.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/NodeModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Bottom",
+      "value": 2
+    },
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Top",
+      "value": 1
+    }
+  ]
+}

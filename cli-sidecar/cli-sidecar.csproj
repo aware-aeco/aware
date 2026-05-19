@@ -68,6 +68,15 @@
   <ItemGroup>
     <Compile Remove="Tests\**\*.cs" />
     <Compile Remove="Ingest\Generator\Tests\**\*.cs" />
+    <!-- Dynamo extractor (Phase B B11) caches an extracted source archive under
+         Ingest\Output\dynamo-nupkg\source-archive\Dynamo-<ref>\ on the build host so it
+         can scan .cs files for type-declaration positions. The .cs / .resx / .csproj
+         files in there would otherwise be picked up by the SDK's globbing — exclude them
+         from the sidecar's build. -->
+    <Compile Remove="Ingest\Output\**\*.cs" />
+    <EmbeddedResource Remove="Ingest\Output\**\*.resx" />
+    <None Remove="Ingest\Output\**\*.csproj" />
+    <None Remove="Ingest\Output\**\*.resx" />
   </ItemGroup>
 
 </Project>

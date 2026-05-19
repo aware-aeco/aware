@@ -1,0 +1,108 @@
+{
+  "name": "DSVarArgFunction",
+  "namespace": "Dynamo.Graph.Nodes.ZeroTouch",
+  "kind": "class",
+  "summary": "DesignScript var-arg function node. All functions from DesignScript share the same function node but internally have different procedure.",
+  "base": "Dynamo.Graph.Nodes.ZeroTouch.DSFunctionBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs",
+  "constructors": [
+    {
+      "name": "DSVarArgFunction(Dynamo.Engine.FunctionDescriptor)",
+      "signature": "void DSVarArgFunction(Dynamo.Engine.FunctionDescriptor descriptor)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.ZeroTouch.DSVarArgFunction class.",
+      "params": [
+        {
+          "name": "descriptor",
+          "type": "Dynamo.Engine.FunctionDescriptor",
+          "doc": "Function descritor.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "DSVarArgFunction.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "DSVarArgFunction.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FunctionSignature",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The function name with required parameters.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    },
+    {
+      "name": "FunctionType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "It indicates which of the three types of function calls this node represents, a call to an external graph, a call to a function with a vararg argument, or a standard function.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    },
+    {
+      "name": "NodeType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The NodeType property provides a name which maps to the server type for the node. This property should only be used for serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    },
+    {
+      "name": "VarInputController",
+      "type": "Dynamo.Graph.Nodes.VariableInputNodeController",
+      "getter": true,
+      "setter": false,
+      "summary": "Custom VariableInput controller for DSVarArgFunctions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Graph/Nodes/ZeroTouch/DSVarArgFunction.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

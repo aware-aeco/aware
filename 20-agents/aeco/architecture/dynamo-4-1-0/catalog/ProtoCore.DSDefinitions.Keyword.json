@@ -1,0 +1,13 @@
+{
+  "name": "Keyword",
+  "namespace": "ProtoCore.DSDefinitions",
+  "kind": "struct",
+  "summary": "Type Keyword",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/DSDefinitions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

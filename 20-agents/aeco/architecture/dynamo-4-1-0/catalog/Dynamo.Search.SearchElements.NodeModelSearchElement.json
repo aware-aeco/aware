@@ -1,0 +1,37 @@
+{
+  "name": "NodeModelSearchElement",
+  "namespace": "Dynamo.Search.SearchElements",
+  "kind": "class",
+  "summary": "Search element for basic NodeModels.",
+  "base": "Dynamo.Search.SearchElements.NodeModelSearchElementBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeModelSearchElement.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConstructNewNodeModel",
+      "signature": "Dynamo.Graph.Nodes.NodeModel ConstructNewNodeModel()",
+      "summary": "NodeModelSearchElement.ConstructNewNodeModel",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Graph.Nodes.NodeModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeModelSearchElement.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CreationName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "NodeModelSearchElement.CreationName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Search/SearchElements/NodeModelSearchElement.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

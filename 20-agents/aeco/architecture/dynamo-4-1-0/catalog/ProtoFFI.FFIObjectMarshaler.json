@@ -1,0 +1,170 @@
+{
+  "name": "FFIObjectMarshaler",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "This class is responsible for marshaling of FFI objects to DS world and vice-versa.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [
+    {
+      "name": "FFIObjectMarshaler()",
+      "signature": "void FFIObjectMarshaler()",
+      "summary": "FFIObjectMarshaler.FFIObjectMarshaler",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMarshaledType(System.Type)",
+      "signature": "ProtoCore.Type GetMarshaledType(System.Type type)",
+      "summary": "Returns the marshaled Type of DS object for a given FFI object type",
+      "params": [
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "Type of FFI object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.Type",
+        "doc": "Type of DS object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetStringValue(ProtoCore.DSASM.StackValue)",
+      "signature": "string GetStringValue(ProtoCore.DSASM.StackValue dsObject)",
+      "summary": "Returns a string representation for given DS object",
+      "params": [
+        {
+          "name": "dsObject",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "DS Object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "string representation of a DS object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "Marshal(object, ProtoCore.Runtime.Context, ProtoCore.DSASM.Interpreter, ProtoCore.Type)",
+      "signature": "ProtoCore.DSASM.StackValue Marshal(object obj, ProtoCore.Runtime.Context context, ProtoCore.DSASM.Interpreter dsi, ProtoCore.Type type)",
+      "summary": "Marshales a given FFI object to DS Object of given ProtoCore.Type",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "doc": "The FFI object",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "DS execution context",
+          "optional": false
+        },
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "doc": "The current runtime interpreter",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "doc": "Type of DS Object expected",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": "Marshaled object as Operand"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "OnDispose(ProtoCore.DSASM.StackValue, ProtoCore.Runtime.Context, ProtoCore.DSASM.Interpreter)",
+      "signature": "void OnDispose(ProtoCore.DSASM.StackValue dsObject, ProtoCore.Runtime.Context context, ProtoCore.DSASM.Interpreter dsi)",
+      "summary": "This is a callback method called when the given DS object is disposed. Marshaler gets an opportunity to clear the cache related to the given DS object.",
+      "params": [
+        {
+          "name": "dsObject",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "DS object being disposed",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "DS execution context",
+          "optional": false
+        },
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "doc": "The current runtime interpreter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "UnMarshal(ProtoCore.DSASM.StackValue, ProtoCore.Runtime.Context, ProtoCore.DSASM.Interpreter, System.Type)",
+      "signature": "object UnMarshal(ProtoCore.DSASM.StackValue dsObject, ProtoCore.Runtime.Context context, ProtoCore.DSASM.Interpreter dsi, System.Type type)",
+      "summary": "UnMarshales a given DS object to FFI object of given System.Type",
+      "params": [
+        {
+          "name": "dsObject",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "The DS object",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "DS execution context",
+          "optional": false
+        },
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "doc": "The current runtime interpreter",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "System.Type",
+          "doc": "Type of FFI object expected",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Unmarshaled FFI object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

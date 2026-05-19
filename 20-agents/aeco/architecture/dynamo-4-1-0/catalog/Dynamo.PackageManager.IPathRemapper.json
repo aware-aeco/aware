@@ -1,0 +1,40 @@
+{
+  "name": "IPathRemapper",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "interface",
+  "summary": "A simplified interface for remapping the file path of a CustomNodeWorkspace. Useful for when a custom node will be moved by a package creation operation.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/CustomNodePathRemapper.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SetPath(string, string)",
+      "signature": "bool SetPath(string originalPath, string newDirectoryPath)",
+      "summary": "Remap the custom node path",
+      "params": [
+        {
+          "name": "originalPath",
+          "type": "string",
+          "doc": "The original path",
+          "optional": false
+        },
+        {
+          "name": "newDirectoryPath",
+          "type": "string",
+          "doc": "The final directory path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "If successful, returns true"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoPackages/Interfaces/CustomNodePathRemapper.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

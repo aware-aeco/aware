@@ -1,0 +1,54 @@
+{
+  "name": "IAstNodeContainer",
+  "namespace": "Dynamo.Engine.CodeGeneration",
+  "kind": "interface",
+  "summary": "Returns notification for AST compilation events.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/IAstNodeContainer.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnCompiled(System.Guid, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void OnCompiled(System.Guid nodeGuid, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E astNodes)",
+      "summary": "Indicates a NodeModel has been compiled to AST nodes.",
+      "params": [
+        {
+          "name": "nodeGuid",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "astNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/IAstNodeContainer.cs"
+    },
+    {
+      "name": "OnCompiling(System.Guid)",
+      "signature": "void OnCompiling(System.Guid nodeGuid)",
+      "summary": "Indicates to start compiling a NodeModel to AST nodes.",
+      "params": [
+        {
+          "name": "nodeGuid",
+          "type": "System.Guid",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Engine/CodeGeneration/IAstNodeContainer.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

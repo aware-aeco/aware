@@ -1,0 +1,105 @@
+{
+  "name": "MethodAttributes",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "class",
+  "summary": "Type MethodAttributes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [
+    {
+      "name": "MethodAttributes(bool, bool, string)",
+      "signature": "void MethodAttributes(bool hiddenInLibrary, bool canUpdatePeriodically, string msg)",
+      "summary": "MethodAttributes.MethodAttributes",
+      "params": [
+        {
+          "name": "hiddenInLibrary",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "canUpdatePeriodically",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AllowArrayPromotion",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.AllowArrayPromotion",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "CanUpdatePeriodically",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.CanUpdatePeriodically",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns/Sets description for the method.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "HiddenInLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.HiddenInLibrary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "IsLacingDisabled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.IsLacingDisabled",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "IsObsolete",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.IsObsolete",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ObsoleteMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.ObsoleteMessage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ReturnKeys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodAttributes.ReturnKeys",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

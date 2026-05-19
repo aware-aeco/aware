@@ -1,0 +1,41 @@
+{
+  "name": "LayoutSection",
+  "namespace": "Dynamo.Wpf.Interfaces",
+  "kind": "class",
+  "summary": "Represents a section element, which is the root element in the library view",
+  "base": "Dynamo.Wpf.Interfaces.LayoutElement",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs",
+  "constructors": [
+    {
+      "name": "LayoutSection(string)",
+      "signature": "void LayoutSection(string text)",
+      "summary": "Default constructor",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "Text value of the element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "showHeader",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Sections may have headers displayed or hidden. If the header is shown the section is collapsible, otheriwse its always expanded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Interfaces/LayoutSpecification.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

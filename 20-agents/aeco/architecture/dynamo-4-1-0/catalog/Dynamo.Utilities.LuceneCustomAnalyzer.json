@@ -1,0 +1,61 @@
+{
+  "name": "LuceneCustomAnalyzer",
+  "namespace": "Dynamo.Utilities",
+  "kind": "class",
+  "summary": "Due that the Lucene StandardAnalyzer removes special characters/words like \u0022\u002B\u0022, \u0022*\u0022, \u0022And\u0022 then we had to implement a Custom Analyzer that support that that kind of search terms",
+  "base": "Lucene.Net.Analysis.Analyzer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Utilities/LuceneSearchUtility.cs",
+  "constructors": [
+    {
+      "name": "LuceneCustomAnalyzer(Lucene.Net.Util.LuceneVersion, string)",
+      "signature": "void LuceneCustomAnalyzer(Lucene.Net.Util.LuceneVersion matchVersion, string language)",
+      "summary": "LuceneCustomAnalyzer.LuceneCustomAnalyzer",
+      "params": [
+        {
+          "name": "matchVersion",
+          "type": "Lucene.Net.Util.LuceneVersion",
+          "optional": false
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Utilities/LuceneSearchUtility.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateComponents(string, System.IO.TextReader)",
+      "signature": "Lucene.Net.Analysis.TokenStreamComponents CreateComponents(string fieldName, System.IO.TextReader reader)",
+      "summary": "LuceneCustomAnalyzer.CreateComponents",
+      "params": [
+        {
+          "name": "fieldName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "reader",
+          "type": "System.IO.TextReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Lucene.Net.Analysis.TokenStreamComponents",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Utilities/LuceneSearchUtility.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

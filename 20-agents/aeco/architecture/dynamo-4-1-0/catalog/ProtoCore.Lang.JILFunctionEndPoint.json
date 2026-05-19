@@ -1,0 +1,105 @@
+{
+  "name": "JILFunctionEndPoint",
+  "namespace": "ProtoCore.Lang",
+  "kind": "class",
+  "summary": "Type JILFunctionEndPoint",
+  "base": "ProtoCore.FunctionEndPoint",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs",
+  "constructors": [
+    {
+      "name": "JILFunctionEndPoint()",
+      "signature": "void JILFunctionEndPoint()",
+      "summary": "JILFunctionEndPoint.JILFunctionEndPoint",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs"
+    },
+    {
+      "name": "JILFunctionEndPoint(ProtoCore.Lang.JILActivationRecord)",
+      "signature": "void JILFunctionEndPoint(ProtoCore.Lang.JILActivationRecord activation)",
+      "summary": "JILFunctionEndPoint.JILFunctionEndPoint",
+      "params": [
+        {
+          "name": "activation",
+          "type": "ProtoCore.Lang.JILActivationRecord",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DoesPredicateMatch(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E)",
+      "signature": "bool DoesPredicateMatch(ProtoCore.Runtime.Context c, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions)",
+      "summary": "JILFunctionEndPoint.DoesPredicateMatch",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs"
+    },
+    {
+      "name": "Execute(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue Execute(ProtoCore.Runtime.Context c, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParameters, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "JILFunctionEndPoint.Execute",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParameters",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Lang/JILFunctionEndPoint.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "ITree\u003CTNodeTag, TLeaf\u003E",
+  "namespace": "Dynamo.Utilities",
+  "kind": "interface",
+  "summary": "A tree that has a tag, leaves, and subtrees.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Leaves",
+      "type": "System.Collections.Generic.IEnumerable\u003CTLeaf\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ITree.Leaves",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "SubTrees",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Utilities.ITree\u003CTNodeTag, TLeaf\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ITree.SubTrees",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    },
+    {
+      "name": "Tag",
+      "type": "TNodeTag",
+      "getter": true,
+      "setter": false,
+      "summary": "ITree.Tag",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/EnumerableExtensions.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

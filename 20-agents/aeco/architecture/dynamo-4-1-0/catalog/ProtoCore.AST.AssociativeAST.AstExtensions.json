@@ -1,0 +1,451 @@
+{
+  "name": "AstExtensions",
+  "namespace": "ProtoCore.AST.AssociativeAST",
+  "kind": "static-class",
+  "summary": "Type AstExtensions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToImperativeAST(ProtoCore.AST.AssociativeAST.AssociativeNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ImperativeNode ToImperativeAST(ProtoCore.AST.AssociativeAST.AssociativeNode aNode)",
+      "summary": "AstExtensions.ToImperativeAST",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ImperativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.ArrayNameNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ArrayNameNode ToImperativeNode(ProtoCore.AST.AssociativeAST.ArrayNameNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.ArrayNameNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ArrayNameNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.ArrayNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ArrayNode ToImperativeNode(ProtoCore.AST.AssociativeAST.ArrayNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.ArrayNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ArrayNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.BinaryExpressionNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.BinaryExpressionNode ToImperativeNode(ProtoCore.AST.AssociativeAST.BinaryExpressionNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.BinaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.BinaryExpressionNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.BooleanNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.BooleanNode ToImperativeNode(ProtoCore.AST.AssociativeAST.BooleanNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.BooleanNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.BooleanNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.CharNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.CharNode ToImperativeNode(ProtoCore.AST.AssociativeAST.CharNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.CharNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.CharNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.CodeBlockNode ToImperativeNode(ProtoCore.AST.AssociativeAST.CodeBlockNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.CodeBlockNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.DoubleNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.DoubleNode ToImperativeNode(ProtoCore.AST.AssociativeAST.DoubleNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.DoubleNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.DoubleNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.ExprListNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ExprListNode ToImperativeNode(ProtoCore.AST.AssociativeAST.ExprListNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.ExprListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ExprListNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.FunctionCallNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.FunctionCallNode ToImperativeNode(ProtoCore.AST.AssociativeAST.FunctionCallNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.FunctionCallNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.FunctionCallNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.GroupExpressionNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.GroupExpressionNode ToImperativeNode(ProtoCore.AST.AssociativeAST.GroupExpressionNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.GroupExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.GroupExpressionNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.IdentifierListNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.IdentifierListNode ToImperativeNode(ProtoCore.AST.AssociativeAST.IdentifierListNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.IdentifierListNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.IdentifierNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.IdentifierNode ToImperativeNode(ProtoCore.AST.AssociativeAST.IdentifierNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.IdentifierNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.InlineConditionalNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.InlineConditionalNode ToImperativeNode(ProtoCore.AST.AssociativeAST.InlineConditionalNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.InlineConditionalNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.InlineConditionalNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.IntNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.IntNode ToImperativeNode(ProtoCore.AST.AssociativeAST.IntNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.IntNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.IntNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.LanguageBlockNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.LanguageBlockNode ToImperativeNode(ProtoCore.AST.AssociativeAST.LanguageBlockNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.LanguageBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.LanguageBlockNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.NullNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.NullNode ToImperativeNode(ProtoCore.AST.AssociativeAST.NullNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.NullNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.NullNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.RangeExprNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.RangeExprNode ToImperativeNode(ProtoCore.AST.AssociativeAST.RangeExprNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.RangeExprNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.RangeExprNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.StringNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.StringNode ToImperativeNode(ProtoCore.AST.AssociativeAST.StringNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.StringNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.StringNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.TypedIdentifierNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.TypedIdentifierNode ToImperativeNode(ProtoCore.AST.AssociativeAST.TypedIdentifierNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.TypedIdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.TypedIdentifierNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.AssociativeAST.UnaryExpressionNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.UnaryExpressionNode ToImperativeNode(ProtoCore.AST.AssociativeAST.UnaryExpressionNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.AssociativeAST.UnaryExpressionNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.UnaryExpressionNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.ImperativeAST.BreakNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.BreakNode ToImperativeNode(ProtoCore.AST.ImperativeAST.BreakNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.ImperativeAST.BreakNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.BreakNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    },
+    {
+      "name": "ToImperativeNode(ProtoCore.AST.ImperativeAST.ContinueNode)",
+      "signature": "ProtoCore.AST.ImperativeAST.ContinueNode ToImperativeNode(ProtoCore.AST.ImperativeAST.ContinueNode aNode)",
+      "summary": "AstExtensions.ToImperativeNode",
+      "params": [
+        {
+          "name": "aNode",
+          "type": "ProtoCore.AST.ImperativeAST.ContinueNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.ImperativeAST.ContinueNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/Engine/ProtoCore/Parser/AssociativeAST.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

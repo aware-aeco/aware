@@ -1,0 +1,94 @@
+{
+  "name": "Thickness",
+  "namespace": "Dynamo.Utilities",
+  "kind": "struct",
+  "summary": "Type Thickness",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs",
+  "constructors": [
+    {
+      "name": "Thickness(double)",
+      "signature": "void Thickness(double thickness)",
+      "summary": "Thickness.Thickness",
+      "params": [
+        {
+          "name": "thickness",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs"
+    },
+    {
+      "name": "Thickness(double, double, double, double)",
+      "signature": "void Thickness(double left, double top, double right, double bottom)",
+      "summary": "Thickness.Thickness",
+      "params": [
+        {
+          "name": "left",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Bottom",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness.Bottom",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs"
+    },
+    {
+      "name": "Left",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness.Left",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs"
+    },
+    {
+      "name": "Right",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness.Right",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs"
+    },
+    {
+      "name": "Top",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Thickness.Top",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoUtilities/Thickness.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

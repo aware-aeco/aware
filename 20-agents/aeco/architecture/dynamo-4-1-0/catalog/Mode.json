@@ -1,0 +1,54 @@
+{
+  "name": "Mode",
+  "namespace": "",
+  "kind": "enum",
+  "summary": "Type Mode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/v4.1.0/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Begin",
+      "value": 0,
+      "summary": "Begin connection."
+    },
+    {
+      "name": "BeginCreateConnections",
+      "value": 7,
+      "summary": "End current connection and create new connections."
+    },
+    {
+      "name": "BeginDuplicateConnection",
+      "value": 6,
+      "summary": "Begin duplicate connection."
+    },
+    {
+      "name": "BeginShiftReconnections",
+      "value": 2,
+      "summary": "Begin shift reconnections."
+    },
+    {
+      "name": "Cancel",
+      "value": 5,
+      "summary": "Cancel connection."
+    },
+    {
+      "name": "End",
+      "value": 1,
+      "summary": "End connection."
+    },
+    {
+      "name": "EndAndStartCtrlConnection",
+      "value": 4,
+      "summary": "End and start control connections."
+    },
+    {
+      "name": "EndShiftReconnections",
+      "value": 3,
+      "summary": "End shift reconnections."
+    }
+  ]
+}
