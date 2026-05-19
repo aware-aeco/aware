@@ -16,10 +16,15 @@ namespace AwareRevit.AddIn;
 
 /// <summary>Roslyn-script globals — exposed to user C# as `uiapp` and `args`.
 /// MUST be public + non-nested so Roslyn's dynamically-generated Submission#N
-/// type can access it from a different assembly.</summary>
+/// type can access it from a different assembly.
+///
+/// `uiapp` is statically typed as Autodesk.Revit.UI.UIApplication (not `dynamic`)
+/// so that LINQ extension methods + lambdas work directly off it. The cost is
+/// a compile-time dependency on RevitAPIUI in the script's reference set, but
+/// we add that anyway in ResolveReferences().</summary>
 public sealed class ExecGlobals
 {
-    public dynamic uiapp { get; set; } = null!;
+    public UIApplication uiapp { get; set; } = null!;
     public IDictionary<string, object?> args { get; set; } = new Dictionary<string, object?>();
 }
 
