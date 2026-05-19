@@ -17,15 +17,17 @@
 param(
     [string]$AwareSketchup = $null,
     [string]$FixturesDir   = (Join-Path $PSScriptRoot "Output"),
-    [string]$SummaryPath   = (Join-Path $PSScriptRoot "Output\drill-summary.md")
+    [string]$SummaryPath   = (Join-Path $PSScriptRoot "Output\drill-summary.md"),
+    [switch]$NoDismissWelcome
 )
 
 $ErrorActionPreference = "Stop"
 
-# Auto-discover aware-sketchup.exe if not supplied.
+# Auto-discover aware-sketchup.exe if not supplied. Try win-x64 release first.
 if (-not $AwareSketchup) {
     $candidates = @(
         (Join-Path $PSScriptRoot "..\bin\Release\net10.0-windows\win-x64\publish\aware-sketchup.exe"),
+        (Join-Path $PSScriptRoot "..\bin\Release\net10.0-windows\win-x64\aware-sketchup.exe"),
         (Join-Path $PSScriptRoot "..\bin\Release\net10.0-windows\aware-sketchup.exe"),
         (Join-Path $PSScriptRoot "..\bin\Debug\net10.0-windows\aware-sketchup.exe")
     )
@@ -35,6 +37,22 @@ if (-not $AwareSketchup) {
 }
 if (-not $AwareSketchup -or -not (Test-Path $AwareSketchup)) {
     Write-Error "aware-sketchup.exe not found. Run ``dotnet publish -c Release -r win-x64`` first, or pass -AwareSketchup <path>."
+}
+
+# Auto-dismiss the SketchUp 2026 "Welcome to SketchUp" CEF modal if it's
+# blocking Plugins/ load. See dismiss-welcome.ps1 for the technique. Skip
+# with -NoDismissWelcome if you've already dismissed it manually.
+if (-not $NoDismissWelcome) {
+    $dismissScript = Join-Path $PSScriptRoot "dismiss-welcome.ps1"
+    if (Test-Path $dismissScript) {
+        $sketchup = Get-Process SketchUp -ErrorAction SilentlyContinue
+        if ($sketchup) {
+            Write-Host "Checking for SketchUp Welcome dialog..."
+            # Suppress non-zero exit so a "no welcome to dismiss" / harmless
+            # timeout doesn't kill the drill.
+            try { & $dismissScript -TimeoutSec 5 | Out-Host } catch { Write-Host "  (dismiss-welcome reported: $_; continuing)" }
+        }
+    }
 }
 
 $fixtures = Get-ChildItem -Path $FixturesDir -Filter "prompt-*.json" | Sort-Object Name
@@ -50,8 +68,11 @@ $pass = 0; $fail = 0
 foreach ($fix in $fixtures) {
     $name = $fix.BaseName
     Write-Host -NoNewline ("  {0} ... " -f $name)
-    $payload = Get-Content $fix.FullName -Raw
-    $rawOutput = $payload | & $AwareSketchup --json-stdin 2>&1
+    # Use cmd's stdin redirection instead of PowerShell's pipe. PS5/PS7 pipes
+    # re-encode native-cmd stdin through the console output encoding which adds
+    # a UTF-16 BOM in PS5; the sidecar's JSON parser then rejects the leading
+    # 0xEF byte. cmd's '<' is a byte-faithful redirect.
+    $rawOutput = cmd /c "`"$AwareSketchup`" --json-stdin < `"$($fix.FullName)`"" 2>&1
     $exit = $LASTEXITCODE
     if ($rawOutput -is [array]) { $rawOutput = ($rawOutput -join "`n") }
     $rawOutput = [string]$rawOutput
