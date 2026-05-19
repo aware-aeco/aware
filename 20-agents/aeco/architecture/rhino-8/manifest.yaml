@@ -171,6 +171,107 @@ commands:
         files:
           type: array
           items: string
+  selection.by-attribute:
+    lifecycle: single
+    category: curated
+    description: |
+      Select objects whose user-text attribute matches a value or regex.
+      The "find every part tagged X" / "select by mark" primitive.
+    inputs:
+      key:
+        type: string
+        description: User-text key to read (e.g. "AWARE_RUN_ID").
+      value:
+        type: string
+        description: Exact value to match (case-insensitive). Use this OR pattern.
+      pattern:
+        type: string
+        description: Regex to match the value. Use this OR value.
+      add-to-selection:
+        type: boolean
+        default: false
+        description: When true, ADDS to the current selection. When false (default), replaces.
+    outputs:
+      type: single
+      schema:
+        matched-count: number
+        ids:
+          type: array
+          items: string
+  user-text.bulk-write:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write multiple user-text key/value pairs onto every selected object.
+      The "stamp the run id" / "tag-by-mark" primitive.
+    inputs:
+      entries:
+        type: object
+        description: Map of key -> value (both strings) to write on every selected object.
+    outputs:
+      type: single
+      schema:
+        objects-stamped: number
+        keys-written:    number
+  snapshot.save-named-view:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Save the current active viewport (camera + display mode) as a named view.
+      The "capture this perspective for later" primitive.
+    inputs:
+      view-name:
+        type: string
+        description: Name for the new named view. If exists, overwrites unless overwrite=false.
+      overwrite:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        view-name:    string
+        overwritten:  boolean
+        camera-location: object
+        camera-target:   object
+  model-info.summary:
+    lifecycle: single
+    category: curated
+    description: |
+      Compact model summary: object counts by class, layer count, block-def
+      count, units, bounding box, named-view list. The "what's in this 3dm"
+      one-shot inventory.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        units:         string
+        object-count:  number
+        objects-by-class: object
+        layer-count:   number
+        block-definition-count: number
+        named-view-count: number
+        bounding-box:  object
+  worksession.reload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Reload all worksession-attached models (out-of-process references).
+      The "pull the latest from teammates" primitive. Reports per-file
+      success/failure.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        attached-count: number
+        results:
+          type: array
+          items:
+            path:    string
+            success: boolean
+            error:   string
   # === Auto-generated catalog commands =======================================
   bitmap-extensions-bitmap-as-texture-file-reference:
     lifecycle: single
