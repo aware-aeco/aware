@@ -1,0 +1,23 @@
+{
+  "name": "ModelInfoList",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "A list of model infos",
+  "remarks": "List wrapper (root type: array) \u2014 see Items property for element type.",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=ModelInfoList",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "List\u003CModelInfo\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of model infos",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=ModelInfoList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

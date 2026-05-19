@@ -1,0 +1,23 @@
+{
+  "name": "IfcGuidList",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "A list of IFC GUIDS",
+  "remarks": "List wrapper (root type: array) \u2014 see Items property for element type.",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=IfcGuidList",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of IFC GUIDS",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=IfcGuidList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

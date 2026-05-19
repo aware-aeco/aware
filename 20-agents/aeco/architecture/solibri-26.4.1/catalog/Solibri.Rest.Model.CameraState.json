@@ -1,0 +1,62 @@
+{
+  "name": "CameraState",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.CameraState.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Projection",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Camera State Projection. Valid values are PERSPECTIVE and ORTHOGONAL",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState"
+    },
+    {
+      "name": "Location",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Location of the camera in 3D space. Unit of location is in Meters.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState"
+    },
+    {
+      "name": "UpDirection",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Up direction of the camera as unit vector in 3D space",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState"
+    },
+    {
+      "name": "Direction",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Direction of the camera as unit vector in 3D space",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState"
+    },
+    {
+      "name": "FieldOfView",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Field of View. Unit is in Radians. This is only valid for Perspective Projection.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState"
+    },
+    {
+      "name": "ViewToWorldScale",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "View to World Scale. This is only valid for Orthogonal Projection.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CameraState"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

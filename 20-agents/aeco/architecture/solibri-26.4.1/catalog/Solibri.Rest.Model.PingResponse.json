@@ -1,0 +1,22 @@
+{
+  "name": "PingResponse",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.PingResponse.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=PingResponse",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Answer",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "(No description provided in vendor docs for PingResponse.answer.)",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=PingResponse"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

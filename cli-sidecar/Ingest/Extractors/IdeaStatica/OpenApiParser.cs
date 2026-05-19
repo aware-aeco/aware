@@ -177,6 +177,44 @@ public static class OpenApiParser
                 delegate_signature: null);
         }
 
+        // Root-level array schema (e.g. Solibri's `IfcGuidList: { type: array, items: ... }`).
+        // We expose this as a class with a single `Items` property carrying the array's
+        // element type wrapped in `List<>`. The schema MUST be a class kind to satisfy
+        // the IR's enum constraint (the kind enum doesn't have "list" — array-root types
+        // are conceptually DTOs whose payload is a list).
+        var rootTypeStr = schema.GetScalar("type");
+        if (rootTypeStr == "array")
+        {
+            var elemType = "object";
+            var items = schema.GetMapping("items");
+            if (items is not null) elemType = ResolveTypeRef(items);
+            var arrayProp = new PropertyInfo(
+                name: "Items",
+                type: $"List<{elemType}>",
+                getter: true,
+                setter: true,
+                summary: string.IsNullOrEmpty(description)
+                    ? $"Underlying list payload for {name}."
+                    : NormaliseInlineHtml(description),
+                remarks: null,
+                doc_url: $"{ctx.DocBaseUrl}{name}.md");
+            return new TypeInfo(
+                name: name,
+                @namespace: ctx.NamespaceForSchemas,
+                kind: "class",
+                summary: summary,
+                remarks: $"List wrapper (root type: array) — see Items property for element type.",
+                @base: null,
+                interfaces: new List<string>(),
+                doc_url: $"{ctx.DocBaseUrl}{name}.md",
+                constructors: new List<MethodInfo>(),
+                methods: new List<MethodInfo>(),
+                properties: new List<PropertyInfo> { arrayProp },
+                events: new List<EventInfo>(),
+                enum_values: new List<EnumValueInfo>(),
+                delegate_signature: null);
+        }
+
         // Object schema → class type.
         var properties = new List<PropertyInfo>();
         var propsNode = schema.GetMapping("properties");
@@ -439,6 +477,16 @@ public static class OpenApiParser
 
         if (typeStr == "object")
         {
+            // Inline maps: `type: object` with `additionalProperties: <schema>` is the
+            // OpenAPI idiom for a string-keyed dictionary. Surface those as Dictionary<string, T>
+            // so the IR property carries the contained shape (mirrors the top-level handling
+            // for components/schemas/<Name>: additionalProperties: $ref a few lines down).
+            var addlProps = schema.Get("additionalProperties");
+            if (addlProps is YamlNode.Mapping addlMap)
+            {
+                var valueType = ResolveTypeRef(addlMap);
+                return $"Dictionary<string, {valueType}>";
+            }
             // Unspecified object — produce `object` per IR convention.
             return "object";
         }

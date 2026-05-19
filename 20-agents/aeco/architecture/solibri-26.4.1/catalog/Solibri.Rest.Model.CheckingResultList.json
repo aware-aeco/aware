@@ -1,0 +1,23 @@
+{
+  "name": "CheckingResultList",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "List of checking results.",
+  "remarks": "List wrapper (root type: array) \u2014 see Items property for element type.",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResultList",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "List\u003CCheckingResult\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "List of checking results.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResultList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

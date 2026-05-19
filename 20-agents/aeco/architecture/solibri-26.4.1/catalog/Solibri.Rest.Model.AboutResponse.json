@@ -1,0 +1,30 @@
+{
+  "name": "AboutResponse",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.AboutResponse.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=AboutResponse",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Product",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the running product",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=AboutResponse"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Version of the running product",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=AboutResponse"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

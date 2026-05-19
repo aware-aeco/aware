@@ -1,0 +1,80 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Solibri REST API
+  description: Mini Solibri-style spec for parser tests. Models the Solibri OSO API's
+    distinctive shapes (tag-less operations, missing operationIds, root-level array
+    schema, inline-map additionalProperties).
+servers:
+  - url: http://localhost/solibri/v1
+paths:
+  /ping:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PingResponse"
+  /shutdown:
+    post:
+      summary: Shutdown the application
+      operationId: shutdown
+      parameters:
+        - in: query
+          name: force
+          required: true
+          description: Forceful shutdown or not
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Closing procedures started successfully
+
+  /models:
+    get:
+      summary: Get current models
+      operationId: getModels
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ModelInfoList"
+  /threed/camera:
+    get:
+      summary: Get Camera State
+      operationId: getCameraState
+      responses:
+        '200':
+          description: OK
+
+components:
+  schemas:
+    PingResponse:
+      type: object
+      required:
+        - answer
+      properties:
+        answer:
+          type: string
+
+    ModelInfo:
+      type: object
+      properties:
+        name:
+          description: Name of the model
+          type: string
+        metadata:
+          description: Metadata of the model as a map
+          type: object
+          additionalProperties:
+            type: string
+
+    ModelInfoList:
+      type: array
+      description: A list of model infos
+      items:
+        $ref: "#/components/schemas/ModelInfo"

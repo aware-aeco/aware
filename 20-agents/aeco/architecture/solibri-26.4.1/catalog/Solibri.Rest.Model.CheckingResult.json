@@ -1,0 +1,54 @@
+{
+  "name": "CheckingResult",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.CheckingResult.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the Checking result",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResult"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Description of checking result.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResult"
+    },
+    {
+      "name": "UniqueKey",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Unique key for checking result.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResult"
+    },
+    {
+      "name": "Location",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Location.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResult"
+    },
+    {
+      "name": "Severity",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Severity of the result.",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=CheckingResult"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Vector3D",
+  "namespace": "Solibri.Rest.Model",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Solibri.Rest.Model.Vector3D.)",
+  "interfaces": [],
+  "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Vector3D",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "X Coordinate",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Vector3D"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Y Coordinate",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Vector3D"
+    },
+    {
+      "name": "Z",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Z Coordinate",
+      "doc_url": "https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml?schema=Vector3D"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
