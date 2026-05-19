@@ -301,11 +301,7 @@ public class SchemaTests
             return null;
         }
         var path = Find(AppContext.BaseDirectory);
-<<<<<<< HEAD
         if (path is null) return;  // IR not generated yet — skip rather than fail.
-=======
-        if (path is null) return;
->>>>>>> worktree-agent-a5a9cc409d6da5342
         var ir = JsonDocument.Parse(File.ReadAllText(path));
         var result = schema.Evaluate(ir.RootElement, new EvaluationOptions { OutputFormat = OutputFormat.Hierarchical });
         if (!result.IsValid)
