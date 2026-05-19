@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar buckets = new Dictionary<string, int>();\nvar collector = new FilteredElementCollector(doc).WhereElementIsNotElementType();\nforeach (var el in collector)\n{\n    var cat = el.Category?.Name ?? \"<no category>\";\n    buckets[cat] = (buckets.TryGetValue(cat, out var n) ? n : 0) + 1;\n}\nreturn new { total = buckets.Values.Sum(), by_category = buckets };",
+  "args": {}
+}

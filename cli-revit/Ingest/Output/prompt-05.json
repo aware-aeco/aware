@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar fams = new FilteredElementCollector(doc).OfClass(typeof(Family)).Cast<Family>().Select(f => new { name = f.Name, category = f.FamilyCategory?.Name }).Take(50).ToList();\nreturn new { count = fams.Count, families = fams };",
+  "args": {}
+}

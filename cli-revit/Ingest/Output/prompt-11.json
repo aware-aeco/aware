@@ -1,0 +1,7 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "transaction": "auto",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar level = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();\nvar colSym = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Columns).WhereElementIsElementType().Cast<FamilySymbol>().FirstOrDefault();\nif (level == null || colSym == null) return new { placed = false, reason = \"no level or column symbol available\" };\nif (!colSym.IsActive) colSym.Activate();\nvar p = new XYZ(20, 20, 0);\nvar col = doc.Create.NewFamilyInstance(p, colSym, level, Autodesk.Revit.DB.Structure.StructuralType.Column);\nreturn new { placed = true, id = col.Id.Value, symbol = colSym.Name };",
+  "args": {}
+}
