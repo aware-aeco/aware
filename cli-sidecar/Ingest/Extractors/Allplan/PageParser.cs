@@ -298,10 +298,36 @@ public static class PageParser
     ///     "interface"; otherwise "class").
     ///
     /// Returns (null, [], "class") if no bases line is present.
+    ///
+    /// IMPORTANT: We must scope the bases lookup to the OUTER class's own doc-contents block,
+    /// not the whole subtree. `classDiv.QuerySelector("p.doc-class-bases")` is a descendant
+    /// query — when the outer class has NO bases of its own but contains an inner enum/interface
+    /// class, the descendant query reaches into the inner class's doc-contents and picks up its
+    /// bases. That mis-classifies the outer class as `enum`/`interface`. The 2025 ControlProperties
+    /// class (plain class containing an inner IntEnum `ControlType`) was the canonical repro: it
+    /// was getting `kind: "enum", base: "IntEnum"` from `ControlType`'s bases paragraph.
+    ///
+    /// Fix: locate the outer class's own doc-contents (the first direct-child div with class
+    /// `doc.doc-contents` or `doc.doc-contents.first`), then look for `p.doc-class-bases` as a
+    /// direct child of that doc-contents block. Inner-class bases live one level deeper (inside
+    /// doc-children → inner doc-class → inner doc-contents) and are correctly skipped.
     /// </summary>
     static (string? @base, List<string> interfaces, string kind) ExtractBasesAndKind(IElement classDiv)
     {
-        var basesP = classDiv.QuerySelector("p.doc-class-bases");
+        // Step 1: find the outer class's OWN doc-contents (direct child of classDiv).
+        var ownContents = classDiv.Children.FirstOrDefault(c =>
+            c.LocalName == "div"
+            && c.ClassList.Contains("doc")
+            && c.ClassList.Contains("doc-contents"));
+
+        // Step 2: look for p.doc-class-bases as a direct child of own-contents.
+        IElement? basesP = null;
+        if (ownContents is not null)
+        {
+            basesP = ownContents.Children.FirstOrDefault(c =>
+                c.LocalName == "p" && c.ClassList.Contains("doc-class-bases")) as IElement;
+        }
+
         if (basesP is null) return (null, new List<string>(), "class");
 
         // mkdocstrings emits multiple <code> entries for multi-base classes, e.g.
