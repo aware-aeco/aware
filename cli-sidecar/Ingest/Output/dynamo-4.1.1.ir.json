@@ -7,7 +7,7 @@
       "https://www.nuget.org/packages/DynamoVisualProgramming.Core/4.1.1.4941",
       "https://github.com/DynamoDS/Dynamo/tree/RC4.1.1_master"
     ],
-    "extracted_at": "2026-05-19T07:01:21.8394386Z"
+    "extracted_at": "2026-05-19T08:36:26.6454017Z"
   },
   "types": [
     {
@@ -790,7 +790,7 @@
     },
     {
       "name": "CommandLineArguments",
-      "namespace": "",
+      "namespace": "Dynamo.Applications.StartupUtils",
       "kind": "struct",
       "summary": "Type CommandLineArguments",
       "interfaces": [],
@@ -31945,7 +31945,7 @@
     },
     {
       "name": "LuceneStorage",
-      "namespace": "",
+      "namespace": "Dynamo.Utilities.LuceneSearchUtility",
       "kind": "enum",
       "summary": "Type LuceneStorage",
       "interfaces": [],
@@ -31967,7 +31967,7 @@
     },
     {
       "name": "BrowserItemHandler",
-      "namespace": "",
+      "namespace": "Dynamo.Search.BrowserItem",
       "kind": "delegate",
       "summary": "Type BrowserItemHandler",
       "interfaces": [],
@@ -32065,7 +32065,7 @@
     },
     {
       "name": "SearchElementHandler",
-      "namespace": "",
+      "namespace": "Dynamo.Search.SearchElements.SearchElementBase",
       "kind": "delegate",
       "summary": "Type SearchElementHandler",
       "interfaces": [],
@@ -32163,7 +32163,7 @@
     },
     {
       "name": "TaskPriority",
-      "namespace": "",
+      "namespace": "Dynamo.Scheduler.AsyncTask",
       "kind": "enum",
       "summary": "Type TaskPriority",
       "interfaces": [],
@@ -32205,7 +32205,7 @@
     },
     {
       "name": "TaskMergeInstruction",
-      "namespace": "",
+      "namespace": "Dynamo.Scheduler.AsyncTask",
       "kind": "enum",
       "summary": "Type TaskMergeInstruction",
       "interfaces": [],
@@ -32234,7 +32234,7 @@
     },
     {
       "name": "State",
-      "namespace": "",
+      "namespace": "Dynamo.Scheduler.TaskStateChangedEventArgs",
       "kind": "enum",
       "summary": "Type State",
       "interfaces": [],
@@ -32278,7 +32278,7 @@
     },
     {
       "name": "Decision",
-      "namespace": "",
+      "namespace": "Dynamo.Migration.MigrationManager",
       "kind": "enum",
       "summary": "Type Decision",
       "interfaces": [],
@@ -32307,7 +32307,7 @@
     },
     {
       "name": "FutureFileCallback",
-      "namespace": "",
+      "namespace": "Dynamo.Migration.MigrationManager",
       "kind": "delegate",
       "summary": "Type FutureFileCallback",
       "interfaces": [],
@@ -32431,7 +32431,7 @@
     },
     {
       "name": "ObsoleteFileCallback",
-      "namespace": "",
+      "namespace": "Dynamo.Migration.MigrationManager",
       "kind": "delegate",
       "summary": "Type ObsoleteFileCallback",
       "interfaces": [],
@@ -32549,7 +32549,7 @@
     },
     {
       "name": "Categories",
-      "namespace": "",
+      "namespace": "Dynamo.Engine.LibraryServices",
       "kind": "static-class",
       "summary": "Type Categories",
       "interfaces": [],
@@ -32562,7 +32562,7 @@
     },
     {
       "name": "LibraryLoadFailedEventArgs",
-      "namespace": "",
+      "namespace": "Dynamo.Engine.LibraryServices",
       "kind": "class",
       "summary": "Type LibraryLoadFailedEventArgs",
       "base": "System.EventArgs",
@@ -32628,7 +32628,7 @@
     },
     {
       "name": "LibraryLoadedEventArgs",
-      "namespace": "",
+      "namespace": "Dynamo.Engine.LibraryServices",
       "kind": "class",
       "summary": "Type LibraryLoadedEventArgs",
       "base": "System.EventArgs",
@@ -32668,7 +32668,7 @@
     },
     {
       "name": "LibraryLoadingEventArgs",
-      "namespace": "",
+      "namespace": "Dynamo.Engine.LibraryServices",
       "kind": "class",
       "summary": "Type LibraryLoadingEventArgs",
       "base": "System.EventArgs",
@@ -32708,7 +32708,7 @@
     },
     {
       "name": "CompletionType",
-      "namespace": "",
+      "namespace": "Dynamo.Engine.CodeCompletion.CompletionData",
       "kind": "enum",
       "summary": "Type CompletionType",
       "interfaces": [],
@@ -32746,7 +32746,7 @@
     },
     {
       "name": "AssemblyLoadedHandler",
-      "namespace": "",
+      "namespace": "Dynamo.Models.NodeModelAssemblyLoader",
       "kind": "delegate",
       "summary": "Type AssemblyLoadedHandler",
       "interfaces": [],
@@ -32844,7 +32844,7 @@
     },
     {
       "name": "AssemblyLoadedEventArgs",
-      "namespace": "",
+      "namespace": "Dynamo.Models.NodeModelAssemblyLoader",
       "kind": "class",
       "summary": "Type AssemblyLoadedEventArgs",
       "interfaces": [],
@@ -32884,7 +32884,7 @@
     },
     {
       "name": "DynamoModelState",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "enum",
       "summary": "Type DynamoModelState",
       "interfaces": [],
@@ -32910,7 +32910,7 @@
     },
     {
       "name": "IStartConfiguration",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "interface",
       "summary": "Type IStartConfiguration",
       "interfaces": [],
@@ -33044,7 +33044,7 @@
     },
     {
       "name": "CrashReporterStartupOptions",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "struct",
       "summary": "Type CrashReporterStartupOptions",
       "interfaces": [],
@@ -33066,7 +33066,7 @@
     },
     {
       "name": "IStartConfigCrashReporter",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "interface",
       "summary": "Type IStartConfigCrashReporter",
       "interfaces": [],
@@ -33088,7 +33088,7 @@
     },
     {
       "name": "IStartConfigurationLogger",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "interface",
       "summary": "Type IStartConfigurationLogger",
       "interfaces": [],
@@ -33110,7 +33110,7 @@
     },
     {
       "name": "DefaultStartConfiguration",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "struct",
       "summary": "Type DefaultStartConfiguration",
       "interfaces": [
@@ -33306,7 +33306,7 @@
     },
     {
       "name": "RunCompletedHandler",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "delegate",
       "summary": "Type RunCompletedHandler",
       "interfaces": [],
@@ -33414,7 +33414,7 @@
     },
     {
       "name": "CrashPromptHandler",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "delegate",
       "summary": "Type CrashPromptHandler",
       "interfaces": [],
@@ -33522,7 +33522,7 @@
     },
     {
       "name": "RecordableCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type RecordableCommand",
       "interfaces": [],
@@ -33598,7 +33598,7 @@
     },
     {
       "name": "ModelBasedRecordableCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type ModelBasedRecordableCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -33688,7 +33688,7 @@
     },
     {
       "name": "PausePlaybackCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type PausePlaybackCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -33753,7 +33753,7 @@
     },
     {
       "name": "OpenFileCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type OpenFileCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -33853,7 +33853,7 @@
     },
     {
       "name": "InsertFileCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type InsertFileCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -33924,7 +33924,7 @@
     },
     {
       "name": "OpenFileFromJsonCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type OpenFileFromJsonCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -33995,7 +33995,7 @@
     },
     {
       "name": "RunCancelCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type RunCancelCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -34066,7 +34066,7 @@
     },
     {
       "name": "ForceRunCancelCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type ForceRunCancelCommand",
       "base": "Dynamo.Models.DynamoModel.RunCancelCommand",
@@ -34121,7 +34121,7 @@
     },
     {
       "name": "MutateTestCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type MutateTestCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -34179,7 +34179,7 @@
     },
     {
       "name": "CreateNodeCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type CreateNodeCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -34371,7 +34371,7 @@
     },
     {
       "name": "CreateAndConnectNodeCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type CreateAndConnectNodeCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -34493,7 +34493,7 @@
     },
     {
       "name": "CreateProxyNodeCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type CreateProxyNodeCommand",
       "base": "Dynamo.Models.DynamoModel.CreateNodeCommand",
@@ -34590,7 +34590,7 @@
     },
     {
       "name": "CreateNoteCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type CreateNoteCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -34761,7 +34761,7 @@
     },
     {
       "name": "SelectModelCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type SelectModelCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -34878,7 +34878,7 @@
     },
     {
       "name": "SelectInRegionCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type SelectInRegionCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -34949,7 +34949,7 @@
     },
     {
       "name": "DragSelectionCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type DragSelectionCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -35020,7 +35020,7 @@
     },
     {
       "name": "MakeConnectionCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type MakeConnectionCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -35190,7 +35190,7 @@
     },
     {
       "name": "DeleteModelCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type DeleteModelCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -35289,7 +35289,7 @@
     },
     {
       "name": "UndoRedoCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type UndoRedoCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -35354,7 +35354,7 @@
     },
     {
       "name": "ModelEventCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type ModelEventCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -35560,7 +35560,7 @@
     },
     {
       "name": "UpdateModelValueCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type UpdateModelValueCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -35803,7 +35803,7 @@
     },
     {
       "name": "ConvertNodesToCodeCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type ConvertNodesToCodeCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -35850,7 +35850,7 @@
     },
     {
       "name": "CreateCustomNodeCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type CreateCustomNodeCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -36021,7 +36021,7 @@
     },
     {
       "name": "SwitchTabCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type SwitchTabCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -36086,7 +36086,7 @@
     },
     {
       "name": "CreateAnnotationCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type CreateAnnotationCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -36310,7 +36310,7 @@
     },
     {
       "name": "UngroupModelCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type UngroupModelCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -36409,7 +36409,7 @@
     },
     {
       "name": "AddModelToGroupCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type AddModelToGroupCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -36508,7 +36508,7 @@
     },
     {
       "name": "AddGroupToGroupCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type AddGroupToGroupCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -36634,7 +36634,7 @@
     },
     {
       "name": "AddPresetCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type AddPresetCommand",
       "base": "Dynamo.Models.DynamoModel.ModelBasedRecordableCommand",
@@ -36711,7 +36711,7 @@
     },
     {
       "name": "ApplyPresetCommand",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel",
       "kind": "class",
       "summary": "Type ApplyPresetCommand",
       "base": "Dynamo.Models.DynamoModel.RecordableCommand",
@@ -36782,7 +36782,7 @@
     },
     {
       "name": "Operation",
-      "namespace": "",
+      "namespace": "Dynamo.Models.ViewOperationEventArgs",
       "kind": "enum",
       "summary": "Type Operation",
       "interfaces": [],
@@ -36808,7 +36808,7 @@
     },
     {
       "name": "Usage",
-      "namespace": "",
+      "namespace": "Dynamo.Models.Migration.Python.PythonEngineUpgradeService",
       "kind": "class",
       "summary": "Type Usage",
       "interfaces": [],
@@ -36846,7 +36846,7 @@
     },
     {
       "name": "PreferenceItem",
-      "namespace": "",
+      "namespace": "Dynamo.Core.PathManager",
       "kind": "enum",
       "summary": "Type PreferenceItem",
       "interfaces": [],
@@ -36872,7 +36872,7 @@
     },
     {
       "name": "DisplayOptions",
-      "namespace": "",
+      "namespace": "Dynamo.Core.CrashPromptArgs",
       "kind": "enum",
       "summary": "Type DisplayOptions",
       "interfaces": [],
@@ -36898,7 +36898,7 @@
     },
     {
       "name": "UserAction",
-      "namespace": "",
+      "namespace": "Dynamo.Core.UndoRedoRecorder",
       "kind": "enum",
       "summary": "Type UserAction",
       "interfaces": [],
@@ -36924,7 +36924,7 @@
     },
     {
       "name": "WorkspaceSavedEvent",
-      "namespace": "",
+      "namespace": "Dynamo.Graph.Workspaces.WorkspaceModel",
       "kind": "delegate",
       "summary": "Type WorkspaceSavedEvent",
       "interfaces": [],
@@ -37022,7 +37022,7 @@
     },
     {
       "name": "PointEventHandler",
-      "namespace": "",
+      "namespace": "Dynamo.Graph.Workspaces.WorkspaceModel",
       "kind": "delegate",
       "summary": "Type PointEventHandler",
       "interfaces": [],
@@ -37130,7 +37130,7 @@
     },
     {
       "name": "UndoAction",
-      "namespace": "",
+      "namespace": "Dynamo.Graph.Notes.NoteModel",
       "kind": "enum",
       "summary": "Type UndoAction",
       "interfaces": [],
@@ -37152,7 +37152,7 @@
     },
     {
       "name": "State",
-      "namespace": "",
+      "namespace": "Dynamo.Graph.Nodes.Statement",
       "kind": "enum",
       "summary": "Type State",
       "interfaces": [],
@@ -37178,7 +37178,7 @@
     },
     {
       "name": "StatementType",
-      "namespace": "",
+      "namespace": "Dynamo.Graph.Nodes.Statement",
       "kind": "enum",
       "summary": "Type StatementType",
       "interfaces": [],
@@ -37216,7 +37216,7 @@
     },
     {
       "name": "Nature",
-      "namespace": "",
+      "namespace": "Dynamo.Graph.Nodes.DummyNode",
       "kind": "enum",
       "summary": "Type Nature",
       "interfaces": [],
@@ -37238,7 +37238,7 @@
     },
     {
       "name": "NodeFieldsEnum",
-      "namespace": "",
+      "namespace": "Dynamo.Configuration.LuceneConfig",
       "kind": "enum",
       "summary": "Type NodeFieldsEnum",
       "interfaces": [],
@@ -37307,7 +37307,7 @@
     },
     {
       "name": "AskForTrustedLocationResult",
-      "namespace": "",
+      "namespace": "Dynamo.Configuration.PreferenceSettings",
       "kind": "enum",
       "summary": "Type AskForTrustedLocationResult",
       "interfaces": [],
@@ -37336,7 +37336,7 @@
     },
     {
       "name": "Operation",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel.DragSelectionCommand",
       "kind": "enum",
       "summary": "Type Operation",
       "interfaces": [],
@@ -37360,7 +37360,7 @@
     },
     {
       "name": "Mode",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel.MakeConnectionCommand",
       "kind": "enum",
       "summary": "Type Mode",
       "interfaces": [],
@@ -37414,7 +37414,7 @@
     },
     {
       "name": "Operation",
-      "namespace": "",
+      "namespace": "Dynamo.Models.DynamoModel.UndoRedoCommand",
       "kind": "enum",
       "summary": "Type Operation",
       "interfaces": [],
@@ -40281,7 +40281,7 @@
     },
     {
       "name": "StateTypes",
-      "namespace": "",
+      "namespace": "Dynamo.PackageManager.PackageLoadState",
       "kind": "enum",
       "summary": "Type StateTypes",
       "interfaces": [],
@@ -40315,7 +40315,7 @@
     },
     {
       "name": "ScheduledTypes",
-      "namespace": "",
+      "namespace": "Dynamo.PackageManager.PackageLoadState",
       "kind": "enum",
       "summary": "Type ScheduledTypes",
       "interfaces": [],
@@ -40344,7 +40344,7 @@
     },
     {
       "name": "State",
-      "namespace": "",
+      "namespace": "Dynamo.PackageManager.PackageDownloadHandle",
       "kind": "enum",
       "summary": "Type State",
       "interfaces": [],
@@ -40382,7 +40382,7 @@
     },
     {
       "name": "State",
-      "namespace": "",
+      "namespace": "Dynamo.PackageManager.PackageUploadHandle",
       "kind": "enum",
       "summary": "Type State",
       "interfaces": [],
@@ -40420,7 +40420,7 @@
     },
     {
       "name": "UploadType",
-      "namespace": "",
+      "namespace": "Dynamo.PackageManager.PackageUploadHandle",
       "kind": "enum",
       "summary": "Type UploadType",
       "interfaces": [],
@@ -44583,7 +44583,7 @@
     },
     {
       "name": "WinTrust",
-      "namespace": "",
+      "namespace": "DynamoUtilities.WinTrustInterop",
       "kind": "class",
       "summary": "Type WinTrust",
       "interfaces": [],
@@ -44616,7 +44616,7 @@
     },
     {
       "name": "UnTrustedAssemblyException",
-      "namespace": "",
+      "namespace": "DynamoUtilities.CertificateVerification",
       "kind": "class",
       "summary": "Type UnTrustedAssemblyException",
       "base": "System.Exception",
@@ -44647,7 +44647,7 @@
     },
     {
       "name": "AssemblyCertificateCheckException",
-      "namespace": "",
+      "namespace": "DynamoUtilities.CertificateVerification",
       "kind": "class",
       "summary": "Type AssemblyCertificateCheckException",
       "base": "System.Exception",
@@ -44678,7 +44678,7 @@
     },
     {
       "name": "CaseInfo",
-      "namespace": "",
+      "namespace": "DynamoUtilities.TypeSwitch",
       "kind": "class",
       "summary": "Type CaseInfo",
       "interfaces": [],
@@ -44727,7 +44727,7 @@
     },
     {
       "name": "DebugMode",
-      "namespace": "",
+      "namespace": "Dynamo.Utilities.DebugModes",
       "kind": "class",
       "summary": "Type DebugMode",
       "interfaces": [],
@@ -44751,7 +44751,7 @@
     },
     {
       "name": "IIndexed\u003CT\u003E",
-      "namespace": "",
+      "namespace": "Dynamo.Utilities.ExtensionMethods",
       "kind": "interface",
       "summary": "Type IIndexed\u003CT\u003E",
       "interfaces": [],
@@ -92914,7 +92914,7 @@
     },
     {
       "name": "MessageType",
-      "namespace": "",
+      "namespace": "ProtoCore.OutputMessage",
       "kind": "enum",
       "summary": "Type MessageType",
       "interfaces": [],
@@ -92940,7 +92940,7 @@
     },
     {
       "name": "ErrorType",
-      "namespace": "",
+      "namespace": "ProtoCore.Core",
       "kind": "enum",
       "summary": "Type ErrorType",
       "interfaces": [],
@@ -92966,7 +92966,7 @@
     },
     {
       "name": "ErrorEntry",
-      "namespace": "",
+      "namespace": "ProtoCore.Core",
       "kind": "struct",
       "summary": "Type ErrorEntry",
       "interfaces": [],
@@ -92979,7 +92979,7 @@
     },
     {
       "name": "BreakpointOptions",
-      "namespace": "",
+      "namespace": "ProtoCore.DebugProperties",
       "kind": "enum",
       "summary": "Type BreakpointOptions",
       "interfaces": [],
@@ -93017,7 +93017,7 @@
     },
     {
       "name": "StackFrameFlagOptions",
-      "namespace": "",
+      "namespace": "ProtoCore.DebugProperties",
       "kind": "enum",
       "summary": "Type StackFrameFlagOptions",
       "interfaces": [],
@@ -93047,7 +93047,7 @@
     },
     {
       "name": "State",
-      "namespace": "",
+      "namespace": "ProtoCore.ExecutionStateEventArgs",
       "kind": "enum",
       "summary": "Type State",
       "interfaces": [],
@@ -93081,7 +93081,7 @@
     },
     {
       "name": "RawTraceData",
-      "namespace": "",
+      "namespace": "ProtoCore.CallSite",
       "kind": "class",
       "summary": "Type RawTraceData",
       "interfaces": [],
@@ -93133,7 +93133,7 @@
     },
     {
       "name": "SingleRunTraceData",
-      "namespace": "",
+      "namespace": "ProtoCore.CallSite",
       "kind": "class",
       "summary": "Type SingleRunTraceData",
       "interfaces": [],
@@ -93225,7 +93225,7 @@
     },
     {
       "name": "LogWarningHandler",
-      "namespace": "",
+      "namespace": "ProtoCore.MigrationRewriter",
       "kind": "delegate",
       "summary": "Type LogWarningHandler",
       "interfaces": [],
@@ -93333,7 +93333,7 @@
     },
     {
       "name": "DisposeDelegate",
-      "namespace": "",
+      "namespace": "ProtoCore.RuntimeCore",
       "kind": "delegate",
       "summary": "Type DisposeDelegate",
       "interfaces": [],
@@ -93431,7 +93431,7 @@
     },
     {
       "name": "CommentType",
-      "namespace": "",
+      "namespace": "ProtoCore.AST.AssociativeAST.CommentNode",
       "kind": "enum",
       "summary": "Type CommentType",
       "interfaces": [],
@@ -93453,7 +93453,7 @@
     },
     {
       "name": "SymbolConflictWarningHandler",
-      "namespace": "",
+      "namespace": "ProtoCore.Namespace.ElementRewriter",
       "kind": "delegate",
       "summary": "Type SymbolConflictWarningHandler",
       "interfaces": [],
@@ -93561,7 +93561,7 @@
     },
     {
       "name": "MethodID",
-      "namespace": "",
+      "namespace": "ProtoCore.Lang.BuiltInMethods",
       "kind": "enum",
       "summary": "Type MethodID",
       "interfaces": [],
@@ -93811,7 +93811,7 @@
     },
     {
       "name": "BuiltInMethod",
-      "namespace": "",
+      "namespace": "ProtoCore.Lang.BuiltInMethods",
       "kind": "class",
       "summary": "Type BuiltInMethod",
       "interfaces": [],
@@ -93868,7 +93868,7 @@
     },
     {
       "name": "GCMark",
-      "namespace": "",
+      "namespace": "ProtoCore.DSASM.Heap",
       "kind": "enum",
       "summary": "Type GCMark",
       "interfaces": [],
@@ -94812,7 +94812,7 @@
     },
     {
       "name": "ASC_STATUS",
-      "namespace": "",
+      "namespace": "DynamoInstallDetective.AscSdkWrapper",
       "kind": "enum",
       "summary": "Type ASC_STATUS",
       "interfaces": [],
