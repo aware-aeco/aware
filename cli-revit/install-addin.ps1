@@ -51,7 +51,11 @@ Get-ChildItem $buildOut -File -Recurse | ForEach-Object {
 $deployedDll = Join-Path $deployDir "AwareRevit.dll"
 $destManifest = Join-Path $addinDir "AwareRevit.addin"
 $xml = [xml](Get-Content $srcManifest -Raw)
-$xml.RevitAddIns.AddIn.Assembly = $deployedDll
+# Use SelectSingleNode + InnerText: setting .Assembly = string fails on element
+# nodes (PowerShell XML accessor returns an XmlElement, not a string property).
+$assemblyNode = $xml.SelectSingleNode("/RevitAddIns/AddIn/Assembly")
+if ($assemblyNode -eq $null) { Write-Error "Could not find /RevitAddIns/AddIn/Assembly node in $srcManifest" }
+$assemblyNode.InnerText = $deployedDll
 $xml.Save($destManifest)
 
 Write-Host "Deployed:"
