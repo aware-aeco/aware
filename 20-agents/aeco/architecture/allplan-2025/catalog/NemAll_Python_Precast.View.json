@@ -1,0 +1,99 @@
+{
+  "name": "View",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.View.)",
+  "base": "Cell",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/",
+  "constructors": [
+    {
+      "name": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation )",
+      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/#NemAll_Python_Precast.View.__init__"
+    },
+    {
+      "name": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, )",
+      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "View",
+          "type": "object",
+          "doc": "properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/#NemAll_Python_Precast.View.__init__"
+    },
+    {
+      "name": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )",
+      "signature": "View( doc: DocumentAdapter, cellId: int, direction: Direction, rotation: Rotation, viewProps: ViewProperties, conditionTemplate: str, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "View",
+          "type": "object",
+          "doc": "properties",
+          "optional": false
+        },
+        {
+          "name": "Condition",
+          "type": "object",
+          "doc": "template",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/#NemAll_Python_Precast.View.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "create",
+      "signature": "create( elements: BaseElementAdapterList, position: Point2D, view: BaseElementAdapter, ) -\u003E bool",
+      "summary": "Creates a standalon local uvs view without plan",
+      "remarks": "Creates a standalon local uvs view without plan",
+      "params": [
+        {
+          "name": "Allplan",
+          "type": "object",
+          "doc": ":IFW::ElementAdapter::BaseElementAdapterList:-\u003E elements of the view",
+          "optional": false
+        },
+        {
+          "name": "Allplan",
+          "type": "object",
+          "doc": ":Geometry::Point2D:-\u003E position of the view",
+          "optional": false
+        },
+        {
+          "name": "Allplan",
+          "type": "object",
+          "doc": ":IFW::ElementAdapter::BaseElementAdapter:-\u003E created view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/View/#NemAll_Python_Precast.View.create"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

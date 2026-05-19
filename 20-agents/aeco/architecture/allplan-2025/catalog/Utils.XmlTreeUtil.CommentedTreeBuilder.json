@@ -1,0 +1,14 @@
+{
+  "name": "CommentedTreeBuilder",
+  "namespace": "Utils.XmlTreeUtil",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for Utils.XmlTreeUtil.CommentedTreeBuilder.)",
+  "base": "TreeBuilder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/XmlTreeUtil/CommentedTreeBuilder/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

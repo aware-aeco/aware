@@ -1,0 +1,39 @@
+{
+  "name": "WallAxisPosition",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Position of the axis relative to the architectural component (any linear component, not only wall as the name might suggest).",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/WallAxisPosition/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCenter",
+      "value": 2,
+      "summary": "Axis is in the center of the architectural component. Set the Distance property to the half of the component width!"
+    },
+    {
+      "name": "eFree",
+      "value": 8,
+      "summary": "Position is defined by in the Distance property"
+    },
+    {
+      "name": "eLeft",
+      "value": 1,
+      "summary": "Axis is on the left side of the component (on the \u002BY side). Set the Distance property to 0!"
+    },
+    {
+      "name": "eRight",
+      "value": 4,
+      "summary": "Axis is on the right side of the component (on the -Y side). Set the Distance property to the width of the component!"
+    },
+    {
+      "name": "eUnknown",
+      "value": 0
+    }
+  ]
+}

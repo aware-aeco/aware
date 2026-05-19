@@ -1,0 +1,1443 @@
+{
+  "name": "Arc3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D arc.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/",
+  "constructors": [
+    {
+      "name": "Arc3D()",
+      "signature": "Arc3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D(arc: Arc3D)",
+      "signature": "Arc3D(arc: Arc3D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc3D",
+          "doc": "Arc3D which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D( center: Point3D, xDir: Vector3D, normVector: Vector3D, minor: float, major: float, startAngle: float, deltaAngle: float, )",
+      "signature": "Arc3D( center: Point3D, xDir: Vector3D, normVector: Vector3D, minor: float, major: float, startAngle: float, deltaAngle: float, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "xDir",
+          "type": "Vector3D",
+          "doc": "X-axis",
+          "optional": false
+        },
+        {
+          "name": "normVector",
+          "type": "Vector3D",
+          "doc": "Normal vector",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "startAngle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "deltaAngle",
+          "type": "float",
+          "doc": "Delta angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D( center: Point3D, xDir: Vector3D, normVector: Vector3D, minor: float, major: float, startAngle: float, endAngle: float, counterClockwise: bool, )",
+      "signature": "Arc3D( center: Point3D, xDir: Vector3D, normVector: Vector3D, minor: float, major: float, startAngle: float, endAngle: float, counterClockwise: bool, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "xDir",
+          "type": "Vector3D",
+          "doc": "X-axis",
+          "optional": false
+        },
+        {
+          "name": "normVector",
+          "type": "Vector3D",
+          "doc": "Normal vector",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "startAngle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "endAngle",
+          "type": "float",
+          "doc": "End angle",
+          "optional": false
+        },
+        {
+          "name": "counterClockwise",
+          "type": "bool",
+          "doc": "Winding direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D( center: Point3D, minor: float, major: float, startAngle: float, deltaAngle: float, )",
+      "signature": "Arc3D( center: Point3D, minor: float, major: float, startAngle: float, deltaAngle: float, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "startAngle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "deltaAngle",
+          "type": "float",
+          "doc": "Delta angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D( center: Point3D, minor: float, major: float, startAngle: float, endAngle: float, counterClockwise: bool, )",
+      "signature": "Arc3D( center: Point3D, minor: float, major: float, startAngle: float, endAngle: float, counterClockwise: bool, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "startAngle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "endAngle",
+          "type": "float",
+          "doc": "End angle",
+          "optional": false
+        },
+        {
+          "name": "counterClockwise",
+          "type": "bool",
+          "doc": "Winding direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D( placement: AxisPlacement3D, minor: float, major: float, startAngle: float, deltaAngle: float, )",
+      "signature": "Arc3D( placement: AxisPlacement3D, minor: float, major: float, startAngle: float, deltaAngle: float, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "3D Placement",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "startAngle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "deltaAngle",
+          "type": "float",
+          "doc": "Delta angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D( placement: AxisPlacement3D, minor: float, major: float, startAngle: float, endAngle: float, counterClockwise: bool, )",
+      "signature": "Arc3D( placement: AxisPlacement3D, minor: float, major: float, startAngle: float, endAngle: float, counterClockwise: bool, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "3D Placement",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "startAngle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "endAngle",
+          "type": "float",
+          "doc": "End angle",
+          "optional": false
+        },
+        {
+          "name": "counterClockwise",
+          "type": "bool",
+          "doc": "Winding direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    },
+    {
+      "name": "Arc3D(arc2D: Arc2D)",
+      "signature": "Arc3D(arc2D: Arc2D)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "arc2D",
+          "type": "Arc2D",
+          "doc": "Arc to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "Close()",
+      "summary": "Close the arc. Set the delta angle to 2Pi, to close the arc",
+      "remarks": "Close the arc. Set the delta angle to 2Pi, to close the arc",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.Close"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(arc: Arc3D) -\u003E bool",
+      "summary": "Test for equal reference point",
+      "remarks": "Test for equal reference point",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc3D",
+          "doc": "Arc3D to compare with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "result as bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.EqualRef"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter() -\u003E Point3D",
+      "summary": "Get center.",
+      "remarks": "Get center.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetCenter"
+    },
+    {
+      "name": "GetCenterRel",
+      "signature": "GetCenterRel() -\u003E Point3D",
+      "summary": "Get center in relative coordinate system",
+      "remarks": "Get center in relative coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetCenterRel"
+    },
+    {
+      "name": "GetDeltaAngle",
+      "signature": "GetDeltaAngle() -\u003E Angle",
+      "summary": "Get the delta angle",
+      "remarks": "Get the delta angle",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "delta angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetDeltaAngle"
+    },
+    {
+      "name": "GetEndAngle",
+      "signature": "GetEndAngle() -\u003E Angle",
+      "summary": "Get end angle.",
+      "remarks": "Get end angle.",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "angle as const Angle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetEndAngle"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point3D",
+      "summary": "Get end point in world coordinates",
+      "remarks": "Get end point in world coordinates",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "end point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint() -\u003E Point3D",
+      "summary": "Get end point in relative coordinates",
+      "remarks": "Get end point in relative coordinates",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "End Point in relative coordinates."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetEndRelPoint"
+    },
+    {
+      "name": "GetLocalPoint",
+      "signature": "GetLocalPoint(point: Point3D) -\u003E Point3D",
+      "summary": "Get the local coordinates of a global world point",
+      "remarks": "Get the local coordinates of a global world point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Global point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "point angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetLocalPoint"
+    },
+    {
+      "name": "GetMajorAxis",
+      "signature": "GetMajorAxis() -\u003E Vector3D",
+      "summary": "Get the major axis The major axis is calculated according to the plane normal and the axis angle",
+      "remarks": "Get the major axis The major axis is calculated according to the plane normal and the axis angle",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "major axis as Vector3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetMajorAxis"
+    },
+    {
+      "name": "GetMajorRadius",
+      "signature": "GetMajorRadius() -\u003E float",
+      "summary": "Get major radius.",
+      "remarks": "Get major radius.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "major radius as const double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetMajorRadius"
+    },
+    {
+      "name": "GetMinorAxis",
+      "signature": "GetMinorAxis() -\u003E Vector3D",
+      "summary": "Get the minor axis The minor axis is calculated via the cross product of major axis and plane normal",
+      "remarks": "Get the minor axis The minor axis is calculated via the cross product of major axis and plane normal",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "minor axis as Vector3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetMinorAxis"
+    },
+    {
+      "name": "GetMinorRadius",
+      "signature": "GetMinorRadius() -\u003E float",
+      "summary": "Get minor radius.",
+      "remarks": "Get minor radius.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "minor radius as const double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetMinorRadius"
+    },
+    {
+      "name": "GetNormVector",
+      "signature": "GetNormVector() -\u003E Vector3D",
+      "summary": "Get normvector.",
+      "remarks": "Get normvector.",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "normvector as const Vector3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetNormVector"
+    },
+    {
+      "name": "GetOrigin",
+      "signature": "GetOrigin() -\u003E Point3D",
+      "summary": "Get Origin.",
+      "remarks": "Get Origin.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D Origin"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetOrigin"
+    },
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint(angle: Angle) -\u003E Point3D",
+      "summary": "Get point on arc with given angle in world coordinates",
+      "remarks": "Get point on arc with given angle in world coordinates",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "central angle of the point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "point on arc as Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetPoint"
+    },
+    {
+      "name": "GetPointAngle",
+      "signature": "GetPointAngle(point: Point3D) -\u003E Angle",
+      "summary": "Get the angle of a point",
+      "remarks": "Get the angle of a point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Global point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "point angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetPointAngle"
+    },
+    {
+      "name": "GetPointRel",
+      "signature": "GetPointRel(angle: Angle) -\u003E Point3D",
+      "summary": "Get point on arc with given angle in relative coordinates",
+      "remarks": "Get point on arc with given angle in relative coordinates",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "central angle of the point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "point on arc as Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetPointRel"
+    },
+    {
+      "name": "GetRefPlacement",
+      "signature": "GetRefPlacement() -\u003E AxisPlacement3D",
+      "summary": "Get the reference placement",
+      "remarks": "Get the reference placement",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "reference placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetRefPlacement"
+    },
+    {
+      "name": "GetRefPlacementRel",
+      "signature": "GetRefPlacementRel() -\u003E AxisPlacement3D",
+      "summary": "Get the reference placement",
+      "remarks": "Get the reference placement",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "reference placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetRefPlacementRel"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point3D",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetRefPoint"
+    },
+    {
+      "name": "GetStartAngle",
+      "signature": "GetStartAngle() -\u003E Angle",
+      "summary": "Get start angle.",
+      "remarks": "Get start angle.",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "angle as const Angle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetStartAngle"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point3D",
+      "summary": "Get start point in world coordinates",
+      "remarks": "Get start point in world coordinates",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint() -\u003E Point3D",
+      "summary": "Get start point in relative coordinates",
+      "remarks": "Get start point in relative coordinates",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "start point in relative coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetStartRelPoint"
+    },
+    {
+      "name": "GetXAxis",
+      "signature": "GetXAxis() -\u003E Vector3D",
+      "summary": "Get Major axis (X-Axis of the placement).",
+      "remarks": "Get Major axis (X-Axis of the placement).",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Major axis as const Vector3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetXAxis"
+    },
+    {
+      "name": "GetZAxis",
+      "signature": "GetZAxis() -\u003E Vector3D",
+      "summary": "Get Normal vector of the placement.",
+      "remarks": "Get Normal vector of the placement.",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Normal vector as const Vector3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.GetZAxis"
+    },
+    {
+      "name": "IsAngleOnArc",
+      "signature": "IsAngleOnArc(angle: Angle) -\u003E bool",
+      "summary": "Checks if the given angle lies on the arc",
+      "remarks": "Checks if the given angle lies on the arc",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle to test",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Angle on arc true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsAngleOnArc"
+    },
+    {
+      "name": "IsCircle",
+      "signature": "IsCircle() -\u003E bool",
+      "summary": "Check if minor radius equals major radius",
+      "remarks": "Check if minor radius equals major radius",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "result of check as bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsCircle"
+    },
+    {
+      "name": "IsClockwise",
+      "signature": "IsClockwise() -\u003E bool",
+      "summary": "Returns winding direction clockwise true/false",
+      "remarks": "Returns winding direction clockwise true/false",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Is winding direction clockwise true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsClockwise"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed() -\u003E bool",
+      "summary": "Check delta angle is 2pi",
+      "remarks": "Check delta angle is 2pi",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "result of check as bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsClosed"
+    },
+    {
+      "name": "IsCounterClockwise",
+      "signature": "IsCounterClockwise() -\u003E bool",
+      "summary": "Returns winding direction counterclockwise true/false",
+      "remarks": "Returns winding direction counterclockwise true/false",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Is winding direction counterclockwise true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsCounterClockwise"
+    },
+    {
+      "name": "IsEpsilonClosed",
+      "signature": "IsEpsilonClosed() -\u003E bool",
+      "summary": "Check delta angle is 2pi",
+      "remarks": "Check delta angle is 2pi",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "result of check as bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsEpsilonClosed"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Checks if the arc is valid",
+      "remarks": "Checks if the arc is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Validity true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.IsValid"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse of current arc Method reverse Arc, start with end angle and orientation.",
+      "remarks": "Reverse of current arc Method reverse Arc, start with end angle and orientation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.Reverse"
+    },
+    {
+      "name": "RotateAroundLocalZAxis",
+      "signature": "RotateAroundLocalZAxis(angle: Angle)",
+      "summary": "Rotate the arc around the Z-axis (normal vector)",
+      "remarks": "Rotate the arc around the Z-axis (normal vector)",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.RotateAroundLocalZAxis"
+    },
+    {
+      "name": "SetCenter",
+      "signature": "SetCenter(center: Point3D)",
+      "summary": "Set center point.",
+      "remarks": "Set center point.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "center point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetCenter"
+    },
+    {
+      "name": "SetCenterRel",
+      "signature": "SetCenterRel(center: Point3D)",
+      "summary": "Set center point in local coordinate system",
+      "remarks": "Set center point in local coordinate system",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "center point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetCenterRel"
+    },
+    {
+      "name": "SetClockwise(cw: bool)",
+      "signature": "SetClockwise(cw: bool)",
+      "summary": "Set the winding direction of the arc",
+      "remarks": "Set the winding direction of the arc",
+      "params": [
+        {
+          "name": "cw",
+          "type": "bool",
+          "doc": "winding clockwise true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetClockwise"
+    },
+    {
+      "name": "SetClockwise()",
+      "signature": "SetClockwise()",
+      "summary": "Set the winding direction of the arc to CW",
+      "remarks": "Set the winding direction of the arc to CW",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetClockwise"
+    },
+    {
+      "name": "SetCounterClockwise(ccw: bool)",
+      "signature": "SetCounterClockwise(ccw: bool)",
+      "summary": "Set the winding direction of the arc",
+      "remarks": "Set the winding direction of the arc",
+      "params": [
+        {
+          "name": "ccw",
+          "type": "bool",
+          "doc": "winding counterclockwise true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetCounterClockwise"
+    },
+    {
+      "name": "SetCounterClockwise()",
+      "signature": "SetCounterClockwise()",
+      "summary": "Set the winding direction of the arc to CCW",
+      "remarks": "Set the winding direction of the arc to CCW",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetCounterClockwise"
+    },
+    {
+      "name": "SetDeltaAngle",
+      "signature": "SetDeltaAngle(deltaAngle: Angle)",
+      "summary": "Set the delta angle. Set the delta angle",
+      "remarks": "Set the delta angle. Set the delta angle",
+      "params": [
+        {
+          "name": "deltaAngle",
+          "type": "Angle",
+          "doc": "angle which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetDeltaAngle"
+    },
+    {
+      "name": "SetEndAngle(angle: Angle)",
+      "signature": "SetEndAngle(angle: Angle)",
+      "summary": "Set end angle. Set the end angle and normalize it to [0,2PI[",
+      "remarks": "Set end angle. Set the end angle and normalize it to [0,2PI[",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetEndAngle"
+    },
+    {
+      "name": "SetEndAngle(angle: Angle, ccw: bool)",
+      "signature": "SetEndAngle(angle: Angle, ccw: bool)",
+      "summary": "Set end angle. Set the end angle and normalize it to [0,2PI[",
+      "remarks": "Set end angle. Set the end angle and normalize it to [0,2PI[",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle which will be set.",
+          "optional": false
+        },
+        {
+          "name": "ccw",
+          "type": "bool",
+          "doc": "in counterclockwise winding",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetEndAngle"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(endpoint: Point3D)",
+      "summary": "Set the end point of an object in world coordinates",
+      "remarks": "Set the end point of an object in world coordinates",
+      "params": [
+        {
+          "name": "endpoint",
+          "type": "Point3D",
+          "doc": "New end point of curve",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetEndPoint"
+    },
+    {
+      "name": "SetMajorRadius",
+      "signature": "SetMajorRadius(radius: float)",
+      "summary": "Set major radius.",
+      "remarks": "Set major radius.",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "major radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetMajorRadius"
+    },
+    {
+      "name": "SetMinorRadius",
+      "signature": "SetMinorRadius(radius: float)",
+      "summary": "Set minor radius.",
+      "remarks": "Set minor radius.",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "minor radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetMinorRadius"
+    },
+    {
+      "name": "SetNormVector",
+      "signature": "SetNormVector(normalVec: Vector3D)",
+      "summary": "Set the normvector Set the plane normal and normalizes it to unit vector",
+      "remarks": "Set the normvector Set the plane normal and normalizes it to unit vector",
+      "params": [
+        {
+          "name": "normalVec",
+          "type": "Vector3D",
+          "doc": "Vector3D to be set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetNormVector"
+    },
+    {
+      "name": "SetOrigin",
+      "signature": "SetOrigin(center: Point3D)",
+      "summary": "Set Origin",
+      "remarks": "Set Origin",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Origin",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetOrigin"
+    },
+    {
+      "name": "SetRefPlacement(refPlacement: AxisPlacement3D)",
+      "signature": "SetRefPlacement(refPlacement: AxisPlacement3D)",
+      "summary": "Set the reference placement",
+      "remarks": "Set the reference placement",
+      "params": [
+        {
+          "name": "refPlacement",
+          "type": "AxisPlacement3D",
+          "doc": "reference placement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetRefPlacement"
+    },
+    {
+      "name": "SetRefPlacement(center: Point3D, xAxis: Vector3D, normalVec: Vector3D)",
+      "signature": "SetRefPlacement(center: Point3D, xAxis: Vector3D, normalVec: Vector3D)",
+      "summary": "Set the reference placement",
+      "remarks": "Set the reference placement",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "center point",
+          "optional": false
+        },
+        {
+          "name": "xAxis",
+          "type": "Vector3D",
+          "doc": "X-axis of the arc",
+          "optional": false
+        },
+        {
+          "name": "normalVec",
+          "type": "Vector3D",
+          "doc": "normal vector (Z-axis) of the arc",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetRefPlacement"
+    },
+    {
+      "name": "SetRefPlacementRel",
+      "signature": "SetRefPlacementRel(refPlacement: AxisPlacement3D)",
+      "summary": "Set the reference placement relative to the refPoint",
+      "remarks": "Set the reference placement relative to the refPoint",
+      "params": [
+        {
+          "name": "refPlacement",
+          "type": "AxisPlacement3D",
+          "doc": "reference placement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetRefPlacementRel"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point3D)",
+      "summary": "Set the reference point",
+      "remarks": "Set the reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetRefPoint"
+    },
+    {
+      "name": "SetStartAngle(angle: Angle)",
+      "signature": "SetStartAngle(angle: Angle)",
+      "summary": "Set start angle Set the start angle and normalize it to [0,2PI[",
+      "remarks": "Set start angle Set the start angle and normalize it to [0,2PI[",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetStartAngle"
+    },
+    {
+      "name": "SetStartAngle(angle: Angle, ccw: bool)",
+      "signature": "SetStartAngle(angle: Angle, ccw: bool)",
+      "summary": "Set start angle. Set the start angle and normalize it to [0,2PI[",
+      "remarks": "Set start angle. Set the start angle and normalize it to [0,2PI[",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle which will be set.",
+          "optional": false
+        },
+        {
+          "name": "ccw",
+          "type": "bool",
+          "doc": "in counterclockwise winding",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetStartAngle"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startpoint: Point3D)",
+      "summary": "Set the start point of an object in world coordinates",
+      "remarks": "Set the start point of an object in world coordinates",
+      "params": [
+        {
+          "name": "startpoint",
+          "type": "Point3D",
+          "doc": "New start point of curve",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.SetStartPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(arc: Arc3D) -\u003E bool",
+      "summary": "Comparison of arcs. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of arcs. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc3D",
+          "doc": "arc to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when arcs are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get center.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.Center"
+    },
+    {
+      "name": "CenterRel",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get center in relative coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.CenterRel"
+    },
+    {
+      "name": "CounterClockwise",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns winding direction counterclockwise true/false",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.CounterClockwise"
+    },
+    {
+      "name": "DeltaAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the delta angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.DeltaAngle"
+    },
+    {
+      "name": "EndAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end angle.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.EndAngle"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end point in world coordinates",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.EndPoint"
+    },
+    {
+      "name": "EndRelPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get end point in relative coordinates",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.EndRelPoint"
+    },
+    {
+      "name": "MajorRadius",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get major radius.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.MajorRadius"
+    },
+    {
+      "name": "MinorRadius",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get minor radius.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.MinorRadius"
+    },
+    {
+      "name": "NormVector",
+      "type": "Vector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get normvector.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.NormVector"
+    },
+    {
+      "name": "Origin",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get Origin.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.Origin"
+    },
+    {
+      "name": "RefPlacement",
+      "type": "AxisPlacement3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference placement",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.RefPlacement"
+    },
+    {
+      "name": "RefPlacementRel",
+      "type": "AxisPlacement3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference placement",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.RefPlacementRel"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.RefPoint"
+    },
+    {
+      "name": "StartAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start angle.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.StartAngle"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start point in world coordinates",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.StartPoint"
+    },
+    {
+      "name": "StartRelPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get start point in relative coordinates",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc3D/#NemAll_Python_Geometry.Arc3D.StartRelPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

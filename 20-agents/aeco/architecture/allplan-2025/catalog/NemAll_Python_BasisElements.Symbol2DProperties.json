@@ -1,0 +1,118 @@
+{
+  "name": "Symbol2DProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the point symbol",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/",
+  "constructors": [
+    {
+      "name": "Symbol2DProperties()",
+      "signature": "Symbol2DProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: Symbol2DProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "Symbol2DProperties",
+          "doc": "Symbol2DProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Height",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Symbol height",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.Height"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the symbol should be scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.IsScaleDependent"
+    },
+    {
+      "name": "PrimaryPointNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Primary point number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.PrimaryPointNumber"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.RotationAngle"
+    },
+    {
+      "name": "SecondaryPointNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Secondary point number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.SecondaryPointNumber"
+    },
+    {
+      "name": "SymbolID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Symbol ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.SymbolID"
+    },
+    {
+      "name": "Width",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Symbol width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol2DProperties/#NemAll_Python_BasisElements.Symbol2DProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

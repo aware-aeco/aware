@@ -1,0 +1,170 @@
+{
+  "name": "BeamProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the properties of an upstand/downstand beam",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/",
+  "constructors": [
+    {
+      "name": "BeamProperties()",
+      "signature": "BeamProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.__init__"
+    },
+    {
+      "name": "BeamProperties(beamProp: BeamProperties)",
+      "signature": "BeamProperties(beamProp: BeamProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "beamProp",
+          "type": "BeamProperties",
+          "doc": "Beam properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetShapeType",
+      "signature": "GetShapeType() -\u003E ShapeType",
+      "summary": "Get the type of the cross-section shape",
+      "remarks": "Get the type of the cross-section shape",
+      "params": [],
+      "returns": {
+        "type": "ShapeType",
+        "doc": "Shape type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.GetShapeType"
+    },
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth() -\u003E float",
+      "summary": "Get the width of the rectangular cross-section shape",
+      "remarks": "Get the width of the rectangular cross-section shape",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Width"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.GetWidth"
+    },
+    {
+      "name": "SetAttribute",
+      "signature": "SetAttribute(attrib: object)",
+      "summary": "Set the attribute",
+      "remarks": "Set the attribute",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "object",
+          "doc": "Attribute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetAttribute"
+    },
+    {
+      "name": "SetAxis",
+      "signature": "SetAxis(axis: AxisProperties)",
+      "summary": "Set the axis",
+      "remarks": "Set the axis",
+      "params": [
+        {
+          "name": "axis",
+          "type": "AxisProperties",
+          "doc": "Axis data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetAxis"
+    },
+    {
+      "name": "SetShapeType",
+      "signature": "SetShapeType(shapeType: ShapeType)",
+      "summary": "Set the type of the cross-section shape",
+      "remarks": "Set the type of the cross-section shape",
+      "params": [
+        {
+          "name": "shapeType",
+          "type": "ShapeType",
+          "doc": "Shape type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetShapeType"
+    },
+    {
+      "name": "SetWidth",
+      "signature": "SetWidth(width: float)",
+      "summary": "Set the width of the rectangular cross-section shape",
+      "remarks": "Set the width of the rectangular cross-section shape",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.SetWidth"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsStartNewJoinedBeamGroup",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should this beam be the first of a new group of beams joined together Set this property to False in the second or subsequent beams in order to join all of them with each other at their ends to create a continous chain of beams.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.IsStartNewJoinedBeamGroup"
+    },
+    {
+      "name": "ShapeType",
+      "type": "ShapeType",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of the cross-section shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.ShapeType"
+    },
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Width of the rectangular cross-section shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BeamProperties/#NemAll_Python_ArchElements.BeamProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

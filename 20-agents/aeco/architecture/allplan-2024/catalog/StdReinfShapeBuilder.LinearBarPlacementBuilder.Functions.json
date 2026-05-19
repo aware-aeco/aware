@@ -1,0 +1,69 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.LinearBarPlacementBuilder",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.LinearBarPlacementBuilder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_linear_bar_placement_from_to_by_dist",
+      "signature": "create_linear_bar_placement_from_to_by_dist(position, shape, from_point, to_point, concrete_cover_left, concrete_cover_right, bar_distance, start_end_rule=AdditionalCover, global_move=True)",
+      "summary": "Create a linear placement defined by two points and a bar distance Return: Bar placement",
+      "remarks": "Create a linear placement defined by two points and a bar distance Return: Bar placement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/_functions/#StdReinfShapeBuilder.LinearBarPlacementBuilder.create_linear_bar_placement_from_to_by_dist"
+    },
+    {
+      "name": "create_linear_bar_placement_from_to_by_count",
+      "signature": "create_linear_bar_placement_from_to_by_count(position, shape, from_point, to_point, concrete_cover_left, concrete_cover_right, bar_count, global_move=True, remove_count_left=0, remove_count_right=0)",
+      "summary": "Create a linear placement defined by two points and a bar count Return: Bar placement",
+      "remarks": "Create a linear placement defined by two points and a bar count Return: Bar placement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/_functions/#StdReinfShapeBuilder.LinearBarPlacementBuilder.create_linear_bar_placement_from_to_by_count"
+    },
+    {
+      "name": "create_linear_bar_placement_from_by_dist_count",
+      "signature": "create_linear_bar_placement_from_by_dist_count(position, shape, from_point, direction_point, concrete_cover, bar_distance, bar_count, global_move=True)",
+      "summary": "Create a linear placement defined by a from point, a direction point, a bar count and a distance Return: Bar placement",
+      "remarks": "Create a linear placement defined by a from point, a direction point, a bar count and a distance Return: Bar placement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/_functions/#StdReinfShapeBuilder.LinearBarPlacementBuilder.create_linear_bar_placement_from_by_dist_count"
+    },
+    {
+      "name": "calculate_length_of_regions",
+      "signature": "calculate_length_of_regions(value_list, from_point, to_point, concrete_cover_left, concrete_cover_right)",
+      "summary": "Create the real region length of a placement Return: Bar placement ploints as list of tuples (start point, end point)",
+      "remarks": "Create the real region length of a placement Return: Bar placement ploints as list of tuples (start point, end point)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/_functions/#StdReinfShapeBuilder.LinearBarPlacementBuilder.calculate_length_of_regions"
+    },
+    {
+      "name": "check_placement_length_by_distance",
+      "signature": "check_placement_length_by_distance(length, distance)",
+      "summary": "Helper function for the length checking of a placement Return: adapted length of the placement",
+      "remarks": "Helper function for the length checking of a placement Return: adapted length of the placement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/_functions/#StdReinfShapeBuilder.LinearBarPlacementBuilder.check_placement_length_by_distance"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

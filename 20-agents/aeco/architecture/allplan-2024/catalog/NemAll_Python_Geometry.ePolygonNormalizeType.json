@@ -1,0 +1,57 @@
+{
+  "name": "ePolygonNormalizeType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "type of Polygon2D normalization",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ePolygonNormalizeType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ePolygonNormalizeType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/ePolygonNormalizeType/#NemAll_Python_Geometry.ePolygonNormalizeType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DEFAULT_NORM_TYPE",
+      "value": 0
+    },
+    {
+      "name": "HATCHING_MEASUR_NORM_TYPE",
+      "value": 2
+    },
+    {
+      "name": "HATCHING_NORM_TYPE",
+      "value": 3
+    },
+    {
+      "name": "SIDEFACE_NORM_TYPE",
+      "value": 1
+    },
+    {
+      "name": "STARTPOINT_NORM_TYPE",
+      "value": 4
+    }
+  ]
+}

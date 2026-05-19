@@ -1,0 +1,28 @@
+{
+  "name": "CreateElementResult",
+  "namespace": "CreateElementResult",
+  "kind": "class",
+  "summary": "Implementation of the data class for the result of the create_element function",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/CreateElementResult/CreateElementResult/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "is_empty",
+      "signature": "is_empty()",
+      "summary": "check for empty data",
+      "remarks": "check for empty data",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if no elements and handles exist, otherwise False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/CreateElementResult/CreateElementResult/#CreateElementResult.CreateElementResult.is_empty"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

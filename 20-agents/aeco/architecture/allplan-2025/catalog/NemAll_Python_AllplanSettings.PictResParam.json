@@ -1,0 +1,95 @@
+{
+  "name": "PictResParam",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for the parameter icons",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResParam/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eParam01",
+      "value": 19093
+    },
+    {
+      "name": "eParam010",
+      "value": 19111
+    },
+    {
+      "name": "eParam011",
+      "value": 19113
+    },
+    {
+      "name": "eParam012",
+      "value": 19115
+    },
+    {
+      "name": "eParam013",
+      "value": 19117
+    },
+    {
+      "name": "eParam014",
+      "value": 19119
+    },
+    {
+      "name": "eParam015",
+      "value": 19121
+    },
+    {
+      "name": "eParam016",
+      "value": 19123
+    },
+    {
+      "name": "eParam017",
+      "value": 19125
+    },
+    {
+      "name": "eParam018",
+      "value": 19127
+    },
+    {
+      "name": "eParam019",
+      "value": 19129
+    },
+    {
+      "name": "eParam02",
+      "value": 19095
+    },
+    {
+      "name": "eParam020",
+      "value": 19131
+    },
+    {
+      "name": "eParam03",
+      "value": 19097
+    },
+    {
+      "name": "eParam04",
+      "value": 19099
+    },
+    {
+      "name": "eParam05",
+      "value": 19101
+    },
+    {
+      "name": "eParam06",
+      "value": 19103
+    },
+    {
+      "name": "eParam07",
+      "value": 19105
+    },
+    {
+      "name": "eParam08",
+      "value": 19107
+    },
+    {
+      "name": "eParam09",
+      "value": 19109
+    }
+  ]
+}

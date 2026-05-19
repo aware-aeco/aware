@@ -1,0 +1,55 @@
+{
+  "name": "PictResPlaneReferences",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for the plan references",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResPlaneReferences/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAbsElevationBottom",
+      "value": 8567
+    },
+    {
+      "name": "eAbsElevationTop",
+      "value": 8568
+    },
+    {
+      "name": "eBottomFixed",
+      "value": 8576
+    },
+    {
+      "name": "eBottomPlane",
+      "value": 8569
+    },
+    {
+      "name": "eBottomPlaneFromTop",
+      "value": 8570
+    },
+    {
+      "name": "eComponentsBottomPlane",
+      "value": 8574
+    },
+    {
+      "name": "eComponentsTopPlane",
+      "value": 8575
+    },
+    {
+      "name": "eTopFixed",
+      "value": 8576
+    },
+    {
+      "name": "eTopPlane",
+      "value": 8572
+    },
+    {
+      "name": "eTopPlaneFromBottom",
+      "value": 8571
+    }
+  ]
+}

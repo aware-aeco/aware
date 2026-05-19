@@ -1,0 +1,36 @@
+{
+  "name": "TextPropertiesSource_Enum",
+  "namespace": "NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties",
+  "kind": "enum",
+  "summary": "enum for Section type",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.TextPropertiesSource_Enum",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E TextPropertiesSource_Enum",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TextPropertiesSource_Enum",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.TextPropertiesSource_Enum.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

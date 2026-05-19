@@ -1,0 +1,735 @@
+{
+  "name": "CircularAreaElement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the bar placement element",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/",
+  "constructors": [
+    {
+      "name": "CircularAreaElement()",
+      "signature": "CircularAreaElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.__init__"
+    },
+    {
+      "name": "CircularAreaElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, outerAngleStart, outerAngleEnd, innerAngleStart, innerAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)",
+      "signature": "CircularAreaElement(positionNumber, diameter, steelGrade, concreteGrade, rotationAxis, contourPoints, outerAngleStart, outerAngleEnd, innerAngleStart, innerAngleEnd, concreteCoverStart, concreteCoverEnd, concreteCoverContour)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade",
+          "optional": false
+        },
+        {
+          "name": "rotationAxis",
+          "type": "Line3D",
+          "doc": "Rotation axis",
+          "optional": false
+        },
+        {
+          "name": "contourPoints",
+          "type": "Polyline3D",
+          "doc": "Contour points",
+          "optional": false
+        },
+        {
+          "name": "outerAngleStart",
+          "type": "float",
+          "doc": "Outer angle at the start",
+          "optional": false
+        },
+        {
+          "name": "outerAngleEnd",
+          "type": "float",
+          "doc": "Outer angle at the end",
+          "optional": false
+        },
+        {
+          "name": "innerAngleStart",
+          "type": "float",
+          "doc": "Inner angle at the start",
+          "optional": false
+        },
+        {
+          "name": "innerAngleEnd",
+          "type": "float",
+          "doc": "Inner angle at the end",
+          "optional": false
+        },
+        {
+          "name": "concreteCoverStart",
+          "type": "float",
+          "doc": "Concrete cover at the start",
+          "optional": false
+        },
+        {
+          "name": "concreteCoverEnd",
+          "type": "float",
+          "doc": "Concrete cover at the end",
+          "optional": false
+        },
+        {
+          "name": "concreteCoverContour",
+          "type": "float",
+          "doc": "Concrete cover of the contour",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.__init__"
+    },
+    {
+      "name": "CircularAreaElement(element)",
+      "signature": "CircularAreaElement(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "CircularAreaElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetConcreteCoverContour",
+      "signature": "GetConcreteCoverContour()",
+      "summary": "Get the concrete cover from the contour",
+      "remarks": "Get the concrete cover from the contour",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover from the contour"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetConcreteCoverContour"
+    },
+    {
+      "name": "GetConcreteCoverEnd",
+      "signature": "GetConcreteCoverEnd()",
+      "summary": "Get the concrete cover from the end",
+      "remarks": "Get the concrete cover from the end",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover from the end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetConcreteCoverEnd"
+    },
+    {
+      "name": "GetConcreteCoverStart",
+      "signature": "GetConcreteCoverStart()",
+      "summary": "Get the concrete cover from the start",
+      "remarks": "Get the concrete cover from the start",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover from the start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetConcreteCoverStart"
+    },
+    {
+      "name": "GetConcreteGrade",
+      "signature": "GetConcreteGrade()",
+      "summary": "Get the concrete grade",
+      "remarks": "Get the concrete grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetConcreteGrade"
+    },
+    {
+      "name": "GetContourPoints",
+      "signature": "GetContourPoints()",
+      "summary": "Get the contour points",
+      "remarks": "Get the contour points",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "Contour points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetContourPoints"
+    },
+    {
+      "name": "GetDiameter",
+      "signature": "GetDiameter()",
+      "summary": "Get the diameter",
+      "remarks": "Get the diameter",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Diameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetDiameter"
+    },
+    {
+      "name": "GetDistance",
+      "signature": "GetDistance()",
+      "summary": "Get the distance",
+      "remarks": "Get the distance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Distance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetDistance"
+    },
+    {
+      "name": "GetEvenFirstLength",
+      "signature": "GetEvenFirstLength()",
+      "summary": "Get the first length for the even ring number",
+      "remarks": "Get the first length for the even ring number",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "First length for the even ring number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetEvenFirstLength"
+    },
+    {
+      "name": "GetEvenOverlapEnd",
+      "signature": "GetEvenOverlapEnd()",
+      "summary": "Get the overlap length at the end for the even ring number",
+      "remarks": "Get the overlap length at the end for the even ring number",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap length at the end for the even ring number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetEvenOverlapEnd"
+    },
+    {
+      "name": "GetEvenOverlapStart",
+      "signature": "GetEvenOverlapStart()",
+      "summary": "Get the overlap length at the start for the even ring number",
+      "remarks": "Get the overlap length at the start for the even ring number",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap length at the start for the even ring number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetEvenOverlapStart"
+    },
+    {
+      "name": "GetLengthFactor",
+      "signature": "GetLengthFactor()",
+      "summary": "Get the length factor",
+      "remarks": "Get the length factor",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Length factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetLengthFactor"
+    },
+    {
+      "name": "GetMaxBarLength",
+      "signature": "GetMaxBarLength()",
+      "summary": "Get the maximal bar length",
+      "remarks": "Get the maximal bar length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Maximal bar length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetMaxBarLength"
+    },
+    {
+      "name": "GetMaxBarRise",
+      "signature": "GetMaxBarRise()",
+      "summary": "Get the maximal bar radius",
+      "remarks": "Get the maximal bar radius",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Maximal bar radius"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetMaxBarRise"
+    },
+    {
+      "name": "GetMinBarLength",
+      "signature": "GetMinBarLength()",
+      "summary": "Get the minimal bar length",
+      "remarks": "Get the minimal bar length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Minimal bar length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetMinBarLength"
+    },
+    {
+      "name": "GetMinBarRadius",
+      "signature": "GetMinBarRadius()",
+      "summary": "Get the minimal bar radius",
+      "remarks": "Get the minimal bar radius",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Minimal bar radius"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetMinBarRadius"
+    },
+    {
+      "name": "GetOddFirstLength",
+      "signature": "GetOddFirstLength()",
+      "summary": "Get the first length for the odd ring number",
+      "remarks": "Get the first length for the odd ring number",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "First length for the odd ring number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetOddFirstLength"
+    },
+    {
+      "name": "GetOddOverlapEnd",
+      "signature": "GetOddOverlapEnd()",
+      "summary": "Get the overlap length at the end for the odd ring number",
+      "remarks": "Get the overlap length at the end for the odd ring number",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap length at the end for the odd ring number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetOddOverlapEnd"
+    },
+    {
+      "name": "GetOddOverlapStart",
+      "signature": "GetOddOverlapStart()",
+      "summary": "Get the overlap length at the start for the even ring number",
+      "remarks": "Get the overlap length at the start for the even ring number",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap length at the start for the odd ring number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetOddOverlapStart"
+    },
+    {
+      "name": "GetOuterAngleEnd",
+      "signature": "GetOuterAngleEnd()",
+      "summary": "Get the outer angle at the end",
+      "remarks": "Get the outer angle at the end",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Outer angle at the end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetOuterAngleEnd"
+    },
+    {
+      "name": "GetOuterAngleStart",
+      "signature": "GetOuterAngleStart()",
+      "summary": "Get the outer angle at the start",
+      "remarks": "Get the outer angle at the start",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Outer angle at the start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetOuterAngleStart"
+    },
+    {
+      "name": "GetOverlapLength",
+      "signature": "GetOverlapLength()",
+      "summary": "Get the overlap length",
+      "remarks": "Get the overlap length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetOverlapLength"
+    },
+    {
+      "name": "GetPlacementRule",
+      "signature": "GetPlacementRule()",
+      "summary": "Get the placement rule",
+      "remarks": "Get the placement rule",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Placement rule"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetPlacementRule"
+    },
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber()",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetPositionNumber"
+    },
+    {
+      "name": "GetRotationAxis",
+      "signature": "GetRotationAxis()",
+      "summary": "Get the rotation axis",
+      "remarks": "Get the rotation axis",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "Rotation axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetRotationAxis"
+    },
+    {
+      "name": "GetSteelGrade",
+      "signature": "GetSteelGrade()",
+      "summary": "Get the steel grade",
+      "remarks": "Get the steel grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Steel grade"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetSteelGrade"
+    },
+    {
+      "name": "GetinnerAngleEnd",
+      "signature": "GetinnerAngleEnd()",
+      "summary": "Get the inner angle at the end",
+      "remarks": "Get the inner angle at the end",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Inner angle at the end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetinnerAngleEnd"
+    },
+    {
+      "name": "GetinnerAngleStart",
+      "signature": "GetinnerAngleStart()",
+      "summary": "Get the inner angle at the start",
+      "remarks": "Get the inner angle at the start",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Inner angle at the start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.GetinnerAngleStart"
+    },
+    {
+      "name": "IsPlacePerLinearMeter",
+      "signature": "IsPlacePerLinearMeter()",
+      "summary": "Get the place per linear meter state",
+      "remarks": "Get the place per linear meter state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Place per linear meter: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.IsPlacePerLinearMeter"
+    },
+    {
+      "name": "IsbOverlapEndAsCircle",
+      "signature": "IsbOverlapEndAsCircle()",
+      "summary": "Get the overlap state at the end",
+      "remarks": "Get the overlap state at the end",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Overlap length at the end as circle = true, as tangent = false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.IsbOverlapEndAsCircle"
+    },
+    {
+      "name": "IsbOverlapStartAsCircle",
+      "signature": "IsbOverlapStartAsCircle()",
+      "summary": "Get the overlap state at the start",
+      "remarks": "Get the overlap state at the start",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Overlap length at the start as circle = true, as tangent = false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.IsbOverlapStartAsCircle"
+    },
+    {
+      "name": "SetBarProperties",
+      "signature": "SetBarProperties(distance, maxBarLength, minBarLength, placementRule, oddFirstLength, evenFirstLength, minBarRadius, maxBarRise)",
+      "summary": "Set the bar properties",
+      "remarks": "Set the bar properties",
+      "params": [
+        {
+          "name": "distance",
+          "type": "float",
+          "doc": "Distance",
+          "optional": false
+        },
+        {
+          "name": "maxBarLength",
+          "type": "float",
+          "doc": "Maximal bar length",
+          "optional": false
+        },
+        {
+          "name": "minBarLength",
+          "type": "float",
+          "doc": "Minimal bar length",
+          "optional": false
+        },
+        {
+          "name": "placementRule",
+          "type": "int",
+          "doc": "Placement rule",
+          "optional": false
+        },
+        {
+          "name": "oddFirstLength",
+          "type": "float",
+          "doc": "First length for the odd ring number",
+          "optional": false
+        },
+        {
+          "name": "evenFirstLength",
+          "type": "float",
+          "doc": "First bar length for the event ring number",
+          "optional": false
+        },
+        {
+          "name": "minBarRadius",
+          "type": "float",
+          "doc": "Minimal bar radius",
+          "optional": false
+        },
+        {
+          "name": "maxBarRise",
+          "type": "float",
+          "doc": "Maximal bar rise",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.SetBarProperties"
+    },
+    {
+      "name": "SetLengthFactor",
+      "signature": "SetLengthFactor(lengthFactor)",
+      "summary": "Set the length factor",
+      "remarks": "Set the length factor",
+      "params": [
+        {
+          "name": "lengthFactor",
+          "type": "float",
+          "doc": "Length factor",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.SetLengthFactor"
+    },
+    {
+      "name": "SetOverlap",
+      "signature": "SetOverlap(oddOverlapStart, evenOverlapStart, bOverlapStartAsCircle, oddOverlapEnd, evenOverlapEnd, bOverlapEndAsCircle, overlapLength)",
+      "summary": "Set the overlap",
+      "remarks": "Set the overlap",
+      "params": [
+        {
+          "name": "oddOverlapStart",
+          "type": "float",
+          "doc": "Overlap length at the start for the odd ring number",
+          "optional": false
+        },
+        {
+          "name": "evenOverlapStart",
+          "type": "float",
+          "doc": "Overlap length at the start for the even ring number",
+          "optional": false
+        },
+        {
+          "name": "bOverlapStartAsCircle",
+          "type": "bool",
+          "doc": "Overlap length at the start as circle = true, as tangent = false",
+          "optional": false
+        },
+        {
+          "name": "oddOverlapEnd",
+          "type": "float",
+          "doc": "Overlap length at the end for the odd ring number",
+          "optional": false
+        },
+        {
+          "name": "evenOverlapEnd",
+          "type": "float",
+          "doc": "Overlap length at the end for the even ring number",
+          "optional": false
+        },
+        {
+          "name": "bOverlapEndAsCircle",
+          "type": "bool",
+          "doc": "Overlap length at the end as circle = true, as tangent = false",
+          "optional": false
+        },
+        {
+          "name": "overlapLength",
+          "type": "float",
+          "doc": "Overlap length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.SetOverlap"
+    },
+    {
+      "name": "SetPlacePerLinearMeter",
+      "signature": "SetPlacePerLinearMeter(bPlacePerLinearMeter)",
+      "summary": "Set the place per linear meter state",
+      "remarks": "Set the place per linear meter state",
+      "params": [
+        {
+          "name": "bPlacePerLinearMeter",
+          "type": "bool",
+          "doc": "Place per linear meter: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.SetPlacePerLinearMeter"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LengthFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the length factor",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.LengthFactor"
+    },
+    {
+      "name": "PlacePerLinearMeter",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the place per linear meter state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/CircularAreaElement/#NemAll_Python_Reinforcement.CircularAreaElement.PlacePerLinearMeter"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

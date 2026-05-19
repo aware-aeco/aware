@@ -1,0 +1,98 @@
+{
+  "name": "BarAreaPlacementService",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.BarAreaPlacementService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementService/",
+  "constructors": [
+    {
+      "name": "BarAreaPlacementService()",
+      "signature": "BarAreaPlacementService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementService/#NemAll_Python_Reinforcement.BarAreaPlacementService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddOpeningPolygon",
+      "signature": "AddOpeningPolygon(arg2, openingPol)",
+      "summary": "Add an opening polygon",
+      "remarks": "Add an opening polygon",
+      "params": [
+        {
+          "name": "openingPol",
+          "type": "float",
+          "doc": "Opening polygon",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementService/#NemAll_Python_Reinforcement.BarAreaPlacementService.AddOpeningPolygon"
+    },
+    {
+      "name": "Calculate",
+      "signature": "Calculate(doc, barPlacementProp, placementMatrix, concreteCoverZDir)",
+      "summary": "Calculate the meshes",
+      "remarks": "Calculate the meshes",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "barPlacementProp",
+          "type": "BarAreaPlacementProperties",
+          "doc": "Placement properties",
+          "optional": false
+        },
+        {
+          "name": "placementMatrix",
+          "type": "Matrix3D",
+          "doc": "Placement matrix",
+          "optional": false
+        },
+        {
+          "name": "concreteCoverZDir",
+          "type": "float",
+          "doc": "Concrete cover in the local z direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementService/#NemAll_Python_Reinforcement.BarAreaPlacementService.Calculate"
+    },
+    {
+      "name": "SetOuterPolygon",
+      "signature": "SetOuterPolygon(arg2, placementPol)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "placementPol",
+          "type": "float",
+          "doc": "Placement polygon",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementService/#NemAll_Python_Reinforcement.BarAreaPlacementService.SetOuterPolygon"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

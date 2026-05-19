@@ -1,0 +1,30 @@
+{
+  "name": "ConnectToPythonPartState",
+  "namespace": "PythonPartTransaction",
+  "kind": "enum",
+  "summary": "Enumeration of the possible types of relationships in a PythonPart connection.",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartTransaction/ConnectToPythonPartState/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "IS_CHILD",
+      "value": 2,
+      "summary": "Connected PythonPart is the child of the other PythonPart."
+    },
+    {
+      "name": "IS_PARENT",
+      "value": 1,
+      "summary": "Connected PythonPart is the parent of the other PythonPart."
+    },
+    {
+      "name": "IS_PARENT_CHILD",
+      "value": 3,
+      "summary": "Creates a connection in both directions."
+    }
+  ]
+}

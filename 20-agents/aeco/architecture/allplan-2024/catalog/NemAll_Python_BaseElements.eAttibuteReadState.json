@@ -1,0 +1,53 @@
+{
+  "name": "eAttibuteReadState",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Attribute read state",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/eAttibuteReadState/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eAttibuteReadState",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/eAttibuteReadState/#NemAll_Python_BaseElements.eAttibuteReadState.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DoNotRead",
+      "value": 2
+    },
+    {
+      "name": "ReadAll",
+      "value": 1
+    },
+    {
+      "name": "ReadAllAndComputable",
+      "value": 3
+    },
+    {
+      "name": "ReadWithoutGeometry",
+      "value": 0
+    }
+  ]
+}

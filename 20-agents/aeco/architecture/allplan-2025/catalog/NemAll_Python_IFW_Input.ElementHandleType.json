@@ -1,0 +1,89 @@
+{
+  "name": "ElementHandleType",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Element handle type",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/",
+  "constructors": [
+    {
+      "name": "ElementHandleType()",
+      "signature": "ElementHandleType()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HANDLE_ARROW",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": false,
+      "summary": "Arrow handle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.HANDLE_ARROW"
+    },
+    {
+      "name": "HANDLE_CIRCLE",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": false,
+      "summary": "Circle handle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.HANDLE_CIRCLE"
+    },
+    {
+      "name": "HANDLE_SQUARE_BLUE",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": false,
+      "summary": "Filled square handle with blue color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.HANDLE_SQUARE_BLUE"
+    },
+    {
+      "name": "HANDLE_SQUARE_EMPTY",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": false,
+      "summary": "Empty square handle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.HANDLE_SQUARE_EMPTY"
+    },
+    {
+      "name": "HANDLE_SQUARE_RED",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": false,
+      "summary": "Filled square handle with red color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.HANDLE_SQUARE_RED"
+    },
+    {
+      "name": "HANDLE_SQUARE_RIGHT",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": false,
+      "summary": "Halve-filled square handle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/ElementHandleType/#NemAll_Python_IFW_Input.ElementHandleType.HANDLE_SQUARE_RIGHT"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,644 @@
+{
+  "name": "PolyPoints2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "The PolyPoints class is the base template class for all objects which store geometry as a vector of points (or another objects), specially for polyline, polygon and spline.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Remove all points from vector.",
+      "remarks": "Remove all points from vector.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Clear"
+    },
+    {
+      "name": "Count",
+      "signature": "Count() -\u003E int",
+      "summary": "Get count of points.",
+      "remarks": "Get count of points.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Count"
+    },
+    {
+      "name": "Empty",
+      "signature": "Empty() -\u003E bool",
+      "summary": "Return true if no points, otherwise false.",
+      "remarks": "Return true if no points, otherwise false.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Empty"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(polyPoints: PolyPoints2D) -\u003E bool",
+      "summary": "Test if reference points are equal.",
+      "remarks": "Test if reference points are equal.",
+      "params": [
+        {
+          "name": "polyPoints",
+          "type": "PolyPoints2D",
+          "doc": "constant the PolyPoints.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Reference points are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.EqualRef"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point2D",
+      "summary": "Get the end point in world coordinate system.",
+      "remarks": "Get the end point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "end point in world coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint() -\u003E Point2D",
+      "summary": "Get the end point",
+      "remarks": "Get the end point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "end point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetEndRelPoint"
+    },
+    {
+      "name": "GetLastPoint",
+      "signature": "GetLastPoint() -\u003E Point2D",
+      "summary": "Get the last point in world coordinate system, data.",
+      "remarks": "Get the last point in world coordinate system, data.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "last point in world coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetLastPoint"
+    },
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint(index: int) -\u003E Point2D",
+      "summary": "Get point in world coordinate system, data. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get point in world coordinate system, data. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "point index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point point in world coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetPoint"
+    },
+    {
+      "name": "GetPointIndex",
+      "signature": "GetPointIndex(point: Point2D) -\u003E tuple[bool, int]",
+      "summary": "Get index of the given point",
+      "remarks": "Get index of the given point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Searched point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, int]",
+        "doc": "tuple(True if a point was found, Found index)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetPointIndex"
+    },
+    {
+      "name": "GetPointIndexes",
+      "signature": "GetPointIndexes(point: Point2D) -\u003E tuple[bool, list[int]]",
+      "summary": "Get indexes of the given point, in case that several points in the spline will have the same coordinates",
+      "remarks": "Get indexes of the given point, in case that several points in the spline will have the same coordinates",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Searched point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, list[int]]",
+        "doc": "tuple(True if at least one point was found, Found indexes)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetPointIndexes"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point2D",
+      "summary": "Get reference point.",
+      "remarks": "Get reference point.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "constant the reference point in the world coordinate system."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetRefPoint"
+    },
+    {
+      "name": "GetRelPoint",
+      "signature": "GetRelPoint(index: int) -\u003E Point2D",
+      "summary": "Get point in Local coordinate system, no data. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get point in Local coordinate system, no data. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "point index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point constant the point at position index."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetRelPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point2D",
+      "summary": "Get the start point in world coordinate system.",
+      "remarks": "Get the start point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "start point in world coordinate system"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint() -\u003E Point2D",
+      "summary": "Get the start point",
+      "remarks": "Get the start point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.GetStartRelPoint"
+    },
+    {
+      "name": "Insert(polyPoints: PolyPoints2D, position: int = 18446744073709551615) -\u003E bool",
+      "signature": "Insert(polyPoints: PolyPoints2D, position: int = 18446744073709551615) -\u003E bool",
+      "summary": "Insert vector of points at specific position. If return false then points weren\u0027t inserted.",
+      "remarks": "Insert vector of points at specific position. If return false then points weren\u0027t inserted.",
+      "params": [
+        {
+          "name": "polyPoints",
+          "type": "PolyPoints2D",
+          "doc": "constant the PolyPoints.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "position where points will be inserted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Insert"
+    },
+    {
+      "name": "Insert(point: Point2D, position: int = 18446744073709551615) -\u003E bool",
+      "signature": "Insert(point: Point2D, position: int = 18446744073709551615) -\u003E bool",
+      "summary": "Insert point at specific position. Used world coordinates. If return false then points weren\u0027t Inserted.",
+      "remarks": "Insert point at specific position. Used world coordinates. If return false then points weren\u0027t Inserted.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "constant the Point.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "position where points will be inserted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Insert"
+    },
+    {
+      "name": "InsertRel",
+      "signature": "InsertRel(point: Point2D, position: int = 18446744073709551615) -\u003E bool",
+      "summary": "Insert relative point at specific position. Used local coordinates. If return false then points weren\u0027t Inserted.",
+      "remarks": "Insert relative point at specific position. Used local coordinates. If return false then points weren\u0027t Inserted.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "constant the Point.",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "position where points will be inserted.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true if successful."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.InsertRel"
+    },
+    {
+      "name": "Remove",
+      "signature": "Remove(position: int) -\u003E bool",
+      "summary": "Remove point from specific position. If return false then points weren\u0027t removed.",
+      "remarks": "Remove point from specific position. If return false then points weren\u0027t removed.",
+      "params": [
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "position of point which will be removed.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Point removed: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Remove"
+    },
+    {
+      "name": "RemoveLastPoint",
+      "signature": "RemoveLastPoint() -\u003E bool",
+      "summary": "Remove the last point",
+      "remarks": "Remove the last point",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Point removed: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.RemoveLastPoint"
+    },
+    {
+      "name": "Reserve",
+      "signature": "Reserve(newCount: int)",
+      "summary": "Reserve container capacity",
+      "remarks": "Reserve container capacity",
+      "params": [
+        {
+          "name": "newCount",
+          "type": "int",
+          "doc": "Expected size of container [count of points]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Reserve"
+    },
+    {
+      "name": "Resize",
+      "signature": "Resize(newSize: int)",
+      "summary": "Specifies a new size for the points vector.",
+      "remarks": "Specifies a new size for the points vector.",
+      "params": [
+        {
+          "name": "newSize",
+          "type": "int",
+          "doc": "The new size of the points vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Resize"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse the point order",
+      "remarks": "Reverse the point order",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Reverse"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(endpoint: Point2D)",
+      "summary": "Set the end point in world coordinates",
+      "remarks": "Set the end point in world coordinates",
+      "params": [
+        {
+          "name": "endpoint",
+          "type": "Point2D",
+          "doc": "new end point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.SetEndPoint"
+    },
+    {
+      "name": "SetPoint",
+      "signature": "SetPoint(point: Point2D, index: int)",
+      "summary": "Set point at given position in world coordinate system.",
+      "remarks": "Set point at given position in world coordinate system.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "point in the world coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "index of point which will be set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.SetPoint"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point2D)",
+      "summary": "Set reference point in world coordinate system.",
+      "remarks": "Set reference point in world coordinate system.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "reference point in the world coordinate system.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.SetRefPoint"
+    },
+    {
+      "name": "SetRelPoint",
+      "signature": "SetRelPoint(point: Point2D, index: int)",
+      "summary": "Set point at given position in relative coordinate system.",
+      "remarks": "Set point at given position in relative coordinate system.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "point in the relative coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "index of point which will be set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.SetRelPoint"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startpoint: Point2D)",
+      "summary": "Set the start point in world coordinates",
+      "remarks": "Set the start point in world coordinates",
+      "params": [
+        {
+          "name": "startpoint",
+          "type": "Point2D",
+          "doc": "new start point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.SetStartPoint"
+    },
+    {
+      "name": "ToLineChain",
+      "signature": "ToLineChain() -\u003E Point2DList",
+      "summary": "Get polyline as a chain of lines composed from 2 points.",
+      "remarks": "Get polyline as a chain of lines composed from 2 points.",
+      "params": [],
+      "returns": {
+        "type": "Point2DList",
+        "doc": "vector of lines composed from 2 points (start and end point of a line)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.ToLineChain"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index: int) -\u003E Point2D",
+      "summary": "Get point at position from index. Used world coordinates. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get point at position from index. Used world coordinates. This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "point index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(point: Point2D) -\u003E PolyPoints2D",
+      "summary": "Add point in world coordinates.",
+      "remarks": "Add point in world coordinates.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "adding point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolyPoints2D",
+        "doc": "New point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.__iadd__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E PolyPoints2D",
+      "summary": "2D matrix transformation",
+      "remarks": "2D matrix transformation",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "2D transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolyPoints2D",
+        "doc": "Transformed polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.__mul__"
+    },
+    {
+      "name": "__setitem__",
+      "signature": "__setitem__(arg2: int, value: Point2D)",
+      "summary": "Set point at position from index. Used world coordinates. This method is checked and throwing Geometry::Exception when index is out of range. Args: index: Specified position pnt: Point",
+      "remarks": "Set point at position from index. Used world coordinates. This method is checked and throwing Geometry::Exception when index is out of range. Args: index: Specified position pnt: Point",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.__setitem__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the end point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.EndPoint"
+    },
+    {
+      "name": "EndRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the end point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.EndRelPoint"
+    },
+    {
+      "name": "Points",
+      "type": "list[Point2D]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the point list",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.Points"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get reference point.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.RefPoint"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the start point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.StartPoint"
+    },
+    {
+      "name": "StartRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the start point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolyPoints2D/#NemAll_Python_Geometry.PolyPoints2D.StartRelPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "DockingPointUtil",
+  "namespace": "Utils.DockingPointUtil",
+  "kind": "class",
+  "summary": "Implementation of the docking point utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/DockingPointUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_docking_points",
+      "signature": "get_docking_points(element_key: str, element: Any) -\u003E List[Tuple[str, Point3D]]",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Any",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.get_docking_points"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

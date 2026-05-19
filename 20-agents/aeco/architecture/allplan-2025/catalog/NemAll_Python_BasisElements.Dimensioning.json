@@ -1,0 +1,25 @@
+{
+  "name": "Dimensioning",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Type of the dimensioning",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Dimensioning/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDimensionLine",
+      "value": 1,
+      "summary": "As a dimension line"
+    },
+    {
+      "name": "eElevation",
+      "value": 2,
+      "summary": "As elevation points"
+    }
+  ]
+}

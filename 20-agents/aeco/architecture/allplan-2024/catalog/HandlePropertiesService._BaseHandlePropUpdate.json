@@ -1,0 +1,118 @@
+{
+  "name": "_BaseHandlePropUpdate",
+  "namespace": "HandlePropertiesService",
+  "kind": "interface",
+  "summary": "base class for the handle property update",
+  "base": "ABC",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/",
+  "constructors": [
+    {
+      "name": "_BaseHandlePropUpdate()",
+      "signature": "_BaseHandlePropUpdate(build_ele, handle_prop, input_pnt, param_data)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        },
+        {
+          "name": "handle_prop",
+          "type": "HandleProperties",
+          "doc": "handle property",
+          "optional": false
+        },
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        },
+        {
+          "name": "param_data",
+          "type": "HandleParameterData",
+          "doc": "parameter data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/#HandlePropertiesService._BaseHandlePropUpdate.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__()",
+      "summary": "execute the value update",
+      "remarks": "execute the value update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/#HandlePropertiesService._BaseHandlePropUpdate.__call__"
+    },
+    {
+      "name": "get_property_data",
+      "signature": "get_property_data()",
+      "summary": "get the property data",
+      "remarks": "get the property data",
+      "params": [],
+      "returns": {
+        "type": "Tuple[Optional[ParameterProperty], str, str]",
+        "doc": "parameter property, item_name with index, parameter name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/#HandlePropertiesService._BaseHandlePropUpdate.get_property_data"
+    },
+    {
+      "name": "get_z_min_max",
+      "signature": "get_z_min_max()",
+      "summary": "get the min and max parameter of the z coordinate",
+      "remarks": "get the min and max parameter of the z coordinate",
+      "params": [],
+      "returns": {
+        "type": "Tuple[Optional[ParameterProperty], Optional[ParameterProperty]]",
+        "doc": "min/max parameter of the z coordinate"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/#HandlePropertiesService._BaseHandlePropUpdate.get_z_min_max"
+    },
+    {
+      "name": "update_property_value",
+      "signature": "update_property_value(value)",
+      "summary": "update the property value",
+      "remarks": "update the property value",
+      "params": [
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/#HandlePropertiesService._BaseHandlePropUpdate.update_property_value"
+    }
+  ],
+  "properties": [
+    {
+      "name": "update_palette",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "get the update palette state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_BaseHandlePropUpdate/#HandlePropertiesService._BaseHandlePropUpdate.update_palette"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,158 @@
+{
+  "name": "Polygon2DUtil",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Geometry.Polygon2DUtil.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2DUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CalculateInscribedCircumscribedArc",
+      "signature": "CalculateInscribedCircumscribedArc( outline: Polygon2D, centerPoint: Point2D, isCircumscribed: bool ) -\u003E tuple[Arc2D, Arc2D]",
+      "summary": "Create the inscribed/ circumscribed arc for a regular polygon",
+      "remarks": "Create the inscribed/ circumscribed arc for a regular polygon",
+      "params": [
+        {
+          "name": "outline",
+          "type": "Polygon2D",
+          "doc": "Regular polygon",
+          "optional": false
+        },
+        {
+          "name": "centerPoint",
+          "type": "Point2D",
+          "doc": "Center point of the regular polygon",
+          "optional": false
+        },
+        {
+          "name": "isCircumscribed",
+          "type": "bool",
+          "doc": "True, if",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Arc2D, Arc2D]",
+        "doc": "tuple(Circumscribing arc of the regular polygon, Inscribing arc of the regular polygon)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2DUtil/#NemAll_Python_Geometry.Polygon2DUtil.CalculateInscribedCircumscribedArc"
+    },
+    {
+      "name": "CreateRegularPolygonFromArc",
+      "signature": "CreateRegularPolygonFromArc( arc: Arc2D, placement: AxisPlacement2D, segmentation: int, bInscribed: bool ) -\u003E tuple[bool, Polygon2D]",
+      "summary": "Create a regular polygon for an arc",
+      "remarks": "Create a regular polygon for an arc",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Base arc",
+          "optional": false
+        },
+        {
+          "name": "placement",
+          "type": "AxisPlacement2D",
+          "doc": "Placement for the poylgon",
+          "optional": false
+        },
+        {
+          "name": "segmentation",
+          "type": "int",
+          "doc": "Number of corner points",
+          "optional": false
+        },
+        {
+          "name": "bInscribed",
+          "type": "bool",
+          "doc": "True, if if the arc is inscribed to the polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polygon2D]",
+        "doc": "tuple(true, if the polygonization was correct, Regular polygon)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2DUtil/#NemAll_Python_Geometry.Polygon2DUtil.CreateRegularPolygonFromArc"
+    },
+    {
+      "name": "FindPointOnPolygonWithDistance",
+      "signature": "FindPointOnPolygonWithDistance( polygon: Polygon2D, fromPoint: Point2D, directionPoint: Point2D, iAxisCurve_object: object, pointDistance: float, ) -\u003E tuple[int, Point2D]",
+      "summary": "Find a point on a polygon with a distance",
+      "remarks": "Find a point on a polygon with a distance",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon",
+          "optional": false
+        },
+        {
+          "name": "fromPoint",
+          "type": "Point2D",
+          "doc": "From point",
+          "optional": false
+        },
+        {
+          "name": "directionPoint",
+          "type": "Point2D",
+          "doc": "Direction point",
+          "optional": false
+        },
+        {
+          "name": "iAxisCurve_object",
+          "type": "object",
+          "doc": "Axis curve",
+          "optional": false
+        },
+        {
+          "name": "pointDistance",
+          "type": "float",
+          "doc": "Point distance",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[int, Point2D]",
+        "doc": "Found state, Distance point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2DUtil/#NemAll_Python_Geometry.Polygon2DUtil.FindPointOnPolygonWithDistance"
+    },
+    {
+      "name": "GetPolygon2DSegment",
+      "signature": "GetPolygon2DSegment( polygon: Polygon2D, clickPoint: Point2D ) -\u003E tuple[int, int, Line2D]",
+      "summary": "Get the closest segment for the given click point",
+      "remarks": "Get the closest segment for the given click point",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon to analyze",
+          "optional": false
+        },
+        {
+          "name": "clickPoint",
+          "type": "Point2D",
+          "doc": "Click point to analyze",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[int, int, Line2D]",
+        "doc": "tuple(Index of the start point of the clicked line, Index of the end point of the clicked line, Segment of the polygon, where the click point is on)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2DUtil/#NemAll_Python_Geometry.Polygon2DUtil.GetPolygon2DSegment"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

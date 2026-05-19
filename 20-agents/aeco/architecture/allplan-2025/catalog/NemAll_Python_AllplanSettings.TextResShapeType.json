@@ -1,0 +1,55 @@
+{
+  "name": "TextResShapeType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Texture resouces for shape types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/TextResShapeType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eArbitrary",
+      "value": 36391
+    },
+    {
+      "name": "eCircle",
+      "value": 36390
+    },
+    {
+      "name": "eDiamond",
+      "value": 36389
+    },
+    {
+      "name": "ePolygon",
+      "value": 36496
+    },
+    {
+      "name": "eRectangle",
+      "value": 36367
+    },
+    {
+      "name": "eRegularPolygonCircumscribed",
+      "value": 36440
+    },
+    {
+      "name": "eRegularPolygonInscribed",
+      "value": 36439
+    },
+    {
+      "name": "eRiseBottomTop",
+      "value": 36370
+    },
+    {
+      "name": "eSemiCircle",
+      "value": 36369
+    },
+    {
+      "name": "eSemiDiamond",
+      "value": 36368
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "ProfilerType",
+  "namespace": "TestHelper.ProfileUtil",
+  "kind": "enum",
+  "summary": "Definition of profiler types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TestHelper/ProfileUtil/ProfilerType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AUSTIN",
+      "value": 4
+    },
+    {
+      "name": "C_PROFILE",
+      "value": 1
+    },
+    {
+      "name": "LINE_PROFILER",
+      "value": 3
+    },
+    {
+      "name": "PY_INSTRUMENT",
+      "value": 2
+    }
+  ]
+}

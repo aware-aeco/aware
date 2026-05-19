@@ -1,0 +1,185 @@
+{
+  "name": "HatchingProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the hatching properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/",
+  "constructors": [
+    {
+      "name": "HatchingProperties()",
+      "signature": "HatchingProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__init__"
+    },
+    {
+      "name": "HatchingProperties(element)",
+      "signature": "HatchingProperties(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "HatchingProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetBackgroundColorBGR",
+      "signature": "SetBackgroundColorBGR(value)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Color value as BGR",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.SetBackgroundColorBGR"
+    },
+    {
+      "name": "SetBackgroundColorIRGB",
+      "signature": "SetBackgroundColorIRGB(value)",
+      "summary": "Set the background color",
+      "remarks": "Set the background color",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Color value as IRGB",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.SetBackgroundColorIRGB"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "HatchingProperties",
+          "doc": "HatchingProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColor",
+      "type": "ARGB",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the background color",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.BackgroundColor"
+    },
+    {
+      "name": "DirectionToReferenceLine",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the index of the direction line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.DirectionToReferenceLine"
+    },
+    {
+      "name": "ExistAlignment",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the alignment state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.ExistAlignment"
+    },
+    {
+      "name": "HatchID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hatch ID",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.HatchID"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the scale dependent state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.IsScaleDependent"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "NemAll_Python_Geometry.Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.ReferencePoint"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "NemAll_Python_Geometry.Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.RotationAngle"
+    },
+    {
+      "name": "UseBackgroundColor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the use background color state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.UseBackgroundColor"
+    },
+    {
+      "name": "UseReferencePoint",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the use reference point state",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingProperties/#NemAll_Python_BasisElements.HatchingProperties.UseReferencePoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

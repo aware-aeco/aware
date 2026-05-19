@@ -1,0 +1,30 @@
+{
+  "name": "PlacementType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Trimming modes of a pattern (PatternElement)",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PlacementType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFitting",
+      "value": 1,
+      "summary": "Trim pattern along boundary"
+    },
+    {
+      "name": "eInsideFitting",
+      "value": 2,
+      "summary": "Trim pattern to full segments"
+    },
+    {
+      "name": "eOutsideFitting",
+      "value": 0,
+      "summary": "No trim"
+    }
+  ]
+}

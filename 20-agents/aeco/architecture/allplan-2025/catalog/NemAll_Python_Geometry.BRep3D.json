@@ -1,0 +1,1558 @@
+{
+  "name": "BRep3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D boundary representation.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/",
+  "constructors": [
+    {
+      "name": "BRep3D()",
+      "signature": "BRep3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.__init__"
+    },
+    {
+      "name": "BRep3D(brep: BRep3D)",
+      "signature": "BRep3D(brep: BRep3D)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "BRep3D which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AreFacesNaturallyTrimmed",
+      "signature": "AreFacesNaturallyTrimmed() -\u003E bool",
+      "summary": "Find if all faces are naturally trimmed by their surfaces throw Exception in case of invalid object.",
+      "remarks": "Find if all faces are naturally trimmed by their surfaces throw Exception in case of invalid object.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool (true = yes)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.AreFacesNaturallyTrimmed"
+    },
+    {
+      "name": "CreateCone",
+      "signature": "CreateCone(cone: Cone3D, closed: bool = True) -\u003E BRep3D",
+      "summary": "Create BRep3D as cone",
+      "remarks": "Create BRep3D as cone",
+      "params": [
+        {
+          "name": "cone",
+          "type": "Cone3D",
+          "doc": "cone data",
+          "optional": false
+        },
+        {
+          "name": "closed",
+          "type": "bool",
+          "doc": "whether to create solid or sheet body",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "created geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.CreateCone"
+    },
+    {
+      "name": "CreateCuboid",
+      "signature": "CreateCuboid( placement: AxisPlacement3D, length: float, width: float, height: float ) -\u003E BRep3D",
+      "summary": "Create BRep3D as cuboid",
+      "remarks": "Create BRep3D as cuboid",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "cuboid origin",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "length in its x axis",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "width in its y axis",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "height in its z axis",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "created geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.CreateCuboid"
+    },
+    {
+      "name": "CreateCylinder",
+      "signature": "CreateCylinder( placement: AxisPlacement3D, radius: float, height: float, closedTop: bool = True, closedBottom: bool = True, ) -\u003E BRep3D",
+      "summary": "Create Brep as cylinder",
+      "remarks": "Create Brep as cylinder",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "axis placement",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "cylinder radius",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "cylinder height",
+          "optional": false
+        },
+        {
+          "name": "closedTop",
+          "type": "bool",
+          "doc": "whether to close top of cylinder",
+          "optional": false
+        },
+        {
+          "name": "closedBottom",
+          "type": "bool",
+          "doc": "whether to close bottom of cylinder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "created cone"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.CreateCylinder"
+    },
+    {
+      "name": "CreateSphere",
+      "signature": "CreateSphere(placement: AxisPlacement3D, radius: float) -\u003E BRep3D",
+      "summary": "Create BRep3D as sphere",
+      "remarks": "Create BRep3D as sphere",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "sphere origin",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "sphere radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "created geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.CreateSphere"
+    },
+    {
+      "name": "CreateWireBody",
+      "signature": "CreateWireBody( icurve: ( Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D ), ) -\u003E BRep3D",
+      "summary": "Create wire body from the curve as one edge",
+      "remarks": "Create wire body from the curve as one edge",
+      "params": [
+        {
+          "name": "icurve",
+          "type": "Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D",
+          "doc": "curve for edge geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BRep3D",
+        "doc": "created BRep3D element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.CreateWireBody"
+    },
+    {
+      "name": "DeleteFace",
+      "signature": "DeleteFace(faceIndex: int) -\u003E eGeometryErrorCode",
+      "summary": "Delete face from brep",
+      "remarks": "Delete face from brep",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "index of face we want to delete",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.DeleteFace"
+    },
+    {
+      "name": "DeleteFaces",
+      "signature": "DeleteFaces(faceIndices: VecULongList) -\u003E eGeometryErrorCode",
+      "summary": "Delete faces from brep",
+      "remarks": "Delete faces from brep",
+      "params": [
+        {
+          "name": "faceIndices",
+          "type": "VecULongList",
+          "doc": "indices of faces to delete",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.DeleteFaces"
+    },
+    {
+      "name": "GetAllEdgesFlags",
+      "signature": "GetAllEdgesFlags() -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get flags of the all edges.",
+      "remarks": "Get flags of the all edges.",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(Error code, flags values)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetAllEdgesFlags"
+    },
+    {
+      "name": "GetAllFacesFlags",
+      "signature": "GetAllFacesFlags() -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get flags of the all faces.",
+      "remarks": "Get flags of the all faces.",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(Error code, flags values)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetAllFacesFlags"
+    },
+    {
+      "name": "GetEdgeCount",
+      "signature": "GetEdgeCount() -\u003E int",
+      "summary": "Get the edges count",
+      "remarks": "Get the edges count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "size_t count of edges"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeCount"
+    },
+    {
+      "name": "GetEdgeCurves",
+      "signature": "GetEdgeCurves() -\u003E tuple[eGeometryErrorCode, list[Any]]",
+      "summary": "get all edge curves as BSpline3D",
+      "remarks": "get all edge curves as BSpline3D",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Any]]",
+        "doc": "tuple(error code, result edge curves handle vector)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeCurves"
+    },
+    {
+      "name": "GetEdgeFaceIndices",
+      "signature": "GetEdgeFaceIndices(edge: int) -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get faces containing this edge (if any)",
+      "remarks": "Get faces containing this edge (if any)",
+      "params": [
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "desired edge index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(error code, face indices)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeFaceIndices"
+    },
+    {
+      "name": "GetEdgeGeometry",
+      "signature": "GetEdgeGeometry(edge: int) -\u003E Any",
+      "summary": "Get (trimmed) edge geometry as BSpline3D",
+      "remarks": "Get (trimmed) edge geometry as BSpline3D",
+      "params": [
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "edge index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "handle to geometry curve"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeGeometry"
+    },
+    {
+      "name": "GetEdgeParametricCurves",
+      "signature": "GetEdgeParametricCurves() -\u003E tuple[eGeometryErrorCode, list[Any]]",
+      "summary": "get parametric curves of all edges",
+      "remarks": "get parametric curves of all edges",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Any]]",
+        "doc": "tuple(error code, result edge curves handle vector)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeParametricCurves"
+    },
+    {
+      "name": "GetEdgeParametricGeometry",
+      "signature": "GetEdgeParametricGeometry(edge: int) -\u003E Any",
+      "summary": "Get (trimmed) edge geometry as parametric curves",
+      "remarks": "Get (trimmed) edge geometry as parametric curves",
+      "params": [
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "edge index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "handle to geometry curve"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeParametricGeometry"
+    },
+    {
+      "name": "GetEdgeVertexIndices",
+      "signature": "GetEdgeVertexIndices(edge: int) -\u003E tuple",
+      "summary": "Get vertex indices of the edge",
+      "remarks": "Get vertex indices of the edge",
+      "params": [
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "edge index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeVertexIndices"
+    },
+    {
+      "name": "GetEdgeVertices",
+      "signature": "GetEdgeVertices(edge: int) -\u003E tuple[eGeometryErrorCode, Point3D, Point3D]",
+      "summary": "get edge vertices",
+      "remarks": "get edge vertices",
+      "params": [
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "edge index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D, Point3D]",
+        "doc": "tuple(error code, start vertex, end vertex)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetEdgeVertices"
+    },
+    {
+      "name": "GetExactTypeIsoCurves",
+      "signature": "GetExactTypeIsoCurves( ucount: int, vcount: int, planarfaces: bool = False ) -\u003E tuple[eGeometryErrorCode, list[Any]]",
+      "summary": "Get iso curves from all faces",
+      "remarks": "Get iso curves from all faces",
+      "params": [
+        {
+          "name": "ucount",
+          "type": "int",
+          "doc": "number of u-curves",
+          "optional": false
+        },
+        {
+          "name": "vcount",
+          "type": "int",
+          "doc": "number of v-curves",
+          "optional": false
+        },
+        {
+          "name": "planarfaces",
+          "type": "bool",
+          "doc": "include planar faces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Any]]",
+        "doc": "tuple(error code, result iso curves handle vector)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetExactTypeIsoCurves"
+    },
+    {
+      "name": "GetFaceBoundaryCurves",
+      "signature": "GetFaceBoundaryCurves(face: int) -\u003E tuple[eGeometryErrorCode, list[Any]]",
+      "summary": "Get face boundary curves, curves are trimmed",
+      "remarks": "Get face boundary curves, curves are trimmed",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Any]]",
+        "doc": "tuple(error code, result geometries)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceBoundaryCurves"
+    },
+    {
+      "name": "GetFaceCount",
+      "signature": "GetFaceCount() -\u003E int",
+      "summary": "Get the faces count",
+      "remarks": "Get the faces count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "size_t count of faces"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceCount"
+    },
+    {
+      "name": "GetFaceEdgeNaturalTrimming",
+      "signature": "GetFaceEdgeNaturalTrimming( face: int, oedge: OrientedEdge ) -\u003E tuple[eGeometryErrorCode, eSurfaceTrimParam]",
+      "summary": "get edge trimming on this face",
+      "remarks": "get edge trimming on this face",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        },
+        {
+          "name": "oedge",
+          "type": "OrientedEdge",
+          "doc": "oriented edge",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, eSurfaceTrimParam]",
+        "doc": "tuple(error code, result trimming)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceEdgeNaturalTrimming"
+    },
+    {
+      "name": "GetFaceEdgeOrientation",
+      "signature": "GetFaceEdgeOrientation(face: int, edge: int) -\u003E tuple[eGeometryErrorCode, bool]",
+      "summary": "Get orientation of the edge in the given face",
+      "remarks": "Get orientation of the edge in the given face",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "edge index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, bool]",
+        "doc": "tuple(error code, result orientation (same = true or opposite = false))"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceEdgeOrientation"
+    },
+    {
+      "name": "GetFaceEdges",
+      "signature": "GetFaceEdges(faceIndex: int) -\u003E tuple[eGeometryErrorCode, list[OrientedEdge]]",
+      "summary": "Get face edges together with their orientations",
+      "remarks": "Get face edges together with their orientations",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[OrientedEdge]]",
+        "doc": "tuple(error code, result edges)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceEdges"
+    },
+    {
+      "name": "GetFaceFlags",
+      "signature": "GetFaceFlags(face: int) -\u003E int",
+      "summary": "Get flags of the face.",
+      "remarks": "Get flags of the face.",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "flags value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceFlags"
+    },
+    {
+      "name": "GetFaceGeometry",
+      "signature": "GetFaceGeometry(face: int) -\u003E Any",
+      "summary": "Get surface geometry of the face throw Exception in case of invalid input.",
+      "remarks": "Get surface geometry of the face throw Exception in case of invalid input.",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "surface geometry handle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceGeometry"
+    },
+    {
+      "name": "GetFaceGeometryOrientation",
+      "signature": "GetFaceGeometryOrientation(face: int) -\u003E bool",
+      "summary": "Get surface geometry orientation of the face",
+      "remarks": "Get surface geometry orientation of the face",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "surface geometry orientation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceGeometryOrientation"
+    },
+    {
+      "name": "GetFaceLoops",
+      "signature": "GetFaceLoops(face: int) -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get loops from given face",
+      "remarks": "Get loops from given face",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face to find loops",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(error code, face loops indices)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceLoops"
+    },
+    {
+      "name": "GetFaceLoopsCount",
+      "signature": "GetFaceLoopsCount(face: int) -\u003E int",
+      "summary": "Get count of loops of face given by index",
+      "remarks": "Get count of loops of face given by index",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "index of face",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "count of loops"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceLoopsCount"
+    },
+    {
+      "name": "GetFaceUVBox",
+      "signature": "GetFaceUVBox(face: int) -\u003E tuple[eGeometryErrorCode, MinMax2D]",
+      "summary": "Get uv box of the face",
+      "remarks": "Get uv box of the face",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "selected face",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, MinMax2D]",
+        "doc": "tuple(error code, uv box of face)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceUVBox"
+    },
+    {
+      "name": "GetFaceVerticesIndices",
+      "signature": "GetFaceVerticesIndices(faceIndex: int) -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get indices of vertices for given face index",
+      "remarks": "Get indices of vertices for given face index",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "index of face",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(error code, indices of vertices)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFaceVerticesIndices"
+    },
+    {
+      "name": "GetFinData",
+      "signature": "GetFinData(fin: int) -\u003E tuple[eGeometryErrorCode, int, bool]",
+      "summary": "Get index of edge to which fin belongs and its sense",
+      "remarks": "Get index of edge to which fin belongs and its sense",
+      "params": [
+        {
+          "name": "fin",
+          "type": "int",
+          "doc": "fin to find infos",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, int, bool]",
+        "doc": "tuple(error code, index of edge to which fin belongs, fin sense)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetFinData"
+    },
+    {
+      "name": "GetIsoCurves",
+      "signature": "GetIsoCurves( ucount: int, vcount: int, planarfaces: bool = False ) -\u003E tuple[eGeometryErrorCode, list[Any]]",
+      "summary": "Get iso curves from all faces",
+      "remarks": "Get iso curves from all faces",
+      "params": [
+        {
+          "name": "ucount",
+          "type": "int",
+          "doc": "number of u-curves",
+          "optional": false
+        },
+        {
+          "name": "vcount",
+          "type": "int",
+          "doc": "number of v-curves",
+          "optional": false
+        },
+        {
+          "name": "planarfaces",
+          "type": "bool",
+          "doc": "include planar faces",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Any]]",
+        "doc": "tuple(error code, result iso curves handle vector)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetIsoCurves"
+    },
+    {
+      "name": "GetLoopFins",
+      "signature": "GetLoopFins(loop: int) -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get fins from given loop",
+      "remarks": "Get fins from given loop",
+      "params": [
+        {
+          "name": "loop",
+          "type": "int",
+          "doc": "loop to find fins",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(error code, loop fins indices)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetLoopFins"
+    },
+    {
+      "name": "GetParts",
+      "signature": "GetParts() -\u003E tuple[eGeometryErrorCode, list[BRep3D]]",
+      "summary": "Get separated parts (continuos shells)",
+      "remarks": "Get separated parts (continuos shells)",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[BRep3D]]",
+        "doc": "tuple(error code, separated bodies)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetParts"
+    },
+    {
+      "name": "GetPartsCount",
+      "signature": "GetPartsCount() -\u003E int",
+      "summary": "Get number of parts in this body",
+      "remarks": "Get number of parts in this body",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "number of parts"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetPartsCount"
+    },
+    {
+      "name": "GetPlanarFaces",
+      "signature": "GetPlanarFaces() -\u003E list[tuple[Plane3D, int]]",
+      "summary": "Get planar faces if this brep contains planar faces",
+      "remarks": "Get planar faces if this brep contains planar faces",
+      "params": [],
+      "returns": {
+        "type": "list[tuple[Plane3D, int]]",
+        "doc": "pairs of - surface geometry and surface index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetPlanarFaces"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point3D",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Constant reference point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetRefPoint"
+    },
+    {
+      "name": "GetSilhouetteCurves",
+      "signature": "GetSilhouetteCurves( viewMatrix: Matrix3D, bPerspective: bool ) -\u003E tuple[eGeometryErrorCode, list[Any]]",
+      "summary": "Get silhouette curves of Brep",
+      "remarks": "Get silhouette curves of Brep",
+      "params": [
+        {
+          "name": "viewMatrix",
+          "type": "Matrix3D",
+          "doc": "View matrix",
+          "optional": false
+        },
+        {
+          "name": "bPerspective",
+          "type": "bool",
+          "doc": "Flag if it is central projection or not (true / false)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Any]]",
+        "doc": "tuple(error code, silhouette curves)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetSilhouetteCurves"
+    },
+    {
+      "name": "GetSilhouetteVertices",
+      "signature": "GetSilhouetteVertices( viewMatrix: Matrix3D, bPerspective: bool ) -\u003E tuple[eGeometryErrorCode, list[Point3D]]",
+      "summary": "Get vertices (end points) of silhouette curves",
+      "remarks": "Get vertices (end points) of silhouette curves",
+      "params": [
+        {
+          "name": "viewMatrix",
+          "type": "Matrix3D",
+          "doc": "view matrix",
+          "optional": false
+        },
+        {
+          "name": "bPerspective",
+          "type": "bool",
+          "doc": "Flag if view is central perspective (true / false)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Point3D]]",
+        "doc": "tuple(error code, output vector of found points)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetSilhouetteVertices"
+    },
+    {
+      "name": "GetVertex",
+      "signature": "GetVertex(vertexIndex: int) -\u003E tuple[eGeometryErrorCode, Point3D]",
+      "summary": "Get vertex geometry",
+      "remarks": "Get vertex geometry",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "vertex index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D]",
+        "doc": "tuple(error code, vertex point)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVertex"
+    },
+    {
+      "name": "GetVertexCount",
+      "signature": "GetVertexCount() -\u003E int",
+      "summary": "Get the vertices count",
+      "remarks": "Get the vertices count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "count of vertices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVertexCount"
+    },
+    {
+      "name": "GetVertexEdges",
+      "signature": "GetVertexEdges(vertex: int) -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get the edges containing given vertex",
+      "remarks": "Get the edges containing given vertex",
+      "params": [
+        {
+          "name": "vertex",
+          "type": "int",
+          "doc": "Index of vertex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(Error code, Indices of edges that contains vertex)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVertexEdges"
+    },
+    {
+      "name": "GetVertexFaceIndices",
+      "signature": "GetVertexFaceIndices(vertexIndex: int) -\u003E tuple[eGeometryErrorCode, list[int]]",
+      "summary": "Get indices of faces for given vertex index",
+      "remarks": "Get indices of faces for given vertex index",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "index of vertex",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[int]]",
+        "doc": "tuple(error code, indices of faces)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVertexFaceIndices"
+    },
+    {
+      "name": "GetVertices",
+      "signature": "GetVertices() -\u003E tuple[eGeometryErrorCode, list[Point3D]]",
+      "summary": "Get all vertices from brep",
+      "remarks": "Get all vertices from brep",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Point3D]]",
+        "doc": "tuple(error code, vertices of brep)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVertices"
+    },
+    {
+      "name": "GetVirtualVertices",
+      "signature": "GetVirtualVertices() -\u003E tuple[eGeometryErrorCode, list[Point3D], list[int]]",
+      "summary": "Get vertices from edges without vertex (get start points of edge curves)",
+      "remarks": "Get vertices from edges without vertex (get start points of edge curves)",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, list[Point3D], list[int]]",
+        "doc": "tuple(error code, points (start points of curves), indices of edges without real vertex)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVirtualVertices"
+    },
+    {
+      "name": "GetVirtualVerticesCount",
+      "signature": "GetVirtualVerticesCount() -\u003E int",
+      "summary": "Get count of vertices (count of edges without vertex)",
+      "remarks": "Get count of vertices (count of edges without vertex)",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "count of vertices (edges without vertex)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.GetVirtualVerticesCount"
+    },
+    {
+      "name": "HasPlanarFaces",
+      "signature": "HasPlanarFaces() -\u003E bool",
+      "summary": "Check if this brep contains planar faces",
+      "remarks": "Check if this brep contains planar faces",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = yes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.HasPlanarFaces"
+    },
+    {
+      "name": "InvertAllEdgesFlags",
+      "signature": "InvertAllEdgesFlags()",
+      "summary": "Invert flags for the all edges",
+      "remarks": "Invert flags for the all edges",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.InvertAllEdgesFlags"
+    },
+    {
+      "name": "InvertAllFacesFlags",
+      "signature": "InvertAllFacesFlags()",
+      "summary": "Invert flags for the all faces",
+      "remarks": "Invert flags for the all faces",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.InvertAllFacesFlags"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed() -\u003E bool",
+      "summary": "Check whether the B-rep is closed (closed shells)",
+      "remarks": "Check whether the B-rep is closed (closed shells)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = yes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsClosed"
+    },
+    {
+      "name": "IsCone",
+      "signature": "IsCone() -\u003E tuple[bool, AxisPlacement3D, float, float, float]",
+      "summary": "Check if the b-rep is a cone",
+      "remarks": "Check if the b-rep is a cone",
+      "params": [],
+      "returns": {
+        "type": "tuple[bool, AxisPlacement3D, float, float, float]",
+        "doc": "tuple(bool true = yes, result axis placement (cone bottom center, axis orientation), cone bottom radius, cone top radius, cone height)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsCone"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty() -\u003E bool",
+      "summary": "Returns true if the body is empty",
+      "remarks": "Returns true if the body is empty",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsEmpty"
+    },
+    {
+      "name": "IsFaceNaturallyTrimmed",
+      "signature": "IsFaceNaturallyTrimmed(face: int) -\u003E bool",
+      "summary": "Find if the face is naturally trimmed by its surface throw Exception in case of invalid input.",
+      "remarks": "Find if the face is naturally trimmed by its surface throw Exception in case of invalid input.",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "bool (true = yes)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsFaceNaturallyTrimmed"
+    },
+    {
+      "name": "IsPolyhedron",
+      "signature": "IsPolyhedron() -\u003E bool",
+      "summary": "Check if the b-rep is a polyhedron",
+      "remarks": "Check if the b-rep is a polyhedron",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = yes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsPolyhedron"
+    },
+    {
+      "name": "IsSphere",
+      "signature": "IsSphere() -\u003E tuple[bool, AxisPlacement3D, float]",
+      "summary": "Check if the b-rep is a sphere",
+      "remarks": "Check if the b-rep is a sphere",
+      "params": [],
+      "returns": {
+        "type": "tuple[bool, AxisPlacement3D, float]",
+        "doc": "tuple(bool true = yes, result axis placement (sphere center, axis orientation), sphere radius)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsSphere"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "check whether data is valid",
+      "remarks": "check whether data is valid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsValid"
+    },
+    {
+      "name": "IsWire",
+      "signature": "IsWire() -\u003E bool",
+      "summary": "Check if BRep is wire body. If has only edges.",
+      "remarks": "Check if BRep is wire body. If has only edges.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if BRep is wire."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.IsWire"
+    },
+    {
+      "name": "PickEdge",
+      "signature": "PickEdge( rayPoint: Point3D, rayVector: Vector3D, searchRadius: float ) -\u003E tuple[bool, int, float, Point3D]",
+      "summary": "Pick the edge under cursor",
+      "remarks": "Pick the edge under cursor",
+      "params": [
+        {
+          "name": "rayPoint",
+          "type": "Point3D",
+          "doc": "ray point",
+          "optional": false
+        },
+        {
+          "name": "rayVector",
+          "type": "Vector3D",
+          "doc": "ray vector",
+          "optional": false
+        },
+        {
+          "name": "searchRadius",
+          "type": "float",
+          "doc": "search radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, int, float, Point3D]",
+        "doc": "tuple(true if any edge under cursor found, index of found edge, minimal distance between edge and ray, nearest point on ray from edge)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.PickEdge"
+    },
+    {
+      "name": "PickEdges",
+      "signature": "PickEdges( rayPoint: Point3D, rayVector: Vector3D, searchRadius: float ) -\u003E tuple[bool, list[int], list[float], list[Point3D]]",
+      "summary": "Pick the edges under cursor",
+      "remarks": "Pick the edges under cursor",
+      "params": [
+        {
+          "name": "rayPoint",
+          "type": "Point3D",
+          "doc": "ray point",
+          "optional": false
+        },
+        {
+          "name": "rayVector",
+          "type": "Vector3D",
+          "doc": "ray vector",
+          "optional": false
+        },
+        {
+          "name": "searchRadius",
+          "type": "float",
+          "doc": "search radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, list[int], list[float], list[Point3D]]",
+        "doc": "tuple(true if any edge under cursor found, index of found edge, minimal distance between edge and ray, nearest point on ray from edge)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.PickEdges"
+    },
+    {
+      "name": "PickFace",
+      "signature": "PickFace(rayPoint: Point3D, rayVector: Vector3D) -\u003E tuple[bool, int, Point3D]",
+      "summary": "Pick the face under cursor",
+      "remarks": "Pick the face under cursor",
+      "params": [
+        {
+          "name": "rayPoint",
+          "type": "Point3D",
+          "doc": "ray point",
+          "optional": false
+        },
+        {
+          "name": "rayVector",
+          "type": "Vector3D",
+          "doc": "ray vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, int, Point3D]",
+        "doc": "tuple(true if any face under cursor found, index of found face, nearest point on ray from face (intersection point))"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.PickFace"
+    },
+    {
+      "name": "PickVertex",
+      "signature": "PickVertex( rayPoint: Point3D, rayVector: Vector3D, searchRadius: float ) -\u003E tuple[bool, int, float, Point3D]",
+      "summary": "Pick the vertex under cursor",
+      "remarks": "Pick the vertex under cursor",
+      "params": [
+        {
+          "name": "rayPoint",
+          "type": "Point3D",
+          "doc": "ray point",
+          "optional": false
+        },
+        {
+          "name": "rayVector",
+          "type": "Vector3D",
+          "doc": "ray vector",
+          "optional": false
+        },
+        {
+          "name": "searchRadius",
+          "type": "float",
+          "doc": "search radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, int, float, Point3D]",
+        "doc": "tuple(true if any vertex under cursor found, index of found vertex, minimal distance between vertex and ray, nearest point on ray from vertex)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.PickVertex"
+    },
+    {
+      "name": "ReadFromStream( sstream_str: str, transformationMatrix: Matrix3D ) -\u003E eGeometryErrorCode",
+      "signature": "ReadFromStream( sstream_str: str, transformationMatrix: Matrix3D ) -\u003E eGeometryErrorCode",
+      "summary": "Read BRep3D from string",
+      "remarks": "Read BRep3D from string",
+      "params": [
+        {
+          "name": "sstream_str",
+          "type": "str",
+          "doc": "input string",
+          "optional": false
+        },
+        {
+          "name": "transformationMatrix",
+          "type": "Matrix3D",
+          "doc": "Matrix to use for BRep transformation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.ReadFromStream"
+    },
+    {
+      "name": "ReadFromStream( sstream_str: str, scale: float, translation: Vector3D, spaceminmax: MinMax3D, visibleminmax: MinMax3D, ) -\u003E eGeometryErrorCode",
+      "signature": "ReadFromStream( sstream_str: str, scale: float, translation: Vector3D, spaceminmax: MinMax3D, visibleminmax: MinMax3D, ) -\u003E eGeometryErrorCode",
+      "summary": "Read BRep3D from the string",
+      "remarks": "Read BRep3D from the string",
+      "params": [
+        {
+          "name": "sstream_str",
+          "type": "str",
+          "doc": "string to read brep data from",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "float",
+          "doc": "transformation scale",
+          "optional": false
+        },
+        {
+          "name": "translation",
+          "type": "Vector3D",
+          "doc": "translation vector",
+          "optional": false
+        },
+        {
+          "name": "spaceminmax",
+          "type": "MinMax3D",
+          "doc": "space minmax (including control points",
+          "optional": false
+        },
+        {
+          "name": "visibleminmax",
+          "type": "MinMax3D",
+          "doc": "visible minmax of the body",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.ReadFromStream"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse() -\u003E eGeometryErrorCode",
+      "summary": "Reverse the orientation of BRep",
+      "remarks": "Reverse the orientation of BRep",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.Reverse"
+    },
+    {
+      "name": "SetAllEdgesFlags",
+      "signature": "SetAllEdgesFlags(flags: int)",
+      "summary": "Set flags to the all edges.",
+      "remarks": "Set flags to the all edges.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "int",
+          "doc": "flags value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.SetAllEdgesFlags"
+    },
+    {
+      "name": "SetAllFacesFlags",
+      "signature": "SetAllFacesFlags(flags: int)",
+      "summary": "Set flags to the all faces.",
+      "remarks": "Set flags to the all faces.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "int",
+          "doc": "flags value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.SetAllFacesFlags"
+    },
+    {
+      "name": "SetFaceFlags",
+      "signature": "SetFaceFlags(face: int, flags: int)",
+      "summary": "Set flags to the face.",
+      "remarks": "Set flags to the face.",
+      "params": [
+        {
+          "name": "face",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "int",
+          "doc": "flags value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.SetFaceFlags"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point3D)",
+      "summary": "Set the reference point",
+      "remarks": "Set the reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "New reference point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.SetRefPoint"
+    },
+    {
+      "name": "WriteToStream",
+      "signature": "WriteToStream() -\u003E tuple[eGeometryErrorCode, str, Matrix3D]",
+      "summary": "Write BRep3D to the text",
+      "remarks": "Write BRep3D to the text",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, str, Matrix3D]",
+        "doc": "tuple(error code, output string, Matrix used to transform BRep)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.WriteToStream"
+    },
+    {
+      "name": "WriteToStreamSplitTransform",
+      "signature": "WriteToStreamSplitTransform() -\u003E ( tuple[eGeometryErrorCode, str, float, Vector3D, MinMax3D, MinMax3D] )",
+      "summary": "Write BRep3D to the text, get transform parameters and minmax",
+      "remarks": "Write BRep3D to the text, get transform parameters and minmax",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, str, float, Vector3D, MinMax3D, MinMax3D]",
+        "doc": "tuple(error code, output string, transform scale, translation vector, space minmax (including control points), visible minmax of the body)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.WriteToStreamSplitTransform"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(brep: BRep3D) -\u003E object",
+      "summary": "Comparison of breps without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of breps without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "Compared brep.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when breps are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllEdgesFlags",
+      "type": "eGeometryErrorCode",
+      "getter": true,
+      "setter": true,
+      "summary": "Get flags of the all edges.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.AllEdgesFlags"
+    },
+    {
+      "name": "AllFacesFlags",
+      "type": "eGeometryErrorCode",
+      "getter": true,
+      "setter": true,
+      "summary": "Get flags of the all faces.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.AllFacesFlags"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BRep3D/#NemAll_Python_Geometry.BRep3D.RefPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

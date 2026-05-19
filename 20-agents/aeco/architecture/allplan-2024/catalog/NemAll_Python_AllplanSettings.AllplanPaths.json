@@ -1,0 +1,154 @@
+{
+  "name": "AllplanPaths",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Class for getting Allplan paths",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurPrjDesignPath",
+      "signature": "GetCurPrjDesignPath()",
+      "summary": "Get the current project design path",
+      "remarks": "Get the current project design path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Current project design path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetCurPrjDesignPath"
+    },
+    {
+      "name": "GetCurPrjPath",
+      "signature": "GetCurPrjPath()",
+      "summary": "Get the current project path",
+      "remarks": "Get the current project path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Current project path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetCurPrjPath"
+    },
+    {
+      "name": "GetEtcPath",
+      "signature": "GetEtcPath()",
+      "summary": "Get the Etc path",
+      "remarks": "Get the Etc path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Etc path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetEtcPath"
+    },
+    {
+      "name": "GetPathOfApplication",
+      "signature": "GetPathOfApplication()",
+      "summary": "Get the path of the application",
+      "remarks": "Get the path of the application",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Path of the application"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetPathOfApplication"
+    },
+    {
+      "name": "GetPrgPath",
+      "signature": "GetPrgPath()",
+      "summary": "Get the program path",
+      "remarks": "Get the program path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Program path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetPrgPath"
+    },
+    {
+      "name": "GetPythonPartsEtcPath",
+      "signature": "GetPythonPartsEtcPath()",
+      "summary": "Get the PythonParts Etc path",
+      "remarks": "Get the PythonParts Etc path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Etc path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetPythonPartsEtcPath"
+    },
+    {
+      "name": "GetStdDesignPath",
+      "signature": "GetStdDesignPath()",
+      "summary": "Get the Std design path",
+      "remarks": "Get the Std design path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Std design path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetStdDesignPath"
+    },
+    {
+      "name": "GetStdPath",
+      "signature": "GetStdPath()",
+      "summary": "Get the Std path",
+      "remarks": "Get the Std path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Std path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetStdPath"
+    },
+    {
+      "name": "GetTmpPath",
+      "signature": "GetTmpPath()",
+      "summary": "Get the Tmp path",
+      "remarks": "Get the Tmp path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Tmp path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetTmpPath"
+    },
+    {
+      "name": "GetUsrPath",
+      "signature": "GetUsrPath()",
+      "summary": "Get the Usr path",
+      "remarks": "Get the Usr path",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Usr path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanPaths/#NemAll_Python_AllplanSettings.AllplanPaths.GetUsrPath"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,284 @@
+{
+  "name": "HandleCreator",
+  "namespace": "Utils.HandleCreator",
+  "kind": "class",
+  "summary": "implementation of the handle creator",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "move",
+      "signature": "move( handle_list: list[HandleProperties], name: str, placement_point: Point3D, info_text: str = \u0022\u0022, )",
+      "summary": "create a handle for a move",
+      "remarks": "create a handle for a move",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "handle list",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "handle parameter name",
+          "optional": false
+        },
+        {
+          "name": "placement_point",
+          "type": "Point3D",
+          "doc": "placement move handle",
+          "optional": false
+        },
+        {
+          "name": "info_text",
+          "type": "str",
+          "doc": "info text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/#Utils.HandleCreator.HandleCreator.move"
+    },
+    {
+      "name": "move_in_direction",
+      "signature": "move_in_direction( handle_list: list[HandleProperties], name: str, placement_point: Point3D, angle: Angle, info_text: str = \u0022\u0022, )",
+      "summary": "create a handle for a move in the arrow direction",
+      "remarks": "create a handle for a move in the arrow direction",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "handle list",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "handle parameter name",
+          "optional": false
+        },
+        {
+          "name": "placement_point",
+          "type": "Point3D",
+          "doc": "placement move handle",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "handle angle",
+          "optional": false
+        },
+        {
+          "name": "info_text",
+          "type": "str",
+          "doc": "info text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/#Utils.HandleCreator.HandleCreator.move_in_direction"
+    },
+    {
+      "name": "move_xyz",
+      "signature": "move_xyz( handle_list: list[HandleProperties], name: str, handle_point: Point3D, ref_point: Point3D, has_input_field: bool = True, input_field_above: bool = True, show_handles: bool = True, )",
+      "summary": "create a handle with a move in x/y/z direction",
+      "remarks": "create a handle with a move in x/y/z direction",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "handle list",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "handle parameter name",
+          "optional": false
+        },
+        {
+          "name": "handle_point",
+          "type": "Point3D",
+          "doc": "handle point",
+          "optional": false
+        },
+        {
+          "name": "ref_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "has_input_field",
+          "type": "bool",
+          "doc": "has input field state",
+          "optional": false
+        },
+        {
+          "name": "input_field_above",
+          "type": "bool",
+          "doc": "input field above the dimension line state",
+          "optional": false
+        },
+        {
+          "name": "show_handles",
+          "type": "bool",
+          "doc": "show the handles state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/#Utils.HandleCreator.HandleCreator.move_xyz"
+    },
+    {
+      "name": "point",
+      "signature": "point( handle_list: list[HandleProperties], name: str, handle_point: Point3D, index: int | None = None, info_text: str = \u0022\u0022, )",
+      "summary": "create a handle with a point to move",
+      "remarks": "create a handle with a point to move",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "handle list",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "handle parameter name",
+          "optional": false
+        },
+        {
+          "name": "handle_point",
+          "type": "Point3D",
+          "doc": "handle point",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int | None",
+          "doc": "point index",
+          "optional": false
+        },
+        {
+          "name": "info_text",
+          "type": "str",
+          "doc": "info text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/#Utils.HandleCreator.HandleCreator.point"
+    },
+    {
+      "name": "point_distance",
+      "signature": "point_distance( handle_list: list[HandleProperties], name: str, handle_point: Point3D, ref_point: Point3D, has_input_field: bool = True, input_field_above: bool = True, show_handles: bool = True, center_point: Point3D | None = None, )",
+      "summary": "create a handle with a point distance",
+      "remarks": "create a handle with a point distance",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "handle list",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "handle parameter name",
+          "optional": false
+        },
+        {
+          "name": "handle_point",
+          "type": "Point3D",
+          "doc": "handle point",
+          "optional": false
+        },
+        {
+          "name": "ref_point",
+          "type": "Point3D",
+          "doc": "reference point",
+          "optional": false
+        },
+        {
+          "name": "has_input_field",
+          "type": "bool",
+          "doc": "has input field state",
+          "optional": false
+        },
+        {
+          "name": "input_field_above",
+          "type": "bool",
+          "doc": "input field above the dimension line state",
+          "optional": false
+        },
+        {
+          "name": "show_handles",
+          "type": "bool",
+          "doc": "show the handles state",
+          "optional": false
+        },
+        {
+          "name": "center_point",
+          "type": "Point3D | None",
+          "doc": "center point for arc",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/#Utils.HandleCreator.HandleCreator.point_distance"
+    },
+    {
+      "name": "point_list_2d",
+      "signature": "point_list_2d( handle_list: list[HandleProperties], name: str, handle_points: list[Point2D], info_text: str = \u0022\u0022, )",
+      "summary": "create a handle with a point to move",
+      "remarks": "create a handle with a point to move",
+      "params": [
+        {
+          "name": "handle_list",
+          "type": "list[HandleProperties]",
+          "doc": "handle list",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "handle parameter name",
+          "optional": false
+        },
+        {
+          "name": "handle_points",
+          "type": "list[Point2D]",
+          "doc": "handle points",
+          "optional": false
+        },
+        {
+          "name": "info_text",
+          "type": "str",
+          "doc": "info text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/HandleCreator/#Utils.HandleCreator.HandleCreator.point_list_2d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

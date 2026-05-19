@@ -1,0 +1,65 @@
+{
+  "name": "eFilletErrorCode",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Enumeration of error codes for Fillet",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eFilletErrorCode/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFilletErrorCode",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eFilletErrorCode/#NemAll_Python_Geometry.eFilletErrorCode.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eERROR_LINES_ARENOT_COPLANAR",
+      "value": 1
+    },
+    {
+      "name": "eERROR_LINES_ARE_COLLINEAR",
+      "value": 2
+    },
+    {
+      "name": "eERROR_LINES_ARE_NOT_PARALLEL",
+      "value": 6
+    },
+    {
+      "name": "eERROR_LINES_ARE_PARALLEL",
+      "value": 3
+    },
+    {
+      "name": "eERROR_NO_FILLET_CREATED",
+      "value": 5
+    },
+    {
+      "name": "eERROR_ZEROO_LINE_LENGTH",
+      "value": 4
+    },
+    {
+      "name": "eNO_ERROR",
+      "value": 0
+    }
+  ]
+}

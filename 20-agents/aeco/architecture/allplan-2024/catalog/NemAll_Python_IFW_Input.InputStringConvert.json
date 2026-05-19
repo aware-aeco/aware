@@ -1,0 +1,51 @@
+{
+  "name": "InputStringConvert",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.InputStringConvert.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/",
+  "constructors": [
+    {
+      "name": "InputStringConvert(arg2)",
+      "signature": "InputStringConvert(arg2)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.__init__"
+    },
+    {
+      "name": "InputStringConvert(arg2)",
+      "signature": "InputStringConvert(arg2)",
+      "summary": "Construct the InputStringConvert by a std::wstring",
+      "remarks": "Construct the InputStringConvert by a std::wstring",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetString",
+      "signature": "GetString()",
+      "summary": "Get the input string",
+      "remarks": "Get the input string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Input string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.GetString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

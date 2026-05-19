@@ -1,0 +1,119 @@
+{
+  "name": "ElementGroupElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of the element group in Allplan.",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/",
+  "constructors": [
+    {
+      "name": "ElementGroupElement()",
+      "signature": "ElementGroupElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.__init__"
+    },
+    {
+      "name": "ElementGroupElement( commonProp: CommonProperties, elementGroupProp: ElementGroupProperties, elementGroupObjectList: list, )",
+      "signature": "ElementGroupElement( commonProp: CommonProperties, elementGroupProp: ElementGroupProperties, elementGroupObjectList: list, )",
+      "summary": "Default constructor",
+      "remarks": "Default constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "elementGroupProp",
+          "type": "ElementGroupProperties",
+          "doc": "Properties of the element group",
+          "optional": false
+        },
+        {
+          "name": "elementGroupObjectList",
+          "type": "list",
+          "doc": "List of objects to put in the group",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetElementGroupProperties",
+      "signature": "GetElementGroupProperties() -\u003E ElementGroupProperties",
+      "summary": "Get the ElementGroup properties",
+      "remarks": "Get the ElementGroup properties",
+      "params": [],
+      "returns": {
+        "type": "ElementGroupProperties",
+        "doc": "ElementGroup properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.GetElementGroupProperties"
+    },
+    {
+      "name": "GetObjectList",
+      "signature": "GetObjectList() -\u003E list",
+      "summary": "Get the list of element group objects",
+      "remarks": "Get the list of element group objects",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Element group object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.GetObjectList"
+    },
+    {
+      "name": "SetElementGroupProperties",
+      "signature": "SetElementGroupProperties(ElementGroupProp: ElementGroupProperties)",
+      "summary": "Set the ElementGroup properties",
+      "remarks": "Set the ElementGroup properties",
+      "params": [
+        {
+          "name": "ElementGroupProp",
+          "type": "ElementGroupProperties",
+          "doc": "ElementGroup properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.SetElementGroupProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementGroupElement/#NemAll_Python_BasisElements.ElementGroupElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

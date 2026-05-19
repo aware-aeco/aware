@@ -1,0 +1,65 @@
+{
+  "name": "InputStringConvert",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Representation of the prompt shown in Allplan UI in the so called dialog line during an input (selection or point input)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/",
+  "constructors": [
+    {
+      "name": "InputStringConvert(id: int)",
+      "signature": "InputStringConvert(id: int)",
+      "summary": "Construct the prompt from an ID pointing out to a built-in string",
+      "remarks": "Construct the prompt from an ID pointing out to a built-in string",
+      "params": [
+        {
+          "name": "arg2",
+          "type": "object",
+          "doc": "ID of the build-in prompt",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.__init__"
+    },
+    {
+      "name": "InputStringConvert(text: str)",
+      "signature": "InputStringConvert(text: str)",
+      "summary": "Construct the prompt from any string",
+      "remarks": "Construct the prompt from any string",
+      "params": [
+        {
+          "name": "arg2",
+          "type": "object",
+          "doc": "Prompt to show in the dialog line",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetString",
+      "signature": "GetString() -\u003E str",
+      "summary": "Get the input string",
+      "remarks": "Get the input string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Input string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputStringConvert/#NemAll_Python_IFW_Input.InputStringConvert.GetString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

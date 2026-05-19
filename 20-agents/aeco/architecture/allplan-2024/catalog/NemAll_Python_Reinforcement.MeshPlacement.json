@@ -1,0 +1,205 @@
+{
+  "name": "MeshPlacement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.MeshPlacement.)",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/",
+  "constructors": [
+    {
+      "name": "MeshPlacement()",
+      "signature": "MeshPlacement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.__init__"
+    },
+    {
+      "name": "MeshPlacement(positionNumber, widthVec, bendingShape)",
+      "signature": "MeshPlacement(positionNumber, widthVec, bendingShape)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        },
+        {
+          "name": "widthVec",
+          "type": "Vector3D",
+          "doc": "Width vector of the mesh",
+          "optional": false
+        },
+        {
+          "name": "bendingShape",
+          "type": "BendingShape",
+          "doc": "Mesh shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBendingShape",
+      "signature": "GetBendingShape()",
+      "summary": "Get the shape polyline",
+      "remarks": "Get the shape polyline",
+      "params": [],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Shape polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.GetBendingShape"
+    },
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber()",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.GetPositionNumber"
+    },
+    {
+      "name": "GetWidthVector",
+      "signature": "GetWidthVector()",
+      "summary": "Get the width vector",
+      "remarks": "Get the width vector",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Width vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.GetWidthVector"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(transVec)",
+      "summary": "Move the placement",
+      "remarks": "Move the placement",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.Move"
+    },
+    {
+      "name": "SetBendingShape",
+      "signature": "SetBendingShape(shape)",
+      "summary": "Set the reinforcement shape",
+      "remarks": "Set the reinforcement shape",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Reinforcement shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.SetBendingShape"
+    },
+    {
+      "name": "SetPositionNumber",
+      "signature": "SetPositionNumber(positionNumber)",
+      "summary": "Set the position number",
+      "remarks": "Set the position number",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.SetPositionNumber"
+    },
+    {
+      "name": "SetWidthVector",
+      "signature": "SetWidthVector(widthVec)",
+      "summary": "Set the width vector",
+      "remarks": "Set the width vector",
+      "params": [
+        {
+          "name": "widthVec",
+          "type": "Vector3D",
+          "doc": "Width vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.SetWidthVector"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(transMat)",
+      "summary": "Transform the placement",
+      "remarks": "Transform the placement",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.Transform"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshPlacement/#NemAll_Python_Reinforcement.MeshPlacement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

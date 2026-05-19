@@ -1,0 +1,50 @@
+{
+  "name": "SectionFilterProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of filter settings of a UVS",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionFilterProperties/",
+  "constructors": [
+    {
+      "name": "SectionFilterProperties()",
+      "signature": "SectionFilterProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionFilterProperties/#NemAll_Python_BasisElements.SectionFilterProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DrawingFilesProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Settings regarding which drawing files are to be considered in the UVS",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionFilterProperties/#NemAll_Python_BasisElements.SectionFilterProperties.DrawingFilesProperties"
+    },
+    {
+      "name": "IsAssociativityOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether to update the UVS automatically",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionFilterProperties/#NemAll_Python_BasisElements.SectionFilterProperties.IsAssociativityOn"
+    },
+    {
+      "name": "LayerProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Settings regarding which layer are to be considered in the UVS",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionFilterProperties/#NemAll_Python_BasisElements.SectionFilterProperties.LayerProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

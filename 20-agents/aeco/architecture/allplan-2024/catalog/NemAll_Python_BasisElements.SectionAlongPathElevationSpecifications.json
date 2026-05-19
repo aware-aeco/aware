@@ -1,0 +1,356 @@
+{
+  "name": "SectionAlongPathElevationSpecifications",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Elevation specifications",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathElevationSpecifications(bInitFromSTW=False)",
+      "signature": "SectionAlongPathElevationSpecifications(bInitFromSTW=False)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.__init__"
+    },
+    {
+      "name": "SectionAlongPathElevationSpecifications(B)",
+      "signature": "SectionAlongPathElevationSpecifications(B)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [
+        {
+          "name": "B",
+          "type": "SectionAlongPathElevationSpecifications",
+          "doc": "object to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DecimalPlaces",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the number of places after decimal point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.DecimalPlaces"
+    },
+    {
+      "name": "FontHeight",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height of the character set",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.FontHeight"
+    },
+    {
+      "name": "FontNameStrg",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Name the the character set",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.FontNameStrg"
+    },
+    {
+      "name": "HeightWidthFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the height/width ratio",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.HeightWidthFactor"
+    },
+    {
+      "name": "IsAbsoluteElevation",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Absolute elevation",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsAbsoluteElevation"
+    },
+    {
+      "name": "IsDimensionLineVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visibility of dimension line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsDimensionLineVisible"
+    },
+    {
+      "name": "IsDimensionNumberVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Dimension number is visible",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsDimensionNumberVisible"
+    },
+    {
+      "name": "IsFixFraction",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Fix fraction",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsFixFraction"
+    },
+    {
+      "name": "IsFontBold",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the character set Bold",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsFontBold"
+    },
+    {
+      "name": "IsFontItalic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the character set Italic",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsFontItalic"
+    },
+    {
+      "name": "IsFontUnderline",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the character set Underline",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsFontUnderline"
+    },
+    {
+      "name": "IsFreeElevation",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Free elevation",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsFreeElevation"
+    },
+    {
+      "name": "IsLineColorFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the settings from layers three checkboxes on third page in layer dialog like in BBasisDimSettings.h (do not know, why is it is doubled)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsLineColorFromLayer"
+    },
+    {
+      "name": "IsLineColorSameForAll",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the the same line color for DMline,auxiliary line and number/texts",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsLineColorSameForAll"
+    },
+    {
+      "name": "IsLineColorTake",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the settings from layers three checkboxes on third page in layer dialog",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsLineColorTake"
+    },
+    {
+      "name": "IsModifiedIsTextOpaque",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the is text opaque",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsModifiedIsTextOpaque"
+    },
+    {
+      "name": "IsPenFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the settings from layers three checkboxes on third page in layer dialog like in BasisDimSettings.h (do not know, why is it is doubled)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsPenFromLayer"
+    },
+    {
+      "name": "IsPenSameForAll",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the the same pen for DMline,auxiliary line and number/texts",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsPenSameForAll"
+    },
+    {
+      "name": "IsPenSymbolFlag",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the when true -\u003E pen for symbol as help construction line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsPenSymbolFlag"
+    },
+    {
+      "name": "IsPenTake",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the settings from layers three checkboxes on third page in layer dialog",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsPenTake"
+    },
+    {
+      "name": "IsPlusMinusSign",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Draw \u002B- sign before zero number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsPlusMinusSign"
+    },
+    {
+      "name": "IsPositiveSign",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Draw \u002Bs ign before positive number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsPositiveSign"
+    },
+    {
+      "name": "IsTextSymbolFlag",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the when true -\u003E pen for text as help construction line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.IsTextSymbolFlag"
+    },
+    {
+      "name": "LayerId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer Number",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.LayerId"
+    },
+    {
+      "name": "LeadingCharacters",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the prefix of dimension number/additional number(16)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.LeadingCharacters"
+    },
+    {
+      "name": "MeasuredValueUnit",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Unit of the measured value",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.MeasuredValueUnit"
+    },
+    {
+      "name": "PointSymbol",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Point symbol",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.PointSymbol"
+    },
+    {
+      "name": "PointSymbolSize",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the symbol size in mm/inch",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.PointSymbolSize"
+    },
+    {
+      "name": "RoundOffInch",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the round of number inch units",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.RoundOffInch"
+    },
+    {
+      "name": "RoundOffNormal",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the round of number metric units",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.RoundOffNormal"
+    },
+    {
+      "name": "SymbolColorId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Symbol color",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.SymbolColorId"
+    },
+    {
+      "name": "SymbolPenId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Symbol pen",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.SymbolPenId"
+    },
+    {
+      "name": "TailingCharacters",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the suffix of dimension number/additional number(16)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.TailingCharacters"
+    },
+    {
+      "name": "TailingZeros",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the number of zeros after decimal point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.TailingZeros"
+    },
+    {
+      "name": "TextColorId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Text color",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.TextColorId"
+    },
+    {
+      "name": "TextLocation",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the text location from position / location of texts (up to enum eTextLocation)",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.TextLocation"
+    },
+    {
+      "name": "TextOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the distance -\u003E offset of texts from dimension line",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.TextOffset"
+    },
+    {
+      "name": "TextPenId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Text pen",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathElevationSpecifications/#NemAll_Python_BasisElements.SectionAlongPathElevationSpecifications.TextPenId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

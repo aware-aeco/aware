@@ -1,0 +1,140 @@
+{
+  "name": "HandleDirection",
+  "namespace": "HandleDirection",
+  "kind": "enum",
+  "summary": "Class with the definition of the handle directions.",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandleDirection/HandleDirection/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANGLE",
+      "value": "angle",
+      "summary": "Move the handle in xy direction. Show a circle as info."
+    },
+    {
+      "name": "CLICK",
+      "value": 13,
+      "summary": "handle can be used as button, ..."
+    },
+    {
+      "name": "PLANE_DIR",
+      "value": "plane_dir",
+      "summary": "Move the handle in xy direction on the defined plane from HandleProperties Draw an arrow symbol in reference-handle point-direction"
+    },
+    {
+      "name": "POINT_DIR",
+      "value": "point_dir",
+      "summary": "Move the handle in point direction, defined by the reference and handle point. Draw an arrow symbol in reference-handle point-direction"
+    },
+    {
+      "name": "VECTOR_DIR",
+      "value": "vector_dir",
+      "summary": "Move the handle in the direction defined by the vector from HandleProperties"
+    },
+    {
+      "name": "XYZ_DIR",
+      "value": "xyz_dir",
+      "summary": "Move the handle in xyz direction."
+    },
+    {
+      "name": "XY_DIR",
+      "value": "xy_dir",
+      "summary": "Move the handle in xy direction. Draw an arrow symbol in reference-handle point-direction"
+    },
+    {
+      "name": "XZ_DIR",
+      "value": "xz_dir",
+      "summary": "Move the handle in xz direction. Draw an arrow symbol in reference-handle point-direction"
+    },
+    {
+      "name": "X_DIR",
+      "value": "x_dir",
+      "summary": "Move the handle in x-direction. Draw an arrow symbol in x-direction"
+    },
+    {
+      "name": "YZ_DIR",
+      "value": "yz_dir",
+      "summary": "Move the handle in yz direction. Draw an arrow symbol in reference-handle point-direction"
+    },
+    {
+      "name": "Y_DIR",
+      "value": "y_dir",
+      "summary": "Move the handle in y-direction. Draw an arrow symbol in y-direction"
+    },
+    {
+      "name": "Z_COORD",
+      "value": "z_coord",
+      "summary": "Move the handle in point direction, defined by the reference and handle point. Draw an arrow symbol in reference-handle point-direction"
+    },
+    {
+      "name": "Z_DIR",
+      "value": "z_dir",
+      "summary": "Move the handle in z-direction. Draw an arrow symbol in z-direction"
+    },
+    {
+      "name": "angle",
+      "value": 9,
+      "summary": "deprecated, use XYZ_DIR"
+    },
+    {
+      "name": "plane_dir",
+      "value": 11,
+      "summary": "deprecated, use PLANE_DIR"
+    },
+    {
+      "name": "point_dir",
+      "value": 8,
+      "summary": "deprecated, use POINT_DIR"
+    },
+    {
+      "name": "vector_dir",
+      "value": 12,
+      "summary": "deprecated, use VECTOR_DIR"
+    },
+    {
+      "name": "x_dir",
+      "value": 1,
+      "summary": "deprecated, use X_DIR"
+    },
+    {
+      "name": "xy_dir",
+      "value": 4,
+      "summary": "deprecated, use XY_DIR"
+    },
+    {
+      "name": "xyz_dir",
+      "value": 7,
+      "summary": "deprecated, use XYZ_DIR"
+    },
+    {
+      "name": "xz_dir",
+      "value": 5,
+      "summary": "deprecated, use XZ_DIR"
+    },
+    {
+      "name": "y_dir",
+      "value": 2,
+      "summary": "deprecated, use Y_DIR"
+    },
+    {
+      "name": "yz_dir",
+      "value": 6,
+      "summary": "deprecated, use YZ_DIR"
+    },
+    {
+      "name": "z_coord",
+      "value": 10,
+      "summary": "deprecated, use XYZ_DIR"
+    },
+    {
+      "name": "z_dir",
+      "value": 3,
+      "summary": "deprecated, use Z_DIR"
+    }
+  ]
+}

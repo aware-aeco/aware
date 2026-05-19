@@ -1,0 +1,138 @@
+{
+  "name": "LayoutMasterData",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Layout master data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/",
+  "constructors": [
+    {
+      "name": "LayoutMasterData()",
+      "signature": "LayoutMasterData()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BackgroundType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the background type (0-none, 1- color, 2-filling/gradient filling, 3 texture) :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.BackgroundType"
+    },
+    {
+      "name": "Border",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the border :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.Border"
+    },
+    {
+      "name": "Filling",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the filling :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.Filling"
+    },
+    {
+      "name": "LayoutHeaderOffsetX",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the horizontal distance between legend frame and inner line of border :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.LayoutHeaderOffsetX"
+    },
+    {
+      "name": "LayoutHeaderOffsetY",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the vertical distance between legend frame and inner line of border :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.LayoutHeaderOffsetY"
+    },
+    {
+      "name": "LayoutHeaderType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the header type (0-none, 1-stamp, 2-legend) :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.LayoutHeaderType"
+    },
+    {
+      "name": "Legend",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the legend :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.Legend"
+    },
+    {
+      "name": "Margin",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the margin :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.Margin"
+    },
+    {
+      "name": "SheetSize",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the size of the sheet :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.SheetSize"
+    },
+    {
+      "name": "Stamp",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the stamp :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.Stamp"
+    },
+    {
+      "name": "Texture",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the texture :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.Texture"
+    },
+    {
+      "name": "UseBorder",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the use border state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.UseBorder"
+    },
+    {
+      "name": "UseMargins",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the use margins state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.UseMargins"
+    },
+    {
+      "name": "UseProperties",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the use properties state :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutMasterData/#NemAll_Python_BaseElements.LayoutMasterData.UseProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

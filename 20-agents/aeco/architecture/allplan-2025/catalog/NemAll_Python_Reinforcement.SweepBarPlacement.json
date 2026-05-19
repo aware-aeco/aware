@@ -1,0 +1,549 @@
+{
+  "name": "SweepBarPlacement",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the sweep bar placement element",
+  "base": "ReinfElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/",
+  "constructors": [
+    {
+      "name": "SweepBarPlacement()",
+      "signature": "SweepBarPlacement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.__init__"
+    },
+    {
+      "name": "SweepBarPlacement(placement: SweepBarPlacement)",
+      "signature": "SweepBarPlacement(placement: SweepBarPlacement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "placement",
+          "type": "SweepBarPlacement",
+          "doc": "Placement to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.__init__"
+    },
+    {
+      "name": "SweepBarPlacement( positionNumber: int, sweepPaths: Path3DList, rotation: bool, firstPathIsSweepPath: bool, interpolation: bool, interpolationOfAllPoints: bool, crossBarDistance: float, concreteCoverStart: float, concreteCoverEnd: float, edgeOffsetType: eEdgeOffsetType, edgeOffsetStart: float, edgeOffsetEnd: float, barOffset: float, benchingLength: float, benchingAngle: float, )",
+      "signature": "SweepBarPlacement( positionNumber: int, sweepPaths: Path3DList, rotation: bool, firstPathIsSweepPath: bool, interpolation: bool, interpolationOfAllPoints: bool, crossBarDistance: float, concreteCoverStart: float, concreteCoverEnd: float, edgeOffsetType: eEdgeOffsetType, edgeOffsetStart: float, edgeOffsetEnd: float, barOffset: float, benchingLength: float, benchingAngle: float, )",
+      "summary": "Constructor for cross bars",
+      "remarks": "Constructor for cross bars",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        },
+        {
+          "name": "sweepPaths",
+          "type": "Path3DList",
+          "doc": "Path",
+          "optional": false
+        },
+        {
+          "name": "rotation",
+          "type": "bool",
+          "doc": "Rotation",
+          "optional": false
+        },
+        {
+          "name": "firstPathIsSweepPath",
+          "type": "bool",
+          "doc": "First path is also sweep path",
+          "optional": false
+        },
+        {
+          "name": "interpolation",
+          "type": "bool",
+          "doc": "Interpolation",
+          "optional": false
+        },
+        {
+          "name": "interpolationOfAllPoints",
+          "type": "bool",
+          "doc": "Interpolation of all points",
+          "optional": false
+        },
+        {
+          "name": "crossBarDistance",
+          "type": "float",
+          "doc": "Cross bar distance",
+          "optional": false
+        },
+        {
+          "name": "concreteCoverStart",
+          "type": "float",
+          "doc": "Concrete cover at the start of the path",
+          "optional": false
+        },
+        {
+          "name": "concreteCoverEnd",
+          "type": "float",
+          "doc": "Concrete cover at the end of the path",
+          "optional": false
+        },
+        {
+          "name": "edgeOffsetType",
+          "type": "eEdgeOffsetType",
+          "doc": "Get the edge offset type of the path",
+          "optional": false
+        },
+        {
+          "name": "edgeOffsetStart",
+          "type": "float",
+          "doc": "Edge offset at the start of the path",
+          "optional": false
+        },
+        {
+          "name": "edgeOffsetEnd",
+          "type": "float",
+          "doc": "Edge offset at the end of the path",
+          "optional": false
+        },
+        {
+          "name": "barOffset",
+          "type": "float",
+          "doc": "Bar offset",
+          "optional": false
+        },
+        {
+          "name": "benchingLength",
+          "type": "float",
+          "doc": "Benching length",
+          "optional": false
+        },
+        {
+          "name": "benchingAngle",
+          "type": "float",
+          "doc": "Benching angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddPlacementSection",
+      "signature": "AddPlacementSection(placementSection: BarPlacementSection) -\u003E bool",
+      "summary": "Add a placement section",
+      "remarks": "Add a placement section",
+      "params": [
+        {
+          "name": "placementSection",
+          "type": "BarPlacementSection",
+          "doc": "Section",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Section is added: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.AddPlacementSection"
+    },
+    {
+      "name": "AddSectionBars",
+      "signature": "AddSectionBars( bendingShapes: BendingShapeList, sectionsLongitudinalBarsProp: LongitudinalBarPropertiesList, sectionPlane: Plane3D, )",
+      "summary": "Add the bars and the section plane for a section bendingShapeViewVector View vector of the bending shape",
+      "remarks": "Add the bars and the section plane for a section bendingShapeViewVector View vector of the bending shape",
+      "params": [
+        {
+          "name": "bendingShapes",
+          "type": "BendingShapeList",
+          "doc": "Bending shapes of the section",
+          "optional": false
+        },
+        {
+          "name": "sectionsLongitudinalBarsProp",
+          "type": "LongitudinalBarPropertiesList",
+          "doc": "Longitudinal bars properties",
+          "optional": false
+        },
+        {
+          "name": "sectionPlane",
+          "type": "Plane3D",
+          "doc": "Section plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.AddSectionBars"
+    },
+    {
+      "name": "GetBarOffset",
+      "signature": "GetBarOffset() -\u003E float",
+      "summary": "Get the bar offset",
+      "remarks": "Get the bar offset",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Bar offset"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetBarOffset"
+    },
+    {
+      "name": "GetBenchingAngle",
+      "signature": "GetBenchingAngle() -\u003E float",
+      "summary": "Get the benching angle",
+      "remarks": "Get the benching angle",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Benching angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetBenchingAngle"
+    },
+    {
+      "name": "GetBenchingLength",
+      "signature": "GetBenchingLength() -\u003E float",
+      "summary": "Get the benching length",
+      "remarks": "Get the benching length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Benching length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetBenchingLength"
+    },
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties() -\u003E CommonProperties",
+      "summary": "Get the common properties",
+      "remarks": "Get the common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetCommonProperties"
+    },
+    {
+      "name": "GetConcreteCoverEnd",
+      "signature": "GetConcreteCoverEnd() -\u003E float",
+      "summary": "Get the concrete cover at the end of the path",
+      "remarks": "Get the concrete cover at the end of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover at the end of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetConcreteCoverEnd"
+    },
+    {
+      "name": "GetConcreteCoverStart",
+      "signature": "GetConcreteCoverStart() -\u003E float",
+      "summary": "Get the concrete cover at the start of the path",
+      "remarks": "Get the concrete cover at the start of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Concrete cover at the start of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetConcreteCoverStart"
+    },
+    {
+      "name": "GetCrossBarDistance",
+      "signature": "GetCrossBarDistance() -\u003E float",
+      "summary": "Get the cross bar distance",
+      "remarks": "Get the cross bar distance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Cross bar distance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetCrossBarDistance"
+    },
+    {
+      "name": "GetEdgeOffsetEnd",
+      "signature": "GetEdgeOffsetEnd() -\u003E float",
+      "summary": "Get the edge offset at the end of the path",
+      "remarks": "Get the edge offset at the end of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Edge offset at the end of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetEdgeOffsetEnd"
+    },
+    {
+      "name": "GetEdgeOffsetStart",
+      "signature": "GetEdgeOffsetStart() -\u003E float",
+      "summary": "Get the edge offset at the start of the path",
+      "remarks": "Get the edge offset at the start of the path",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Edge offset at the start of the path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetEdgeOffsetStart"
+    },
+    {
+      "name": "GetEdgeOffsetType",
+      "signature": "GetEdgeOffsetType() -\u003E eEdgeOffsetType",
+      "summary": "Get the edge offset type",
+      "remarks": "Get the edge offset type",
+      "params": [],
+      "returns": {
+        "type": "eEdgeOffsetType",
+        "doc": "Edge offset type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetEdgeOffsetType"
+    },
+    {
+      "name": "GetEdgeOffsets",
+      "signature": "GetEdgeOffsets() -\u003E tuple",
+      "summary": "Get the edge offsets",
+      "remarks": "Get the edge offsets",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Edge offsets"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetEdgeOffsets"
+    },
+    {
+      "name": "GetPlacementSections",
+      "signature": "GetPlacementSections() -\u003E object",
+      "summary": "Get the placement sections",
+      "remarks": "Get the placement sections",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Placement sections"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetPlacementSections"
+    },
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber() -\u003E int",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.GetPositionNumber"
+    },
+    {
+      "name": "IsFirstPathIsSweepPath",
+      "signature": "IsFirstPathIsSweepPath() -\u003E bool",
+      "summary": "Get the first path is sweep path state",
+      "remarks": "Get the first path is sweep path state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "First path is sweep path state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.IsFirstPathIsSweepPath"
+    },
+    {
+      "name": "IsInterpolation",
+      "signature": "IsInterpolation() -\u003E bool",
+      "summary": "Get the interpolation state",
+      "remarks": "Get the interpolation state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Interpolation state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.IsInterpolation"
+    },
+    {
+      "name": "IsInterpolationOfAllPoints",
+      "signature": "IsInterpolationOfAllPoints() -\u003E bool",
+      "summary": "Get the interpolation of all points state",
+      "remarks": "Get the interpolation of all points state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Interpolation of all points state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.IsInterpolationOfAllPoints"
+    },
+    {
+      "name": "IsRoation",
+      "signature": "IsRoation() -\u003E bool",
+      "summary": "Get the rotation state",
+      "remarks": "Get the rotation state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Rotation state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.IsRoation"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(transVec: Vector3D)",
+      "summary": "Move the placement",
+      "remarks": "Move the placement",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.Move"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.SetCommonProperties"
+    },
+    {
+      "name": "SetPositionNumber",
+      "signature": "SetPositionNumber(positionNumber: int)",
+      "summary": "Set the position number",
+      "remarks": "Set the position number",
+      "params": [
+        {
+          "name": "positionNumber",
+          "type": "int",
+          "doc": "Position number",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.SetPositionNumber"
+    },
+    {
+      "name": "Sweep",
+      "signature": "Sweep()",
+      "summary": "Sweep the bars",
+      "remarks": "Sweep the bars",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.Sweep"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(transMat: Matrix3D)",
+      "summary": "Transform the placement",
+      "remarks": "Transform the placement",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.Transform"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.CommonProperties"
+    },
+    {
+      "name": "PositionNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/SweepBarPlacement/#NemAll_Python_Reinforcement.SweepBarPlacement.PositionNumber"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

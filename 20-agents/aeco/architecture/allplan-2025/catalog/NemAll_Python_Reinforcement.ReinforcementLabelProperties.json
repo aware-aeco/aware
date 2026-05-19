@@ -1,0 +1,147 @@
+{
+  "name": "ReinforcementLabelProperties",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.ReinforcementLabelProperties.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/",
+  "constructors": [
+    {
+      "name": "ReinforcementLabelProperties()",
+      "signature": "ReinforcementLabelProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.__init__"
+    },
+    {
+      "name": "ReinforcementLabelProperties(prop: ReinforcementLabelProperties)",
+      "signature": "ReinforcementLabelProperties(prop: ReinforcementLabelProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "prop",
+          "type": "ReinforcementLabelProperties",
+          "doc": "Properties to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ShowBarCount",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar count :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBarCount"
+    },
+    {
+      "name": "ShowBarDiameter",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar diameter :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBarDiameter"
+    },
+    {
+      "name": "ShowBarDistance",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar distance :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBarDistance"
+    },
+    {
+      "name": "ShowBarLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar layer :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBarLayer"
+    },
+    {
+      "name": "ShowBarLength",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar length :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBarLength"
+    },
+    {
+      "name": "ShowBarPlace",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar place :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBarPlace"
+    },
+    {
+      "name": "ShowBendingShape",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bending shape :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowBendingShape"
+    },
+    {
+      "name": "ShowPositionAtEnd",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the bar diameter :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowPositionAtEnd"
+    },
+    {
+      "name": "ShowPositionNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the position number :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowPositionNumber"
+    },
+    {
+      "name": "ShowSteelGrade",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the steel grade :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowSteelGrade"
+    },
+    {
+      "name": "ShowTwoLineText",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the show state for the two line text :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementLabelProperties/#NemAll_Python_Reinforcement.ReinforcementLabelProperties.ShowTwoLineText"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

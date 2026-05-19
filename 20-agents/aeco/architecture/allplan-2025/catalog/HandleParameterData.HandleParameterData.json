@@ -1,0 +1,13 @@
+{
+  "name": "HandleParameterData",
+  "namespace": "HandleParameterData",
+  "kind": "class",
+  "summary": "The parameter data are used to define the recalculation of the parameter property assigned to the handle. The recalculation is performed depending on the defined parameter type.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleParameterData/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

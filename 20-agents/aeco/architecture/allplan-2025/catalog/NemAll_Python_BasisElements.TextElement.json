@@ -1,0 +1,244 @@
+{
+  "name": "TextElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of text in Allplan",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/",
+  "constructors": [
+    {
+      "name": "TextElement()",
+      "signature": "TextElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__init__"
+    },
+    {
+      "name": "TextElement( commonProp: CommonProperties, textProp: TextProperties, text: str, textPnt: Point2D, )",
+      "signature": "TextElement( commonProp: CommonProperties, textProp: TextProperties, text: str, textPnt: Point2D, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "textProp",
+          "type": "TextProperties",
+          "doc": "Text properties",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Text string",
+          "optional": false
+        },
+        {
+          "name": "textPnt",
+          "type": "Point2D",
+          "doc": "Text point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__init__"
+    },
+    {
+      "name": "TextElement(element: TextElement)",
+      "signature": "TextElement(element: TextElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "TextElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDimensions",
+      "signature": "GetDimensions(doc: DocumentAdapter) -\u003E Vector2D",
+      "summary": "Get the dimensions of the text",
+      "remarks": "Get the dimensions of the text",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Text dimensions"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.GetDimensions"
+    },
+    {
+      "name": "GetText",
+      "signature": "GetText() -\u003E str",
+      "summary": "Get the text string",
+      "remarks": "Get the text string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Text string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.GetText"
+    },
+    {
+      "name": "GetTextPoints",
+      "signature": "GetTextPoints(doc: DocumentAdapter, refPnt: Point2D) -\u003E Point2DList",
+      "summary": "Get the list of text points composed as follows:",
+      "remarks": "Get the list of text points composed as follows:",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "Point2D",
+          "doc": "Reference point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2DList",
+        "doc": "Text points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.GetTextPoints"
+    },
+    {
+      "name": "GetTextProperties",
+      "signature": "GetTextProperties() -\u003E TextProperties",
+      "summary": "Get the Text properties",
+      "remarks": "Get the Text properties",
+      "params": [],
+      "returns": {
+        "type": "TextProperties",
+        "doc": "Text properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.GetTextProperties"
+    },
+    {
+      "name": "SetText",
+      "signature": "SetText(text: str)",
+      "summary": "Set the text string",
+      "remarks": "Set the text string",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Text string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.SetText"
+    },
+    {
+      "name": "SetTextProperties",
+      "signature": "SetTextProperties(textProp: TextProperties)",
+      "summary": "Set the Text properties",
+      "remarks": "Set the Text properties",
+      "params": [
+        {
+          "name": "textProp",
+          "type": "TextProperties",
+          "doc": "Text properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.SetTextProperties"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(textEle: TextElement) -\u003E bool",
+      "summary": "Comparison operator",
+      "remarks": "Comparison operator",
+      "params": [
+        {
+          "name": "textEle",
+          "type": "TextElement",
+          "doc": "Text element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Text",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Representation of text in Allplan",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.Text"
+    },
+    {
+      "name": "TextProperties",
+      "type": "TextProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Text properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextElement/#NemAll_Python_BasisElements.TextElement.TextProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

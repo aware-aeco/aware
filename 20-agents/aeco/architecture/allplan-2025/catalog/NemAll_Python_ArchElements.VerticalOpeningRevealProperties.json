@@ -1,0 +1,73 @@
+{
+  "name": "VerticalOpeningRevealProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Properties of the door/window reveal",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/",
+  "constructors": [
+    {
+      "name": "VerticalOpeningRevealProperties()",
+      "signature": "VerticalOpeningRevealProperties(element: VerticalOpeningRevealProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "VerticalOpeningRevealProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/#NemAll_Python_ArchElements.VerticalOpeningRevealProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Depth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Door/Window depth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/#NemAll_Python_ArchElements.VerticalOpeningRevealProperties.Depth"
+    },
+    {
+      "name": "InnerOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset to inner face (in case of inner reveal)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/#NemAll_Python_ArchElements.VerticalOpeningRevealProperties.InnerOffset"
+    },
+    {
+      "name": "OuterOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset to outer face (in case of inner reveal)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/#NemAll_Python_ArchElements.VerticalOpeningRevealProperties.OuterOffset"
+    },
+    {
+      "name": "SideOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Side offset (aka projection, in case of outer reveal)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/#NemAll_Python_ArchElements.VerticalOpeningRevealProperties.SideOffset"
+    },
+    {
+      "name": "Type",
+      "type": "VerticalOpeningRevealType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reveal Type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealProperties/#NemAll_Python_ArchElements.VerticalOpeningRevealProperties.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

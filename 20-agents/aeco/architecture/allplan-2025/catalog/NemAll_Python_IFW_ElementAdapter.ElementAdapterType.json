@@ -1,0 +1,200 @@
+{
+  "name": "ElementAdapterType",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "Implementation of the element type",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDisplayName",
+      "signature": "GetDisplayName() -\u003E str",
+      "summary": "Get the display name of the element",
+      "remarks": "Get the display name of the element",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Display name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.GetDisplayName"
+    },
+    {
+      "name": "GetGuid",
+      "signature": "GetGuid() -\u003E GUID",
+      "summary": "Get the GUID",
+      "remarks": "Get the GUID",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "GUID of the element type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.GetGuid"
+    },
+    {
+      "name": "GetModelType",
+      "signature": "GetModelType() -\u003E GUID",
+      "summary": "Get the model type",
+      "remarks": "Get the model type",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "Model type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.GetModelType"
+    },
+    {
+      "name": "GetTypeName",
+      "signature": "GetTypeName() -\u003E str",
+      "summary": "Get the type name of the element",
+      "remarks": "Get the type name of the element",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Type name of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.GetTypeName"
+    },
+    {
+      "name": "GetZoomState",
+      "signature": "GetZoomState() -\u003E object",
+      "summary": "Get the zoom state of the element type",
+      "remarks": "Get the zoom state of the element type",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Zoom state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.GetZoomState"
+    },
+    {
+      "name": "Is3DElement",
+      "signature": "Is3DElement() -\u003E bool",
+      "summary": "Get the 3D element state",
+      "remarks": "Get the 3D element state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Element has 3D geometry: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.Is3DElement"
+    },
+    {
+      "name": "IsInfoFromParent",
+      "signature": "IsInfoFromParent() -\u003E bool",
+      "summary": "Get the element state for the element info",
+      "remarks": "Get the element state for the element info",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Use the element info from the parent element: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.IsInfoFromParent"
+    },
+    {
+      "name": "IsTypeGroup",
+      "signature": "IsTypeGroup(typeGroup: ElementAdapterTypeGroup) -\u003E bool",
+      "summary": "Check for the type group",
+      "remarks": "Check for the type group",
+      "params": [
+        {
+          "name": "typeGroup",
+          "type": "ElementAdapterTypeGroup",
+          "doc": "Type group to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is in the type group: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.IsTypeGroup"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(guid: GUID) -\u003E bool",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "guid",
+          "type": "GUID",
+          "doc": "Type to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Types are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(guid: GUID) -\u003E bool",
+      "summary": "Not equal operator",
+      "remarks": "Not equal operator",
+      "params": [
+        {
+          "name": "guid",
+          "type": "GUID",
+          "doc": "Type to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Types are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.__ne__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the display name of the element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.DisplayName"
+    },
+    {
+      "name": "Guid",
+      "type": "GUID",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the GUID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.Guid"
+    },
+    {
+      "name": "IsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the visible state of the element type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterType/#NemAll_Python_IFW_ElementAdapter.ElementAdapterType.IsVisible"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

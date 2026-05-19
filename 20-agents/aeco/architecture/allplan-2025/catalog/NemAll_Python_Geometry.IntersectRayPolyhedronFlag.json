@@ -1,0 +1,35 @@
+{
+  "name": "IntersectRayPolyhedronFlag",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Flag for determining the best result of ray-polyhedron intersection",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/IntersectRayPolyhedronFlag/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNegativeIfNoPositive",
+      "value": 1
+    },
+    {
+      "name": "eNegativePreferred",
+      "value": 2
+    },
+    {
+      "name": "eNegativeVerticalPreferred",
+      "value": 4
+    },
+    {
+      "name": "ePositiveOnly",
+      "value": 0
+    },
+    {
+      "name": "eSmallestLmabda",
+      "value": 3
+    }
+  ]
+}

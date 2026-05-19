@@ -1,0 +1,166 @@
+{
+  "name": "ViewSectionElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the view section element",
+  "base": "AllplanElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/",
+  "constructors": [
+    {
+      "name": "ViewSectionElement()",
+      "signature": "ViewSectionElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.__init__"
+    },
+    {
+      "name": "ViewSectionElement(param)",
+      "signature": "ViewSectionElement(param)",
+      "summary": "Args: param:",
+      "remarks": "Args: param:",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateSectionBody",
+      "signature": "CreateSectionBody(doc, insertionMat, undoRedoService=None)",
+      "summary": "Create the section body",
+      "remarks": "Create the section body",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Placement matrix",
+          "optional": false
+        },
+        {
+          "name": "undoRedoService",
+          "type": "Optional[object]",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.CreateSectionBody"
+    },
+    {
+      "name": "DrawElement",
+      "signature": "DrawElement(modelElements, insertionMat, docID, asStaticPreview)",
+      "summary": "Draw eLement preview in Allplan",
+      "remarks": "Draw eLement preview in Allplan",
+      "params": [
+        {
+          "name": "modelElements",
+          "type": "object",
+          "doc": "Python object which should be drawn",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "insertion matrix",
+          "optional": false
+        },
+        {
+          "name": "docID",
+          "type": "int",
+          "doc": "Document ID",
+          "optional": false
+        },
+        {
+          "name": "asStaticPreview",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "Min/max box of the preview"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.DrawElement"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DimensionElements",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.DimensionElements"
+    },
+    {
+      "name": "GeneralSectionProperties",
+      "type": "SectionGeneralProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.GeneralSectionProperties"
+    },
+    {
+      "name": "ReinforcementLabels",
+      "type": "NemAll_Python_Reinforcement.ReinforcementLabel",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.ReinforcementLabels"
+    },
+    {
+      "name": "SectionDefinitionData",
+      "type": "SectionDefinitionData",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.SectionDefinitionData"
+    },
+    {
+      "name": "TextElements",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.TextElements"
+    },
+    {
+      "name": "ViewMatrix",
+      "type": "NemAll_Python_Geometry.Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.ViewMatrix"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

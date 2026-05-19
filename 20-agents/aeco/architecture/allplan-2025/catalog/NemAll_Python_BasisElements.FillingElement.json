@@ -1,0 +1,123 @@
+{
+  "name": "FillingElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of the filling in Allplan",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/",
+  "constructors": [
+    {
+      "name": "FillingElement()",
+      "signature": "FillingElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/#NemAll_Python_BasisElements.FillingElement.__init__"
+    },
+    {
+      "name": "FillingElement( commonProp: CommonProperties, gradientFillingProp: FillingProperties, geometryObject: object, )",
+      "signature": "FillingElement( commonProp: CommonProperties, gradientFillingProp: FillingProperties, geometryObject: object, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "gradientFillingProp",
+          "type": "FillingProperties",
+          "doc": "GradientFilling properties",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/#NemAll_Python_BasisElements.FillingElement.__init__"
+    },
+    {
+      "name": "FillingElement(FillingElement: FillingElement)",
+      "signature": "FillingElement(FillingElement: FillingElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "fillingElement",
+          "type": "object",
+          "doc": "Filling element element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/#NemAll_Python_BasisElements.FillingElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFillingProperties",
+      "signature": "GetFillingProperties() -\u003E FillingProperties",
+      "summary": "Get the filling properties",
+      "remarks": "Get the filling properties",
+      "params": [],
+      "returns": {
+        "type": "FillingProperties",
+        "doc": "Filling properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/#NemAll_Python_BasisElements.FillingElement.GetFillingProperties"
+    },
+    {
+      "name": "SetFillingProperties",
+      "signature": "SetFillingProperties(gradientFillingProp: FillingProperties)",
+      "summary": "Set the filling properties",
+      "remarks": "Set the filling properties",
+      "params": [
+        {
+          "name": "gradientFillingProp",
+          "type": "FillingProperties",
+          "doc": "Filling properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/#NemAll_Python_BasisElements.FillingElement.SetFillingProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/FillingElement/#NemAll_Python_BasisElements.FillingElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

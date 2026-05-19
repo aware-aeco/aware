@@ -1,0 +1,138 @@
+{
+  "name": "StructuralBraceProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.StructuralBraceProperties.)",
+  "base": "StructuralElementProperties",
+  "interfaces": [
+    "ArchBaseProperties"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/",
+  "constructors": [
+    {
+      "name": "StructuralBraceProperties()",
+      "signature": "StructuralBraceProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.__init__"
+    },
+    {
+      "name": "StructuralBraceProperties(structuralBraceProps)",
+      "signature": "StructuralBraceProperties(structuralBraceProps)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "structuralBraceProps",
+          "type": "StructuralBraceProperties",
+          "doc": "Structural Brace properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint()",
+      "summary": "Get the end point of the element in world coordinate system",
+      "remarks": "Get the end point of the element in world coordinate system",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.GetEndPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint()",
+      "summary": "Get the start point of the element in world coordinate system",
+      "remarks": "Get the start point of the element in world coordinate system",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.GetStartPoint"
+    },
+    {
+      "name": "SetAnchorPointProperties",
+      "signature": "SetAnchorPointProperties(val, point, val1, point1, bool)",
+      "summary": "Set the Brace Anchor Points Properties",
+      "remarks": "Set the Brace Anchor Points Properties",
+      "params": [
+        {
+          "name": "val",
+          "type": "int",
+          "doc": "Offset with Anchor Points Properties of Brace",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.SetAnchorPointProperties"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(x, y, z)",
+      "summary": "Set the end point of the element in world coordinate system",
+      "remarks": "Set the end point of the element in world coordinate system",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.SetEndPoint"
+    },
+    {
+      "name": "SetHeightProperties",
+      "signature": "SetHeightProperties(doc, planeReferences)",
+      "summary": "Set HeightProperties",
+      "remarks": "Set HeightProperties",
+      "params": [
+        {
+          "name": "PlaneReferences",
+          "type": "object",
+          "doc": "Height Properties of Column, as PlaneReferences type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.SetHeightProperties"
+    },
+    {
+      "name": "SetHeightPropsByPlacementPoints",
+      "signature": "SetHeightPropsByPlacementPoints(doc, val, val1, val2)",
+      "summary": "Set HeightProperties",
+      "remarks": "Set HeightProperties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.SetHeightPropsByPlacementPoints"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(x, y, z)",
+      "summary": "Set the start point of the element in world coordinate system",
+      "remarks": "Set the start point of the element in world coordinate system",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceProperties/#NemAll_Python_ArchElements.StructuralBraceProperties.SetStartPoint"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

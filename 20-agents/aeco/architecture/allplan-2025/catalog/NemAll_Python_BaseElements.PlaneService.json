@@ -1,0 +1,154 @@
+{
+  "name": "PlaneService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Implementation of the plane service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/",
+  "constructors": [
+    {
+      "name": "PlaneService()",
+      "signature": "PlaneService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.__init__"
+    },
+    {
+      "name": "PlaneService(doc: DocumentAdapter)",
+      "signature": "PlaneService(doc: DocumentAdapter)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.__init__"
+    },
+    {
+      "name": "PlaneService(element: PlaneService)",
+      "signature": "PlaneService(element: PlaneService)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "PlaneService",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateBRepSurfacePlane",
+      "signature": "CreateBRepSurfacePlane( doc: DocumentAdapter, planeSurface: BRep3D, surfaceName: str, isVisible: bool, ) -\u003E BaseElementAdapter",
+      "summary": "Create a BRep3D surface plane",
+      "remarks": "Create a BRep3D surface plane",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeSurface",
+          "type": "BRep3D",
+          "doc": "Plane surface",
+          "optional": false
+        },
+        {
+          "name": "surfaceName",
+          "type": "str",
+          "doc": "Name of the surface",
+          "optional": false
+        },
+        {
+          "name": "isVisible",
+          "type": "bool",
+          "doc": "Visible state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Plane element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.CreateBRepSurfacePlane"
+    },
+    {
+      "name": "CreatePolyhedronSurfacePlane",
+      "signature": "CreatePolyhedronSurfacePlane( doc: DocumentAdapter, planeSurface: Polyhedron3D, surfaceName: str, isVisible: bool, ) -\u003E BaseElementAdapter",
+      "summary": "Create a Polyhedron3D surface plane",
+      "remarks": "Create a Polyhedron3D surface plane",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeSurface",
+          "type": "Polyhedron3D",
+          "doc": "Plane surface",
+          "optional": false
+        },
+        {
+          "name": "surfaceName",
+          "type": "str",
+          "doc": "Name of the surface",
+          "optional": false
+        },
+        {
+          "name": "isVisible",
+          "type": "bool",
+          "doc": "Visible state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Plane element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.CreatePolyhedronSurfacePlane"
+    },
+    {
+      "name": "GetCurrentLevelModelGuid",
+      "signature": "GetCurrentLevelModelGuid() -\u003E GUID",
+      "summary": "Get the current level model GUID of the active drawing file",
+      "remarks": "Get the current level model GUID of the active drawing file",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "Level modle GUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PlaneService/#NemAll_Python_BaseElements.PlaneService.GetCurrentLevelModelGuid"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

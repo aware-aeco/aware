@@ -1,0 +1,31 @@
+{
+  "name": "eApproximationSettingsType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of Approximation settings",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eApproximationSettingsType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ASET_BREP_TESSELATION",
+      "value": 3
+    },
+    {
+      "name": "ASET_MAX_DISTANCE",
+      "value": 2
+    },
+    {
+      "name": "ASET_MAX_LENGTH",
+      "value": 1
+    },
+    {
+      "name": "ASET_SEGMENTATION",
+      "value": 0
+    }
+  ]
+}

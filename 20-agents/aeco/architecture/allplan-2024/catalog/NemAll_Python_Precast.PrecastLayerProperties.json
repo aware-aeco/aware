@@ -1,0 +1,129 @@
+{
+  "name": "PrecastLayerProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "PrecastLayerProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/",
+  "constructors": [
+    {
+      "name": "PrecastLayerProperties()",
+      "signature": "PrecastLayerProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetMaterialCatalogAddressOffset",
+      "signature": "SetMaterialCatalogAddressOffset(arg2, arg3)",
+      "summary": "Set the materialCatAddressOffset",
+      "remarks": "Set the materialCatAddressOffset",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "materialCatAddressOffset"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.SetMaterialCatalogAddressOffset"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "PrecastLayerProperties",
+          "doc": "PrecastLayerProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CalculateLayerThickness",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for CalculateLayerThickness :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.CalculateLayerThickness"
+    },
+    {
+      "name": "LayerName",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for LayerName :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.LayerName"
+    },
+    {
+      "name": "LayerNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for LayerNumber :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.LayerNumber"
+    },
+    {
+      "name": "LayerThickness",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for LayerThickness :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.LayerThickness"
+    },
+    {
+      "name": "Material",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Material :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.Material"
+    },
+    {
+      "name": "MaterialCatAddressOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for MaterialCatAddressOffset :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.MaterialCatAddressOffset"
+    },
+    {
+      "name": "MaterialType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for MaterialType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastLayerProperties/#NemAll_Python_Precast.PrecastLayerProperties.MaterialType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

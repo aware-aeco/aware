@@ -1,0 +1,71 @@
+{
+  "name": "BendingShapeType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Type of the bending shape",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShapeType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BarSpacer",
+      "value": 113
+    },
+    {
+      "name": "BarWithArc",
+      "value": 115
+    },
+    {
+      "name": "CircleStirrup",
+      "value": 67
+    },
+    {
+      "name": "ColumnStirrup",
+      "value": 110
+    },
+    {
+      "name": "Freeform",
+      "value": 99
+    },
+    {
+      "name": "LShapedBar",
+      "value": 11
+    },
+    {
+      "name": "LongitudinalBar",
+      "value": 0
+    },
+    {
+      "name": "LongitudinalBarDoubleBentOff",
+      "value": 26
+    },
+    {
+      "name": "LongitudinalBarFourTimesBentOff",
+      "value": 44
+    },
+    {
+      "name": "LongitudinalBarSingleBentOff",
+      "value": 15
+    },
+    {
+      "name": "OpenStirrup",
+      "value": 21
+    },
+    {
+      "name": "SHook",
+      "value": 112
+    },
+    {
+      "name": "Stirrup",
+      "value": 51
+    },
+    {
+      "name": "TorsionStirrup",
+      "value": 111
+    }
+  ]
+}

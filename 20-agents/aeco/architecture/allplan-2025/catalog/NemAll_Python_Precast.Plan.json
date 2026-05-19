@@ -1,0 +1,114 @@
+{
+  "name": "Plan",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.Plan.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/",
+  "constructors": [
+    {
+      "name": "Plan(doc: DocumentAdapter)",
+      "signature": "Plan(doc: DocumentAdapter)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.__init__"
+    },
+    {
+      "name": "Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)",
+      "signature": "Plan(arg2: DocumentAdapter, doc: BaseElementAdapterList)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "add_page",
+      "signature": "add_page(page: Page)",
+      "summary": "Adds a page to the plan",
+      "remarks": "Adds a page to the plan",
+      "params": [
+        {
+          "name": "page",
+          "type": "Page",
+          "doc": "to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.add_page"
+    },
+    {
+      "name": "create(elemPlan: BaseElementAdapter) -\u003E bool",
+      "signature": "create(elemPlan: BaseElementAdapter) -\u003E bool",
+      "summary": "Creates the elementplan",
+      "remarks": "Creates the elementplan",
+      "params": [
+        {
+          "name": "Allplan",
+          "type": "object",
+          "doc": ":IFW::ElementAdapter::BaseElementAdapter:-\u003E created elementplan",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.create"
+    },
+    {
+      "name": "create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -\u003E bool",
+      "signature": "create( elemPlan: BaseElementAdapter, baseElements: BaseElementAdapterList ) -\u003E bool",
+      "summary": "Creates the elementplan",
+      "remarks": "Creates the elementplan",
+      "params": [
+        {
+          "name": "Allplan",
+          "type": "object",
+          "doc": ":IFW::ElementAdapter::BaseElementAdapter:-\u003E created elementplan",
+          "optional": false
+        },
+        {
+          "name": "Allplan",
+          "type": "object",
+          "doc": ":IFW::ElementAdapter::BaseElementAdapterList:-\u003E elements to create",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.create"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawingFile",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Sets the drawing file where the elementplan should be placed Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.DrawingFile"
+    },
+    {
+      "name": "Offset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Sets the offset of the plan Value type: Allplan::Geometry::Point2D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Plan/#NemAll_Python_Precast.Plan.Offset"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,141 @@
+{
+  "name": "RoomElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the Room element",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/",
+  "constructors": [
+    {
+      "name": "RoomElement()",
+      "signature": "RoomElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.__init__"
+    },
+    {
+      "name": "RoomElement(RoomProp: RoomProperties, RoomPolygon: Polygon2D)",
+      "signature": "RoomElement(RoomProp: RoomProperties, RoomPolygon: Polygon2D)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "RoomProp",
+          "type": "RoomProperties",
+          "doc": "Room properties",
+          "optional": false
+        },
+        {
+          "name": "RoomPolygon",
+          "type": "Polygon2D",
+          "doc": "Room polygon",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.__init__"
+    },
+    {
+      "name": "RoomElement(element: RoomElement)",
+      "signature": "RoomElement(element: RoomElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "RoomElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetProperties",
+      "signature": "GetProperties() -\u003E RoomProperties",
+      "summary": "Get the Room properties",
+      "remarks": "Get the Room properties",
+      "params": [],
+      "returns": {
+        "type": "RoomProperties",
+        "doc": "Room properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.GetProperties"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.SetCommonProperties"
+    },
+    {
+      "name": "SetProperties",
+      "signature": "SetProperties(RoomProp: RoomProperties)",
+      "summary": "Set the Room properties",
+      "remarks": "Set the Room properties",
+      "params": [
+        {
+          "name": "RoomProp",
+          "type": "RoomProperties",
+          "doc": "Room properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.SetProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "RoomProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Room properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RoomElement/#NemAll_Python_ArchElements.RoomElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

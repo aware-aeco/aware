@@ -1,0 +1,237 @@
+{
+  "name": "StructuralBeamProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the properties of the structural framing beam",
+  "base": "StructuralElementProperties",
+  "interfaces": [
+    "ArchBaseProperties"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/",
+  "constructors": [
+    {
+      "name": "StructuralBeamProperties()",
+      "signature": "StructuralBeamProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.__init__"
+    },
+    {
+      "name": "StructuralBeamProperties(value: StructuralBeamProperties)",
+      "signature": "StructuralBeamProperties(value: StructuralBeamProperties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "value",
+          "type": "StructuralBeamProperties",
+          "doc": "Structural Beam properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point3D",
+      "summary": "Get the end point of the element in world coordinate system",
+      "remarks": "Get the end point of the element in world coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "End point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.GetEndPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point3D",
+      "summary": "Get the start point of the element in world coordinate system",
+      "remarks": "Get the start point of the element in world coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.GetStartPoint"
+    },
+    {
+      "name": "SetAnchorPointProperties",
+      "signature": "SetAnchorPointProperties( anchorPointStart: int, offsetStart: Point2D, anchorPointEnd: int, offsetEnd: Point2D, twoAnchorPoints: bool, )",
+      "summary": "Set the properties of the beam anchor points",
+      "remarks": "Set the properties of the beam anchor points",
+      "params": [
+        {
+          "name": "anchorPointStart",
+          "type": "int",
+          "doc": "anchor point position",
+          "optional": false
+        },
+        {
+          "name": "offsetStart",
+          "type": "Point2D",
+          "doc": "offset from start anchor point",
+          "optional": false
+        },
+        {
+          "name": "anchorPointEnd",
+          "type": "int",
+          "doc": "anchor point position",
+          "optional": false
+        },
+        {
+          "name": "offsetEnd",
+          "type": "Point2D",
+          "doc": "offset from end anchor point",
+          "optional": false
+        },
+        {
+          "name": "twoAnchorPoints",
+          "type": "bool",
+          "doc": "true when both anchor points are used",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.SetAnchorPointProperties"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(x: float, y: float, z: float)",
+      "summary": "Set the end point of the element in world coordinate system",
+      "remarks": "Set the end point of the element in world coordinate system",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "x coordinate",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "y coordinate",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "doc": "z coordinate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.SetEndPoint"
+    },
+    {
+      "name": "SetHeightProperties",
+      "signature": "SetHeightProperties(doc: DocumentAdapter, planeReferences: PlaneReferences)",
+      "summary": "Set height properties",
+      "remarks": "Set height properties",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeReferences",
+          "type": "PlaneReferences",
+          "doc": "Height properties as PlaneReferences object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.SetHeightProperties"
+    },
+    {
+      "name": "SetHeightPropsByPlacementPoints",
+      "signature": "SetHeightPropsByPlacementPoints( doc: DocumentAdapter, value: PlaneReferences, startPointZcoord: float, endPointZcoord: float, )",
+      "summary": "Set HeightProperties by the placement points",
+      "remarks": "Set HeightProperties by the placement points",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "PlaneReferences",
+          "doc": "Height properties",
+          "optional": false
+        },
+        {
+          "name": "startPointZcoord",
+          "type": "float",
+          "doc": "Z coordinate of the start point",
+          "optional": false
+        },
+        {
+          "name": "endPointZcoord",
+          "type": "float",
+          "doc": "Z coordinate of the end point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.SetHeightPropsByPlacementPoints"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(x: float, y: float, z: float)",
+      "summary": "Set the start point of the element in world coordinate system",
+      "remarks": "Set the start point of the element in world coordinate system",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "x coordinate",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "y coordinate",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "doc": "z coordinate",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBeamProperties/#NemAll_Python_ArchElements.StructuralBeamProperties.SetStartPoint"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

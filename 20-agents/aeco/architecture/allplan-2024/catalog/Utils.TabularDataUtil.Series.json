@@ -1,0 +1,237 @@
+{
+  "name": "Series",
+  "namespace": "Utils.TabularDataUtil",
+  "kind": "class",
+  "summary": "One-dimensional array with axis labels",
+  "base": "list",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/",
+  "constructors": [
+    {
+      "name": "Series()",
+      "signature": "Series(data=None, axis=None, name=0)",
+      "summary": "Initialization of class Series",
+      "remarks": "Initialization of class Series",
+      "params": [
+        {
+          "name": "data",
+          "type": "Optional[Union[List[int], List[str]]]",
+          "doc": "a list of row or column data",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "axis",
+          "type": "Optional[Union[List[int], List[str]]]",
+          "doc": "data labels, can be a list of int or str",
+          "optional": true,
+          "default": "None"
+        },
+        {
+          "name": "name",
+          "type": "Union[int, str]",
+          "doc": "name of the modified property",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(other)",
+      "summary": "comparison of the series values with an other value",
+      "remarks": "comparison of the series values with an other value",
+      "params": [
+        {
+          "name": "other",
+          "type": "Any",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series with the comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__eq__"
+    },
+    {
+      "name": "__ge__",
+      "signature": "__ge__(other)",
+      "summary": "greater equal comparison of the series values with an other value",
+      "remarks": "greater equal comparison of the series values with an other value",
+      "params": [
+        {
+          "name": "other",
+          "type": "Any",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series with the comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__ge__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "Get items",
+      "remarks": "Get items",
+      "params": [
+        {
+          "name": "key",
+          "type": "Union[int, str, slice]",
+          "doc": "it can be a column name or a range of row index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[Union[int, str, Series]]",
+        "doc": "item for the index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__getitem__"
+    },
+    {
+      "name": "__gt__",
+      "signature": "__gt__(other)",
+      "summary": "greater comparison of the series values with an other value",
+      "remarks": "greater comparison of the series values with an other value",
+      "params": [
+        {
+          "name": "other",
+          "type": "Any",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series with the comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__gt__"
+    },
+    {
+      "name": "__le__",
+      "signature": "__le__(other)",
+      "summary": "less equal comparison of the series values with an other value",
+      "remarks": "less equal comparison of the series values with an other value",
+      "params": [
+        {
+          "name": "other",
+          "type": "Any",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series with the comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__le__"
+    },
+    {
+      "name": "__lt__",
+      "signature": "__lt__(other)",
+      "summary": "less comparison of the series values with an other value",
+      "remarks": "less comparison of the series values with an other value",
+      "params": [
+        {
+          "name": "other",
+          "type": "Any",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series with the comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__lt__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(other)",
+      "summary": "unequal comparison of the series values with an other value",
+      "remarks": "unequal comparison of the series values with an other value",
+      "params": [
+        {
+          "name": "other",
+          "type": "Any",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series with the comparison state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__ne__"
+    },
+    {
+      "name": "__operation",
+      "signature": "__operation(operator_fct, other)",
+      "summary": "execute a comparison operation of the series values with an other value",
+      "remarks": "execute a comparison operation of the series values with an other value",
+      "params": [
+        {
+          "name": "operator_fct",
+          "type": "Callable",
+          "doc": "operator function",
+          "optional": false
+        },
+        {
+          "name": "other",
+          "type": "Series",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "series"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__operation"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "create a string from a series",
+      "remarks": "create a string from a series",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "series data a string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/TabularDataUtil/Series/#Utils.TabularDataUtil.Series.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,41 @@
+{
+  "name": "ElementsLayerService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for processing (changing) the layer of existing model elements.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsLayerService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangeLayer",
+      "signature": "ChangeLayer( elements: BaseElementAdapterList, newValue: str ) -\u003E BaseElementAdapterList",
+      "summary": "Change the Layer",
+      "remarks": "Change the Layer",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements to change",
+          "optional": false
+        },
+        {
+          "name": "newValue",
+          "type": "str",
+          "doc": "New value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the modified elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsLayerService/#NemAll_Python_BaseElements.ElementsLayerService.ChangeLayer"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

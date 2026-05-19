@@ -1,0 +1,822 @@
+{
+  "name": "BSpline3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "class for 3D (non uniform, rational) B-spline geometry",
+  "base": "PolyPoints3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/",
+  "constructors": [
+    {
+      "name": "BSpline3D()",
+      "signature": "BSpline3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
+    },
+    {
+      "name": "BSpline3D( points: Point3DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool = False, )",
+      "signature": "BSpline3D( points: Point3DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool = False, )",
+      "summary": "Default constructor. Creates invalid spline.",
+      "remarks": "Default constructor. Creates invalid spline.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
+    },
+    {
+      "name": "BSpline3D(spline: BSpline3D)",
+      "signature": "BSpline3D(spline: BSpline3D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "spline",
+          "type": "BSpline3D",
+          "doc": "Spline which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear data, getting invalid state",
+      "remarks": "Clear data, getting invalid state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Clear"
+    },
+    {
+      "name": "Create",
+      "signature": "Create( curve: ( Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D ), ) -\u003E BSpline3D",
+      "summary": "Create BSpline from ICurve3D",
+      "remarks": "Create BSpline from ICurve3D",
+      "params": [
+        {
+          "name": "curve",
+          "type": "Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D",
+          "doc": "Input curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "Created BSpline3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Create"
+    },
+    {
+      "name": "CreateArc3D",
+      "signature": "CreateArc3D(arc: Arc3D) -\u003E BSpline3D",
+      "summary": "Create BSpline form Arc3D",
+      "remarks": "Create BSpline form Arc3D",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc3D",
+          "doc": "Input arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "Created Bspline3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateArc3D"
+    },
+    {
+      "name": "CreateBSpline",
+      "signature": "CreateBSpline(points: Point3DList, degree: int, isPeriodic: bool) -\u003E BSpline3D",
+      "summary": "Create BSpline from control points",
+      "remarks": "Create BSpline from control points",
+      "params": [
+        {
+          "name": "points",
+          "type": "Point3DList",
+          "doc": "Control points",
+          "optional": false
+        },
+        {
+          "name": "degree",
+          "type": "int",
+          "doc": "Degree of BSpline",
+          "optional": false
+        },
+        {
+          "name": "isPeriodic",
+          "type": "bool",
+          "doc": "true if BSpline should be smoothly closed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "BSpline object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateBSpline"
+    },
+    {
+      "name": "CreateBSpline3DFrom2DCurves",
+      "signature": "CreateBSpline3DFrom2DCurves( directionCurve: object, elevationCurve: object, startHeight: float, chainPoints: Point3DList, ) -\u003E tuple[eGeometryErrorCode, BSpline3D]",
+      "summary": "Creates BSpline3D from direction 2D curve and elevation 2D curve",
+      "remarks": "Creates BSpline3D from direction 2D curve and elevation 2D curve",
+      "params": [
+        {
+          "name": "directionCurve",
+          "type": "object",
+          "doc": "direction curve ( for X,Y coordinates)",
+          "optional": false
+        },
+        {
+          "name": "elevationCurve",
+          "type": "object",
+          "doc": "elevation curve (for Z coordinates)",
+          "optional": false
+        },
+        {
+          "name": "startHeight",
+          "type": "float",
+          "doc": "Z coordinate of new curve start point",
+          "optional": false
+        },
+        {
+          "name": "chainPoints",
+          "type": "Point3DList",
+          "doc": "list of chain points to match resulting curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, BSpline3D]",
+        "doc": "tuple(eOK if successful, created BSpline3D)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateBSpline3DFrom2DCurves"
+    },
+    {
+      "name": "CreateBSpline3DFromAxisAndGradient",
+      "signature": "CreateBSpline3DFromAxisAndGradient( directionCurve: ( Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D ), elevationCurve: ( Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D ), startHeight: float, chainPoints: Point3DList, ) -\u003E tuple",
+      "summary": "Create BSpline3D curve from axis and gradient (all placed in XY plane)",
+      "remarks": "Create BSpline3D curve from axis and gradient (all placed in XY plane)",
+      "params": [
+        {
+          "name": "directionCurve",
+          "type": "Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D",
+          "doc": "direction/axis curve",
+          "optional": false
+        },
+        {
+          "name": "elevationCurve",
+          "type": "Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D",
+          "doc": "elevation/gradient curve",
+          "optional": false
+        },
+        {
+          "name": "startHeight",
+          "type": "float",
+          "doc": "Z coordinate of new curve start point",
+          "optional": false
+        },
+        {
+          "name": "chainPoints",
+          "type": "Point3DList",
+          "doc": "list of chain points to match resulting curve",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "tuple(error code, result BSpline3D curve)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateBSpline3DFromAxisAndGradient"
+    },
+    {
+      "name": "CreateBSplineInterpolated",
+      "signature": "CreateBSplineInterpolated( points: Point3DList, degree: int, isPeriodic: bool ) -\u003E BSpline3D",
+      "summary": "Create BSpline from interpolated points",
+      "remarks": "Create BSpline from interpolated points",
+      "params": [
+        {
+          "name": "points",
+          "type": "Point3DList",
+          "doc": "Interpolated points",
+          "optional": false
+        },
+        {
+          "name": "degree",
+          "type": "int",
+          "doc": "Degree of BSpline",
+          "optional": false
+        },
+        {
+          "name": "isPeriodic",
+          "type": "bool",
+          "doc": "true if BSpline should be smoothly closed",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "BSpline object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateBSplineInterpolated"
+    },
+    {
+      "name": "CreateBSplineJoined",
+      "signature": "CreateBSplineJoined(curves: Curve3DList) -\u003E BSpline3D",
+      "summary": "Create BSpline by joining curves. Curves should meet by end points.",
+      "remarks": "Create BSpline by joining curves. Curves should meet by end points.",
+      "params": [
+        {
+          "name": "curves",
+          "type": "Curve3DList",
+          "doc": "Source curves",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "BSpline object (empty, if joining failed)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateBSplineJoined"
+    },
+    {
+      "name": "CreateLine3D",
+      "signature": "CreateLine3D(line: Line3D) -\u003E BSpline3D",
+      "summary": "Create BSpline3D from Line3D",
+      "remarks": "Create BSpline3D from Line3D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Input line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "Created BSpline3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateLine3D"
+    },
+    {
+      "name": "CreatePolyline3D",
+      "signature": "CreatePolyline3D(polyline3d: Polyline3D) -\u003E BSpline3D",
+      "summary": "Create a BSpline out of a Polyline3D object",
+      "remarks": "Create a BSpline out of a Polyline3D object",
+      "params": [
+        {
+          "name": "polyline3d",
+          "type": "Polyline3D",
+          "doc": "Polyline3D that will be used for conversion",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "An instance of the created BSpline3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreatePolyline3D"
+    },
+    {
+      "name": "CreateSpline",
+      "signature": "CreateSpline(spline: Spline3D) -\u003E BSpline3D",
+      "summary": "Create BSpline from Spline3D",
+      "remarks": "Create BSpline from Spline3D",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline3D",
+          "doc": "Spline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "Created BSpline3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.CreateSpline"
+    },
+    {
+      "name": "EvaluateEndPoint",
+      "signature": "EvaluateEndPoint() -\u003E tuple[eGeometryErrorCode, Point3D]",
+      "summary": "Evaluate end point of bspline",
+      "remarks": "Evaluate end point of bspline",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D]",
+        "doc": "evaluated end point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.EvaluateEndPoint"
+    },
+    {
+      "name": "EvaluateEndRelPoint",
+      "signature": "EvaluateEndRelPoint() -\u003E tuple[eGeometryErrorCode, Point3D]",
+      "summary": "Evaluate relative end (last) point of bspline",
+      "remarks": "Evaluate relative end (last) point of bspline",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D]",
+        "doc": "evaluated relative end point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.EvaluateEndRelPoint"
+    },
+    {
+      "name": "EvaluatePoint",
+      "signature": "EvaluatePoint(param: float) -\u003E tuple[eGeometryErrorCode, Point3D]",
+      "summary": "Evaluate point of b-spline",
+      "remarks": "Evaluate point of b-spline",
+      "params": [
+        {
+          "name": "param",
+          "type": "float",
+          "doc": "parameter to evaluate point on b-spline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D]",
+        "doc": "tuple(error code of evaluation, resulting point, if succeeded)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.EvaluatePoint"
+    },
+    {
+      "name": "EvaluatePointsWithTangents",
+      "signature": "EvaluatePointsWithTangents( parameters: VecDoubleList, ) -\u003E list[tuple[Point3D, Vector3D]]",
+      "summary": "Evaluate points and tangents of b-spline",
+      "remarks": "Evaluate points and tangents of b-spline",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "VecDoubleList",
+          "doc": "parameters to evaluate points and tangents on b-spline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[tuple[Point3D, Vector3D]]",
+        "doc": "vector of resulting points and tangents, if calculation failed for any parameter, empty vector is returned"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.EvaluatePointsWithTangents"
+    },
+    {
+      "name": "EvaluateStartPoint",
+      "signature": "EvaluateStartPoint() -\u003E tuple[eGeometryErrorCode, Point3D]",
+      "summary": "Evaluate start point of bspline",
+      "remarks": "Evaluate start point of bspline",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D]",
+        "doc": "evaluated start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.EvaluateStartPoint"
+    },
+    {
+      "name": "EvaluateStartRelPoint",
+      "signature": "EvaluateStartRelPoint() -\u003E tuple[eGeometryErrorCode, Point3D]",
+      "summary": "Evaluate relative start point of bspline",
+      "remarks": "Evaluate relative start point of bspline",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Point3D]",
+        "doc": "evaluated relative start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.EvaluateStartRelPoint"
+    },
+    {
+      "name": "Get",
+      "signature": "Get() -\u003E tuple[Point3DList, VecDoubleList, VecDoubleList, int, bool]",
+      "summary": "Return type: tuple( Point3DList, VecDoubleList, VecDoubleList, int, bool)",
+      "remarks": "Return type: tuple( Point3DList, VecDoubleList, VecDoubleList, int, bool)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Get"
+    },
+    {
+      "name": "GetDegree",
+      "signature": "GetDegree() -\u003E int",
+      "summary": "Gets spline degree",
+      "remarks": "Gets spline degree",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "spline degree"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetDegree"
+    },
+    {
+      "name": "GetInterpolatedPoints",
+      "signature": "GetInterpolatedPoints() -\u003E Point3DList",
+      "summary": "Function returns interpolated points of b-spline",
+      "remarks": "Function returns interpolated points of b-spline",
+      "params": [],
+      "returns": {
+        "type": "Point3DList",
+        "doc": "list of interpolated points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetInterpolatedPoints"
+    },
+    {
+      "name": "GetInterpolatedPointsParameters",
+      "signature": "GetInterpolatedPointsParameters() -\u003E VecDoubleList",
+      "summary": "Function returns list of parameters for interpolated points of b-spline",
+      "remarks": "Function returns list of parameters for interpolated points of b-spline",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "list of parameters of interpolated points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetInterpolatedPointsParameters"
+    },
+    {
+      "name": "GetInterval",
+      "signature": "GetInterval() -\u003E tuple[bool, float, float]",
+      "summary": "Function returns the interval of bspline",
+      "remarks": "Function returns the interval of bspline",
+      "params": [],
+      "returns": {
+        "type": "tuple[bool, float, float]",
+        "doc": "tuple(true if success, start of curve interval, end of curve interval)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetInterval"
+    },
+    {
+      "name": "GetKnotMultiplicities",
+      "signature": "GetKnotMultiplicities() -\u003E tuple[VecDoubleList, VecSizeTList]",
+      "summary": "Get knot vector and knot multiplicities",
+      "remarks": "Get knot vector and knot multiplicities",
+      "params": [],
+      "returns": {
+        "type": "tuple[VecDoubleList, VecSizeTList]",
+        "doc": "tuple(knot vector with unique values, knot multiplicities)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetKnotMultiplicities"
+    },
+    {
+      "name": "GetKnots",
+      "signature": "GetKnots() -\u003E VecDoubleList",
+      "summary": "Get knot vector",
+      "remarks": "Get knot vector",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "knot vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetKnots"
+    },
+    {
+      "name": "GetParametersForDistances",
+      "signature": "GetParametersForDistances(distances: VecDoubleList) -\u003E VecDoubleList",
+      "summary": "Find parameters for distances on b-spline",
+      "remarks": "Find parameters for distances on b-spline",
+      "params": [
+        {
+          "name": "distances",
+          "type": "VecDoubleList",
+          "doc": "list of distances to calculate parameters for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "list of parameters, if calculation failed for any distance, empty vector is returned"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetParametersForDistances"
+    },
+    {
+      "name": "GetWeights",
+      "signature": "GetWeights() -\u003E VecDoubleList",
+      "summary": "Get control points weights",
+      "remarks": "Get control points weights",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "weights vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.GetWeights"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed() -\u003E bool",
+      "summary": "Check if spline is closed ( first/last points are equal )",
+      "remarks": "Check if spline is closed ( first/last points are equal )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "closed spline true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsClosed"
+    },
+    {
+      "name": "IsEndClamped",
+      "signature": "IsEndClamped() -\u003E bool",
+      "summary": "Function returns whether the bspline is clamped at the end",
+      "remarks": "Function returns whether the bspline is clamped at the end",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if clamped on end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsEndClamped"
+    },
+    {
+      "name": "IsLine",
+      "signature": "IsLine() -\u003E bool",
+      "summary": "Check if bspline is line",
+      "remarks": "Check if bspline is line",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true if it is line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsLine"
+    },
+    {
+      "name": "IsPeriodicClosed",
+      "signature": "IsPeriodicClosed() -\u003E bool",
+      "summary": "Returns whether the spline is periodic or closed in 1st degree BSpline with degree == 1 cannot be periodic, wherefore returns true if closed.",
+      "remarks": "Returns whether the spline is periodic or closed in 1st degree BSpline with degree == 1 cannot be periodic, wherefore returns true if closed.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = periodic or closed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsPeriodicClosed"
+    },
+    {
+      "name": "IsRational",
+      "signature": "IsRational() -\u003E bool",
+      "summary": "Check if the spline is rational",
+      "remarks": "Check if the spline is rational",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool true = rational"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsRational"
+    },
+    {
+      "name": "IsStartClamped",
+      "signature": "IsStartClamped() -\u003E bool",
+      "summary": "Function returns whether the bspline is clamped at the start",
+      "remarks": "Function returns whether the bspline is clamped at the start",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if clamped on start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsStartClamped"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Check spline validity",
+      "remarks": "Check spline validity",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool valid = true"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsValid"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "remarks": "Reverse of current spline Method reverse Spline using reverse from PolyPoints and swapping tangents.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Reverse"
+    },
+    {
+      "name": "Set",
+      "signature": "Set( points: Point3DList, weights: VecDoubleList, knots: VecDoubleList, degree: int, isPeriodic: bool = False, )",
+      "summary": "Args: points weights knots degree isPeriodic",
+      "remarks": "Args: points weights knots degree isPeriodic",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Set"
+    },
+    {
+      "name": "SetDegree",
+      "signature": "SetDegree(degree: int)",
+      "summary": "Set spline degree",
+      "remarks": "Set spline degree",
+      "params": [
+        {
+          "name": "degree",
+          "type": "int",
+          "doc": "desired degree",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.SetDegree"
+    },
+    {
+      "name": "SetKnots",
+      "signature": "SetKnots(knots: VecDoubleList)",
+      "summary": "Set knot vector",
+      "remarks": "Set knot vector",
+      "params": [
+        {
+          "name": "knots",
+          "type": "VecDoubleList",
+          "doc": "knot vector to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.SetKnots"
+    },
+    {
+      "name": "SetPeriodic",
+      "signature": "SetPeriodic(periodic: bool)",
+      "summary": "Set periodic flag",
+      "remarks": "Set periodic flag",
+      "params": [
+        {
+          "name": "periodic",
+          "type": "bool",
+          "doc": "value of periodic flag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.SetPeriodic"
+    },
+    {
+      "name": "SetWeights",
+      "signature": "SetWeights(weights: VecDoubleList)",
+      "summary": "Set weights for control points",
+      "remarks": "Set weights for control points",
+      "params": [
+        {
+          "name": "weights",
+          "type": "VecDoubleList",
+          "doc": "weights vector to set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.SetWeights"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(bspline: BSpline3D) -\u003E object",
+      "summary": "Comparison of bsplines without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of bsplines without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "bspline",
+          "type": "BSpline3D",
+          "doc": "Compared bspline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when bsplines are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Degree",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets spline degree",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Degree"
+    },
+    {
+      "name": "IsPeriodic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns whether the spline is periodic Returns only given flag which was originally set",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.IsPeriodic"
+    },
+    {
+      "name": "Knots",
+      "type": "VecDoubleList",
+      "getter": true,
+      "setter": true,
+      "summary": "Get knot vector",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Knots"
+    },
+    {
+      "name": "Weights",
+      "type": "VecDoubleList",
+      "getter": true,
+      "setter": true,
+      "summary": "Get control points weights",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/BSpline3D/#NemAll_Python_Geometry.BSpline3D.Weights"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

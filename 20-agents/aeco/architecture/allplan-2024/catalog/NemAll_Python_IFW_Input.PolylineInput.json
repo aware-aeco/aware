@@ -1,0 +1,101 @@
+{
+  "name": "PolylineInput",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the polyline input",
+  "base": "CoordinateInput",
+  "interfaces": [
+    "InputViewDocumentData"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/",
+  "constructors": [
+    {
+      "name": "PolylineInput()",
+      "signature": "PolylineInput(coordInput, bZCoord)",
+      "summary": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state",
+      "remarks": "Args: coordInput: Coordinate input object bZCoord: Z-coordinate input state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/#NemAll_Python_IFW_Input.PolylineInput.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExecuteInput",
+      "signature": "ExecuteInput(mouseMsg, pnt, pMsgInfo)",
+      "summary": "Execute the input",
+      "remarks": "Execute the input",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "View input point",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "execution state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/#NemAll_Python_IFW_Input.PolylineInput.ExecuteInput"
+    },
+    {
+      "name": "GetPolyline",
+      "signature": "GetPolyline()",
+      "summary": "get the final polyline",
+      "remarks": "get the final polyline",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "final polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/#NemAll_Python_IFW_Input.PolylineInput.GetPolyline"
+    },
+    {
+      "name": "GetPreviewPolyline",
+      "signature": "GetPreviewPolyline()",
+      "summary": "get the preview polyline",
+      "remarks": "get the preview polyline",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "preview polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/#NemAll_Python_IFW_Input.PolylineInput.GetPreviewPolyline"
+    },
+    {
+      "name": "StartNewInput",
+      "signature": "StartNewInput()",
+      "summary": "Start new input",
+      "remarks": "Start new input",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PolylineInput/#NemAll_Python_IFW_Input.PolylineInput.StartNewInput"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

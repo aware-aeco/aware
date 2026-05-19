@@ -1,0 +1,35 @@
+{
+  "name": "LibraryElementType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Types of library elements",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LibraryElementType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFixture",
+      "value": 1,
+      "summary": "Fixture from fixture catalog"
+    },
+    {
+      "name": "eFixtureSingleFile",
+      "value": 3,
+      "summary": "Fixture from Allplan library"
+    },
+    {
+      "name": "eSmartSymbol",
+      "value": 0,
+      "summary": "Smart symbol"
+    },
+    {
+      "name": "eSymbol",
+      "value": 2,
+      "summary": "Symbol"
+    }
+  ]
+}

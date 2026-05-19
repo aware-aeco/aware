@@ -1,0 +1,87 @@
+{
+  "name": "RotationUtil",
+  "namespace": "Utils.RotationUtil",
+  "kind": "class",
+  "summary": "Implementation of the rotation utility",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/",
+  "constructors": [
+    {
+      "name": "RotationUtil()",
+      "signature": "RotationUtil(angle_x, angle_y, angle_z)",
+      "summary": "Set the model angles",
+      "remarks": "Set the model angles",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/#Utils.RotationUtil.RotationUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "create a string from the object data",
+      "remarks": "create a string from the object data",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "string with the object data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/#Utils.RotationUtil.RotationUtil.__repr__"
+    },
+    {
+      "name": "get_rotation_matrix",
+      "signature": "get_rotation_matrix(axis_point=Point3D())",
+      "summary": "get the rotation matrix",
+      "remarks": "get the rotation matrix",
+      "params": [
+        {
+          "name": "axis_point",
+          "type": "Point3D",
+          "doc": "axis point. Defaults to AllplanGeo.Point3D().",
+          "optional": true,
+          "default": "Point3D()"
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "rotation axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/#Utils.RotationUtil.RotationUtil.get_rotation_matrix"
+    }
+  ],
+  "properties": [
+    {
+      "name": "angle_x",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the x angle in degree",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/#Utils.RotationUtil.RotationUtil.angle_x"
+    },
+    {
+      "name": "angle_y",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the y angle in degree",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/#Utils.RotationUtil.RotationUtil.angle_y"
+    },
+    {
+      "name": "angle_z",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the y angle in degree",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/RotationUtil/RotationUtil/#Utils.RotationUtil.RotationUtil.angle_z"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "SingleElementSelectResult",
+  "namespace": "ScriptObjectInteractors.SingleElementSelectInteractor",
+  "kind": "class",
+  "summary": "implementation of the single element selection result",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "input_point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Input point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectResult/#ScriptObjectInteractors.SingleElementSelectInteractor.SingleElementSelectResult.input_point"
+    },
+    {
+      "name": "sel_element",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": false,
+      "summary": "Selected element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectResult/#ScriptObjectInteractors.SingleElementSelectInteractor.SingleElementSelectResult.sel_element"
+    },
+    {
+      "name": "sel_geo_ele",
+      "type": "Any",
+      "getter": true,
+      "setter": false,
+      "summary": "Geometry of the selected element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/SingleElementSelectInteractor/SingleElementSelectResult/#ScriptObjectInteractors.SingleElementSelectInteractor.SingleElementSelectResult.sel_geo_ele"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,27 @@
+{
+  "name": "CombinationType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Definition of the combination type",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/CombinationType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eVx",
+      "value": 1
+    },
+    {
+      "name": "eVy",
+      "value": 2
+    },
+    {
+      "name": "eVz",
+      "value": 3
+    }
+  ]
+}

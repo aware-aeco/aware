@@ -1,0 +1,102 @@
+{
+  "name": "PythonPartParameterUtil",
+  "namespace": "Utils.PythonPartParameterUtil",
+  "kind": "class",
+  "summary": "implementation of the PythonPart parameter utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/PythonPartParameterUtil/PythonPartParameterUtil/",
+  "constructors": [
+    {
+      "name": "PythonPartParameterUtil()",
+      "signature": "PythonPartParameterUtil(python_part_ele, str_table_service)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "python_part_ele",
+          "type": "BaseElementAdapter",
+          "doc": "PythonPart element",
+          "optional": false
+        },
+        {
+          "name": "str_table_service",
+          "type": "StringTableService",
+          "doc": "sting table service",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/PythonPartParameterUtil/PythonPartParameterUtil/#Utils.PythonPartParameterUtil.PythonPartParameterUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__create_attribute_id_label_data",
+      "signature": "__create_attribute_id_label_data(doc, prop, ctrl_props, label_data, prop_pal_ctrl_service)",
+      "summary": "create the label data for the value type AttributeID",
+      "remarks": "create the label data for the value type AttributeID",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "prop",
+          "type": "ParameterProperty",
+          "doc": "parameter property",
+          "optional": false
+        },
+        {
+          "name": "ctrl_props",
+          "type": "ControlProperties",
+          "doc": "control properties",
+          "optional": false
+        },
+        {
+          "name": "label_data",
+          "type": "ParameterValueList",
+          "doc": "label data",
+          "optional": false
+        },
+        {
+          "name": "prop_pal_ctrl_service",
+          "type": "PropertyPaletteControlService",
+          "doc": "property palette control service",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/PythonPartParameterUtil/PythonPartParameterUtil/#Utils.PythonPartParameterUtil.PythonPartParameterUtil.__create_attribute_id_label_data"
+    },
+    {
+      "name": "get_label_data",
+      "signature": "get_label_data(doc)",
+      "summary": "get the data for a label from the parameters",
+      "remarks": "get the data for a label from the parameters",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ParameterValueList",
+        "doc": "parameter value data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/PythonPartParameterUtil/PythonPartParameterUtil/#Utils.PythonPartParameterUtil.PythonPartParameterUtil.get_label_data"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

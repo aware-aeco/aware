@@ -1,0 +1,58 @@
+{
+  "name": "AllplanVersion",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Class for extraction of Allplan version information",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanVersion/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MainReleaseName",
+      "signature": "MainReleaseName()",
+      "summary": "Get the Allplan main release name Returns: Allplan main release name (\u00272016\u0027, \u00272017\u0027, ...)",
+      "remarks": "Get the Allplan main release name Returns: Allplan main release name (\u00272016\u0027, \u00272017\u0027, ...)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanVersion/#NemAll_Python_AllplanSettings.AllplanVersion.MainReleaseName"
+    },
+    {
+      "name": "SubReleaseName",
+      "signature": "SubReleaseName()",
+      "summary": "Get the Allplan sub release name Returns: Allplan sub release name (\u00272016.0\u0027, \u00272016.1\u0027, ...)",
+      "remarks": "Get the Allplan sub release name Returns: Allplan sub release name (\u00272016.0\u0027, \u00272016.1\u0027, ...)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanVersion/#NemAll_Python_AllplanSettings.AllplanVersion.SubReleaseName"
+    },
+    {
+      "name": "Version",
+      "signature": "Version()",
+      "summary": "Get the Allplan version as string Returns: Allplan version 2016.1 2016: Allplan main version .1: Allplan sub version 2016.1.1 2016: Allplan main version .1.1: Allplan sub version",
+      "remarks": "Get the Allplan version as string Returns: Allplan version 2016.1 2016: Allplan main version .1: Allplan sub version 2016.1.1 2016: Allplan main version .1.1: Allplan sub version",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanVersion/#NemAll_Python_AllplanSettings.AllplanVersion.Version"
+    },
+    {
+      "name": "WindowsReleaseName",
+      "signature": "WindowsReleaseName()",
+      "summary": "Get the Allplan window release name Returns: \u0027P\u0027 for project version or empty string for the normal version",
+      "remarks": "Get the Allplan window release name Returns: \u0027P\u0027 for project version or empty string for the normal version",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanVersion/#NemAll_Python_AllplanSettings.AllplanVersion.WindowsReleaseName"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

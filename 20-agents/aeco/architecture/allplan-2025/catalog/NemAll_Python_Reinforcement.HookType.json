@@ -1,0 +1,27 @@
+{
+  "name": "HookType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the hooks",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/HookType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAnchorage",
+      "value": 3
+    },
+    {
+      "name": "eAngle",
+      "value": 2
+    },
+    {
+      "name": "eStirrup",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_Palette",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPaletteDataColumnWidth",
+      "signature": "GetPaletteDataColumnWidth() -\u003E int",
+      "summary": "Get the width of the property palette data column",
+      "remarks": "Get the width of the property palette data column",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Width of the property palette data column"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/#NemAll_Python_Palette.GetPaletteDataColumnWidth"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

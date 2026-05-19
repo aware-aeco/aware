@@ -1,0 +1,27 @@
+{
+  "name": "LabelTextFormat",
+  "namespace": "Utils.LabelTextUtil",
+  "kind": "enum",
+  "summary": "definition the label text format unit",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/LabelTextUtil/LabelTextFormat/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CHARACTER",
+      "value": 0
+    },
+    {
+      "name": "FLOAT",
+      "value": 1
+    },
+    {
+      "name": "INTEGER",
+      "value": 2
+    }
+  ]
+}

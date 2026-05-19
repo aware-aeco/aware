@@ -1,0 +1,68 @@
+{
+  "name": "InputFunctionStarter",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.InputFunctionStarter.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputFunctionStarter/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RemoveFunction",
+      "signature": "RemoveFunction()",
+      "summary": "Remove the current input function from the input function stack",
+      "remarks": "Remove the current input function from the input function stack",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputFunctionStarter/#NemAll_Python_IFW_Input.InputFunctionStarter.RemoveFunction"
+    },
+    {
+      "name": "StartElementSelect",
+      "signature": "StartElementSelect(text, selectSetting, postSel, markSelectedElements, selectionMode=eSelectGeometry)",
+      "summary": "Start the element selection A standard element selection will be started as overloaded function. The function will be removed if the selection is finished and elements are selected.",
+      "remarks": "Start the element selection A standard element selection will be started as overloaded function. The function will be removed if the selection is finished and elements are selected.",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "selectSetting",
+          "type": "ElementSelectFilterSetting",
+          "doc": "Filter setting",
+          "optional": false
+        },
+        {
+          "name": "postSel",
+          "type": "PostElementSelection",
+          "doc": "Post element selection",
+          "optional": false
+        },
+        {
+          "name": "markSelectedElements",
+          "type": "bool",
+          "doc": "Mark the selected elements: True/False",
+          "optional": false
+        },
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode",
+          "doc": "Selection mode",
+          "optional": true,
+          "default": "eSelectGeometry"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputFunctionStarter/#NemAll_Python_IFW_Input.InputFunctionStarter.StartElementSelect"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

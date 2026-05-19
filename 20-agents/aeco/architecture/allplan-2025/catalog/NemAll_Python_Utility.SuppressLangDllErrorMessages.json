@@ -1,0 +1,25 @@
+{
+  "name": "SuppressLangDllErrorMessages",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Utility.SuppressLangDllErrorMessages.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SuppressLangDllErrorMessages/",
+  "constructors": [
+    {
+      "name": "SuppressLangDllErrorMessages()",
+      "signature": "SuppressLangDllErrorMessages()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/SuppressLangDllErrorMessages/#NemAll_Python_Utility.SuppressLangDllErrorMessages.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

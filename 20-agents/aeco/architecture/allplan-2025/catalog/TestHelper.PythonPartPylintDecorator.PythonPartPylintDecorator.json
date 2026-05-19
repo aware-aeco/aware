@@ -1,0 +1,35 @@
+{
+  "name": "PythonPartPylintDecorator",
+  "namespace": "TestHelper.PythonPartPylintDecorator",
+  "kind": "class",
+  "summary": "implementation of the PythonPart decorators for the pylint extension",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PythonPartPylintDecorator/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "deprecated",
+      "signature": "deprecated(replace: str = \u0027\u0027) -\u003E Callable",
+      "summary": "create the deprecated function decorator",
+      "remarks": "create the deprecated function decorator",
+      "params": [
+        {
+          "name": "replace",
+          "type": "str",
+          "doc": "replace information",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Callable",
+        "doc": "function decorator"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PythonPartPylintDecorator/#TestHelper.PythonPartPylintDecorator.PythonPartPylintDecorator.deprecated"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

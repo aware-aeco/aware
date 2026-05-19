@@ -1,0 +1,14 @@
+{
+  "name": "BarShapeSideDataList",
+  "namespace": "StdReinfShapeBuilder.BarShapeSideDataList",
+  "kind": "class",
+  "summary": "the rows can have the following tuple entries",
+  "base": "List[Union[float, Tuple[Point2D, Point2D, float], Tuple[Point2D, Point2D, float, float], Tuple[Point2D, Point2D, float, float, float], Tuple[Line2D, float], Tuple[Line2D, float, float], Tuple[Line2D, float, float, float], Tuple[Arc2D, float, float, float], Tuple[Point3D, Point3D, float], Tuple[Point3D, Point3D, float, float], Tuple[Line3D, float], Tuple[Line3D, float, float]]]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapeSideDataList/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

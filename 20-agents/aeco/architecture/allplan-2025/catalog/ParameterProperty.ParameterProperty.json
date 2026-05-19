@@ -1,0 +1,235 @@
+{
+  "name": "ParameterProperty",
+  "namespace": "ParameterProperty",
+  "kind": "enum",
+  "summary": "Definition of class ParameterProperty",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/",
+  "constructors": [
+    {
+      "name": "ParameterProperty()",
+      "signature": "ParameterProperty()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Print class information",
+      "remarks": "Print class information",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "parameter property as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.__repr__"
+    },
+    {
+      "name": "deep_copy",
+      "signature": "deep_copy() -\u003E ParameterProperty",
+      "summary": "deep copy of the parameter values",
+      "remarks": "deep copy of the parameter values",
+      "params": [],
+      "returns": {
+        "type": "ParameterProperty",
+        "doc": "copied parameter property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.deep_copy"
+    },
+    {
+      "name": "reset_modified",
+      "signature": "reset_modified()",
+      "summary": "Reset the is_modified state",
+      "remarks": "Reset the is_modified state",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.reset_modified"
+    },
+    {
+      "name": "set_named_tuple_def",
+      "signature": "set_named_tuple_def(typename: str, field_names: list[str])",
+      "summary": "Set the named tuple definition",
+      "remarks": "Set the named tuple definition",
+      "params": [
+        {
+          "name": "typename",
+          "type": "str",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "field_names",
+          "type": "list[str]",
+          "doc": "description",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.set_named_tuple_def"
+    }
+  ],
+  "properties": [
+    {
+      "name": "attribute_id",
+      "type": "int | list[int]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attribute id of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.attribute_id"
+    },
+    {
+      "name": "attribute_id_str",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attribute id string of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.attribute_id_str"
+    },
+    {
+      "name": "dimensions",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the dimensions of the property in case of a list",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.dimensions"
+    },
+    {
+      "name": "enum_dict",
+      "type": "dict[int, IntEnum]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the enumeration list for the input values",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.enum_dict"
+    },
+    {
+      "name": "exclude_identical",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the exclude identical state If True, the parameter is not used for checking identical PythonParts",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.exclude_identical"
+    },
+    {
+      "name": "group_name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the group name of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.group_name"
+    },
+    {
+      "name": "input_type",
+      "type": "InputType",
+      "getter": true,
+      "setter": true,
+      "summary": "Getter for input type parameter",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.input_type"
+    },
+    {
+      "name": "is_modified",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the modified state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.is_modified"
+    },
+    {
+      "name": "list_reverse",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the list reverse state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.list_reverse"
+    },
+    {
+      "name": "list_squeeze",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the list squeeze state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.list_squeeze"
+    },
+    {
+      "name": "list_state",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the list as block state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.list_state"
+    },
+    {
+      "name": "name",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the name of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.name"
+    },
+    {
+      "name": "named_tuple_def",
+      "type": "NamedTupleDef | None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the named tuple definition",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.named_tuple_def"
+    },
+    {
+      "name": "persistent",
+      "type": "Persistent",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the persistent state of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.persistent"
+    },
+    {
+      "name": "selected_value",
+      "type": "Any",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the selected value of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.selected_value"
+    },
+    {
+      "name": "value",
+      "type": "Any",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the value of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.value"
+    },
+    {
+      "name": "value_list_util",
+      "type": "ComboBoxValueListUtil | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the combo box value list utility",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.value_list_util"
+    },
+    {
+      "name": "value_type",
+      "type": "ParameterPropertyValueType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the value type of the property",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/ParameterProperty/#ParameterProperty.ParameterProperty.value_type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

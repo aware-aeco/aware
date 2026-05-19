@@ -180,6 +180,13 @@ internal static class Program
                             // Reflection runs against PE metadata (no IL execution), AOT-clean.
                             "navisworks" => Ingest.Extractors.Navisworks.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Allplan extractor (Phase B B10) — Nemetschek's PythonParts API docs
+                            // at pythonparts.allplan.com. mkdocs-material/mkdocstrings layout,
+                            // sitemap-driven crawl, single-pass extraction. Versions 2024.0 and
+                            // 2025.0 have separate version-pinned trees. IR stamps host="allplan".
+                            // Separate from the .NET BIF.Core BimPlus surface (different agents).
+                            "allplan" => Ingest.Extractors.Allplan.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

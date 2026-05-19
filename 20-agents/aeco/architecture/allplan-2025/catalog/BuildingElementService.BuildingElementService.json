@@ -1,0 +1,110 @@
+{
+  "name": "BuildingElementService",
+  "namespace": "BuildingElementService",
+  "kind": "class",
+  "summary": "Definition of class BuildingElementService",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "read_build_ele_from_pyp",
+      "signature": "read_build_ele_from_pyp( file_name: str, ) -\u003E tuple[bool, ModuleType | None, BuildingElement | None]",
+      "summary": "Create BuildingElement and python module based on .pyp file This method gets only the BuildingElement and the python module of the script, the .pyp file refers to. The resulting BuildingElement contains parameters with their default values. Use this method in the script of a main element (e.g. PythonPartGroup) to get the BuildingElement of the subordinate elements (e.g. PythonParts in the group).",
+      "remarks": "Create BuildingElement and python module based on .pyp file This method gets only the BuildingElement and the python module of the script, the .pyp file refers to. The resulting BuildingElement contains parameters with their default values. Use this method in the script of a main element (e.g. PythonPartGroup) to get the BuildingElement of the subordinate elements (e.g. PythonParts in the group).",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "full path to the .pyp file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True, if import was successful, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementService/#BuildingElementService.BuildingElementService.read_build_ele_from_pyp"
+    },
+    {
+      "name": "read_data_from_pyp",
+      "signature": "read_data_from_pyp( file_name: str, str_table: BuildingElementStringTable, is_library_preview: bool, material_str_table: BuildingElementMaterialStringTable, sub_file_name: str = \u0022\u0022, init_with_last_input: bool = True, add_sub_file_name: str = \u0022\u0022, ) -\u003E Tuple[ Optional[bool], Optional[ModuleType], List[BuildingElement], List[BuildingElementControlProperties], BuildingElementComposite, str, str, ]",
+      "summary": "Read the data from the pyp file and check the version",
+      "remarks": "Read the data from the pyp file and check the version",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "Name of the pyp file",
+          "optional": false
+        },
+        {
+          "name": "str_table",
+          "type": "BuildingElementStringTable",
+          "doc": "String table",
+          "optional": false
+        },
+        {
+          "name": "is_library_preview",
+          "type": "bool",
+          "doc": "Called for library preview",
+          "optional": false
+        },
+        {
+          "name": "material_str_table",
+          "type": "BuildingElementMaterialStringTable",
+          "doc": "Material string table",
+          "optional": false
+        },
+        {
+          "name": "sub_file_name",
+          "type": "str",
+          "doc": "File with the sub elements",
+          "optional": false
+        },
+        {
+          "name": "init_with_last_input",
+          "type": "bool",
+          "doc": "Initialize with the data from the last input (only if ReadLastInput is set in the script)",
+          "optional": false
+        },
+        {
+          "name": "add_sub_file_name",
+          "type": "str",
+          "doc": "additional sub file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[bool]",
+        "doc": "True, if import was successful, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementService/#BuildingElementService.BuildingElementService.read_data_from_pyp"
+    },
+    {
+      "name": "write_data_to_default_favorite_file",
+      "signature": "write_data_to_default_favorite_file(build_ele_list: List[BuildingElement])",
+      "summary": "Write the data to the default favorite file",
+      "remarks": "Write the data to the default favorite file",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "List[BuildingElement]",
+          "doc": "Building element list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementService/#BuildingElementService.BuildingElementService.write_data_to_default_favorite_file"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

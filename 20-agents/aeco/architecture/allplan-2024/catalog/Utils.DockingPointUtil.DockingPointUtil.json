@@ -1,0 +1,473 @@
+{
+  "name": "DockingPointUtil",
+  "namespace": "Utils.DockingPointUtil",
+  "kind": "class",
+  "summary": "Implementation of the docking point utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__get_arc2d_docking_points",
+      "signature": "__get_arc2d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Arc2D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_arc2d_docking_points"
+    },
+    {
+      "name": "__get_arc3d_docking_points",
+      "signature": "__get_arc3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Arc3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_arc3d_docking_points"
+    },
+    {
+      "name": "__get_brep3d_docking_points",
+      "signature": "__get_brep3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "BRep3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_brep3d_docking_points"
+    },
+    {
+      "name": "__get_bspline2d_docking_points",
+      "signature": "__get_bspline2d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "BSpline2D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_bspline2d_docking_points"
+    },
+    {
+      "name": "__get_bspline3d_docking_points",
+      "signature": "__get_bspline3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "BSpline3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_bspline3d_docking_points"
+    },
+    {
+      "name": "__get_line2d_docking_points",
+      "signature": "__get_line2d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Line2D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_line2d_docking_points"
+    },
+    {
+      "name": "__get_line3d_docking_points",
+      "signature": "__get_line3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Line3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_line3d_docking_points"
+    },
+    {
+      "name": "__get_poly_point_curve2d_docking_points",
+      "signature": "__get_poly_point_curve2d_docking_points(element_key, points)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "object",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_poly_point_curve2d_docking_points"
+    },
+    {
+      "name": "__get_poly_point_curve3d_docking_points",
+      "signature": "__get_poly_point_curve3d_docking_points(element_key, points)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "object",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_poly_point_curve3d_docking_points"
+    },
+    {
+      "name": "__get_polygon2d_docking_points",
+      "signature": "__get_polygon2d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Polygon2D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_polygon2d_docking_points"
+    },
+    {
+      "name": "__get_polygon3d_docking_points",
+      "signature": "__get_polygon3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Polygon3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_polygon3d_docking_points"
+    },
+    {
+      "name": "__get_polyhedron3d_docking_points",
+      "signature": "__get_polyhedron3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Polyhedron3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_polyhedron3d_docking_points"
+    },
+    {
+      "name": "__get_polyline2d_docking_points",
+      "signature": "__get_polyline2d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Polyline2D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_polyline2d_docking_points"
+    },
+    {
+      "name": "__get_polyline3d_docking_points",
+      "signature": "__get_polyline3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Polyline3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_polyline3d_docking_points"
+    },
+    {
+      "name": "__get_spline2d_docking_points",
+      "signature": "__get_spline2d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Spline2D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_spline2d_docking_points"
+    },
+    {
+      "name": "__get_spline3d_docking_points",
+      "signature": "__get_spline3d_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Spline3D",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.__get_spline3d_docking_points"
+    },
+    {
+      "name": "get_docking_points",
+      "signature": "get_docking_points(element_key, element)",
+      "summary": "get the docking points",
+      "remarks": "get the docking points",
+      "params": [
+        {
+          "name": "element_key",
+          "type": "str",
+          "doc": "geometry element key",
+          "optional": false
+        },
+        {
+          "name": "element",
+          "type": "Any",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Tuple[str, Point3D]]",
+        "doc": "list with the docking points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/DockingPointUtil/DockingPointUtil/#Utils.DockingPointUtil.DockingPointUtil.get_docking_points"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

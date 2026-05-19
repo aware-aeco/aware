@@ -1,0 +1,42 @@
+{
+  "name": "RectangularShape",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.RectangularShape.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RectangularShape/",
+  "constructors": [
+    {
+      "name": "RectangularShape()",
+      "signature": "RectangularShape(arg2)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RectangularShape/#NemAll_Python_ArchElements.RectangularShape.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Thickness",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the thickness) :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RectangularShape/#NemAll_Python_ArchElements.RectangularShape.Thickness"
+    },
+    {
+      "name": "Width",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the width) :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/RectangularShape/#NemAll_Python_ArchElements.RectangularShape.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

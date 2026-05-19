@@ -1,0 +1,65 @@
+{
+  "name": "DocumentResourceService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.DocumentResourceService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DocumentResourceService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateSurface",
+      "signature": "CreateSurface( doc: DocumentAdapter, surfaceDirectoryPath: str, localPathAndName: str, surfaceDef: SurfaceDefinition, createUniqueName: bool = True, bitmapDefinitions: Dict[eSurfaceTextureID, BitmapDefinition] = {}, ) -\u003E str",
+      "summary": "Create a surface resource with a unique name",
+      "remarks": "Create a surface resource with a unique name",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "surfaceDirectoryPath",
+          "type": "str",
+          "doc": "Path to the surface directory (e.g. ...\\std\\design)",
+          "optional": false
+        },
+        {
+          "name": "localPathAndName",
+          "type": "str",
+          "doc": "Local path and name (extends the surface directory path)",
+          "optional": false
+        },
+        {
+          "name": "surfaceDef",
+          "type": "SurfaceDefinition",
+          "doc": "Surface definition",
+          "optional": false
+        },
+        {
+          "name": "createUniqueName",
+          "type": "bool",
+          "doc": "create a unique name state",
+          "optional": false
+        },
+        {
+          "name": "bitmapDefinitions",
+          "type": "Dict[eSurfaceTextureID, BitmapDefinition]",
+          "doc": "Bitmap definitions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Unique name extension of the surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DocumentResourceService/#NemAll_Python_BaseElements.DocumentResourceService.CreateSurface"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

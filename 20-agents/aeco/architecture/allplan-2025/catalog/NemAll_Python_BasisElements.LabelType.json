@@ -1,0 +1,50 @@
+{
+  "name": "LabelType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Type of the label",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLabelArchDimensionLine",
+      "value": 3,
+      "summary": "Architectural dimension line"
+    },
+    {
+      "name": "eLabelBftSlabElementation",
+      "value": 5,
+      "summary": "Precast slab elementation label"
+    },
+    {
+      "name": "eLabelBftWallElementation",
+      "value": 4,
+      "summary": "Precast wall elementation label"
+    },
+    {
+      "name": "eLabelEng3DBarReinforcement",
+      "value": 2,
+      "summary": "3D reinforcement bar label"
+    },
+    {
+      "name": "eLabelNoText",
+      "value": 7,
+      "summary": "Label with no text"
+    },
+    {
+      "name": "eLabelNormalText",
+      "value": 0,
+      "summary": "Fixed text"
+    },
+    {
+      "name": "eLabelVariableText",
+      "value": 1,
+      "summary": "Variable text"
+    }
+  ]
+}

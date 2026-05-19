@@ -1,0 +1,14 @@
+{
+  "name": "PlaneReferenceDependency",
+  "namespace": "NemAll_Python_ArchElements.PlaneReferences",
+  "kind": "enum",
+  "summary": "Plane reference Dependency",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.PlaneReferenceDependency",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

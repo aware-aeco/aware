@@ -1,0 +1,123 @@
+{
+  "name": "ElementAdapterTypeGroup",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "enum",
+  "summary": "Implementation of the element adapter type groups",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/ElementAdapterTypeGroup/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAREAS3D_GROUP",
+      "value": 5
+    },
+    {
+      "name": "eAXIS_ELEMENT_GROUP",
+      "value": 17
+    },
+    {
+      "name": "eBARS_PLACEMENT_GROUP",
+      "value": 18
+    },
+    {
+      "name": "eBREPS3D_GROUP",
+      "value": 1
+    },
+    {
+      "name": "eBREPS3D_SURFACE_GROUP",
+      "value": 2
+    },
+    {
+      "name": "eCURVES3D_GROUP",
+      "value": 4
+    },
+    {
+      "name": "eDEFECT_ELEMENT_GROUP",
+      "value": 19
+    },
+    {
+      "name": "eDIMENSION_GROUP",
+      "value": 8
+    },
+    {
+      "name": "eFIXTURE_GROUP",
+      "value": 11
+    },
+    {
+      "name": "eHYPERELEMENT_GROUP",
+      "value": 23
+    },
+    {
+      "name": "eHYPERELEMENT_TIER_GROUP",
+      "value": 25
+    },
+    {
+      "name": "eLAST_GROUP",
+      "value": 26
+    },
+    {
+      "name": "eLINES3D_GROUP",
+      "value": 3
+    },
+    {
+      "name": "eNO_GROUP",
+      "value": 0
+    },
+    {
+      "name": "eOPENINGPART_GROUP",
+      "value": 24
+    },
+    {
+      "name": "ePIPEBUNDLE_GROUP",
+      "value": 16
+    },
+    {
+      "name": "ePIPEWORK_GROUP",
+      "value": 15
+    },
+    {
+      "name": "ePRECAST_GROUP",
+      "value": 22
+    },
+    {
+      "name": "ePYTHON_PART_GROUP",
+      "value": 14
+    },
+    {
+      "name": "eREVEAL_GROUP",
+      "value": 12
+    },
+    {
+      "name": "eSMART_PART_GROUP",
+      "value": 10
+    },
+    {
+      "name": "eSMART_SYMBOL_GROUP",
+      "value": 9
+    },
+    {
+      "name": "eTEXT_GROUP",
+      "value": 7
+    },
+    {
+      "name": "eVOLUMES3D_GROUP",
+      "value": 6
+    },
+    {
+      "name": "eWALL_OPENING_GROUP",
+      "value": 20
+    },
+    {
+      "name": "eWALL_OPENING_SUB_ELEMENTS_GROUP",
+      "value": 21
+    },
+    {
+      "name": "eXREF_GROUP",
+      "value": 13
+    }
+  ]
+}

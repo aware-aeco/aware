@@ -1,0 +1,90 @@
+{
+  "name": "HiddenSectionLinesProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Visible hidden edges properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/",
+  "constructors": [
+    {
+      "name": "HiddenSectionLinesProperties()",
+      "signature": "HiddenSectionLinesProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HiddenSectionLinesColor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for color for hidden section lines :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.HiddenSectionLinesColor"
+    },
+    {
+      "name": "HiddenSectionLinesLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for layer for hidden section lines :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.HiddenSectionLinesLayer"
+    },
+    {
+      "name": "HiddenSectionLinesLineType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for line type for hidden section lines :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.HiddenSectionLinesLineType"
+    },
+    {
+      "name": "HiddenSectionLinesPen",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for pen for hidden section lines :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.HiddenSectionLinesPen"
+    },
+    {
+      "name": "IsHiddenSectionLinesColorFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for hidden section lines color from layer :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.IsHiddenSectionLinesColorFromLayer"
+    },
+    {
+      "name": "IsHiddenSectionLinesLineTypeFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for hidden section lines line type from layer :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.IsHiddenSectionLinesLineTypeFromLayer"
+    },
+    {
+      "name": "IsHiddenSectionLinesOn",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the drawing of the hidden section lines :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.IsHiddenSectionLinesOn"
+    },
+    {
+      "name": "IsHiddenSectionLinesPenFromLayer",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for hidden section lines pen from layer :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HiddenSectionLinesProperties/#NemAll_Python_BasisElements.HiddenSectionLinesProperties.IsHiddenSectionLinesPenFromLayer"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

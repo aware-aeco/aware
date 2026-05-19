@@ -1,0 +1,222 @@
+{
+  "name": "FaceOffset",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Service for offset of faces of the element",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/",
+  "constructors": [
+    {
+      "name": "FaceOffset(inputPolyhedron: Polyhedron3D)",
+      "signature": "FaceOffset(inputPolyhedron: Polyhedron3D)",
+      "summary": "Constructor with polyhedron input geometry",
+      "remarks": "Constructor with polyhedron input geometry",
+      "params": [
+        {
+          "name": "inputPolyhedron",
+          "type": "Polyhedron3D",
+          "doc": "polyhedron to execute face offset/shell on",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
+    },
+    {
+      "name": "FaceOffset(inputPolyhedron: Polyhedron3D, faceIndices: VecSizeTList)",
+      "signature": "FaceOffset(inputPolyhedron: Polyhedron3D, faceIndices: VecSizeTList)",
+      "summary": "Constructor with polyhedron element",
+      "remarks": "Constructor with polyhedron element",
+      "params": [
+        {
+          "name": "inputPolyhedron",
+          "type": "Polyhedron3D",
+          "doc": "polyhedron to execute face offset/shell on",
+          "optional": false
+        },
+        {
+          "name": "faceIndices",
+          "type": "VecSizeTList",
+          "doc": "vector of indices of faces to offset/shell",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
+    },
+    {
+      "name": "FaceOffset(inputBRep: BRep3D)",
+      "signature": "FaceOffset(inputBRep: BRep3D)",
+      "summary": "Constructor with brep element",
+      "remarks": "Constructor with brep element",
+      "params": [
+        {
+          "name": "inputBRep",
+          "type": "BRep3D",
+          "doc": "brep to execute face offset/shell on",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
+    },
+    {
+      "name": "FaceOffset(inputBRep: BRep3D, faceIndices: VecSizeTList)",
+      "signature": "FaceOffset(inputBRep: BRep3D, faceIndices: VecSizeTList)",
+      "summary": "Constructor with brep element",
+      "remarks": "Constructor with brep element",
+      "params": [
+        {
+          "name": "inputBRep",
+          "type": "BRep3D",
+          "doc": "brep to execute face offset/shell on",
+          "optional": false
+        },
+        {
+          "name": "faceIndices",
+          "type": "VecSizeTList",
+          "doc": "vector of indices of faces for offset/shell",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
+    },
+    {
+      "name": "FaceOffset(element: FaceOffset)",
+      "signature": "FaceOffset(element: FaceOffset)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "FaceOffset",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsResultBrep",
+      "signature": "IsResultBrep() -\u003E bool",
+      "summary": "returns if selected object has brep geometry",
+      "remarks": "returns if selected object has brep geometry",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if brep"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.IsResultBrep"
+    },
+    {
+      "name": "Offset",
+      "signature": "Offset( offsetDistance: float, direction: eFaceOffsetDirection, useOffsetStepPierce: bool, useOrthoVXSplit: bool, punchDirection: Vector3D | None = None, ) -\u003E tuple[eGeometryErrorCode, Any, Any]",
+      "summary": "Execute face offset",
+      "remarks": "Execute face offset",
+      "params": [
+        {
+          "name": "offsetDistance",
+          "type": "float",
+          "doc": "distance for offset",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "eFaceOffsetDirection",
+          "doc": "offset direction 0 - in face normal direction, 1 - in both directions, 2 - opposite to face normal",
+          "optional": false
+        },
+        {
+          "name": "useOffsetStepPierce",
+          "type": "bool",
+          "doc": "if to use offset step pierce",
+          "optional": false
+        },
+        {
+          "name": "useOrthoVXSplit",
+          "type": "bool",
+          "doc": "if to use OrthoVXSplit option",
+          "optional": false
+        },
+        {
+          "name": "punchDirection",
+          "type": "Vector3D | None",
+          "doc": "defined direction for offset (optional)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Any, Any]",
+        "doc": "tuple(eOK if success, first resulting geometry, second resulting geometry, set only if offset in both direction is performed)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.Offset"
+    },
+    {
+      "name": "Shell",
+      "signature": "Shell( offsetDistance: float, direction: eFaceOffsetDirection, useOffsetStepPierce: bool, useOrthoVXSplit: bool, punchDirection: Vector3D | None = None, ) -\u003E tuple[eGeometryErrorCode, Any]",
+      "summary": "Execute face shell",
+      "remarks": "Execute face shell",
+      "params": [
+        {
+          "name": "offsetDistance",
+          "type": "float",
+          "doc": "distance for offset",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "eFaceOffsetDirection",
+          "doc": "offset direction 0 - in face normal direction, 1 - in both directions, 2 - opposite to face normal",
+          "optional": false
+        },
+        {
+          "name": "useOffsetStepPierce",
+          "type": "bool",
+          "doc": "if to use offset step pierce",
+          "optional": false
+        },
+        {
+          "name": "useOrthoVXSplit",
+          "type": "bool",
+          "doc": "if to use OrthoVXSplit option",
+          "optional": false
+        },
+        {
+          "name": "punchDirection",
+          "type": "Vector3D | None",
+          "doc": "defined direction for shell (optional)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Any]",
+        "doc": "tuple(eOK if success, resulting geometry)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FaceOffset/#NemAll_Python_Geometry.FaceOffset.Shell"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

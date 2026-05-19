@@ -1,0 +1,111 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_Precast",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreatePrecastElements",
+      "signature": "CreatePrecastElements(doc, insertionMat, elements, modelEleList, modelUuidList, viewProj, delete_python)",
+      "summary": "Create the precast elements",
+      "remarks": "Create the precast elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Insertion matrix",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "List of created elements",
+          "optional": false
+        },
+        {
+          "name": "modelEleList",
+          "type": "list",
+          "doc": "List of model elements which have to be created",
+          "optional": false
+        },
+        {
+          "name": "modelUuidList",
+          "type": "list",
+          "doc": "List with the model UUIDS in modification mode",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View projection",
+          "optional": false
+        },
+        {
+          "name": "delete_python",
+          "type": "bool",
+          "doc": "bool weather the python should be deleted after update",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/_functions/#NemAll_Python_Precast.CreatePrecastElements"
+    },
+    {
+      "name": "LockPrecastUpdate",
+      "signature": "LockPrecastUpdate()",
+      "summary": "Lock the precast update",
+      "remarks": "Lock the precast update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/_functions/#NemAll_Python_Precast.LockPrecastUpdate"
+    },
+    {
+      "name": "TriggerPrecastUpdate",
+      "signature": "TriggerPrecastUpdate(elements)",
+      "summary": "Trigger the precast update",
+      "remarks": "Trigger the precast update",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements to update",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "update successful: true/false)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/_functions/#NemAll_Python_Precast.TriggerPrecastUpdate"
+    },
+    {
+      "name": "UnlockPrecastUpdate",
+      "signature": "UnlockPrecastUpdate()",
+      "summary": "Lock the precast update",
+      "remarks": "Lock the precast update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Precast/_functions/#NemAll_Python_Precast.UnlockPrecastUpdate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

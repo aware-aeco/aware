@@ -1,0 +1,485 @@
+{
+  "name": "Matrix2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D matrix",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/",
+  "constructors": [
+    {
+      "name": "Matrix2D()",
+      "signature": "Matrix2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__init__"
+    },
+    {
+      "name": "Matrix2D(matrix: Matrix2D)",
+      "signature": "Matrix2D(matrix: Matrix2D)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "Matrix which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddDimension",
+      "signature": "AddDimension() -\u003E Matrix3D",
+      "summary": "Create a 3D matrix from this 2D matrix",
+      "remarks": "Create a 3D matrix from this 2D matrix",
+      "params": [],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "3D Matrix from this matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.AddDimension"
+    },
+    {
+      "name": "Determinant",
+      "signature": "Determinant() -\u003E float",
+      "summary": "Calculate determinant",
+      "remarks": "Calculate determinant",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Determinant."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Determinant"
+    },
+    {
+      "name": "IsIdentity",
+      "signature": "IsIdentity() -\u003E bool",
+      "summary": "Check to identity matrix",
+      "remarks": "Check to identity matrix",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true when is matrix identity, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.IsIdentity"
+    },
+    {
+      "name": "Multiply",
+      "signature": "Multiply(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Multiple matrix with given matrix calling \u0022 A.Multiply(B) \u0022 is identical with \u0022 A *= B \u0022",
+      "remarks": "Multiple matrix with given matrix calling \u0022 A.Multiply(B) \u0022 is identical with \u0022 A *= B \u0022",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "Matrix to be multiple with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Product of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Multiply"
+    },
+    {
+      "name": "Reflection",
+      "signature": "Reflection(axis: Axis2D)",
+      "summary": "Reflection across a axis of given angle",
+      "remarks": "Reflection across a axis of given angle",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Axis2D",
+          "doc": "Reflection axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Reflection"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse() -\u003E bool",
+      "summary": "Reverse matrix This method provide geometrical inverse matrix and can not be used with regular inverse 4x4 matrix calculations. Geometrical representation: Point3D = { Point3D * Matrix } * Matrix.Reverse()",
+      "remarks": "Reverse matrix This method provide geometrical inverse matrix and can not be used with regular inverse 4x4 matrix calculations. Geometrical representation: Point3D = { Point3D * Matrix } * Matrix.Reverse()",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when operation is successful, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Reverse"
+    },
+    {
+      "name": "Rotation",
+      "signature": "Rotation(point: Point2D, angle: Angle)",
+      "summary": "Rotate the matrix",
+      "remarks": "Rotate the matrix",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point of rotation",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Rotation"
+    },
+    {
+      "name": "Scaling",
+      "signature": "Scaling(scaleX: float, scaleY: float)",
+      "summary": "Scale the matrix",
+      "remarks": "Scale the matrix",
+      "params": [
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Scale in X axis.",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Scale in Y axis.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Scaling"
+    },
+    {
+      "name": "SetIdentity",
+      "signature": "SetIdentity()",
+      "summary": "Initialize identity matrix",
+      "remarks": "Initialize identity matrix",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.SetIdentity"
+    },
+    {
+      "name": "SetReflection",
+      "signature": "SetReflection(axis: Axis2D)",
+      "summary": "Initialize matrix only with reflection",
+      "remarks": "Initialize matrix only with reflection",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Axis2D",
+          "doc": "Reflection axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.SetReflection"
+    },
+    {
+      "name": "SetRotation",
+      "signature": "SetRotation(point: Point2D, angle: Angle)",
+      "summary": "Initialize matrix only with rotation",
+      "remarks": "Initialize matrix only with rotation",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point of rotation.",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle of rotation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.SetRotation"
+    },
+    {
+      "name": "SetScaling",
+      "signature": "SetScaling(scaleX: float, scaleY: float)",
+      "summary": "Initialize matrix only with scaling factors",
+      "remarks": "Initialize matrix only with scaling factors",
+      "params": [
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Scale in X axis.",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Scale in Y axis.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.SetScaling"
+    },
+    {
+      "name": "SetTranslation",
+      "signature": "SetTranslation(vec: Vector2D)",
+      "summary": "Initialize matrix only with translation",
+      "remarks": "Initialize matrix only with translation",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector of translation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.SetTranslation"
+    },
+    {
+      "name": "SetValue",
+      "signature": "SetValue(index: int, value: float) -\u003E bool",
+      "summary": "Set the matrix element at a specified position Use this method when you don\u0027t want to catch exception by operator[].",
+      "remarks": "Set the matrix element at a specified position Use this method when you don\u0027t want to catch exception by operator[].",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Position index \u003C0..9\u003E",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "Value for set",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when operation successful (index is not out of range), otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.SetValue"
+    },
+    {
+      "name": "Translate",
+      "signature": "Translate(vec: Vector2D)",
+      "summary": "Translate the matrix",
+      "remarks": "Translate the matrix",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector of translation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.Translate"
+    },
+    {
+      "name": "__add__",
+      "signature": "__add__(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Matrix addition Formula: Result(new matrix) = A\u002BB A is this matrix.",
+      "remarks": "Matrix addition Formula: Result(new matrix) = A\u002BB A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__add__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index: int) -\u003E float",
+      "summary": "Get the matrix element at a specified position This method is checked and throwing Geometry::Exception when index is out of range.",
+      "remarks": "Get the matrix element at a specified position This method is checked and throwing Geometry::Exception when index is out of range.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Position index \u003C0..9\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Returns an element at a specified position."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__getitem__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Matrix addition Formula: A \u002B= B or A = A\u002BB A is this matrix.",
+      "remarks": "Matrix addition Formula: A \u002B= B or A = A\u002BB A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__iadd__"
+    },
+    {
+      "name": "__imul__",
+      "signature": "__imul__(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Matrix multiplication Formula: A = B or A = AB A is this matrix.",
+      "remarks": "Matrix multiplication Formula: A = B or A = AB A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Product of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__imul__"
+    },
+    {
+      "name": "__isub__",
+      "signature": "__isub__(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Matrix addition Formula: A -= B or A = A-B A is this matrix.",
+      "remarks": "Matrix addition Formula: A -= B or A = A-B A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__isub__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Matrix multiplication Formula: Result(new matrix) = A*B A is this matrix.",
+      "remarks": "Matrix multiplication Formula: Result(new matrix) = A*B A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Product of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__repr__"
+    },
+    {
+      "name": "__sub__",
+      "signature": "__sub__(matrix: Matrix2D) -\u003E Matrix2D",
+      "summary": "Matrix addition Formula: Result(new matrix) = A-B A is this matrix.",
+      "remarks": "Matrix addition Formula: Result(new matrix) = A-B A is this matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "B matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix2D",
+        "doc": "Addition of matrices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Matrix2D/#NemAll_Python_Geometry.Matrix2D.__sub__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

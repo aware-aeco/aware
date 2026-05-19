@@ -1,0 +1,56 @@
+﻿
+idx ns                                                 name                                   kind         result issues           
+--- --                                                 ----                                   ----         ------ ------           
+ 62 NemAll_Python_AllplanSettings                      AllplanPaths                           class        FAIL   kind-word-missing
+566 NemAll_Python_Utility                              VecStringList                          class        FAIL   kind-word-missing
+ 45 PythonPart                                         AttrBuilder                            class        FAIL   kind-word-missing
+439 NemAll_Python_IFW_Input                            InputStringConvert                     class        FAIL   kind-word-missing
+604 Utils.StringUtil                                   StringUtil                             class        FAIL   kind-word-missing
+223 NemAll_Python_BasisElements                        SectionAlongPathElement                class        FAIL   kind-word-missing
+ 79 NemAll_Python_ArchElements                         AxisProperties                         enum         FAIL   kind-word-missing
+296 NemAll_Python_Geometry                             BSpline3DService                       class        FAIL   kind-word-missing
+601 Utils.TabularDataUtil                              DataFrame                              class        FAIL   kind-word-missing
+204 NemAll_Python_BasisElements                        MacroGroupElement                      class        FAIL   kind-word-missing
+539 NemAll_Python_Reinforcement                        ReinforcementLabelProperties           class        FAIL   kind-word-missing
+ 42 ParameterProperty.ParameterProperty                Persistent                             enum         FAIL   kind-word-missing
+597 Utils.PythonPartParameterUtil                      PythonPartParameterUtil                class        FAIL   kind-word-missing
+119 NemAll_Python_BaseElements                         AttributeInteger                       class        FAIL   kind-word-missing
+ 49 PythonPart                                         PythonPartGroup                        class        FAIL   kind-word-missing
+442 NemAll_Python_IFW_Input                            LCS_Flags                              enum         FAIL   kind-word-missing
+ 26 HandleProperties                                   HandleProperties                       class        FAIL   kind-word-missing
+217 NemAll_Python_BasisElements                        PatternElement                         class        FAIL   kind-word-missing
+227 NemAll_Python_BasisElements                        SectionAlongPathLabelingStripSetting   class        FAIL   kind-word-missing
+385 NemAll_Python_Geometry                             TangentCalculus                        class        FAIL   kind-word-missing
+  0 AttributeIdValue                                   AttributeIdValue                       class        FAIL   kind-word-missing
+ 46 HandlePropertiesService                            _YDistance                             class        FAIL   kind-word-missing
+202 NemAll_Python_BasisElements                        MacroElement                           class        FAIL   kind-word-missing
+303 NemAll_Python_Geometry                             ClosedAreaComposite2D                  class        FAIL   kind-word-missing
+545 NemAll_Python_Reinforcement                        ReinforcementType                      enum         FAIL   kind-word-missing
+294 NemAll_Python_Geometry                             ClippedSweptSolid3D                    class        FAIL   kind-word-missing
+253 NemAll_Python_BasisElements.SectionLayerProperties eVisibilityFilterMode                  enum         FAIL   kind-word-missing
+ 10 BuildingElementInput                               BuildingElementInput                   class        FAIL   kind-word-missing
+298 NemAll_Python_Geometry                             ClosedArea2DList                       class        FAIL   kind-word-missing
+237 NemAll_Python_BasisElements                        SectionDefinitionData                  class        FAIL   kind-word-missing
+259 NemAll_Python_BasisElements                        TextElementList                        class        FAIL   kind-word-missing
+496 NemAll_Python_Precast                              SubType                                enum         FAIL   kind-word-missing
+419 NemAll_Python_IFW_ElementAdapter                   BaseElementAdapterParentElementService class        FAIL   kind-word-missing
+430 NemAll_Python_IFW_Input                            CoordinateInput                        class        FAIL   kind-word-missing
+398 NemAll_Python_Geometry                             Functions                              static-class PASS                    
+506 NemAll_Python_Reinforcement                        BarsOperations                         class        FAIL   kind-word-missing
+553 NemAll_Python_Utility                              FileDialog                             class        FAIL   kind-word-missing
+406 NemAll_Python_Geometry                             ePolyhedronHealingSettings             enum         FAIL   kind-word-missing
+170 NemAll_Python_BasisElements                        AssociativeViewProperties              class        FAIL   kind-word-missing
+158 NemAll_Python_BaseElements                         PythonPartService                      class        FAIL   kind-word-missing
+483 NemAll_Python_Precast                              MacroType                              enum         FAIL   kind-word-missing
+280 NemAll_Python_Geometry                             BRep3D                                 class        FAIL   kind-word-missing
+118 NemAll_Python_BaseElements                         AttributeDouble                        class        FAIL   kind-word-missing
+ 97 NemAll_Python_ArchElements                         SlabElement                            class        FAIL   kind-word-missing
+297 NemAll_Python_Geometry                             ClippedSweptSolid3DList                class        FAIL   kind-word-missing
+ 43 PreviewSymbols                                     PreviewSymbols                         enum         FAIL   kind-word-missing
+563 NemAll_Python_Utility                              VecSizeTList                           class        FAIL   kind-word-missing
+564 NemAll_Python_Utility                              VecDoubleList                          class        FAIL   kind-word-missing
+ 86 NemAll_Python_ArchElements                         ColumnProperties                       class        FAIL   kind-word-missing
+171 NemAll_Python_BasisElements                        AttributeContainer                     class        FAIL   kind-word-missing
+
+
+

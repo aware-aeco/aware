@@ -1,0 +1,34 @@
+{
+  "name": "CircularShape",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_ArchElements.CircularShape.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CircularShape/",
+  "constructors": [
+    {
+      "name": "CircularShape()",
+      "signature": "CircularShape(arg2)",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CircularShape/#NemAll_Python_ArchElements.CircularShape.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Radius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Set/get the radius) :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/CircularShape/#NemAll_Python_ArchElements.CircularShape.Radius"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

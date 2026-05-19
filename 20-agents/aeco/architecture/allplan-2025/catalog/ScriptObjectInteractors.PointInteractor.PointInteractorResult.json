@@ -1,0 +1,30 @@
+{
+  "name": "PointInteractorResult",
+  "namespace": "ScriptObjectInteractors.PointInteractor",
+  "kind": "class",
+  "summary": "Implementation of the point input result",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractorResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "input_point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Input point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractorResult/#ScriptObjectInteractors.PointInteractor.PointInteractorResult.input_point"
+    },
+    {
+      "name": "input_value",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Value input in the input control in the dialog line",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractorResult/#ScriptObjectInteractors.PointInteractor.PointInteractorResult.input_value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

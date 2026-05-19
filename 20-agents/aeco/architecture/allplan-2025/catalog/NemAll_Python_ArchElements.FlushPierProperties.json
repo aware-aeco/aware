@@ -1,0 +1,86 @@
+{
+  "name": "FlushPierProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the FlushPier properties",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/",
+  "constructors": [
+    {
+      "name": "FlushPierProperties()",
+      "signature": "FlushPierProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/#NemAll_Python_ArchElements.FlushPierProperties.__init__"
+    },
+    {
+      "name": "FlushPierProperties(flushPierProp: FlushPierProperties)",
+      "signature": "FlushPierProperties(flushPierProp: FlushPierProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "flushPierProp",
+          "type": "FlushPierProperties",
+          "doc": "Properties to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/#NemAll_Python_ArchElements.FlushPierProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth() -\u003E float",
+      "summary": "Get the width of the Flush Pier",
+      "remarks": "Get the width of the Flush Pier",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Width of the Flush Pier"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/#NemAll_Python_ArchElements.FlushPierProperties.GetWidth"
+    },
+    {
+      "name": "SetWidth",
+      "signature": "SetWidth(width: float)",
+      "summary": "Set the width of the Flush Pier",
+      "remarks": "Set the width of the Flush Pier",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the Flush Pier",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/#NemAll_Python_ArchElements.FlushPierProperties.SetWidth"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the width of the Flush Pier",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/FlushPierProperties/#NemAll_Python_ArchElements.FlushPierProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

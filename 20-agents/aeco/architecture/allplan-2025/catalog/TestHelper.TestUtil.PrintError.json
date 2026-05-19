@@ -1,0 +1,117 @@
+{
+  "name": "PrintError",
+  "namespace": "TestHelper.TestUtil",
+  "kind": "class",
+  "summary": "helper class",
+  "base": "TestCase",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/TestUtil/",
+  "constructors": [
+    {
+      "name": "PrintError()",
+      "signature": "PrintError(new_text: str, indent_count: int)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "new_text",
+          "type": "str",
+          "doc": "new element text",
+          "optional": false
+        },
+        {
+          "name": "indent_count",
+          "type": "int",
+          "doc": "indent count",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/TestUtil/#TestHelper.TestUtil.PrintError.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "copy_text_to_clipboard",
+      "signature": "copy_text_to_clipboard()",
+      "summary": "copy the text to the clipboard",
+      "remarks": "copy the text to the clipboard",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/TestUtil/#TestHelper.TestUtil.PrintError.copy_text_to_clipboard"
+    },
+    {
+      "name": "execute",
+      "signature": "execute(ele1_str: str, ele2_str: str, str1: str, str2: str, info_str=\u0027\u0027)",
+      "summary": "execute the assert",
+      "remarks": "execute the assert",
+      "params": [
+        {
+          "name": "ele1_str",
+          "type": "str",
+          "doc": "strings from the first element",
+          "optional": false
+        },
+        {
+          "name": "ele2_str",
+          "type": "str",
+          "doc": "strings from the second element",
+          "optional": false
+        },
+        {
+          "name": "str1",
+          "type": "str",
+          "doc": "row string from the first element",
+          "optional": false
+        },
+        {
+          "name": "str2",
+          "type": "str",
+          "doc": "row string from the second element",
+          "optional": false
+        },
+        {
+          "name": "info_str",
+          "type": "object",
+          "doc": "info string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/TestUtil/#TestHelper.TestUtil.PrintError.execute"
+    },
+    {
+      "name": "print_msg",
+      "signature": "print_msg(msg: str, set_fail: bool = True)",
+      "summary": "print a message",
+      "remarks": "print a message",
+      "params": [
+        {
+          "name": "msg",
+          "type": "str",
+          "doc": "message",
+          "optional": false
+        },
+        {
+          "name": "set_fail",
+          "type": "bool",
+          "doc": "set fail state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/TestUtil/#TestHelper.TestUtil.PrintError.print_msg"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

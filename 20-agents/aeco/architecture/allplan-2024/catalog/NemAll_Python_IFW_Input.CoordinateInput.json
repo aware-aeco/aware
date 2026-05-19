@@ -1,0 +1,924 @@
+{
+  "name": "CoordinateInput",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.CoordinateInput.)",
+  "base": "InputViewDocumentData",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/",
+  "constructors": [
+    {
+      "name": "CoordinateInput()",
+      "signature": "CoordinateInput()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCurrentPoint()",
+      "signature": "GetCurrentPoint()",
+      "summary": "Get and mark the current input point",
+      "remarks": "Get and mark the current input point",
+      "params": [],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
+    },
+    {
+      "name": "GetCurrentPoint(startPnt)",
+      "signature": "GetCurrentPoint(startPnt)",
+      "summary": "Get and mark the current input point",
+      "remarks": "Get and mark the current input point",
+      "params": [
+        {
+          "name": "startPnt",
+          "type": "Point3D",
+          "doc": "Starting point End point input is possible by a distance input to the start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
+    },
+    {
+      "name": "GetCurrentPoint(startPnt, bStartPnt)",
+      "signature": "GetCurrentPoint(startPnt, bStartPnt)",
+      "summary": "Get and mark the current input point",
+      "remarks": "Get and mark the current input point",
+      "params": [
+        {
+          "name": "startPnt",
+          "type": "Point3D",
+          "doc": "Starting point",
+          "optional": false
+        },
+        {
+          "name": "bStartPnt",
+          "type": "bool",
+          "doc": "Starting point is active End point input is possible by a distance input to the start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
+    },
+    {
+      "name": "GetCurrentPoint(bStartPnt)",
+      "signature": "GetCurrentPoint(bStartPnt)",
+      "summary": "Get and mark the current input point End point input is possible by a distance input to the input point of the last input step",
+      "remarks": "Get and mark the current input point End point input is possible by a distance input to the input point of the last input step",
+      "params": [
+        {
+          "name": "bStartPnt",
+          "type": "bool",
+          "doc": "Starting point is active true/false.",
+          "optional": false
+        },
+        {
+          "name": "End",
+          "type": "object",
+          "doc": "point input is possible by a distance input to the input point of the last input step",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetCurrentPoint"
+    },
+    {
+      "name": "GetInputPoint(mouseMsg, pnt, pMsgInfo)",
+      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo)",
+      "summary": "Get the current input point",
+      "remarks": "Get the current input point",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point (view coordinate)",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint"
+    },
+    {
+      "name": "GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt)",
+      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo, bStartPnt)",
+      "summary": "Get the current input point End point input is possible by a distance input to the input point of the last input step",
+      "remarks": "Get the current input point End point input is possible by a distance input to the input point of the last input step",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point (view coordinate)",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        },
+        {
+          "name": "bStartPnt",
+          "type": "bool",
+          "doc": "Starting point is active End point input is possible by a distance input to the input point of the last input step",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint"
+    },
+    {
+      "name": "GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)",
+      "signature": "GetInputPoint(mouseMsg, pnt, pMsgInfo, startPnt, bStartPnt)",
+      "summary": "Get the current input point End point input is possible by a distance input to the start point",
+      "remarks": "Get the current input point End point input is possible by a distance input to the start point",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point (view coordinate)",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        },
+        {
+          "name": "startPnt",
+          "type": "Point3D",
+          "doc": "Starting point",
+          "optional": false
+        },
+        {
+          "name": "bStartPnt",
+          "type": "bool",
+          "doc": "Starting point is active End point input is possible by a distance input to the start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CoordinateInputResult",
+        "doc": "Current input point result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputPoint"
+    },
+    {
+      "name": "IsValueInputControl(id)",
+      "signature": "IsValueInputControl(id)",
+      "summary": "Check, whether the ID belongs to the value input control (from the coordinate input dialog)",
+      "remarks": "Check, whether the ID belongs to the value input control (from the coordinate input dialog)",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "doc": "ID to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "ID belongs to the value input control (from the coordinate input dialog): true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControl"
+    },
+    {
+      "name": "IsValueInputControl()",
+      "signature": "IsValueInputControl()",
+      "summary": "Check, whether a value input control exists",
+      "remarks": "Check, whether a value input control exists",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "A value input control exists: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControl"
+    },
+    {
+      "name": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter)",
+      "signature": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter)",
+      "summary": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
+      "remarks": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point (view coordinate)",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        },
+        {
+          "name": "bHighlight",
+          "type": "bool",
+          "doc": "Highlight the selected element",
+          "optional": false
+        },
+        {
+          "name": "bSelAlways",
+          "type": "bool",
+          "doc": "true: Select always",
+          "optional": false
+        },
+        {
+          "name": "bAllowCenter",
+          "type": "bool",
+          "doc": "Allow element identification by center point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is selected: true false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectElement"
+    },
+    {
+      "name": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)",
+      "signature": "SelectElement(mouseMsg, pnt, pMsgInfo, bHighlight, bSelAlways, bAllowCenter, selectSetting)",
+      "summary": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
+      "remarks": "Select an element if no identification point exists. Use the filter set by SetElementFilter",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point (view coordinate)",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        },
+        {
+          "name": "bHighlight",
+          "type": "bool",
+          "doc": "Highlight the selected element",
+          "optional": false
+        },
+        {
+          "name": "bSelAlways",
+          "type": "bool",
+          "doc": "true: Select always",
+          "optional": false
+        },
+        {
+          "name": "bAllowCenter",
+          "type": "bool",
+          "doc": "Allow element identification by center point",
+          "optional": false
+        },
+        {
+          "name": "selectSetting",
+          "type": "ElementSelectFilterSetting",
+          "doc": "Element selection filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element is selected: true false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectElement"
+    },
+    {
+      "name": "AddGeometryFromPreviewElements",
+      "signature": "AddGeometryFromPreviewElements(arg2)",
+      "summary": "Add the geometry elements from the preview elements for the point and element search",
+      "remarks": "Add the geometry elements from the preview elements for the point and element search",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.AddGeometryFromPreviewElements"
+    },
+    {
+      "name": "CancelInput",
+      "signature": "CancelInput()",
+      "summary": "Explicit cancel of the input function",
+      "remarks": "Explicit cancel of the input function",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.CancelInput"
+    },
+    {
+      "name": "GetAssocViewFromPoint",
+      "signature": "GetAssocViewFromPoint(arg2, arg3, arg4)",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetAssocViewFromPoint"
+    },
+    {
+      "name": "GetInputControlIntValue",
+      "signature": "GetInputControlIntValue()",
+      "summary": "Get the integer value from the value input control",
+      "remarks": "Get the integer value from the value input control",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Integer value from the value input control"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputControlIntValue"
+    },
+    {
+      "name": "GetInputControlValue",
+      "signature": "GetInputControlValue()",
+      "summary": "Get the double value from the value input control",
+      "remarks": "Get the double value from the value input control",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Double value from the value input control"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetInputControlValue"
+    },
+    {
+      "name": "GetSelectedElement",
+      "signature": "GetSelectedElement()",
+      "summary": "Get the selected element The function can be used in case of eIdentMode = MODE_TEXTPOINT, SelectGeometryElement, SelectElement, ...",
+      "remarks": "Get the selected element The function can be used in case of eIdentMode = MODE_TEXTPOINT, SelectGeometryElement, SelectElement, ...",
+      "params": [],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Selected element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetSelectedElement"
+    },
+    {
+      "name": "GetSelectedGeometryElement",
+      "signature": "GetSelectedGeometryElement()",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.GetSelectedGeometryElement"
+    },
+    {
+      "name": "InitFirstElementInput",
+      "signature": "InitFirstElementInput(text, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string. The input is allowed in each document.",
+      "remarks": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string. The input is allowed in each document.",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitFirstElementInput"
+    },
+    {
+      "name": "InitFirstElementValueInput",
+      "signature": "InitFirstElementValueInput(text, ctrlData, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string and the value input controls. The input is allowed only in the document from the last input",
+      "remarks": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string and the value input controls. The input is allowed only in the document from the last input",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "ctrlData",
+          "type": "ValueInputControlData",
+          "doc": "Input control data as eValueInputControlType or ValueInputControlData object",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitFirstElementValueInput"
+    },
+    {
+      "name": "InitFirstPointInput",
+      "signature": "InitFirstPointInput(text, identMode=CoordinateInputMode, inputViewData=InputViewData)",
+      "summary": "Initialize the coordinate input for a first point input. The input is allowed in each document Sample: InitFirstPointInput(IDC_FIRST_POINT); InitFirstPointInput(CAllString(32128));",
+      "remarks": "Initialize the coordinate input for a first point input. The input is allowed in each document Sample: InitFirstPointInput(IDC_FIRST_POINT); InitFirstPointInput(CAllString(32128));",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitFirstPointInput"
+    },
+    {
+      "name": "InitFirstPointValueInput",
+      "signature": "InitFirstPointValueInput(text, ctrlData, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for a first point and value input. The input is allowed in each document Sample: InitFirstPointValueInput(IDC_FIRST_POINT,ValueInputControlData::COORDINATE_EDIT); InitFirstPointValueInput(CAllString(32128),ValueInputControlData(ValueInputControlData::DOUBLE_EDIT,20.,0.,1000.));",
+      "remarks": "Initialize the coordinate input for a first point and value input. The input is allowed in each document Sample: InitFirstPointValueInput(IDC_FIRST_POINT,ValueInputControlData::COORDINATE_EDIT); InitFirstPointValueInput(CAllString(32128),ValueInputControlData(ValueInputControlData::DOUBLE_EDIT,20.,0.,1000.));",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "ctrlData",
+          "type": "ValueInputControlData",
+          "doc": "Input control data as eValueInputControlType or ValueInputControlData object",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitFirstPointValueInput"
+    },
+    {
+      "name": "InitNextElementInput",
+      "signature": "InitNextElementInput(text, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string. The input is allowed only in the document from the last input",
+      "remarks": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string. The input is allowed only in the document from the last input",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitNextElementInput"
+    },
+    {
+      "name": "InitNextElementValueInput",
+      "signature": "InitNextElementValueInput(text, ctrlData, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string and the value input controls. The input is allowed only in the document from the last input",
+      "remarks": "Initialize the coordinate input for an element (point, line, ...) input as free point input. The coordinate input toolbar shows only the request string and the value input controls. The input is allowed only in the document from the last input",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "ctrlData",
+          "type": "ValueInputControlData",
+          "doc": "Input control data as eValueInputControlType or ValueInputControlData object",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitNextElementValueInput"
+    },
+    {
+      "name": "InitNextPointInput",
+      "signature": "InitNextPointInput(text, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for a next point input. The input is allowed only in the document from the last input",
+      "remarks": "Initialize the coordinate input for a next point input. The input is allowed only in the document from the last input",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitNextPointInput"
+    },
+    {
+      "name": "InitNextPointValueInput",
+      "signature": "InitNextPointValueInput(text, ctrlData, identMode=CoordinateInputMode)",
+      "summary": "Initialize the coordinate input for a first point and value input The input is allowed only in the document from the last input",
+      "remarks": "Initialize the coordinate input for a first point and value input The input is allowed only in the document from the last input",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "ctrlData",
+          "type": "ValueInputControlData",
+          "doc": "Input control data as eValueInputControlType or ValueInputControlData object",
+          "optional": false
+        },
+        {
+          "name": "identMode",
+          "type": "CoordinateInputMode",
+          "doc": "Identification mode",
+          "optional": true,
+          "default": "CoordinateInputMode"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitNextPointValueInput"
+    },
+    {
+      "name": "InitValueInput",
+      "signature": "InitValueInput(text, ctrlData)",
+      "summary": "Initialize the value input",
+      "remarks": "Initialize the value input",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        },
+        {
+          "name": "ctrlData",
+          "type": "ValueInputControlData",
+          "doc": "Input control data as eValueInputControlType or ValueInputControlData object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.InitValueInput"
+    },
+    {
+      "name": "IsEmptyValueInputControl",
+      "signature": "IsEmptyValueInputControl()",
+      "summary": "Check, whether there is no input inside the input control",
+      "remarks": "Check, whether there is no input inside the input control",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Input control is empty: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsEmptyValueInputControl"
+    },
+    {
+      "name": "IsMouseMove",
+      "signature": "IsMouseMove(mouseMsg)",
+      "summary": "Check on mouse move",
+      "remarks": "Check on mouse move",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Mouse move: true false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsMouseMove"
+    },
+    {
+      "name": "IsValueInputControlInput",
+      "signature": "IsValueInputControlInput(bIdentPoint)",
+      "summary": "Check, whether an input inside the value input control is done and the value should be used",
+      "remarks": "Check, whether an input inside the value input control is done and the value should be used",
+      "params": [
+        {
+          "name": "bIdentPoint",
+          "type": "bool",
+          "doc": "Identification point has higher priority: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Check, whether the input value inside the added control"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.IsValueInputControlInput"
+    },
+    {
+      "name": "SelectGeometryElement",
+      "signature": "SelectGeometryElement(mouseMsg, pnt, pMsgInfo, bHighlightCompleteElement)",
+      "summary": "Select a base geometry element. Use the filter set by SetGeometryElementFilter and SetGeometryFilter",
+      "remarks": "Select a base geometry element. Use the filter set by SetGeometryElementFilter and SetGeometryFilter",
+      "params": [
+        {
+          "name": "mouseMsg",
+          "type": "int",
+          "doc": "Mouse message WM_xxx",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "Cursor point (view coordinate)",
+          "optional": false
+        },
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        },
+        {
+          "name": "bHighlightCompleteElement",
+          "type": "bool",
+          "doc": "true = highlight the complete element, false = highlight only the selected geometry part",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Element was found: true false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectGeometryElement"
+    },
+    {
+      "name": "SelectPolyhedronFace",
+      "signature": "SelectPolyhedronFace(arg2, arg3, arg4)",
+      "summary": ".. deprecated:: since Allplan 2023-1-0 use FaceSelectService::SelectPolyhedronFace",
+      "remarks": ".. deprecated:: since Allplan 2023-1-0 use FaceSelectService::SelectPolyhedronFace",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectPolyhedronFace"
+    },
+    {
+      "name": "SelectWallFace",
+      "signature": "SelectWallFace(arg2, arg3, arg4)",
+      "summary": ".. deprecated:: since Allplan 2023-1-0 use FaceSelectService::SelectWallFace",
+      "remarks": ".. deprecated:: since Allplan 2023-1-0 use FaceSelectService::SelectWallFace",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectWallFace"
+    },
+    {
+      "name": "SelectWallFaceInUVS",
+      "signature": "SelectWallFaceInUVS(arg2, arg3, arg4)",
+      "summary": ".. deprecated:: since Allplan 2023-1-0 use FaceSelectService::SelectWallFaceInUVS",
+      "remarks": ".. deprecated:: since Allplan 2023-1-0 use FaceSelectService::SelectWallFaceInUVS",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SelectWallFaceInUVS"
+    },
+    {
+      "name": "SetAbscissaLine",
+      "signature": "SetAbscissaLine(arg2, arg3)",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SetAbscissaLine"
+    },
+    {
+      "name": "SetGeometryFilter",
+      "signature": "SetGeometryFilter(geoFilter)",
+      "summary": "Set the geometry element selection filter",
+      "remarks": "Set the geometry element selection filter",
+      "params": [
+        {
+          "name": "geoFilter",
+          "type": "SnoopElementGeometryFilter",
+          "doc": "Geometry element filter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SetGeometryFilter"
+    },
+    {
+      "name": "SetInputPlane",
+      "signature": "SetInputPlane(plane)",
+      "summary": "Set the input plane The input point will be transformed to the input plane: true/false",
+      "remarks": "Set the input plane The input point will be transformed to the input plane: true/false",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "Input plane",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SetInputPlane"
+    },
+    {
+      "name": "SetInputText",
+      "signature": "SetInputText(text)",
+      "summary": "Set the input text",
+      "remarks": "Set the input text",
+      "params": [
+        {
+          "name": "text",
+          "type": "InputStringConvert",
+          "doc": "Request string as resource ID, CAllstring, TCHAR or CString",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SetInputText"
+    },
+    {
+      "name": "SetProjectionBase0",
+      "signature": "SetProjectionBase0(setProjectionBase0)",
+      "summary": "Set the projection base of the coordinate selection",
+      "remarks": "Set the projection base of the coordinate selection",
+      "params": [
+        {
+          "name": "wallsetProjectionBase0",
+          "type": "object",
+          "doc": "True: the input plane normal coordinate is set to 0",
+          "optional": false
+        },
+        {
+          "name": "False",
+          "type": "object",
+          "doc": ": the input plane normal coordinate is used from the selected point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInput/#NemAll_Python_IFW_Input.CoordinateInput.SetProjectionBase0"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,48 @@
+{
+  "name": "AnyValueByType",
+  "namespace": "AnyValueByType",
+  "kind": "class",
+  "summary": "implementation of the data class for the attribute id and value",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/AnyValueByType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__gt__",
+      "signature": "__gt__(any_value: AnyValueByType) -\u003E bool",
+      "summary": "",
+      "params": [
+        {
+          "name": "any_value",
+          "type": "AnyValueByType",
+          "doc": "value to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "value is greater than value to compare with"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/AnyValueByType/#AnyValueByType.AnyValueByType.__gt__"
+    },
+    {
+      "name": "deep_copy",
+      "signature": "deep_copy() -\u003E AnyValueByType",
+      "summary": "execute a deep copy",
+      "remarks": "execute a deep copy",
+      "params": [],
+      "returns": {
+        "type": "AnyValueByType",
+        "doc": "copied object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/AnyValueByType/#AnyValueByType.AnyValueByType.deep_copy"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

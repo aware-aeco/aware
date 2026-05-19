@@ -1,0 +1,979 @@
+{
+  "name": "Polyhedron3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D polyhedron.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/",
+  "constructors": [
+    {
+      "name": "Polyhedron3D()",
+      "signature": "Polyhedron3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__init__"
+    },
+    {
+      "name": "Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation)",
+      "signature": "Polyhedron3D(polyhedronType, verticesCount, edgesCount, facesCount, negativeOrientation)",
+      "summary": "Constructor The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
+      "remarks": "Constructor The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
+      "params": [
+        {
+          "name": "polyhedronType",
+          "type": "PolyhedronType",
+          "doc": "Polyhedron type - edges, faces or volume.",
+          "optional": false
+        },
+        {
+          "name": "verticesCount",
+          "type": "int",
+          "doc": "Count of expected vertices.",
+          "optional": false
+        },
+        {
+          "name": "edgesCount",
+          "type": "int",
+          "doc": "Count of expected edges.",
+          "optional": false
+        },
+        {
+          "name": "facesCount",
+          "type": "int",
+          "doc": "Count of expected faces.",
+          "optional": false
+        },
+        {
+          "name": "negativeOrientation",
+          "type": "bool",
+          "doc": "True for negative orientation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__init__"
+    },
+    {
+      "name": "Polyhedron3D(polyhedron)",
+      "signature": "Polyhedron3D(polyhedron)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear()",
+      "signature": "Clear()",
+      "summary": "Clear all vertices, edges and faces Type and vertices,edges,faces preallocation size of polyhedron will be preserved",
+      "remarks": "Clear all vertices, edges and faces Type and vertices,edges,faces preallocation size of polyhedron will be preserved",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Clear"
+    },
+    {
+      "name": "Clear(verticesCount, edgesCount, facesCount, negativeOrientation)",
+      "signature": "Clear(verticesCount, edgesCount, facesCount, negativeOrientation)",
+      "summary": "Clear all vertices, edges and faces The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
+      "remarks": "Clear all vertices, edges and faces The \u0022Count\u0022 parameters have sense only for appropriate polyhedron type and specified a memory allocation size - performance optimization. In case of any error, constructor throw an exception.",
+      "params": [
+        {
+          "name": "verticesCount",
+          "type": "int",
+          "doc": "Count of expected vertices.",
+          "optional": false
+        },
+        {
+          "name": "edgesCount",
+          "type": "int",
+          "doc": "Count of expected edges.",
+          "optional": false
+        },
+        {
+          "name": "facesCount",
+          "type": "int",
+          "doc": "Count of expected faces.",
+          "optional": false
+        },
+        {
+          "name": "negativeOrientation",
+          "type": "bool",
+          "doc": "True for negative orientation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Clear"
+    },
+    {
+      "name": "CreateCuboid(p1, p2)",
+      "signature": "CreateCuboid(p1, p2)",
+      "summary": "static constructor for cuboid",
+      "remarks": "static constructor for cuboid",
+      "params": [
+        {
+          "name": "p1",
+          "type": "Point3D",
+          "doc": "lower point of min/max box that states the cuboid\u0027s size",
+          "optional": false
+        },
+        {
+          "name": "p2",
+          "type": "Point3D",
+          "doc": "lower point of min/max box that states the cuboid\u0027s size",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
+    },
+    {
+      "name": "CreateCuboid(box)",
+      "signature": "CreateCuboid(box)",
+      "summary": "static constructor for cuboid",
+      "remarks": "static constructor for cuboid",
+      "params": [
+        {
+          "name": "box",
+          "type": "MinMax3D",
+          "doc": "min/max box that states the cuboid\u0027s size",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
+    },
+    {
+      "name": "CreateCuboid(placement, length, width, height)",
+      "signature": "CreateCuboid(placement, length, width, height)",
+      "summary": "Create Polyhedron3D as cuboid",
+      "remarks": "Create Polyhedron3D as cuboid",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "cuboid origin",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "length in its x axis",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "width in its y axis",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "height in its z axis",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyhedron3D",
+        "doc": "created geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
+    },
+    {
+      "name": "CreateCuboid(length, width, height)",
+      "signature": "CreateCuboid(length, width, height)",
+      "summary": "Create a cuboid",
+      "remarks": "Create a cuboid",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "Height",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyhedron3D",
+        "doc": "Polyhedron3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateCuboid"
+    },
+    {
+      "name": "GetEdge(edgeHandle)",
+      "signature": "GetEdge(edgeHandle)",
+      "summary": "Get edge at the specified position",
+      "remarks": "Get edge at the specified position",
+      "params": [
+        {
+          "name": "edgeHandle",
+          "type": "int",
+          "doc": "Specified position of the edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdge"
+    },
+    {
+      "name": "GetEdge(orientedEdge)",
+      "signature": "GetEdge(orientedEdge)",
+      "summary": "Get edge at the specified position with orientation",
+      "remarks": "Get edge at the specified position with orientation",
+      "params": [
+        {
+          "name": "orientedEdge",
+          "type": "OrientedEdge",
+          "doc": "Specified position and orientation of the edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdge"
+    },
+    {
+      "name": "AppendEdge",
+      "signature": "AppendEdge(edge)",
+      "summary": "Append edge Method throw exception if object is not initialized. Old interface: appendPolyederEdge",
+      "remarks": "Append edge Method throw exception if object is not initialized. Old interface: appendPolyederEdge",
+      "params": [
+        {
+          "name": "edge",
+          "type": "GeometryEdge",
+          "doc": "Appended edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.AppendEdge"
+    },
+    {
+      "name": "CreateFace",
+      "signature": "CreateFace(expectedEdges)",
+      "summary": "Create face and append it to polyhedron Method throw exception if object is not initialized. Old interface: appendPolyederFace",
+      "remarks": "Create face and append it to polyhedron Method throw exception if object is not initialized. Old interface: appendPolyederFace",
+      "params": [
+        {
+          "name": "expectedEdges",
+          "type": "int",
+          "doc": "Appended face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolyhedronFace",
+        "doc": "Created face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.CreateFace"
+    },
+    {
+      "name": "DeleteEdge",
+      "signature": "DeleteEdge(edgeHandle)",
+      "summary": "Delete edge Method throw exception if object is not initialized. Old interface: deletePolyederEdge",
+      "remarks": "Delete edge Method throw exception if object is not initialized. Old interface: deletePolyederEdge",
+      "params": [
+        {
+          "name": "edgeHandle",
+          "type": "int",
+          "doc": "Edge to delete",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.DeleteEdge"
+    },
+    {
+      "name": "DeleteFace",
+      "signature": "DeleteFace(faceIndex)",
+      "summary": "Delete face at specified position Method throw exception in case of any error. Old interface: deleteFace",
+      "remarks": "Delete face at specified position Method throw exception in case of any error. Old interface: deleteFace",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "Position of the deleted face. Zero based.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.DeleteFace"
+    },
+    {
+      "name": "DeleteFaces",
+      "signature": "DeleteFaces(faceIndices)",
+      "summary": "Delete faces at specified positions Method throw exception in case of any error. Old interface: deleteFace",
+      "remarks": "Delete faces at specified positions Method throw exception in case of any error. Old interface: deleteFace",
+      "params": [
+        {
+          "name": "faceIndices",
+          "type": "VecSizeTList",
+          "doc": "Positions of the deleted faces. Zero based.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.DeleteFaces"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(polyhedron)",
+      "summary": "Test for equal reference point",
+      "remarks": "Test for equal reference point",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Tested polyhedron.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when both polyhedrons has the same reference point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.EqualRef"
+    },
+    {
+      "name": "GetEdgeVertices",
+      "signature": "GetEdgeVertices(orientedEdge)",
+      "summary": "Get points on specified edge from specified face Method throw exception in case of any error.",
+      "remarks": "Get points on specified edge from specified face Method throw exception in case of any error.",
+      "params": [
+        {
+          "name": "orientedEdge",
+          "type": "OrientedEdge",
+          "doc": "Oriented edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdgeVertices"
+    },
+    {
+      "name": "GetEdges",
+      "signature": "GetEdges()",
+      "summary": "Get copy of all edges Old interface: getPolyederAllEdges",
+      "remarks": "Get copy of all edges Old interface: getPolyederAllEdges",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdges"
+    },
+    {
+      "name": "GetEdgesCount",
+      "signature": "GetEdgesCount()",
+      "summary": "Get count of edges Method throw exception in case of any error. Count",
+      "remarks": "Get count of edges Method throw exception in case of any error. Count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdgesCount"
+    },
+    {
+      "name": "GetEdgesLines",
+      "signature": "GetEdgesLines()",
+      "summary": "Get copy of all edges as vector of lines",
+      "remarks": "Get copy of all edges as vector of lines",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdgesLines"
+    },
+    {
+      "name": "GetEdgesOnFaceCount",
+      "signature": "GetEdgesOnFaceCount(faceIndex)",
+      "summary": "Get count of edges at the specified face Method throw exception in case of any error. In case of error, return 0. Count",
+      "remarks": "Get count of edges at the specified face Method throw exception in case of any error. In case of error, return 0. Count",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "Specified position of the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Count if edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetEdgesOnFaceCount"
+    },
+    {
+      "name": "GetFace",
+      "signature": "GetFace(faceIndex)",
+      "summary": "Get face at the specified position In case of error, method throw an exception.",
+      "remarks": "Get face at the specified position In case of error, method throw an exception.",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "Specified position of the face.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PolyhedronFace",
+        "doc": "Face."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetFace"
+    },
+    {
+      "name": "GetFacesCount",
+      "signature": "GetFacesCount()",
+      "summary": "Get count of faces Method throw exception in case of any error.",
+      "remarks": "Get count of faces Method throw exception in case of any error.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of faces."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetFacesCount"
+    },
+    {
+      "name": "GetNormalVectorOfFace",
+      "signature": "GetNormalVectorOfFace(faceIndex)",
+      "summary": "Get normal vector of the face",
+      "remarks": "Get normal vector of the face",
+      "params": [
+        {
+          "name": "faceIndex",
+          "type": "int",
+          "doc": "face index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetNormalVectorOfFace"
+    },
+    {
+      "name": "GetParts",
+      "signature": "GetParts()",
+      "summary": "Get separated parts (continuos shells)",
+      "remarks": "Get separated parts (continuos shells)",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetParts"
+    },
+    {
+      "name": "GetPartsCount",
+      "signature": "GetPartsCount()",
+      "summary": "Get number of parts in this polyhedron",
+      "remarks": "Get number of parts in this polyhedron",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "number of parts"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetPartsCount"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint()",
+      "summary": "Get the reference point",
+      "remarks": "Get the reference point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Constant reference point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetRefPoint"
+    },
+    {
+      "name": "GetRelVertex",
+      "signature": "GetRelVertex(index)",
+      "summary": "Get relative vertex at specified position Method throw exception in case of any error. (usually out of range)",
+      "remarks": "Get relative vertex at specified position Method throw exception in case of any error. (usually out of range)",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Specified position.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetRelVertex"
+    },
+    {
+      "name": "GetType",
+      "signature": "GetType()",
+      "summary": "Get polyhedron type In case of error, method return tEdges.",
+      "remarks": "Get polyhedron type In case of error, method return tEdges.",
+      "params": [],
+      "returns": {
+        "type": "PolyhedronType",
+        "doc": "Type."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetType"
+    },
+    {
+      "name": "GetVertex",
+      "signature": "GetVertex(vertexIndex)",
+      "summary": "Get vertex at specified position Method throw exception in case of any error.",
+      "remarks": "Get vertex at specified position Method throw exception in case of any error.",
+      "params": [
+        {
+          "name": "vertexIndex",
+          "type": "int",
+          "doc": "Specified position of vertex.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetVertex"
+    },
+    {
+      "name": "GetVertices",
+      "signature": "GetVertices()",
+      "summary": "Get copy of vertices in world coordinate system",
+      "remarks": "Get copy of vertices in world coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3DList",
+        "doc": "Vector with all vertices as Point3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetVertices"
+    },
+    {
+      "name": "GetVerticesCount",
+      "signature": "GetVerticesCount()",
+      "summary": "Get count of vertices Method throw exception in case of any error. Count",
+      "remarks": "Get count of vertices Method throw exception in case of any error. Count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of vertices."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.GetVerticesCount"
+    },
+    {
+      "name": "Heal",
+      "signature": "Heal()",
+      "summary": "Heal polyhedron by splitting non-planar faces to triangles",
+      "remarks": "Heal polyhedron by splitting non-planar faces to triangles",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Heal"
+    },
+    {
+      "name": "Invert",
+      "signature": "Invert()",
+      "summary": "Invert polyhedron from positive to negative or vice versa",
+      "remarks": "Invert polyhedron from positive to negative or vice versa",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Invert"
+    },
+    {
+      "name": "InvertWithFlagUnchanged",
+      "signature": "InvertWithFlagUnchanged()",
+      "summary": "Invert polyhedron from positive to negative or vice versa, but keep flag unchanged",
+      "remarks": "Invert polyhedron from positive to negative or vice versa, but keep flag unchanged",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.InvertWithFlagUnchanged"
+    },
+    {
+      "name": "IsNegative",
+      "signature": "IsNegative()",
+      "summary": "Checking the negative orientation Method throw exception in case of any error. Old interface: getPolyederNega",
+      "remarks": "Checking the negative orientation Method throw exception in case of any error. Old interface: getPolyederNega",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when negative orientation, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.IsNegative"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Checking validity Depends on polyhedron type",
+      "remarks": "Checking validity Depends on polyhedron type",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when valid, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.IsValid"
+    },
+    {
+      "name": "Normalize",
+      "signature": "Normalize(normType)",
+      "summary": "Normalize polyhedron",
+      "remarks": "Normalize polyhedron",
+      "params": [
+        {
+          "name": "normType",
+          "type": "int",
+          "doc": "Type of normalization.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Normalize"
+    },
+    {
+      "name": "ReadFromStream",
+      "signature": "ReadFromStream(sstream_str)",
+      "summary": "Read Polyhedron3D from stream",
+      "remarks": "Read Polyhedron3D from stream",
+      "params": [
+        {
+          "name": "sstream_str",
+          "type": "str",
+          "doc": "input stream",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.ReadFromStream"
+    },
+    {
+      "name": "RemapVertices",
+      "signature": "RemapVertices(source)",
+      "summary": "set vertex order as in source polyhedron",
+      "remarks": "set vertex order as in source polyhedron",
+      "params": [
+        {
+          "name": "source",
+          "type": "Polyhedron3D",
+          "doc": "original cuboid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "success"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.RemapVertices"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(refPoint, polyhedronWorld)",
+      "summary": "Set polyhedron on reference point. Polyhedron is in world coordinate system",
+      "remarks": "Set polyhedron on reference point. Polyhedron is in world coordinate system",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "Reference point.",
+          "optional": false
+        },
+        {
+          "name": "polyhedronWorld",
+          "type": "Polyhedron3D",
+          "doc": "Polyhedron with vertices in World coordinate system.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Set"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint)",
+      "summary": "Set the reference point Be aware: All vertices will be recalculated on new reference point. This operation is very slow in case of many vertices. Use constructor for better and faster initialization object.",
+      "remarks": "Set the reference point Be aware: All vertices will be recalculated on new reference point. This operation is very slow in case of many vertices. Use constructor for better and faster initialization object.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "New reference point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.SetRefPoint"
+    },
+    {
+      "name": "SetType",
+      "signature": "SetType(polyheronType)",
+      "summary": "Get polyhedron type Method throw exception if polyhedron is not initialized. In case of incorrect polyhedronType, tEdges type will be set.",
+      "remarks": "Get polyhedron type Method throw exception if polyhedron is not initialized. In case of incorrect polyhedronType, tEdges type will be set.",
+      "params": [
+        {
+          "name": "polyheronType",
+          "type": "PolyhedronType",
+          "doc": "Type of polyhedron.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.SetType"
+    },
+    {
+      "name": "WriteToStream",
+      "signature": "WriteToStream()",
+      "summary": "Write Polyhedron3D to the stream",
+      "remarks": "Write Polyhedron3D to the stream",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.WriteToStream"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(polyhedron)",
+      "summary": "Comparison of polyhedrons without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of polyhedrons without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "polyhedron",
+          "type": "Polyhedron3D",
+          "doc": "Compared polyhedron.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when polyhedrons are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__eq__"
+    },
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(index)",
+      "summary": "Get vertex at the specified position from index. Used world coordinates Operator throw exception in case of any error.",
+      "remarks": "Get vertex at the specified position from index. Used world coordinates Operator throw exception in case of any error.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Specified position",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Vertex"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__getitem__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix)",
+      "summary": "Matrix transformation of vertices",
+      "remarks": "Matrix transformation of vertices",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyhedron3D",
+        "doc": "Transformed polyhedron."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "RefPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point Be aware: All vertices will be recalculated on new reference point. This operation is very slow in case of many vertices. Use constructor for better and faster initialization object.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.RefPoint"
+    },
+    {
+      "name": "Type",
+      "type": "PolyhedronType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get polyhedron type In case of error, method return tEdges. Get polyhedron type Method throw exception if polyhedron is not initialized. In case of incorrect polyhedronType, tEdges type will be set.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyhedron3D/#NemAll_Python_Geometry.Polyhedron3D.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

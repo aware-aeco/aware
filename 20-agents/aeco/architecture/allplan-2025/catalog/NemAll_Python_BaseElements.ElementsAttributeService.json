@@ -1,0 +1,101 @@
+{
+  "name": "ElementsAttributeService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for processing attributes of existing model elements. The service provides methods to e.g. read or modify attribute values.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsAttributeService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ChangeAttribute",
+      "signature": "ChangeAttribute( attributeNumber: int, newValue: object, elements: BaseElementAdapterList ) -\u003E BaseElementAdapterList",
+      "summary": "Change an attribute",
+      "remarks": "Change an attribute",
+      "params": [
+        {
+          "name": "attributeNumber",
+          "type": "int",
+          "doc": "Attribute number",
+          "optional": false
+        },
+        {
+          "name": "newValue",
+          "type": "object",
+          "doc": "New value",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Adapted elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsAttributeService/#NemAll_Python_BaseElements.ElementsAttributeService.ChangeAttribute"
+    },
+    {
+      "name": "ChangeAttributes",
+      "signature": "ChangeAttributes( attributeDataList: list, elements: BaseElementAdapterList ) -\u003E BaseElementAdapterList",
+      "summary": "Change an attribute",
+      "remarks": "Change an attribute",
+      "params": [
+        {
+          "name": "attributeDataList",
+          "type": "list",
+          "doc": "List with the attribute data as tuple(number, value)",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements as BaseElementAdapterList",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Modified elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsAttributeService/#NemAll_Python_BaseElements.ElementsAttributeService.ChangeAttributes"
+    },
+    {
+      "name": "GetAttributes",
+      "signature": "GetAttributes( ele: BaseElementAdapter, readState: eAttibuteReadState = ReadAll ) -\u003E list",
+      "summary": "Get the attributes from an element",
+      "remarks": "Get the attributes from an element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element adapter",
+          "optional": false
+        },
+        {
+          "name": "readState",
+          "type": "eAttibuteReadState",
+          "doc": "What attributes to read",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list",
+        "doc": "Attributes"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsAttributeService/#NemAll_Python_BaseElements.ElementsAttributeService.GetAttributes"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

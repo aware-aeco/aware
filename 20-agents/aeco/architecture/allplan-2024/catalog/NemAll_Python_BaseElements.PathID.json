@@ -1,0 +1,53 @@
+{
+  "name": "PathID",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Path IDs for the stamp",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PathID/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PathID",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PathID/#NemAll_Python_BaseElements.PathID.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PathDefaultID",
+      "value": 20
+    },
+    {
+      "name": "PathOfficeID",
+      "value": 30
+    },
+    {
+      "name": "PathPrivateID",
+      "value": 8
+    },
+    {
+      "name": "PathProjectID",
+      "value": 1
+    }
+  ]
+}

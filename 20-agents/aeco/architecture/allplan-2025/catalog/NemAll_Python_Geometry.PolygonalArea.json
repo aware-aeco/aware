@@ -1,0 +1,277 @@
+{
+  "name": "PolygonalArea",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Geometry.PolygonalArea.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AppendEdge",
+      "signature": "AppendEdge(edge: GeometryEdge) -\u003E eGeometryErrorCode",
+      "summary": "Append edge (appendPolygonEdge).",
+      "remarks": "Append edge (appendPolygonEdge).",
+      "params": [
+        {
+          "name": "edge",
+          "type": "GeometryEdge",
+          "doc": "Appended edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.AppendEdge"
+    },
+    {
+      "name": "GetComponentsCount",
+      "signature": "GetComponentsCount() -\u003E int",
+      "summary": "Get count of components.",
+      "remarks": "Get count of components.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of component."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetComponentsCount"
+    },
+    {
+      "name": "GetEdge",
+      "signature": "GetEdge(edgeIndex: int) -\u003E tuple",
+      "summary": "Get edge.",
+      "remarks": "Get edge.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "index of the edge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetEdge"
+    },
+    {
+      "name": "GetEdges",
+      "signature": "GetEdges() -\u003E tuple",
+      "summary": "Get copy of all edges.",
+      "remarks": "Get copy of all edges.",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetEdges"
+    },
+    {
+      "name": "GetEdgesCount",
+      "signature": "GetEdgesCount() -\u003E int",
+      "summary": "Get count of edges.",
+      "remarks": "Get count of edges.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of edges."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetEdgesCount"
+    },
+    {
+      "name": "GetLoopEndEdgeIndex",
+      "signature": "GetLoopEndEdgeIndex(loopIndex: int) -\u003E int",
+      "summary": "Get the index of last edge of a loop.",
+      "remarks": "Get the index of last edge of a loop.",
+      "params": [
+        {
+          "name": "loopIndex",
+          "type": "int",
+          "doc": "index of loop.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Index of the last edge of the loop identified by the loopIndex value."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetLoopEndEdgeIndex"
+    },
+    {
+      "name": "GetLoopsCount",
+      "signature": "GetLoopsCount() -\u003E int",
+      "summary": "Get Count of loops.",
+      "remarks": "Get Count of loops.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of loops."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetLoopsCount"
+    },
+    {
+      "name": "GetNeighborEdges",
+      "signature": "GetNeighborEdges(edgeIndex: int) -\u003E tuple",
+      "summary": "Get neighbor edges.",
+      "remarks": "Get neighbor edges.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetNeighborEdges"
+    },
+    {
+      "name": "GetNextEdge",
+      "signature": "GetNextEdge(edgeIndex: int) -\u003E tuple",
+      "summary": "Get next edge.",
+      "remarks": "Get next edge.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetNextEdge"
+    },
+    {
+      "name": "GetPlane",
+      "signature": "GetPlane() -\u003E tuple",
+      "summary": "Get plane if polygon is plane.",
+      "remarks": "Get plane if polygon is plane.",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetPlane"
+    },
+    {
+      "name": "GetPrevEdge",
+      "signature": "GetPrevEdge(edgeIndex: int) -\u003E tuple",
+      "summary": "Get previous edge.",
+      "remarks": "Get previous edge.",
+      "params": [
+        {
+          "name": "edgeIndex",
+          "type": "int",
+          "doc": "edge index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetPrevEdge"
+    },
+    {
+      "name": "GetVector",
+      "signature": "GetVector() -\u003E tuple",
+      "summary": "Get Normal vector if polygon is plane.",
+      "remarks": "Get Normal vector if polygon is plane.",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "Error code.,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetVector"
+    },
+    {
+      "name": "GetVerticesCount",
+      "signature": "GetVerticesCount() -\u003E int",
+      "summary": "Get count of vertices.",
+      "remarks": "Get count of vertices.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of vertices."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.GetVerticesCount"
+    },
+    {
+      "name": "SetPlane",
+      "signature": "SetPlane(plane: Plane3D)",
+      "summary": "Set plane.",
+      "remarks": "Set plane.",
+      "params": [
+        {
+          "name": "plane",
+          "type": "Plane3D",
+          "doc": "plane which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.SetPlane"
+    },
+    {
+      "name": "SetVector",
+      "signature": "SetVector(vec: Vector3D) -\u003E eGeometryErrorCode",
+      "summary": "Set normal vector.",
+      "remarks": "Set normal vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "vector which will be set.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/PolygonalArea/#NemAll_Python_Geometry.PolygonalArea.SetVector"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,119 @@
+{
+  "name": "FixturePlacementElement",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixturePlacementElement class",
+  "base": "PrecastElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/",
+  "constructors": [
+    {
+      "name": "FixturePlacementElement()",
+      "signature": "FixturePlacementElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.__init__"
+    },
+    {
+      "name": "FixturePlacementElement( commonProp: CommonProperties, macroPlacementProp: FixturePlacementProperties, macro: object, )",
+      "signature": "FixturePlacementElement( commonProp: CommonProperties, macroPlacementProp: FixturePlacementProperties, macro: object, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "macroPlacementProp",
+          "type": "FixturePlacementProperties",
+          "doc": "MacroPlacement properties",
+          "optional": false
+        },
+        {
+          "name": "macro",
+          "type": "object",
+          "doc": "Macro definition element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFixturePlacementProperties",
+      "signature": "GetFixturePlacementProperties() -\u003E FixturePlacementProperties",
+      "summary": "Get the MacroPlacement properties",
+      "remarks": "Get the MacroPlacement properties",
+      "params": [],
+      "returns": {
+        "type": "FixturePlacementProperties",
+        "doc": "MacroPlacement properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.GetFixturePlacementProperties"
+    },
+    {
+      "name": "GetMacro",
+      "signature": "GetMacro() -\u003E object",
+      "summary": "Get the corresponding macro definition",
+      "remarks": "Get the corresponding macro definition",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Macro definition element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.GetMacro"
+    },
+    {
+      "name": "SetFixturePlacementProperties",
+      "signature": "SetFixturePlacementProperties(MacroPlacementProp: FixturePlacementProperties)",
+      "summary": "Set the MacroPlacement properties",
+      "remarks": "Set the MacroPlacement properties",
+      "params": [
+        {
+          "name": "MacroPlacementProp",
+          "type": "FixturePlacementProperties",
+          "doc": "MacroPlacement properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.SetFixturePlacementProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementElement/#NemAll_Python_Precast.FixturePlacementElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Functions",
+  "namespace": "TestHelper.ProfileUtil",
+  "kind": "static-class",
+  "summary": "Module-level functions of TestHelper.ProfileUtil",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TestHelper/ProfileUtil/_functions/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "use_line_profiler",
+      "signature": "use_line_profiler(mod)",
+      "summary": "implementation of the line usage function",
+      "remarks": "implementation of the line usage function",
+      "params": [
+        {
+          "name": "mod",
+          "type": "Any",
+          "doc": "module to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "result of the executed function"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TestHelper/ProfileUtil/_functions/#TestHelper.ProfileUtil.use_line_profiler"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

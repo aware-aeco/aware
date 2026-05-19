@@ -1,0 +1,406 @@
+{
+  "name": "Path2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D path.",
+  "base": "Path",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/",
+  "constructors": [
+    {
+      "name": "Path2D()",
+      "signature": "Path2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__init__"
+    },
+    {
+      "name": "Path2D(path)",
+      "signature": "Path2D(path)",
+      "summary": "Copy constructor Copy constructor is expensive because all data are cloned in new path.",
+      "remarks": "Copy constructor Copy constructor is expensive because all data are cloned in new path.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path2D",
+          "doc": "Path which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add(element)",
+      "signature": "Add(element)",
+      "summary": "Add element into path Path2D",
+      "remarks": "Add element into path Path2D",
+      "params": [
+        {
+          "name": "element",
+          "type": "Path2D",
+          "doc": "Path element to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.Add"
+    },
+    {
+      "name": "Add(element_object)",
+      "signature": "Add(element_object)",
+      "summary": "Add element into path Path2D",
+      "remarks": "Add element into path Path2D",
+      "params": [
+        {
+          "name": "element_object",
+          "type": "object",
+          "doc": "Pointer to element to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "error code"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.Add"
+    },
+    {
+      "name": "__iadd__(element)",
+      "signature": "__iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Path2D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Path2D",
+        "doc": "Reference to path."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
+    },
+    {
+      "name": "__iadd__(element)",
+      "signature": "__iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Line2D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
+    },
+    {
+      "name": "__iadd__(element)",
+      "signature": "__iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Polyline2D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
+    },
+    {
+      "name": "__iadd__(element)",
+      "signature": "__iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Spline2D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
+    },
+    {
+      "name": "__iadd__(element)",
+      "signature": "__iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Clothoid2D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
+    },
+    {
+      "name": "__iadd__(element)",
+      "signature": "__iadd__(element)",
+      "summary": "Append operator",
+      "remarks": "Append operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "Arc2D",
+          "doc": "Element which will be appended",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__iadd__"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint()",
+      "summary": "Get path end point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "remarks": "Get path end point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "const Point2D End point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint()",
+      "summary": "Get relative end (last) point of the path",
+      "remarks": "Get relative end (last) point of the path",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "End point (relative)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.GetEndRelPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint()",
+      "summary": "Get path start point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "remarks": "Get path start point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "const Point2D Start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint()",
+      "summary": "Get relative start (first) point of the path",
+      "remarks": "Get relative start (first) point of the path",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Start point (relative)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.GetStartRelPoint"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed()",
+      "summary": "Check for closed path, it mean that first point is same as last point",
+      "remarks": "Check for closed path, it mean that first point is same as last point",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when path is closed, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.IsClosed"
+    },
+    {
+      "name": "IsItPossibleToAddElement",
+      "signature": "IsItPossibleToAddElement(pGeometry_object)",
+      "summary": "Check if the geometry can be added into path Path2D",
+      "remarks": "Check if the geometry can be added into path Path2D",
+      "params": [
+        {
+          "name": "pGeometry_object",
+          "type": "object",
+          "doc": "Pointer to geometry to check",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.IsItPossibleToAddElement"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Validity check \\warning Path doesn\u0027t have to be closed to be valid, you have to check this extra",
+      "remarks": "Validity check \\warning Path doesn\u0027t have to be closed to be valid, you have to check this extra",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.IsValid"
+    },
+    {
+      "name": "IsValidCurveType",
+      "signature": "IsValidCurveType(pGeometry_object)",
+      "summary": "Check if the geometry is supported by Path2D",
+      "remarks": "Check if the geometry is supported by Path2D",
+      "params": [
+        {
+          "name": "pGeometry_object",
+          "type": "object",
+          "doc": "Pointer to geometry to check",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.IsValidCurveType"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(endpoint)",
+      "summary": "Set end (last) point of the path",
+      "remarks": "Set end (last) point of the path",
+      "params": [
+        {
+          "name": "endpoint",
+          "type": "Point2D",
+          "doc": "E point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "none"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.SetEndPoint"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startpoint)",
+      "summary": "Set start (first) point of the path",
+      "remarks": "Set start (first) point of the path",
+      "params": [
+        {
+          "name": "startpoint",
+          "type": "Point2D",
+          "doc": "Start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "none"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.SetStartPoint"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(path)",
+      "summary": "Comparison of paths without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of paths without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path2D",
+          "doc": "Compared path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when paths are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get path end point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.EndPoint"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get path start point Throw THROW_GEO_EXCEPTION_OUT_OF_RANGE_ if path is empty Throw THROW_GEO_EXCEPTION_GENERAL_ERROR_ if internal error",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path2D/#NemAll_Python_Geometry.Path2D.StartPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,23 @@
+{
+  "name": "OpeningSide",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Type of the opening side",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/OpeningSide/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eInnerSide",
+      "value": 0
+    },
+    {
+      "name": "eOuterSide",
+      "value": 1
+    }
+  ]
+}

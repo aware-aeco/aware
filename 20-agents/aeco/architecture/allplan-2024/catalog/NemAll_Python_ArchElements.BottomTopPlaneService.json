@@ -1,0 +1,166 @@
+{
+  "name": "BottomTopPlaneService",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the bottom top plane service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BottomTopPlaneService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAbsoluteBottomElevation",
+      "signature": "GetAbsoluteBottomElevation(refElement, doc, planeProp)",
+      "summary": "Get the absolute elevation of the bottom plane",
+      "remarks": "Get the absolute elevation of the bottom plane",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeProp",
+          "type": "BasePlaneReferences",
+          "doc": "Plane properties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Absolute elevation of the bottom plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BottomTopPlaneService/#NemAll_Python_ArchElements.BottomTopPlaneService.GetAbsoluteBottomElevation"
+    },
+    {
+      "name": "GetAbsoluteTopElevation",
+      "signature": "GetAbsoluteTopElevation(refElement, doc, planeProp)",
+      "summary": "Get the absolute elevation of the top plane",
+      "remarks": "Get the absolute elevation of the top plane",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeProp",
+          "type": "BasePlaneReferences",
+          "doc": "Plane properties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Absolute elevation of the top plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BottomTopPlaneService/#NemAll_Python_ArchElements.BottomTopPlaneService.GetAbsoluteTopElevation"
+    },
+    {
+      "name": "GetBottomReferencePlane",
+      "signature": "GetBottomReferencePlane(refElement, doc, planeProp)",
+      "summary": "Get the bottom reference plane",
+      "remarks": "Get the bottom reference plane",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeProp",
+          "type": "BasePlaneReferences",
+          "doc": "Plane properties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Union[BRep3D, Polyhedron3D, Plane3D]",
+        "doc": "Bottom reference plane as Plan3D, BRep3D or Polyhedron3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BottomTopPlaneService/#NemAll_Python_ArchElements.BottomTopPlaneService.GetBottomReferencePlane"
+    },
+    {
+      "name": "GetDocumentDefaultPlanes",
+      "signature": "GetDocumentDefaultPlanes(doc)",
+      "summary": "Get the default bottom and top plane of the document",
+      "remarks": "Get the default bottom and top plane of the document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Plane3D, Plane3D]",
+        "doc": "Default bottom and top plane of the document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BottomTopPlaneService/#NemAll_Python_ArchElements.BottomTopPlaneService.GetDocumentDefaultPlanes"
+    },
+    {
+      "name": "GetTopReferencePlane",
+      "signature": "GetTopReferencePlane(refElement, doc, planeProp)",
+      "summary": "Get the top reference plane",
+      "remarks": "Get the top reference plane",
+      "params": [
+        {
+          "name": "refElement",
+          "type": "BaseElementAdapter",
+          "doc": "Reference element (empty element if not exist)",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "planeProp",
+          "type": "BasePlaneReferences",
+          "doc": "Plane properties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Union[BRep3D, Polyhedron3D, Plane3D]",
+        "doc": "Bottom reference plane as Plan3D, BRep3D or Polyhedron3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/BottomTopPlaneService/#NemAll_Python_ArchElements.BottomTopPlaneService.GetTopReferencePlane"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

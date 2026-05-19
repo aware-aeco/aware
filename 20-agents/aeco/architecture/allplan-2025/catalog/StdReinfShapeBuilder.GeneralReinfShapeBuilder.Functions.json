@@ -1,0 +1,884 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.GeneralReinfShapeBuilder",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.GeneralReinfShapeBuilder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_hook_type_from_angle",
+      "signature": "get_hook_type_from_angle( hook_type: HookType | int, hook_angle: float ) -\u003E HookType",
+      "summary": "Determines the hook type based on the given angle",
+      "remarks": "Determines the hook type based on the given angle",
+      "params": [
+        {
+          "name": "hook_type",
+          "type": "HookType | int",
+          "doc": "Type of the hook. If set to -1, hook type is determined based on given angle. Otherwise, given hook type is returned.",
+          "optional": false
+        },
+        {
+          "name": "hook_angle",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "HookType",
+        "doc": "Determined hook type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.get_hook_type_from_angle"
+    },
+    {
+      "name": "create_longitudinal_shape_with_hooks",
+      "signature": "create_longitudinal_shape_with_hooks( length: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, start_hook: float = 0, end_hook: float = 0, ) -\u003E BendingShape",
+      "summary": "Create a straight bar shape, optionally with standard 90\u00B0 hooks at start and/or end. The shape is created in the XY coordinate system, along X axis.",
+      "remarks": "Create a straight bar shape, optionally with standard 90\u00B0 hooks at start and/or end. The shape is created in the XY coordinate system, along X axis.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference line.",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: left, right and bottom cover",
+          "optional": false
+        },
+        {
+          "name": "start_hook",
+          "type": "float",
+          "doc": "Hook length at the start. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "end_hook",
+          "type": "float",
+          "doc": "Hook length at the end. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_longitudinal_shape_with_hooks"
+    },
+    {
+      "name": "create_longitudinal_shape_with_user_hooks",
+      "signature": "create_longitudinal_shape_with_user_hooks( length: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, start_hook: float = 0.0, end_hook: float = 0.0, start_hook_angle: float = 90.0, end_hook_angle: float = 90.0, hook_type_start: HookType | int = -1, hook_type_end: HookType | int = -1, ) -\u003E BendingShape",
+      "summary": "Create a straight bar shape, optionally with user defined hooks at start and/or end. The shape is created in the local XY coordinate system, along X axis.",
+      "remarks": "Create a straight bar shape, optionally with user defined hooks at start and/or end. The shape is created in the local XY coordinate system, along X axis.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference line.",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: left, right and bottom cover",
+          "optional": false
+        },
+        {
+          "name": "start_hook",
+          "type": "float",
+          "doc": "Hook length at the start. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "end_hook",
+          "type": "float",
+          "doc": "Hook length at the end. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "start_hook_angle",
+          "type": "float",
+          "doc": "Hook angle at start. Value between [-180, 180]",
+          "optional": false
+        },
+        {
+          "name": "end_hook_angle",
+          "type": "float",
+          "doc": "Hook angle at end. Value between [-180, 180]",
+          "optional": false
+        },
+        {
+          "name": "hook_type_start",
+          "type": "HookType | int",
+          "doc": "Type of the hook at the start. By default determined based on angle.",
+          "optional": false
+        },
+        {
+          "name": "hook_type_end",
+          "type": "HookType | int",
+          "doc": "Type of the hook at the end. By default determined based on angle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_longitudinal_shape_with_user_hooks"
+    },
+    {
+      "name": "create_longitudinal_shape_with_anchorage",
+      "signature": "create_longitudinal_shape_with_anchorage( from_point: Point2D | Point3D, to_point: Point2D | Point3D, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, start_anchorage: float = 0, end_anchorage: float = 0, ) -\u003E BendingShape",
+      "summary": "Create a straight bar shape, optionally with anchorage. The shape is created in the local XY coordinate system, along X axis.",
+      "remarks": "Create a straight bar shape, optionally with anchorage. The shape is created in the local XY coordinate system, along X axis.",
+      "params": [
+        {
+          "name": "from_point",
+          "type": "Point2D | Point3D",
+          "doc": "Start point of the reference line.",
+          "optional": false
+        },
+        {
+          "name": "to_point",
+          "type": "Point2D | Point3D",
+          "doc": "End point of the reference line.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: bottom cover. If the anchorage length at start or end is set to 0, then also left or right cover respectively are considered.",
+          "optional": false
+        },
+        {
+          "name": "start_anchorage",
+          "type": "float",
+          "doc": "Anchorage length at the start.",
+          "optional": false
+        },
+        {
+          "name": "end_anchorage",
+          "type": "float",
+          "doc": "Anchorage length at the end.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_longitudinal_shape_with_anchorage"
+    },
+    {
+      "name": "create_l_shape_with_hooks",
+      "signature": "create_l_shape_with_hooks( length: float, width: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, start_hook: float = 0, end_hook: float = 0, ) -\u003E BendingShape",
+      "summary": "Create an L-shape, optionally with standard 90\u00B0 hooks at start and/or end. The shape is created in local XY coordinate system like this: \u2143",
+      "remarks": "Create an L-shape, optionally with standard 90\u00B0 hooks at start and/or end. The shape is created in local XY coordinate system like this: \u2143",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference line parallel to X axis",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Length of the reference line parallel to Y axis",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete cover properties. Relevant are all: bottom, left, right and top.",
+          "optional": false
+        },
+        {
+          "name": "start_hook",
+          "type": "float",
+          "doc": "Hook length at the start. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "end_hook",
+          "type": "float",
+          "doc": "Hook length at the end. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_l_shape_with_hooks"
+    },
+    {
+      "name": "create_stirrup",
+      "signature": "create_stirrup( length: float, width: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, stirrup_type: StirrupType = Normal, hook_length: float = 0, ) -\u003E BendingShape",
+      "summary": "Create a rectangular stirrup shape with default hooks. The shape is created in local XY coordinate system.",
+      "remarks": "Create a rectangular stirrup shape with default hooks. The shape is created in local XY coordinate system.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference rectangle (X-direction).",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the reference rectangle (Y-direction).",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers: bottom, left, right and top.",
+          "optional": false
+        },
+        {
+          "name": "stirrup_type",
+          "type": "StirrupType",
+          "doc": "Type of the stirrup.",
+          "optional": false
+        },
+        {
+          "name": "hook_length",
+          "type": "float",
+          "doc": "Hook length. Default value (0) calculates the length automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_stirrup"
+    },
+    {
+      "name": "create_stirrup_with_user_hooks",
+      "signature": "create_stirrup_with_user_hooks( length: float, width: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, stirrup_type: StirrupType, hook_length_start: float, hook_angle_start: float, hook_length_end: float, hook_angle_end: float, ) -\u003E BendingShape",
+      "summary": "Create a rectangular stirrup shape with user defined hooks. The shape is created in local XY coordinate system.",
+      "remarks": "Create a rectangular stirrup shape with user defined hooks. The shape is created in local XY coordinate system.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference rectangle (X-direction).",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the reference rectangle (Y-direction).",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers: bottom, left, right and top.",
+          "optional": false
+        },
+        {
+          "name": "stirrup_type",
+          "type": "StirrupType",
+          "doc": "Type of the stirrup.",
+          "optional": false
+        },
+        {
+          "name": "hook_length_start",
+          "type": "float",
+          "doc": "Hook length at start. When set to 0, the length is calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "hook_angle_start",
+          "type": "float",
+          "doc": "Hook angle at start. When set to 0, the angle is calculated automatically based on stirrup type.",
+          "optional": false
+        },
+        {
+          "name": "hook_length_end",
+          "type": "float",
+          "doc": "Hook length at end. When set to 0, the length is calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "hook_angle_end",
+          "type": "float",
+          "doc": "Hook angle at end. When set to 0, the angle is calculated automatically based on stirrup type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_stirrup_with_user_hooks"
+    },
+    {
+      "name": "create_open_stirrup",
+      "signature": "create_open_stirrup( length: float, width: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, start_hook: float = 0, end_hook: float = 0, start_hook_angle: float = 90.0, end_hook_angle: float = 90.0, hook_type: HookType | int = -1, ) -\u003E BendingShape",
+      "summary": "Create a rectangular stirrup shape, open on the top side. The shape is created in local XY coordinate system.",
+      "remarks": "Create a rectangular stirrup shape, open on the top side. The shape is created in local XY coordinate system.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference rectangle (X-direction).",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the reference rectangle (Y-direction).",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers: bottom, left, right and top.",
+          "optional": false
+        },
+        {
+          "name": "start_hook",
+          "type": "float",
+          "doc": "Length of the left hook. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "end_hook",
+          "type": "float",
+          "doc": "Length of the right hook. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "start_hook_angle",
+          "type": "float",
+          "doc": "Angle of the left hook [-180, 180]",
+          "optional": false
+        },
+        {
+          "name": "end_hook_angle",
+          "type": "float",
+          "doc": "Angle of the right hook [-180, 180]",
+          "optional": false
+        },
+        {
+          "name": "hook_type",
+          "type": "HookType | int",
+          "doc": "Type of the hook at the end. By default determined based on angle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_open_stirrup"
+    },
+    {
+      "name": "create_s_hook",
+      "signature": "create_s_hook( length: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, hook_length: float = 0, ) -\u003E BendingShape",
+      "summary": "Create an S-hook shape with 180\u00B0 hooks at both ends. The shape is created in local XY coordinate system, along the X-axis.",
+      "remarks": "Create an S-hook shape with 180\u00B0 hooks at both ends. The shape is created in local XY coordinate system, along the X-axis.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference line",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: left and right cover.",
+          "optional": false
+        },
+        {
+          "name": "hook_length",
+          "type": "float",
+          "doc": "Length of both hooks. Default value (0) calculates the length automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_s_hook"
+    },
+    {
+      "name": "create_hook_stirrup",
+      "signature": "create_hook_stirrup( length: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, hook_length: float = 0, hook_start_angle: float = 180.0, hook_end_angle: float = 180.0, ) -\u003E BendingShape",
+      "summary": "Create a hook stirrup with user defined hooks at both ends. The shape is created in local XY coordinate system, along the X-axis.",
+      "remarks": "Create a hook stirrup with user defined hooks at both ends. The shape is created in local XY coordinate system, along the X-axis.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the reference line",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: left and right cover.",
+          "optional": false
+        },
+        {
+          "name": "hook_length",
+          "type": "float",
+          "doc": "Length of both hooks. Default value (0) calculates the length automatically.",
+          "optional": false
+        },
+        {
+          "name": "hook_start_angle",
+          "type": "float",
+          "doc": "Angle of the left hook.",
+          "optional": false
+        },
+        {
+          "name": "hook_end_angle",
+          "type": "float",
+          "doc": "Angle of the right hook.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_hook_stirrup"
+    },
+    {
+      "name": "create_spacer",
+      "signature": "create_spacer( length: float, width: float, height: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, ) -\u003E BendingShape",
+      "summary": "Create a spacer shape. Created shape is 3-dimensional with total 5 legs. Concrete covers are not considered. Legs nr:",
+      "remarks": "Create a spacer shape. Created shape is 3-dimensional with total 5 legs. Concrete covers are not considered. Legs nr:",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Length of the box bounding the shape (X-direction).",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the box bounding the shape (Y-direction).",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "doc": "Height of the box bounding the shape (Z-direction).",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_spacer"
+    },
+    {
+      "name": "create_u_link",
+      "signature": "create_u_link( width: float, side_length: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, hook_length: float, ) -\u003E BendingShape",
+      "summary": "Create a U-bar with both left and right legs of the same length. Optionally with hooks at both ends. The shape is created in local XY coordinate system, with its open side pointing upwards (in Y\u002B direction) like in the letter U.",
+      "remarks": "Create a U-bar with both left and right legs of the same length. Optionally with hooks at both ends. The shape is created in local XY coordinate system, with its open side pointing upwards (in Y\u002B direction) like in the letter U.",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the U-bar base line.",
+          "optional": false
+        },
+        {
+          "name": "side_length",
+          "type": "float",
+          "doc": "Length of both left and right leg.",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: left, right and bottom cover.",
+          "optional": false
+        },
+        {
+          "name": "hook_length",
+          "type": "float",
+          "doc": "Length of both hooks. When set to 0, it\u0027s calculated automatically. When set to -1, no hooks are created.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape of the u link shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_u_link"
+    },
+    {
+      "name": "create_u_link_variable",
+      "signature": "create_u_link_variable( width: float, side_length_start: float, side_length_end: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover_props: ConcreteCoverProperties, start_hook: float = 0.0, end_hook: float = 0.0, start_hook_angle: float = 90.0, end_hook_angle: float = 90.0, hook_type_start: HookType | int = -1, hook_type_end: HookType | int = -1, ) -\u003E BendingShape",
+      "summary": "Create an u-bar with different lengths of the left and right leg. Optionally with hooks at the end of right and/or left leg. The shape is created in local XY coordinate system, with its open side pointing upwards (in Y\u002B direction) like in the letter U.",
+      "remarks": "Create an u-bar with different lengths of the left and right leg. Optionally with hooks at the end of right and/or left leg. The shape is created in local XY coordinate system, with its open side pointing upwards (in Y\u002B direction) like in the letter U.",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width of the U-bar base line.",
+          "optional": false
+        },
+        {
+          "name": "side_length_start",
+          "type": "float",
+          "doc": "Length of the left leg.",
+          "optional": false
+        },
+        {
+          "name": "side_length_end",
+          "type": "float",
+          "doc": "Length of the right leg.",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover_props",
+          "type": "ConcreteCoverProperties",
+          "doc": "Concrete covers. Relevant are: left, right and bottom cover.",
+          "optional": false
+        },
+        {
+          "name": "start_hook",
+          "type": "float",
+          "doc": "Length of the hook at the end of the left leg. When set to 0, it\u0027s calculated automatically. When set to -1, hook is not created.",
+          "optional": false
+        },
+        {
+          "name": "end_hook",
+          "type": "float",
+          "doc": "Length of the hook at the end of the right leg. When set to 0, it\u0027s calculated automatically. When set to -1, hook is not created.",
+          "optional": false
+        },
+        {
+          "name": "start_hook_angle",
+          "type": "float",
+          "doc": "Angle of the hook of the left leg [-180, 180].",
+          "optional": false
+        },
+        {
+          "name": "end_hook_angle",
+          "type": "float",
+          "doc": "Angle of the hook of the right leg [-180, 180].",
+          "optional": false
+        },
+        {
+          "name": "hook_type_start",
+          "type": "HookType | int",
+          "doc": "Type of the hook of the left leg. By default determined based on angle.",
+          "optional": false
+        },
+        {
+          "name": "hook_type_end",
+          "type": "HookType | int",
+          "doc": "Type of the hook of the right leg. By default determined based on angle.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_u_link_variable"
+    },
+    {
+      "name": "create_freeform_shape_with_hooks",
+      "signature": "create_freeform_shape_with_hooks( points: Point2DList | Point3DList | list[Point2D] | list[Point3D], model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover: float, start_hook: float = 0, end_hook: float = 0, ) -\u003E BendingShape",
+      "summary": "Create a free form shape based on points. Optionally with standard 90\u00B0 hooks at start and/or end of the shape.",
+      "remarks": "Create a free form shape based on points. Optionally with standard 90\u00B0 hooks at start and/or end of the shape.",
+      "params": [
+        {
+          "name": "points",
+          "type": "Point2DList | Point3DList | list[Point2D] | list[Point3D]",
+          "doc": "Points of the geometry side (min. 2 points)",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover",
+          "type": "float",
+          "doc": "Concrete cover. Will be applied on all sides.",
+          "optional": false
+        },
+        {
+          "name": "start_hook",
+          "type": "float",
+          "doc": "Length of the hook at the start. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        },
+        {
+          "name": "end_hook",
+          "type": "float",
+          "doc": "Length of the hook at the end. Default value (0) calculates the length automatically. If set to -1: no hook.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_freeform_shape_with_hooks"
+    },
+    {
+      "name": "create_circle_stirrup_with_user_hooks",
+      "signature": "create_circle_stirrup_with_user_hooks( radius: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover: float, overlap: float, hook_length_start: float, hook_angle_start: float, hook_length_end: float, hook_angle_end: float, ) -\u003E BendingShape",
+      "summary": "Create a circle stirrup shape. If rotation angles all set to 0, the shape is created in local XY coordinate system. The center of the reference circle is the (0,0) point.",
+      "remarks": "Create a circle stirrup shape. If rotation angles all set to 0, the shape is created in local XY coordinate system. The center of the reference circle is the (0,0) point.",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "Radius of the reference circle.",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties.",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover",
+          "type": "float",
+          "doc": "Concrete cover.",
+          "optional": false
+        },
+        {
+          "name": "overlap",
+          "type": "float",
+          "doc": "Overlap length.",
+          "optional": false
+        },
+        {
+          "name": "hook_length_start",
+          "type": "float",
+          "doc": "Length of the hook at the start. When set to 0, the length will be calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "hook_angle_start",
+          "type": "float",
+          "doc": "Hook angle at the start. When set to 0, it will be calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "hook_length_end",
+          "type": "float",
+          "doc": "Length of the hook at the end. When set to 0, the length will be calculated automatically.",
+          "optional": false
+        },
+        {
+          "name": "hook_angle_end",
+          "type": "float",
+          "doc": "Hook angle at the end. When set to 0, it will be calculated automatically.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/GeneralReinfShapeBuilder/#StdReinfShapeBuilder.GeneralReinfShapeBuilder.create_circle_stirrup_with_user_hooks"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

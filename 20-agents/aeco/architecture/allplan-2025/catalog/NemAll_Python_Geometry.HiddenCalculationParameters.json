@@ -1,0 +1,86 @@
+{
+  "name": "HiddenCalculationParameters",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Parameters of hidden calculation.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/",
+  "constructors": [
+    {
+      "name": "HiddenCalculationParameters()",
+      "signature": "HiddenCalculationParameters()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.__init__"
+    },
+    {
+      "name": "HiddenCalculationParameters(param: HiddenCalculationParameters)",
+      "signature": "HiddenCalculationParameters(param: HiddenCalculationParameters)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SetObserverMatrix",
+      "signature": "SetObserverMatrix(eyePoint: Point3D, viewPoint: Point3D)",
+      "summary": "Calculates observer matrix from 2 points.",
+      "remarks": "Calculates observer matrix from 2 points.",
+      "params": [
+        {
+          "name": "eyePoint",
+          "type": "Point3D",
+          "doc": "Eye point.",
+          "optional": false
+        },
+        {
+          "name": "viewPoint",
+          "type": "Point3D",
+          "doc": "View point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.SetObserverMatrix"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdjacentEdgesMaxAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Adjacent edges max angle. Maximal angle in which adjacent edges will be joined.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.AdjacentEdgesMaxAngle"
+    },
+    {
+      "name": "GetHiddenLines",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if get also hidden lines. If false only visible lines are produced during hidden calculation.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.GetHiddenLines"
+    },
+    {
+      "name": "ObserverMatrix",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Observer matrix;",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenCalculationParameters/#NemAll_Python_Geometry.HiddenCalculationParameters.ObserverMatrix"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

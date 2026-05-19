@@ -1,0 +1,154 @@
+{
+  "name": "AllplanGlobalSettings",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Helper class for global Allplan settings exposure",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentColorId",
+      "signature": "GetCurrentColorId()",
+      "summary": "Get the current used color ID in Allplan",
+      "remarks": "Get the current used color ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current color ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentColorId"
+    },
+    {
+      "name": "GetCurrentCommonProperties",
+      "signature": "GetCurrentCommonProperties()",
+      "summary": "Get the current common properties",
+      "remarks": "Get the current common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Current common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentCommonProperties"
+    },
+    {
+      "name": "GetCurrentFaceStyleId",
+      "signature": "GetCurrentFaceStyleId()",
+      "summary": "Get the current used face style ID in Allplan",
+      "remarks": "Get the current used face style ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current face style ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentFaceStyleId"
+    },
+    {
+      "name": "GetCurrentFontId",
+      "signature": "GetCurrentFontId()",
+      "summary": "Get the current used font ID in Allplan",
+      "remarks": "Get the current used font ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current font ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentFontId"
+    },
+    {
+      "name": "GetCurrentHatchId",
+      "signature": "GetCurrentHatchId()",
+      "summary": "Get the current used hatch ID in Allplan",
+      "remarks": "Get the current used hatch ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current hatch ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentHatchId"
+    },
+    {
+      "name": "GetCurrentLayerId",
+      "signature": "GetCurrentLayerId()",
+      "summary": "Get the current used layer ID in Allplan",
+      "remarks": "Get the current used layer ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current layer ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentLayerId"
+    },
+    {
+      "name": "GetCurrentPatternId",
+      "signature": "GetCurrentPatternId()",
+      "summary": "Get the current used pattern ID in Allplan",
+      "remarks": "Get the current used pattern ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current pattern ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentPatternId"
+    },
+    {
+      "name": "GetCurrentPenId",
+      "signature": "GetCurrentPenId()",
+      "summary": "Get the current used pen ID in Allplan",
+      "remarks": "Get the current used pen ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current pen ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentPenId"
+    },
+    {
+      "name": "GetCurrentStrokeId",
+      "signature": "GetCurrentStrokeId()",
+      "summary": "Get the current used stroke ID in Allplan",
+      "remarks": "Get the current used stroke ID in Allplan",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Current stroke ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetCurrentStrokeId"
+    },
+    {
+      "name": "GetOffsetPoint",
+      "signature": "GetOffsetPoint()",
+      "summary": "Get the offset point",
+      "remarks": "Get the offset point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Offset point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanGlobalSettings/#NemAll_Python_AllplanSettings.AllplanGlobalSettings.GetOffsetPoint"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

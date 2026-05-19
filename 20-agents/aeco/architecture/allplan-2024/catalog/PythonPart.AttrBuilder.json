@@ -1,0 +1,76 @@
+{
+  "name": "AttrBuilder",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Define specific PythonPart attributes",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/AttrBuilder/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "placement_matrix_attr",
+      "signature": "placement_matrix_attr(matrix)",
+      "summary": "Define attribute holding PythonPart matrix for update",
+      "remarks": "Define attribute holding PythonPart matrix for update",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AttributeDoubleVec",
+        "doc": "Attribute holding PythonPart matrix for update"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/AttrBuilder/#PythonPart.AttrBuilder.placement_matrix_attr"
+    },
+    {
+      "name": "pyp_file_param_list_attr",
+      "signature": "pyp_file_param_list_attr(python_file, parameter_list)",
+      "summary": "Define attribute holding python file name and all parameter - values pairs of pyp file",
+      "remarks": "Define attribute holding python file name and all parameter - values pairs of pyp file",
+      "params": [
+        {
+          "name": "python_file",
+          "type": "str",
+          "doc": "Filename of PYP file",
+          "optional": false
+        },
+        {
+          "name": "parameter_list",
+          "type": "list[str]",
+          "doc": "list of parameters of PYP file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AttributeStringVec",
+        "doc": "Attribute holding values as string vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/AttrBuilder/#PythonPart.AttrBuilder.pyp_file_param_list_attr"
+    },
+    {
+      "name": "python_part_attr",
+      "signature": "python_part_attr()",
+      "summary": "Define attribute holding \u0022PythonPart\u0022 identification string",
+      "remarks": "Define attribute holding \u0022PythonPart\u0022 identification string",
+      "params": [],
+      "returns": {
+        "type": "AttributeString",
+        "doc": "Attribute holding PythonPart identifier"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/AttrBuilder/#PythonPart.AttrBuilder.python_part_attr"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,104 @@
+{
+  "name": "SnoopElementGeometryFilter",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.SnoopElementGeometryFilter.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/",
+  "constructors": [
+    {
+      "name": "SnoopElementGeometryFilter()",
+      "signature": "SnoopElementGeometryFilter()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/#NemAll_Python_IFW_Input.SnoopElementGeometryFilter.__init__"
+    },
+    {
+      "name": "SnoopElementGeometryFilter( bFindBaseGeometry: bool, bFindAreaGeometry: bool, bPerpendicularOnElement: bool, bFindNonPassiveOnly: bool, bSplitAreaGeometries: bool, bIdentifyEmbeddedElement: bool, bFindCompleteFootprint: bool, splitElement3D: eSplitElement3D, )",
+      "signature": "SnoopElementGeometryFilter( bFindBaseGeometry: bool, bFindAreaGeometry: bool, bPerpendicularOnElement: bool, bFindNonPassiveOnly: bool, bSplitAreaGeometries: bool, bIdentifyEmbeddedElement: bool, bFindCompleteFootprint: bool, splitElement3D: eSplitElement3D, )",
+      "summary": "Constructor Passive geometry is virtual geometry which is using for element snooping. Typical passive geometry is boundary area around text. This area has no edges like a Hatching, but if cursor is inside this area, then element must be snooped. Passive geometry has no points, perpendicular points, edges, etc. .",
+      "remarks": "Constructor Passive geometry is virtual geometry which is using for element snooping. Typical passive geometry is boundary area around text. This area has no edges like a Hatching, but if cursor is inside this area, then element must be snooped. Passive geometry has no points, perpendicular points, edges, etc. .",
+      "params": [
+        {
+          "name": "bFindBaseGeometry",
+          "type": "bool",
+          "doc": "If true, find the base geometry element (e.g. line from polyline)",
+          "optional": false
+        },
+        {
+          "name": "bFindAreaGeometry",
+          "type": "bool",
+          "doc": "If true, the service adds the nearest area geometry if nothing else is found",
+          "optional": false
+        },
+        {
+          "name": "bPerpendicularOnElement",
+          "type": "bool",
+          "doc": "If true, the service adds perpendicular geometry",
+          "optional": false
+        },
+        {
+          "name": "bFindNonPassiveOnly",
+          "type": "bool",
+          "doc": "If true, then only non passive geometry will be searching",
+          "optional": false
+        },
+        {
+          "name": "bSplitAreaGeometries",
+          "type": "bool",
+          "doc": "If true, find the line geometry element for area geometries (e.g line from polygon)",
+          "optional": false
+        },
+        {
+          "name": "bIdentifyEmbeddedElement",
+          "type": "bool",
+          "doc": "If true, find elements from embedded documents",
+          "optional": false
+        },
+        {
+          "name": "bFindCompleteFootprint",
+          "type": "bool",
+          "doc": "If true, find the complete footprint of a wall instead of the footprint of the wall tier",
+          "optional": false
+        },
+        {
+          "name": "splitElement3D",
+          "type": "eSplitElement3D",
+          "doc": "Split the 3D element geometry ---\u003E in case of bFindBaseGeometry the split is always done to edges !!!",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/#NemAll_Python_IFW_Input.SnoopElementGeometryFilter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddElements",
+      "signature": "AddElements(elementNames: str)",
+      "summary": "Add elements to the filter",
+      "remarks": "Add elements to the filter",
+      "params": [
+        {
+          "name": "elementNames",
+          "type": "str",
+          "doc": "Element names, separated by ,",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SnoopElementGeometryFilter/#NemAll_Python_IFW_Input.SnoopElementGeometryFilter.AddElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,578 @@
+{
+  "name": "Point3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D point",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/",
+  "constructors": [
+    {
+      "name": "Point3D()",
+      "signature": "Point3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
+    },
+    {
+      "name": "Point3D(point)",
+      "signature": "Point3D(point)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
+    },
+    {
+      "name": "Point3D(point)",
+      "signature": "Point3D(point)",
+      "summary": "Explicit copy constructor. Copy only X_COORD and Y_COORD from point, Z_COORD is set to zero.",
+      "remarks": "Explicit copy constructor. Copy only X_COORD and Y_COORD from point, Z_COORD is set to zero.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "2D Point which will be copied to the 3D point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
+    },
+    {
+      "name": "Point3D(refPoint, point)",
+      "signature": "Point3D(refPoint, point)",
+      "summary": "Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint \u002B point",
+      "remarks": "Constructor. Initialize point from point in local coordinate system. Formula: Result = refPoint \u002B point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "Reference point.",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Relative point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
+    },
+    {
+      "name": "Point3D(x, y, z)",
+      "signature": "Point3D(x, y, z)",
+      "summary": "Constructor Initialize point from single coordinates in world coordinate system.",
+      "remarks": "Constructor Initialize point from single coordinates in world coordinate system.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "X coordinate of point",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "Y coordinate of point",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "doc": "Z coordinate of point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Set(point)",
+      "signature": "Set(point)",
+      "summary": "Initialize from point 3D.",
+      "remarks": "Initialize from point 3D.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Set"
+    },
+    {
+      "name": "Set(x, y, z)",
+      "signature": "Set(x, y, z)",
+      "summary": "Initialize from x,y,z coordinates.",
+      "remarks": "Initialize from x,y,z coordinates.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "doc": "coordinate.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "doc": "coordinate.",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "doc": "coordinate.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Set"
+    },
+    {
+      "name": "__add__(vec)",
+      "signature": "__add__(vec)",
+      "summary": "Move the point by vector 3D",
+      "remarks": "Move the point by vector 3D",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "New point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__"
+    },
+    {
+      "name": "__add__(vec)",
+      "signature": "__add__(vec)",
+      "summary": "Move the point by vector 2D. Z axis will be ignored",
+      "remarks": "Move the point by vector 2D. Z axis will be ignored",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "New point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__"
+    },
+    {
+      "name": "__add__(point)",
+      "signature": "__add__(point)",
+      "summary": "Point translation by point Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "remarks": "Point translation by point Formula: Point(new) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__add__"
+    },
+    {
+      "name": "__mul__(matrix)",
+      "signature": "__mul__(matrix)",
+      "summary": "2D matrix transformation. Result = Point * matrix",
+      "remarks": "2D matrix transformation. Result = Point * matrix",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "2D transformation Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__"
+    },
+    {
+      "name": "__mul__(matrix)",
+      "signature": "__mul__(matrix)",
+      "summary": "3D matrix transformation. Result = Point * matrix",
+      "remarks": "3D matrix transformation. Result = Point * matrix",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "3D transformation Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__"
+    },
+    {
+      "name": "__mul__(scale)",
+      "signature": "__mul__(scale)",
+      "summary": "Scale point with constant Result = Point * scale",
+      "remarks": "Scale point with constant Result = Point * scale",
+      "params": [
+        {
+          "name": "scale",
+          "type": "float",
+          "doc": "scale factor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "scaled Point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__mul__"
+    },
+    {
+      "name": "__sub__(vec)",
+      "signature": "__sub__(vec)",
+      "summary": "Move the point by reversed vector 3D",
+      "remarks": "Move the point by reversed vector 3D",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "3D vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "New point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__"
+    },
+    {
+      "name": "__sub__(vec)",
+      "signature": "__sub__(vec)",
+      "summary": "Move the point by reversed vector 2D. Z coordinate stays unchanged.",
+      "remarks": "Move the point by reversed vector 2D. Z coordinate stays unchanged.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "2D vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "New point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__"
+    },
+    {
+      "name": "__sub__(point)",
+      "signature": "__sub__(point)",
+      "summary": "Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "remarks": "Point translation by negative point Formula: Point(new) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point3D.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__sub__"
+    },
+    {
+      "name": "GetCoords",
+      "signature": "GetCoords()",
+      "summary": "Get copy of X,Y,Z coordinates",
+      "remarks": "Get copy of X,Y,Z coordinates",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(X coordinate of point,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.GetCoords"
+    },
+    {
+      "name": "GetDistance",
+      "signature": "GetDistance(point)",
+      "summary": "Get distance Formula: Result(double) = |A-B|.",
+      "remarks": "Get distance Formula: Result(double) = |A-B|.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point3D.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "double."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.GetDistance"
+    },
+    {
+      "name": "IsZero",
+      "signature": "IsZero()",
+      "summary": "Check the coords [0.0, 0.0, 0.0] If the coords are zero, the return value is true. If the coords aren\u0027t zero, the return value is false.",
+      "remarks": "Check the coords [0.0, 0.0, 0.0] If the coords are zero, the return value is true. If the coords aren\u0027t zero, the return value is false.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.IsZero"
+    },
+    {
+      "name": "Values",
+      "signature": "Values()",
+      "summary": "Get copy of X,Y,Z coordinates as python list",
+      "remarks": "Get copy of X,Y,Z coordinates as python list",
+      "params": [],
+      "returns": {
+        "type": "list[float]",
+        "doc": "X coordinate of point,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Values"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(point)",
+      "summary": "Comparison of points without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of points without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Compared point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when points are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__eq__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(point)",
+      "summary": "Point translation by point Formula: Point(this) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "remarks": "Point translation by point Formula: Point(this) = Point(this) \u002B Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__iadd__"
+    },
+    {
+      "name": "__idiv__",
+      "signature": "__idiv__(divider)",
+      "summary": "Divide operator. This method is checked and throwing Geometry::Exception when divider is zero.",
+      "remarks": "Divide operator. This method is checked and throwing Geometry::Exception when divider is zero.",
+      "params": [
+        {
+          "name": "divider",
+          "type": "float",
+          "doc": "Divider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__idiv__"
+    },
+    {
+      "name": "__isub__",
+      "signature": "__isub__(point)",
+      "summary": "Point translation by negative point Formula: Point(this) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "remarks": "Point translation by negative point Formula: Point(this) = Point(this) - Point This is not standard math operation and is implemented only as practical use case for point moving in %Allplan. In this case given operand point represent offset from Zero point. For standard move operation please use Service::Move method with Vector3D operand.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__isub__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(point)",
+      "summary": "Comparison of points without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of points without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "Compared point.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when points are not equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__repr__"
+    },
+    {
+      "name": "__truediv__",
+      "signature": "__truediv__(divider)",
+      "summary": "Divide operator.",
+      "remarks": "Divide operator.",
+      "params": [
+        {
+          "name": "divider",
+          "type": "float",
+          "doc": "Divider.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.__truediv__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "X",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the x coordinate",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.X"
+    },
+    {
+      "name": "Y",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the y coordinate",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Y"
+    },
+    {
+      "name": "Z",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the z coordinate",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point3D/#NemAll_Python_Geometry.Point3D.Z"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "PageData",
+  "namespace": "BuildingElement.BuildingElement",
+  "kind": "class",
+  "summary": "implementation of the page data class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElement/BuildingElement/#BuildingElement.BuildingElement.PageData",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

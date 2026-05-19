@@ -1,0 +1,130 @@
+{
+  "name": "MySimpleAustin",
+  "namespace": "TestHelper.ProfileUtilAustin",
+  "kind": "class",
+  "summary": "implementation of the simple Austin class",
+  "base": "SimpleAustin",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtilAustin/",
+  "constructors": [
+    {
+      "name": "MySimpleAustin()",
+      "signature": "MySimpleAustin( austin_running_event: Event, test_running_event: Event, terminate_event: Event, process_id: str, result_file_name: str, )",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "austin_running_event",
+          "type": "Event",
+          "doc": "signals the running austin",
+          "optional": false
+        },
+        {
+          "name": "test_running_event",
+          "type": "Event",
+          "doc": "signals the running test",
+          "optional": false
+        },
+        {
+          "name": "terminate_event",
+          "type": "Event",
+          "doc": "signals the profile termination",
+          "optional": false
+        },
+        {
+          "name": "process_id",
+          "type": "str",
+          "doc": "process ID of the profess to profile",
+          "optional": false
+        },
+        {
+          "name": "result_file_name",
+          "type": "str",
+          "doc": "name of the result file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtilAustin/#TestHelper.ProfileUtilAustin.MySimpleAustin.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "on_ready",
+      "signature": "on_ready( _process: Any, _child_process: Any, _command_line: str, _data: Any = None ) -\u003E Any",
+      "summary": "function description",
+      "remarks": "function description",
+      "params": [
+        {
+          "name": "_process",
+          "type": "Any",
+          "doc": "process",
+          "optional": false
+        },
+        {
+          "name": "_child_process",
+          "type": "Any",
+          "doc": "child process",
+          "optional": false
+        },
+        {
+          "name": "_command_line",
+          "type": "str",
+          "doc": "command line",
+          "optional": false
+        },
+        {
+          "name": "_data",
+          "type": "Any",
+          "doc": "data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtilAustin/#TestHelper.ProfileUtilAustin.MySimpleAustin.on_ready"
+    },
+    {
+      "name": "on_sample_received",
+      "signature": "on_sample_received(text: str)",
+      "summary": "receive the sample result",
+      "remarks": "receive the sample result",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "sample result",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtilAustin/#TestHelper.ProfileUtilAustin.MySimpleAustin.on_sample_received"
+    },
+    {
+      "name": "on_terminate",
+      "signature": "on_terminate(_stats: Dict[str, str])",
+      "summary": "terminate the profiling",
+      "remarks": "terminate the profiling",
+      "params": [
+        {
+          "name": "_stats",
+          "type": "Dict[str, str]",
+          "doc": "stats",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/ProfileUtilAustin/#TestHelper.ProfileUtilAustin.MySimpleAustin.on_terminate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

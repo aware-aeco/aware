@@ -1,0 +1,28 @@
+{
+  "name": "AnyValueByType",
+  "namespace": "AnyValueByType",
+  "kind": "class",
+  "summary": "implementation of the data class for the attribute id and value",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/AnyValueByType/AnyValueByType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "deep_copy",
+      "signature": "deep_copy()",
+      "summary": "execute a deep copy",
+      "remarks": "execute a deep copy",
+      "params": [],
+      "returns": {
+        "type": "AnyValueByType",
+        "doc": "copied object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/AnyValueByType/AnyValueByType/#AnyValueByType.AnyValueByType.deep_copy"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

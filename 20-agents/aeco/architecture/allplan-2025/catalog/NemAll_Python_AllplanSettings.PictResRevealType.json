@@ -1,0 +1,31 @@
+{
+  "name": "PictResRevealType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for reveal types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResRevealType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEmbedded",
+      "value": 19709
+    },
+    {
+      "name": "eExterior",
+      "value": 19713
+    },
+    {
+      "name": "eInterior",
+      "value": 19711
+    },
+    {
+      "name": "eNone",
+      "value": 17025
+    }
+  ]
+}

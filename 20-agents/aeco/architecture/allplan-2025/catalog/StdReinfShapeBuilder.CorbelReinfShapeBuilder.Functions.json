@@ -1,0 +1,71 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.CorbelReinfShapeBuilder",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.CorbelReinfShapeBuilder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/CorbelReinfShapeBuilder/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "column_corbel_shape_type1",
+      "signature": "column_corbel_shape_type1( column_width: float, column_thickness: float, corbel_width: float, corbel_top: float, model_angles: RotationAngles, shape_props: ReinforcementShapeProperties, concrete_cover: float, ) -\u003E BendingShape",
+      "summary": "Create a 3-dimensional rebar shape for the column corbel. The created shape has 5 legs in total. The corbel is assumed to be at the right side of the columns rectangular cross-section. The shape\u0027s legs are created in following directions: Z\u002B, X\u002B, Y\u002B, X-, Z-. This means, that from above the generated shape will look like \u2183 In addition, following assumptions are made:",
+      "remarks": "Create a 3-dimensional rebar shape for the column corbel. The created shape has 5 legs in total. The corbel is assumed to be at the right side of the columns rectangular cross-section. The shape\u0027s legs are created in following directions: Z\u002B, X\u002B, Y\u002B, X-, Z-. This means, that from above the generated shape will look like \u2183 In addition, following assumptions are made:",
+      "params": [
+        {
+          "name": "column_width",
+          "type": "float",
+          "doc": "Width (X-dimension) of the column\u0027s cross-section",
+          "optional": false
+        },
+        {
+          "name": "column_thickness",
+          "type": "float",
+          "doc": "Thickness (Y-dimension) of the column\u0027s cross-section",
+          "optional": false
+        },
+        {
+          "name": "corbel_width",
+          "type": "float",
+          "doc": "Corbel width (X-dimension)",
+          "optional": false
+        },
+        {
+          "name": "corbel_top",
+          "type": "float",
+          "doc": "Elevation (Z-coordinate) of the corbel\u0027s top surface",
+          "optional": false
+        },
+        {
+          "name": "model_angles",
+          "type": "RotationAngles",
+          "doc": "Angles to rotate the shape from local to global coordinate system.",
+          "optional": false
+        },
+        {
+          "name": "shape_props",
+          "type": "ReinforcementShapeProperties",
+          "doc": "Shape properties",
+          "optional": false
+        },
+        {
+          "name": "concrete_cover",
+          "type": "float",
+          "doc": "Concrete cover at the shape sides",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BendingShape",
+        "doc": "Bar shape in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/CorbelReinfShapeBuilder/#StdReinfShapeBuilder.CorbelReinfShapeBuilder.column_corbel_shape_type1"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

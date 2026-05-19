@@ -1,0 +1,138 @@
+{
+  "name": "CoordinateInputMode",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Settings regarding mode, in which elements and/or points should be identified during point input",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/",
+  "constructors": [
+    {
+      "name": "CoordinateInputMode()",
+      "signature": "CoordinateInputMode()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.__init__"
+    },
+    {
+      "name": "CoordinateInputMode( identMode: eIdentificationMode, drawPointSymbol: eDrawElementIdentPointSymbols = eDRAW_IDENT_ELEMENT_POINT_SYMBOL_YES, )",
+      "signature": "CoordinateInputMode( identMode: eIdentificationMode, drawPointSymbol: eDrawElementIdentPointSymbols = eDRAW_IDENT_ELEMENT_POINT_SYMBOL_YES, )",
+      "summary": "Constructor, sets the local coordinate input to false",
+      "remarks": "Constructor, sets the local coordinate input to false",
+      "params": [
+        {
+          "name": "identMode",
+          "type": "eIdentificationMode",
+          "doc": "Identification mode",
+          "optional": false
+        },
+        {
+          "name": "drawPointSymbol",
+          "type": "eDrawElementIdentPointSymbols",
+          "doc": "Draw the identification point symbol at the element (if an element is selected): true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.__init__"
+    },
+    {
+      "name": "CoordinateInputMode(identMode: eIdentificationMode, bLocalCoordInput: bool)",
+      "signature": "CoordinateInputMode(identMode: eIdentificationMode, bLocalCoordInput: bool)",
+      "summary": "Constructor, sets the local coordinate input",
+      "remarks": "Constructor, sets the local coordinate input",
+      "params": [
+        {
+          "name": "identMode",
+          "type": "eIdentificationMode",
+          "doc": "Identification mode",
+          "optional": false
+        },
+        {
+          "name": "bLocalCoordInput",
+          "type": "bool",
+          "doc": "Only local coordinate input: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.__init__"
+    },
+    {
+      "name": "CoordinateInputMode(element: CoordinateInputMode)",
+      "signature": "CoordinateInputMode(element: CoordinateInputMode)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "CoordinateInputMode",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetIdentMode",
+      "signature": "GetIdentMode() -\u003E eIdentificationMode",
+      "summary": "Get the identification mode",
+      "remarks": "Get the identification mode",
+      "params": [],
+      "returns": {
+        "type": "eIdentificationMode",
+        "doc": "Identification mode"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.GetIdentMode"
+    },
+    {
+      "name": "IsLocalCoordInput",
+      "signature": "IsLocalCoordInput() -\u003E bool",
+      "summary": "Get the local coordinate input state",
+      "remarks": "Get the local coordinate input state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Local coordinate input state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.IsLocalCoordInput"
+    },
+    {
+      "name": "SetLocalCoordInput",
+      "signature": "SetLocalCoordInput(bLocalCoordInput: bool)",
+      "summary": "Set the local coordinate input state",
+      "remarks": "Set the local coordinate input state",
+      "params": [
+        {
+          "name": "bLocalCoordInput",
+          "type": "bool",
+          "doc": "Only local coordinate input: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/CoordinateInputMode/#NemAll_Python_IFW_Input.CoordinateInputMode.SetLocalCoordInput"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

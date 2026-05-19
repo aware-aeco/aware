@@ -1,0 +1,35 @@
+{
+  "name": "PaletteValueType",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "enum",
+  "summary": "Types of the palette values",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PaletteValueType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANGLE",
+      "value": 2
+    },
+    {
+      "name": "DOUBLE",
+      "value": 6
+    },
+    {
+      "name": "INTEGER",
+      "value": 5
+    },
+    {
+      "name": "LENGTH",
+      "value": 1
+    },
+    {
+      "name": "STRING",
+      "value": 3
+    }
+  ]
+}

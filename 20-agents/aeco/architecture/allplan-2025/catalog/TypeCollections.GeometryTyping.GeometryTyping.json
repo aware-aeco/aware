@@ -1,0 +1,56 @@
+{
+  "name": "GeometryTyping",
+  "namespace": "TypeCollections.GeometryTyping",
+  "kind": "class",
+  "summary": "implementation of the geometry element typing",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/GeometryTyping/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "is_curve_2d",
+      "signature": "is_curve_2d(geo_ele: CURVES) -\u003E bool",
+      "summary": "test for a 2D curve",
+      "remarks": "test for a 2D curve",
+      "params": [
+        {
+          "name": "geo_ele",
+          "type": "CURVES",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "curve 2D state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/GeometryTyping/#TypeCollections.GeometryTyping.GeometryTyping.is_curve_2d"
+    },
+    {
+      "name": "is_curve_3d",
+      "signature": "is_curve_3d(geo_ele: CURVES) -\u003E bool",
+      "summary": "test for a 3D curve",
+      "remarks": "test for a 3D curve",
+      "params": [
+        {
+          "name": "geo_ele",
+          "type": "CURVES",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "curve 3D state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/GeometryTyping/#TypeCollections.GeometryTyping.GeometryTyping.is_curve_3d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

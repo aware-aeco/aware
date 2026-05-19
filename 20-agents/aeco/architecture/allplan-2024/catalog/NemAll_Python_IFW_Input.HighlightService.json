@@ -1,0 +1,50 @@
+{
+  "name": "HighlightService",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.HighlightService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HighlightService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CancelAllHighlightedElements",
+      "signature": "CancelAllHighlightedElements(documentID)",
+      "summary": "Cancel the highlight of all elements",
+      "remarks": "Cancel the highlight of all elements",
+      "params": [
+        {
+          "name": "documentID",
+          "type": "int",
+          "doc": "document ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HighlightService/#NemAll_Python_IFW_Input.HighlightService.CancelAllHighlightedElements"
+    },
+    {
+      "name": "HighlightElements",
+      "signature": "HighlightElements(eleList)",
+      "summary": "Highlight the elements",
+      "remarks": "Highlight the elements",
+      "params": [
+        {
+          "name": "eleList",
+          "type": "BaseElementAdapterList",
+          "doc": "Element list as BaseElementAdapterList",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/HighlightService/#NemAll_Python_IFW_Input.HighlightService.HighlightElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

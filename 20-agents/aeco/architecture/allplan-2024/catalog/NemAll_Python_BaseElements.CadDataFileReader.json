@@ -1,0 +1,95 @@
+{
+  "name": "CadDataFileReader",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.CadDataFileReader.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CadDataFileReader/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ReadIFC",
+      "signature": "ReadIFC(doc, fileName)",
+      "summary": "Import the data from an IFC file to be used as PythonPart content",
+      "remarks": "Import the data from an IFC file to be used as PythonPart content",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the IFC file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[tuple[str, list[ModelElement3D]]]",
+        "doc": "List with a tuple (group name, model elements)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CadDataFileReader/#NemAll_Python_BaseElements.CadDataFileReader.ReadIFC"
+    },
+    {
+      "name": "ReadOBJ",
+      "signature": "ReadOBJ(fileName, designPathLocation)",
+      "summary": "Import an OBJ file",
+      "remarks": "Import an OBJ file",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Full file name of the OBJ file",
+          "optional": false
+        },
+        {
+          "name": "designPathLocation",
+          "type": "eDesignPathLocation",
+          "doc": "Location of the design path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[ModelElement3D]",
+        "doc": "List with the model elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CadDataFileReader/#NemAll_Python_BaseElements.CadDataFileReader.ReadOBJ"
+    },
+    {
+      "name": "ReadSKP",
+      "signature": "ReadSKP(fileName, designPathLocation)",
+      "summary": "Import an SKP file",
+      "remarks": "Import an SKP file",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Full file name of the SKP file",
+          "optional": false
+        },
+        {
+          "name": "designPathLocation",
+          "type": "eDesignPathLocation",
+          "doc": "Location of the design path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[ModelElement3D]",
+        "doc": "List with the model elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/CadDataFileReader/#NemAll_Python_BaseElements.CadDataFileReader.ReadSKP"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

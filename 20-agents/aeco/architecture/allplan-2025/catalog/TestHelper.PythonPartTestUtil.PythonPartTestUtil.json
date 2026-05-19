@@ -1,0 +1,98 @@
+{
+  "name": "PythonPartTestUtil",
+  "namespace": "TestHelper.PythonPartTestUtil",
+  "kind": "class",
+  "summary": "Implementation of the test utilities for the nodes",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PythonPartTestUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_interactor",
+      "signature": "create_interactor( doc: DocumentAdapter, example_name: str, input_data: Optional[List[Any]] = None, print_script_name: bool = True, ) -\u003E Tuple[ Optional[object], PythonWpfPalette, List[BuildingElement], CoordinateInputMock, ]",
+      "summary": "Read the example",
+      "remarks": "Read the example",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "example_name",
+          "type": "str",
+          "doc": "name of the example",
+          "optional": false
+        },
+        {
+          "name": "input_data",
+          "type": "Optional[List[Any]]",
+          "doc": "input data",
+          "optional": false
+        },
+        {
+          "name": "print_script_name",
+          "type": "bool",
+          "doc": "print script name state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[Optional[object], PythonWpfPalette, List[BuildingElement], CoordinateInputMock]",
+        "doc": "tuple(created interactor, palette, list with the building elements, coordinate input)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PythonPartTestUtil/#TestHelper.PythonPartTestUtil.PythonPartTestUtil.create_interactor"
+    },
+    {
+      "name": "start_script",
+      "signature": "start_script( doc: DocumentAdapter, example_name: str, print_script_name: bool = True, parameter_list: Optional[List[Any]] = None, modify_uuid_list: Optional[List[str]] = None, ) -\u003E Tuple[ Optional[Any], List[BuildingElement], CoordinateInputMock, PythonWpfPalette ]",
+      "summary": "Start the example script",
+      "remarks": "Start the example script",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "example_name",
+          "type": "str",
+          "doc": "name of the example",
+          "optional": false
+        },
+        {
+          "name": "print_script_name",
+          "type": "bool",
+          "doc": "print the script name in the trace output state",
+          "optional": false
+        },
+        {
+          "name": "parameter_list",
+          "type": "Optional[List[Any]]",
+          "doc": "list with the interactor parameters",
+          "optional": false
+        },
+        {
+          "name": "modify_uuid_list",
+          "type": "Optional[List[str]]",
+          "doc": "list with the UUIDs of the modified elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[Optional[Any], List[BuildingElement], CoordinateInputMock, PythonWpfPalette]",
+        "doc": "tuple(created interactor, list with the building elements, coordinate input, palette)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PythonPartTestUtil/#TestHelper.PythonPartTestUtil.PythonPartTestUtil.start_script"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,937 @@
+{
+  "name": "BendingShape",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the reinforcement shape",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/",
+  "constructors": [
+    {
+      "name": "BendingShape()",
+      "signature": "BendingShape()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    },
+    {
+      "name": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, diameter: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, )",
+      "signature": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, diameter: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "shapePol",
+          "type": "Polyline3D",
+          "doc": "Shape polyline",
+          "optional": false
+        },
+        {
+          "name": "bendingRoller",
+          "type": "VecDoubleList",
+          "doc": "Bending roller",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
+          "optional": false
+        },
+        {
+          "name": "bendingShapeType",
+          "type": "BendingShapeType",
+          "doc": "Bending shape type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    },
+    {
+      "name": "BendingShape( shapePoint: Point3D, diameter: float, steelGrade: int, concreteGrade: int )",
+      "signature": "BendingShape( shapePoint: Point3D, diameter: float, steelGrade: int, concreteGrade: int )",
+      "summary": "Constructor for a point placement",
+      "remarks": "Constructor for a point placement",
+      "params": [
+        {
+          "name": "shapePoint",
+          "type": "Point3D",
+          "doc": "Shape placement point",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    },
+    {
+      "name": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, meshType: str, meshBendingDirection: MeshBendingDirection, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, )",
+      "signature": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, meshType: str, meshBendingDirection: MeshBendingDirection, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "shapePol",
+          "type": "Polyline3D",
+          "doc": "Shape polyline",
+          "optional": false
+        },
+        {
+          "name": "bendingRoller",
+          "type": "VecDoubleList",
+          "doc": "Bending roller",
+          "optional": false
+        },
+        {
+          "name": "meshType",
+          "type": "str",
+          "doc": "Mesh type",
+          "optional": false
+        },
+        {
+          "name": "meshBendingDirection",
+          "type": "MeshBendingDirection",
+          "doc": "Mesh bending direction",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
+          "optional": false
+        },
+        {
+          "name": "bendingShapeType",
+          "type": "BendingShapeType",
+          "doc": "Bending shape type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    },
+    {
+      "name": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, diameter: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, hookLengthStart: float, hookAngleStart: float, hookTypeStart: HookType, hookLengthEnd: float, hookAngleEnd: float, hookTypeEnd: HookType, )",
+      "signature": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, diameter: float, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, hookLengthStart: float, hookAngleStart: float, hookTypeStart: HookType, hookLengthEnd: float, hookAngleEnd: float, hookTypeEnd: HookType, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "shapePol",
+          "type": "Polyline3D",
+          "doc": "Shape polyline",
+          "optional": false
+        },
+        {
+          "name": "bendingRoller",
+          "type": "VecDoubleList",
+          "doc": "Bending roller",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
+          "optional": false
+        },
+        {
+          "name": "bendingShapeType",
+          "type": "BendingShapeType",
+          "doc": "Bending shape type",
+          "optional": false
+        },
+        {
+          "name": "hookLengthStart",
+          "type": "float",
+          "doc": "Hook length at the start of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookAngleStart",
+          "type": "float",
+          "doc": "Hook angle at the start of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookTypeStart",
+          "type": "HookType",
+          "doc": "Hook type at the start of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookLengthEnd",
+          "type": "float",
+          "doc": "Hook length at the end of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookAngleEnd",
+          "type": "float",
+          "doc": "Hook angle at the end of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookTypeEnd",
+          "type": "HookType",
+          "doc": "Hook type at the end of the shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    },
+    {
+      "name": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, meshType: str, meshBendingDirection: MeshBendingDirection, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, hookLengthStart: float, hookAngleStart: float, hookTypeStart: HookType, hookLengthEnd: float, hookAngleEnd: float, hookTypeEnd: HookType, )",
+      "signature": "BendingShape( shapePol: Polyline3D, bendingRoller: VecDoubleList, meshType: str, meshBendingDirection: MeshBendingDirection, steelGrade: int, concreteGrade: int, bendingShapeType: BendingShapeType, hookLengthStart: float, hookAngleStart: float, hookTypeStart: HookType, hookLengthEnd: float, hookAngleEnd: float, hookTypeEnd: HookType, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "shapePol",
+          "type": "Polyline3D",
+          "doc": "Shape polyline",
+          "optional": false
+        },
+        {
+          "name": "bendingRoller",
+          "type": "VecDoubleList",
+          "doc": "Bending roller",
+          "optional": false
+        },
+        {
+          "name": "meshType",
+          "type": "str",
+          "doc": "Mesh type",
+          "optional": false
+        },
+        {
+          "name": "meshBendingDirection",
+          "type": "MeshBendingDirection",
+          "doc": "Mesh bending direction",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)",
+          "optional": false
+        },
+        {
+          "name": "bendingShapeType",
+          "type": "BendingShapeType",
+          "doc": "Bending shape type",
+          "optional": false
+        },
+        {
+          "name": "hookLengthStart",
+          "type": "float",
+          "doc": "Hook length at the start of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookAngleStart",
+          "type": "float",
+          "doc": "Hook angle at the start of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookTypeStart",
+          "type": "HookType",
+          "doc": "Hook type at the start of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookLengthEnd",
+          "type": "float",
+          "doc": "Hook length at the end of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookAngleEnd",
+          "type": "float",
+          "doc": "Hook angle at the end of the shape",
+          "optional": false
+        },
+        {
+          "name": "hookTypeEnd",
+          "type": "HookType",
+          "doc": "Hook type at the end of the shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    },
+    {
+      "name": "BendingShape(element: BendingShape)",
+      "signature": "BendingShape(element: BendingShape)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "BendingShape",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetBendingRoller",
+      "signature": "GetBendingRoller() -\u003E VecDoubleList",
+      "summary": "Get the bending roller",
+      "remarks": "Get the bending roller",
+      "params": [],
+      "returns": {
+        "type": "VecDoubleList",
+        "doc": "Bending roller"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetBendingRoller"
+    },
+    {
+      "name": "GetBendingShapeType",
+      "signature": "GetBendingShapeType() -\u003E BendingShapeType",
+      "summary": "Get the bending shape type",
+      "remarks": "Get the bending shape type",
+      "params": [],
+      "returns": {
+        "type": "BendingShapeType",
+        "doc": "Bending shape type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetBendingShapeType"
+    },
+    {
+      "name": "GetConcreteGrade",
+      "signature": "GetConcreteGrade() -\u003E int",
+      "summary": "Get the concrete grade",
+      "remarks": "Get the concrete grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Concrete grade (index of the global list starting from 0, -1 = use global value from the Allplan settings)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetConcreteGrade"
+    },
+    {
+      "name": "GetDiameter",
+      "signature": "GetDiameter() -\u003E float",
+      "summary": "Get the diameter",
+      "remarks": "Get the diameter",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Diameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetDiameter"
+    },
+    {
+      "name": "GetHookAngleEnd",
+      "signature": "GetHookAngleEnd() -\u003E float",
+      "summary": "Get the hook angle a the end of the shape",
+      "remarks": "Get the hook angle a the end of the shape",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Hook angle at the end of the shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetHookAngleEnd"
+    },
+    {
+      "name": "GetHookAngleStart",
+      "signature": "GetHookAngleStart() -\u003E float",
+      "summary": "Get the hook angle a the start of the shape",
+      "remarks": "Get the hook angle a the start of the shape",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Hook angle at the start of the shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetHookAngleStart"
+    },
+    {
+      "name": "GetHookLengthEnd",
+      "signature": "GetHookLengthEnd() -\u003E float",
+      "summary": "Get the hook length a the end of the shape",
+      "remarks": "Get the hook length a the end of the shape",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Hook length at the end of the shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetHookLengthEnd"
+    },
+    {
+      "name": "GetHookLengthStart",
+      "signature": "GetHookLengthStart() -\u003E float",
+      "summary": "Get the hook length a the start of the shape",
+      "remarks": "Get the hook length a the start of the shape",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Hook length at the start of the shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetHookLengthStart"
+    },
+    {
+      "name": "GetHookTypeEnd",
+      "signature": "GetHookTypeEnd() -\u003E HookType",
+      "summary": "Get the hook type a the end of the shape",
+      "remarks": "Get the hook type a the end of the shape",
+      "params": [],
+      "returns": {
+        "type": "HookType",
+        "doc": "Hook type a the end of the shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetHookTypeEnd"
+    },
+    {
+      "name": "GetHookTypeStart",
+      "signature": "GetHookTypeStart() -\u003E HookType",
+      "summary": "Get the hook type a the start of the shape",
+      "remarks": "Get the hook type a the start of the shape",
+      "params": [],
+      "returns": {
+        "type": "HookType",
+        "doc": "Hook type a the start of the shape"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetHookTypeStart"
+    },
+    {
+      "name": "GetMeshBendingDirection",
+      "signature": "GetMeshBendingDirection() -\u003E MeshBendingDirection",
+      "summary": "Get the mesh bending direction",
+      "remarks": "Get the mesh bending direction",
+      "params": [],
+      "returns": {
+        "type": "MeshBendingDirection",
+        "doc": "Mesh bending direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetMeshBendingDirection"
+    },
+    {
+      "name": "GetMeshType",
+      "signature": "GetMeshType() -\u003E str",
+      "summary": "Get the mesh type",
+      "remarks": "Get the mesh type",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Mesh type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetMeshType"
+    },
+    {
+      "name": "GetShapePolyline",
+      "signature": "GetShapePolyline() -\u003E Polyline3D",
+      "summary": "Get the shape polyline",
+      "remarks": "Get the shape polyline",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "Shape polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetShapePolyline"
+    },
+    {
+      "name": "GetSteelGrade",
+      "signature": "GetSteelGrade() -\u003E int",
+      "summary": "Get the steel grade",
+      "remarks": "Get the steel grade",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Steel grade"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.GetSteelGrade"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Get the state of the shape",
+      "remarks": "Get the state of the shape",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Shape is valid: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.IsValid"
+    },
+    {
+      "name": "Move",
+      "signature": "Move(transVec: Vector3D)",
+      "summary": "Move the shape",
+      "remarks": "Move the shape",
+      "params": [
+        {
+          "name": "transVec",
+          "type": "Vector3D",
+          "doc": "Move vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Move"
+    },
+    {
+      "name": "Rotate(modelAngles: object, refPnt: Point3D)",
+      "signature": "Rotate(modelAngles: object, refPnt: Point3D)",
+      "summary": "Rotate the shape",
+      "remarks": "Rotate the shape",
+      "params": [
+        {
+          "name": "modelAngles",
+          "type": "object",
+          "doc": "Model angles",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "Point3D",
+          "doc": "Reference point of the rotation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Rotate"
+    },
+    {
+      "name": "Rotate(modelAngles: object)",
+      "signature": "Rotate(modelAngles: object)",
+      "summary": "Rotate the shape",
+      "remarks": "Rotate the shape",
+      "params": [
+        {
+          "name": "modelAngles",
+          "type": "object",
+          "doc": "Model angles",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Rotate"
+    },
+    {
+      "name": "SetBendingRoller",
+      "signature": "SetBendingRoller(bendingRoller: VecDoubleList)",
+      "summary": "Set the bending roller",
+      "remarks": "Set the bending roller",
+      "params": [
+        {
+          "name": "bendingRoller",
+          "type": "VecDoubleList",
+          "doc": "Bending roller",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetBendingRoller"
+    },
+    {
+      "name": "SetDiameter",
+      "signature": "SetDiameter(diameter: float)",
+      "summary": "Set the diameter",
+      "remarks": "Set the diameter",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "diameter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetDiameter"
+    },
+    {
+      "name": "SetHookAngleEnd",
+      "signature": "SetHookAngleEnd(hookAngleEnd: float)",
+      "summary": "Set the hook angle at the end of the shape",
+      "remarks": "Set the hook angle at the end of the shape",
+      "params": [
+        {
+          "name": "hookAngleEnd",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetHookAngleEnd"
+    },
+    {
+      "name": "SetHookAngleStart",
+      "signature": "SetHookAngleStart(hookAngleStart: float)",
+      "summary": "Set the hook angle at the start of the shape",
+      "remarks": "Set the hook angle at the start of the shape",
+      "params": [
+        {
+          "name": "hookAngleStart",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetHookAngleStart"
+    },
+    {
+      "name": "SetHookLengthEnd",
+      "signature": "SetHookLengthEnd(hookLengthEnd: float)",
+      "summary": "Set the end length of the hook",
+      "remarks": "Set the end length of the hook",
+      "params": [
+        {
+          "name": "hookLengthEnd",
+          "type": "float",
+          "doc": "End length of the hook",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetHookLengthEnd"
+    },
+    {
+      "name": "SetHookLengthStart",
+      "signature": "SetHookLengthStart(hookLengthStart: float)",
+      "summary": "Set the start length of the hook",
+      "remarks": "Set the start length of the hook",
+      "params": [
+        {
+          "name": "hookLengthStart",
+          "type": "float",
+          "doc": "Start length of the hook",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetHookLengthStart"
+    },
+    {
+      "name": "SetHookTypeEnd",
+      "signature": "SetHookTypeEnd(hookTypeEnd: HookType)",
+      "summary": "Set the hook type at the end of the shape",
+      "remarks": "Set the hook type at the end of the shape",
+      "params": [
+        {
+          "name": "hookTypeEnd",
+          "type": "HookType",
+          "doc": "Hook type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetHookTypeEnd"
+    },
+    {
+      "name": "SetHookTypeStart",
+      "signature": "SetHookTypeStart(hookTypeStart: HookType)",
+      "summary": "Set the hook type at the start of the shape",
+      "remarks": "Set the hook type at the start of the shape",
+      "params": [
+        {
+          "name": "hookTypeStart",
+          "type": "HookType",
+          "doc": "Hook type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetHookTypeStart"
+    },
+    {
+      "name": "SetShapePolyline",
+      "signature": "SetShapePolyline(shapePol: Polyline3D)",
+      "summary": "Set the shape polyline",
+      "remarks": "Set the shape polyline",
+      "params": [
+        {
+          "name": "shapePol",
+          "type": "Polyline3D",
+          "doc": "Shape polyline",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetShapePolyline"
+    },
+    {
+      "name": "SetSteelGrade",
+      "signature": "SetSteelGrade(steelGrade: int)",
+      "summary": "Set the steel grade",
+      "remarks": "Set the steel grade",
+      "params": [
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "steel grade",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SetSteelGrade"
+    },
+    {
+      "name": "Transform",
+      "signature": "Transform(transMat: Matrix3D)",
+      "summary": "Transform the shape",
+      "remarks": "Transform the shape",
+      "params": [
+        {
+          "name": "transMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Transform"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(shape: BendingShape) -\u003E bool",
+      "summary": "Compare operator",
+      "remarks": "Compare operator",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Shape to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Shapes are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BendingRoller",
+      "type": "list[float]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the bending roller",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.BendingRoller"
+    },
+    {
+      "name": "Diameter",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the diameter",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.Diameter"
+    },
+    {
+      "name": "HookAngleEnd",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hook angle a the end of the shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.HookAngleEnd"
+    },
+    {
+      "name": "HookAngleStart",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hook angle a the start of the shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.HookAngleStart"
+    },
+    {
+      "name": "HookLengthEnd",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hook length a the end of the shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.HookLengthEnd"
+    },
+    {
+      "name": "HookLengthStart",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hook length a the start of the shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.HookLengthStart"
+    },
+    {
+      "name": "HookTypeEnd",
+      "type": "HookType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hook type a the end of the shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.HookTypeEnd"
+    },
+    {
+      "name": "HookTypeStart",
+      "type": "HookType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hook type a the start of the shape",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.HookTypeStart"
+    },
+    {
+      "name": "ShapePolyline",
+      "type": "Polyline3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape polyline",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.ShapePolyline"
+    },
+    {
+      "name": "SteelGrade",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the steel grade",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BendingShape/#NemAll_Python_Reinforcement.BendingShape.SteelGrade"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

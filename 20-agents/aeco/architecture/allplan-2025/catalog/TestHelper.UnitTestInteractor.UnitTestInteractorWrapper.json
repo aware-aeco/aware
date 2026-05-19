@@ -1,0 +1,145 @@
+{
+  "name": "UnitTestInteractorWrapper",
+  "namespace": "TestHelper.UnitTestInteractor",
+  "kind": "class",
+  "summary": "implementation of the unit test interactor wrapper",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "modify_element_property",
+      "signature": "modify_element_property(page: str, name: str, value: Any)",
+      "summary": "Modify property of element",
+      "remarks": "Modify property of element",
+      "params": [
+        {
+          "name": "page",
+          "type": "str",
+          "doc": "the page of the property",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value for property.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.modify_element_property"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E bool",
+      "summary": "Handles the cancel function event (e.g. by ESC, ...)",
+      "remarks": "Handles the cancel function event (e.g. by ESC, ...)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.on_cancel_function"
+    },
+    {
+      "name": "on_control_event",
+      "signature": "on_control_event(event_id: int)",
+      "summary": "Handles the on control event",
+      "remarks": "Handles the on control event",
+      "params": [
+        {
+          "name": "event_id",
+          "type": "int",
+          "doc": "event id of button control.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.on_control_event"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event",
+      "remarks": "Handles the mouse leave event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.on_preview_draw"
+    },
+    {
+      "name": "on_value_input_control_enter",
+      "signature": "on_value_input_control_enter() -\u003E bool",
+      "summary": "Handles the enter inside the value input control event",
+      "remarks": "Handles the enter inside the value input control event",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.on_value_input_control_enter"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: Any) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "the mouse message.",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "",
+          "doc": "the input point.",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "object",
+          "doc": "additional message info.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestInteractor/UnitTestInteractorWrapper/#TestHelper.UnitTestInteractor.UnitTestInteractorWrapper.process_mouse_msg"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

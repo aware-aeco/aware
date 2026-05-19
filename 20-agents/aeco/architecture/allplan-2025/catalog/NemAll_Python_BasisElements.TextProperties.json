@@ -1,0 +1,318 @@
+{
+  "name": "TextProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the text properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/",
+  "constructors": [
+    {
+      "name": "TextProperties()",
+      "signature": "TextProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.__init__"
+    },
+    {
+      "name": "TextProperties(element: TextProperties)",
+      "signature": "TextProperties(element: TextProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "TextProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetRatio",
+      "signature": "GetRatio() -\u003E float",
+      "summary": "Get text height/width ratio",
+      "remarks": "Get text height/width ratio",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "height/width ratio"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.GetRatio"
+    },
+    {
+      "name": "Init",
+      "signature": "Init()",
+      "summary": "Init section properties with default values",
+      "remarks": "Init section properties with default values",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Init"
+    },
+    {
+      "name": "IsDraftText",
+      "signature": "IsDraftText() -\u003E bool",
+      "summary": "Check if the text is a draft text (unprintable)",
+      "remarks": "Check if the text is a draft text (unprintable)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if text is unprintable, otherwise False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.IsDraftText"
+    },
+    {
+      "name": "SetHasBackgroundColorAndTransparentBackgroundColor",
+      "signature": "SetHasBackgroundColorAndTransparentBackgroundColor(value: bool)",
+      "summary": "Setting for filling the text background with the color of the viewport",
+      "remarks": "Setting for filling the text background with the color of the viewport",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "doc": "Set to to True to turn the background filling on.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.SetHasBackgroundColorAndTransparentBackgroundColor"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: TextProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "TextProperties",
+          "doc": "TextProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alignment",
+      "type": "TextAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "Text alignment",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Alignment"
+    },
+    {
+      "name": "BackgroundColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Background color of the text",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.BackgroundColor"
+    },
+    {
+      "name": "ColumnSlopeAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Slope angle of columns in [rad]",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.ColumnSlopeAngle"
+    },
+    {
+      "name": "Expansion",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Text expansion",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Expansion"
+    },
+    {
+      "name": "Font",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Font ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Font"
+    },
+    {
+      "name": "FontAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Angle of characters (italic) in [rad]",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.FontAngle"
+    },
+    {
+      "name": "FontStyles",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Font style (Bold, Italic, Underline, Crossed out) via bits, where:",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.FontStyles"
+    },
+    {
+      "name": "HasBackgroundColor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the text has a background color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.HasBackgroundColor"
+    },
+    {
+      "name": "HasReferencePoint",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the text has a reference point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.HasReferencePoint"
+    },
+    {
+      "name": "HasTextFrame",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to draw border around text",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.HasTextFrame"
+    },
+    {
+      "name": "HasTransparentBackground",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the text background is to be transparent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.HasTransparentBackground"
+    },
+    {
+      "name": "Height",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Height of text in [mm]",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Height"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the text is to be scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.IsScaleDependent"
+    },
+    {
+      "name": "IsUserModifiable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether the text should be modifiable by the user",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.IsUserModifiable"
+    },
+    {
+      "name": "LineFeed",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Line feed of text in [mm]",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.LineFeed"
+    },
+    {
+      "name": "TextAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Angle of whole text in [rad]",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.TextAngle"
+    },
+    {
+      "name": "TextFrameColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Color ID of the text frame color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.TextFrameColor"
+    },
+    {
+      "name": "TextFramePen",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Pen ID of the text frame",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.TextFramePen"
+    },
+    {
+      "name": "TextFrameStroke",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Stroke ID of the text frame",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.TextFrameStroke"
+    },
+    {
+      "name": "Type",
+      "type": "TextType",
+      "getter": true,
+      "setter": true,
+      "summary": "Text type (0 - normal text, \u003E1 variable text)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Type"
+    },
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Text width in [mm]",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.Width"
+    },
+    {
+      "name": "WrappedText",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether to use text wrapping.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.WrappedText"
+    },
+    {
+      "name": "WrappingWidth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Wrapping width. Used when wrapping is active",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextProperties/#NemAll_Python_BasisElements.TextProperties.WrappingWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

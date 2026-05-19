@@ -1,0 +1,31 @@
+{
+  "name": "PictResSillType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for sill types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResSillType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBothsides",
+      "value": 19707
+    },
+    {
+      "name": "eInner",
+      "value": 19703
+    },
+    {
+      "name": "eNone",
+      "value": 19701
+    },
+    {
+      "name": "eOuter",
+      "value": 19705
+    }
+  ]
+}

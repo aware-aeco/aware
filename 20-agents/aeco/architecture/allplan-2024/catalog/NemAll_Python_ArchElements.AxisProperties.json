@@ -1,0 +1,82 @@
+{
+  "name": "AxisProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Axis properties",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/",
+  "constructors": [
+    {
+      "name": "AxisProperties()",
+      "signature": "AxisProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Distance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the distance",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Distance"
+    },
+    {
+      "name": "Extension",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the extension",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Extension"
+    },
+    {
+      "name": "Modus",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the modus",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Modus"
+    },
+    {
+      "name": "OnLayer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the axis layer",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.OnLayer"
+    },
+    {
+      "name": "Position",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the axis position",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Position"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

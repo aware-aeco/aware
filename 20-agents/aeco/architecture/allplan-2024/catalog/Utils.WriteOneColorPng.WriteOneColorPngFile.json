@@ -1,0 +1,114 @@
+{
+  "name": "WriteOneColorPngFile",
+  "namespace": "Utils.WriteOneColorPng",
+  "kind": "class",
+  "summary": "Create a one color png and write it to a file",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/",
+  "constructors": [
+    {
+      "name": "WriteOneColorPngFile()",
+      "signature": "WriteOneColorPngFile(height, width, color)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "beginchunk",
+      "signature": "beginchunk(name, length)",
+      "summary": "begin chunk",
+      "remarks": "begin chunk",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.beginchunk"
+    },
+    {
+      "name": "endchunk",
+      "signature": "endchunk()",
+      "summary": "end chunk",
+      "remarks": "end chunk",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.endchunk"
+    },
+    {
+      "name": "resetcrc",
+      "signature": "resetcrc()",
+      "summary": "reset the crc",
+      "remarks": "reset the crc",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.resetcrc"
+    },
+    {
+      "name": "write",
+      "signature": "write(file)",
+      "summary": "write to the file",
+      "remarks": "write to the file",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.write"
+    },
+    {
+      "name": "write_byte_crc",
+      "signature": "write_byte_crc(c_value)",
+      "summary": "write a byte crc",
+      "remarks": "write a byte crc",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.write_byte_crc"
+    },
+    {
+      "name": "writelong",
+      "signature": "writelong(l_value)",
+      "summary": "write a long value",
+      "remarks": "write a long value",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.writelong"
+    },
+    {
+      "name": "writelongcrc",
+      "signature": "writelongcrc(l_value)",
+      "summary": "write a long crc value",
+      "remarks": "write a long crc value",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.writelongcrc"
+    },
+    {
+      "name": "writewordcrc",
+      "signature": "writewordcrc(s_value, reverse)",
+      "summary": "write word crc value",
+      "remarks": "write word crc value",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/WriteOneColorPng/WriteOneColorPngFile/#Utils.WriteOneColorPng.WriteOneColorPngFile.writewordcrc"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

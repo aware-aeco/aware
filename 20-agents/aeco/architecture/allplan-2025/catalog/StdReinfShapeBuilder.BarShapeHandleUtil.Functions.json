@@ -1,0 +1,50 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.BarShapeHandleUtil",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.BarShapeHandleUtil",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapeHandleUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_handle_from_shape",
+      "signature": "get_handle_from_shape(reinf_def, shape, handle_list, handle_id, build_ele)",
+      "summary": "Create the handle from a shape",
+      "remarks": "Create the handle from a shape",
+      "params": [
+        {
+          "name": "reinf_def",
+          "type": "object",
+          "doc": "reinforcement definition",
+          "optional": false
+        },
+        {
+          "name": "shape",
+          "type": "object",
+          "doc": "bending shape",
+          "optional": false
+        },
+        {
+          "name": "handle_list",
+          "type": "object",
+          "doc": "list with the handle",
+          "optional": false
+        },
+        {
+          "name": "handle_id",
+          "type": "object",
+          "doc": "ID of the handle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarShapeHandleUtil/#StdReinfShapeBuilder.BarShapeHandleUtil.get_handle_from_shape"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

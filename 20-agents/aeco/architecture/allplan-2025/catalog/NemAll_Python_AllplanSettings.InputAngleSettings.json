@@ -1,0 +1,113 @@
+{
+  "name": "InputAngleSettings",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Utility containing functions to control the Allplan settings related to the input angle",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAngleInputUnit",
+      "signature": "GetAngleInputUnit() -\u003E eAngleGradientUnit",
+      "summary": "Gets the current setting for unit of angle",
+      "remarks": "Gets the current setting for unit of angle",
+      "params": [],
+      "returns": {
+        "type": "eAngleGradientUnit",
+        "doc": "Unit for angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/#NemAll_Python_AllplanSettings.InputAngleSettings.GetAngleInputUnit"
+    },
+    {
+      "name": "GetGradientInputUnit",
+      "signature": "GetGradientInputUnit() -\u003E eAngleGradientUnit",
+      "summary": "Gets the current setting for Inclination as. If it\u0027s set to Angle, the result will be the current Unit of angle setting",
+      "remarks": "Gets the current setting for Inclination as. If it\u0027s set to Angle, the result will be the current Unit of angle setting",
+      "params": [],
+      "returns": {
+        "type": "eAngleGradientUnit",
+        "doc": "Units for the inclination"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/#NemAll_Python_AllplanSettings.InputAngleSettings.GetGradientInputUnit"
+    },
+    {
+      "name": "GetProjectAngle",
+      "signature": "GetProjectAngle(noCache: bool = False) -\u003E float",
+      "summary": "Get the project angle",
+      "remarks": "Get the project angle",
+      "params": [
+        {
+          "name": "noCache",
+          "type": "bool",
+          "doc": "Use no cache: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Project angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/#NemAll_Python_AllplanSettings.InputAngleSettings.GetProjectAngle"
+    },
+    {
+      "name": "GetSystemAngle",
+      "signature": "GetSystemAngle() -\u003E float",
+      "summary": "Get the system angle (rotation angle of the cursor)",
+      "remarks": "Get the system angle (rotation angle of the cursor)",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "System angle in radian"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/#NemAll_Python_AllplanSettings.InputAngleSettings.GetSystemAngle"
+    },
+    {
+      "name": "SetProjectAngle",
+      "signature": "SetProjectAngle(angle: float)",
+      "summary": "Set the project angle",
+      "remarks": "Set the project angle",
+      "params": [
+        {
+          "name": "angle",
+          "type": "float",
+          "doc": "Project angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/#NemAll_Python_AllplanSettings.InputAngleSettings.SetProjectAngle"
+    },
+    {
+      "name": "SetSystemAngle",
+      "signature": "SetSystemAngle(angle: float)",
+      "summary": "Set the system angle",
+      "remarks": "Set the system angle",
+      "params": [
+        {
+          "name": "angle",
+          "type": "float",
+          "doc": "New system angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/InputAngleSettings/#NemAll_Python_AllplanSettings.InputAngleSettings.SetSystemAngle"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

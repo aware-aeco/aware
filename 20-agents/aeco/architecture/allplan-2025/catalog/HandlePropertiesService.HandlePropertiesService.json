@@ -1,0 +1,47 @@
+{
+  "name": "HandlePropertiesService",
+  "namespace": "HandlePropertiesService",
+  "kind": "class",
+  "summary": "implementation of the service for the handle properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandlePropertiesService/HandlePropertiesService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "update_property_value",
+      "signature": "update_property_value( build_ele: BuildingElement, handle_prop: HandleProperties, input_pnt: Point3D, ) -\u003E bool",
+      "summary": "Update the property value",
+      "remarks": "Update the property value",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        },
+        {
+          "name": "handle_prop",
+          "type": "HandleProperties",
+          "doc": "handle property",
+          "optional": false
+        },
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "update palette state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandlePropertiesService/HandlePropertiesService/#HandlePropertiesService.HandlePropertiesService.update_property_value"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

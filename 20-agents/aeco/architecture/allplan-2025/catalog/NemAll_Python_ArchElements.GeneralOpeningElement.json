@@ -1,0 +1,145 @@
+{
+  "name": "GeneralOpeningElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of (polygonal) niche, recess, slit or opening.",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/",
+  "constructors": [
+    {
+      "name": "GeneralOpeningElement()",
+      "signature": "GeneralOpeningElement()",
+      "summary": "Initialize with default values",
+      "remarks": "Initialize with default values",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__init__"
+    },
+    {
+      "name": "GeneralOpeningElement( wallOpeningProp: GeneralOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
+      "signature": "GeneralOpeningElement( wallOpeningProp: GeneralOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
+      "summary": "Construct a regular niche, recess, slit or opening by start and end point",
+      "remarks": "Construct a regular niche, recess, slit or opening by start and end point",
+      "params": [
+        {
+          "name": "wallOpeningProp",
+          "type": "GeneralOpeningProperties",
+          "doc": "Opening properties",
+          "optional": false
+        },
+        {
+          "name": "generalEle",
+          "type": "BaseElementAdapter",
+          "doc": "General element which includes the opening",
+          "optional": false
+        },
+        {
+          "name": "startPnt",
+          "type": "Point2D",
+          "doc": "Start point of the opening",
+          "optional": false
+        },
+        {
+          "name": "endPnt",
+          "type": "Point2D",
+          "doc": "End point",
+          "optional": false
+        },
+        {
+          "name": "drawPlacementPreview",
+          "type": "bool",
+          "doc": "Set to True to draw preview before the opening is placed in an architectural component (no general element adaption). Set to False after the opening is placed in an opening.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__init__"
+    },
+    {
+      "name": "GeneralOpeningElement( wallOpeningProp: GeneralOpeningProperties, generalEle: BaseElementAdapter, groundPlanePolygon: Polygon2D, drawPlacementPreview: bool, )",
+      "signature": "GeneralOpeningElement( wallOpeningProp: GeneralOpeningProperties, generalEle: BaseElementAdapter, groundPlanePolygon: Polygon2D, drawPlacementPreview: bool, )",
+      "summary": "Construct a polygonal niche, recess, slit or opening",
+      "remarks": "Construct a polygonal niche, recess, slit or opening",
+      "params": [
+        {
+          "name": "wallOpeningProp",
+          "type": "GeneralOpeningProperties",
+          "doc": "Opening properties",
+          "optional": false
+        },
+        {
+          "name": "generalEle",
+          "type": "BaseElementAdapter",
+          "doc": "General element which includes the opening",
+          "optional": false
+        },
+        {
+          "name": "groundPlanePolygon",
+          "type": "Polygon2D",
+          "doc": "Ground plan polygon",
+          "optional": false
+        },
+        {
+          "name": "drawPlacementPreview",
+          "type": "bool",
+          "doc": "Set to True to draw preview before the opening is placed in an architectural component (no general element adaption). Set to False after the opening is placed in an opening.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__init__"
+    },
+    {
+      "name": "GeneralOpeningElement(element: GeneralOpeningElement)",
+      "signature": "GeneralOpeningElement(element: GeneralOpeningElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "GeneralOpeningElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "GeneralOpeningProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Opening properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/GeneralOpeningElement/#NemAll_Python_ArchElements.GeneralOpeningElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Location",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "locations",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Location/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLeftBottom",
+      "value": 1
+    },
+    {
+      "name": "eLeftTop",
+      "value": 3
+    },
+    {
+      "name": "eRightBottom",
+      "value": 0
+    },
+    {
+      "name": "eRightTop",
+      "value": 2
+    }
+  ]
+}

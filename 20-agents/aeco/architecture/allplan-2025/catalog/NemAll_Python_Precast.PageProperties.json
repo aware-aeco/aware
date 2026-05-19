@@ -1,0 +1,76 @@
+{
+  "name": "PageProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "@brief Wrapper for page properties of elementplan",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/",
+  "constructors": [
+    {
+      "name": "PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float)",
+      "signature": "PageProperties(label: str, sizeType: int, scaleType: int, fixedScale: float)",
+      "summary": "@brief Creates a helper to fill python palette for UVS Elementplan @param label Label of the page @param sizeType Size type of the page (Fixed | AutomaticSelection) @param scaleType Scale type of the page (ScaleAutomaticSelection | ScaleFixed | MaximumSize) @param fixedScale Fixed scale",
+      "remarks": "@brief Creates a helper to fill python palette for UVS Elementplan @param label Label of the page @param sizeType Size type of the page (Fixed | AutomaticSelection) @param scaleType Scale type of the page (ScaleAutomaticSelection | ScaleFixed | MaximumSize) @param fixedScale Fixed scale",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.__init__"
+    },
+    {
+      "name": "PageProperties(element: PageProperties)",
+      "signature": "PageProperties(element: PageProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "PageProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FixedScale",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Fixed scaleof the page",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.FixedScale"
+    },
+    {
+      "name": "Label",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Label of the page",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.Label"
+    },
+    {
+      "name": "ScaleType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Scale type of the page",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.ScaleType"
+    },
+    {
+      "name": "SizeType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Size type of the page",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PageProperties/#NemAll_Python_Precast.PageProperties.SizeType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,123 @@
+{
+  "name": "AssemblyGroupElement",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "AssemblyGroupElement class",
+  "base": "PrecastElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/",
+  "constructors": [
+    {
+      "name": "AssemblyGroupElement()",
+      "signature": "AssemblyGroupElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.__init__"
+    },
+    {
+      "name": "AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )",
+      "signature": "AssemblyGroupElement( name: str, number: int, LibraryElementsList: list, FixtureElementsList: list, ReinforcementList: list, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Name of the assembly group",
+          "optional": false
+        },
+        {
+          "name": "number",
+          "type": "int",
+          "doc": "Number of the assembly group",
+          "optional": false
+        },
+        {
+          "name": "LibraryElementsList",
+          "type": "list",
+          "doc": "List of library fixtures which should be included in the assembly group",
+          "optional": false
+        },
+        {
+          "name": "FixtureElementsList",
+          "type": "list",
+          "doc": "List of parametric fixtures which should be included in the assembly group",
+          "optional": false
+        },
+        {
+          "name": "ReinforcementList",
+          "type": "list",
+          "doc": "List of reinforcement placements which should be included in the assembly group",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FixtureElementsList",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "List of parametric fixtures which should be included in the assembly group Value type: list :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.FixtureElementsList"
+    },
+    {
+      "name": "LibraryElementsList",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "List of library fixtures which should be included in the assembly group Value type: list :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.LibraryElementsList"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the assembly group Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.Name"
+    },
+    {
+      "name": "Number",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of the assembly group Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.Number"
+    },
+    {
+      "name": "ReinforcementList",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "List of reinforcement placements which should be included in the assembly group Value type: list :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AssemblyGroupElement/#NemAll_Python_Precast.AssemblyGroupElement.ReinforcementList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

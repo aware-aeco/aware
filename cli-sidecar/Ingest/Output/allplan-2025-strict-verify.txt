@@ -1,0 +1,56 @@
+﻿
+idx ns                                                    name                                      kind         result issues           
+--- --                                                    ----                                      ----         ------ ------           
+279 NemAll_Python_BasisElements                           SectionAlongPathSectionLabelingProperties enum         FAIL   kind-word-missing
+257 NemAll_Python_BasisElements                           MacroSlideType                            enum         FAIL   kind-word-missing
+233 NemAll_Python_BasisElements                           ElementGroupElement                       class        FAIL   kind-word-missing
+639 NemAll_Python_Utility                                 Functions                                 static-class PASS                    
+683 StdReinfShapeBuilder.BarShapeHandleUtil               Functions                                 static-class PASS                    
+544 NemAll_Python_Precast                                 FixtureGroupElement                       class        FAIL   kind-word-missing
+ 17 BuildingElementStringTable                            BuildingElementStringTable                class        FAIL   kind-word-missing
+264 NemAll_Python_BasisElements                           PatternCurveAlignment                     enum         FAIL   kind-word-missing
+198 NemAll_Python_BaseElements                            FaceSelectService                         class        FAIL   kind-word-missing
+102 NemAll_Python_ArchElements                            ColumnElement                             class        FAIL   kind-word-missing
+113 NemAll_Python_ArchElements                            JointElement                              class        FAIL   kind-word-missing
+515 NemAll_Python_IFW_Input                               VisibleService                            class        FAIL   kind-word-missing
+ 11 BuildingElementControlProperties                      BuildingElementControlProperties          class        FAIL   kind-word-missing
+410 NemAll_Python_Geometry                                Point3D                                   class        FAIL   kind-word-missing
+187 NemAll_Python_BaseElements                            ElementsByAttributeService                class        FAIL   kind-word-missing
+205 NemAll_Python_BaseElements                            PlaneService                              class        FAIL   kind-word-missing
+621 NemAll_Python_Reinforcement                           ReinfElement                              class        FAIL   kind-word-missing
+201 NemAll_Python_BaseElements                            LayoutMasterStampData                     class        FAIL   kind-word-missing
+602 NemAll_Python_Reinforcement.DivideBarsParameters      eDivideMode                               enum         FAIL   kind-word-missing
+482 NemAll_Python_IFW_ElementAdapter                      ElementAdapterTypeGroup                   enum         FAIL   kind-word-missing
+ 30 HandleProperties                                      HandleProperties                          class        FAIL   kind-word-missing
+ 31 HandlePropertiesService                               Functions                                 static-class FAIL   type-name-missing
+278 NemAll_Python_BasisElements                           SectionAlongPathScaleProperties           class        FAIL   kind-word-missing
+723 Utils.Architecture.GeneralOpeningSlopedPolyhedronUtil GeneralOpeningSlopedPolyhedronUtil        class        FAIL   kind-word-missing
+488 NemAll_Python_IFW_ElementAdapter                      ReinforcementPropertiesReader             class        FAIL   kind-word-missing
+ 81 NemAll_Python_AllplanSettings                         PictResWallTierCount                      enum         FAIL   kind-word-missing
+669 ScriptObjectInteractors.LineInteractor.LineInteractor UvsTransformation                         class        FAIL   kind-word-missing
+565 NemAll_Python_Precast                                 OutlineTypeInGroup                        enum         FAIL   kind-word-missing
+270 NemAll_Python_BasisElements                           SectionAlongPathClippingPathProperties    class        FAIL   kind-word-missing
+562 NemAll_Python_Precast                                 OutlineShape                              enum         FAIL   kind-word-missing
+510 NemAll_Python_IFW_Input                               SelectionMode                             enum         FAIL   kind-word-missing
+485 NemAll_Python_IFW_Input                               Functions                                 static-class FAIL   type-name-missing
+730 Utils.ElementFilter.ArchitectureElementsQueryUtil     ArchitectureElementsQueryUtil             class        FAIL   kind-word-missing
+133 NemAll_Python_ArchElements                            SlabOpeningType                           enum         FAIL   kind-word-missing
+726 Utils.BaseElementAdapterFilter                        BaseElementAdapterFilter                  class        FAIL   kind-word-missing
+243 NemAll_Python_BasisElements                           HeightDefinitionType                      enum         FAIL   kind-word-missing
+275 NemAll_Python_BasisElements                           SectionAlongPathGeneralSectionProperties  class        FAIL   kind-word-missing
+ 24 ControlPropertiesUtil                                 ControlPropertiesUtil                     class        FAIL   kind-word-missing
+ 91 NemAll_Python_ArchElements                            Functions                                 static-class FAIL   type-name-missing
+391 NemAll_Python_Geometry                                Matrix2D                                  class        FAIL   kind-word-missing
+525 NemAll_Python_Palette                                 Functions                                 static-class PASS                    
+246 NemAll_Python_BasisElements                           LabelingProperties                        class        FAIL   kind-word-missing
+352 NemAll_Python_Geometry                                ClosedAreaComposite2D                     class        FAIL   kind-word-missing
+186 NemAll_Python_BaseElements.DrawingTypeService         DefaultDrawingTypes                       enum         FAIL   kind-word-missing
+419 NemAll_Python_Geometry                                PolygonalArea                             class        FAIL   kind-word-missing
+408 NemAll_Python_Geometry                                Point2DList                               class        FAIL   kind-word-missing
+470 NemAll_Python_IFW_ElementAdapter                      AssocViewElementAdapter                   class        FAIL   kind-word-missing
+638 NemAll_Python_Utility                                 DateDialog                                class        FAIL   kind-word-missing
+265 NemAll_Python_BasisElements                           PlacementType                             enum         FAIL   kind-word-missing
+416 NemAll_Python_Geometry                                Polygon3D                                 class        FAIL   kind-word-missing
+
+
+

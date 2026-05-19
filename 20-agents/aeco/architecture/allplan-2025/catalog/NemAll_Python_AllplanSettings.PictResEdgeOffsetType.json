@@ -1,0 +1,35 @@
+{
+  "name": "PictResEdgeOffsetType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for edge offset types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResEdgeOffsetType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMajorValueAtEnd",
+      "value": 12151
+    },
+    {
+      "name": "eMajorValueAtStart",
+      "value": 12147
+    },
+    {
+      "name": "eStartEqualEnd",
+      "value": 12149
+    },
+    {
+      "name": "eZeroAtEnd",
+      "value": 12153
+    },
+    {
+      "name": "eZeroAtStart",
+      "value": 12145
+    }
+  ]
+}

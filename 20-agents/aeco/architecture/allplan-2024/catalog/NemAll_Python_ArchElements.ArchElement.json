@@ -1,0 +1,56 @@
+{
+  "name": "ArchElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the abstract base class ArchElement",
+  "base": "AllplanElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchElement/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetConnectionUUID",
+      "signature": "GetConnectionUUID()",
+      "summary": "Get the connection UUID",
+      "remarks": "Get the connection UUID",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "Connection UUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchElement/#NemAll_Python_ArchElements.ArchElement.GetConnectionUUID"
+    },
+    {
+      "name": "SetConnectionUUID",
+      "signature": "SetConnectionUUID(connectionGuid)",
+      "summary": "Set the connection UUID",
+      "remarks": "Set the connection UUID",
+      "params": [
+        {
+          "name": "connectionGuid",
+          "type": "GUID",
+          "doc": "Connection UUID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchElement/#NemAll_Python_ArchElements.ArchElement.SetConnectionUUID"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConnectionUUID",
+      "type": "NemAll_Python_IFW_ElementAdapter.GUID",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the connection UUID",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ArchElement/#NemAll_Python_ArchElements.ArchElement.ConnectionUUID"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

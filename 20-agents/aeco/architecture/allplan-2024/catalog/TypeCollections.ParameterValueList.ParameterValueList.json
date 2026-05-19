@@ -1,0 +1,673 @@
+{
+  "name": "ParameterValueList",
+  "namespace": "TypeCollections.ParameterValueList",
+  "kind": "class",
+  "summary": "implementation of the parameter value list",
+  "base": "List[ParameterValueData]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/",
+  "constructors": [
+    {
+      "name": "ParameterValueList()",
+      "signature": "ParameterValueList()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddAngleValue",
+      "signature": "AddAngleValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add an angle value",
+      "remarks": "add an angle value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddAngleValue"
+    },
+    {
+      "name": "AddAreaValue",
+      "signature": "AddAreaValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add an area value",
+      "remarks": "add an area value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddAreaValue"
+    },
+    {
+      "name": "AddCheckboxValue",
+      "signature": "AddCheckboxValue(*_args)",
+      "summary": "add a checkbox value",
+      "remarks": "add a checkbox value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddCheckboxValue"
+    },
+    {
+      "name": "AddColorValue",
+      "signature": "AddColorValue(*_args)",
+      "summary": "add a color value",
+      "remarks": "add a color value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddColorValue"
+    },
+    {
+      "name": "AddComboBoxValue",
+      "signature": "AddComboBoxValue(text, name, value, _value_list, _palette_ctrl_type, palette_value_type, *_args)",
+      "summary": "add a combobox value",
+      "remarks": "add a combobox value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_value_list",
+          "type": "str",
+          "doc": "value list",
+          "optional": false
+        },
+        {
+          "name": "_palette_ctrl_type",
+          "type": "PaletteCtrlType",
+          "doc": "palette controls type",
+          "optional": false
+        },
+        {
+          "name": "palette_value_type",
+          "type": "PaletteValueType",
+          "doc": "palette value type",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddComboBoxValue"
+    },
+    {
+      "name": "AddDoubleValue",
+      "signature": "AddDoubleValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add a double value",
+      "remarks": "add a double value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddDoubleValue"
+    },
+    {
+      "name": "AddHatchValue",
+      "signature": "AddHatchValue(*_args)",
+      "summary": "add a hatch value",
+      "remarks": "add a hatch value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddHatchValue"
+    },
+    {
+      "name": "AddIntValue",
+      "signature": "AddIntValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add an integer value",
+      "remarks": "add an integer value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddIntValue"
+    },
+    {
+      "name": "AddLayer",
+      "signature": "AddLayer(*_args)",
+      "summary": "add a layer value",
+      "remarks": "add a layer value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddLayer"
+    },
+    {
+      "name": "AddLengthValue",
+      "signature": "AddLengthValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add a length value",
+      "remarks": "add a length value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddLengthValue"
+    },
+    {
+      "name": "AddPatternValue",
+      "signature": "AddPatternValue(*_args)",
+      "summary": "add a pattern value",
+      "remarks": "add a pattern value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddPatternValue"
+    },
+    {
+      "name": "AddPenValue",
+      "signature": "AddPenValue(*_args)",
+      "summary": "add a pen value",
+      "remarks": "add a pen value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddPenValue"
+    },
+    {
+      "name": "AddStringValue",
+      "signature": "AddStringValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add a string value",
+      "remarks": "add a string value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddStringValue"
+    },
+    {
+      "name": "AddStroke",
+      "signature": "AddStroke(*_args)",
+      "summary": "add a stroke value",
+      "remarks": "add a stroke value",
+      "params": [
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddStroke"
+    },
+    {
+      "name": "AddVolumeValue",
+      "signature": "AddVolumeValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add a volume value",
+      "remarks": "add a volume value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddVolumeValue"
+    },
+    {
+      "name": "AddWeightValue",
+      "signature": "AddWeightValue(text, name, value, _page_index, _expander_name, row_name, *_args)",
+      "summary": "add a weight value",
+      "remarks": "add a weight value",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "text of the value",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value",
+          "optional": false
+        },
+        {
+          "name": "_page_index",
+          "type": "int",
+          "doc": "page index",
+          "optional": false
+        },
+        {
+          "name": "_expander_name",
+          "type": "str",
+          "doc": "expander name",
+          "optional": false
+        },
+        {
+          "name": "row_name",
+          "type": "str",
+          "doc": "row name",
+          "optional": false
+        },
+        {
+          "name": "_args",
+          "type": "Any",
+          "doc": "additional arguments",
+          "optional": true,
+          "default": "()"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.AddWeightValue"
+    },
+    {
+      "name": "set_attribute_id",
+      "signature": "set_attribute_id(attribute_id)",
+      "summary": "set the attribute ID",
+      "remarks": "set the attribute ID",
+      "params": [
+        {
+          "name": "attribute_id",
+          "type": "int",
+          "doc": "attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/TypeCollections/ParameterValueList/ParameterValueList/#TypeCollections.ParameterValueList.ParameterValueList.set_attribute_id"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Functions",
+  "namespace": "Utils.LibraryBitmapPreview",
+  "kind": "static-class",
+  "summary": "Module-level functions of Utils.LibraryBitmapPreview",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/LibraryBitmapPreview/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_libary_bitmap_preview",
+      "signature": "create_libary_bitmap_preview(png_file_name: str) -\u003E List[Any]",
+      "summary": "deprecated function with typo",
+      "remarks": "deprecated function with typo",
+      "params": [
+        {
+          "name": "png_file_name",
+          "type": "str",
+          "doc": "pnt file name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Any]",
+        "doc": "list with the model elements for the preview"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/LibraryBitmapPreview/#Utils.LibraryBitmapPreview.create_libary_bitmap_preview"
+    },
+    {
+      "name": "create_library_bitmap_preview",
+      "signature": "create_library_bitmap_preview(png_file_name: str) -\u003E List[Any]",
+      "summary": "This function creates the preview objects, which are needed to draw a bitmap inside the preview window of the library",
+      "remarks": "This function creates the preview objects, which are needed to draw a bitmap inside the preview window of the library",
+      "params": [
+        {
+          "name": "png_file_name",
+          "type": "str",
+          "doc": "full name of the png file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Any]",
+        "doc": "list with the model elements for the preview"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/LibraryBitmapPreview/#Utils.LibraryBitmapPreview.create_library_bitmap_preview"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

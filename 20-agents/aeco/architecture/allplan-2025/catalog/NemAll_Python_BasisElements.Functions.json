@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "static-class",
+  "summary": "Module-level functions of NemAll_Python_BasisElements",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,757 @@
+{
+  "name": "Line3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 3D line.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/",
+  "constructors": [
+    {
+      "name": "Line3D()",
+      "signature": "Line3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    },
+    {
+      "name": "Line3D(line2D)",
+      "signature": "Line3D(line2D)",
+      "summary": "Copy constructor. Copy Line2D to Line3D at z=0.0",
+      "remarks": "Copy constructor. Copy Line2D to Line3D at z=0.0",
+      "params": [
+        {
+          "name": "line2D",
+          "type": "Line2D",
+          "doc": "Line2D which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    },
+    {
+      "name": "Line3D(line)",
+      "signature": "Line3D(line)",
+      "summary": "Copy constructor. Copy Line3D",
+      "remarks": "Copy constructor. Copy Line3D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Line3D which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    },
+    {
+      "name": "Line3D(point1, point2)",
+      "signature": "Line3D(point1, point2)",
+      "summary": "Constructor. Constructs a Line3D from point1 to point2 in world coordinates.",
+      "remarks": "Constructor. Constructs a Line3D from point1 to point2 in world coordinates.",
+      "params": [
+        {
+          "name": "point1",
+          "type": "Point3D",
+          "doc": "start point of line.",
+          "optional": false
+        },
+        {
+          "name": "point2",
+          "type": "Point3D",
+          "doc": "end point of line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    },
+    {
+      "name": "Line3D(startPoint, vec)",
+      "signature": "Line3D(startPoint, vec)",
+      "summary": "Constructor. Constructs a Line3D from point1 to point1\u002Bvec in world coordinates.",
+      "remarks": "Constructor. Constructs a Line3D from point1 to point1\u002Bvec in world coordinates.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "start point of line.",
+          "optional": false
+        },
+        {
+          "name": "vec",
+          "type": "Vector3D",
+          "doc": "translation vector.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    },
+    {
+      "name": "Line3D(x1, y1, z1, x2, y2, z2)",
+      "signature": "Line3D(x1, y1, z1, x2, y2, z2)",
+      "summary": "Constructor. Constructs a Line3D from 6 doubles in world coordinates.",
+      "remarks": "Constructor. Constructs a Line3D from 6 doubles in world coordinates.",
+      "params": [
+        {
+          "name": "x1",
+          "type": "float",
+          "doc": "X coordinate of start point.",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "float",
+          "doc": "Y coordinate of start point.",
+          "optional": false
+        },
+        {
+          "name": "z1",
+          "type": "float",
+          "doc": "Z coordinate of start point.",
+          "optional": false
+        },
+        {
+          "name": "x2",
+          "type": "float",
+          "doc": "X coordinate of end point.",
+          "optional": false
+        },
+        {
+          "name": "y2",
+          "type": "float",
+          "doc": "Y coordinate of end point.",
+          "optional": false
+        },
+        {
+          "name": "z2",
+          "type": "float",
+          "doc": "Z coordinate of end point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    },
+    {
+      "name": "Line3D(refPoint, startPoint, endPoint)",
+      "signature": "Line3D(refPoint, startPoint, endPoint)",
+      "summary": "Constructor. Constructs a Line3D in local coordinate system.",
+      "remarks": "Constructor. Constructs a Line3D in local coordinate system.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "Reference point.",
+          "optional": false
+        },
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "relative start point.",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Point3D",
+          "doc": "relative end point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Set(x1, y1, z1, x2, y2, z2)",
+      "signature": "Set(x1, y1, z1, x2, y2, z2)",
+      "summary": "Initialize from 6 doubles Set line points in world coordinate system",
+      "remarks": "Initialize from 6 doubles Set line points in world coordinate system",
+      "params": [
+        {
+          "name": "x1",
+          "type": "float",
+          "doc": "X coordinate of start point",
+          "optional": false
+        },
+        {
+          "name": "y1",
+          "type": "float",
+          "doc": "Y coordinate of start point",
+          "optional": false
+        },
+        {
+          "name": "z1",
+          "type": "float",
+          "doc": "Z coordinate of start point",
+          "optional": false
+        },
+        {
+          "name": "x2",
+          "type": "float",
+          "doc": "X coordinate of end point",
+          "optional": false
+        },
+        {
+          "name": "y2",
+          "type": "float",
+          "doc": "Y coordinate of end point",
+          "optional": false
+        },
+        {
+          "name": "z2",
+          "type": "float",
+          "doc": "Z coordinate of end point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
+    },
+    {
+      "name": "Set(line)",
+      "signature": "Set(line)",
+      "summary": "Initialize line from line.",
+      "remarks": "Initialize line from line.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Line3D.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
+    },
+    {
+      "name": "Set(startPoint, endPoint)",
+      "signature": "Set(startPoint, endPoint)",
+      "summary": "Initialize from two points. Set line points in world coordinate system.",
+      "remarks": "Initialize from two points. Set line points in world coordinate system.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "start point.",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Point3D",
+          "doc": "end point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
+    },
+    {
+      "name": "Set(refPoint, startPoint, endPoint)",
+      "signature": "Set(refPoint, startPoint, endPoint)",
+      "summary": "Initialize from 3 points. Set line points in local coordinate system.",
+      "remarks": "Initialize from 3 points. Set line points in local coordinate system.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "Reference point.",
+          "optional": false
+        },
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "relative start point.",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Point3D",
+          "doc": "relative end point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Set"
+    },
+    {
+      "name": "__mul__(matrix)",
+      "signature": "__mul__(matrix)",
+      "summary": "2D matrix transformation. Multiplies line start and end point with matrix.",
+      "remarks": "2D matrix transformation. Multiplies line start and end point with matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "2D transformation Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Line3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__mul__"
+    },
+    {
+      "name": "__mul__(matrix)",
+      "signature": "__mul__(matrix)",
+      "summary": "3D matrix transformation. Multiplies line start and end point with matrix.",
+      "remarks": "3D matrix transformation. Multiplies line start and end point with matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "3D transformation Matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Line3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__mul__"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(line)",
+      "summary": "Test if points are equal.",
+      "remarks": "Test if points are equal.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "line for comparision",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "bool"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.EqualRef"
+    },
+    {
+      "name": "GetCenterPoint",
+      "signature": "GetCenterPoint()",
+      "summary": "Get the center point in world coordinate system",
+      "remarks": "Get the center point in world coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetCenterPoint"
+    },
+    {
+      "name": "GetCoords",
+      "signature": "GetCoords()",
+      "summary": "Get the coordinates. Get the coordinates in world coordinate system.",
+      "remarks": "Get the coordinates. Get the coordinates in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "tuple(X coordinate of start point,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetCoords"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint()",
+      "summary": "Get the end point. Get the end point in world coordinate system.",
+      "remarks": "Get the end point. Get the end point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint()",
+      "summary": "Get the end point. Get the end point in relative coordinate system.",
+      "remarks": "Get the end point. Get the end point in relative coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetEndRelPoint"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint()",
+      "summary": "Get the point",
+      "remarks": "Get the point",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetRefPoint"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint()",
+      "summary": "Get the start point. Get the start point in world coordinate system.",
+      "remarks": "Get the start point. Get the start point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint()",
+      "summary": "Get the start point. Get the start point in relative coordinate system.",
+      "remarks": "Get the start point. Get the start point in relative coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Point3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetStartRelPoint"
+    },
+    {
+      "name": "GetVector",
+      "signature": "GetVector()",
+      "summary": "Get the vector from start to end point.",
+      "remarks": "Get the vector from start to end point.",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.GetVector"
+    },
+    {
+      "name": "Is2DLine",
+      "signature": "Is2DLine()",
+      "summary": "Check, whether the line is a 2D line (both y coordinates are 0.)",
+      "remarks": "Check, whether the line is a 2D line (both y coordinates are 0.)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Line is a 2D line: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Is2DLine"
+    },
+    {
+      "name": "IsPoint",
+      "signature": "IsPoint()",
+      "summary": "Check, whether the line is a point (start point equal end point)",
+      "remarks": "Check, whether the line is a point (start point equal end point)",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Line is a point: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.IsPoint"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse orientation of the Line",
+      "remarks": "Reverse orientation of the Line",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.Reverse"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(endPoint)",
+      "summary": "Set end point Set end point in world coordinate system.",
+      "remarks": "Set end point Set end point in world coordinate system.",
+      "params": [
+        {
+          "name": "endPoint",
+          "type": "Point3D",
+          "doc": "End point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.SetEndPoint"
+    },
+    {
+      "name": "SetEndRelPoint",
+      "signature": "SetEndRelPoint(endPoint)",
+      "summary": "Set end point Set end point in Local coordinate system.",
+      "remarks": "Set end point Set end point in Local coordinate system.",
+      "params": [
+        {
+          "name": "endPoint",
+          "type": "Point3D",
+          "doc": "End point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.SetEndRelPoint"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint)",
+      "summary": "Set the point.",
+      "remarks": "Set the point.",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point3D",
+          "doc": "Reference point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.SetRefPoint"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startPoint)",
+      "summary": "Set start point Set start point in world coordinate system.",
+      "remarks": "Set start point Set start point in world coordinate system.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "Start point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.SetStartPoint"
+    },
+    {
+      "name": "SetStartRelPoint",
+      "signature": "SetStartRelPoint(startPoint)",
+      "summary": "Set start point Set start point in Local coordinate system.",
+      "remarks": "Set start point Set start point in Local coordinate system.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Point3D",
+          "doc": "Start point.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.SetStartRelPoint"
+    },
+    {
+      "name": "TrimEnd",
+      "signature": "TrimEnd(ds)",
+      "summary": "Trim line at the end",
+      "remarks": "Trim line at the end",
+      "params": [
+        {
+          "name": "ds",
+          "type": "float",
+          "doc": "dimension value the line is modified",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "object",
+          "doc": "value \u003E0 shortens the line",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "object",
+          "doc": "value \u003C0 extend the line",
+          "optional": false
+        },
+        {
+          "name": "If",
+          "type": "object",
+          "doc": "the line is shorten larger than its actual length a exception is throw",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.TrimEnd"
+    },
+    {
+      "name": "TrimStart",
+      "signature": "TrimStart(ds)",
+      "summary": "Trim line at the start",
+      "remarks": "Trim line at the start",
+      "params": [
+        {
+          "name": "ds",
+          "type": "float",
+          "doc": "dimension value the line is modified",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "object",
+          "doc": "value \u003E0 shortens the line",
+          "optional": false
+        },
+        {
+          "name": "A",
+          "type": "object",
+          "doc": "value \u003C0 extend the line",
+          "optional": false
+        },
+        {
+          "name": "If",
+          "type": "object",
+          "doc": "the line is shorten larger than its actual length a exception is throw",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.TrimStart"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(line)",
+      "summary": "Comparison of lines without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of lines without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Compared line.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when lines are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the end point. Get the end point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.EndPoint"
+    },
+    {
+      "name": "EndRelPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the end point. Get the end point in relative coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.EndRelPoint"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the point",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.RefPoint"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the start point. Get the start point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.StartPoint"
+    },
+    {
+      "name": "StartRelPoint",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the start point. Get the start point in relative coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Line3D/#NemAll_Python_Geometry.Line3D.StartRelPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,37 @@
+{
+  "name": "LabelStyle",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.LabelStyle.)",
+  "base": "Cell",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyle/",
+  "constructors": [
+    {
+      "name": "LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, )",
+      "signature": "LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyle/#NemAll_Python_Precast.LabelStyle.__init__"
+    },
+    {
+      "name": "LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, conditionTemplate: str, )",
+      "signature": "LabelStyle( doc: DocumentAdapter, cellId: int, labelStyleProps: LabelStyleProperties, allowOverlapping: bool, conditionTemplate: str, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LabelStyle/#NemAll_Python_Precast.LabelStyle.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

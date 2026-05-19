@@ -1,0 +1,71 @@
+{
+  "name": "NormType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the norms",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/NormType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNORM_AS",
+      "value": 8
+    },
+    {
+      "name": "eNORM_BS",
+      "value": 5
+    },
+    {
+      "name": "eNORM_DIN",
+      "value": 0
+    },
+    {
+      "name": "eNORM_DIN_1",
+      "value": 10
+    },
+    {
+      "name": "eNORM_DIN_H",
+      "value": 4
+    },
+    {
+      "name": "eNORM_EC2",
+      "value": 6
+    },
+    {
+      "name": "eNORM_EHE",
+      "value": 7
+    },
+    {
+      "name": "eNORM_NEN",
+      "value": 9
+    },
+    {
+      "name": "eNORM_NF",
+      "value": 3
+    },
+    {
+      "name": "eNORM_OE",
+      "value": 2
+    },
+    {
+      "name": "eNORM_SIA",
+      "value": 1
+    },
+    {
+      "name": "eNORM_SNIP",
+      "value": 11
+    },
+    {
+      "name": "eNORM_SNIP2003",
+      "value": 12
+    },
+    {
+      "name": "eNormNo",
+      "value": -1
+    }
+  ]
+}

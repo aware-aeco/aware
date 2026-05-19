@@ -1,0 +1,70 @@
+{
+  "name": "ImperialUnitService",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Utility class offering methods for conversion from metric into imperial units",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/ImperialUnitService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConvertToMM",
+      "signature": "ConvertToMM(imperialValue: str) -\u003E tuple",
+      "summary": "Convert an imperial length unit to mm",
+      "remarks": "Convert an imperial length unit to mm",
+      "params": [
+        {
+          "name": "imperialValue",
+          "type": "str",
+          "doc": "Imperial value as string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when conversion failed, False when it was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/ImperialUnitService/#NemAll_Python_AllplanSettings.ImperialUnitService.ConvertToMM"
+    },
+    {
+      "name": "ConvertTokg",
+      "signature": "ConvertTokg(imperialValue: str) -\u003E tuple",
+      "summary": "Convert an imperial weight unit to kg",
+      "remarks": "Convert an imperial weight unit to kg",
+      "params": [
+        {
+          "name": "imperialValue",
+          "type": "str",
+          "doc": "Imperial value as string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when conversion failed, False when it was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/ImperialUnitService/#NemAll_Python_AllplanSettings.ImperialUnitService.ConvertTokg"
+    },
+    {
+      "name": "IsImperialUnit",
+      "signature": "IsImperialUnit() -\u003E bool",
+      "summary": "Check whether the current input unit is imperial unit",
+      "remarks": "Check whether the current input unit is imperial unit",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Imperial unit input: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/ImperialUnitService/#NemAll_Python_AllplanSettings.ImperialUnitService.IsImperialUnit"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

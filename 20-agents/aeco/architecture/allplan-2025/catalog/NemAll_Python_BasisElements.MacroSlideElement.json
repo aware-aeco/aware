@@ -1,0 +1,113 @@
+{
+  "name": "MacroSlideElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of a macro slide. In Allplan referred to as foil of a smart symbol",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/",
+  "constructors": [
+    {
+      "name": "MacroSlideElement()",
+      "signature": "MacroSlideElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.__init__"
+    },
+    {
+      "name": "MacroSlideElement(macroSlideProp: MacroSlideProperties, objectList: list)",
+      "signature": "MacroSlideElement(macroSlideProp: MacroSlideProperties, objectList: list)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "macroSlideProp",
+          "type": "MacroSlideProperties",
+          "doc": "MacroSlide properties",
+          "optional": false
+        },
+        {
+          "name": "objectList",
+          "type": "list",
+          "doc": "Object list of slide",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMacroSlideProperties",
+      "signature": "GetMacroSlideProperties() -\u003E MacroSlideProperties",
+      "summary": "Get the MacroSlide properties",
+      "remarks": "Get the MacroSlide properties",
+      "params": [],
+      "returns": {
+        "type": "MacroSlideProperties",
+        "doc": "MacroSlide properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.GetMacroSlideProperties"
+    },
+    {
+      "name": "GetObjectList",
+      "signature": "GetObjectList() -\u003E list",
+      "summary": "Get the slide object list",
+      "remarks": "Get the slide object list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Slide object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.GetObjectList"
+    },
+    {
+      "name": "SetMacroSlideProperties",
+      "signature": "SetMacroSlideProperties(MacroSlideProp: MacroSlideProperties)",
+      "summary": "Set the MacroSlide properties",
+      "remarks": "Set the MacroSlide properties",
+      "params": [
+        {
+          "name": "MacroSlideProp",
+          "type": "MacroSlideProperties",
+          "doc": "MacroSlide properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.SetMacroSlideProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/MacroSlideElement/#NemAll_Python_BasisElements.MacroSlideElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

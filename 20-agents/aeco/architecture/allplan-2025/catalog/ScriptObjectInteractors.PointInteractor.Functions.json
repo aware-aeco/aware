@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "ScriptObjectInteractors.PointInteractor",
+  "kind": "static-class",
+  "summary": "Module-level functions of ScriptObjectInteractors.PointInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

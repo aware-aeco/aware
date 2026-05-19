@@ -1,0 +1,26 @@
+{
+  "name": "_ZCoord",
+  "namespace": "HandlePropertiesService",
+  "kind": "class",
+  "summary": "modify the z coordinate",
+  "base": "_BaseHandlePropUpdate",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_ZCoord/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__()",
+      "summary": "execute the value update",
+      "remarks": "execute the value update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_ZCoord/#HandlePropertiesService._ZCoord.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

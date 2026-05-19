@@ -1,0 +1,35 @@
+{
+  "name": "DebugUtil",
+  "namespace": "Utils.DebugUtil",
+  "kind": "class",
+  "summary": "implementation of the debug utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/DebugUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "start_debugger",
+      "signature": "start_debugger(info_by_msg_box: bool) -\u003E bool",
+      "summary": "start the debugger",
+      "remarks": "start the debugger",
+      "params": [
+        {
+          "name": "info_by_msg_box",
+          "type": "bool",
+          "doc": "True = info by message box / False = info by print",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "started debugger state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/DebugUtil/#Utils.DebugUtil.DebugUtil.start_debugger"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

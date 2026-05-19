@@ -1,0 +1,206 @@
+{
+  "name": "View",
+  "namespace": "PythonPart",
+  "kind": "class",
+  "summary": "Definition of a view class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/",
+  "constructors": [
+    {
+      "name": "View()",
+      "signature": "View(viewtype=eGeometry, visibility2d=True, visibility3d=True, start_scale=0.0, end_scale=9999.0, elements=None)",
+      "summary": "initialization of view class",
+      "remarks": "initialization of view class",
+      "params": [
+        {
+          "name": "viewtype",
+          "type": "MacroSlideType",
+          "doc": "view type. Defaults to AllplanBasisElements.MacroSlideType.eGeometry.",
+          "optional": true,
+          "default": "eGeometry"
+        },
+        {
+          "name": "visibility2d",
+          "type": "bool",
+          "doc": "visible in 2D. Defaults to True.",
+          "optional": true,
+          "default": "True"
+        },
+        {
+          "name": "visibility3d",
+          "type": "bool",
+          "doc": "visible in 3D. Defaults to True.",
+          "optional": true,
+          "default": "True"
+        },
+        {
+          "name": "start_scale",
+          "type": "float",
+          "doc": "start scale. Defaults to 0.",
+          "optional": true,
+          "default": "0.0"
+        },
+        {
+          "name": "end_scale",
+          "type": "float",
+          "doc": "end scale. Defaults to 9999.",
+          "optional": true,
+          "default": "9999.0"
+        },
+        {
+          "name": "elements",
+          "type": "list[Any] | None",
+          "doc": "elements. Defaults to None.",
+          "optional": true,
+          "default": "None"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "create the element string",
+      "remarks": "create the element string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "element string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.__repr__"
+    },
+    {
+      "name": "add",
+      "signature": "add(element)",
+      "summary": "add one element",
+      "remarks": "add one element",
+      "params": [
+        {
+          "name": "element",
+          "type": "Any",
+          "doc": "element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.add"
+    },
+    {
+      "name": "create",
+      "signature": "create()",
+      "summary": "Create view",
+      "remarks": "Create view",
+      "params": [],
+      "returns": {
+        "type": "MacroSlideElement",
+        "doc": "macro slide element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.create"
+    },
+    {
+      "name": "reset",
+      "signature": "reset(elements)",
+      "summary": "Reset elements",
+      "remarks": "Reset elements",
+      "params": [
+        {
+          "name": "elements",
+          "type": "list[Any]",
+          "doc": "elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.reset"
+    }
+  ],
+  "properties": [
+    {
+      "name": "elements",
+      "type": "list[Any]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get all elements",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.elements"
+    },
+    {
+      "name": "end_scale",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the reference end scale",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.end_scale"
+    },
+    {
+      "name": "start_scale",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the reference start scale",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.start_scale"
+    },
+    {
+      "name": "viewtype",
+      "type": "AllplanBasisEle.MacroSlideType",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the type",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.viewtype"
+    },
+    {
+      "name": "visibility2d",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the 2D visibility flag",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.visibility2d"
+    },
+    {
+      "name": "visibility3d",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the 3D visibility flag",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.visibility3d"
+    },
+    {
+      "name": "visibility_layer_a",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer A visibility flag",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.visibility_layer_a"
+    },
+    {
+      "name": "visibility_layer_b",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer B visibility flag",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.visibility_layer_b"
+    },
+    {
+      "name": "visibility_layer_c",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Layer C visibility flag",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PythonPart/View/#PythonPart.View.visibility_layer_c"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

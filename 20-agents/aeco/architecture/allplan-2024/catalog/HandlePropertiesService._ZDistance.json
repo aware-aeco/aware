@@ -1,0 +1,26 @@
+{
+  "name": "_ZDistance",
+  "namespace": "HandlePropertiesService",
+  "kind": "class",
+  "summary": "modify the z distance",
+  "base": "_BaseHandlePropUpdate",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_ZDistance/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__()",
+      "summary": "execute the value update",
+      "remarks": "execute the value update",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/HandlePropertiesService/_ZDistance/#HandlePropertiesService._ZDistance.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,31 @@
+{
+  "name": "TextResRevealType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Texture resources for reveal types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/TextResRevealType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEmbedded",
+      "value": 36386
+    },
+    {
+      "name": "eExterior",
+      "value": 36388
+    },
+    {
+      "name": "eInterior",
+      "value": 36387
+    },
+    {
+      "name": "eNone",
+      "value": 36385
+    }
+  ]
+}

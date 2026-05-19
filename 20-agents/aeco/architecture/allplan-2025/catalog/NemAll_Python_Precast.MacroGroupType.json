@@ -1,0 +1,31 @@
+{
+  "name": "MacroGroupType",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/MacroGroupType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eGroupType_CuttedGroup",
+      "value": 2
+    },
+    {
+      "name": "eGroupType_DynamicGroup",
+      "value": 1
+    },
+    {
+      "name": "eGroupType_GeneralGroup",
+      "value": 0
+    },
+    {
+      "name": "eGroupType_LeadingGroup",
+      "value": 3
+    }
+  ]
+}

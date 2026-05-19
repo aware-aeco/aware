@@ -1,0 +1,69 @@
+{
+  "name": "LabelType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the label",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LabelType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "LabelType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LabelType/#NemAll_Python_Reinforcement.LabelType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "LabelWithComb",
+      "value": 2
+    },
+    {
+      "name": "LabelWithComb2Pointer",
+      "value": 3
+    },
+    {
+      "name": "LabelWithComb3Pointer",
+      "value": 4
+    },
+    {
+      "name": "LabelWithDimensionLine",
+      "value": 1
+    },
+    {
+      "name": "LabelWithFan",
+      "value": 5
+    },
+    {
+      "name": "LabelWithFanStartCenterEnd",
+      "value": 7
+    },
+    {
+      "name": "LabelWithFanStartEnd",
+      "value": 6
+    },
+    {
+      "name": "LabelWithPointer",
+      "value": 0
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "InputType",
+  "namespace": "ParameterProperty.ParameterProperty",
+  "kind": "enum",
+  "summary": "Class used to define the type of inputs",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ParameterProperty/ParameterProperty/#ParameterProperty.ParameterProperty.InputType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

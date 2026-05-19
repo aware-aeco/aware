@@ -1,0 +1,23 @@
+{
+  "name": "eHiddenCalculationResult",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Result of hidden calculation for line.",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eHiddenCalculationResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eHidden",
+      "value": 1
+    },
+    {
+      "name": "eVisible",
+      "value": 0
+    }
+  ]
+}

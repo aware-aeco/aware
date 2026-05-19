@@ -1,0 +1,385 @@
+{
+  "name": "Axis2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D Axis",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/",
+  "constructors": [
+    {
+      "name": "Axis2D()",
+      "signature": "Axis2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
+    },
+    {
+      "name": "Axis2D(axis: Axis2D)",
+      "signature": "Axis2D(axis: Axis2D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Axis2D",
+          "doc": "Axis which will be copied",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
+    },
+    {
+      "name": "Axis2D(axisPoint: Point2D, vector: Vector2D)",
+      "signature": "Axis2D(axisPoint: Point2D, vector: Vector2D)",
+      "summary": "Constructor. Reference point is initialized to [0.,0.] Used world coordinate system for AxisPoint",
+      "remarks": "Constructor. Reference point is initialized to [0.,0.] Used world coordinate system for AxisPoint",
+      "params": [
+        {
+          "name": "axisPoint",
+          "type": "Point2D",
+          "doc": "Axis point",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Vector2D",
+          "doc": "Axis vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
+    },
+    {
+      "name": "Axis2D(refPoint: Point2D, axisPoint: Point2D, vector: Vector2D)",
+      "signature": "Axis2D(refPoint: Point2D, axisPoint: Point2D, vector: Vector2D)",
+      "summary": "Constructor. Used local coordinate system for AxisPoint",
+      "remarks": "Constructor. Used local coordinate system for AxisPoint",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "Reference point",
+          "optional": false
+        },
+        {
+          "name": "axisPoint",
+          "type": "Point2D",
+          "doc": "Axis point",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Vector2D",
+          "doc": "Axis vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
+    },
+    {
+      "name": "Axis2D(line: Line2D)",
+      "signature": "Axis2D(line: Line2D)",
+      "summary": "Explicit constructor from Line2D",
+      "remarks": "Explicit constructor from Line2D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "2D line",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAxisPoint",
+      "signature": "GetAxisPoint() -\u003E Point2D",
+      "summary": "Get axis point in world coordinate system.",
+      "remarks": "Get axis point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Axis point in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetAxisPoint"
+    },
+    {
+      "name": "GetAxisPoint2",
+      "signature": "GetAxisPoint2() -\u003E Point2D",
+      "summary": "Get second axis point. Used world coordinate system.",
+      "remarks": "Get second axis point. Used world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Second axis point in world coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetAxisPoint2"
+    },
+    {
+      "name": "GetAxisRelPoint",
+      "signature": "GetAxisRelPoint() -\u003E Point2D",
+      "summary": "Get axis point in local coordinate system",
+      "remarks": "Get axis point in local coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Axis point in local coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetAxisRelPoint"
+    },
+    {
+      "name": "GetAxisRelPoint2",
+      "signature": "GetAxisRelPoint2() -\u003E Point2D",
+      "summary": "Get second axis point. Used local coordinate system",
+      "remarks": "Get second axis point. Used local coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Second axis point in local coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetAxisRelPoint2"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point2D",
+      "summary": "Get reference point.",
+      "remarks": "Get reference point.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "Reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetRefPoint"
+    },
+    {
+      "name": "GetVector",
+      "signature": "GetVector() -\u003E Vector2D",
+      "summary": "Get axis vector",
+      "remarks": "Get axis vector",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Axis vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.GetVector"
+    },
+    {
+      "name": "Set(axis: Axis2D)",
+      "signature": "Set(axis: Axis2D)",
+      "summary": "Set axis",
+      "remarks": "Set axis",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Axis2D",
+          "doc": "Axis which will be copied",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.Set"
+    },
+    {
+      "name": "Set(refPoint: Point2D, axisPoint: Point2D, vector: Vector2D)",
+      "signature": "Set(refPoint: Point2D, axisPoint: Point2D, vector: Vector2D)",
+      "summary": "Set axis Used local coordinate system for axisPoint",
+      "remarks": "Set axis Used local coordinate system for axisPoint",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "Reference point",
+          "optional": false
+        },
+        {
+          "name": "axisPoint",
+          "type": "Point2D",
+          "doc": "Axis point",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Vector2D",
+          "doc": "Axis vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.Set"
+    },
+    {
+      "name": "SetAxisPoint",
+      "signature": "SetAxisPoint(point: Point2D)",
+      "summary": "Set axis point, used world coordinate system.",
+      "remarks": "Set axis point, used world coordinate system.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Axis point in world coordinates",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.SetAxisPoint"
+    },
+    {
+      "name": "SetAxisRelPoint",
+      "signature": "SetAxisRelPoint(axisPoint: Point2D)",
+      "summary": "Set axis point, used local coordinate system.",
+      "remarks": "Set axis point, used local coordinate system.",
+      "params": [
+        {
+          "name": "axisPoint",
+          "type": "Point2D",
+          "doc": "Axis point in local coordinates",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.SetAxisRelPoint"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point2D)",
+      "summary": "Set reference point",
+      "remarks": "Set reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "New reference point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.SetRefPoint"
+    },
+    {
+      "name": "SetVector",
+      "signature": "SetVector(vector: Vector2D)",
+      "summary": "Set axis vector",
+      "remarks": "Set axis vector",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Vector2D",
+          "doc": "New axis vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.SetVector"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(axis: Axis2D) -\u003E bool",
+      "summary": "Comparison of axes. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of axes. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "axis",
+          "type": "Axis2D",
+          "doc": "axis to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when axes are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AxisPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get axis point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.AxisPoint"
+    },
+    {
+      "name": "AxisRefPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get reference point.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.AxisRefPoint"
+    },
+    {
+      "name": "AxisRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get axis point in local coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.AxisRelPoint"
+    },
+    {
+      "name": "AxisVector",
+      "type": "Vector2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get axis vector",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Axis2D/#NemAll_Python_Geometry.Axis2D.AxisVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "PrecastPropertiesService",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_ElementAdapter.PrecastPropertiesService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/PrecastPropertiesService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPositionNumber",
+      "signature": "GetPositionNumber()",
+      "summary": "Get the precast element position number",
+      "remarks": "Get the precast element position number",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/PrecastPropertiesService/#NemAll_Python_IFW_ElementAdapter.PrecastPropertiesService.GetPositionNumber"
+    },
+    {
+      "name": "GetPositionNumberPure",
+      "signature": "GetPositionNumberPure()",
+      "summary": "Get the precast element position number",
+      "remarks": "Get the precast element position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/PrecastPropertiesService/#NemAll_Python_IFW_ElementAdapter.PrecastPropertiesService.GetPositionNumberPure"
+    },
+    {
+      "name": "GetPrecastElementTypeDescription",
+      "signature": "GetPrecastElementTypeDescription(arg2)",
+      "summary": "Get the precast element description (new wall system)",
+      "remarks": "Get the precast element description (new wall system)",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "description"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/PrecastPropertiesService/#NemAll_Python_IFW_ElementAdapter.PrecastPropertiesService.GetPrecastElementTypeDescription"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

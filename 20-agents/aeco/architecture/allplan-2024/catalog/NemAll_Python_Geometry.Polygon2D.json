@@ -1,0 +1,258 @@
+{
+  "name": "Polygon2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D Polygon",
+  "base": "PolyPoints2D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/",
+  "constructors": [
+    {
+      "name": "Polygon2D()",
+      "signature": "Polygon2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__init__"
+    },
+    {
+      "name": "Polygon2D(pntList)",
+      "signature": "Polygon2D(pntList)",
+      "summary": "Constructor with an initializer list",
+      "remarks": "Constructor with an initializer list",
+      "params": [
+        {
+          "name": "pntList",
+          "type": "list",
+          "doc": "Point list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__init__"
+    },
+    {
+      "name": "Polygon2D(polygon)",
+      "signature": "Polygon2D(polygon)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon which will be copied",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateRectangle",
+      "signature": "CreateRectangle(leftBottom, rightTop)",
+      "summary": "Create a rectangle",
+      "remarks": "Create a rectangle",
+      "params": [
+        {
+          "name": "leftBottom",
+          "type": "Point2D",
+          "doc": "Left bottom point",
+          "optional": false
+        },
+        {
+          "name": "rightTop",
+          "type": "Point2D",
+          "doc": "Right top point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon2D",
+        "doc": "Polygon of the rectangle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.CreateRectangle"
+    },
+    {
+      "name": "GetSegments",
+      "signature": "GetSegments()",
+      "summary": "Get polygon segments",
+      "remarks": "Get polygon segments",
+      "params": [],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "tuple(error code,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.GetSegments"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid()",
+      "summary": "Check if the polygon is valid ( has at least 3 points ) For additional point validation use Service::Validate.",
+      "remarks": "Check if the polygon is valid ( has at least 3 points ) For additional point validation use Service::Validate.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if is valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.IsValid"
+    },
+    {
+      "name": "Normalize",
+      "signature": "Normalize(normalizeType=DEFAULT_NORM_TYPE, extra_smooth=False)",
+      "summary": "Normalize Polygon2D. Using huge old algorithm, adding points at line crossings, reorganizing the lines, correcting gaps, ... This method is checked and throwing Exception when error occurs.",
+      "remarks": "Normalize Polygon2D. Using huge old algorithm, adding points at line crossings, reorganizing the lines, correcting gaps, ... This method is checked and throwing Exception when error occurs.",
+      "params": [
+        {
+          "name": "normalizeType",
+          "type": "ePolygonNormalizeType",
+          "doc": "type of Polygon2D normalization",
+          "optional": true,
+          "default": "DEFAULT_NORM_TYPE"
+        },
+        {
+          "name": "extra_smooth",
+          "type": "bool",
+          "doc": "Including extra smooth: true/false",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.Normalize"
+    },
+    {
+      "name": "NormalizeNoThrow",
+      "signature": "NormalizeNoThrow(normalizeType=DEFAULT_NORM_TYPE, extra_smooth=False)",
+      "summary": "Normalize Polygon2D. Same as Normalize, but method doesn\u0027t throw exception, just return error code",
+      "remarks": "Normalize Polygon2D. Same as Normalize, but method doesn\u0027t throw exception, just return error code",
+      "params": [
+        {
+          "name": "normalizeType",
+          "type": "ePolygonNormalizeType",
+          "doc": "type of Polygon2D normalization",
+          "optional": true,
+          "default": "DEFAULT_NORM_TYPE"
+        },
+        {
+          "name": "extra_smooth",
+          "type": "bool",
+          "doc": "Including extra smooth: true/false",
+          "optional": true,
+          "default": "False"
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Error code (eOK, eAllocError, eStructuralError)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.NormalizeNoThrow"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse the point order in polygon, separatelly for every subpolygon",
+      "remarks": "Reverse the point order in polygon, separatelly for every subpolygon",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.Reverse"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(polygon2)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "polygon2",
+          "type": "Polygon2D",
+          "doc": "Second polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Polyline3D are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__eq__"
+    },
+    {
+      "name": "__iadd__",
+      "signature": "__iadd__(point)",
+      "summary": "Addition assignment operator",
+      "remarks": "Addition assignment operator",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point which will be added",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon2D",
+        "doc": "Reference to polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__iadd__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(polygon2)",
+      "summary": "Not equal operator",
+      "remarks": "Not equal operator",
+      "params": [
+        {
+          "name": "polygon2",
+          "type": "Polygon2D",
+          "doc": "Second polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Polyline3D are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon2D/#NemAll_Python_Geometry.Polygon2D.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

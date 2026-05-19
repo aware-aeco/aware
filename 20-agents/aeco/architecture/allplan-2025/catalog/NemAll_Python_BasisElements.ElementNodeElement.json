@@ -1,0 +1,119 @@
+{
+  "name": "ElementNodeElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "ElementNodeElement class",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/",
+  "constructors": [
+    {
+      "name": "ElementNodeElement()",
+      "signature": "ElementNodeElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/#NemAll_Python_BasisElements.ElementNodeElement.__init__"
+    },
+    {
+      "name": "ElementNodeElement( commonProp: CommonProperties, elementNodeId: type, elementNodeObjectList: list, )",
+      "signature": "ElementNodeElement( commonProp: CommonProperties, elementNodeId: type, elementNodeObjectList: list, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "elementGroupProp",
+          "type": "object",
+          "doc": "ElementGroup properties",
+          "optional": false
+        },
+        {
+          "name": "elementGroupObjectList",
+          "type": "object",
+          "doc": "ElementGroup object list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/#NemAll_Python_BasisElements.ElementNodeElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetObjectList",
+      "signature": "GetObjectList() -\u003E list",
+      "summary": "Get the list of element node objects",
+      "remarks": "Get the list of element node objects",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "Element node object list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/#NemAll_Python_BasisElements.ElementNodeElement.GetObjectList"
+    },
+    {
+      "name": "GetParentID",
+      "signature": "GetParentID() -\u003E type",
+      "summary": "Get parent ID",
+      "remarks": "Get parent ID",
+      "params": [],
+      "returns": {
+        "type": "type",
+        "doc": "UUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/#NemAll_Python_BasisElements.ElementNodeElement.GetParentID"
+    },
+    {
+      "name": "SetParentID",
+      "signature": "SetParentID(ParentID: type)",
+      "summary": "Set the parent element id to this object",
+      "remarks": "Set the parent element id to this object",
+      "params": [
+        {
+          "name": "ParentID",
+          "type": "type",
+          "doc": "(UUID) sub element id",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/#NemAll_Python_BasisElements.ElementNodeElement.SetParentID"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ElementNodeElement/#NemAll_Python_BasisElements.ElementNodeElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

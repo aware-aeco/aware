@@ -1,0 +1,50 @@
+{
+  "name": "eAngleGradientUnit",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Enumeration of available angle units for input of rotation and inclination",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/eAngleGradientUnit/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANGLE_DEGREE",
+      "value": 1,
+      "summary": "Degrees"
+    },
+    {
+      "name": "ANGLE_GON",
+      "value": 3,
+      "summary": "Gradians"
+    },
+    {
+      "name": "ANGLE_NOTDEF",
+      "value": 0,
+      "summary": "Undefined"
+    },
+    {
+      "name": "ANGLE_PERCENT",
+      "value": 5,
+      "summary": "Inclination as %"
+    },
+    {
+      "name": "ANGLE_PERCENTAGE",
+      "value": 4,
+      "summary": "Inclination as 1:x"
+    },
+    {
+      "name": "ANGLE_PERMILL",
+      "value": 6,
+      "summary": "Inclination as \u2030"
+    },
+    {
+      "name": "ANGLE_RADIAN",
+      "value": 2,
+      "summary": "Radians"
+    }
+  ]
+}

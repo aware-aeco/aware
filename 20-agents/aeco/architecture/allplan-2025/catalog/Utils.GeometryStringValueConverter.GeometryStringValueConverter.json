@@ -1,0 +1,83 @@
+{
+  "name": "GeometryStringValueConverter",
+  "namespace": "Utils.GeometryStringValueConverter",
+  "kind": "class",
+  "summary": "implementation of the geometry string and value converter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/GeometryStringValueConverter/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_element",
+      "signature": "get_element(geometry_ele_str: str) -\u003E Any",
+      "summary": "get the elements from a string",
+      "remarks": "get the elements from a string",
+      "params": [
+        {
+          "name": "geometry_ele_str",
+          "type": "str",
+          "doc": "geometry element string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Any",
+        "doc": "value of the geometry element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/GeometryStringValueConverter/#Utils.GeometryStringValueConverter.GeometryStringValueConverter.get_element"
+    },
+    {
+      "name": "get_elements",
+      "signature": "get_elements( geometry_ele_str_list: List[str], convert_to_3d: bool ) -\u003E List[Any]",
+      "summary": "get the elements from a string",
+      "remarks": "get the elements from a string",
+      "params": [
+        {
+          "name": "geometry_ele_str_list",
+          "type": "List[str]",
+          "doc": "list with the geometry element strings",
+          "optional": false
+        },
+        {
+          "name": "convert_to_3d",
+          "type": "bool",
+          "doc": "convert the elements to 3D elements state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "List[Any]",
+        "doc": "value of the geometry element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/GeometryStringValueConverter/#Utils.GeometryStringValueConverter.GeometryStringValueConverter.get_elements"
+    },
+    {
+      "name": "to_string",
+      "signature": "to_string(geometry_ele: Any) -\u003E str",
+      "summary": "convert the geometry_ele to a string",
+      "remarks": "convert the geometry_ele to a string",
+      "params": [
+        {
+          "name": "geometry_ele",
+          "type": "Any",
+          "doc": "geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "string from geometry element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/GeometryStringValueConverter/#Utils.GeometryStringValueConverter.GeometryStringValueConverter.to_string"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,35 @@
+{
+  "name": "Type",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Type/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eGroup_Fixture",
+      "value": 3
+    },
+    {
+      "name": "eLine_Fixture",
+      "value": 1
+    },
+    {
+      "name": "ePlane_Fixture",
+      "value": 2
+    },
+    {
+      "name": "ePoint_Fixture",
+      "value": 0
+    },
+    {
+      "name": "eUseSameType",
+      "value": -1
+    }
+  ]
+}

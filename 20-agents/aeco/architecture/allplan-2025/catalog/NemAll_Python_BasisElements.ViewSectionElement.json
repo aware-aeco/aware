@@ -1,0 +1,155 @@
+{
+  "name": "ViewSectionElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Representation of a Unified View and Section (UVS) in Allplan",
+  "base": "AllplanElement",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/",
+  "constructors": [
+    {
+      "name": "ViewSectionElement()",
+      "signature": "ViewSectionElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.__init__"
+    },
+    {
+      "name": "ViewSectionElement(param: ViewSectionElement)",
+      "signature": "ViewSectionElement(param: ViewSectionElement)",
+      "summary": "Args: param",
+      "remarks": "Args: param",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateSectionBody",
+      "signature": "CreateSectionBody( doc: DocumentAdapter, insertionMat: Matrix3D, undoRedoService: object | None = None, )",
+      "summary": "Create the section body",
+      "remarks": "Create the section body",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Placement matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.CreateSectionBody"
+    },
+    {
+      "name": "DrawElement",
+      "signature": "DrawElement( modelElements: object, insertionMat: Matrix3D, docID: int, asStaticPreview: bool, ) -\u003E MinMax3D",
+      "summary": "Draw eLement preview in Allplan",
+      "remarks": "Draw eLement preview in Allplan",
+      "params": [
+        {
+          "name": "modelElements",
+          "type": "object",
+          "doc": "Python object which should be drawn",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "insertion matrix",
+          "optional": false
+        },
+        {
+          "name": "docID",
+          "type": "int",
+          "doc": "Document ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "Min/max box of the preview"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.DrawElement"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DimensionElements",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "Dimension elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.DimensionElements"
+    },
+    {
+      "name": "GeneralSectionProperties",
+      "type": "SectionGeneralProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "General section properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.GeneralSectionProperties"
+    },
+    {
+      "name": "ReinforcementLabels",
+      "type": "ReinforcementLabel",
+      "getter": true,
+      "setter": true,
+      "summary": "Reinforcement labels",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.ReinforcementLabels"
+    },
+    {
+      "name": "SectionDefinitionData",
+      "type": "SectionDefinitionData",
+      "getter": true,
+      "setter": true,
+      "summary": "Section definition data",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.SectionDefinitionData"
+    },
+    {
+      "name": "TextElements",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "Labels",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.TextElements"
+    },
+    {
+      "name": "ViewMatrix",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "View transformation matrix",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ViewSectionElement/#NemAll_Python_BasisElements.ViewSectionElement.ViewMatrix"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

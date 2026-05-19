@@ -1,0 +1,454 @@
+{
+  "name": "SurfaceDefinition",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Surface resource definition",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CompareData",
+      "signature": "CompareData(ldef: SurfaceDefinition) -\u003E bool",
+      "summary": "compare the surface properties",
+      "remarks": "compare the surface properties",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.CompareData"
+    },
+    {
+      "name": "CopyData",
+      "signature": "CopyData(pSrcSurface: SurfaceDefinition, bCopyName: bool = True)",
+      "summary": "copy the data from an other surface",
+      "remarks": "copy the data from an other surface",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.CopyData"
+    },
+    {
+      "name": "Create",
+      "signature": "Create() -\u003E SurfaceDefinition",
+      "summary": "Create a surface definition",
+      "remarks": "Create a surface definition",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Create"
+    },
+    {
+      "name": "Dump",
+      "signature": "Dump(deep: bool)",
+      "summary": "Dumps content of the resource",
+      "remarks": "Dumps content of the resource",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Dump"
+    },
+    {
+      "name": "GetDiffuseFactor",
+      "signature": "GetDiffuseFactor() -\u003E float",
+      "summary": "get the diffuse factor calculated from diffuse color intensity, reflection intensity and the transparency intensity",
+      "remarks": "get the diffuse factor calculated from diffuse color intensity, reflection intensity and the transparency intensity",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetDiffuseFactor"
+    },
+    {
+      "name": "GetHash",
+      "signature": "GetHash() -\u003E int",
+      "summary": "get the hash of the surface definition data",
+      "remarks": "get the hash of the surface definition data",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetHash"
+    },
+    {
+      "name": "GetReflectionFactor",
+      "signature": "GetReflectionFactor() -\u003E float",
+      "summary": "calculate the reflection factor from transparency and reflection intensity",
+      "remarks": "calculate the reflection factor from transparency and reflection intensity",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetReflectionFactor"
+    },
+    {
+      "name": "GetScaleU",
+      "signature": "GetScaleU() -\u003E float",
+      "summary": "get the texture u scale factor",
+      "remarks": "get the texture u scale factor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetScaleU"
+    },
+    {
+      "name": "GetScaleV",
+      "signature": "GetScaleV() -\u003E float",
+      "summary": "get the texture v scale factor",
+      "remarks": "get the texture v scale factor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetScaleV"
+    },
+    {
+      "name": "GetSeasonStatus",
+      "signature": "GetSeasonStatus() -\u003E bool",
+      "summary": "get the surface season flag , true - not all color texture are the same",
+      "remarks": "get the surface season flag , true - not all color texture are the same",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetSeasonStatus"
+    },
+    {
+      "name": "GetSurfaceName",
+      "signature": "GetSurfaceName() -\u003E str",
+      "summary": "get the surface name",
+      "remarks": "get the surface name",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetSurfaceName"
+    },
+    {
+      "name": "GetTextureID",
+      "signature": "GetTextureID(tex: eSurfaceTextureID) -\u003E int",
+      "summary": "get the bitmap id of the texture",
+      "remarks": "get the bitmap id of the texture",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetTextureID"
+    },
+    {
+      "name": "GetTranslateU",
+      "signature": "GetTranslateU() -\u003E float",
+      "summary": "get the texture u offset",
+      "remarks": "get the texture u offset",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetTranslateU"
+    },
+    {
+      "name": "GetTranslateV",
+      "signature": "GetTranslateV() -\u003E float",
+      "summary": "get the texture v offset",
+      "remarks": "get the texture v offset",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.GetTranslateV"
+    },
+    {
+      "name": "IsDefault",
+      "signature": "IsDefault() -\u003E bool",
+      "summary": "check whether the surface properties has default values",
+      "remarks": "check whether the surface properties has default values",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.IsDefault"
+    },
+    {
+      "name": "LoadSurfaceData",
+      "signature": "LoadSurfaceData(surfacePath: str)",
+      "summary": "load surface properties only",
+      "remarks": "load surface properties only",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.LoadSurfaceData"
+    },
+    {
+      "name": "PreviewCalculationSkipped",
+      "signature": "PreviewCalculationSkipped() -\u003E bool",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.PreviewCalculationSkipped"
+    },
+    {
+      "name": "Save",
+      "signature": "Save( surfacePath: str, bitmapDict: Dict[eSurfaceTextureID, BitmapDefinition] ) -\u003E bool",
+      "summary": "Create a surface definition",
+      "remarks": "Create a surface definition",
+      "params": [
+        {
+          "name": "surfacePath",
+          "type": "str",
+          "doc": "Path of the bitmap",
+          "optional": false
+        },
+        {
+          "name": "bitmapDefinitions",
+          "type": "object",
+          "doc": "Dict with the bitmap definitions",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Creation successful state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Save"
+    },
+    {
+      "name": "SetScale",
+      "signature": "SetScale(u: float, v: float)",
+      "summary": "set the texture scaling factors -10000 to 10000",
+      "remarks": "set the texture scaling factors -10000 to 10000",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.SetScale"
+    },
+    {
+      "name": "SetTextureID",
+      "signature": "SetTextureID(tex: eSurfaceTextureID, bitmapID: int)",
+      "summary": "set the bitmapID for one texture",
+      "remarks": "set the bitmapID for one texture",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.SetTextureID"
+    },
+    {
+      "name": "SetTranslate",
+      "signature": "SetTranslate(u: float, v: float)",
+      "summary": "set the texture offset -INT_MAX to INT_MAX",
+      "remarks": "set the texture offset -INT_MAX to INT_MAX",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.SetTranslate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AbsolutePath",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "get the absolute path of the surface, outside from the design path",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.AbsolutePath"
+    },
+    {
+      "name": "AlphaFromTextureStatus",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "get the flag for using alpha channel from the color bitmap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.AlphaFromTextureStatus"
+    },
+    {
+      "name": "BumpAmplitude",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get bump mapping amplitude",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.BumpAmplitude"
+    },
+    {
+      "name": "ColorKey",
+      "type": "ARGB",
+      "getter": true,
+      "setter": true,
+      "summary": "get the color key color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ColorKey"
+    },
+    {
+      "name": "ColorKeyStatus",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "get the flag for using color key",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ColorKeyStatus"
+    },
+    {
+      "name": "ColorKeyTolerance",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get the color key tolerance 0-255",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ColorKeyTolerance"
+    },
+    {
+      "name": "ColorMixingFactor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get the color mixing factor, 0 - 100",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ColorMixingFactor"
+    },
+    {
+      "name": "ColorMixingMode",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get the color mixing mode.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ColorMixingMode"
+    },
+    {
+      "name": "DiffuseColor",
+      "type": "ARGB",
+      "getter": true,
+      "setter": true,
+      "summary": "get the diffuse color",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.DiffuseColor"
+    },
+    {
+      "name": "DiffuseReflectivity",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get the diffuse color intensity",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.DiffuseReflectivity"
+    },
+    {
+      "name": "Emission",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get the color emission intensity",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Emission"
+    },
+    {
+      "name": "MetricStatus",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "get the flag for texture scale dependency from the object size. true - texture is scaled independently from the object size",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.MetricStatus"
+    },
+    {
+      "name": "MultiToneFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get the coating reflection intensity",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.MultiToneFactor"
+    },
+    {
+      "name": "NormalMapStatus",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "get the flag for using normal map texture in bump map, otherwise it will be height map",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.NormalMapStatus"
+    },
+    {
+      "name": "NotFound",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "get the flag for not found surface file",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.NotFound"
+    },
+    {
+      "name": "ParallaxOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get the parallax offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ParallaxOffset"
+    },
+    {
+      "name": "ParallaxSamples",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get parallax samples",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.ParallaxSamples"
+    },
+    {
+      "name": "Reflection",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get the reflection amplitude",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Reflection"
+    },
+    {
+      "name": "Refraction",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get the IOR",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Refraction"
+    },
+    {
+      "name": "RelativeName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "get the relative path and name of the surface, under the design folder",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.RelativeName"
+    },
+    {
+      "name": "RepeatStatus",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "get the flag for texture repeating",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.RepeatStatus"
+    },
+    {
+      "name": "Rotation",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get the texture rotation angle in degrees",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Rotation"
+    },
+    {
+      "name": "Roughness",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "get the roughness amplitude",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Roughness"
+    },
+    {
+      "name": "Transparency",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "get the transparency intensity",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SurfaceDefinition/#NemAll_Python_BasisElements.SurfaceDefinition.Transparency"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

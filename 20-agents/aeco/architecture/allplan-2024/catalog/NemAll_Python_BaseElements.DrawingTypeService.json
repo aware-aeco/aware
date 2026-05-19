@@ -1,0 +1,135 @@
+{
+  "name": "DrawingTypeService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Implementation of the drawing type service",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCurrentDrawingTypeDescription",
+      "signature": "GetCurrentDrawingTypeDescription(doc)",
+      "summary": "Get the description of the current drawing type",
+      "remarks": "Get the description of the current drawing type",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.GetCurrentDrawingTypeDescription"
+    },
+    {
+      "name": "GetCurrentDrawingTypeId",
+      "signature": "GetCurrentDrawingTypeId(doc)",
+      "summary": "Get the current drawing type ID",
+      "remarks": "Get the current drawing type ID",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.GetCurrentDrawingTypeId"
+    },
+    {
+      "name": "GetDrawingTypeDescription",
+      "signature": "GetDrawingTypeDescription(doc, drawingTypeId)",
+      "summary": "Get the description of the drawing type",
+      "remarks": "Get the description of the drawing type",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "drawingTypeId",
+          "type": "int",
+          "doc": "Drawing type ID",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.GetDrawingTypeDescription"
+    },
+    {
+      "name": "GetDrawingTypeDescriptions",
+      "signature": "GetDrawingTypeDescriptions(doc)",
+      "summary": "Get the description of the drawing types",
+      "remarks": "Get the description of the drawing types",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.GetDrawingTypeDescriptions"
+    },
+    {
+      "name": "GetDrawingTypeIdFromDescription",
+      "signature": "GetDrawingTypeIdFromDescription(doc, typeDescription)",
+      "summary": "Get the ID of the drawing type from the description",
+      "remarks": "Get the ID of the drawing type from the description",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "typeDescription",
+          "type": "str",
+          "doc": "Drawing type description",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.GetDrawingTypeIdFromDescription"
+    },
+    {
+      "name": "SetDrawingTypeId",
+      "signature": "SetDrawingTypeId(drawingTypeId)",
+      "summary": "Set the drawing type ID",
+      "remarks": "Set the drawing type ID",
+      "params": [
+        {
+          "name": "drawingTypeId",
+          "type": "int",
+          "doc": "ID of the drawing type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/#NemAll_Python_BaseElements.DrawingTypeService.SetDrawingTypeId"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

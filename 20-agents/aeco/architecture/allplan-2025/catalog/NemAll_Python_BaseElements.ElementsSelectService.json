@@ -1,0 +1,62 @@
+{
+  "name": "ElementsSelectService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.ElementsSelectService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsSelectService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "SelectAllElements",
+      "signature": "SelectAllElements(ele: DocumentAdapter) -\u003E BaseElementAdapterList",
+      "summary": "Select all elements from the document",
+      "remarks": "Select all elements from the document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "object",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "All elements from the document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsSelectService/#NemAll_Python_BaseElements.ElementsSelectService.SelectAllElements"
+    },
+    {
+      "name": "SelectElementsByIfcGuid",
+      "signature": "SelectElementsByIfcGuid(ele: list) -\u003E BaseElementAdapterList",
+      "summary": "Select elements by IFC guids",
+      "remarks": "Select elements by IFC guids",
+      "params": [
+        {
+          "name": "doc",
+          "type": "object",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "ifcGuids",
+          "type": "object",
+          "doc": "List with the IFC GUIDs",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsSelectService/#NemAll_Python_BaseElements.ElementsSelectService.SelectElementsByIfcGuid"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

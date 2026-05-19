@@ -1,0 +1,25 @@
+{
+  "name": "BuildingElementMigrationUtil",
+  "namespace": "BuildingElementMigrationUtil",
+  "kind": "class",
+  "summary": "Implementation of the migration utilities for the building element",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementMigrationUtil/BuildingElementMigrationUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "transfer_parameter_value",
+      "signature": "transfer_parameter_value(parameter_list, old_element_id, old_value_name, new_element_id, new_value_name, converter_function=None, append_parameter=False)",
+      "summary": "transfer a parameter value for an old ID and name to a new ID and name Args: parameter_list : list with the parameter names and values old_element_id : old element ID of the PythonPart old_value_name : old value name new_element_id : new element ID of the PythonPart new_value_name : new value name converter_function: convert function for the value as converter_function(value: str) -\u003E str append_parameter : append the parameter (False replaces the old parameter)",
+      "remarks": "transfer a parameter value for an old ID and name to a new ID and name Args: parameter_list : list with the parameter names and values old_element_id : old element ID of the PythonPart old_value_name : old value name new_element_id : new element ID of the PythonPart new_value_name : new value name converter_function: convert function for the value as converter_function(value: str) -\u003E str append_parameter : append the parameter (False replaces the old parameter)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/BuildingElementMigrationUtil/BuildingElementMigrationUtil/#BuildingElementMigrationUtil.BuildingElementMigrationUtil.transfer_parameter_value"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

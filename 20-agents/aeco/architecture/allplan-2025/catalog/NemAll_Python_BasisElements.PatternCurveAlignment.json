@@ -1,0 +1,27 @@
+{
+  "name": "PatternCurveAlignment",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Pattern curve alignment types of the pattern curve property",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/PatternCurveAlignment/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCenter",
+      "value": 1
+    },
+    {
+      "name": "eLeft",
+      "value": 0
+    },
+    {
+      "name": "eRight",
+      "value": 2
+    }
+  ]
+}

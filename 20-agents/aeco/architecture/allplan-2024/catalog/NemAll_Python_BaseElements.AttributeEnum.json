@@ -1,0 +1,131 @@
+{
+  "name": "AttributeEnum",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Enum attribute",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/",
+  "constructors": [
+    {
+      "name": "AttributeEnum()",
+      "signature": "AttributeEnum()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__init__"
+    },
+    {
+      "name": "AttributeEnum(id, value)",
+      "signature": "AttributeEnum(id, value)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "doc": "Attribute id",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__init__"
+    },
+    {
+      "name": "AttributeEnum(element)",
+      "signature": "AttributeEnum(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeEnum",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element)",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeEnum",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(element)",
+      "summary": "Unequal operator",
+      "remarks": "Unequal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeEnum",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are unequal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attribute value",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeEnum/#NemAll_Python_BaseElements.AttributeEnum.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

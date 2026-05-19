@@ -1,0 +1,36 @@
+{
+  "name": "eSelectCondition",
+  "namespace": "NemAll_Python_IFW_Input.SelectElementsService",
+  "kind": "enum",
+  "summary": "Element selection condition",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectElementsService/#NemAll_Python_IFW_Input.SelectElementsService.eSelectCondition",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E eSelectCondition",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eSelectCondition",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectElementsService/#NemAll_Python_IFW_Input.SelectElementsService.eSelectCondition.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

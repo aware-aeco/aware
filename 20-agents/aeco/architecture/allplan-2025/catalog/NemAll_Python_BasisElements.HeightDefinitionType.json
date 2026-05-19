@@ -1,0 +1,35 @@
+{
+  "name": "HeightDefinitionType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Enumeration of height definition types of a macro placement",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HeightDefinitionType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAverage",
+      "value": 3,
+      "summary": "Average"
+    },
+    {
+      "name": "eComponent",
+      "value": 2,
+      "summary": "Component"
+    },
+    {
+      "name": "eMacro",
+      "value": 1,
+      "summary": "Macro"
+    },
+    {
+      "name": "eNone",
+      "value": 0,
+      "summary": "Not defined"
+    }
+  ]
+}

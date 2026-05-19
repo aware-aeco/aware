@@ -1,0 +1,303 @@
+{
+  "name": "SectionAlongPathTextParameterProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Text parameter properties",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/",
+  "constructors": [
+    {
+      "name": "SectionAlongPathTextParameterProperties()",
+      "signature": "SectionAlongPathTextParameterProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
+    },
+    {
+      "name": "SectionAlongPathTextParameterProperties(iTextParameterID: int, bInitFromSTW: bool = False)",
+      "signature": "SectionAlongPathTextParameterProperties(iTextParameterID: int, bInitFromSTW: bool = False)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "iTextParameterID",
+          "type": "int",
+          "doc": "type of text parameter",
+          "optional": false
+        },
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
+    },
+    {
+      "name": "SectionAlongPathTextParameterProperties(bInitFromSTW: bool)",
+      "signature": "SectionAlongPathTextParameterProperties(bInitFromSTW: bool)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "bInitFromSTW",
+          "type": "bool",
+          "doc": "is structure initialized from standard values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
+    },
+    {
+      "name": "SectionAlongPathTextParameterProperties(A: SectionAlongPathTextParameterProperties)",
+      "signature": "SectionAlongPathTextParameterProperties(A: SectionAlongPathTextParameterProperties)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DetectBackgroundColorType",
+      "signature": "DetectBackgroundColorType( bHasBgColor: bool, bgColor: int, backgroundIsTransparent: bool ) -\u003E tuple[int, int]",
+      "summary": "Args: bHasBgColor bgColor backgroundIsTransparent",
+      "remarks": "Args: bHasBgColor bgColor backgroundIsTransparent",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.DetectBackgroundColorType"
+    },
+    {
+      "name": "FillPropertiesFromAllplanTextParameters",
+      "signature": "FillPropertiesFromAllplanTextParameters( richTextFlags: int, layerId: int, byLayerFlags: int ) -\u003E object",
+      "summary": "Args: richTextFlags layerId byLayerFlags",
+      "remarks": "Args: richTextFlags layerId byLayerFlags",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FillPropertiesFromAllplanTextParameters"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundColorType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the when =0 : no background color (transparency), when = 1 color is according to Allplan\u0027s view, when = 2, custom defined in CustomBackgroundColor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.BackgroundColorType"
+    },
+    {
+      "name": "BorderColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation of the text in radians, never serialized, not in standard values, it is a working property only",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.BorderColor"
+    },
+    {
+      "name": "BorderLineType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation of the text in radians, never serialized, not in standard values, it is a working property only",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.BorderLineType"
+    },
+    {
+      "name": "BorderOffset",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the BorderOffset 0 it represents value -1; 4 repres. -0.5; 2 repres. 0.0; 1 repres.1.0; 5 repres. 2.0",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.BorderOffset"
+    },
+    {
+      "name": "BorderThickness",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation of the text in radians, never serialized, not in standard values, it is a working property only",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.BorderThickness"
+    },
+    {
+      "name": "ColumnAngle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the ColumnAngle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.ColumnAngle"
+    },
+    {
+      "name": "CustomBackgroundColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the when =0 : no background color (transparency), when = 1 color is according to Allplan\u0027s view, when = 2, custom defined in CustomBackgroundColor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.CustomBackgroundColor"
+    },
+    {
+      "name": "FontAngle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the FontAngle //ONLY for italic",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontAngle"
+    },
+    {
+      "name": "FontColor",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the ColumnAngle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontColor"
+    },
+    {
+      "name": "FontEmphasis",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Font emphasis",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontEmphasis"
+    },
+    {
+      "name": "FontHeight",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the FontHeight",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontHeight"
+    },
+    {
+      "name": "FontID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the FontType",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontID"
+    },
+    {
+      "name": "FontLayer",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the ColumnAngle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontLayer"
+    },
+    {
+      "name": "FontThickness",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the pen of the text, never serialized, not in standard values, it is a working property only",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontThickness"
+    },
+    {
+      "name": "FontWidth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the FontWidth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.FontWidth"
+    },
+    {
+      "name": "IsFontColorFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the When False: it means scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.IsFontColorFromLayer"
+    },
+    {
+      "name": "IsFontLineTypeFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the When False: it means scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.IsFontLineTypeFromLayer"
+    },
+    {
+      "name": "IsFontPenFromLayer",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the When False: it means scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.IsFontPenFromLayer"
+    },
+    {
+      "name": "RowDistance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the RowDistance //Line spacing",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.RowDistance"
+    },
+    {
+      "name": "TextAngle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation of the text in radians, never serialized, not in standard values, it is a working property only",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.TextAngle"
+    },
+    {
+      "name": "TextParameterID",
+      "type": "TextPropertiesSource_Enum",
+      "getter": true,
+      "setter": true,
+      "summary": "Initialize the class with Usable Values",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.TextParameterID"
+    },
+    {
+      "name": "TextParameterId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Text parameter ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.TextParameterId"
+    },
+    {
+      "name": "TextPlacementPointType",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the text placement point, see in NA_Data_TextDefines.h",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.TextPlacementPointType"
+    },
+    {
+      "name": "UseBorderAroundTheText",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation of the text in radians, never serialized, not in standard values, it is a working property only",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.UseBorderAroundTheText"
+    },
+    {
+      "name": "UseConstantSizeInLayout",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the When False: it means scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionAlongPathTextParameterProperties/#NemAll_Python_BasisElements.SectionAlongPathTextParameterProperties.UseConstantSizeInLayout"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

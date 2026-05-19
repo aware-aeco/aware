@@ -1,0 +1,44 @@
+{
+  "name": "ElementPropertiesAttributeUtil",
+  "namespace": "Utils.ElementPropertiesAttributeUtil",
+  "kind": "class",
+  "summary": "implementation of the utilities for the element properties attributes",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/ElementPropertiesAttributeUtil/ElementPropertiesAttributeUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "set_attributes",
+      "signature": "set_attributes(doc, ele_prop, attributes)",
+      "summary": "set the attributes to the properties",
+      "remarks": "set the attributes to the properties",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "ele_prop",
+          "type": "RoomProperties",
+          "doc": "element properties",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "List[AttributeIdValue]",
+          "doc": "attributes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/Utils/ElementPropertiesAttributeUtil/ElementPropertiesAttributeUtil/#Utils.ElementPropertiesAttributeUtil.ElementPropertiesAttributeUtil.set_attributes"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

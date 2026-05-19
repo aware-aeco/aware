@@ -1,0 +1,73 @@
+{
+  "name": "eBoxPoint",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Dedicated location of the box 4----8----3 | | 9 5 7 | | 1----6----2",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eBoxPoint/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eBoxPoint",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/eBoxPoint/#NemAll_Python_Geometry.eBoxPoint.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCenter",
+      "value": 5
+    },
+    {
+      "name": "eLeftBottom",
+      "value": 1
+    },
+    {
+      "name": "eLeftTop",
+      "value": 4
+    },
+    {
+      "name": "eMiddleBottom",
+      "value": 6
+    },
+    {
+      "name": "eMiddleLeft",
+      "value": 9
+    },
+    {
+      "name": "eMiddleRight",
+      "value": 7
+    },
+    {
+      "name": "eMiddleTop",
+      "value": 8
+    },
+    {
+      "name": "eRightBottom",
+      "value": 2
+    },
+    {
+      "name": "eRightTop",
+      "value": 3
+    }
+  ]
+}

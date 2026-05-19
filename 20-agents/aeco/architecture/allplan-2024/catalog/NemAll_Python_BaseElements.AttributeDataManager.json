@@ -1,0 +1,35 @@
+{
+  "name": "AttributeDataManager",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.AttributeDataManager.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDataManager/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAttributeName",
+      "signature": "GetAttributeName(attributeID)",
+      "summary": "Get the attribute name from the ID",
+      "remarks": "Get the attribute name from the ID",
+      "params": [
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Attribute name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDataManager/#NemAll_Python_BaseElements.AttributeDataManager.GetAttributeName"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

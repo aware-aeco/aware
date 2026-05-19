@@ -1,0 +1,14 @@
+{
+  "name": "InputMode",
+  "namespace": "InputMode",
+  "kind": "enum",
+  "summary": "Definition of class InputMode",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/InputMode/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,44 @@
+{
+  "name": "AssociationService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.AssociationService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AssociationService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AssociateObjectsWithPythonPart",
+      "signature": "AssociateObjectsWithPythonPart(doc, objectUUIDs, pythonPartUUID)",
+      "summary": "Associate the objects with the PythonPart",
+      "remarks": "Associate the objects with the PythonPart",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "objectUUIDs",
+          "type": "List[str]",
+          "doc": "List with the object UUIDs",
+          "optional": false
+        },
+        {
+          "name": "pythonPartUUID",
+          "type": "GUID",
+          "doc": "UUID of the PythonPart",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AssociationService/#NemAll_Python_BaseElements.AssociationService.AssociateObjectsWithPythonPart"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

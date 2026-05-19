@@ -1,0 +1,34 @@
+{
+  "name": "MultiElementSelectInteractorResult",
+  "namespace": "ScriptObjectInteractors.MultiElementSelectInteractor",
+  "kind": "class",
+  "summary": "Data class containing results of multiple element selection",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractorResult/",
+  "constructors": [
+    {
+      "name": "MultiElementSelectInteractorResult()",
+      "signature": "MultiElementSelectInteractorResult()",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractorResult/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractorResult.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "sel_elements",
+      "type": "BaseElementAdapterList",
+      "getter": true,
+      "setter": false,
+      "summary": "List of selected elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/MultiElementSelectInteractor/MultiElementSelectInteractorResult/#ScriptObjectInteractors.MultiElementSelectInteractor.MultiElementSelectInteractorResult.sel_elements"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

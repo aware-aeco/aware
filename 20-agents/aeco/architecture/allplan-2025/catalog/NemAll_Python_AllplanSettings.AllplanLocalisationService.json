@@ -1,0 +1,63 @@
+{
+  "name": "AllplanLocalisationService",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Utility for reading the current localization settings in Allplan",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanLocalisationService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AllplanLanguage",
+      "signature": "AllplanLanguage() -\u003E str",
+      "summary": "Get the installed Allplan language",
+      "remarks": "Get the installed Allplan language",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Currently used language as a three letter description bul - Bulgarian deu - German eng - English fin - Finnish fra - French grc - Greek hol - Dutch hrv - Croatian ita - Italian pol - Polish rum - Romanian rus - Russian slk - Slovak spa - Spanish svn - Slovenian tch - Czech trk - Turkish ung - Hungarian dan - Danish ser - Serbian mak - Macedonian prt - Portuguese ltu - Lithuanian lva - Latvian est - Estonian ukr - Ukrainian swe - Swedish nor - Norwegian chn - Chinese kor - Korean jpn - Japanese usa - USA - English vie - Vietnamese"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanLocalisationService/#NemAll_Python_AllplanSettings.AllplanLocalisationService.AllplanLanguage"
+    },
+    {
+      "name": "GetTextResource",
+      "signature": "GetTextResource(textID: int) -\u003E str",
+      "summary": "Get a text resource",
+      "remarks": "Get a text resource",
+      "params": [
+        {
+          "name": "textID",
+          "type": "int",
+          "doc": "Text ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Text from the text ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanLocalisationService/#NemAll_Python_AllplanSettings.AllplanLocalisationService.GetTextResource"
+    },
+    {
+      "name": "Language",
+      "signature": "Language() -\u003E str",
+      "summary": "Get the current Allplan language",
+      "remarks": "Get the current Allplan language",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Currently used language as a two letter description bg - Bulgarian de - German en - English fi - Finnish fr - French el - Greek nl - Dutch hr - Croatian it - Italian pl - Polish ro - Romanian ru - Russian sk - Slovak es - Spanish sl - Slovenian cs - Czech tr - Turkish hu - Hungarian da - Danish sr - Serbian mk - Macedonian pt - Portuguese lt - Lithuanian lv - Latvian et - Estonian uk - Ukrainian sv - Swedish no - Norwegian zh - Chinese ko - Korean ja - Japanese vi - Vietnamese"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AllplanLocalisationService/#NemAll_Python_AllplanSettings.AllplanLocalisationService.Language"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

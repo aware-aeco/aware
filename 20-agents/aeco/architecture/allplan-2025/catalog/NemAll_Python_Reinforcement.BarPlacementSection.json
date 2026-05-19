@@ -1,0 +1,105 @@
+{
+  "name": "BarPlacementSection",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the bar placement section class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/",
+  "constructors": [
+    {
+      "name": "BarPlacementSection(isEnabled: bool, length: float, distance: float)",
+      "signature": "BarPlacementSection(isEnabled: bool, length: float, distance: float)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "isEnabled",
+          "type": "bool",
+          "doc": "Section enabled state",
+          "optional": false
+        },
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "Section length",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "float",
+          "doc": "Bar distance",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/#NemAll_Python_Reinforcement.BarPlacementSection.__init__"
+    },
+    {
+      "name": "BarPlacementSection(element: BarPlacementSection)",
+      "signature": "BarPlacementSection(element: BarPlacementSection)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "BarPlacementSection",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/#NemAll_Python_Reinforcement.BarPlacementSection.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDistance",
+      "signature": "GetDistance() -\u003E float",
+      "summary": "Get the distance",
+      "remarks": "Get the distance",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Distance"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/#NemAll_Python_Reinforcement.BarPlacementSection.GetDistance"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength() -\u003E float",
+      "summary": "Get the length",
+      "remarks": "Get the length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/#NemAll_Python_Reinforcement.BarPlacementSection.GetLength"
+    },
+    {
+      "name": "IsEnabled",
+      "signature": "IsEnabled() -\u003E bool",
+      "summary": "Get the enabled state",
+      "remarks": "Get the enabled state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Enable state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPlacementSection/#NemAll_Python_Reinforcement.BarPlacementSection.IsEnabled"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

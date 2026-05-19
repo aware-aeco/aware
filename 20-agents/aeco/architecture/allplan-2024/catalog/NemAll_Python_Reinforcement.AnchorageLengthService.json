@@ -1,0 +1,399 @@
+{
+  "name": "AnchorageLengthService",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Service class for the anchorage length calculation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/",
+  "constructors": [
+    {
+      "name": "AnchorageLengthService()",
+      "signature": "AnchorageLengthService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Calculate",
+      "signature": "Calculate(concreteGrade, steelGrade, diameter, asMesh, bDoubleBar, meshBarDistCross, bMesh, barDistance, roundLength)",
+      "summary": "Calculation of the anchorage length",
+      "remarks": "Calculation of the anchorage length",
+      "params": [
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade index (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "asMesh",
+          "type": "float",
+          "doc": "asMesh of the mesh",
+          "optional": false
+        },
+        {
+          "name": "bDoubleBar",
+          "type": "bool",
+          "doc": "Double bar",
+          "optional": false
+        },
+        {
+          "name": "meshBarDistCross",
+          "type": "float",
+          "doc": "Distance of the mesh bars cross to the anchorage direction",
+          "optional": false
+        },
+        {
+          "name": "bMesh",
+          "type": "bool",
+          "doc": "Anchorage for a mesh",
+          "optional": false
+        },
+        {
+          "name": "barDistance",
+          "type": "float",
+          "doc": "Bar distance",
+          "optional": false
+        },
+        {
+          "name": "roundLength",
+          "type": "float",
+          "doc": "Rounding length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.Calculate"
+    },
+    {
+      "name": "CalculateBar",
+      "signature": "CalculateBar(concreteGrade, steelGrade, diameter, bDoubleBar, barDistance, roundLength)",
+      "summary": "Calculation of the anchorage length for a bar",
+      "remarks": "Calculation of the anchorage length for a bar",
+      "params": [
+        {
+          "name": "concreteGrade",
+          "type": "int",
+          "doc": "Concrete grade index (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "steelGrade",
+          "type": "int",
+          "doc": "Steel grade",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "bDoubleBar",
+          "type": "bool",
+          "doc": "Double bar",
+          "optional": false
+        },
+        {
+          "name": "barDistance",
+          "type": "float",
+          "doc": "Bar distance",
+          "optional": false
+        },
+        {
+          "name": "roundLength",
+          "type": "float",
+          "doc": "Rounding length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.CalculateBar"
+    },
+    {
+      "name": "GetAnchorageLength",
+      "signature": "GetAnchorageLength()",
+      "summary": "Get the anchorage length",
+      "remarks": "Get the anchorage length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Anchorage length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetAnchorageLength"
+    },
+    {
+      "name": "GetAnchorageType",
+      "signature": "GetAnchorageType()",
+      "summary": "Get the anchorage type",
+      "remarks": "Get the anchorage type",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetAnchorageType"
+    },
+    {
+      "name": "GetAsFactor",
+      "signature": "GetAsFactor()",
+      "summary": "Get the as factor required / available",
+      "remarks": "Get the as factor required / available",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "As mesh factor"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetAsFactor"
+    },
+    {
+      "name": "GetCompositionZone",
+      "signature": "GetCompositionZone()",
+      "summary": "Get the composition zone",
+      "remarks": "Get the composition zone",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Composition zone"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetCompositionZone"
+    },
+    {
+      "name": "GetHookAngle",
+      "signature": "GetHookAngle()",
+      "summary": "Get the hook angle",
+      "remarks": "Get the hook angle",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Hook angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetHookAngle"
+    },
+    {
+      "name": "GetL1",
+      "signature": "GetL1()",
+      "summary": "Get length L1",
+      "remarks": "Get length L1",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Length L1"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetL1"
+    },
+    {
+      "name": "GetL2",
+      "signature": "GetL2()",
+      "summary": "Get length L2",
+      "remarks": "Get length L2",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Length L2"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetL2"
+    },
+    {
+      "name": "GetL3",
+      "signature": "GetL3()",
+      "summary": "Get length L3",
+      "remarks": "Get length L3",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Length L3"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetL3"
+    },
+    {
+      "name": "GetLongitudinalOffset",
+      "signature": "GetLongitudinalOffset()",
+      "summary": "Get the longitudinal offset",
+      "remarks": "Get the longitudinal offset",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Longitudinal offset"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetLongitudinalOffset"
+    },
+    {
+      "name": "GetOverlapLength",
+      "signature": "GetOverlapLength()",
+      "summary": "Get the overlap length",
+      "remarks": "Get the overlap length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Overlap length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.GetOverlapLength"
+    },
+    {
+      "name": "IsCompressionBar",
+      "signature": "IsCompressionBar()",
+      "summary": "Get the compression bar state",
+      "remarks": "Get the compression bar state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Compression bar: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.IsCompressionBar"
+    },
+    {
+      "name": "SetAnchorageType",
+      "signature": "SetAnchorageType(anchorageType)",
+      "summary": "Set the anchorage type",
+      "remarks": "Set the anchorage type",
+      "params": [
+        {
+          "name": "anchorageType",
+          "type": "AnchorageType",
+          "doc": "Anchorage type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.SetAnchorageType"
+    },
+    {
+      "name": "SetAsFactor",
+      "signature": "SetAsFactor(AsFactor)",
+      "summary": "Set the as factor required / available",
+      "remarks": "Set the as factor required / available",
+      "params": [
+        {
+          "name": "AsFactor",
+          "type": "float",
+          "doc": "As facto required / availabler",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.SetAsFactor"
+    },
+    {
+      "name": "SetCompositionZone",
+      "signature": "SetCompositionZone(compositionZone)",
+      "summary": "Set the composition zone",
+      "remarks": "Set the composition zone",
+      "params": [
+        {
+          "name": "compositionZone",
+          "type": "int",
+          "doc": "Composition zone",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.SetCompositionZone"
+    },
+    {
+      "name": "SetCompressionBar",
+      "signature": "SetCompressionBar(bCompressionBar)",
+      "summary": "Set the compression bar state",
+      "remarks": "Set the compression bar state",
+      "params": [
+        {
+          "name": "bCompressionBar",
+          "type": "bool",
+          "doc": "Compression bar: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.SetCompressionBar"
+    },
+    {
+      "name": "SetHookAngle",
+      "signature": "SetHookAngle(hookAngle)",
+      "summary": "Set the hook angle",
+      "remarks": "Set the hook angle",
+      "params": [
+        {
+          "name": "hookAngle",
+          "type": "float",
+          "doc": "Hook angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.SetHookAngle"
+    },
+    {
+      "name": "SetLongitudinalOffset",
+      "signature": "SetLongitudinalOffset(longitudinalOffset)",
+      "summary": "Set the longitudinal offset",
+      "remarks": "Set the longitudinal offset",
+      "params": [
+        {
+          "name": "longitudinalOffset",
+          "type": "float",
+          "doc": "longitudinal offset",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageLengthService/#NemAll_Python_Reinforcement.AnchorageLengthService.SetLongitudinalOffset"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

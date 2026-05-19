@@ -1,0 +1,427 @@
+{
+  "name": "ModelElement3D",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the 3D model element",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/",
+  "constructors": [
+    {
+      "name": "ModelElement3D()",
+      "signature": "ModelElement3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(commonProp, geometryObject)",
+      "signature": "ModelElement3D(commonProp, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(commonProp, BrepIsoLinesU, BrepIsoLinesV, geometryObject)",
+      "signature": "ModelElement3D(commonProp, BrepIsoLinesU, BrepIsoLinesV, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "BrepIsoLinesU",
+          "type": "int",
+          "doc": "Count of Isolines U for a Berep",
+          "optional": false
+        },
+        {
+          "name": "BrepIsoLinesV",
+          "type": "int",
+          "doc": "Count of Isolines V for a Berep",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(commonProp, textureDefinition, geometryObject)",
+      "signature": "ModelElement3D(commonProp, textureDefinition, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "textureDefinition",
+          "type": "TextureDefinition",
+          "doc": "Texture definition (surface filename)",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(commonProp, textureDefinition, BrepIsoLinesU, BrepIsoLinesV, geometryObject)",
+      "signature": "ModelElement3D(commonProp, textureDefinition, BrepIsoLinesU, BrepIsoLinesV, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "textureDefinition",
+          "type": "TextureDefinition",
+          "doc": "Texture definition (surface filename)",
+          "optional": false
+        },
+        {
+          "name": "BrepIsoLinesU",
+          "type": "int",
+          "doc": "Count of Isolines U for a Berep",
+          "optional": false
+        },
+        {
+          "name": "BrepIsoLinesV",
+          "type": "int",
+          "doc": "Count of Isolines V for a Berep",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(commonProp, textureDefinition, textureMapping, geometryObject)",
+      "signature": "ModelElement3D(commonProp, textureDefinition, textureMapping, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "textureDefinition",
+          "type": "TextureDefinition",
+          "doc": "Texture definition (surface filename)",
+          "optional": false
+        },
+        {
+          "name": "textureMapping",
+          "type": "TextureMapping",
+          "doc": "Texture mapping properties",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(commonProp, textureDefinition, textureMapping, BrepIsoLinesU, BrepIsoLinesV, geometryObject)",
+      "signature": "ModelElement3D(commonProp, textureDefinition, textureMapping, BrepIsoLinesU, BrepIsoLinesV, geometryObject)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "textureDefinition",
+          "type": "TextureDefinition",
+          "doc": "Texture definition (surface filename)",
+          "optional": false
+        },
+        {
+          "name": "textureMapping",
+          "type": "TextureMapping",
+          "doc": "Texture mapping properties",
+          "optional": false
+        },
+        {
+          "name": "BrepIsoLinesU",
+          "type": "int",
+          "doc": "Count of Isolines U for a Berep",
+          "optional": false
+        },
+        {
+          "name": "BrepIsoLinesV",
+          "type": "int",
+          "doc": "Count of Isolines V for a Berep",
+          "optional": false
+        },
+        {
+          "name": "geometryObject",
+          "type": "object",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    },
+    {
+      "name": "ModelElement3D(element)",
+      "signature": "ModelElement3D(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "ModelElement3D",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetTextureDefinition",
+      "signature": "GetTextureDefinition()",
+      "summary": "Get the texture definition",
+      "remarks": "Get the texture definition",
+      "params": [],
+      "returns": {
+        "type": "TextureDefinition",
+        "doc": "Texture definition (surface filename)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.GetTextureDefinition"
+    },
+    {
+      "name": "GetTextureMapping",
+      "signature": "GetTextureMapping()",
+      "summary": "Get the texture mapping",
+      "remarks": "Get the texture mapping",
+      "params": [],
+      "returns": {
+        "type": "TextureMapping",
+        "doc": "Texture mapping properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.GetTextureMapping"
+    },
+    {
+      "name": "GetTransformationList",
+      "signature": "GetTransformationList()",
+      "summary": "Get transformation list",
+      "remarks": "Get transformation list",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "List with the transformations"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.GetTransformationList"
+    },
+    {
+      "name": "IsValidateGeometry",
+      "signature": "IsValidateGeometry()",
+      "summary": "Get the validate geometry state",
+      "remarks": "Get the validate geometry state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Validate the geometry state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.IsValidateGeometry"
+    },
+    {
+      "name": "SetTextureDefinition",
+      "signature": "SetTextureDefinition(textureDefinition)",
+      "summary": "Set the texture definition",
+      "remarks": "Set the texture definition",
+      "params": [
+        {
+          "name": "textureDefinition",
+          "type": "TextureDefinition",
+          "doc": "Texture definition (surface filename)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.SetTextureDefinition"
+    },
+    {
+      "name": "SetTextureMapping",
+      "signature": "SetTextureMapping(textureMapping)",
+      "summary": "Set the texture mapping",
+      "remarks": "Set the texture mapping",
+      "params": [
+        {
+          "name": "textureMapping",
+          "type": "TextureMapping",
+          "doc": "Texture mapping properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.SetTextureMapping"
+    },
+    {
+      "name": "SetTransformationList",
+      "signature": "SetTransformationList(transformationList)",
+      "summary": "Set the transformation list",
+      "remarks": "Set the transformation list",
+      "params": [
+        {
+          "name": "transformationList",
+          "type": "list",
+          "doc": "List with the transformations",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.SetTransformationList"
+    },
+    {
+      "name": "SetValidateGeometry",
+      "signature": "SetValidateGeometry(validateGeometry)",
+      "summary": "Set the validate geometry state",
+      "remarks": "Set the validate geometry state",
+      "params": [
+        {
+          "name": "validateGeometry",
+          "type": "bool",
+          "doc": "Validate the geometry",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.SetValidateGeometry"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TextureDefinition",
+      "type": "TextureDefinition",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the texture definition",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.TextureDefinition"
+    },
+    {
+      "name": "TextureMapping",
+      "type": "TextureMappingProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the texture mapping",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.TextureMapping"
+    },
+    {
+      "name": "TransformationList",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "Get transformation list",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ModelElement3D/#NemAll_Python_BasisElements.ModelElement3D.TransformationList"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

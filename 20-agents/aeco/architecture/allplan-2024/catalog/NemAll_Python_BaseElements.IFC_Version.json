@@ -1,0 +1,53 @@
+{
+  "name": "IFC_Version",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "IFC version",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/IFC_Version/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "IFC_Version",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/IFC_Version/#NemAll_Python_BaseElements.IFC_Version.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Ifc_2x3",
+      "value": 4
+    },
+    {
+      "name": "Ifc_4",
+      "value": 7
+    },
+    {
+      "name": "Ifc_XML_2x3",
+      "value": 5
+    },
+    {
+      "name": "Ifc_XML_4",
+      "value": 8
+    }
+  ]
+}

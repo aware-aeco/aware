@@ -1,0 +1,41 @@
+{
+  "name": "GeneralOpeningSlopedPolyhedronUtil",
+  "namespace": "Utils.Architecture.GeneralOpeningSlopedPolyhedronUtil",
+  "kind": "class",
+  "summary": "\u0022 implementation of the utility for a general opening created by a sloped Polyhedron3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/GeneralOpeningSlopedPolyhedronUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_opening_polygon_and_plane_surfaces",
+      "signature": "create_opening_polygon_and_plane_surfaces( general_ele: BaseElementAdapter, opening_cut_geo: Polyhedron3D ) -\u003E tuple[bool, Polyhedron3D, Polyhedron3D, Polygon2D]",
+      "summary": "create the opening polygon and planes for a Polyhedron opening",
+      "remarks": "create the opening polygon and planes for a Polyhedron opening",
+      "params": [
+        {
+          "name": "general_ele",
+          "type": "BaseElementAdapter",
+          "doc": "general element",
+          "optional": false
+        },
+        {
+          "name": "opening_cut_geo",
+          "type": "Polyhedron3D",
+          "doc": "geometry for the opening creation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polyhedron3D, Polyhedron3D, Polygon2D]",
+        "doc": "opening created state, bottom plane surface, top plane surface, opening polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/GeneralOpeningSlopedPolyhedronUtil/#Utils.Architecture.GeneralOpeningSlopedPolyhedronUtil.GeneralOpeningSlopedPolyhedronUtil.create_opening_polygon_and_plane_surfaces"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

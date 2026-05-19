@@ -1,0 +1,129 @@
+{
+  "name": "HatchingElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the hatching element",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/",
+  "constructors": [
+    {
+      "name": "HatchingElement()",
+      "signature": "HatchingElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.__init__"
+    },
+    {
+      "name": "HatchingElement(commonProp, hatchingProp, polygon)",
+      "signature": "HatchingElement(commonProp, hatchingProp, polygon)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        },
+        {
+          "name": "hatchingProp",
+          "type": "HatchingProperties",
+          "doc": "Hatching properties",
+          "optional": false
+        },
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Geometry element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.__init__"
+    },
+    {
+      "name": "HatchingElement(element)",
+      "signature": "HatchingElement(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "HatchingElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetHatchingProperties",
+      "signature": "GetHatchingProperties()",
+      "summary": "Get the hatching properties",
+      "remarks": "Get the hatching properties",
+      "params": [],
+      "returns": {
+        "type": "HatchingProperties",
+        "doc": "Hatching properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.GetHatchingProperties"
+    },
+    {
+      "name": "SetHatchingProperties",
+      "signature": "SetHatchingProperties(hatchingProp)",
+      "summary": "Set the hatching properties",
+      "remarks": "Set the hatching properties",
+      "params": [
+        {
+          "name": "hatchingProp",
+          "type": "HatchingProperties",
+          "doc": "Hatching properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.SetHatchingProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HatchingProperties",
+      "type": "HatchingProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the hatching properties",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/HatchingElement/#NemAll_Python_BasisElements.HatchingElement.HatchingProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

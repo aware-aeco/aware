@@ -1,0 +1,94 @@
+{
+  "name": "GeometryExpansionUtil",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.GeometryExpansionUtil.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/",
+  "constructors": [
+    {
+      "name": "GeometryExpansionUtil()",
+      "signature": "GeometryExpansionUtil()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.__init__"
+    },
+    {
+      "name": "GeometryExpansionUtil(pMsgInfo: AddMsgInfo, use3DGeometry: bool)",
+      "signature": "GeometryExpansionUtil(pMsgInfo: AddMsgInfo, use3DGeometry: bool)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "pMsgInfo",
+          "type": "AddMsgInfo",
+          "doc": "Additional message info",
+          "optional": false
+        },
+        {
+          "name": "use3DGeometry",
+          "type": "bool",
+          "doc": "Use the 3D geometry for the expansione: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetLineAbove",
+      "signature": "GetLineAbove(arg2: Point2D, arg3: Line2D, arg4: bool, arg5: int) -\u003E tuple",
+      "summary": "Get the line above the base line and the placement point",
+      "remarks": "Get the line above the base line and the placement point",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.GetLineAbove"
+    },
+    {
+      "name": "GetLineAtPoint",
+      "signature": "GetLineAtPoint(arg2: Point2D, arg3: Vector2D, arg4: bool, arg5: float) -\u003E tuple",
+      "summary": "Get the line at the defined point of the reference line",
+      "remarks": "Get the line at the defined point of the reference line",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.GetLineAtPoint"
+    },
+    {
+      "name": "GetLineFromPoint",
+      "signature": "GetLineFromPoint( arg2: DocumentAdapter, arg3: Point2D, arg4: ViewWorldProjection, arg5: bool ) -\u003E tuple",
+      "summary": "Get the line near to the input point",
+      "remarks": "Get the line near to the input point",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.GetLineFromPoint"
+    },
+    {
+      "name": "GetLineLeft",
+      "signature": "GetLineLeft(arg2: Point2D, arg3: Line2D, arg4: bool, arg5: int) -\u003E tuple",
+      "summary": "Get the line left from the base line and the placement point",
+      "remarks": "Get the line left from the base line and the placement point",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/GeometryExpansionUtil/#NemAll_Python_Reinforcement.GeometryExpansionUtil.GetLineLeft"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

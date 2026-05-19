@@ -1,0 +1,70 @@
+{
+  "name": "HandleParameterType",
+  "namespace": "HandleParameterType",
+  "kind": "enum",
+  "summary": "The parameter type defines the function to be used to recalculate the value of the parameter property assigned to the handle.",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleParameterType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ANGLE",
+      "value": 9,
+      "summary": "Calculate the angle from the xy-plane vector between the reference and handle point"
+    },
+    {
+      "name": "CHECK_BOX",
+      "value": 13,
+      "summary": "Use the handle as checkbox"
+    },
+    {
+      "name": "DECREMENT_BUTTON",
+      "value": 15,
+      "summary": "Use the handle as button to decrement the value"
+    },
+    {
+      "name": "INCREMENT_BUTTON",
+      "value": 14,
+      "summary": "Use the handle as button to increment the value"
+    },
+    {
+      "name": "POINT",
+      "value": 7,
+      "summary": "Set the value to the handle point"
+    },
+    {
+      "name": "POINT_DISTANCE",
+      "value": 8,
+      "summary": "Calculate the value from the distance between the reference and handle point"
+    },
+    {
+      "name": "VECTOR_DISTANCE",
+      "value": 12,
+      "summary": "Calculate the value from the distance between the reference and handle point, transformed to the vector direction assigned to the HandleProperties"
+    },
+    {
+      "name": "X_DISTANCE",
+      "value": 1,
+      "summary": "Calculate the value from the x-distance between the reference and handle point"
+    },
+    {
+      "name": "Y_DISTANCE",
+      "value": 2,
+      "summary": "Calculate the value from the y-distance between the reference and handle point"
+    },
+    {
+      "name": "Z_COORD",
+      "value": 10,
+      "summary": "Calculate the value for the \u0022ZMin\u0022 or \u0022ZMax\u0022 parameter. The distance between these values is adapted to the distance between the reference and handle point"
+    },
+    {
+      "name": "Z_DISTANCE",
+      "value": 3,
+      "summary": "Calculate the value from the z-distance between the reference and handle point"
+    }
+  ]
+}

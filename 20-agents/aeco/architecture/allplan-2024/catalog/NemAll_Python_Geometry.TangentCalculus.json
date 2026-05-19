@@ -1,0 +1,434 @@
+{
+  "name": "TangentCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Tangent calculation at an element point",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate(line)",
+      "signature": "Calculate(line)",
+      "summary": "Calculates tangent vector of Line2D",
+      "remarks": "Calculates tangent vector of Line2D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D on which to calculate tangent vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(line)",
+      "signature": "Calculate(line)",
+      "summary": "Calculates tangent vector of Line3D",
+      "remarks": "Calculates tangent vector of Line3D",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "line on which to calculate tangent vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polyline, inputPnt)",
+      "signature": "Calculate(polyline, inputPnt)",
+      "summary": "Calculates tangent vector of Polyline2D at given point",
+      "remarks": "Calculates tangent vector of Polyline2D at given point",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polyline, inputPnt)",
+      "signature": "Calculate(polyline, inputPnt)",
+      "summary": "Calculates tangent vector of Polyline2D at given point",
+      "remarks": "Calculates tangent vector of Polyline2D at given point",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline3D",
+          "doc": "Polyline on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polygon, inputPnt)",
+      "signature": "Calculate(polygon, inputPnt)",
+      "summary": "Calculates tangent vector of Polygon2D at given point",
+      "remarks": "Calculates tangent vector of Polygon2D at given point",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(arc, inputPnt)",
+      "signature": "Calculate(arc, inputPnt)",
+      "summary": "Calculates tangent vector of Arc2D at given point",
+      "remarks": "Calculates tangent vector of Arc2D at given point",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Arc2D on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(arc, inputPnt)",
+      "signature": "Calculate(arc, inputPnt)",
+      "summary": "Calculates tangent vector of Arc3D at given point",
+      "remarks": "Calculates tangent vector of Arc3D at given point",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc3D",
+          "doc": "Arc3D on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(spline, inputPnt)",
+      "signature": "Calculate(spline, inputPnt)",
+      "summary": "Calculates tangent vector of Spline2D at given point",
+      "remarks": "Calculates tangent vector of Spline2D at given point",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline2D",
+          "doc": "Spline on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(spline, inputPnt)",
+      "signature": "Calculate(spline, inputPnt)",
+      "summary": "Calculates tangent vector of Spline2D at given point",
+      "remarks": "Calculates tangent vector of Spline2D at given point",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline3D",
+          "doc": "Spline on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(bspline, inputPnt)",
+      "signature": "Calculate(bspline, inputPnt)",
+      "summary": "Calculates tangent vector of BSpline2D at given point",
+      "remarks": "Calculates tangent vector of BSpline2D at given point",
+      "params": [
+        {
+          "name": "bspline",
+          "type": "BSpline2D",
+          "doc": "BSpline on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(bspline, inputPnt)",
+      "signature": "Calculate(bspline, inputPnt)",
+      "summary": "Calculates tangent vector of BSpline3D at given point",
+      "remarks": "Calculates tangent vector of BSpline3D at given point",
+      "params": [
+        {
+          "name": "bspline",
+          "type": "BSpline3D",
+          "doc": "BSpline on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(clothoid, inputPnt)",
+      "signature": "Calculate(clothoid, inputPnt)",
+      "summary": "Calculates tangent vector of Clothoid2D at given point",
+      "remarks": "Calculates tangent vector of Clothoid2D at given point",
+      "params": [
+        {
+          "name": "clothoid",
+          "type": "Clothoid2D",
+          "doc": "Clothoid on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(path, inputPnt)",
+      "signature": "Calculate(path, inputPnt)",
+      "summary": "Calculates tangent vector of Path2D at given point",
+      "remarks": "Calculates tangent vector of Path2D at given point",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path2D",
+          "doc": "Path on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(brep, inputPnt)",
+      "signature": "Calculate(brep, inputPnt)",
+      "summary": "Calculates tangent vector of BRep3D at given point",
+      "remarks": "Calculates tangent vector of BRep3D at given point",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "Brep body",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3DList",
+        "doc": "tangent vectors"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(geoObject, inputPnt)",
+      "signature": "Calculate(geoObject, inputPnt)",
+      "summary": "Calculates tangent vector from object at given point",
+      "remarks": "Calculates tangent vector from object at given point",
+      "params": [
+        {
+          "name": "geoObject",
+          "type": "object",
+          "doc": "object on which to calculate tangent vector",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for tangent calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "tangent vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.Calculate"
+    },
+    {
+      "name": "CalculateNormal",
+      "signature": "CalculateNormal(brep, inputPnt)",
+      "summary": "Calculates normal vector of BRep3D at given point",
+      "remarks": "Calculates normal vector of BRep3D at given point",
+      "params": [
+        {
+          "name": "brep",
+          "type": "BRep3D",
+          "doc": "Brep body",
+          "optional": false
+        },
+        {
+          "name": "inputPnt",
+          "type": "Point3D",
+          "doc": "point on object for normal calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "normal vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Geometry/TangentCalculus/#NemAll_Python_Geometry.TangentCalculus.CalculateNormal"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

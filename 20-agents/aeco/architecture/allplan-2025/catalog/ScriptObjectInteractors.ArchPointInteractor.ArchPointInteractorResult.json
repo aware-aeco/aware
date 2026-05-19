@@ -1,0 +1,46 @@
+{
+  "name": "ArchPointInteractorResult",
+  "namespace": "ScriptObjectInteractors.ArchPointInteractor",
+  "kind": "class",
+  "summary": "Implementation of the result of a point input on an architectural element",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractorResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "input_point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "input point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractorResult/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractorResult.input_point"
+    },
+    {
+      "name": "sel_geo_ele",
+      "type": "Line2D | None",
+      "getter": true,
+      "setter": false,
+      "summary": "Selected geometry element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractorResult/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractorResult.sel_geo_ele"
+    },
+    {
+      "name": "sel_model_ele",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": false,
+      "summary": "Selected model element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractorResult/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractorResult.sel_model_ele"
+    },
+    {
+      "name": "sel_model_ele_geo",
+      "type": "Polygon2D | Polyline2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Geometry of the selected model element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractorResult/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractorResult.sel_model_ele_geo"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

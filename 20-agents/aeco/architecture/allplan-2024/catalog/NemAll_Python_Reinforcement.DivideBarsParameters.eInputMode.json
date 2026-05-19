@@ -1,0 +1,14 @@
+{
+  "name": "eInputMode",
+  "namespace": "NemAll_Python_Reinforcement.DivideBarsParameters",
+  "kind": "enum",
+  "summary": "Information of input mode",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/#NemAll_Python_Reinforcement.DivideBarsParameters.eInputMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

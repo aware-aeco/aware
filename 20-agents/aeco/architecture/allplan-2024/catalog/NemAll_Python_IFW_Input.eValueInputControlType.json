@@ -1,0 +1,97 @@
+{
+  "name": "eValueInputControlType",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Type of the value input control",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eValueInputControlType/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key)",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eValueInputControlType",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eValueInputControlType/#NemAll_Python_IFW_Input.eValueInputControlType.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eANGLE_COMBOBOX",
+      "value": 6
+    },
+    {
+      "name": "eCONTROL_EXTERNAL",
+      "value": 1
+    },
+    {
+      "name": "eCONTROL_NONE",
+      "value": 0
+    },
+    {
+      "name": "eCOORDINATE_EDIT",
+      "value": 101
+    },
+    {
+      "name": "eCOORDINATE_EDIT_FIX",
+      "value": 102
+    },
+    {
+      "name": "eCOORDINATE_EDIT_GE0",
+      "value": 103
+    },
+    {
+      "name": "eCOORDINATE_EDIT_GT0",
+      "value": 104
+    },
+    {
+      "name": "eDIMENSION_EDIT",
+      "value": 5
+    },
+    {
+      "name": "eINT_COMBOBOX",
+      "value": 4
+    },
+    {
+      "name": "eINT_EDIT",
+      "value": 3
+    },
+    {
+      "name": "eNUMBER_EDIT_1",
+      "value": 201
+    },
+    {
+      "name": "eNUMBER_EDIT_1_GE0",
+      "value": 202
+    },
+    {
+      "name": "eROTATION_ANGLE_STEP",
+      "value": 8
+    },
+    {
+      "name": "eTEXT_EDIT",
+      "value": 9
+    },
+    {
+      "name": "eWALL_PLACEMENT",
+      "value": 7
+    }
+  ]
+}

@@ -1,0 +1,180 @@
+{
+  "name": "ARGB",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "ARGB class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/",
+  "constructors": [
+    {
+      "name": "ARGB()",
+      "signature": "ARGB()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
+    },
+    {
+      "name": "ARGB(red, green, blue, alpha)",
+      "signature": "ARGB(red, green, blue, alpha)",
+      "summary": "constructor with RGBA components",
+      "remarks": "constructor with RGBA components",
+      "params": [
+        {
+          "name": "red",
+          "type": "int",
+          "doc": "red component",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "int",
+          "doc": "green component",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "int",
+          "doc": "blue component",
+          "optional": false
+        },
+        {
+          "name": "alpha",
+          "type": "int",
+          "doc": "alpha component",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
+    },
+    {
+      "name": "ARGB(argb)",
+      "signature": "ARGB(argb)",
+      "summary": "constructor with ARGB color",
+      "remarks": "constructor with ARGB color",
+      "params": [
+        {
+          "name": "argb",
+          "type": "int",
+          "doc": "ARGB color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
+    },
+    {
+      "name": "ARGB(argb)",
+      "signature": "ARGB(argb)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [
+        {
+          "name": "argb",
+          "type": "ARGB",
+          "doc": "copy from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetARGB",
+      "signature": "GetARGB()",
+      "summary": "returns color as unsigned long",
+      "remarks": "returns color as unsigned long",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "color as long"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.GetARGB"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(argb)",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "argb",
+          "type": "ARGB",
+          "doc": "color to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Alpha",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for alpha channel :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Alpha"
+    },
+    {
+      "name": "Blue",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for blue channel :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Blue"
+    },
+    {
+      "name": "Green",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for green channel :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Green"
+    },
+    {
+      "name": "Red",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for red channel :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ARGB/#NemAll_Python_BasisElements.ARGB.Red"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "BaseScriptObject",
+  "kind": "static-class",
+  "summary": "Module-level functions of BaseScriptObject",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

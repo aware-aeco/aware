@@ -1,0 +1,435 @@
+{
+  "name": "BuildingElementInput",
+  "namespace": "BuildingElementInput",
+  "kind": "class",
+  "summary": "Definition of class BuildingElementInput",
+  "base": "InputData",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/",
+  "constructors": [
+    {
+      "name": "BuildingElementInput()",
+      "signature": "BuildingElementInput(coord_input: CoordinateInput, path: str)",
+      "summary": "Initialization of class BuildingElementInput",
+      "remarks": "Initialization of class BuildingElementInput",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "Coordinate input class",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "Python script path",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "close_palette",
+      "signature": "close_palette()",
+      "summary": "Close the palette",
+      "remarks": "Close the palette",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.close_palette"
+    },
+    {
+      "name": "execute_pre_element_delete",
+      "signature": "execute_pre_element_delete() -\u003E bool",
+      "summary": "execute the pre element delete",
+      "remarks": "execute the pre element delete",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "pre element delete handled state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.execute_pre_element_delete"
+    },
+    {
+      "name": "get_point_from_insert_matrix",
+      "signature": "get_point_from_insert_matrix() -\u003E Point3D",
+      "summary": "Get input point from the insert matrix",
+      "remarks": "Get input point from the insert matrix",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "point from the insert matrix"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.get_point_from_insert_matrix"
+    },
+    {
+      "name": "is_visualeditor_running",
+      "signature": "is_visualeditor_running( _power_management: bool, cancel_by_menu_function: bool ) -\u003E bool",
+      "summary": "check for running visual editor",
+      "remarks": "check for running visual editor",
+      "params": [
+        {
+          "name": "_power_management",
+          "type": "bool",
+          "doc": "checking for power management",
+          "optional": false
+        },
+        {
+          "name": "cancel_by_menu_function",
+          "type": "bool",
+          "doc": "cancel is execute due to menu function start",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Visual Editor is running"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.is_visualeditor_running"
+    },
+    {
+      "name": "modify_element_property",
+      "signature": "modify_element_property(page: int, name: str, value: Any)",
+      "summary": "Modify property of element",
+      "remarks": "Modify property of element",
+      "params": [
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "the page of the property",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value for property.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.modify_element_property"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E bool",
+      "summary": "Cancel the input function",
+      "remarks": "Cancel the input function",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_cancel_function"
+    },
+    {
+      "name": "on_control_event",
+      "signature": "on_control_event(event_id: int)",
+      "summary": "On control event",
+      "remarks": "On control event",
+      "params": [
+        {
+          "name": "event_id",
+          "type": "int",
+          "doc": "event id of control.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_control_event"
+    },
+    {
+      "name": "on_input_undo",
+      "signature": "on_input_undo() -\u003E bool",
+      "summary": "Process the input undo event",
+      "remarks": "Process the input undo event",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "message was processed: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_input_undo"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event",
+      "remarks": "Handles the mouse leave event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_preview_draw"
+    },
+    {
+      "name": "on_shortcut_control_input",
+      "signature": "on_shortcut_control_input(value: int) -\u003E bool",
+      "summary": "Handles the input inside the shortcut control",
+      "remarks": "Handles the input inside the shortcut control",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "shortcut value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "message was processed: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_shortcut_control_input"
+    },
+    {
+      "name": "on_value_input_control_enter",
+      "signature": "on_value_input_control_enter() -\u003E bool",
+      "summary": "Process the enter inside the value input control",
+      "remarks": "Process the enter inside the value input control",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "message was processed: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.on_value_input_control_enter"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "the mouse message.",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "",
+          "doc": "the input point.",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "object",
+          "doc": "additional message info.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.process_mouse_msg"
+    },
+    {
+      "name": "reset_param_values",
+      "signature": "reset_param_values()",
+      "summary": "Reset to original parameter values from PYP file",
+      "remarks": "Reset to original parameter values from PYP file",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.reset_param_values"
+    },
+    {
+      "name": "save_load_favorite",
+      "signature": "save_load_favorite(is_save: bool, file_name: str)",
+      "summary": "Save or load a favorite",
+      "remarks": "Save or load a favorite",
+      "params": [
+        {
+          "name": "is_save",
+          "type": "bool",
+          "doc": "True = save, False = load",
+          "optional": false
+        },
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "Name of the favorite file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.save_load_favorite"
+    },
+    {
+      "name": "set_is_only_update_locks",
+      "signature": "set_is_only_update_locks(is_only_update: bool)",
+      "summary": "set the is only update locks",
+      "remarks": "set the is only update locks",
+      "params": [
+        {
+          "name": "is_only_update",
+          "type": "bool",
+          "doc": "only update the PythonPart, no user interaction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.set_is_only_update_locks"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input( file_name: str, parameter_data: list[str], msg_info: AddMsgInfo | None, is_modification_mode: bool, modify_uuid_list: ModificationElementList, geo_matrix: Matrix3D, local_placement_matrix: Matrix3D, asso_ref_ele: BaseElementAdapter, is_only_update: bool, is_marked_for_delete: bool = False, ) -\u003E tuple[bool, Any]",
+      "summary": "Start the input function",
+      "remarks": "Start the input function",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "file name of the pyp file",
+          "optional": false
+        },
+        {
+          "name": "parameter_data",
+          "type": "list[str]",
+          "doc": "parameter data of the selected PythonPart",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "AddMsgInfo | None",
+          "doc": "additional mouse message info",
+          "optional": false
+        },
+        {
+          "name": "is_modification_mode",
+          "type": "bool",
+          "doc": "is started in modification mode",
+          "optional": false
+        },
+        {
+          "name": "modify_uuid_list",
+          "type": "ModificationElementList",
+          "doc": "list with the UUIDs of the modified elements",
+          "optional": false
+        },
+        {
+          "name": "geo_matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix",
+          "optional": false
+        },
+        {
+          "name": "local_placement_matrix",
+          "type": "Matrix3D",
+          "doc": "local placement matrix",
+          "optional": false
+        },
+        {
+          "name": "asso_ref_ele",
+          "type": "BaseElementAdapter",
+          "doc": "reference element of the associative view",
+          "optional": false
+        },
+        {
+          "name": "is_only_update",
+          "type": "bool",
+          "doc": "only update the PythonPart, no user interaction",
+          "optional": false
+        },
+        {
+          "name": "is_marked_for_delete",
+          "type": "bool",
+          "doc": "is marked for delete state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Any]",
+        "doc": "(successfully started, started script object)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.start_input"
+    },
+    {
+      "name": "start_next_input",
+      "signature": "start_next_input() -\u003E bool",
+      "summary": "start the next input if multi placement is active",
+      "remarks": "start the next input if multi placement is active",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "next input is started: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.start_next_input"
+    },
+    {
+      "name": "start_standard_pythonpart",
+      "signature": "start_standard_pythonpart(update_palette: bool) -\u003E bool",
+      "summary": "start the standard PythonPart input",
+      "remarks": "start the standard PythonPart input",
+      "params": [
+        {
+          "name": "update_palette",
+          "type": "bool",
+          "doc": "update palette state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "start state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementInput/#BuildingElementInput.BuildingElementInput.start_standard_pythonpart"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

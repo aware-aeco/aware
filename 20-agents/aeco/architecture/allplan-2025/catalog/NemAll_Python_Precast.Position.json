@@ -1,0 +1,47 @@
+{
+  "name": "Position",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "position for labeling",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Position/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAccordingTheUSStandard",
+      "value": 7
+    },
+    {
+      "name": "eBottomCenter",
+      "value": 5
+    },
+    {
+      "name": "eBottomLeft",
+      "value": 4
+    },
+    {
+      "name": "eBottomRight",
+      "value": 6
+    },
+    {
+      "name": "eNone",
+      "value": 0
+    },
+    {
+      "name": "eTopCenter",
+      "value": 2
+    },
+    {
+      "name": "eTopLeft",
+      "value": 1
+    },
+    {
+      "name": "eTopRight",
+      "value": 3
+    }
+  ]
+}

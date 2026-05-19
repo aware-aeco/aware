@@ -1,0 +1,836 @@
+{
+  "name": "FilletCalculus2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class for fillet calculation",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/",
+  "constructors": [
+    {
+      "name": "FilletCalculus2D()",
+      "signature": "FilletCalculus2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(geoObj1: object, geoObj2: object, r: float)",
+      "signature": "FilletCalculus2D(geoObj1: object, geoObj2: object, r: float)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "geoObj1",
+          "type": "object",
+          "doc": "IGeometry object",
+          "optional": false
+        },
+        {
+          "name": "geoObj2",
+          "type": "object",
+          "doc": "IGeometry object",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "float",
+          "doc": "radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(line1: Line2D, line2: Line2D, r: float)",
+      "signature": "FilletCalculus2D(line1: Line2D, line2: Line2D, r: float)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line2D",
+          "doc": "Line2D",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line2D",
+          "doc": "Line2D",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "float",
+          "doc": "radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(line: Line2D, arc: Arc2D, r: float)",
+      "signature": "FilletCalculus2D(line: Line2D, arc: Arc2D, r: float)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D",
+          "optional": false
+        },
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "float",
+          "doc": "radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(arc1: Arc2D, arc2: Arc2D, r: float)",
+      "signature": "FilletCalculus2D(arc1: Arc2D, arc2: Arc2D, r: float)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "arc1",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "arc2",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "r",
+          "type": "float",
+          "doc": "radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(arc: Arc2D, point: Point2D)",
+      "signature": "FilletCalculus2D(arc: Arc2D, point: Point2D)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(line: Line2D, point: Point2D)",
+      "signature": "FilletCalculus2D(line: Line2D, point: Point2D)",
+      "summary": "constructor",
+      "remarks": "constructor",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D",
+          "optional": false
+        },
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    },
+    {
+      "name": "FilletCalculus2D(element: FilletCalculus2D)",
+      "signature": "FilletCalculus2D(element: FilletCalculus2D)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "FilletCalculus2D",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ClickedOnObject( line: Line2D, clickedPoint: Point2D, searchRadius: float ) -\u003E bool",
+      "signature": "ClickedOnObject( line: Line2D, clickedPoint: Point2D, searchRadius: float ) -\u003E bool",
+      "summary": "Check if click point is a point located on given line",
+      "remarks": "Check if click point is a point located on given line",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D which will be checked",
+          "optional": false
+        },
+        {
+          "name": "clickedPoint",
+          "type": "Point2D",
+          "doc": "clicked point",
+          "optional": false
+        },
+        {
+          "name": "searchRadius",
+          "type": "float",
+          "doc": "search radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if point is on the line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.ClickedOnObject"
+    },
+    {
+      "name": "ClickedOnObject(arc: Arc2D, clickedPoint: Point2D, searchRadius: float) -\u003E bool",
+      "signature": "ClickedOnObject(arc: Arc2D, clickedPoint: Point2D, searchRadius: float) -\u003E bool",
+      "summary": "Check if click point is a point located on given arc",
+      "remarks": "Check if click point is a point located on given arc",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Arc2D which will be checked",
+          "optional": false
+        },
+        {
+          "name": "clickedPoint",
+          "type": "Point2D",
+          "doc": "clicked point",
+          "optional": false
+        },
+        {
+          "name": "searchRadius",
+          "type": "float",
+          "doc": "search radius",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if point is on the arc"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.ClickedOnObject"
+    },
+    {
+      "name": "GetArcHelpConstructions",
+      "signature": "GetArcHelpConstructions() -\u003E Arc2DList",
+      "summary": "Get all arc help constructions",
+      "remarks": "Get all arc help constructions",
+      "params": [],
+      "returns": {
+        "type": "Arc2DList",
+        "doc": "all arc help constructions"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetArcHelpConstructions"
+    },
+    {
+      "name": "GetFilletType(line1: Line2D, line2: Line2D) -\u003E eFilletType",
+      "signature": "GetFilletType(line1: Line2D, line2: Line2D) -\u003E eFilletType",
+      "summary": "Get fillet type for two lines",
+      "remarks": "Get fillet type for two lines",
+      "params": [
+        {
+          "name": "line1",
+          "type": "Line2D",
+          "doc": "first line",
+          "optional": false
+        },
+        {
+          "name": "line2",
+          "type": "Line2D",
+          "doc": "second line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFilletType",
+        "doc": "eFilletType"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType"
+    },
+    {
+      "name": "GetFilletType(line: Line2D, arc: Arc2D) -\u003E eFilletType",
+      "signature": "GetFilletType(line: Line2D, arc: Arc2D) -\u003E eFilletType",
+      "summary": "Get fillet type for line and arc",
+      "remarks": "Get fillet type for line and arc",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "line",
+          "optional": false
+        },
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFilletType",
+        "doc": "eFilletType"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType"
+    },
+    {
+      "name": "GetFilletType(arc1: Arc2D, arc2: Arc2D) -\u003E eFilletType",
+      "signature": "GetFilletType(arc1: Arc2D, arc2: Arc2D) -\u003E eFilletType",
+      "summary": "Get fillet type for two arcs",
+      "remarks": "Get fillet type for two arcs",
+      "params": [
+        {
+          "name": "arc1",
+          "type": "Arc2D",
+          "doc": "first arc",
+          "optional": false
+        },
+        {
+          "name": "arc2",
+          "type": "Arc2D",
+          "doc": "second arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFilletType",
+        "doc": "eFilletType"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType"
+    },
+    {
+      "name": "GetFilletType(geometry1: object, geometry2: object) -\u003E eFilletType",
+      "signature": "GetFilletType(geometry1: object, geometry2: object) -\u003E eFilletType",
+      "summary": "Get fillet type for two geometry objects",
+      "remarks": "Get fillet type for two geometry objects",
+      "params": [
+        {
+          "name": "geometry1",
+          "type": "object",
+          "doc": "first geometry element",
+          "optional": false
+        },
+        {
+          "name": "geometry2",
+          "type": "object",
+          "doc": "second geometry element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eFilletType",
+        "doc": "eFilletType"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFilletType"
+    },
+    {
+      "name": "GetFillets",
+      "signature": "GetFillets() -\u003E Arc2DList",
+      "summary": "Get all possible fillets",
+      "remarks": "Get all possible fillets",
+      "params": [],
+      "returns": {
+        "type": "Arc2DList",
+        "doc": "possible fillets"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetFillets"
+    },
+    {
+      "name": "GetLineHelpConstructions",
+      "signature": "GetLineHelpConstructions() -\u003E object",
+      "summary": "Get all line help constructions",
+      "remarks": "Get all line help constructions",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "all line help constructions"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetLineHelpConstructions"
+    },
+    {
+      "name": "GetNearest",
+      "signature": "GetNearest(point: Point2D) -\u003E Arc2D",
+      "summary": "Get the nearest fillet to the point",
+      "remarks": "Get the nearest fillet to the point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc2D",
+        "doc": "nearest arc to the point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.GetNearest"
+    },
+    {
+      "name": "SplitPolylineBySegment",
+      "signature": "SplitPolylineBySegment( polyline: Polyline2D, segment: int ) -\u003E tuple[Polyline2D, Polyline2D]",
+      "summary": "Split polyline by given segment",
+      "remarks": "Split polyline by given segment",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "polyline which will be split by given segment",
+          "optional": false
+        },
+        {
+          "name": "segment",
+          "type": "int",
+          "doc": "segment where polyline will be split",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Polyline2D, Polyline2D]",
+        "doc": "tuple(firs part of polyline, second part of polyline)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.SplitPolylineBySegment"
+    },
+    {
+      "name": "TrimByHelpConstruction( line: Line2D, hcLine: Line2D, intersections: Point3DList ) -\u003E Line2D",
+      "signature": "TrimByHelpConstruction( line: Line2D, hcLine: Line2D, intersections: Point3DList ) -\u003E Line2D",
+      "summary": "Trim line by given help construction",
+      "remarks": "Trim line by given help construction",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "which will be trimmed",
+          "optional": false
+        },
+        {
+          "name": "hcLine",
+          "type": "Line2D",
+          "doc": "line help construction",
+          "optional": false
+        },
+        {
+          "name": "intersections",
+          "type": "Point3DList",
+          "doc": "intersection points",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "which will be trimmed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.TrimByHelpConstruction"
+    },
+    {
+      "name": "TrimByHelpConstruction( polyline: Polyline2D, segment: Line2D, hcLine: Line2D, intersections: Point3DList, ) -\u003E Polyline2D",
+      "signature": "TrimByHelpConstruction( polyline: Polyline2D, segment: Line2D, hcLine: Line2D, intersections: Point3DList, ) -\u003E Polyline2D",
+      "summary": "Trim polyline by given help construction",
+      "remarks": "Trim polyline by given help construction",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "which will be trimmed",
+          "optional": false
+        },
+        {
+          "name": "segment",
+          "type": "Line2D",
+          "doc": "selected segment",
+          "optional": false
+        },
+        {
+          "name": "hcLine",
+          "type": "Line2D",
+          "doc": "line help construction",
+          "optional": false
+        },
+        {
+          "name": "intersections",
+          "type": "Point3DList",
+          "doc": "intersection points",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline2D",
+        "doc": "which will be trimmed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.TrimByHelpConstruction"
+    },
+    {
+      "name": "TrimByHelpConstruction( arc: Arc2D, hcArc: Arc2D, intersections: Point3DList ) -\u003E Arc2D",
+      "signature": "TrimByHelpConstruction( arc: Arc2D, hcArc: Arc2D, intersections: Point3DList ) -\u003E Arc2D",
+      "summary": "Trim arc by given help construction",
+      "remarks": "Trim arc by given help construction",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "which will be trimmed",
+          "optional": false
+        },
+        {
+          "name": "hcArc",
+          "type": "Arc2D",
+          "doc": "arc help construction",
+          "optional": false
+        },
+        {
+          "name": "intersections",
+          "type": "Point3DList",
+          "doc": "intersection points",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc2D",
+        "doc": "which will be trimmed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.TrimByHelpConstruction"
+    },
+    {
+      "name": "UpdateGeometry( geoPolyline: Polyline2D, fillet: Arc2D, selectedGeometry: object ) -\u003E Polyline2D",
+      "signature": "UpdateGeometry( geoPolyline: Polyline2D, fillet: Arc2D, selectedGeometry: object ) -\u003E Polyline2D",
+      "summary": "Update polyline geometry",
+      "remarks": "Update polyline geometry",
+      "params": [
+        {
+          "name": "geoPolyline",
+          "type": "Polyline2D",
+          "doc": "polyline which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry",
+          "type": "object",
+          "doc": "selected geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline2D",
+        "doc": "polyline which will be updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    },
+    {
+      "name": "UpdateGeometry( geoPolyline: Polyline2D, fillet: Arc2D, selectedGeometry1: object, selectedGeometry2: object, ) -\u003E Polyline2DList",
+      "signature": "UpdateGeometry( geoPolyline: Polyline2D, fillet: Arc2D, selectedGeometry1: object, selectedGeometry2: object, ) -\u003E Polyline2DList",
+      "summary": "Update polyline geometry",
+      "remarks": "Update polyline geometry",
+      "params": [
+        {
+          "name": "geoPolyline",
+          "type": "Polyline2D",
+          "doc": "polyline which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry1",
+          "type": "object",
+          "doc": "First selected segment",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry2",
+          "type": "object",
+          "doc": "Second selected segment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline2DList",
+        "doc": "Result polylines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    },
+    {
+      "name": "UpdateGeometry(geoArc: Arc2D, fillet: Arc2D, selectedGeometry: object) -\u003E Arc2D",
+      "signature": "UpdateGeometry(geoArc: Arc2D, fillet: Arc2D, selectedGeometry: object) -\u003E Arc2D",
+      "summary": "Update arc geometry",
+      "remarks": "Update arc geometry",
+      "params": [
+        {
+          "name": "geoArc",
+          "type": "Arc2D",
+          "doc": "arc which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry",
+          "type": "object",
+          "doc": "selected geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc2D",
+        "doc": "arc which will be updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    },
+    {
+      "name": "UpdateGeometry( geoLine: Line2D, fillet: Arc2D, selectedGeometry: object ) -\u003E Line2D",
+      "signature": "UpdateGeometry( geoLine: Line2D, fillet: Arc2D, selectedGeometry: object ) -\u003E Line2D",
+      "summary": "Update lien geometry",
+      "remarks": "Update lien geometry",
+      "params": [
+        {
+          "name": "geoLine",
+          "type": "Line2D",
+          "doc": "line which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry",
+          "type": "object",
+          "doc": "selected geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line2D",
+        "doc": "line which will be updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    },
+    {
+      "name": "UpdateGeometry( geoPolygon: Polygon2D, fillet: Arc2D, segment1: Line2D, segment2: Line2D, segmentCount: int = 36, ) -\u003E Polygon2D",
+      "signature": "UpdateGeometry( geoPolygon: Polygon2D, fillet: Arc2D, segment1: Line2D, segment2: Line2D, segmentCount: int = 36, ) -\u003E Polygon2D",
+      "summary": "Update polygon geometry",
+      "remarks": "Update polygon geometry",
+      "params": [
+        {
+          "name": "geoPolygon",
+          "type": "Polygon2D",
+          "doc": "polygon which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "segment1",
+          "type": "Line2D",
+          "doc": "first selected geometry",
+          "optional": false
+        },
+        {
+          "name": "segment2",
+          "type": "Line2D",
+          "doc": "second selected geometry",
+          "optional": false
+        },
+        {
+          "name": "segmentCount",
+          "type": "int",
+          "doc": "required count of segments of the polygonized fillet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon2D",
+        "doc": "polygon which will be updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    },
+    {
+      "name": "UpdateGeometry(geoSpline: Spline2D, fillet: Arc2D) -\u003E Spline2D",
+      "signature": "UpdateGeometry(geoSpline: Spline2D, fillet: Arc2D) -\u003E Spline2D",
+      "summary": "Update spline geometry",
+      "remarks": "Update spline geometry",
+      "params": [
+        {
+          "name": "geoSpline",
+          "type": "Spline2D",
+          "doc": "spline which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Spline2D",
+        "doc": "spline which will be updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    },
+    {
+      "name": "UpdateGeometry( geoPolyline: Polyline2D, fillet: Arc2D, selectedGeometry1: object, selectedGeometry2: object, segmentCount: int = 36, ) -\u003E Polyline2D",
+      "signature": "UpdateGeometry( geoPolyline: Polyline2D, fillet: Arc2D, selectedGeometry1: object, selectedGeometry2: object, segmentCount: int = 36, ) -\u003E Polyline2D",
+      "summary": "Update polyline geometry",
+      "remarks": "Update polyline geometry",
+      "params": [
+        {
+          "name": "geoPolyline",
+          "type": "Polyline2D",
+          "doc": "polyline which will be updated",
+          "optional": false
+        },
+        {
+          "name": "fillet",
+          "type": "Arc2D",
+          "doc": "Arc2D",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry1",
+          "type": "object",
+          "doc": "the first selected geometry",
+          "optional": false
+        },
+        {
+          "name": "selectedGeometry2",
+          "type": "object",
+          "doc": "the second selected geometry",
+          "optional": false
+        },
+        {
+          "name": "segmentCount",
+          "type": "int",
+          "doc": "required count of segments of the polygonized fillet",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polyline2D",
+        "doc": "polyline which will be updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/FilletCalculus2D/#NemAll_Python_Geometry.FilletCalculus2D.UpdateGeometry"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

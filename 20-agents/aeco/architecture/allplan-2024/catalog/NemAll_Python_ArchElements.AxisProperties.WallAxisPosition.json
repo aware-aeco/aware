@@ -1,0 +1,14 @@
+{
+  "name": "WallAxisPosition",
+  "namespace": "NemAll_Python_ArchElements.AxisProperties",
+  "kind": "enum",
+  "summary": "Position of the wall axis",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.WallAxisPosition",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "TextAlignment",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Types of text alignments",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextAlignment/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLeftBottom",
+      "value": 1
+    },
+    {
+      "name": "eLeftMiddle",
+      "value": 9
+    },
+    {
+      "name": "eLeftTop",
+      "value": 4
+    },
+    {
+      "name": "eMiddleBottom",
+      "value": 6
+    },
+    {
+      "name": "eMiddleMiddle",
+      "value": 5
+    },
+    {
+      "name": "eMiddleTop",
+      "value": 8
+    },
+    {
+      "name": "eRightBottom",
+      "value": 2
+    },
+    {
+      "name": "eRightMiddle",
+      "value": 7
+    },
+    {
+      "name": "eRightTop",
+      "value": 3
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "name": "GeneralOpeningPolygonUtil",
+  "namespace": "Utils.Architecture.GeneralOpeningPolygonUtil",
+  "kind": "class",
+  "summary": "\u0022 implementation of the utility for the general opening polygon creation from an opening body",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/GeneralOpeningPolygonUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "calculate_opening_polygon",
+      "signature": "calculate_opening_polygon( opening: Polyhedron3D | BRep3D, axis_line: Line3D, outer_element_geo: Polygon2D, general_ele: BaseElementAdapter, ) -\u003E Polygon2D",
+      "summary": "calculate the opening polygon",
+      "remarks": "calculate the opening polygon",
+      "params": [
+        {
+          "name": "opening",
+          "type": "Polyhedron3D | BRep3D",
+          "doc": "opening",
+          "optional": false
+        },
+        {
+          "name": "axis_line",
+          "type": "Line3D",
+          "doc": "axis line",
+          "optional": false
+        },
+        {
+          "name": "outer_element_geo",
+          "type": "Polygon2D",
+          "doc": "outer element geometry",
+          "optional": false
+        },
+        {
+          "name": "general_ele",
+          "type": "BaseElementAdapter",
+          "doc": "general element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon2D",
+        "doc": "opening polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/GeneralOpeningPolygonUtil/#Utils.Architecture.GeneralOpeningPolygonUtil.GeneralOpeningPolygonUtil.calculate_opening_polygon"
+    },
+    {
+      "name": "get_general_element_geometry",
+      "signature": "get_general_element_geometry( general_ele: BaseElementAdapter, ) -\u003E tuple[Polyhedron3D | None, Polygon2D | None]",
+      "summary": "get the geometry of the general element",
+      "remarks": "get the geometry of the general element",
+      "params": [
+        {
+          "name": "general_ele",
+          "type": "BaseElementAdapter",
+          "doc": "general element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Polyhedron3D | None, Polygon2D | None]",
+        "doc": "3D geometry, ground view polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/GeneralOpeningPolygonUtil/#Utils.Architecture.GeneralOpeningPolygonUtil.GeneralOpeningPolygonUtil.get_general_element_geometry"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

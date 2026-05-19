@@ -1,0 +1,188 @@
+{
+  "name": "BaseElementAdapterFilter",
+  "namespace": "Utils.BaseElementAdapterFilter",
+  "kind": "class",
+  "summary": "implementation of the base element adapter filter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_bar_definitions",
+      "signature": "get_bar_definitions( elements: BaseElementAdapterList, ) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for all type of bar definitions",
+      "remarks": "get the elements for all type of bar definitions",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_bar_definitions"
+    },
+    {
+      "name": "get_bar_placements",
+      "signature": "get_bar_placements( elements: BaseElementAdapterList, ) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for all type of bar definitions",
+      "remarks": "get the elements for all type of bar definitions",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_bar_placements"
+    },
+    {
+      "name": "get_door_swing",
+      "signature": "get_door_swing(elements: BaseElementAdapterList) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for door swing",
+      "remarks": "get the elements for door swing",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_door_swing"
+    },
+    {
+      "name": "get_elements_by_type",
+      "signature": "get_elements_by_type( elements: BaseElementAdapterList, type_uuid: GUID ) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for the type",
+      "remarks": "get the elements for the type",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        },
+        {
+          "name": "type_uuid",
+          "type": "GUID",
+          "doc": "element type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_elements_by_type"
+    },
+    {
+      "name": "get_mesh_definitions",
+      "signature": "get_mesh_definitions( elements: BaseElementAdapterList, ) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for all type of mesh definitions",
+      "remarks": "get the elements for all type of mesh definitions",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_mesh_definitions"
+    },
+    {
+      "name": "get_python_part",
+      "signature": "get_python_part(elements: BaseElementAdapterList) -\u003E BaseElementAdapter",
+      "summary": "get PythonPart",
+      "remarks": "get PythonPart",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "filtered element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_python_part"
+    },
+    {
+      "name": "get_slab_tiers",
+      "signature": "get_slab_tiers(elements: BaseElementAdapterList) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for all type of wall tiers definitions",
+      "remarks": "get the elements for all type of wall tiers definitions",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_slab_tiers"
+    },
+    {
+      "name": "get_wall_tiers",
+      "signature": "get_wall_tiers(elements: BaseElementAdapterList) -\u003E list[BaseElementAdapter]",
+      "summary": "get the elements for all type of wall tiers definitions",
+      "remarks": "get the elements for all type of wall tiers definitions",
+      "params": [
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "elements to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[BaseElementAdapter]",
+        "doc": "filtered elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/BaseElementAdapterFilter/#Utils.BaseElementAdapterFilter.BaseElementAdapterFilter.get_wall_tiers"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

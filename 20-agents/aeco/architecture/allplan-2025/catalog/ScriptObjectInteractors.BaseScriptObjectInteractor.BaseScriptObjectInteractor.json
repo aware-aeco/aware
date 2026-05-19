@@ -1,0 +1,123 @@
+{
+  "name": "BaseScriptObjectInteractor",
+  "namespace": "ScriptObjectInteractors.BaseScriptObjectInteractor",
+  "kind": "interface",
+  "summary": "implementation of the base script object interactor",
+  "base": "ABC",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_selection_query",
+      "signature": "create_selection_query( ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None, ) -\u003E SelectionQuery",
+      "summary": "create the selection query",
+      "remarks": "create the selection query",
+      "params": [
+        {
+          "name": "ele_filter",
+          "type": "list[GUID] | BaseFilterObject | SelectionQuery | None",
+          "doc": "element filter as a list of accepted element type GUIDs or a callable or a selection query",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "SelectionQuery",
+        "doc": "selection query or None"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/#ScriptObjectInteractors.BaseScriptObjectInteractor.BaseScriptObjectInteractor.create_selection_query"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E OnCancelFunctionResult",
+      "summary": "Handles the cancel function event (e.g. by ESC, ...)",
+      "remarks": "Handles the cancel function event (e.g. by ESC, ...)",
+      "params": [],
+      "returns": {
+        "type": "True",
+        "doc": "cancel the input"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/#ScriptObjectInteractors.BaseScriptObjectInteractor.BaseScriptObjectInteractor.on_cancel_function"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event",
+      "remarks": "Handles the mouse leave event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/#ScriptObjectInteractors.BaseScriptObjectInteractor.BaseScriptObjectInteractor.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/#ScriptObjectInteractors.BaseScriptObjectInteractor.BaseScriptObjectInteractor.on_preview_draw"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "AddMsgInfo",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/#ScriptObjectInteractors.BaseScriptObjectInteractor.BaseScriptObjectInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "start the input",
+      "remarks": "start the input",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/BaseScriptObjectInteractor/#ScriptObjectInteractors.BaseScriptObjectInteractor.BaseScriptObjectInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,599 @@
+{
+  "name": "Clothoid2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for Clothoid2D.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/",
+  "constructors": [
+    {
+      "name": "Clothoid2D()",
+      "signature": "Clothoid2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.__init__"
+    },
+    {
+      "name": "Clothoid2D(clothoid: Clothoid2D)",
+      "signature": "Clothoid2D(clothoid: Clothoid2D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "clothoid",
+          "type": "Clothoid2D",
+          "doc": "Clothoid2D which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEndCurvature",
+      "signature": "GetEndCurvature() -\u003E float",
+      "summary": "Get end curvature.",
+      "remarks": "Get end curvature.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double end curvature of clothoid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetEndCurvature"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point2D",
+      "summary": "Get end point in world coordinate system.",
+      "remarks": "Get end point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point Point2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint() -\u003E Point2D",
+      "summary": "Get the end point in relative coordinate system",
+      "remarks": "Get the end point in relative coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "constant Point2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetEndRelPoint"
+    },
+    {
+      "name": "GetIsReversed",
+      "signature": "GetIsReversed() -\u003E bool",
+      "summary": "is clothoid reversed",
+      "remarks": "is clothoid reversed",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetIsReversed"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength() -\u003E float",
+      "summary": "Get length of clothoid.",
+      "remarks": "Get length of clothoid.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double length of clothoid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetLength"
+    },
+    {
+      "name": "GetParallel",
+      "signature": "GetParallel() -\u003E float",
+      "summary": "Get parallel of clothoid.",
+      "remarks": "Get parallel of clothoid.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double parallel of clothoid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetParallel"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point2D",
+      "summary": "Get reference point in world coordinate system",
+      "remarks": "Get reference point in world coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetRefPoint"
+    },
+    {
+      "name": "GetStartCurvature",
+      "signature": "GetStartCurvature() -\u003E float",
+      "summary": "Get start curvature.",
+      "remarks": "Get start curvature.",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "double start curvature of clothoid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetStartCurvature"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point2D",
+      "summary": "Get start point in world coordinate system.",
+      "remarks": "Get start point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point Point2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint() -\u003E Point2D",
+      "summary": "Get the start point in relative coordinate system",
+      "remarks": "Get the start point in relative coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "constant Point2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetStartRelPoint"
+    },
+    {
+      "name": "GetStartVector",
+      "signature": "GetStartVector() -\u003E Vector2D",
+      "summary": "Get start vector.",
+      "remarks": "Get start vector.",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "const Vector2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetStartVector"
+    },
+    {
+      "name": "GetType",
+      "signature": "GetType() -\u003E eClothoidType",
+      "summary": "Get type of clothoid.",
+      "remarks": "Get type of clothoid.",
+      "params": [],
+      "returns": {
+        "type": "eClothoidType",
+        "doc": "eClothoidType type of clothoid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.GetType"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse orientation of the Clothoid",
+      "remarks": "Reverse orientation of the Clothoid",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.Reverse"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(clothoid: Clothoid2D)",
+      "summary": "Initialize clothoid from clothoid.",
+      "remarks": "Initialize clothoid from clothoid.",
+      "params": [
+        {
+          "name": "clothoid",
+          "type": "Clothoid2D",
+          "doc": "Clothoid2D.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.Set"
+    },
+    {
+      "name": "SetEndCurvature",
+      "signature": "SetEndCurvature(curvature: float)",
+      "summary": "Set end curvature of clothoid.",
+      "remarks": "Set end curvature of clothoid.",
+      "params": [
+        {
+          "name": "curvature",
+          "type": "float",
+          "doc": "end curvature of clothoid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetEndCurvature"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(point: Point2D)",
+      "summary": "Set end point in world coordinate system.",
+      "remarks": "Set end point in world coordinate system.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "const Point2D in World coordinate system.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetEndPoint"
+    },
+    {
+      "name": "SetEndRelPoint",
+      "signature": "SetEndRelPoint(point: Point2D)",
+      "summary": "Set end point in local coordinate system",
+      "remarks": "Set end point in local coordinate system",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D in local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetEndRelPoint"
+    },
+    {
+      "name": "SetLength",
+      "signature": "SetLength(length: float)",
+      "summary": "Set length of clothoid.",
+      "remarks": "Set length of clothoid.",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "length of clothoid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetLength"
+    },
+    {
+      "name": "SetParallel",
+      "signature": "SetParallel(parallel: float)",
+      "summary": "Set parallel of clothoid.",
+      "remarks": "Set parallel of clothoid.",
+      "params": [
+        {
+          "name": "parallel",
+          "type": "float",
+          "doc": "length of clothoid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetParallel"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point2D)",
+      "summary": "Set reference point in world coordinate system",
+      "remarks": "Set reference point in world coordinate system",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "const Point2D in World coordinate system.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetRefPoint"
+    },
+    {
+      "name": "SetReversed",
+      "signature": "SetReversed(flag: bool)",
+      "summary": "Set orientation.",
+      "remarks": "Set orientation.",
+      "params": [
+        {
+          "name": "flag",
+          "type": "bool",
+          "doc": "true for reversed, false normal orientation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetReversed"
+    },
+    {
+      "name": "SetStartCurvature",
+      "signature": "SetStartCurvature(curvature: float)",
+      "summary": "Set start curvature of clothoid.",
+      "remarks": "Set start curvature of clothoid.",
+      "params": [
+        {
+          "name": "curvature",
+          "type": "float",
+          "doc": "start curvature of clothoid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetStartCurvature"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(point: Point2D)",
+      "summary": "Set start point in world coordinate system.",
+      "remarks": "Set start point in world coordinate system.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "const Point2D in World coordinate system.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetStartPoint"
+    },
+    {
+      "name": "SetStartRelPoint",
+      "signature": "SetStartRelPoint(point: Point2D)",
+      "summary": "Set start point in local coordinate system",
+      "remarks": "Set start point in local coordinate system",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point2D",
+          "doc": "Point2D in local coordinate system",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetStartRelPoint"
+    },
+    {
+      "name": "SetStartVector",
+      "signature": "SetStartVector(vec: Vector2D)",
+      "summary": "Set start vector.",
+      "remarks": "Set start vector.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Vector2D",
+          "doc": "const Vector2D.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetStartVector"
+    },
+    {
+      "name": "SetType",
+      "signature": "SetType(type: eClothoidType)",
+      "summary": "Set type of clothoid.",
+      "remarks": "Set type of clothoid.",
+      "params": [
+        {
+          "name": "type",
+          "type": "eClothoidType",
+          "doc": "type of clothoid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.SetType"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(clothoid: Clothoid2D) -\u003E object",
+      "summary": "Comparison of clothoids without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of clothoids without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "clothoid",
+          "type": "Clothoid2D",
+          "doc": "Compared clothoid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when clothoids are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.__eq__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E Clothoid2D",
+      "summary": "Matrix transformation.",
+      "remarks": "Matrix transformation.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Clothoid2D",
+        "doc": "Clothoid2D transformed clothoid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndCurvature",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end curvature.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.EndCurvature"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.EndPoint"
+    },
+    {
+      "name": "EndRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the end point in relative coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.EndRelPoint"
+    },
+    {
+      "name": "Length",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get length of clothoid.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.Length"
+    },
+    {
+      "name": "Parallel",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get parallel of clothoid.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.Parallel"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get reference point in world coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.RefPoint"
+    },
+    {
+      "name": "StartCurvature",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start curvature.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.StartCurvature"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.StartPoint"
+    },
+    {
+      "name": "StartRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the start point in relative coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.StartRelPoint"
+    },
+    {
+      "name": "StartVector",
+      "type": "Vector2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start vector.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.StartVector"
+    },
+    {
+      "name": "Type",
+      "type": "eClothoidType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get type of clothoid.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Clothoid2D/#NemAll_Python_Geometry.Clothoid2D.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

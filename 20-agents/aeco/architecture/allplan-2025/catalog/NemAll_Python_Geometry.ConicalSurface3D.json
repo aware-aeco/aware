@@ -1,0 +1,288 @@
+{
+  "name": "ConicalSurface3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D conical surface",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/",
+  "constructors": [
+    {
+      "name": "ConicalSurface3D()",
+      "signature": "ConicalSurface3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__init__"
+    },
+    {
+      "name": "ConicalSurface3D(placement: AxisPlacement3D, radius: float, angle: Angle)",
+      "signature": "ConicalSurface3D(placement: AxisPlacement3D, radius: float, angle: Angle)",
+      "summary": "Default constructor.",
+      "remarks": "Default constructor.",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "placement of conical surface",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "radius at a placement",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle between placement axis and some axis on surface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__init__"
+    },
+    {
+      "name": "ConicalSurface3D(surface: ConicalSurface3D)",
+      "signature": "ConicalSurface3D(surface: ConicalSurface3D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "surface",
+          "type": "ConicalSurface3D",
+          "doc": "Surface which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Get",
+      "signature": "Get() -\u003E tuple",
+      "summary": "Get all surface members",
+      "remarks": "Get all surface members",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "placement of conical surface,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.Get"
+    },
+    {
+      "name": "GetPlacement",
+      "signature": "GetPlacement() -\u003E AxisPlacement3D",
+      "summary": "returns axis placement of the conical surface",
+      "remarks": "returns axis placement of the conical surface",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "placement - point \u002B axis vector \u002B reference direction vector"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.GetPlacement"
+    },
+    {
+      "name": "GetRadius",
+      "signature": "GetRadius() -\u003E float",
+      "summary": "Returns the radius at the placement",
+      "remarks": "Returns the radius at the placement",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "radius"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.GetRadius"
+    },
+    {
+      "name": "GetSemiAngle",
+      "signature": "GetSemiAngle() -\u003E Angle",
+      "summary": "Returns the value of semi angle of conical surface",
+      "remarks": "Returns the value of semi angle of conical surface",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.GetSemiAngle"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Check surface validity",
+      "remarks": "Check surface validity",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "bool valid = true"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.IsValid"
+    },
+    {
+      "name": "Set",
+      "signature": "Set(placement: AxisPlacement3D, radius: float, angle: Angle)",
+      "summary": "Set all surface members",
+      "remarks": "Set all surface members",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "placement of conical surface",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "radius of conical surface in placement",
+          "optional": false
+        },
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "semi angle of conical surface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.Set"
+    },
+    {
+      "name": "SetPlacement",
+      "signature": "SetPlacement(value: AxisPlacement3D)",
+      "summary": "sets the position of conical surface",
+      "remarks": "sets the position of conical surface",
+      "params": [
+        {
+          "name": "value",
+          "type": "AxisPlacement3D",
+          "doc": "placement - point \u002B axis vector \u002B reference direction vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.SetPlacement"
+    },
+    {
+      "name": "SetRadius",
+      "signature": "SetRadius(value: float)",
+      "summary": "Sets the radius at the placement",
+      "remarks": "Sets the radius at the placement",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "doc": "radius to be set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.SetRadius"
+    },
+    {
+      "name": "SetSemiAngle",
+      "signature": "SetSemiAngle(value: Angle)",
+      "summary": "Sets the value of semi angle of conical surface",
+      "remarks": "Sets the value of semi angle of conical surface",
+      "params": [
+        {
+          "name": "value",
+          "type": "Angle",
+          "doc": "angle to be set",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.SetSemiAngle"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(surface: ConicalSurface3D) -\u003E object",
+      "summary": "Comparison of conical surfaces without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of conical surfaces without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "conical",
+          "type": "object",
+          "doc": "surface Compared conical surface.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when conical surfaces are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Placement",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the placement property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.Placement"
+    },
+    {
+      "name": "Radius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the radius property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.Radius"
+    },
+    {
+      "name": "SemiAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the semi angle property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/ConicalSurface3D/#NemAll_Python_Geometry.ConicalSurface3D.SemiAngle"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

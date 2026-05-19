@@ -1,0 +1,142 @@
+{
+  "name": "LabelElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the Label element",
+  "base": "BasisElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/",
+  "constructors": [
+    {
+      "name": "LabelElement()",
+      "signature": "LabelElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.__init__"
+    },
+    {
+      "name": "LabelElement(text, labelType)",
+      "signature": "LabelElement(text, labelType)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "text",
+          "type": "TextElement",
+          "doc": "Text element",
+          "optional": false
+        },
+        {
+          "name": "labelType",
+          "type": "LabelType",
+          "doc": "Default text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.__init__"
+    },
+    {
+      "name": "LabelElement(textElements, labelType)",
+      "signature": "LabelElement(textElements, labelType)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "textElements",
+          "type": "TextElementList",
+          "doc": "Text elements",
+          "optional": false
+        },
+        {
+          "name": "labelType",
+          "type": "LabelType",
+          "doc": "Label type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.__init__"
+    },
+    {
+      "name": "LabelElement(element)",
+      "signature": "LabelElement(element)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "LabelElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddTextElement",
+      "signature": "AddTextElement(text)",
+      "summary": "Add a text element",
+      "remarks": "Add a text element",
+      "params": [
+        {
+          "name": "text",
+          "type": "TextElement",
+          "doc": "Text element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.AddTextElement"
+    },
+    {
+      "name": "SetLabeledElement",
+      "signature": "SetLabeledElement(labeledElement)",
+      "summary": "Set the labeled element",
+      "remarks": "Set the labeled element",
+      "params": [
+        {
+          "name": "labeledElement",
+          "type": "BaseElementAdapter",
+          "doc": "Labeled element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.SetLabeledElement"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LabelElement/#NemAll_Python_BasisElements.LabelElement.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

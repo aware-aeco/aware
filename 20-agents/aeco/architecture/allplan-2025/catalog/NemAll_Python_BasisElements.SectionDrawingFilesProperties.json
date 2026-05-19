@@ -1,0 +1,57 @@
+{
+  "name": "SectionDrawingFilesProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Class containing settings regarding which drawing files to be considered in a UVS",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/",
+  "constructors": [
+    {
+      "name": "SectionDrawingFilesProperties()",
+      "signature": "SectionDrawingFilesProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__init__"
+    },
+    {
+      "name": "SectionDrawingFilesProperties(A: SectionDrawingFilesProperties)",
+      "signature": "SectionDrawingFilesProperties(A: SectionDrawingFilesProperties)",
+      "summary": "copy constructor",
+      "remarks": "copy constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(A: SectionDrawingFilesProperties) -\u003E bool",
+      "summary": "operator ==",
+      "remarks": "operator ==",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.__eq__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DrawingNumbers",
+      "type": "list[int] | VecIntList",
+      "getter": true,
+      "setter": true,
+      "summary": "Numbers of the drawing files to consider in a UVS",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionDrawingFilesProperties/#NemAll_Python_BasisElements.SectionDrawingFilesProperties.DrawingNumbers"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

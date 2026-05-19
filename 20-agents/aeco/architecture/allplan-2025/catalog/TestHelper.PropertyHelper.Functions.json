@@ -1,0 +1,158 @@
+{
+  "name": "Functions",
+  "namespace": "TestHelper.PropertyHelper",
+  "kind": "static-class",
+  "summary": "Module-level functions of TestHelper.PropertyHelper",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PropertyHelper/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "add_property",
+      "signature": "add_property( build_ele: BuildingElement, name: str, value_type: str, value: Any, persist: Persistent, ) -\u003E ParameterProperty",
+      "summary": "Add a property to the building element",
+      "remarks": "Add a property to the building element",
+      "params": [
+        {
+          "name": "build_ele",
+          "type": "BuildingElement",
+          "doc": "building element with the parameter properties",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value_type",
+          "type": "str",
+          "doc": "value type of the property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value of the property",
+          "optional": false
+        },
+        {
+          "name": "persist",
+          "type": "Persistent",
+          "doc": "persistent state of the property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ParameterProperty",
+        "doc": "created property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PropertyHelper/#TestHelper.PropertyHelper.add_property"
+    },
+    {
+      "name": "create_property",
+      "signature": "create_property(name: str, value: Any, value_type: str) -\u003E ParameterProperty",
+      "summary": "create a property",
+      "remarks": "create a property",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value_type",
+          "type": "str",
+          "doc": "value type of the property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value of the property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ParameterProperty",
+        "doc": "created property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PropertyHelper/#TestHelper.PropertyHelper.create_property"
+    },
+    {
+      "name": "create_ctrl_property",
+      "signature": "create_ctrl_property(text: str, name: str) -\u003E ControlProperties",
+      "summary": "create a property",
+      "remarks": "create a property",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "control text",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ControlProperties",
+        "doc": "created property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PropertyHelper/#TestHelper.PropertyHelper.create_ctrl_property"
+    },
+    {
+      "name": "create_param_and_ctrl_prop",
+      "signature": "create_param_and_ctrl_prop( text: str, name: str, value: Any, value_type: str ) -\u003E Tuple[ParameterProperty, ControlProperties]",
+      "summary": "create a property and a control property",
+      "remarks": "create a property and a control property",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the modified property",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "value of the property",
+          "optional": false
+        },
+        {
+          "name": "value_type",
+          "type": "str",
+          "doc": "value type of the property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tuple[ParameterProperty, ControlProperties]",
+        "doc": "created property"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/PropertyHelper/#TestHelper.PropertyHelper.create_param_and_ctrl_prop"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

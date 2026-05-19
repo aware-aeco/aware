@@ -1,0 +1,229 @@
+{
+  "name": "VisualScriptService",
+  "namespace": "VisualScriptService",
+  "kind": "class",
+  "summary": "implementation of the VisualScript service",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/",
+  "constructors": [
+    {
+      "name": "VisualScriptService()",
+      "signature": "VisualScriptService( coord_input: CoordinateInput, script_path: str, global_str_table_service: StringTableService, build_ele_list: list[BuildingElement], control_props_list: list[BuildingElementControlProperties], default_values: list[DefaultValue], )",
+      "summary": "Initialize the script",
+      "remarks": "Initialize the script",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        },
+        {
+          "name": "script_path",
+          "type": "str",
+          "doc": "script path",
+          "optional": false
+        },
+        {
+          "name": "global_str_table_service",
+          "type": "StringTableService",
+          "doc": "global string table service",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        },
+        {
+          "name": "control_props_list",
+          "type": "list[BuildingElementControlProperties]",
+          "doc": "control properties list",
+          "optional": false
+        },
+        {
+          "name": "default_values",
+          "type": "list[DefaultValue]",
+          "doc": "default values",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "ValueError",
+          "when": "raised in case of wrong script"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "close_all",
+      "signature": "close_all()",
+      "summary": "close the VS script",
+      "remarks": "close the VS script",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.close_all"
+    },
+    {
+      "name": "create_pythonpart",
+      "signature": "create_pythonpart( placement_matrix: Matrix3D, local_placement_matrix: Matrix3D ) -\u003E list[Any]",
+      "summary": "create the PythonPart",
+      "remarks": "create the PythonPart",
+      "params": [
+        {
+          "name": "placement_matrix",
+          "type": "Matrix3D",
+          "doc": "placement matrix of the PythonPart (model placement)",
+          "optional": false
+        },
+        {
+          "name": "local_placement_matrix",
+          "type": "Matrix3D",
+          "doc": "local placement matrix of the PythonPart, used for the local geometry transformation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[Any]",
+        "doc": "created PythonPart elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.create_pythonpart"
+    },
+    {
+      "name": "execute_load_favorite",
+      "signature": "execute_load_favorite(file_name: str)",
+      "summary": "load the favorite data",
+      "remarks": "load the favorite data",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "file name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.execute_load_favorite"
+    },
+    {
+      "name": "execute_save_favorite",
+      "signature": "execute_save_favorite(file_name: str)",
+      "summary": "save the favorite data",
+      "remarks": "save the favorite data",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "file name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.execute_save_favorite"
+    },
+    {
+      "name": "get_preview_elements",
+      "signature": "get_preview_elements() -\u003E list[Any]",
+      "summary": "get the preview elements created by the script",
+      "remarks": "get the preview elements created by the script",
+      "params": [],
+      "returns": {
+        "type": "list[Any]",
+        "doc": "preview elements of the script"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.get_preview_elements"
+    },
+    {
+      "name": "modify_element_property",
+      "signature": "modify_element_property(page: int, name: str, value: Any)",
+      "summary": "Modify property of element",
+      "remarks": "Modify property of element",
+      "params": [
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "page index of the modified property",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "new value for property.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.modify_element_property"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E bool",
+      "summary": "Check for input function cancel in case of ESC",
+      "remarks": "Check for input function cancel in case of ESC",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.on_cancel_function"
+    },
+    {
+      "name": "on_control_event",
+      "signature": "on_control_event(event_id: int)",
+      "summary": "Handles on control event",
+      "remarks": "Handles on control event",
+      "params": [
+        {
+          "name": "event_id",
+          "type": "int",
+          "doc": "event id of the clicked button control",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.on_control_event"
+    },
+    {
+      "name": "reset_param_values",
+      "signature": "reset_param_values()",
+      "summary": "reset the parameter values",
+      "remarks": "reset the parameter values",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/VisualScriptService/VisualScriptService/#VisualScriptService.VisualScriptService.reset_param_values"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

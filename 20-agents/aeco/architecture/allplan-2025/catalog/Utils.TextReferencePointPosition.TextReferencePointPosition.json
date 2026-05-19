@@ -1,0 +1,14 @@
+{
+  "name": "TextReferencePointPosition",
+  "namespace": "Utils.TextReferencePointPosition",
+  "kind": "enum",
+  "summary": "Definition of the text reference points",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TextReferencePointPosition/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
