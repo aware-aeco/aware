@@ -97,22 +97,27 @@ public class AllplanParserTests
         Assert.Equal("NemAll_Python_Geometry", t.@namespace);
         Assert.Equal("class", t.kind);
 
-        // 5 ctor overloads: ()  /  (point: Point2D)  /  (point: Point3D)  /  (refPoint, point)  /  (x, y)
-        Assert.True(t.constructors.Count >= 4, $"expected >=4 ctors, got {t.constructors.Count}");
-        // All constructors must render their signature as "Point2D(...)" not "__init__(...)".
-        foreach (var c in t.constructors)
-        {
-            Assert.StartsWith("Point2D", c.signature);
-            // ctor returns must always be null (void).
-            Assert.Null(c.returns);
-        }
+        // 5 ctor overloads: ()  /  (point: Point2D)  /  (point: Point3D)  /  (refPoint, point)  /  (x, y).
+        // Post-v0.30 the extractor MERGES overload variants into ONE MethodInfo with a
+        // pipe-joined signature (avoids YAML-key corruption from typed param lists). We expect
+        // exactly one ctor entry whose signature carries every variant.
+        Assert.Single(t.constructors);
+        var ctor = t.constructors[0];
+        // Name must be bare type name (no parens / no param list).
+        Assert.Equal("Point2D", ctor.name);
+        // Signature must contain every overload variant joined with " | ", each rewritten to
+        // start with `Point2D` (not `__init__`).
+        Assert.Contains(" | ", ctor.signature);
+        var variants = ctor.signature.Split(" | ", StringSplitOptions.None);
+        Assert.True(variants.Length >= 4, $"expected >=4 ctor variants in joined signature, got {variants.Length}");
+        foreach (var v in variants) Assert.StartsWith("Point2D", v);
+        // ctor returns must always be null (void).
+        Assert.Null(ctor.returns);
 
-        // The (x, y) overload has two params: x: float, y: float.
-        var xyCtor = t.constructors.FirstOrDefault(c =>
-            c.@params.Count == 2 && c.@params[0].name == "x" && c.@params[1].name == "y");
-        Assert.NotNull(xyCtor);
-        Assert.Equal("float", xyCtor!.@params[0].type);
-        Assert.Equal("float", xyCtor.@params[1].type);
+        // The (x, y) overload must appear inside the joined signature. The 2024 mkdocstrings
+        // layout emits bare param names (no type annotations) so we expect `Point2D(x, y)`
+        // verbatim. (The 2025 fixture has typed params; its own test asserts the merge behavior.)
+        Assert.Contains("Point2D(x, y)", ctor.signature);
 
         // Properties X, Y are type-annotated as float and writable.
         var x = t.properties.FirstOrDefault(p => p.name == "X");
@@ -214,6 +219,63 @@ public class AllplanParserTests
         // 2025 has more functions (33 doc-function blocks vs 10 in 2024).
         Assert.True(t.methods.Count >= 10,
             $"2025 fixture should have richer surface than 2024 — got {t.methods.Count} methods");
+    }
+
+    // ── 2025 fixture: overload merge (regression test for v0.30 PageParser fix) ──
+
+    [Fact]
+    public void Class_Point2D_2025_Merges_Overloaded_Methods_Into_Single_Entry()
+    {
+        // Pre-v0.30 the 2025 parser embedded the full Python signature (typed params + return-
+        // type annotation) into each overload variant's IR `name`, producing colons (`:`) and
+        // angle brackets (`<>`) inside YAML map keys. That broke `aware agent describe` for any
+        // agent whose manifest carried merged Allplan-2025 commands. The fix: merge sibling
+        // overload variants into one MethodInfo with the bare canonical name and a pipe-joined
+        // signature carrying every variant.
+        var html = LoadFixture("allplan-2025-class-point2d.html");
+        var r = PageParser.Parse(html,
+            "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Point2D/");
+        Assert.NotNull(r);
+        var t = r!.Type;
+        Assert.Equal("Point2D", t.name);
+        Assert.Equal("class", t.kind);
+
+        // No method name contains parens, colons, or arrow tokens — those are the YAML-fragile
+        // characters that produced the v0.30 regression.
+        foreach (var m in t.methods)
+        {
+            Assert.DoesNotContain("(", m.name);
+            Assert.DoesNotContain(":", m.name);
+            Assert.DoesNotContain("->", m.name);
+            Assert.DoesNotContain("[", m.name);
+            Assert.DoesNotContain("<", m.name);
+        }
+
+        // The fixture documents `__add__` as an overloaded method with multiple typed variants.
+        // After merge we expect a single entry named `__add__` whose signature is pipe-joined.
+        var add = t.methods.FirstOrDefault(m => m.name == "__add__");
+        if (add is not null)
+        {
+            // If __add__ has overloads in the fixture, the signature must be pipe-joined.
+            if (add.signature.Contains(" | "))
+            {
+                var variants = add.signature.Split(" | ", StringSplitOptions.None);
+                Assert.True(variants.Length >= 2, "expected ≥2 pipe-joined variants in __add__");
+                foreach (var v in variants) Assert.StartsWith("__add__", v);
+            }
+        }
+
+        // Same for ctors — bare type name only, pipe-joined signature for overloaded __init__.
+        Assert.Single(t.constructors);
+        var ctor = t.constructors[0];
+        Assert.Equal("Point2D", ctor.name);
+        Assert.DoesNotContain("(", ctor.name);
+        // Every chunk of the pipe-joined ctor signature starts with `Point2D` (the rewritten
+        // `__init__` token).
+        foreach (var chunk in ctor.signature.Split(" | ", StringSplitOptions.None))
+        {
+            Assert.StartsWith("Point2D", chunk);
+        }
     }
 
     // ── Sitemap parsing ───────────────────────────────────────────────────────

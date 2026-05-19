@@ -608,8 +608,18 @@ public static class PageParser
     /// Walk every &lt;div class="doc doc-object doc-function"&gt; (incl. overload variants) under
     /// doc-children. Splits constructors (`__init__`) from regular methods.
     ///
-    /// Both layouts produce one MethodInfo per overload variant. Overload disambiguation uses the
-    /// parameter list embedded in the IR `name` (Tekla/Rhino convention).
+    /// Both layouts produce ONE MethodInfo per canonical name. When @typing.overload variants are
+    /// present we merge them: the MethodInfo's `signature` becomes a `" | "` -joined list of every
+    /// overload variant's signature (SketchUp YARD convention — see
+    /// `cli-sidecar/Ingest/Extractors/SketchUp/MemberPageParser.cs § ExtractNameAndSignature`).
+    /// `params`/`returns`/`throws`/`doc_url`/`summary` come from the FIRST variant — downstream
+    /// consumers (manifest catalog, skills) only need a representative shape, and the joined
+    /// signature carries the full picture.
+    ///
+    /// Pre-v0.30 the parser disambiguated overloads by embedding the param list into the IR
+    /// `name` (`Foo(arg)`, `Foo(other)`). That worked for 2024 (bare-name params) but broke YAML
+    /// validation for 2025 layout (typed params with `:` colons + return-type annotations
+    /// containing `<>[]`). Merge sidesteps the disambiguator entirely.
     /// </summary>
     static (List<MethodInfo> ctors, List<MethodInfo> methods)
         ExtractFunctions(IElement? children, string typeName, string fqName, string sourceUrl)
@@ -639,17 +649,21 @@ public static class PageParser
             var canonicalName = ExtractOverloadCanonicalName(ovHead);
             if (string.IsNullOrEmpty(canonicalName)) continue;
 
+            var variants = new List<MethodInfo>();
             foreach (var inner in overloadInner.Children
                 .Where(c => c.LocalName == "div" && c.ClassList.Contains("doc-function")))
             {
                 visited.Add(inner);
                 var enriched = ParseFunctionBlock2024Variant(inner, typeName, fqName, sourceUrl, idAttr);
-                if (enriched is null) continue;
-                if (IsConstructor(enriched.name))
-                    ctors.Add(RenderAsCtor(enriched, typeName));
-                else
-                    methods.Add(enriched);
+                if (enriched is not null) variants.Add(enriched);
             }
+            if (variants.Count == 0) continue;
+
+            var merged = MergeOverloadVariants(variants, canonicalName);
+            if (IsConstructor(merged.name))
+                ctors.Add(RenderAsCtor(merged, typeName));
+            else
+                methods.Add(merged);
         }
 
         // 2. 2025-style overload sets: <div class="doc-function"> wrapper with h2 + a
@@ -682,8 +696,10 @@ public static class PageParser
                 if (string.IsNullOrEmpty(canonicalName)) continue;
 
                 // Walk the doc-overloads children pair-wise: each doc-signature is followed by a
-                // doc-function-overload that contains the body.
+                // doc-function-overload that contains the body. Accumulate all variants for this
+                // overload set, then merge into one MethodInfo (see method-level summary above).
                 IElement? pendingSignature = null;
+                var variants = new List<MethodInfo>();
                 foreach (var child in overloadContainer.Children)
                 {
                     if (child.LocalName == "div" && child.ClassList.Contains("doc-signature"))
@@ -701,13 +717,16 @@ public static class PageParser
                             typeName: typeName,
                             sourceUrl: sourceUrl);
                         pendingSignature = null;
-                        if (enriched is null) continue;
-                        if (IsConstructor(enriched.name))
-                            ctors.Add(RenderAsCtor(enriched, typeName));
-                        else
-                            methods.Add(enriched);
+                        if (enriched is not null) variants.Add(enriched);
                     }
                 }
+                if (variants.Count == 0) continue;
+
+                var merged = MergeOverloadVariants(variants, canonicalName);
+                if (IsConstructor(merged.name))
+                    ctors.Add(RenderAsCtor(merged, typeName));
+                else
+                    methods.Add(merged);
                 continue;
             }
 
@@ -729,6 +748,33 @@ public static class PageParser
         }
 
         return (ctors, methods);
+    }
+
+    /// <summary>
+    /// Collapse a list of overload-variant MethodInfos into a single MethodInfo. The merged
+    /// `name` is the bare canonical method name (no parens / no params). The merged `signature`
+    /// is `" | "` -joined across every variant — downstream consumers (skills/* markdown,
+    /// catalog/* JSON) see all overload shapes; the manifest verb-id sees just the bare name.
+    ///
+    /// Params / returns / throws / doc_url / summary inherit from the first variant by
+    /// construction: every overload of the same method documents the same logical behavior
+    /// (the @typing.overload variants only differ in argument shape). When mkdocstrings emits
+    /// per-variant docstrings we keep the first one as the representative — losing per-variant
+    /// nuance is intentional to keep the IR shape stable.
+    /// </summary>
+    static MethodInfo MergeOverloadVariants(List<MethodInfo> variants, string canonicalName)
+    {
+        if (variants.Count == 1)
+        {
+            // Single variant — re-stamp the name to the bare canonical form (the variant parser
+            // emits the bare-canonical name already, but defensive in case a future variant
+            // parser embeds the param list).
+            return variants[0] with { name = canonicalName };
+        }
+
+        var head = variants[0];
+        var joinedSignature = string.Join(" | ", variants.Select(v => v.signature));
+        return head with { name = canonicalName, signature = joinedSignature };
     }
 
     /// <summary>
@@ -758,6 +804,11 @@ public static class PageParser
     /// Parse one 2025-style overload variant. The signature lives in the previous-sibling
     /// &lt;div class="doc-signature"&gt; (passed as parameter); the body (description + tables)
     /// lives inside the variant block's &lt;div class="doc-contents"&gt;.
+    ///
+    /// Returns a MethodInfo whose `name` is the bare canonical name. The caller
+    /// (`MergeOverloadVariants`) is responsible for joining sibling variants into one entry; this
+    /// parser does NOT embed the param list into the name (pre-v0.30 it did, which corrupted YAML
+    /// verb keys for 2025 layout — typed params contain `:` and return-types contain `<>[]`).
     /// </summary>
     static MethodInfo? ParseFunctionBlock2025Overload(
         IElement variantBody, IElement? signatureDiv, string canonicalName, string canonicalId,
@@ -781,12 +832,8 @@ public static class PageParser
 
         var docUrl = string.IsNullOrEmpty(canonicalId) ? sourceUrl : $"{sourceUrl}#{canonicalId}";
 
-        // IR name disambiguates by embedding the param list.
-        var openParen = signature.IndexOf('(');
-        var irName = openParen >= 0 ? canonicalName + signature.Substring(openParen) : signature;
-
         return new MethodInfo(
-            name: irName,
+            name: canonicalName,
             signature: signature,
             summary: string.IsNullOrEmpty(desc) ? "" : desc,
             remarks: string.IsNullOrEmpty(desc) ? null : desc,
@@ -803,6 +850,9 @@ public static class PageParser
     /// Parse one 2024-style overload-variant div (inner doc-function under a doc-function-overload
     /// wrapper). The signature lives in a bare &lt;code&gt; direct child; description + tables
     /// live under a sibling .doc-contents.
+    ///
+    /// Returns a MethodInfo whose `name` is the bare canonical name. The caller
+    /// (`MergeOverloadVariants`) handles joining sibling variants into one entry.
     /// </summary>
     static MethodInfo? ParseFunctionBlock2024Variant(IElement variant, string typeName, string fqName, string sourceUrl, string idAttr)
     {
@@ -821,11 +871,9 @@ public static class PageParser
         var throws = ExtractRaises(variant);
 
         var docUrl = string.IsNullOrEmpty(idAttr) ? sourceUrl : $"{sourceUrl}#{idAttr}";
-        // For overload variants, disambiguate by embedding the param list in the IR name.
-        var irName = openParen >= 0 ? name + signature.Substring(openParen) : signature;
 
         return new MethodInfo(
-            name: irName,
+            name: name,
             signature: signature,
             summary: string.IsNullOrEmpty(desc) ? "" : desc,
             remarks: string.IsNullOrEmpty(desc) ? null : desc,
@@ -920,35 +968,40 @@ public static class PageParser
         name == "__init__" || name.StartsWith("__init__(", StringComparison.Ordinal);
 
     /// <summary>
-    /// For constructors, render the signature as `TypeName(args)` and force returns=null.
-    /// Tekla/Rhino convention.
+    /// For constructors, replace the Python `__init__` token with the type name in the IR
+    /// signature, drop any return-type arrow, and force `returns = null`. Handles single + merged
+    /// (pipe-joined) signatures.
+    ///
+    /// Examples:
+    ///   `__init__()`                                      → `TypeName()`
+    ///   `__init__(x: float, y: float)`                    → `TypeName(x: float, y: float)`
+    ///   `__init__() | __init__(point: Point2D)`           → `TypeName() | TypeName(point: Point2D)`
+    ///   `__init__(arg) -> NoneType`                       → `TypeName(arg)`
+    ///
+    /// The merged-variant case is the v0.30 change: pre-merge each overload variant was a
+    /// separate MethodInfo and `RenderAsCtor` rewrote one signature at a time.
     /// </summary>
     static MethodInfo RenderAsCtor(MethodInfo m, string typeName)
     {
-        var sig = m.signature;
-        var openParen = sig.IndexOf('(');
-        var ctorSig = openParen < 0 ? $"{typeName}()" : $"{typeName}{sig.Substring(openParen)}";
-        // Drop any " -> ReturnType" tail (Python convention).
-        var arrowIdx = ctorSig.IndexOf("->", StringComparison.Ordinal);
-        if (arrowIdx >= 0) ctorSig = ctorSig.Substring(0, arrowIdx).TrimEnd();
+        // Split the merged signature on " | ", rewrite each chunk, rejoin. Single signatures
+        // round-trip as a one-element list.
+        var chunks = m.signature.Split(" | ", StringSplitOptions.None);
+        for (int i = 0; i < chunks.Length; i++)
+        {
+            var sig = chunks[i];
+            var openParen = sig.IndexOf('(');
+            var rewritten = openParen < 0 ? $"{typeName}()" : $"{typeName}{sig.Substring(openParen)}";
+            // Drop any " -> ReturnType" tail (Python convention; ctors return self/None implicitly).
+            var arrowIdx = rewritten.IndexOf("->", StringComparison.Ordinal);
+            if (arrowIdx >= 0) rewritten = rewritten.Substring(0, arrowIdx).TrimEnd();
+            chunks[i] = rewritten;
+        }
+        var ctorSig = string.Join(" | ", chunks);
 
-        // The IR `name` for ctors carries the overload disambiguator (`Foo()` vs `Foo(args)`),
-        // not the bare type name.
-        string ctorName;
-        if (m.name == "__init__" || m.name == "__init__()")
-        {
-            ctorName = $"{typeName}()";
-        }
-        else if (m.name.StartsWith("__init__(", StringComparison.Ordinal))
-        {
-            ctorName = typeName + m.name.Substring("__init__".Length);
-        }
-        else
-        {
-            ctorName = ctorSig;
-        }
-
-        return m with { name = ctorName, signature = ctorSig, returns = null };
+        // The IR `name` for ctors is the bare type name (matches the post-merge convention for
+        // methods). Downstream verb-id generation uses just the name; the signature carries every
+        // overload's shape.
+        return m with { name = typeName, signature = ctorSig, returns = null };
     }
 
     // ── Module-level _functions/ page handling ────────────────────────────────
