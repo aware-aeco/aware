@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_archelements
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_ArchElements namespace — 66 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ArchBaseProperties, AllplanElement, ArchitectureElementsGeometryService, AxisProperties, BasePlaneReferences, ArchElement, BeamProperties, and 58 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_ArchElements namespace — 66 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ArchElement, Functions, AllplanElement, ArchBaseProperties, BasePlaneReferences, ArchitectureElementsGeometryService, AxisProperties, BeamElement, and 58 more types.
 ---
 
 # NemAll_Python_ArchElements

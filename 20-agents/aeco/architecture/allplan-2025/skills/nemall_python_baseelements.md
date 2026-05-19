@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_baseelements
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_BaseElements namespace — 50 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AssociationService, Functions, Attribute, AttributeByteVec, AttributeDate, AttributeDouble, AttributeDataManager, and 42 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_BaseElements namespace — 50 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, Attribute, AllplanElement, AssociationService, AttributeByteVec, AttributeDate, AttributeDataManager, AttributeDouble, and 42 more types.
 ---
 
 # NemAll_Python_BaseElements
@@ -529,7 +529,7 @@ Convert to string
 ### Properties
 - `Value` (list[int] | VecIntList, get/set) — Get the attribute value
 
-## AttributeService (enum)
+## AttributeService (class)
 
 Service for reading existing attributes definitions and creating new user-defined attributes
 
@@ -1269,7 +1269,7 @@ Update the graphics engine Args: doc Document
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.UpdateGraphicsEngine)
 
-## DrawingTypeService (enum)
+## DrawingTypeService (class)
 
 Utility for processing the drawing type.
 

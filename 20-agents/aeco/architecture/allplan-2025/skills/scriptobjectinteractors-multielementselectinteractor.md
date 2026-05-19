@@ -1,6 +1,6 @@
 ---
 name: allplan-scriptobjectinteractors-multielementselectinteractor
-description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.MultiElementSelectInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, MultiElementSelectInteractor, MultiElementSelectInteractorResult.
+description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.MultiElementSelectInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, MultiElementSelectInteractorResult, MultiElementSelectInteractor.
 ---
 
 # ScriptObjectInteractors.MultiElementSelectInteractor

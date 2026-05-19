@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_reinforcement
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Reinforcement namespace — 44 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllplanElement, BarAreaPlacementProperties, AnchorageType, AnchorageLengthService, BarAreaPlacementService, BarPlacement, BarPositionData, and 36 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Reinforcement namespace — 44 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllplanElement, AnchorageLengthService, AnchorageType, BarAreaPlacementProperties, BarAreaPlacementService, BarPlacementSection, BarPlacement, and 36 more types.
 ---
 
 # NemAll_Python_Reinforcement
@@ -369,7 +369,7 @@ Types of the anchorage
 - `eAnchorageStraightOneCrossBar` = `3`
 - `eAnchorageStraightTwoCrossBars` = `5`
 
-## BarAreaPlacementProperties (enum)
+## BarAreaPlacementProperties (class)
 
 (No description provided in vendor docs for NemAll_Python_Reinforcement.BarAreaPlacementProperties.)
 
@@ -1897,7 +1897,7 @@ Convert to string
 - `LengthFactor` (float, get/set) — Get the length factor
 - `PlacePerLinearMeter` (bool, get/set) — Get the place per linear meter state
 
-## DivideBarsParameters (enum)
+## DivideBarsParameters (class)
 
 Parameters for dividing engineering geometry
 
@@ -2373,7 +2373,7 @@ Types of the label
 - `LabelWithFanStartEnd` = `6`
 - `LabelWithPointer` = `0`
 
-## LongitudinalBarProperties (enum)
+## LongitudinalBarProperties (class)
 
 Implementation of the longitudinal bar properties
 
@@ -2621,7 +2621,7 @@ Add the items from an iterable to the end of the list
 
 [Docs](https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/LongitudinalBarPropertiesList/#NemAll_Python_Reinforcement.LongitudinalBarPropertiesList.extend)
 
-## MeshAreaPlacementProperties (enum)
+## MeshAreaPlacementProperties (class)
 
 (No description provided in vendor docs for NemAll_Python_Reinforcement.MeshAreaPlacementProperties.)
 
@@ -3391,7 +3391,7 @@ Convert the list to a string
 - `ShowSteelGrade` (None, get) — Set/get the show state for the steel grade :type: None
 - `ShowTwoLineText` (None, get) — Set/get the show state for the two line text :type: None
 
-## ReinforcementService (enum)
+## ReinforcementService (class)
 
 Reinforcement service
 

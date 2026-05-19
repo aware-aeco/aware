@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_precast
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Precast namespace — 48 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllowedElements, Anchor, AllplanElement, AnchorBorderPosition, AssemblyGroupElement, Direction, DirectionMode, and 40 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_Precast namespace — 48 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AllowedElements, AllplanElement, Anchor, AssemblyGroupElement, AnchorBorderPosition, DirectionMode, Direction, and 40 more types.
 ---
 
 # NemAll_Python_Precast

@@ -1,6 +1,6 @@
 ---
 name: allplan-scriptobjectinteractors-archoffsetpointinteractor
-description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.ArchOffsetPointInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ArchOffsetPointInteractor, ArchOffsetPointInteractorResult.
+description: This skill encodes the allplan 2025.0 surface of the ScriptObjectInteractors.ArchOffsetPointInteractor namespace — 3 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ArchOffsetPointInteractor, Functions, ArchOffsetPointInteractorResult.
 ---
 
 # ScriptObjectInteractors.ArchOffsetPointInteractor

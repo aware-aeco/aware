@@ -1,9 +1,8 @@
 {
   "name": "DrawingTypeService",
   "namespace": "NemAll_Python_BaseElements",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Utility for processing the drawing type.",
-  "base": "Enum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/",
   "constructors": [],

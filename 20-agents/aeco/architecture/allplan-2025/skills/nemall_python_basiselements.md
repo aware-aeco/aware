@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_basiselements
-description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_BasisElements namespace — 95 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, AssociativeViewElement, AllplanElement, ARGB, AssociativeViewProperties, AttributeContainer, AssociativeViewElementRepresentation, BasisElement, and 87 more types.
+description: This skill encodes the allplan 2025.0 surface of the NemAll_Python_BasisElements namespace — 95 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Functions, ARGB, AllplanElement, AssociativeViewElementRepresentation, AssociativeViewElement, AssociativeViewProperties, AttributeContainer, BasisElement, and 87 more types.
 ---
 
 # NemAll_Python_BasisElements
@@ -515,7 +515,7 @@ Set the name of the bitmap
 - `AbsolutePath` (str, get/set) — Absolute path of the bitmap
 - `RelativeName` (str, get/set) — Relative name of the bitmap
 
-## ClippingPathProperties (enum)
+## ClippingPathProperties (class)
 
 Representation if the properties of a clipping path of a UVS
 
@@ -2782,7 +2782,7 @@ Access tolerance
 - `ScaleFactorX` (float, get/set) — Get the resizing factor X in Longitudinal direction
 - `ScaleFactorY` (float, get/set) — Get the resizing factor Y in Transversal direction
 
-## SectionAlongPathSectionLabelingProperties (enum)
+## SectionAlongPathSectionLabelingProperties (class)
 
 Section labeling properties
 
@@ -2848,7 +2848,7 @@ Access tolerances
 - `LabelingType` (int, get/set) — Get the LabelingType
 - `Offset` (float, get/set) — Get the Offset
 
-## SectionAlongPathTextParameterProperties (enum)
+## SectionAlongPathTextParameterProperties (class)
 
 Text parameter properties
 
@@ -2917,7 +2917,7 @@ Section definition data
 - `HeightDirection` (None, get) — Set/get the height direction :type: None
 - `SectionBody` (None, get) — Set/get the section body :type: None
 
-## SectionDefinitionProperties (enum)
+## SectionDefinitionProperties (class)
 
 Section definition properties
 
@@ -2981,7 +2981,7 @@ Section format properties
 - `EliminationAngle` (None, get) — Boundary angle from which the adjacent edges are eliminated
 - `IsEliminationOn` (None, get) — Whether to eliminate the adjacent edges
 
-## SectionGeneralProperties (enum)
+## SectionGeneralProperties (class)
 
 General properties of the UVS
 
@@ -3002,7 +3002,7 @@ General properties of the UVS
 - `Status` (None, get) — Type of the UVS calculation
 - `VisibleHiddenEdgesProperties` (None, get) — Settings regarding hidden and visible lines in the UVS
 
-## SectionLayerProperties (enum)
+## SectionLayerProperties (class)
 
 Class containing settings regarding which layers are to be considered in a UVS
 
@@ -3048,7 +3048,7 @@ Sub types of the element group property
 - `eMultiLine3D_Group` = `2`
 - `eUseNoSpecialSubType` = `0`
 
-## SurfaceDefinition (enum)
+## SurfaceDefinition (class)
 
 Surface resource definition
 
