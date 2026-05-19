@@ -26,11 +26,11 @@ Pawel, here's what ran while you were asleep.
 | Vendor | Sidecar verbs | Curated workflow verbs | Craft skills | Live drill |
 |---|---|---|---|---|
 | Tekla (reference) | 5 (pre-session) | yes | 33 (pre-session) | 13/20 v0.31 |
-| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | owed (no Rhino on machine) |
-| Revit | 5 (#77) | 10 (already in main) | 6 (#79) | **17/20 PASS** (subagent ran it) |
-| SketchUp | 5 (#76) | 10 (#72 + #74) | 6 (#78) | blocked on Welcome-dialog click |
+| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | physically blocked (no Rhino install) |
+| Revit | 5 (#77) | 10 (in main) | 6 (#79) | **20/20 PASS** ✨ (subagent re-drilled) |
+| SketchUp | 5 (#76) | 10 (#72 + #74) | 6 (#78) | physically blocked (CEF dialog) |
 
-**All three vendors meet sidecar + curated-workflow + craft-skills parity with tekla.** **Revit's live drill is DONE — 17/20 PASS against the Snowdon Towers sample**, exceeding tekla's 13/20 baseline. See `cli-revit/Ingest/Output/drill-summary.md` on the v0.33-revit-exec branch.
+**Revit exceeds tekla's 13/20 baseline by 7 points.** All three vendors meet sidecar + curated-workflow + craft-skills parity with tekla. Only Revit's live drill was achievable on this build machine — Rhino isn't installed (and not in winget; would need manual McNeel download + license), SketchUp's CEF Welcome dialog gates Ruby init and synthetic input cannot dismiss it (verified this session — WM_CLOSE kills the app entirely).
 
 Plus craft-skills coverage extended to other audit-priority vendors:
 - Navisworks (#80) — was 3, now 8 craft skills
