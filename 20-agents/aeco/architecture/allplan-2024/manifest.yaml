@@ -1,7 +1,7 @@
-agent:        allplan-2024
+agent:        allplan-2024.0
 version:      0.30.0
 sdk-target:   2024.0
-display-name: allplan-2024 (raw — 612 types, full coverage)
+display-name: allplan-2024.0 (raw — 612 types, full coverage)
 
 description: |
   Auto-generated from vendor docs (scrape: https://pythonparts.allplan.com/2024/sitemap.xml)
@@ -15,10 +15,10 @@ description: |
 
 stateful: false
 
-vendor:   allplan
+vendor:   nemetschek
 license:  Apache-2.0
-homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/allplan-2024
-keywords: [aeco, architecture, allplan, allplan, generated, raw, v0.30, full-coverage]
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/architecture/allplan-2024.0
+keywords: [aeco, architecture, allplan, nemetschek, generated, raw, v0.30, full-coverage]
 
 provenance:
   generated-by:     aware-agent-builder
@@ -26,7 +26,7 @@ provenance:
   source:
     type: scrape
     urls: ["https://pythonparts.allplan.com/2024/sitemap.xml"]
-  generated-at: 2026-05-19T09:56:58.3212015Z
+  generated-at: 2026-05-19T16:07:24.5888853Z
 
 transport:
   cli:

@@ -1,9 +1,8 @@
 {
   "name": "PreviewSymbols",
   "namespace": "PreviewSymbols",
-  "kind": "enum",
+  "kind": "class",
   "summary": "implementation of the preview symbols",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/PreviewSymbols/PreviewSymbols/",
   "constructors": [

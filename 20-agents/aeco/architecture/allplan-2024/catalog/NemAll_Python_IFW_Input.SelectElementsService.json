@@ -1,9 +1,8 @@
 {
   "name": "SelectElementsService",
   "namespace": "NemAll_Python_IFW_Input",
-  "kind": "enum",
+  "kind": "class",
   "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.SelectElementsService.)",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectElementsService/",
   "constructors": [],

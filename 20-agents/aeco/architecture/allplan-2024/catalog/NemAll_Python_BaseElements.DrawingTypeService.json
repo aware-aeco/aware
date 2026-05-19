@@ -1,9 +1,8 @@
 {
   "name": "DrawingTypeService",
   "namespace": "NemAll_Python_BaseElements",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Implementation of the drawing type service",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingTypeService/",
   "constructors": [],

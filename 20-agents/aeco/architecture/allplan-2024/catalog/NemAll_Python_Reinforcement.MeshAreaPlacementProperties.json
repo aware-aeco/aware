@@ -1,9 +1,8 @@
 {
   "name": "MeshAreaPlacementProperties",
   "namespace": "NemAll_Python_Reinforcement",
-  "kind": "enum",
+  "kind": "class",
   "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.MeshAreaPlacementProperties.)",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshAreaPlacementProperties/",
   "constructors": [

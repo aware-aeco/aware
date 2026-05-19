@@ -1,9 +1,8 @@
 {
   "name": "DivideBarsParameters",
   "namespace": "NemAll_Python_Reinforcement",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Parameters for dividing engineering geometry",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/DivideBarsParameters/",
   "constructors": [

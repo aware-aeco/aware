@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_basiselements
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_BasisElements namespace — 94 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ARGB, AllplanElement, AssociativeViewElement, AssociativeViewProperties, AssociativeViewElementRepresentation, BasisElement, AttributeContainer, BasisPropertyDialogs, and 86 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_BasisElements namespace — 94 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ARGB, AssociativeViewElementRepresentation, AssociativeViewProperties, AllplanElement, AttributeContainer, AssociativeViewElement, BasisPropertyDialogs, BasisElement, and 86 more types.
 ---
 
 # NemAll_Python_BasisElements
@@ -489,7 +489,7 @@ Args: resourceName:
 - `AbsolutePath` (str, get/set) — 
 - `RelativeName` (str, get/set) — 
 
-## ClippingPathProperties (enum)
+## ClippingPathProperties (class)
 
 Clipping properties
 
@@ -2834,7 +2834,7 @@ Access tolerance
 - `ScaleFactorX` (float, get/set) — Get the resizing factor X in Longitudinal direction
 - `ScaleFactorY` (float, get/set) — Get the resizing factor Y in Transversal direction
 
-## SectionAlongPathSectionLabelingProperties (enum)
+## SectionAlongPathSectionLabelingProperties (class)
 
 Section labeling properties
 
@@ -2900,7 +2900,7 @@ Access tolerances
 - `LabelingType` (int, get/set) — Get the LabelingType
 - `Offset` (float, get/set) — Get the Offset
 
-## SectionAlongPathTextParameterProperties (enum)
+## SectionAlongPathTextParameterProperties (class)
 
 Text parameter properties
 
@@ -2969,7 +2969,7 @@ Section definition data
 - `HeightDirection` (None, get) — Set/get the height direction :type: None
 - `SectionBody` (None, get) — Set/get the section body :type: None
 
-## SectionDefinitionProperties (enum)
+## SectionDefinitionProperties (class)
 
 Section definition properties
 
@@ -3036,7 +3036,7 @@ Section format properties
 - `EliminationAngle` (None, get) — Property for the adjacent edge elimination angle :type: None
 - `IsEliminationOn` (None, get) — Property for the adjacent edge elimination :type: None
 
-## SectionGeneralProperties (enum)
+## SectionGeneralProperties (class)
 
 General section properties
 
@@ -3057,7 +3057,7 @@ General section properties
 - `Status` (None, get) — Property for the drawing state :type: None
 - `VisibleHiddenEdgesProperties` (None, get) — Property for the visible and hidden edge properties :type: None
 
-## SectionLayerProperties (enum)
+## SectionLayerProperties (class)
 
 Section layer properties
 
@@ -3132,7 +3132,7 @@ get the item for a key
 - `eMultiLine3D_Group` = `2`
 - `eUseNoSpecialSubType` = `0`
 
-## SurfaceDefinition (enum)
+## SurfaceDefinition (class)
 
 Surface resource definition
 

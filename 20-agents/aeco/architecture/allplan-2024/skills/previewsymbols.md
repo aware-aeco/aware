@@ -7,7 +7,7 @@ description: This skill encodes the allplan 2024.0 surface of the PreviewSymbols
 
 Auto-generated from vendor docs for allplan 2024.0. 1 types in this namespace.
 
-## PreviewSymbols (enum)
+## PreviewSymbols (class)
 
 implementation of the preview symbols
 

@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_archelements
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_ArchElements namespace — 37 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, ArchBaseProperties, AxisProperties, BeamElement, ArchElement, BasePlaneReferences, BeamProperties, BottomTopPlaneService, and 29 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_ArchElements namespace — 37 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanElement, AxisProperties, ArchElement, BasePlaneReferences, ArchBaseProperties, BeamElement, BeamProperties, BottomTopPlaneService, and 29 more types.
 ---
 
 # NemAll_Python_ArchElements
@@ -125,7 +125,7 @@ Set the label elements
 - `GeometryObject` (object, get/set) — Get the geometry object
 - `LabelElements` (list, get/set) — Get the label elements
 
-## ArchBaseProperties (enum)
+## ArchBaseProperties (class)
 
 Implementation of the architecture base properties
 
@@ -669,7 +669,7 @@ Set the connection UUID
 ### Properties
 - `ConnectionUUID` (NemAll_Python_IFW_ElementAdapter.GUID, get/set) — Get the connection UUID
 
-## AxisProperties (enum)
+## AxisProperties (class)
 
 Axis properties
 

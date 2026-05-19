@@ -1,9 +1,8 @@
 {
   "name": "ControlProperties",
   "namespace": "ControlProperties",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Implementation of the control properties class",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ControlProperties/ControlProperties/",
   "constructors": [

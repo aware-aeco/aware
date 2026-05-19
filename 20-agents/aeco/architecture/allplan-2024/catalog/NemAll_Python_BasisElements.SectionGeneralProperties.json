@@ -1,9 +1,8 @@
 {
   "name": "SectionGeneralProperties",
   "namespace": "NemAll_Python_BasisElements",
-  "kind": "enum",
+  "kind": "class",
   "summary": "General section properties",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_BasisElements/SectionGeneralProperties/",
   "constructors": [

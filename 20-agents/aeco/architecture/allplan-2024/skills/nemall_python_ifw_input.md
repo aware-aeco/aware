@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_ifw_input
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_Input namespace — 36 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AddMsgInfo, CNOI_DocumentWrapper, BuildingElementInputControls, CoordinateInputMode, CoordinateInputResult, CoordinateInput, ElementHandleType, ElementSelect, and 28 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_IFW_Input namespace — 36 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AddMsgInfo, BuildingElementInputControls, CoordinateInputResult, CoordinateInputMode, CoordinateInput, CNOI_DocumentWrapper, ElementHandleType, ElementSelect, and 28 more types.
 ---
 
 # NemAll_Python_IFW_Input
@@ -1304,7 +1304,7 @@ Convert to string
 
 [Docs](https://pythonparts.allplan.com/2024/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__repr__)
 
-## SelectElementsService (enum)
+## SelectElementsService (class)
 
 (No description provided in vendor docs for NemAll_Python_IFW_Input.SelectElementsService.)
 

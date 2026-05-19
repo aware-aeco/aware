@@ -1,9 +1,8 @@
 {
   "name": "ParameterProperty",
   "namespace": "ParameterProperty",
-  "kind": "enum",
+  "kind": "class",
   "summary": "Definition of class ParameterProperty",
-  "base": "IntEnum",
   "interfaces": [],
   "doc_url": "https://pythonparts.allplan.com/2024/api_reference/GeneralScripts/ParameterProperty/ParameterProperty/",
   "constructors": [

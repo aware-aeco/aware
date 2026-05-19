@@ -1,6 +1,6 @@
 ---
 name: allplan-nemall_python_allplansettings
-description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_AllplanSettings namespace — 11 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanPaths, AllplanGlobalSettings, AllplanLocalisationService, AllplanVersion, AngleUnits, ImperialUnitService, FontProvider, PythonPartsSettings, and 3 more types.
+description: This skill encodes the allplan 2024.0 surface of the NemAll_Python_AllplanSettings namespace — 11 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: AllplanGlobalSettings, AllplanVersion, AllplanLocalisationService, AllplanPaths, FontProvider, LengthUnits, ImperialUnitService, AngleUnits, and 3 more types.
 ---
 
 # NemAll_Python_AllplanSettings

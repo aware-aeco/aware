@@ -1,6 +1,6 @@
 ---
 name: allplan-typecollections-parametervaluelist
-description: This skill encodes the allplan 2024.0 surface of the TypeCollections.ParameterValueList namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ParameterValueData, ParameterValueList.
+description: This skill encodes the allplan 2024.0 surface of the TypeCollections.ParameterValueList namespace — 2 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: ParameterValueList, ParameterValueData.
 ---
 
 # TypeCollections.ParameterValueList
