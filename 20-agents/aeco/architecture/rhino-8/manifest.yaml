@@ -47,6 +47,21 @@ commands:
   send-status:
     lifecycle: single
     description: Display a transient status-bar message in Rhino.
+  launch:
+    lifecycle: single
+    description: |
+      Spawn a fresh Rhino 8 instance. Optionally opens a model and auto-starts
+      the Script Server so subsequent exec calls work without manual setup.
+      Input: { model_path?, start_script_server? (default true), rhino_exe? }.
+      Does NOT wait for Script Server readiness -- poll list-instances.
+  close:
+    lifecycle: single
+    description: |
+      Shut a running Rhino instance down cleanly via the `_-Exit` macro
+      through rhinocode (no save by default; `save: true` to save first).
+      Pass `force: true` to skip rhinocode and Process.Kill (loses unsaved
+      state -- explicit data-loss acknowledgement). Input:
+      { rhino_id?, version?, pid?, save? (default false), force? (default false) }.
   # === Auto-generated catalog commands =======================================
   bitmap-extensions-bitmap-as-texture-file-reference:
     lifecycle: single

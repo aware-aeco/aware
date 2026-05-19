@@ -63,8 +63,8 @@ internal static class Program
             verb = args[0];
             // Read stdin only if --json-stdin was passed somewhere after the verb.
             var wantsStdin = args.Skip(1).Any(a => a == "--json-stdin");
-            // exec, send-status, and any verb that takes structured input → always need stdin
-            if (wantsStdin || verb is "exec" or "send-status")
+            // exec, send-status, launch, close, and any verb that takes structured input → always need stdin
+            if (wantsStdin || verb is "exec" or "send-status" or "launch" or "close")
             {
                 string buf;
                 try { buf = Console.In.ReadToEnd(); }
@@ -85,20 +85,26 @@ internal static class Program
             }
         }
 
-        // Discover rhinocode once. All verbs share the client.
-        RhinocodeClient client;
-        try { client = new RhinocodeClient(); }
-        catch (FileNotFoundException e)
+        // `launch` doesn't need rhinocode (it spawns Rhino.exe directly), so
+        // discover lazily — failing to find rhinocode shouldn't block a launch.
+        RhinocodeClient? client = null;
+        if (verb is not "launch")
         {
-            Console.WriteLine(Receipts.GenericFail(verb, e.Message).ToJsonString());
-            return 3;
+            try { client = new RhinocodeClient(); }
+            catch (FileNotFoundException e)
+            {
+                Console.WriteLine(Receipts.GenericFail(verb, e.Message).ToJsonString());
+                return 3;
+            }
         }
 
         return verb switch
         {
-            "exec"           => Exec.Run(client, stdinJson),
-            "list-instances" => ListInstances.Run(client),
-            "send-status"    => SendStatus.Run(client, stdinJson),
+            "exec"           => Exec.Run(client!, stdinJson),
+            "list-instances" => ListInstances.Run(client!),
+            "send-status"    => SendStatus.Run(client!, stdinJson),
+            "launch"         => Launch.Run(stdinJson),
+            "close"          => Close.Run(client!, stdinJson),
             _ => Unknown(verb),
         };
     }
@@ -122,16 +128,19 @@ internal static class Program
               exec             Compile + run an ad-hoc C# script against the active Rhino doc
               list-instances   Print running Rhino instances (PID + version + active doc)
               send-status      Display a transient status-bar message in Rhino
+              launch           Spawn a fresh Rhino instance (optionally with a model + auto Script Server)
+              close            Shut a running Rhino instance down cleanly (or force-kill with force=true)
 
             Exit codes:
               0  success
-              1  no matching Rhino instance running
+              1  no matching Rhino instance running / didn't exit cleanly
               2  API call failed / bad args / unknown verb
-              3  rhinocode.exe not found (install Rhino 8.11+ or set RHINOCODE_EXE)
+              3  rhinocode.exe (or Rhino.exe for launch) not found
 
             Prerequisites:
               - Rhino 8.11+ installed
-              - In Rhino, run `StartScriptServer` once per session
+              - For exec/send-status/list-instances: `StartScriptServer` active in Rhino
+                (launch auto-starts it via /runscript flag if `start_script_server: true`, default true)
               - For multi-instance routing, pass `rhino_id` in the input JSON
             """);
     }
