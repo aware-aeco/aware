@@ -1,0 +1,95 @@
+{
+  "name": "MethodMirror",
+  "namespace": "ProtoCore.Mirror",
+  "kind": "class",
+  "summary": "Reflects upon a Function to retrieve its arguments",
+  "base": "ProtoCore.Mirror.StaticMirror",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetArgumentTypes",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.Type\u003E GetArgumentTypes()",
+      "summary": "MethodMirror.GetArgumentTypes",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "GetMethodAttributes",
+      "signature": "ProtoCore.AST.AssociativeAST.MethodAttributes GetMethodAttributes()",
+      "summary": "MethodMirror.GetMethodAttributes",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.MethodAttributes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "MethodMirror.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ArgumentList",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003Cstring, string\u003E\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodMirror.ArgumentList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "IsConstructor",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodMirror.IsConstructor",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "IsStatic",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodMirror.IsStatic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "MethodName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodMirror.MethodName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    },
+    {
+      "name": "ReturnType",
+      "type": "System.Nullable\u003CProtoCore.Type\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "MethodMirror.ReturnType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Reflection/Mirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

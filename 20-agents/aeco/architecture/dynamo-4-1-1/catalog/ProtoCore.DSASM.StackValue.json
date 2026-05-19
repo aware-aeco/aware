@@ -1,0 +1,1257 @@
+{
+  "name": "StackValue",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "struct",
+  "summary": "Type StackValue",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "BuildArrayDimension(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildArrayDimension(int dimension)",
+      "summary": "StackValue.BuildArrayDimension",
+      "params": [
+        {
+          "name": "dimension",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildArrayKey(ProtoCore.DSASM.StackValue, int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildArrayKey(ProtoCore.DSASM.StackValue array, int index)",
+      "summary": "StackValue.BuildArrayKey",
+      "params": [
+        {
+          "name": "array",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildArrayKey(int, int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildArrayKey(int arrayPtr, int index)",
+      "summary": "StackValue.BuildArrayKey",
+      "params": [
+        {
+          "name": "arrayPtr",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildArrayPointer(long)",
+      "signature": "ProtoCore.DSASM.StackValue BuildArrayPointer(long data)",
+      "summary": "StackValue.BuildArrayPointer",
+      "params": [
+        {
+          "name": "data",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildBlockIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildBlockIndex(int blockIndex)",
+      "summary": "StackValue.BuildBlockIndex",
+      "params": [
+        {
+          "name": "blockIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildBoolean(bool)",
+      "signature": "ProtoCore.DSASM.StackValue BuildBoolean(bool b)",
+      "summary": "StackValue.BuildBoolean",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildCallingConversion(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildCallingConversion(int data)",
+      "summary": "StackValue.BuildCallingConversion",
+      "params": [
+        {
+          "name": "data",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildChar(char)",
+      "signature": "ProtoCore.DSASM.StackValue BuildChar(char ch)",
+      "summary": "StackValue.BuildChar",
+      "params": [
+        {
+          "name": "ch",
+          "type": "char",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildClassIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildClassIndex(int classIndex)",
+      "summary": "StackValue.BuildClassIndex",
+      "params": [
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildDefaultArgument",
+      "signature": "ProtoCore.DSASM.StackValue BuildDefaultArgument()",
+      "summary": "StackValue.BuildDefaultArgument",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildDouble(double)",
+      "signature": "ProtoCore.DSASM.StackValue BuildDouble(double data)",
+      "summary": "StackValue.BuildDouble",
+      "params": [
+        {
+          "name": "data",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildDynamic(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildDynamic(int dynamic)",
+      "summary": "StackValue.BuildDynamic",
+      "params": [
+        {
+          "name": "dynamic",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildDynamicBlock(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildDynamicBlock(int block)",
+      "summary": "StackValue.BuildDynamicBlock",
+      "params": [
+        {
+          "name": "block",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildExplicitCall(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildExplicitCall(int pc)",
+      "summary": "StackValue.BuildExplicitCall",
+      "params": [
+        {
+          "name": "pc",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildFrameType(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildFrameType(int type)",
+      "summary": "StackValue.BuildFrameType",
+      "params": [
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildFunctionIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildFunctionIndex(int functionIndex)",
+      "summary": "StackValue.BuildFunctionIndex",
+      "params": [
+        {
+          "name": "functionIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildFunctionPointer(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildFunctionPointer(int fptr)",
+      "summary": "StackValue.BuildFunctionPointer",
+      "params": [
+        {
+          "name": "fptr",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildInt(long)",
+      "signature": "ProtoCore.DSASM.StackValue BuildInt(long data)",
+      "summary": "StackValue.BuildInt",
+      "params": [
+        {
+          "name": "data",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildInvalid",
+      "signature": "ProtoCore.DSASM.StackValue BuildInvalid()",
+      "summary": "StackValue.BuildInvalid",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildInvalidRegisters",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E BuildInvalidRegisters()",
+      "summary": "StackValue.BuildInvalidRegisters",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildLabelIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildLabelIndex(int labelIndex)",
+      "summary": "StackValue.BuildLabelIndex",
+      "params": [
+        {
+          "name": "labelIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildMemVarIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildMemVarIndex(int varIndex)",
+      "summary": "StackValue.BuildMemVarIndex",
+      "params": [
+        {
+          "name": "varIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildNull",
+      "signature": "ProtoCore.DSASM.StackValue BuildNull()",
+      "summary": "StackValue.BuildNull",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildPointer(long)",
+      "signature": "ProtoCore.DSASM.StackValue BuildPointer(long data)",
+      "summary": "StackValue.BuildPointer",
+      "params": [
+        {
+          "name": "data",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildPointer(long, ProtoCore.DSASM.MetaData)",
+      "signature": "ProtoCore.DSASM.StackValue BuildPointer(long data, ProtoCore.DSASM.MetaData mdata)",
+      "summary": "StackValue.BuildPointer",
+      "params": [
+        {
+          "name": "data",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "mdata",
+          "type": "ProtoCore.DSASM.MetaData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildRegister(ProtoCore.DSASM.Registers)",
+      "signature": "ProtoCore.DSASM.StackValue BuildRegister(ProtoCore.DSASM.Registers reg)",
+      "summary": "StackValue.BuildRegister",
+      "params": [
+        {
+          "name": "reg",
+          "type": "ProtoCore.DSASM.Registers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildReplicationGuide(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildReplicationGuide(int guide)",
+      "summary": "StackValue.BuildReplicationGuide",
+      "params": [
+        {
+          "name": "guide",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildStaticMemVarIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildStaticMemVarIndex(int varIndex)",
+      "summary": "StackValue.BuildStaticMemVarIndex",
+      "params": [
+        {
+          "name": "varIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildStaticType(int, int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildStaticType(int UID, int rank)",
+      "summary": "StackValue.BuildStaticType",
+      "params": [
+        {
+          "name": "UID",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "rank",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildString(long)",
+      "signature": "ProtoCore.DSASM.StackValue BuildString(long data)",
+      "summary": "StackValue.BuildString",
+      "params": [
+        {
+          "name": "data",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildString(string, ProtoCore.DSASM.Heap)",
+      "signature": "ProtoCore.DSASM.StackValue BuildString(string str, ProtoCore.DSASM.Heap heap)",
+      "summary": "StackValue.BuildString",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "heap",
+          "type": "ProtoCore.DSASM.Heap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildThisPtr(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildThisPtr(int thisptr)",
+      "summary": "StackValue.BuildThisPtr",
+      "params": [
+        {
+          "name": "thisptr",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BuildVarIndex(int)",
+      "signature": "ProtoCore.DSASM.StackValue BuildVarIndex(int varIndex)",
+      "summary": "StackValue.BuildVarIndex",
+      "params": [
+        {
+          "name": "varIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BulildInvalid",
+      "signature": "ProtoCore.DSASM.StackValue BulildInvalid()",
+      "summary": "StackValue.BulildInvalid",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object other)",
+      "summary": "StackValue.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "StackValue.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "GetNextKey(ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue GetNextKey(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns an array\u0027s next key",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ShallowClone",
+      "signature": "ProtoCore.DSASM.StackValue ShallowClone()",
+      "summary": "Although StackValue is a struct and assignment creates a copy of StackValue on stack, ShallowClone() has an explicit meaning to do copy.",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ToBoolean(ProtoCore.RuntimeCore)",
+      "signature": "ProtoCore.DSASM.StackValue ToBoolean(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Convert StackValue to boolean typed StackValue. Returns StackValue.Null if not able to do conversion.",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ToDouble",
+      "signature": "ProtoCore.DSASM.StackValue ToDouble()",
+      "summary": "Convert numeric typed StackValue to double typed StackValue. For other types, returns StackValue.Null.",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ToInteger",
+      "signature": "ProtoCore.DSASM.StackValue ToInteger()",
+      "summary": "Convert numeric typed StackValue to integer typed StackValue. For other types, returns StackValue.Null.",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "TryGetArrayKey(ref ProtoCore.DSASM.StackValue, ref int)",
+      "signature": "bool TryGetArrayKey(ref ProtoCore.DSASM.StackValue array, ref int key)",
+      "summary": "Try to get the host array and key value from StackValue. The address type of StackValue should be AddressType.ArrayKey.",
+      "params": [
+        {
+          "name": "array",
+          "type": "ref ProtoCore.DSASM.StackValue",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ref int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ArrayDimension",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ArrayDimension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ArrayKeyIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ArrayKeyIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ArrayPointer",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ArrayPointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BlockIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.BlockIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BooleanValue",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.BooleanValue",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "BounceType",
+      "type": "ProtoCore.DSASM.CallingConvention.BounceType",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.BounceType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "CallType",
+      "type": "ProtoCore.DSASM.CallingConvention.CallType",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.CallType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "CharValue",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.CharValue",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ClassIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ClassIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "DoubleValue",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.DoubleValue",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "DynamicIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.DynamicIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ExplicitCallEntry",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ExplicitCallEntry",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "FrameType",
+      "type": "ProtoCore.DSASM.StackFrameType",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.FrameType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "FunctionIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.FunctionIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "FunctionPointer",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.FunctionPointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IntegerValue",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IntegerValue",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsArray",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsArray",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsArrayDimension",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsArrayDimension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsArrayKey",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsArrayKey",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsBlockIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsBlockIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsBoolean",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsBoolean",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsCallingConvention",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsCallingConvention",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsChar",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsChar",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsClassIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsClassIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsDefaultArgument",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsDefaultArgument",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsDouble",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsDouble",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsDynamic",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsDynamic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsExplicitCall",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsExplicitCall",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsFrameType",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsFrameType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsFunctionIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsFunctionIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsFunctionPointer",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsFunctionPointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsInteger",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsInteger",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsInvalid",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsInvalid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsLabelIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsLabelIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsMemberVariableIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsMemberVariableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsNull",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsNull",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsNumeric",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsNumeric",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsPointer",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsPointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsReferenceType",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsReferenceType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsRegister",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsRegister",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsReplicationGuide",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsReplicationGuide",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsStaticType",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsStaticType",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsStaticVariableIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsStaticVariableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsString",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsString",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsThisPtr",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsThisPtr",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "IsVariableIndex",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.IsVariableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "LabelIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.LabelIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "MemberVariableIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.MemberVariableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "Pointer",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.Pointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "Rank",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.Rank",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "RawData",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns raw data without checking its type or do type conversion. Use with caution.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "Register",
+      "type": "ProtoCore.DSASM.Registers",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.Register",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ReplicationGuide",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ReplicationGuide",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "StaticVariableIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.StaticVariableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "StringPointer",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.StringPointer",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "SymbolIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.SymbolIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "ThisPtr",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.ThisPtr",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    },
+    {
+      "name": "VariableIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "StackValue.VariableIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/InstructionSet.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

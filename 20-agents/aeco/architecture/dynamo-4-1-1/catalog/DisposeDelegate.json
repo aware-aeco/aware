@@ -1,0 +1,98 @@
+{
+  "name": "DisposeDelegate",
+  "namespace": "",
+  "kind": "delegate",
+  "summary": "Type DisposeDelegate",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs",
+  "constructors": [
+    {
+      "name": "DisposeDelegate(object, IntPtr)",
+      "signature": "void DisposeDelegate(object object, IntPtr method)",
+      "summary": "DisposeDelegate.DisposeDelegate",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(ProtoCore.RuntimeCore, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(ProtoCore.RuntimeCore sender, System.AsyncCallback callback, object object)",
+      "summary": "DisposeDelegate.BeginInvoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "DisposeDelegate.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    },
+    {
+      "name": "Invoke(ProtoCore.RuntimeCore)",
+      "signature": "void Invoke(ProtoCore.RuntimeCore sender)",
+      "summary": "DisposeDelegate.Invoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/RuntimeCore.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(ProtoCore.RuntimeCore sender)"
+}

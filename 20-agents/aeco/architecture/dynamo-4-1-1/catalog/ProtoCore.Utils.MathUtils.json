@@ -1,0 +1,86 @@
+{
+  "name": "MathUtils",
+  "namespace": "ProtoCore.Utils",
+  "kind": "static-class",
+  "summary": "Type MathUtils",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/MathUtils.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(double, double)",
+      "signature": "bool Equals(double lhs, double rhs)",
+      "summary": "MathUtils.Equals",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/MathUtils.cs"
+    },
+    {
+      "name": "Equals(double, double, double)",
+      "signature": "bool Equals(double lhs, double rhs, double tolerance)",
+      "summary": "MathUtils.Equals",
+      "params": [
+        {
+          "name": "lhs",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "rhs",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/MathUtils.cs"
+    },
+    {
+      "name": "IsNumber(object)",
+      "signature": "bool IsNumber(object value)",
+      "summary": "MathUtils.IsNumber",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/MathUtils.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

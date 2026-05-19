@@ -1,0 +1,120 @@
+{
+  "name": "PresetModel",
+  "namespace": "Dynamo.Graph.Presets",
+  "kind": "class",
+  "summary": "This class references a set of nodemodels, and a set of serialized versions of those nodemodels a client can use this class to store the state of a set of nodes from a graph",
+  "base": "Dynamo.Graph.ModelBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs",
+  "constructors": [
+    {
+      "name": "PresetModel(string, string, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E)",
+      "signature": "void PresetModel(string name, string description, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E inputsToSave)",
+      "summary": "Create a new presetsState, this will serialize all the referenced nodes by calling their serialize method, the resulting XML elements will be used to save this state when the presetModel is saved on workspace save",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name for the state, must not be null",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "doc": "Description of the state, can be null",
+          "optional": false
+        },
+        {
+          "name": "inputsToSave",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+          "doc": "Set of nodeModels, must be not null",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "PresetModel.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "PresetModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns description of the preset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns name of the preset",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    },
+    {
+      "name": "Nodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Nodes.NodeModel\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns list of nodemodels that this state serializes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    },
+    {
+      "name": "SerializedNodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Xml.XmlElement\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns list of serialized nodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Presets/PresetModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

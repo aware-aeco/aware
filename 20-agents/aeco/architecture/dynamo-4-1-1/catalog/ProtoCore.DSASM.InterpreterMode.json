@@ -1,0 +1,22 @@
+{
+  "name": "InterpreterMode",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "enum",
+  "summary": "Type InterpreterMode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Expression",
+      "value": 0
+    },
+    {
+      "name": "Normal",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "name": "NotificationMessage",
+  "namespace": "Dynamo.Logging",
+  "kind": "class",
+  "summary": "Class representing a notification that a host Application intends to send to a Dynamo user.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/NotificationMessage.cs",
+  "constructors": [
+    {
+      "name": "NotificationMessage(string, string, string, string)",
+      "signature": "void NotificationMessage(string sender, string shortMessage, string detailedMessage, string title)",
+      "summary": "Constructor for a NotificationMessage",
+      "params": [
+        {
+          "name": "sender",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "shortMessage",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "detailedMessage",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/NotificationMessage.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DetailedMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "a more detailed message that displayed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/NotificationMessage.cs"
+    },
+    {
+      "name": "Sender",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The sender of this notification.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/NotificationMessage.cs"
+    },
+    {
+      "name": "ShortMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "A short message that is displayed to inform the user briefly for the reason of the notification",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/NotificationMessage.cs"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The title of the notification message.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/NotificationMessage.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

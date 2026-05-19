@@ -1,0 +1,41 @@
+{
+  "name": "IExtensionSource",
+  "namespace": "Dynamo.Extensions",
+  "kind": "interface",
+  "summary": "An object which may request extensions to be loaded and added to the extensionsManager.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/ExtensionManager.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "RequestedExtensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Collection of Extensions this ExtensionSource has requested be loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/ExtensionManager.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "RequestAddExtension",
+      "delegate": "System.Action\u003CDynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.IExtension\u003E RequestAddExtension",
+      "summary": "Event that is raised when ExtensionSource requests an Extension to be added to list of currently loaded extensions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/ExtensionManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestLoadExtension",
+      "delegate": "System.Func\u003Cstring, Dynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Func\u003Cstring, Dynamo.Extensions.IExtension\u003E RequestLoadExtension",
+      "summary": "Event that is raised when the ExtensionSource requests an Extension be loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/ExtensionManager.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

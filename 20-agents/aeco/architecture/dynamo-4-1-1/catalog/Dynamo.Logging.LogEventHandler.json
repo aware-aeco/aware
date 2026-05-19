@@ -1,0 +1,98 @@
+{
+  "name": "LogEventHandler",
+  "namespace": "Dynamo.Logging",
+  "kind": "delegate",
+  "summary": "This is a delegate used by Log events.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs",
+  "constructors": [
+    {
+      "name": "LogEventHandler(object, IntPtr)",
+      "signature": "void LogEventHandler(object object, IntPtr method)",
+      "summary": "LogEventHandler.LogEventHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Logging.LogEventArgs, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Logging.LogEventArgs args, System.AsyncCallback callback, object object)",
+      "summary": "LogEventHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "args",
+          "type": "Dynamo.Logging.LogEventArgs",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "LogEventHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Logging.LogEventArgs)",
+      "signature": "void Invoke(Dynamo.Logging.LogEventArgs args)",
+      "summary": "LogEventHandler.Invoke",
+      "params": [
+        {
+          "name": "args",
+          "type": "Dynamo.Logging.LogEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Logging.LogEventArgs args)"
+}

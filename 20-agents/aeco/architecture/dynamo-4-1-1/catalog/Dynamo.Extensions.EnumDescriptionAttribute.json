@@ -1,0 +1,47 @@
+{
+  "name": "EnumDescriptionAttribute",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Provides description for enum member.",
+  "base": "System.ComponentModel.DescriptionAttribute",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/EnumExtension.cs",
+  "constructors": [
+    {
+      "name": "EnumDescriptionAttribute(string, System.Type)",
+      "signature": "void EnumDescriptionAttribute(string resourceKey, System.Type resourceType)",
+      "summary": "Creates EnumDescriptionAttribute.",
+      "params": [
+        {
+          "name": "resourceKey",
+          "type": "string",
+          "doc": "Resource name.",
+          "optional": false
+        },
+        {
+          "name": "resourceType",
+          "type": "System.Type",
+          "doc": "Resource type, i.e. type of resource class. E.g. typeof(Resources)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/EnumExtension.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description of enum item.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/EnumExtension.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

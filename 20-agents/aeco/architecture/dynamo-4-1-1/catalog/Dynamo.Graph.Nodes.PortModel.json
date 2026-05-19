@@ -1,0 +1,276 @@
+{
+  "name": "PortModel",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "class",
+  "summary": "PortModel represents Dynamo ports.",
+  "base": "Dynamo.Graph.ModelBase",
+  "interfaces": [
+    "System.IEquatable\u003CDynamo.Graph.Nodes.PortModel\u003E"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs",
+  "constructors": [
+    {
+      "name": "PortModel(Dynamo.Graph.Nodes.PortType, Dynamo.Graph.Nodes.NodeModel, Dynamo.Graph.Nodes.PortData)",
+      "signature": "void PortModel(Dynamo.Graph.Nodes.PortType portType, Dynamo.Graph.Nodes.NodeModel owner, Dynamo.Graph.Nodes.PortData data)",
+      "summary": "Creates PortModel.",
+      "params": [
+        {
+          "name": "portType",
+          "type": "Dynamo.Graph.Nodes.PortType",
+          "doc": "Type of the Port",
+          "optional": false
+        },
+        {
+          "name": "owner",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Parent Node",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Dynamo.Graph.Nodes.PortData",
+          "doc": "Information about port",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "PortModel.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "PortModel.Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Equals(Dynamo.Graph.Nodes.PortModel)",
+      "signature": "bool Equals(Dynamo.Graph.Nodes.PortModel other)",
+      "summary": "PortModel.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "Dynamo.Graph.Nodes.PortModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "PortModel.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "PortModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Dynamo.Utilities.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Center is used by connected connectors to update their shape The \u0022center\u0022 of a port is derived from the type of port and offsets from the node origin based on the port\u0027s index in the ports collection.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Connectors",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003CDynamo.Graph.Connectors.ConnectorModel\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the connectors between the specified ports.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "DefaultValue",
+      "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+      "getter": true,
+      "setter": true,
+      "summary": "Default value for port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "ID of the PortModel, which is unique within the graph.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Index",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Index of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "IsConnected",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the port has connectors or if the default value is enabled and not null. Otherwise, returns false.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether the port is enabled or not.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "KeepListStructure",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "A flag which determines whether data from this node will be re-aligned into the original structure of the nested list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Level",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The Level at which objects will be extracted from a nested list. The deepest level of a nested list is -1.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "LineIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the LineIndex of that port. The vertical position of PortModel is dependent on LineIndex.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "MarginThickness",
+      "type": "Dynamo.Utilities.Thickness",
+      "getter": true,
+      "setter": false,
+      "summary": "Controls the space between successive output ports",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "Owner",
+      "type": "Dynamo.Graph.Nodes.NodeModel",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "PortType",
+      "type": "Dynamo.Graph.Nodes.PortType",
+      "getter": true,
+      "setter": false,
+      "summary": "Type of the port. It can be incoming or outcoming.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "ToolTip",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Tooltip of the port.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "UseLevels",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "A flag which determines whether this Port will extract data from a specific level in a nested list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "UsingDefaultValue",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Controls whether this port is set to use it\u0027s default value (true) or yield a closure (false).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    },
+    {
+      "name": "extensionEdges",
+      "type": "Dynamo.Graph.Nodes.SnapExtensionEdges",
+      "getter": true,
+      "setter": true,
+      "summary": "Based on extensionEdges port is aligned in UI.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

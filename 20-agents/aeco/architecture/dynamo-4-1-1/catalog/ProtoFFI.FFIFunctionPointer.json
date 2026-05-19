@@ -1,0 +1,82 @@
+{
+  "name": "FFIFunctionPointer",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type FFIFunctionPointer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [
+    {
+      "name": "FFIFunctionPointer()",
+      "signature": "void FFIFunctionPointer()",
+      "summary": "FFIFunctionPointer.FFIFunctionPointer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Execute(ProtoCore.Runtime.Context, ProtoCore.DSASM.Interpreter, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E)",
+      "signature": "object Execute(ProtoCore.Runtime.Context c, ProtoCore.DSASM.Interpreter dsi, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E stack)",
+      "summary": "FFIFunctionPointer.Execute",
+      "params": [
+        {
+          "name": "c",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "dsi",
+          "type": "ProtoCore.DSASM.Interpreter",
+          "optional": false
+        },
+        {
+          "name": "stack",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "GetUnderlyingArray(System.Collections.Generic.List\u003CT\u003E)",
+      "signature": "T[] GetUnderlyingArray\u003CT\u003E(System.Collections.Generic.List\u003CT\u003E list)",
+      "summary": "FFIFunctionPointer.GetUnderlyingArray",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.List\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsDNI",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "FFIFunctionPointer.IsDNI",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

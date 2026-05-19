@@ -1,0 +1,350 @@
+{
+  "name": "FunctionGroup",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "A function group is a collection of overloads to the same method",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs",
+  "constructors": [
+    {
+      "name": "FunctionGroup()",
+      "signature": "void FunctionGroup()",
+      "summary": "FunctionGroup.FunctionGroup",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "FunctionGroup(System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E)",
+      "signature": "void FunctionGroup(System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E rhs)",
+      "summary": "FunctionGroup.FunctionGroup",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CanGetExactMatchStatics(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E\u003E, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore, ref System.Collections.Generic.HashSet\u003CProtoCore.FunctionEndPoint\u003E)",
+      "signature": "bool CanGetExactMatchStatics(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E\u003E reducedFormalParams, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore, ref System.Collections.Generic.HashSet\u003CProtoCore.FunctionEndPoint\u003E lookup)",
+      "summary": "For a given list of formal parameters, get the function end points that resolve",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "reducedFormalParams",
+          "type": "System.Collections.Generic.List\u003CSystem.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "lookup",
+          "type": "ref System.Collections.Generic.HashSet\u003CProtoCore.FunctionEndPoint\u003E",
+          "doc": "The number of argument sets that couldn\u0027t be resolved",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns true, if it can find a matching FEP for all the reduced params. Returns False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "CheckInvalidArrayCoersion(ProtoCore.FunctionEndPoint, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.ClassTable, ProtoCore.RuntimeCore, bool)",
+      "signature": "bool CheckInvalidArrayCoersion(ProtoCore.FunctionEndPoint fep, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E reducedSVs, ProtoCore.DSASM.ClassTable classTable, ProtoCore.RuntimeCore runtimeCore, bool allowArrayPromotion)",
+      "summary": "FunctionGroup.CheckInvalidArrayCoersion",
+      "params": [
+        {
+          "name": "fep",
+          "type": "ProtoCore.FunctionEndPoint",
+          "optional": false
+        },
+        {
+          "name": "reducedSVs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        },
+        {
+          "name": "allowArrayPromotion",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "CopyPublic(System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E)",
+      "signature": "void CopyPublic(System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E rhs)",
+      "summary": "FunctionGroup.CopyPublic",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "CopyVisible(System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E)",
+      "signature": "void CopyVisible(System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E rhs)",
+      "summary": "FunctionGroup.CopyVisible",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "GetCastDistances(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.DSASM.ClassTable, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.Dictionary\u003CProtoCore.FunctionEndPoint, int\u003E GetCastDistances(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions, ProtoCore.DSASM.ClassTable classTable, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "FunctionGroup.GetCastDistances",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "optional": false
+        },
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CProtoCore.FunctionEndPoint, int\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "GetConversionDistances(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.DSASM.ClassTable, ProtoCore.RuntimeCore, bool)",
+      "signature": "System.Collections.Generic.Dictionary\u003CProtoCore.FunctionEndPoint, int\u003E GetConversionDistances(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions, ProtoCore.DSASM.ClassTable classTable, ProtoCore.RuntimeCore runtimeCore, bool allowArrayPromotion)",
+      "summary": "Returns a dictionary of the function end points that are type compatible with the costs of the associated conversions",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "allowArrayPromotion",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CProtoCore.FunctionEndPoint, int\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "GetExactTypeMatches(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.DSASM.StackFrame, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E GetExactTypeMatches(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions, ProtoCore.DSASM.StackFrame stackFrame, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns a list of all the function end points that are type compliant, there maybe more than one due to pattern matches",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "optional": false
+        },
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "optional": false
+        },
+        {
+          "name": "stackFrame",
+          "type": "ProtoCore.DSASM.StackFrame",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "GetLooseConversionDistances(ProtoCore.Runtime.Context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E, ProtoCore.DSASM.ClassTable, ProtoCore.RuntimeCore)",
+      "signature": "System.Collections.Generic.Dictionary\u003CProtoCore.FunctionEndPoint, int\u003E GetLooseConversionDistances(ProtoCore.Runtime.Context context, System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E formalParams, System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E replicationInstructions, ProtoCore.DSASM.ClassTable classTable, ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "Returns a dictionary of the function end points that are type compatible with any branch of replicated parameters.",
+      "params": [
+        {
+          "name": "context",
+          "type": "ProtoCore.Runtime.Context",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "formalParams",
+          "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "replicationInstructions",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Lang.Replication.ReplicationInstruction\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003CProtoCore.FunctionEndPoint, int\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "FunctionGroup.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FunctionEndPoints",
+      "type": "System.Collections.Generic.List\u003CProtoCore.FunctionEndPoint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "FunctionGroup.FunctionEndPoints",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Lang/FunctionGroup.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

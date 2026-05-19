@@ -1,0 +1,93 @@
+{
+  "name": "Option",
+  "namespace": "Dynamo.Utilities",
+  "kind": "static-class",
+  "summary": "Utility method for working with Option instances.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "HasValue(Dynamo.Utilities.IOption\u003CT\u003E)",
+      "signature": "bool HasValue\u003CT\u003E(Dynamo.Utilities.IOption\u003CT\u003E option)",
+      "summary": "Determines if the given Option contains a value or not.",
+      "params": [
+        {
+          "name": "option",
+          "type": "Dynamo.Utilities.IOption\u003CT\u003E",
+          "doc": "Option instance to check for a value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "None",
+      "signature": "Dynamo.Utilities.IOption\u003CT\u003E None\u003CT\u003E()",
+      "summary": "Creates an empty Option.",
+      "params": [],
+      "returns": {
+        "type": "Dynamo.Utilities.IOption\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Select(Dynamo.Utilities.IOption\u003CT\u003E, System.Func\u003CT, U\u003E)",
+      "signature": "Dynamo.Utilities.IOption\u003CU\u003E Select\u003CT, U\u003E(Dynamo.Utilities.IOption\u003CT\u003E option, System.Func\u003CT, U\u003E selector)",
+      "summary": "Creates a new IOption(U) from an IOption(T) by converting the potentially contained value, using a given conversion function.",
+      "params": [
+        {
+          "name": "option",
+          "type": "Dynamo.Utilities.IOption\u003CT\u003E",
+          "doc": "An option to Select over.",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CT, U\u003E",
+          "doc": "A function used to convert the potential value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IOption\u003CU\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Some(T)",
+      "signature": "Dynamo.Utilities.IOption\u003CT\u003E Some\u003CT\u003E(T value)",
+      "summary": "Creates a new IOption(T) instance containing a value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "T",
+          "doc": "Value to be stored in the new IOption(T) instance.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IOption\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

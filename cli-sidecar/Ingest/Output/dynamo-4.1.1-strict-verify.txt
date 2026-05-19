@@ -1,0 +1,60 @@
+Sampled 50 types from 707 (seed = 386102003):
+
+
+idx ns                               name                                       kind         result issues
+--- --                               ----                                       ----         ------ ------
+360                                  UploadType                                 enum         PASS         
+203 Dynamo.Graph.Nodes               Variable                                   class        PASS         
+225 Dynamo.Graph.Nodes               ScopedNodeModel                            class        PASS         
+689                                  SingleRunTraceData                         class        PASS         
+ 64 Dynamo.Logging                   ILogMessage                                interface    PASS         
+645 ProtoCore.DSASM                  OpCode                                     enum         PASS         
+276                                  DynamoModelState                           enum         PASS         
+473 ProtoCore.SyntaxAnalysis         ImperativeAstVisitor<TResult>              class        PASS         
+ 40 Dynamo.Scheduler                 AsyncTask                                  class        PASS         
+108 Dynamo.Engine                    FunctionDescriptorParams                   class        PASS         
+368 DynamoUtilities                  XmlHelper                                  class        PASS         
+536 ProtoCore.AST.AssociativeAST     LanguageBlockNode                          class        PASS         
+322                                  State                                      enum         PASS         
+308                                  CreateAnnotationCommand                    class        PASS         
+219 Dynamo.Graph.Nodes               NodeModelExtensions                        static-class PASS         
+ 34 Dynamo.Search.SearchElements     DragDropNodeSearchElementInfo              class        PASS         
+256 Dynamo.Configuration             ViewExtensionSettings                      class        PASS         
+ 11 Dynamo.Visualization             DefaultRenderPackageFactory                class        PASS         
+ 24 Dynamo.Search                    LuceneSearch                               class        PASS         
+206 Dynamo.Graph.Nodes               FunctionCallBase<TController, TDescriptor> class        PASS         
+ 30 Dynamo.Search.SearchElements     NodeModelSearchElement                     class        PASS         
+196 Dynamo.Graph.Nodes               InPortDescriptionsAttribute                class        PASS         
+ 56 Dynamo.Migration                 WorkspaceMigrationAttribute                class        PASS         
+233 Dynamo.Graph.Nodes.ZeroTouch     ZeroTouchVarArgNodeController<T>           class        PASS         
+520 ProtoCore.AST.ImperativeAST      InlineConditionalNode                      class        PASS         
+107 Dynamo.Engine                    IFunctionDescriptor                        interface    PASS         
+440 ProtoCore                        CallSite                                   class        PASS         
+587 ProtoCore.Lang                   Obj                                        class        PASS         
+508 ProtoCore.AST.ImperativeAST      IdentifierNode                             class        PASS         
+323                                  StatementType                              enum         PASS         
+545 ProtoCore.AST.AssociativeAST     DoubleNode                                 class        PASS         
+139 Dynamo.Core                      CrashPromptArgs                            class        PASS         
+150 Dynamo.Graph                     ConnectorPinModel                          class        PASS         
+482 ProtoCore.Mirror                 MirrorObject                               class        PASS         
+701 DynamoInstallDetective           InstalledProductLookUp                     class        PASS         
+570 ProtoCore.AST.AssociativeAST     DynamicBlockNode                           class        PASS         
+154 Dynamo.Graph                     ILocatable                                 interface    PASS         
+354 Dynamo.PackageManager.Interfaces IFileCompressor                            interface    PASS         
+646 ProtoCore.DSASM                  MetaData                                   struct       PASS         
+600 ProtoCore.Exceptions             ReplicationCaseNotCurrentlySupported       class        PASS         
+581 ProtoCore.Lang                   ContinuationStructure                      class        PASS         
+364 DynamoUtilities                  PathHelper                                 class        PASS         
+383 Dynamo.Utilities                 Point2D                                    struct       PASS         
+479 ProtoCore.Runtime                WarningID                                  enum         PASS         
+607 ProtoCore.CompileTime            Context                                    class        PASS         
+167 Dynamo.Graph.Workspaces          WorkspaceReadConverter                     class        PASS         
+ 79 Dynamo.Wpf.Interfaces            LayoutSpecification                        class        PASS         
+491 ProtoCore.Properties             Resources                                  class        PASS         
+151 Dynamo.Graph                     SaveContext                                enum         PASS         
+114 Dynamo.Engine.Profiling          IProfilingExecutionTimeData                interface    PASS         
+
+
+
+
+Strict verification summary: 50 pass / 0 fail / 50 total

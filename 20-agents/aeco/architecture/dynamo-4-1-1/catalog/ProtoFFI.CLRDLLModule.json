@@ -1,0 +1,236 @@
+{
+  "name": "CLRDLLModule",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Implements DLLModule for CLR types and FFI. This class supports .NET module import to DesignScript and provides FFIFunctionPointer \u0026 FFIObjectMarshler.",
+  "base": "ProtoFFI.DLLModule",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs",
+  "constructors": [
+    {
+      "name": "CLRDLLModule(string, System.Reflection.Assembly)",
+      "signature": "void CLRDLLModule(string name, System.Reflection.Assembly assembly)",
+      "summary": "CLRDLLModule.CLRDLLModule",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "CLRDLLModule(string, System.Reflection.Module)",
+      "signature": "void CLRDLLModule(string name, System.Reflection.Module module)",
+      "summary": "CLRDLLModule.CLRDLLModule",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "module",
+          "type": "System.Reflection.Module",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetExtensionAppType",
+      "signature": "System.Type GetExtensionAppType()",
+      "summary": "CLRDLLModule.GetExtensionAppType",
+      "params": [],
+      "returns": {
+        "type": "System.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetFunctionPointer(string, string, System.Collections.Generic.List\u003CProtoCore.Type\u003E, ProtoCore.Type)",
+      "signature": "ProtoFFI.FFIFunctionPointer GetFunctionPointer(string className, string name, System.Collections.Generic.List\u003CProtoCore.Type\u003E argTypes, ProtoCore.Type returnType)",
+      "summary": "CLRDLLModule.GetFunctionPointer",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "argTypes",
+          "type": "System.Collections.Generic.List\u003CProtoCore.Type\u003E",
+          "optional": false
+        },
+        {
+          "name": "returnType",
+          "type": "ProtoCore.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIFunctionPointer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetFunctionPointers(string, string)",
+      "signature": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E GetFunctionPointers(string className, string name)",
+      "summary": "CLRDLLModule.GetFunctionPointers",
+      "params": [
+        {
+          "name": "className",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoFFI.FFIFunctionPointer\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetImplemetationType(System.Reflection.Assembly, System.Type, System.Type, bool)",
+      "signature": "System.Type GetImplemetationType(System.Reflection.Assembly assembly, System.Type interfaceType, System.Type assemblyAttribute, bool searchFromAllExportedType)",
+      "summary": "CLRDLLModule.GetImplemetationType",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        },
+        {
+          "name": "interfaceType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "assemblyAttribute",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "searchFromAllExportedType",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Type",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "GetMarshaler(ProtoCore.RuntimeCore)",
+      "signature": "ProtoFFI.FFIObjectMarshaler GetMarshaler(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "CLRDLLModule.GetMarshaler",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIObjectMarshaler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "ImportCodeBlock(string, string, ProtoCore.AST.AssociativeAST.CodeBlockNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.CodeBlockNode ImportCodeBlock(string typeName, string alias, ProtoCore.AST.AssociativeAST.CodeBlockNode refNode)",
+      "summary": "CLRDLLModule.ImportCodeBlock",
+      "params": [
+        {
+          "name": "typeName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "alias",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "refNode",
+          "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.CodeBlockNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Assembly",
+      "type": "System.Reflection.Assembly",
+      "getter": true,
+      "setter": false,
+      "summary": "CLRDLLModule.Assembly",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "Module",
+      "type": "System.Reflection.Module",
+      "getter": true,
+      "setter": false,
+      "summary": "CLRDLLModule.Module",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "CLRDLLModule.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

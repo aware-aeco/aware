@@ -1,0 +1,63 @@
+{
+  "name": "ModuleHelper",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "Type ModuleHelper",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [
+    {
+      "name": "ModuleHelper()",
+      "signature": "void ModuleHelper()",
+      "summary": "ModuleHelper.ModuleHelper",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMarshaler(ProtoCore.RuntimeCore)",
+      "signature": "ProtoFFI.FFIObjectMarshaler GetMarshaler(ProtoCore.RuntimeCore runtimeCore)",
+      "summary": "ModuleHelper.GetMarshaler",
+      "params": [
+        {
+          "name": "runtimeCore",
+          "type": "ProtoCore.RuntimeCore",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.FFIObjectMarshaler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    },
+    {
+      "name": "getModule(string)",
+      "signature": "ProtoFFI.DLLModule getModule(string name)",
+      "summary": "ModuleHelper.getModule",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoFFI.DLLModule",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

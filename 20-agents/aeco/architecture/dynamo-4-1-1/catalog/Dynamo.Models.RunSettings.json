@@ -1,0 +1,81 @@
+{
+  "name": "RunSettings",
+  "namespace": "Dynamo.Models",
+  "kind": "class",
+  "summary": "The RunSettings object contains properties which control how execution is carried out.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs",
+  "constructors": [
+    {
+      "name": "RunSettings()",
+      "signature": "void RunSettings()",
+      "summary": "This method creates default RunSettings with DefaultRunPeriod, Manual run type and run is enabled.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs"
+    },
+    {
+      "name": "RunSettings(Dynamo.Models.RunType, int)",
+      "signature": "void RunSettings(Dynamo.Models.RunType runType, int period)",
+      "summary": "This function creates RunSettings with specified run type and run period.",
+      "params": [
+        {
+          "name": "runType",
+          "type": "Dynamo.Models.RunType",
+          "doc": "RunType",
+          "optional": false
+        },
+        {
+          "name": "period",
+          "type": "int",
+          "doc": "milliseconds",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "RunEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "A flag which indicates whether running a graph is possible. If set to true, Dynamo will allow graphs to be run (except if the corresponding dyn file is not trusted) If set to false, Dynamo will not allow graphs to be run. The Dynamo UI will reflect the RunEnabled values by enabling/disabling certain UI features (ex. if RunEnabled is false, the Run button will be disabled).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs"
+    },
+    {
+      "name": "RunPeriod",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The length, in milliseconds, of the period between requests to execute.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs"
+    },
+    {
+      "name": "RunType",
+      "type": "Dynamo.Models.RunType",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns or sets the current Run Type. E.g. Manual, Automatic, Periodic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs"
+    },
+    {
+      "name": "RunTypesEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This property will enable or disable the ComboBox RunTypes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RunSettings.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

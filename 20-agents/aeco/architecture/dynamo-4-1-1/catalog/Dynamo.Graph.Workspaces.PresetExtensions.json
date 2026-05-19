@@ -1,0 +1,37 @@
+{
+  "name": "PresetExtensions",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "static-class",
+  "summary": "Extension methods for adding and removing Presets to Workspaces.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/PresetExtensions.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ImportPresets(Dynamo.Graph.Workspaces.WorkspaceModel, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E)",
+      "signature": "void ImportPresets(Dynamo.Graph.Workspaces.WorkspaceModel workspace, System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E presetCollection)",
+      "summary": "Adds a specified collection Dynamo.Graph.Presets.PresetModel objects to the preset collection of the workspace.",
+      "params": [
+        {
+          "name": "workspace",
+          "type": "Dynamo.Graph.Workspaces.WorkspaceModel",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "presetCollection",
+          "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Graph.Presets.PresetModel\u003E",
+          "doc": "Dynamo.Graph.Presets.PresetModel objects to add.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/PresetExtensions.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

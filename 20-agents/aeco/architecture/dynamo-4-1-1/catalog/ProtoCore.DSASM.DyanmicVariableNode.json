@@ -1,0 +1,40 @@
+{
+  "name": "DyanmicVariableNode",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "struct",
+  "summary": "Type DyanmicVariableNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/StringTable.cs",
+  "constructors": [
+    {
+      "name": "DyanmicVariableNode(string, int, int)",
+      "signature": "void DyanmicVariableNode(string varName, int procIndex, int classIndex)",
+      "summary": "DyanmicVariableNode.DyanmicVariableNode",
+      "params": [
+        {
+          "name": "varName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "procIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/StringTable.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

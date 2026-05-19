@@ -1,0 +1,54 @@
+{
+  "name": "StackAlignToFramePointerRestorer",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type StackAlignToFramePointerRestorer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs",
+  "constructors": [
+    {
+      "name": "StackAlignToFramePointerRestorer()",
+      "signature": "void StackAlignToFramePointerRestorer()",
+      "summary": "StackAlignToFramePointerRestorer.StackAlignToFramePointerRestorer",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Align(ProtoCore.Runtime.RuntimeMemory)",
+      "signature": "void Align(ProtoCore.Runtime.RuntimeMemory rMem)",
+      "summary": "StackAlignToFramePointerRestorer.Align",
+      "params": [
+        {
+          "name": "rMem",
+          "type": "ProtoCore.Runtime.RuntimeMemory",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    },
+    {
+      "name": "Restore",
+      "signature": "bool Restore()",
+      "summary": "StackAlignToFramePointerRestorer.Restore",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Stack.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

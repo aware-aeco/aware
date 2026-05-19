@@ -1,0 +1,69 @@
+{
+  "name": "IOption\u003CT\u003E",
+  "namespace": "Dynamo.Utilities",
+  "kind": "interface",
+  "summary": "Object that either contains a single value, or is empty.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Bind(System.Func\u003CT, Dynamo.Utilities.IOption\u003CU\u003E\u003E)",
+      "signature": "Dynamo.Utilities.IOption\u003CU\u003E Bind\u003CU\u003E(System.Func\u003CT, Dynamo.Utilities.IOption\u003CU\u003E\u003E selector)",
+      "summary": "If the IOption(T) instance contains a value, project the value into a new IOption(U) instance using the given function. Otherwise, propagate the empty option.",
+      "params": [
+        {
+          "name": "selector",
+          "type": "System.Func\u003CT, Dynamo.Utilities.IOption\u003CU\u003E\u003E",
+          "doc": "Function used to project a value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Utilities.IOption\u003CU\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    },
+    {
+      "name": "Match(System.Func\u003CT, U\u003E, System.Func\u003CU\u003E)",
+      "signature": "U Match\u003CU\u003E(System.Func\u003CT, U\u003E someCase, System.Func\u003CU\u003E noneCase)",
+      "summary": "Produces a new value of type U using one of the given functions, based on whether the IOption(T) contains a value or not.",
+      "params": [
+        {
+          "name": "someCase",
+          "type": "System.Func\u003CT, U\u003E",
+          "doc": "Function used to create a result from a value.",
+          "optional": false
+        },
+        {
+          "name": "noneCase",
+          "type": "System.Func\u003CU\u003E",
+          "doc": "Function used to create a result from no value.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "U",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Attempts to get a contained value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Option.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

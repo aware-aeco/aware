@@ -1,0 +1,78 @@
+{
+  "name": "LogEventArgs",
+  "namespace": "Dynamo.Logging",
+  "kind": "class",
+  "summary": "Represents Event arguments that are passed to log event handler.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs",
+  "constructors": [
+    {
+      "name": "LogEventArgs(System.Exception, Dynamo.Logging.LogLevel)",
+      "signature": "void LogEventArgs(System.Exception e, Dynamo.Logging.LogLevel level)",
+      "summary": "Creates LogEventArgs based on exception.",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Exception",
+          "doc": "Exception.",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Dynamo.Logging.LogLevel",
+          "doc": "Level, where exception message and stack trace can be logged.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "LogEventArgs(string, Dynamo.Logging.LogLevel)",
+      "signature": "void LogEventArgs(string message, Dynamo.Logging.LogLevel level)",
+      "summary": "Creates LogEventArgs based on log message.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "String message.",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Dynamo.Logging.LogLevel",
+          "doc": "Level, where message can be logged.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Level",
+      "type": "Dynamo.Logging.LogLevel",
+      "getter": true,
+      "setter": true,
+      "summary": "The log level at which to log the message.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The message to be logged.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

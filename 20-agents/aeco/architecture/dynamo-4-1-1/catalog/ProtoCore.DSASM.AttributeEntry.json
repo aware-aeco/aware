@@ -1,0 +1,55 @@
+{
+  "name": "AttributeEntry",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type AttributeEntry",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AttributeEntry.cs",
+  "constructors": [
+    {
+      "name": "AttributeEntry()",
+      "signature": "void AttributeEntry()",
+      "summary": "AttributeEntry.AttributeEntry",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AttributeEntry.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsInternalClassAttribute",
+      "signature": "bool IsInternalClassAttribute()",
+      "summary": "AttributeEntry.IsInternalClassAttribute",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AttributeEntry.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Arguments",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AST.Node\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "AttributeEntry.Arguments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AttributeEntry.cs"
+    },
+    {
+      "name": "ClassNode",
+      "type": "ProtoCore.DSASM.ClassNode",
+      "getter": true,
+      "setter": true,
+      "summary": "AttributeEntry.ClassNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AttributeEntry.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

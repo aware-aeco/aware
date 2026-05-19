@@ -1,0 +1,57 @@
+{
+  "name": "NodeEnumerableExtensions",
+  "namespace": "ProtoCore.AST",
+  "kind": "static-class",
+  "summary": "Type NodeEnumerableExtensions",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/ImperativeAST.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AsEnumerable(ProtoCore.AST.Node)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E AsEnumerable(ProtoCore.AST.Node item)",
+      "summary": "NodeEnumerableExtensions.AsEnumerable",
+      "params": [
+        {
+          "name": "item",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    },
+    {
+      "name": "Concat(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E, ProtoCore.AST.Node)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E Concat(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E list, ProtoCore.AST.Node item)",
+      "summary": "NodeEnumerableExtensions.Concat",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "ProtoCore.AST.Node",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/ImperativeAST.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

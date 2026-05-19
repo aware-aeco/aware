@@ -1,0 +1,122 @@
+{
+  "name": "AstKind",
+  "namespace": "ProtoCore.AST.ImperativeAST",
+  "kind": "enum",
+  "summary": "Type AstKind",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/AssociativeAST.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Array",
+      "value": 1
+    },
+    {
+      "name": "ArrayName",
+      "value": 0
+    },
+    {
+      "name": "BinaryExpression",
+      "value": 2
+    },
+    {
+      "name": "Boolean",
+      "value": 3
+    },
+    {
+      "name": "Break",
+      "value": 4
+    },
+    {
+      "name": "Char",
+      "value": 5
+    },
+    {
+      "name": "CodeBlock",
+      "value": 6
+    },
+    {
+      "name": "Continue",
+      "value": 7
+    },
+    {
+      "name": "Double",
+      "value": 8
+    },
+    {
+      "name": "ElseIf",
+      "value": 9
+    },
+    {
+      "name": "ExpressionList",
+      "value": 10
+    },
+    {
+      "name": "ForLoop",
+      "value": 11
+    },
+    {
+      "name": "FunctionCall",
+      "value": 12
+    },
+    {
+      "name": "GroupExpression",
+      "value": 13
+    },
+    {
+      "name": "Identifier",
+      "value": 14
+    },
+    {
+      "name": "IdentifierList",
+      "value": 15
+    },
+    {
+      "name": "If",
+      "value": 16
+    },
+    {
+      "name": "IfPosition",
+      "value": 17
+    },
+    {
+      "name": "InlineConditional",
+      "value": 18
+    },
+    {
+      "name": "Integer",
+      "value": 19
+    },
+    {
+      "name": "LanguageBlock",
+      "value": 20
+    },
+    {
+      "name": "Null",
+      "value": 21
+    },
+    {
+      "name": "RangeExpression",
+      "value": 22
+    },
+    {
+      "name": "String",
+      "value": 23
+    },
+    {
+      "name": "TypedIdentifier",
+      "value": 24
+    },
+    {
+      "name": "UnaryExpression",
+      "value": 25
+    },
+    {
+      "name": "While",
+      "value": 26
+    }
+  ]
+}

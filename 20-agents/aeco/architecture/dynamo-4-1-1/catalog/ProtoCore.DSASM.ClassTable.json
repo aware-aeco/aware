@@ -1,0 +1,234 @@
+{
+  "name": "ClassTable",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type ClassTable",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs",
+  "constructors": [
+    {
+      "name": "ClassTable()",
+      "signature": "void ClassTable()",
+      "summary": "ClassTable.ClassTable",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "ClassTable(ProtoCore.DSASM.ClassTable)",
+      "signature": "void ClassTable(ProtoCore.DSASM.ClassTable rhs)",
+      "summary": "ClassTable.ClassTable",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Append(ProtoCore.DSASM.ClassNode)",
+      "signature": "int Append(ProtoCore.DSASM.ClassNode node)",
+      "summary": "ClassTable.Append",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.DSASM.ClassNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "AuditMultipleDefinition(ProtoCore.BuildStatus, ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void AuditMultipleDefinition(ProtoCore.BuildStatus status, ProtoCore.AssociativeGraph.GraphNode graphNode)",
+      "summary": "Audits the class table for multiple symbol definition.",
+      "params": [
+        {
+          "name": "status",
+          "type": "ProtoCore.BuildStatus",
+          "doc": "BuildStatus to log the warnings if multiple symbol found.",
+          "optional": false
+        },
+        {
+          "name": "graphNode",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetAllMatchingClasses(string)",
+      "signature": "string[] GetAllMatchingClasses(string name)",
+      "summary": "Returns all matching classes for the given name from this ClassTable. If the classes have a common base class, this simply returns the given name of the class.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Partial name of the class for lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string[]",
+        "doc": "Array of fully qualified name of all matching symbols"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetClassId(string)",
+      "signature": "int GetClassId(string fullname)",
+      "summary": "Returns Class Id for the given fully qualified class name.",
+      "params": [
+        {
+          "name": "fullname",
+          "type": "string",
+          "doc": "Fully qualified class name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Class Id if found, else ProtoCore.DSASM.Constants.kInvalidIndex"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "GetTypeName(int)",
+      "signature": "string GetTypeName(int UID)",
+      "summary": "ClassTable.GetTypeName",
+      "params": [
+        {
+          "name": "UID",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "IndexOf(string)",
+      "signature": "int IndexOf(string partialName)",
+      "summary": "Find a matching class for given partial class name.",
+      "params": [
+        {
+          "name": "partialName",
+          "type": "string",
+          "doc": "Partial class name for lookup.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Class Id if found, else ProtoCore.DSASM.Constants.kInvalidIndex"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "Reserve(int)",
+      "signature": "void Reserve(int size)",
+      "summary": "ClassTable.Reserve",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "SetClassNodeAt(ProtoCore.DSASM.ClassNode, int)",
+      "signature": "void SetClassNodeAt(ProtoCore.DSASM.ClassNode node, int index)",
+      "summary": "ClassTable.SetClassNodeAt",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.DSASM.ClassNode",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    },
+    {
+      "name": "TryGetFullyQualifiedName(string, ref string)",
+      "signature": "bool TryGetFullyQualifiedName(string name, ref string fullName)",
+      "summary": "Tries to get the fully qualified name for the given name from this ClassTable.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Partial name of the class for lookup",
+          "optional": false
+        },
+        {
+          "name": "fullName",
+          "type": "ref string",
+          "doc": "Fully qualified class name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the given name results a unique matching symbol in this ClassTable."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ClassNodes",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CProtoCore.DSASM.ClassNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ClassTable.ClassNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/ClassTable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

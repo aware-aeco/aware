@@ -1,0 +1,22 @@
+{
+  "name": "FFILanguage",
+  "namespace": "ProtoFFI",
+  "kind": "enum",
+  "summary": "Type FFILanguage",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/FFIHandler.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CPlusPlus",
+      "value": 0
+    },
+    {
+      "name": "CSharp",
+      "value": 1
+    }
+  ]
+}

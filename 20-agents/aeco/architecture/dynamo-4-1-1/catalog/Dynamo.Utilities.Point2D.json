@@ -1,0 +1,138 @@
+{
+  "name": "Point2D",
+  "namespace": "Dynamo.Utilities",
+  "kind": "struct",
+  "summary": "Type Point2D",
+  "interfaces": [
+    "System.IFormattable"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs",
+  "constructors": [
+    {
+      "name": "Point2D(double, double)",
+      "signature": "void Point2D(double x, double y)",
+      "summary": "Point2D.Point2D",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(Dynamo.Utilities.Point2D)",
+      "signature": "bool Equals(Dynamo.Utilities.Point2D value)",
+      "summary": "Point2D.Equals",
+      "params": [
+        {
+          "name": "value",
+          "type": "Dynamo.Utilities.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    },
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object o)",
+      "summary": "Point2D.Equals",
+      "params": [
+        {
+          "name": "o",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Point2D.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Point2D.ToString",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    },
+    {
+      "name": "ToString(System.IFormatProvider)",
+      "signature": "string ToString(System.IFormatProvider provider)",
+      "summary": "Point2D.ToString",
+      "params": [
+        {
+          "name": "provider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Point2D.X",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Point2D.Y",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/Point2D.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

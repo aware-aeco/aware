@@ -1,0 +1,180 @@
+{
+  "name": "IPackageUploadBuilder",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "interface",
+  "summary": "Type IPackageUploadBuilder",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadBuilder.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "NewPackageRetainUpload(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E, Dynamo.PackageManager.PackageUploadHandle)",
+      "signature": "Greg.Requests.PackageUpload NewPackageRetainUpload(Dynamo.PackageManager.Package package, string packagesDirectory, System.Collections.Generic.IEnumerable\u003Cstring\u003E roots, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E files, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownFiles, Dynamo.PackageManager.PackageUploadHandle handle)",
+      "summary": "IPackageUploadBuilder.NewPackageRetainUpload",
+      "params": [
+        {
+          "name": "package",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "roots",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "files",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "Dynamo.PackageManager.PackageUploadHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Greg.Requests.PackageUpload",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadBuilder.cs"
+    },
+    {
+      "name": "NewPackageUpload(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E, Dynamo.PackageManager.PackageUploadHandle)",
+      "signature": "Greg.Requests.PackageUpload NewPackageUpload(Dynamo.PackageManager.Package package, string packagesDirectory, System.Collections.Generic.IEnumerable\u003Cstring\u003E files, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownFiles, Dynamo.PackageManager.PackageUploadHandle handle)",
+      "summary": "IPackageUploadBuilder.NewPackageUpload",
+      "params": [
+        {
+          "name": "package",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "files",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "Dynamo.PackageManager.PackageUploadHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Greg.Requests.PackageUpload",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadBuilder.cs"
+    },
+    {
+      "name": "NewPackageVersionRetainUpload(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E, Dynamo.PackageManager.PackageUploadHandle)",
+      "signature": "Greg.Requests.PackageVersionUpload NewPackageVersionRetainUpload(Dynamo.PackageManager.Package package, string packagesDirectory, System.Collections.Generic.IEnumerable\u003Cstring\u003E roots, System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E files, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownFiles, Dynamo.PackageManager.PackageUploadHandle handle)",
+      "summary": "IPackageUploadBuilder.NewPackageVersionRetainUpload",
+      "params": [
+        {
+          "name": "package",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "roots",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "files",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.IEnumerable\u003Cstring\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "Dynamo.PackageManager.PackageUploadHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Greg.Requests.PackageVersionUpload",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadBuilder.cs"
+    },
+    {
+      "name": "NewPackageVersionUpload(Dynamo.PackageManager.Package, string, System.Collections.Generic.IEnumerable\u003Cstring\u003E, System.Collections.Generic.IEnumerable\u003Cstring\u003E, Dynamo.PackageManager.PackageUploadHandle)",
+      "signature": "Greg.Requests.PackageVersionUpload NewPackageVersionUpload(Dynamo.PackageManager.Package package, string packagesDirectory, System.Collections.Generic.IEnumerable\u003Cstring\u003E files, System.Collections.Generic.IEnumerable\u003Cstring\u003E markdownFiles, Dynamo.PackageManager.PackageUploadHandle handle)",
+      "summary": "IPackageUploadBuilder.NewPackageVersionUpload",
+      "params": [
+        {
+          "name": "package",
+          "type": "Dynamo.PackageManager.Package",
+          "optional": false
+        },
+        {
+          "name": "packagesDirectory",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "files",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "markdownFiles",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "Dynamo.PackageManager.PackageUploadHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Greg.Requests.PackageVersionUpload",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageUploadBuilder.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

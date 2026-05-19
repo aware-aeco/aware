@@ -1,0 +1,22 @@
+{
+  "name": "PortType",
+  "namespace": "Dynamo.Graph.Nodes",
+  "kind": "enum",
+  "summary": "Interaction logic for dynPort.xaml",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/PortModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Input",
+      "value": 0
+    },
+    {
+      "name": "Output",
+      "value": 1
+    }
+  ]
+}

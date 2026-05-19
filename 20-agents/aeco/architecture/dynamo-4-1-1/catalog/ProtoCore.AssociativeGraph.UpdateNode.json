@@ -1,0 +1,53 @@
+{
+  "name": "UpdateNode",
+  "namespace": "ProtoCore.AssociativeGraph",
+  "kind": "class",
+  "summary": "Type UpdateNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "UpdateNode()",
+      "signature": "void UpdateNode()",
+      "summary": "UpdateNode.UpdateNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object obj)",
+      "summary": "UpdateNode.Equals",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "dimensionNodeList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.UpdateNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "UpdateNode.dimensionNodeList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

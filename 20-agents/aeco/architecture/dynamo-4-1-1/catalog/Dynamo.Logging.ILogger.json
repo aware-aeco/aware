@@ -1,0 +1,110 @@
+{
+  "name": "ILogger",
+  "namespace": "Dynamo.Logging",
+  "kind": "interface",
+  "summary": "Consumes messages to be used for logging.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/ILogger.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Log(System.Exception)",
+      "signature": "void Log(System.Exception e)",
+      "summary": "Logs exception.",
+      "params": [
+        {
+          "name": "e",
+          "type": "System.Exception",
+          "doc": "Exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/ILogger.cs"
+    },
+    {
+      "name": "Log(string)",
+      "signature": "void Log(string message)",
+      "summary": "Logs the specified message.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/ILogger.cs"
+    },
+    {
+      "name": "Log(string, string)",
+      "signature": "void Log(string tag, string message)",
+      "summary": "Logs data with an associated tag.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "string",
+          "doc": "Tag.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "Message to be logged.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/ILogger.cs"
+    },
+    {
+      "name": "LogError(string)",
+      "signature": "void LogError(string error)",
+      "summary": "Logs error.",
+      "params": [
+        {
+          "name": "error",
+          "type": "string",
+          "doc": "Error message.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/ILogger.cs"
+    },
+    {
+      "name": "LogWarning(string, Dynamo.Logging.WarningLevel)",
+      "signature": "void LogWarning(string warning, Dynamo.Logging.WarningLevel level)",
+      "summary": "Logs warning.",
+      "params": [
+        {
+          "name": "warning",
+          "type": "string",
+          "doc": "Warning message.",
+          "optional": false
+        },
+        {
+          "name": "level",
+          "type": "Dynamo.Logging.WarningLevel",
+          "doc": "Warning level.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/ILogger.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

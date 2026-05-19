@@ -1,0 +1,134 @@
+{
+  "name": "Get",
+  "namespace": "DesignScript.Builtin",
+  "kind": "static-class",
+  "summary": "Type Get",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Builtin.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ValueAtIndex(DesignScript.Builtin.Dictionary, string)",
+      "signature": "object ValueAtIndex(DesignScript.Builtin.Dictionary dictionary, string key)",
+      "summary": "Get.ValueAtIndex",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "DesignScript.Builtin.Dictionary",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Builtin.cs"
+    },
+    {
+      "name": "ValueAtIndex(System.Collections.IList, int)",
+      "signature": "object ValueAtIndex(System.Collections.IList list, int index)",
+      "summary": "Get.ValueAtIndex",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.IList",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Builtin.cs"
+    },
+    {
+      "name": "ValueAtIndex(string, int)",
+      "signature": "object ValueAtIndex(string stringList, int index)",
+      "summary": "Get.ValueAtIndex",
+      "params": [
+        {
+          "name": "stringList",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Builtin.cs"
+    },
+    {
+      "name": "ValueAtIndexInForLoop(System.Collections.IList, int)",
+      "signature": "object ValueAtIndexInForLoop(System.Collections.IList list, int index)",
+      "summary": "Get.ValueAtIndexInForLoop",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.IList",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Builtin.cs"
+    },
+    {
+      "name": "ValueAtIndexInForLoop(string, int)",
+      "signature": "object ValueAtIndexInForLoop(string stringList, int index)",
+      "summary": "Get.ValueAtIndexInForLoop",
+      "params": [
+        {
+          "name": "stringList",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Builtin.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

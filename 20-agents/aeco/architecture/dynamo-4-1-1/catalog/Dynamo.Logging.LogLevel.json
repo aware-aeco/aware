@@ -1,0 +1,30 @@
+{
+  "name": "LogLevel",
+  "namespace": "Dynamo.Logging",
+  "kind": "enum",
+  "summary": "Specifies the level for log messages. A log message could be a console or file or warning.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/DynamoLogger.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Console",
+      "value": 0
+    },
+    {
+      "name": "ConsoleOnly",
+      "value": 3
+    },
+    {
+      "name": "File",
+      "value": 1
+    },
+    {
+      "name": "Warning",
+      "value": 2
+    }
+  ]
+}

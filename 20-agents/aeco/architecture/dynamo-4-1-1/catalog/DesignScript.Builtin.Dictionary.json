@@ -1,0 +1,157 @@
+{
+  "name": "Dictionary",
+  "namespace": "DesignScript.Builtin",
+  "kind": "class",
+  "summary": "Type Dictionary",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ByKeysValues(System.Collections.Generic.IList\u003Cstring\u003E, System.Collections.Generic.IList\u003Cobject\u003E)",
+      "signature": "DesignScript.Builtin.Dictionary ByKeysValues(System.Collections.Generic.IList\u003Cstring\u003E keys, System.Collections.Generic.IList\u003Cobject\u003E values)",
+      "summary": "Produces a Dictionary with the supplied keys and values. The number of entries is the shorter of keys or values.",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Collections.Generic.IList\u003Cstring\u003E",
+          "doc": "Keys of dictionary",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IList\u003Cobject\u003E",
+          "doc": "Values of dictionary",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DesignScript.Builtin.Dictionary",
+        "doc": "Dictionary from keys and values"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "Components",
+      "signature": "System.Collections.Generic.IDictionary\u003Cstring, object\u003E Components()",
+      "summary": "Produces the components of a Dictionary. The reverse of Dictionary.ByKeysValues.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, object\u003E",
+        "doc": "Values of the dictionary"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "RemoveKeys(System.Collections.Generic.IList\u003Cstring\u003E)",
+      "signature": "DesignScript.Builtin.Dictionary RemoveKeys(System.Collections.Generic.IList\u003Cstring\u003E keys)",
+      "summary": "Produce a new Dictionary with the given keys removed.",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Collections.Generic.IList\u003Cstring\u003E",
+          "doc": "The key in the Dictionary to remove",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DesignScript.Builtin.Dictionary",
+        "doc": "New dictionary with keys removed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "SetValueAtKeys(System.Collections.Generic.IList\u003Cstring\u003E, System.Collections.Generic.IList\u003Cobject\u003E)",
+      "signature": "DesignScript.Builtin.Dictionary SetValueAtKeys(System.Collections.Generic.IList\u003Cstring\u003E keys, System.Collections.Generic.IList\u003Cobject\u003E values)",
+      "summary": "Produce a new Dictionary with a list of keys set to the new values, possibly overwriting existing key-value pairs. These two lists are expected to be of the same length. If not, the shorter of the two bounds the number of insertions.",
+      "params": [
+        {
+          "name": "keys",
+          "type": "System.Collections.Generic.IList\u003Cstring\u003E",
+          "doc": "The keys in the Dictionary to set. If the same key already exists, the value at that key will be modified.",
+          "optional": false
+        },
+        {
+          "name": "values",
+          "type": "System.Collections.Generic.IList\u003Cobject\u003E",
+          "doc": "The corresponding values to insert.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "DesignScript.Builtin.Dictionary",
+        "doc": "New dictionary with the entries inserted"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a friendly string representation of the dictionary.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "String representation of the dictionary."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "ValueAtKey(string)",
+      "signature": "object ValueAtKey(string key)",
+      "summary": "Obtain the value at a specified key",
+      "params": [
+        {
+          "name": "key",
+          "type": "string",
+          "doc": "The key in the Dictionary to obtain value for",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Value at the specified key or null if it is not set"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The number of key value pairs in a Dictionary.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "Keys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Produces the keys in a Dictionary.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    },
+    {
+      "name": "Values",
+      "type": "System.Collections.Generic.IEnumerable\u003Cobject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Produces the values in a Dictionary.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Libraries/DesignScriptBuiltin/Dictionary.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,76 @@
+{
+  "name": "InstructionStream",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "InstructionStream holds the executable dsasm code and relevant information",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs",
+  "constructors": [
+    {
+      "name": "InstructionStream(ProtoCore.Language, ProtoCore.Core)",
+      "signature": "void InstructionStream(ProtoCore.Language langId, ProtoCore.Core core)",
+      "summary": "InstructionStream.InstructionStream",
+      "params": [
+        {
+          "name": "langId",
+          "type": "ProtoCore.Language",
+          "optional": false
+        },
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "dependencyGraph",
+      "type": "ProtoCore.AssociativeGraph.DependencyGraph",
+      "getter": true,
+      "setter": true,
+      "summary": "InstructionStream.dependencyGraph",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "entrypoint",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "InstructionStream.entrypoint",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "instrList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.Instruction\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "InstructionStream.instrList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "language",
+      "type": "ProtoCore.Language",
+      "getter": true,
+      "setter": true,
+      "summary": "InstructionStream.language",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    },
+    {
+      "name": "xUpdateList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.UpdateNodeRef\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "InstructionStream.xUpdateList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Executable.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

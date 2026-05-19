@@ -1,0 +1,191 @@
+{
+  "name": "ParseParam",
+  "namespace": "ProtoCore.Utils",
+  "kind": "class",
+  "summary": "Type ParseParam",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs",
+  "constructors": [
+    {
+      "name": "ParseParam(System.Guid, string, ProtoCore.Namespace.ElementResolver)",
+      "signature": "void ParseParam(System.Guid postfixGuid, string code, ProtoCore.Namespace.ElementResolver elementResolver)",
+      "summary": "ParseParam.ParseParam",
+      "params": [
+        {
+          "name": "postfixGuid",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "code",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "elementResolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AppendComments(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void AppendComments(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E commentNodes)",
+      "summary": "ParseParam.AppendComments",
+      "params": [
+        {
+          "name": "commentNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "AppendErrors(System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.ErrorEntry\u003E)",
+      "signature": "void AppendErrors(System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.ErrorEntry\u003E errors)",
+      "summary": "ParseParam.AppendErrors",
+      "params": [
+        {
+          "name": "errors",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.ErrorEntry\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "AppendParsedNodes(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E)",
+      "signature": "void AppendParsedNodes(System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E parsedNodes)",
+      "summary": "ParseParam.AppendParsedNodes",
+      "params": [
+        {
+          "name": "parsedNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "AppendUnboundIdentifier(string, string)",
+      "signature": "void AppendUnboundIdentifier(string displayName, string identifier)",
+      "summary": "ParseParam.AppendUnboundIdentifier",
+      "params": [
+        {
+          "name": "displayName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "identifier",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "AppendWarnings(System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.WarningEntry\u003E)",
+      "signature": "void AppendWarnings(System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.WarningEntry\u003E warnings)",
+      "summary": "ParseParam.AppendWarnings",
+      "params": [
+        {
+          "name": "warnings",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.WarningEntry\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ElementResolver",
+      "type": "ProtoCore.Namespace.ElementResolver",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.ElementResolver",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "Errors",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.ErrorEntry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.Errors",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "OriginalCode",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.OriginalCode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "ParsedComments",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.ParsedComments",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "ParsedNodes",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.AssociativeAST.AssociativeNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.ParsedNodes",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "PostfixGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.PostfixGuid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "UnboundIdentifiers",
+      "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.UnboundIdentifiers",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    },
+    {
+      "name": "Warnings",
+      "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.BuildData.WarningEntry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ParseParam.Warnings",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Utils/CompilerUtils.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

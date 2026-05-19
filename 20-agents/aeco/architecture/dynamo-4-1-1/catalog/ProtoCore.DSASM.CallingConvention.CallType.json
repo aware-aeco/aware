@@ -1,0 +1,26 @@
+{
+  "name": "CallType",
+  "namespace": "ProtoCore.DSASM.CallingConvention",
+  "kind": "enum",
+  "summary": "Type CallType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Defs.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Explicit",
+      "value": 0
+    },
+    {
+      "name": "ExplicitBase",
+      "value": 1
+    },
+    {
+      "name": "Implicit",
+      "value": 2
+    }
+  ]
+}

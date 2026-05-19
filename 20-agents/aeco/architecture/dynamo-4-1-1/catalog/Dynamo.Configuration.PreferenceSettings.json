@@ -1,0 +1,912 @@
+{
+  "name": "PreferenceSettings",
+  "namespace": "Dynamo.Configuration",
+  "kind": "class",
+  "summary": "PreferenceSettings is a class for GUI to persist certain settings. Upon running of the GUI, those settings that are persistent will be loaded from a XML file from DYNAMO_SETTINGS_FILE. When GUI is closed, the settings are saved back into the XML file.",
+  "base": "Dynamo.Core.NotificationObject",
+  "interfaces": [
+    "Dynamo.Interfaces.IPreferences",
+    "Dynamo.Interfaces.IRenderPrecisionPreference",
+    "Dynamo.Interfaces.IDisablePackageLoadingPreferences",
+    "Dynamo.Logging.ILogSource",
+    "Dynamo.Interfaces.IHideAutocompleteMethodOptions"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs",
+  "constructors": [
+    {
+      "name": "PreferenceSettings()",
+      "signature": "void PreferenceSettings()",
+      "summary": "Initializes a new instance of the Dynamo.Configuration.PreferenceSettings class.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AskForTrustedLocation(bool, bool, bool, bool, bool)",
+      "signature": "Dynamo.Configuration.PreferenceSettings.AskForTrustedLocationResult AskForTrustedLocation(bool isOpenedFile, bool isFileInTrustedLocation, bool isHomeSpace, bool isShowStartPage, bool isDisableTrustWarnings)",
+      "summary": "AskForTrustedLocation function",
+      "params": [
+        {
+          "name": "isOpenedFile",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isFileInTrustedLocation",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isHomeSpace",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isShowStartPage",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "isDisableTrustWarnings",
+          "type": "bool",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Configuration.PreferenceSettings.AskForTrustedLocationResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "GetIsBackgroundPreviewActive(string)",
+      "signature": "bool GetIsBackgroundPreviewActive(string name)",
+      "summary": "Returns active state of specified background preview",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Background preview name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "The active state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "GetPythonTemplateFilePath",
+      "signature": "string GetPythonTemplateFilePath()",
+      "summary": "Returns the static Python template file path. When the file exists and is not empty, its contents are used to populate new Python Script nodes added to the Dynamo workspace.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsTrustedLocation(string)",
+      "signature": "bool IsTrustedLocation(string location)",
+      "summary": "Checkes whether the input argument (path) is among Dynamo\u0027s trusted locations Only directories are supported. Subdirectories of a trusted directory are considered trusted.",
+      "params": [
+        {
+          "name": "location",
+          "type": "string",
+          "doc": "An absolute path to a folder or file on disk",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the path is a trusted location, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "Load(string)",
+      "signature": "Dynamo.Configuration.PreferenceSettings Load(string filePath)",
+      "summary": "Loads PreferenceSettings from specified XML file if possible, else initializes PreferenceSettings with default values.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "Path of the XML File",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Configuration.PreferenceSettings",
+        "doc": "Stored PreferenceSettings from xml file or Default PreferenceSettings if xml file is not found."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "LoadContent(string)",
+      "signature": "Dynamo.Configuration.PreferenceSettings LoadContent(string content)",
+      "summary": "Loads PreferenceSettings from specified XML file if possible, else initializes PreferenceSettings with default values.",
+      "params": [
+        {
+          "name": "content",
+          "type": "string",
+          "doc": "The content of the xml file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Configuration.PreferenceSettings",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "Save(string)",
+      "signature": "bool Save(string filePath)",
+      "summary": "Saves PreferenceSettings to XML, given a file path.",
+      "params": [
+        {
+          "name": "filePath",
+          "type": "string",
+          "doc": "Path of the XML File to save to.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if file is saved successfully, false if an error occurred."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "SaveInternal(string)",
+      "signature": "bool SaveInternal(string preferenceFilePath)",
+      "summary": "Saves PreferenceSettings in a default directory when no path is specified.",
+      "params": [
+        {
+          "name": "preferenceFilePath",
+          "type": "string",
+          "doc": "The file path to save preference settings to. If this parameter is null or empty string, preference settings will be saved to the default path.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if file is saved successfully, false if an error occurred."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "SetIsBackgroundPreviewActive(string, bool)",
+      "signature": "void SetIsBackgroundPreviewActive(string name, bool value)",
+      "summary": "Sets active state of specified background preview",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Background preview name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "doc": "Active state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "StaticFields",
+      "signature": "System.Collections.Generic.List\u003Cstring\u003E StaticFields()",
+      "summary": "List of static Fields to be excluded for evaluation due to their access level",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BackgroundPreviews",
+      "type": "System.Collections.Generic.List\u003CDynamo.Interfaces.BackgroundPreviewActiveState\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Collection of pairs [BackgroundPreviewName;isActive]",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "BackupFiles",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of backup file paths.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "BackupFilesCount",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines how many files will be backed up.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "BackupInterval",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines how long (in milliseconds) will the graph be automatically saved.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "BackupLocation",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Backup files path",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "CollapseToMinSize",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the groups should be collapsed to minimal size by default.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ConnectorType",
+      "type": "Dynamo.Graph.Connectors.ConnectorType",
+      "getter": true,
+      "setter": true,
+      "summary": "The types of connector: Bezier or Polyline.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ConsoleHeight",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The height of the console display.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "CustomPackageFolders",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of folders packages, custom nodes or direct paths to .dll and .ds files.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DefaultEnableLegacyPolyCurveBehavior",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "PolyCurve normal and direction behavior has been made predictable in Dynamo 3.0 and has therefore changed. This defines whether legacy (pre-3.0) PolyCurve behavior is selected by default. This flag can be overridden by individual workspaces that have the EnableLegacyPolyCurveBehavior flag defined. Note: For internal use only and will be removed in a future version of Dynamo.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DefaultNodeAutocompleteSuggestion",
+      "type": "Dynamo.Models.NodeAutocompleteSuggestion",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines the default method of the Node Autocomplete",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DefaultPythonEngine",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Engine used by default for new Python script and string nodes. If not empty, this takes precedence over any system settings.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DefaultRunType",
+      "type": "Dynamo.Models.RunType",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines the default run type when opening a workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DefaultScaleFactor",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Default geometry scale factor for a new workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DisableBuiltinPackages",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "If enabled Dynamo Built-In Packages will not be loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DisableCustomPackageLocations",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "If enabled user\u0027s custom package locations will not be loaded.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DisableTrustWarnings",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, trust warnings for opening .dyn files from untrusted locations will not be shown. Do not use this property setter, it does nothing. Exists only to support serialization.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "DynamoPlayerFolderGroups",
+      "type": "System.Collections.Generic.List\u003CDynamo.Configuration.DynamoPlayerFolderGroup\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Collections of folders used by individual Dynamo Player or Generative Design as entry points.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "EnableDynamoPlayerRenamedWatchAsOutput",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Enable legacy behavior for Dynamo Player to allow renamed Watch nodes to be seen as graph output. This flag is for use in the 2024 product release year and can removed for 2025",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "EnableNewNodeAutoCompleteUI",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This allows the user to enable or disable the new node auto complete menu.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "EnableNodeAutoComplete",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants to see the enabled node Auto Complete feature for port interaction.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "EnableNotificationCenter",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants to see the enabled Dynamo Notification Center.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "EnablePersistExtensions",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants the Extensions settings to persist across sessions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "EnableStaticSplashScreen",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if the user wants to see the static splash screen again",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "GraphChecksumItemsList",
+      "type": "System.Collections.Generic.List\u003CDynamo.Configuration.GraphChecksumItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Return a list of GraphChecksumItems",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "GraphicScaleUnit",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Contains the currently selected unit used for scaling the graphic helpers (grids, axes)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "GridScaleFactor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets the background grid element scale",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "GroupStyleItemsList",
+      "type": "System.Collections.Generic.List\u003CDynamo.Configuration.GroupStyleItem\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Stores the group styles added in the preference settings",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "HideAutocompleteMethodOptions",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "If true, autocomplete method options are hidden from UI",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "HideNodesBelowSpecificConfidenceLevel",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants to hide the nodes below a specific confidenc level.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "HomePageSettings",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Persistence for Dynamo HomePage",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IronPythonResolveTargetVersion",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The Version of the IronPython package that Dynamo will download when it is found as missing in graphs.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsADPAnalyticsReportingApproved",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether ADP analytics reporting is approved or not. Note that the getter will communicate to a analytics server which might be slow. This API should only be used in UI scenarios (not in performance sensitive areas)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsAutoSyncDocumentBrowser",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants the Document Browser content to be automatically synced to the selected Node. The default value is true.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsBackgroundGridVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should the background grid be shown?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsCreatedFromValidFile",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates when an instance has been created from a preferences file correctly, a support property",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsFirstRun",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates first run",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsIronPythonDialogDisabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants to see the Iron Python Extension Dialog box on every new session.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsMLAutocompleteTOUApproved",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if the user is agree to the ML Automcomplete Terms of Use",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "IsTimeStampIncludedInExportFilePath",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if the user export file path would include timestamp",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "LibraryWidth",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The width of the library pane.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "LibraryZoomScale",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the zoom scale of the library",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "Locale",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The locale of Dynamo UI, serialize locale instead of language name as ease of conversion back and forth",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "MLRecommendationConfidenceLevel",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines the level of confidence related to the ML recommendation.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "MLRecommendationNumberOfResults",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines the number of results of the ML recommendation",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "MaxNumRecentFiles",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The maximum number of recent file paths to be saved.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "NamespacesToExcludeFromLibrary",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates (if any) which namespaces should not be displayed in the Dynamo node library. String format: \u0022[library name]:[fully qualified namespace]\u0022",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "NamespacesToExcludeFromLibrarySpecified",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "True if the NamespacesToExcludeFromLibrary element is found in DynamoSettings.xml.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "NodeSearchTagSizeLimit",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Limits the size of the tags used by the EntryDictionary",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "NumberFormat",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The decimal precision used to display numbers.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "OpenFileInManualExecutionMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the default state of the \u0022Open in Manual Mode\u0022 checkbox in OpenFileDialog",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "OptionalInPortsCollapsed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the optional input ports are collapsed by default.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "PackageDirectoriesToUninstall",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of packages used by the Package Manager to determine which packages are marked for deletion.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "PackageDownloadTouAccepted",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the user has accepted the terms of use for downloading packages from package manager.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "PredefinedGroupStyleFontSizes",
+      "type": "System.Collections.ObjectModel.ObservableCollection\u003Cint\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the predefined Font size values",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "PythonScriptZoomScale",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates the zoom scale of the Python editor",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "PythonTemplateFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Path to the Python (.py) file to use as a starting template when creating a new PythonScript Node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ReadNotificationIds",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Stores the notification ids that was read by the user",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "RecentFiles",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "A list of recently opened file paths.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "RenderPrecision",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicate which render precision will be used",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "SelectedPackagePathForInstall",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Currently selected package path where all packages downloaded from the Package Manager will be installed. The default package path for install is the user data directory currently used by the Dynamo environment.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowCodeBlockLineNumber",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if code block node line numbers should be displayed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowConnector",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should connectors be visible?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowConnectorToolTip",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should connector tooltip be visible?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowDefaultGroupDescription",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if groups should display the default description.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowDetailedLayout",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether show detailed or compact layout during search.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowEdges",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether surface and solid edges will be rendered.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowPreviewBubbles",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if preview bubbles should be displayed on nodes.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowPythonAutoMigrationNotifications",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Controls whether Dynamo shows upgrade notifications for legacy CPython nodes when opening a graph. These notices appear when a graph contains CPython-engine Python nodes that are automatically upgraded to PythonNet3: \u2022 save/close confirmation dialog \u2022 banner inside the Python Script Editor NOTE: This setting is not related to the historical IronPython2 \u2192 CPython3 migration.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowRunPreview",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Show Run Preview flag.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ShowTabsAndSpacesInScriptEditor",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "This defines if user wants to see the whitespaces and tabs in python script editor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "TemplateFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Template path",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "TrustedLocations",
+      "type": "System.Collections.Generic.List\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Represents a copy of the list of trusted locations that the user added. Do not use this list to check if a new path is trusted or not. To check if a new path is trusted or not please use the IsTrustedLocation API (IsTrustedLocation supports locations)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "UnconnectedOutPortsCollapsed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if the unconnected output ports are hidden by default.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "UseHardwareAcceleration",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Should Dynamo use hardware acceleration if it is supported?",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "UseHostScaleUnits",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates if Host units should be used for graphic helpers for Dynamo Revit",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "UseRenderInstancing",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Indicates whether background preview use instancing when rendering geometry. be rendered.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "ViewExtensionSettings",
+      "type": "System.Collections.Generic.List\u003CDynamo.Configuration.ViewExtensionSettings\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Settings that apply to view extensions.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "WindowH",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The last height of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "WindowW",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The last width of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "WindowX",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The last X coordinate of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    },
+    {
+      "name": "WindowY",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The last Y coordinate of the Dynamo window.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "Log message event",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/PreferenceSettings.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "ILibraryLoader",
+  "namespace": "Dynamo.Library",
+  "kind": "interface",
+  "summary": "Exposes (use cref) LoadNodeLibrary method. Specify the usage of LoadNodeLibrary",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/ILibraryLoader.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadNodeLibrary(System.Reflection.Assembly)",
+      "signature": "void LoadNodeLibrary(System.Reflection.Assembly library)",
+      "summary": "Loads node\u0027s library",
+      "params": [
+        {
+          "name": "library",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Library/ILibraryLoader.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,151 @@
+{
+  "name": "PackageManagerExtension",
+  "namespace": "Dynamo.PackageManager",
+  "kind": "class",
+  "summary": "Type PackageManagerExtension",
+  "interfaces": [
+    "Dynamo.Extensions.IExtension",
+    "System.IDisposable",
+    "Dynamo.Logging.ILogSource",
+    "Dynamo.Extensions.IExtensionSource"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs",
+  "constructors": [
+    {
+      "name": "PackageManagerExtension()",
+      "signature": "void PackageManagerExtension()",
+      "summary": "PackageManagerExtension.PackageManagerExtension",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "PackageManagerExtension.Dispose",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "Ready(Dynamo.Extensions.ReadyParams)",
+      "signature": "void Ready(Dynamo.Extensions.ReadyParams sp)",
+      "summary": "PackageManagerExtension.Ready",
+      "params": [
+        {
+          "name": "sp",
+          "type": "Dynamo.Extensions.ReadyParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "Shutdown",
+      "signature": "void Shutdown()",
+      "summary": "PackageManagerExtension.Shutdown",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "Startup(Dynamo.Extensions.StartupParams)",
+      "signature": "void Startup(Dynamo.Extensions.StartupParams startupParams)",
+      "summary": "Validate the package manager url and initialize the PackageManagerClient object",
+      "params": [
+        {
+          "name": "startupParams",
+          "type": "Dynamo.Extensions.StartupParams",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerExtension.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "PackageLoader",
+      "type": "Dynamo.PackageManager.PackageLoader",
+      "getter": true,
+      "setter": false,
+      "summary": "Manages loading of packages (property meant solely for tests)",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "PackageManagerClient",
+      "type": "Dynamo.PackageManager.PackageManagerClient",
+      "getter": true,
+      "setter": false,
+      "summary": "Dynamo Package Manager Instance.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "RequestedExtensions",
+      "type": "System.Collections.Generic.IEnumerable\u003CDynamo.Extensions.IExtension\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerExtension.RequestedExtensions",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    },
+    {
+      "name": "UniqueId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PackageManagerExtension.UniqueId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs"
+    }
+  ],
+  "events": [
+    {
+      "name": "MessageLogged",
+      "delegate": "System.Action\u003CDynamo.Logging.ILogMessage\u003E",
+      "signature": "public event System.Action\u003CDynamo.Logging.ILogMessage\u003E MessageLogged",
+      "summary": "PackageManagerExtension.MessageLogged",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestAddExtension",
+      "delegate": "System.Action\u003CDynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Action\u003CDynamo.Extensions.IExtension\u003E RequestAddExtension",
+      "summary": "PackageManagerExtension.RequestAddExtension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RequestLoadExtension",
+      "delegate": "System.Func\u003Cstring, Dynamo.Extensions.IExtension\u003E",
+      "signature": "public event System.Func\u003Cstring, Dynamo.Extensions.IExtension\u003E RequestLoadExtension",
+      "summary": "PackageManagerExtension.RequestLoadExtension",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/PackageManagerExtension.cs",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

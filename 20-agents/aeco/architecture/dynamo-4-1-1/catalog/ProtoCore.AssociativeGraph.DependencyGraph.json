@@ -1,0 +1,125 @@
+{
+  "name": "DependencyGraph",
+  "namespace": "ProtoCore.AssociativeGraph",
+  "kind": "class",
+  "summary": "Type DependencyGraph",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "DependencyGraph(ProtoCore.Core)",
+      "signature": "void DependencyGraph(ProtoCore.Core core)",
+      "summary": "DependencyGraph.DependencyGraph",
+      "params": [
+        {
+          "name": "core",
+          "type": "ProtoCore.Core",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetExecutionStatesAtScope(int, int)",
+      "signature": "System.Collections.Generic.List\u003Cbool\u003E GetExecutionStatesAtScope(int classIndex, int procIndex)",
+      "summary": "DependencyGraph.GetExecutionStatesAtScope",
+      "params": [
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "procIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003Cbool\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "GetGraphNodesAtScope(int, int)",
+      "signature": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E GetGraphNodesAtScope(int classIndex, int procIndex)",
+      "summary": "DependencyGraph.GetGraphNodesAtScope",
+      "params": [
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "procIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "Push(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void Push(ProtoCore.AssociativeGraph.GraphNode node)",
+      "summary": "DependencyGraph.Push",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "RemoveNodesFromScope(int, int)",
+      "signature": "void RemoveNodesFromScope(int classIndex, int procIndex)",
+      "summary": "DependencyGraph.RemoveNodesFromScope",
+      "params": [
+        {
+          "name": "classIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "procIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "GraphList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "DependencyGraph.GraphList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

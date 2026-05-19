@@ -1,0 +1,49 @@
+{
+  "name": "CaseInfo",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type CaseInfo",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs",
+  "constructors": [
+    {
+      "name": "CaseInfo()",
+      "signature": "void CaseInfo()",
+      "summary": "CaseInfo.CaseInfo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Action",
+      "type": "System.Action\u003Cobject\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "CaseInfo.Action",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    },
+    {
+      "name": "IsDefault",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "CaseInfo.IsDefault",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    },
+    {
+      "name": "Target",
+      "type": "System.Type",
+      "getter": true,
+      "setter": true,
+      "summary": "CaseInfo.Target",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoUtilities/TypeSwitch.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

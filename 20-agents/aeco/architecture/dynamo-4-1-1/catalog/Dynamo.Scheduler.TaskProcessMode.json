@@ -1,0 +1,24 @@
+{
+  "name": "TaskProcessMode",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "enum",
+  "summary": "Describes the way a scheduled task will be processed.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/DynamoScheduler.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Asynchronous",
+      "value": 1,
+      "summary": "Scheduled task will be processed by schedule"
+    },
+    {
+      "name": "Synchronous",
+      "value": 0,
+      "summary": "Scheduled task will be processed immediately"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "ViewExtensionDisplayMode",
+  "namespace": "Dynamo.Configuration",
+  "kind": "enum",
+  "summary": "Possible display modes for an extension UI control.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/ViewExtensionSettings.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DockRight",
+      "value": 1,
+      "summary": "Extension control should be displayed docked to the right side."
+    },
+    {
+      "name": "FloatingWindow",
+      "value": 2,
+      "summary": "Extension control should be displayed in a floating window."
+    },
+    {
+      "name": "Unspecified",
+      "value": 0,
+      "summary": "Not really a display mode but rather the absence of one."
+    }
+  ]
+}

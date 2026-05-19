@@ -1,0 +1,478 @@
+{
+  "name": "GraphNode",
+  "namespace": "ProtoCore.AssociativeGraph",
+  "kind": "class",
+  "summary": "Type GraphNode",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs",
+  "constructors": [
+    {
+      "name": "GraphNode()",
+      "signature": "void GraphNode()",
+      "summary": "GraphNode.GraphNode",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DependsOn(ProtoCore.AssociativeGraph.UpdateNodeRef, ref ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "bool DependsOn(ProtoCore.AssociativeGraph.UpdateNodeRef modifiedRef, ref ProtoCore.AssociativeGraph.GraphNode dependentNode)",
+      "summary": "GraphNode.DependsOn",
+      "params": [
+        {
+          "name": "modifiedRef",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+          "optional": false
+        },
+        {
+          "name": "dependentNode",
+          "type": "ref ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "DependsOnTempSSA",
+      "signature": "bool DependsOnTempSSA()",
+      "summary": "GraphNode.DependsOnTempSSA",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsSSANode",
+      "signature": "bool IsSSANode()",
+      "summary": "GraphNode.IsSSANode",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsUpdateableBy(ProtoCore.AssociativeGraph.UpdateNodeRef)",
+      "signature": "bool IsUpdateableBy(ProtoCore.AssociativeGraph.UpdateNodeRef modifiedRef)",
+      "summary": "GraphNode.IsUpdateableBy",
+      "params": [
+        {
+          "name": "modifiedRef",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeRef",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "PushChildNode(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void PushChildNode(ProtoCore.AssociativeGraph.GraphNode child)",
+      "summary": "GraphNode.PushChildNode",
+      "params": [
+        {
+          "name": "child",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "PushDependent(ProtoCore.AssociativeGraph.GraphNode)",
+      "signature": "void PushDependent(ProtoCore.AssociativeGraph.GraphNode dependent)",
+      "summary": "GraphNode.PushDependent",
+      "params": [
+        {
+          "name": "dependent",
+          "type": "ProtoCore.AssociativeGraph.GraphNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "PushSymbolReference(ProtoCore.DSASM.SymbolNode)",
+      "signature": "void PushSymbolReference(ProtoCore.DSASM.SymbolNode symbol)",
+      "summary": "GraphNode.PushSymbolReference",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "PushSymbolReference(ProtoCore.DSASM.SymbolNode, ProtoCore.AssociativeGraph.UpdateNodeType)",
+      "signature": "void PushSymbolReference(ProtoCore.DSASM.SymbolNode symbol, ProtoCore.AssociativeGraph.UpdateNodeType type)",
+      "summary": "GraphNode.PushSymbolReference",
+      "params": [
+        {
+          "name": "symbol",
+          "type": "ProtoCore.DSASM.SymbolNode",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "ProtoCore.AssociativeGraph.UpdateNodeType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "ResolveLHSArrayIndex",
+      "signature": "void ResolveLHSArrayIndex()",
+      "summary": "GraphNode.ResolveLHSArrayIndex",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AstID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.AstID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "CallsiteIdentifier",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.CallsiteIdentifier",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "ChildrenNodes",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Children nodes are nodes that will be marked dirty if this graphnode is executed a = 1 \u003C- the child of this graphnode is \u0027b = a\u0027 b = a",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsLHSIdentList",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.IsLHSIdentList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsLastNodeInSSA",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.IsLastNodeInSSA",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "IsModifier",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.IsModifier",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "OriginalAstID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.OriginalAstID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "ParentNodes",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Parent nodes are the nodes that this graphnode is dependent on a = 1 b = a \u003C- the parent of this graphnode is \u0027a = 1\u0027",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "ProcedureOwned",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.ProcedureOwned",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "UID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.UID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "allowDependents",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.allowDependents",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "classIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.classIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "counter",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.counter",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "cyclePoint",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.cyclePoint",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "dependencyGraphListID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.dependencyGraphListID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "dependentList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.GraphNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.dependentList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "dimensionNodeList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.UpdateNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.dimensionNodeList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "exprUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.exprUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "firstProc",
+      "type": "ProtoCore.DSASM.ProcedureNode",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.firstProc",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.guid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isActive",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Flag determines if a graph node is active or not. If inactive, the graph node is invalid this is especially used in the LiveRunner to mark modified/deleted nodes inactive so that they are not executed",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isAutoGenerated",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isAutoGenerated",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isCyclic",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isCyclic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isDirty",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isDirty",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isIndexingLHS",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isIndexingLHS",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isInlineConditional",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isInlineConditional",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isLHSNode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isLHSNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isLanguageBlock",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isLanguageBlock",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "isReturn",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.isReturn",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "languageBlockId",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.languageBlockId",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "lastGraphNode",
+      "type": "ProtoCore.AssociativeGraph.GraphNode",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.lastGraphNode",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "procIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.procIndex",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "reExecuteExpression",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.reExecuteExpression",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "ssaExpressionUID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.ssaExpressionUID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "ssaSubExpressionID",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.ssaSubExpressionID",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "symbolListWithinExpression",
+      "type": "System.Collections.Generic.List\u003CProtoCore.DSASM.SymbolNode\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "This is the list of lhs symbols in the same expression ID It is applicable for expressions transformed to SSA where each ssa temp in the same expression is in this list This list is only populated on the last SSA assignment as such: Given a = b.c.d [0] t0 = b -\u003E List empty [1] t1 = t0.c -\u003E List empty [2] t2 = t1.d -\u003E List empty [3] a = t2 -\u003E This is the last SSA stmt, its graphnode contains a list of graphnodes {t0,t1,t2}",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "updateBlock",
+      "type": "ProtoCore.AssociativeGraph.UpdateBlock",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.updateBlock",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    },
+    {
+      "name": "updateNodeRefList",
+      "type": "System.Collections.Generic.List\u003CProtoCore.AssociativeGraph.UpdateNodeRef\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "GraphNode.updateNodeRefList",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/AssociativeGraph.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

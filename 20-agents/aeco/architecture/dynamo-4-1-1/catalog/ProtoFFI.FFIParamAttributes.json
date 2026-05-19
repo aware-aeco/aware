@@ -1,0 +1,48 @@
+{
+  "name": "FFIParamAttributes",
+  "namespace": "ProtoFFI",
+  "kind": "class",
+  "summary": "A parameter\u0027s attributes.",
+  "base": "ProtoCore.AST.AssociativeAST.ExternalAttributes",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs",
+  "constructors": [
+    {
+      "name": "FFIParamAttributes(System.Reflection.ParameterInfo)",
+      "signature": "void FFIParamAttributes(System.Reflection.ParameterInfo parameter)",
+      "summary": "FFIParamAttributes.FFIParamAttributes",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "System.Reflection.ParameterInfo",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DefaultArgumentExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "FFIParamAttributes.DefaultArgumentExpression",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    },
+    {
+      "name": "IsArbitraryDimensionArray",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "FFIParamAttributes.IsArbitraryDimensionArray",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/FFI/CLRDLLModule.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

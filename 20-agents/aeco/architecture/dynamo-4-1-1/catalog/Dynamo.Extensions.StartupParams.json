@@ -1,0 +1,78 @@
+{
+  "name": "StartupParams",
+  "namespace": "Dynamo.Extensions",
+  "kind": "class",
+  "summary": "Application-level handles provided to an extension when Dynamo is starting up and is not yet ready for interaction.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AuthProvider",
+      "type": "Greg.IAuthProvider",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Greg.IAuthProvider for DynamoModel",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "CustomNodeManager",
+      "type": "Dynamo.Graph.Nodes.CustomNodes.ICustomNodeManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Graph.Nodes.CustomNodes.ICustomNodeManager for DynamoModel",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "DynamoVersion",
+      "type": "System.Version",
+      "getter": true,
+      "setter": false,
+      "summary": "Defines version of Dynamo",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "LibraryLoader",
+      "type": "Dynamo.Library.ILibraryLoader",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Library.ILibraryLoader for DynamoModel",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "LinterManager",
+      "type": "Dynamo.Linting.LinterManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Sessions Linter Manager",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "NoNetworkMode",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "True when Dynamo starts up in offline mode.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "PathManager",
+      "type": "Dynamo.Interfaces.IPathManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Interfaces.IPathManager for DynamoModel",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    },
+    {
+      "name": "Preferences",
+      "type": "Dynamo.Interfaces.IPreferences",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Dynamo.Interfaces.IPreferences for DynamoModel",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Extensions/StartupParams.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

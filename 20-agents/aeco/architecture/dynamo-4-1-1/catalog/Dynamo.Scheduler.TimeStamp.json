@@ -1,0 +1,98 @@
+{
+  "name": "TimeStamp",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "struct",
+  "summary": "This class is used to set creation time of async task in Dynamo Scheduler.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/TimeStampGenerator.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals(object)",
+      "signature": "bool Equals(object other)",
+      "summary": "TimeStamp.Equals",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/TimeStampGenerator.cs"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "TimeStamp.GetHashCode",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/TimeStampGenerator.cs"
+    },
+    {
+      "name": "op_GreaterThan(Dynamo.Scheduler.TimeStamp, Dynamo.Scheduler.TimeStamp)",
+      "signature": "bool op_GreaterThan(Dynamo.Scheduler.TimeStamp timeStamp0, Dynamo.Scheduler.TimeStamp timeStamp1)",
+      "summary": "The public usage of time stamps should be restricted to these methods which are used to ensure an ordering on timestamps",
+      "params": [
+        {
+          "name": "timeStamp0",
+          "type": "Dynamo.Scheduler.TimeStamp",
+          "doc": "The first time stamp in comparison.",
+          "optional": false
+        },
+        {
+          "name": "timeStamp1",
+          "type": "Dynamo.Scheduler.TimeStamp",
+          "doc": "The second time stamp in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if the first time stamp was created later than the second time stamp, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/TimeStampGenerator.cs"
+    },
+    {
+      "name": "op_LessThan(Dynamo.Scheduler.TimeStamp, Dynamo.Scheduler.TimeStamp)",
+      "signature": "bool op_LessThan(Dynamo.Scheduler.TimeStamp timeStamp0, Dynamo.Scheduler.TimeStamp timeStamp1)",
+      "summary": "The public usage of time stamps should be restricted to these methods which are used to ensure an ordering on timestamps",
+      "params": [
+        {
+          "name": "timeStamp0",
+          "type": "Dynamo.Scheduler.TimeStamp",
+          "doc": "The first time stamp in comparison.",
+          "optional": false
+        },
+        {
+          "name": "timeStamp1",
+          "type": "Dynamo.Scheduler.TimeStamp",
+          "doc": "The second time stamp in comparison.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if the first time stamp was created earlier than the second time stamp, or false otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/TimeStampGenerator.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

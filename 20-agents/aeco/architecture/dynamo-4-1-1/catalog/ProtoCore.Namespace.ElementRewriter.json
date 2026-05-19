@@ -1,0 +1,118 @@
+{
+  "name": "ElementRewriter",
+  "namespace": "ProtoCore.Namespace",
+  "kind": "class",
+  "summary": "Type ElementRewriter",
+  "base": "ProtoCore.SyntaxAnalysis.AstReplacer",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementRewriter.cs",
+  "constructors": [
+    {
+      "name": "ElementRewriter(ProtoCore.DSASM.ClassTable, ProtoCore.Namespace.ElementRewriter.SymbolConflictWarningHandler, ProtoCore.Namespace.ElementResolver)",
+      "signature": "void ElementRewriter(ProtoCore.DSASM.ClassTable classTable, ProtoCore.Namespace.ElementRewriter.SymbolConflictWarningHandler warningHandler, ProtoCore.Namespace.ElementResolver resolver)",
+      "summary": "ElementRewriter.ElementRewriter",
+      "params": [
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "optional": false
+        },
+        {
+          "name": "warningHandler",
+          "type": "ProtoCore.Namespace.ElementRewriter.SymbolConflictWarningHandler",
+          "optional": false
+        },
+        {
+          "name": "resolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "RewriteElementNames(ProtoCore.DSASM.ClassTable, ProtoCore.Namespace.ElementResolver, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E, ProtoCore.Namespace.ElementRewriter.SymbolConflictWarningHandler)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E RewriteElementNames(ProtoCore.DSASM.ClassTable classTable, ProtoCore.Namespace.ElementResolver elementResolver, System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E astNodes, ProtoCore.Namespace.ElementRewriter.SymbolConflictWarningHandler handler)",
+      "summary": "Lookup namespace resolution map to substitute partial classnames with their fully qualified names in ASTs. If partial class is not found in map, update ResolutionMap with fully resolved name from compiler.",
+      "params": [
+        {
+          "name": "classTable",
+          "type": "ProtoCore.DSASM.ClassTable",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "elementResolver",
+          "type": "ProtoCore.Namespace.ElementResolver",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "astNodes",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+          "doc": "parent AST node",
+          "optional": false
+        },
+        {
+          "name": "handler",
+          "type": "ProtoCore.Namespace.ElementRewriter.SymbolConflictWarningHandler",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.AST.Node\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    },
+    {
+      "name": "VisitIdentifierListNode(ProtoCore.AST.AssociativeAST.IdentifierListNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode VisitIdentifierListNode(ProtoCore.AST.AssociativeAST.IdentifierListNode node)",
+      "summary": "ElementRewriter.VisitIdentifierListNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.IdentifierListNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    },
+    {
+      "name": "VisitTypedIdentifierNode(ProtoCore.AST.AssociativeAST.TypedIdentifierNode)",
+      "signature": "ProtoCore.AST.AssociativeAST.AssociativeNode VisitTypedIdentifierNode(ProtoCore.AST.AssociativeAST.TypedIdentifierNode node)",
+      "summary": "ElementRewriter.VisitTypedIdentifierNode",
+      "params": [
+        {
+          "name": "node",
+          "type": "ProtoCore.AST.AssociativeAST.TypedIdentifierNode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.AST.AssociativeAST.AssociativeNode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Namespace/ElementRewriter.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

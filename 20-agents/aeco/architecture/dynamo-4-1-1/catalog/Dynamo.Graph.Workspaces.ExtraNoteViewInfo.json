@@ -1,0 +1,24 @@
+{
+  "name": "ExtraNoteViewInfo",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Non view-specific container for additional note view information required to fully construct a WorkspaceModel from JSON",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "ExtraNoteViewInfo()",
+      "signature": "void ExtraNoteViewInfo()",
+      "summary": "ExtraNoteViewInfo.ExtraNoteViewInfo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

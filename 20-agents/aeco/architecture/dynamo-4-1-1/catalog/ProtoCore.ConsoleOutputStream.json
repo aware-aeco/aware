@@ -1,0 +1,43 @@
+{
+  "name": "ConsoleOutputStream",
+  "namespace": "ProtoCore",
+  "kind": "class",
+  "summary": "Type ConsoleOutputStream",
+  "interfaces": [
+    "ProtoCore.IOutputStream"
+  ],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [
+    {
+      "name": "ConsoleOutputStream()",
+      "signature": "void ConsoleOutputStream()",
+      "summary": "ConsoleOutputStream.ConsoleOutputStream",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Write(ProtoCore.OutputMessage)",
+      "signature": "void Write(ProtoCore.OutputMessage message)",
+      "summary": "ConsoleOutputStream.Write",
+      "params": [
+        {
+          "name": "message",
+          "type": "ProtoCore.OutputMessage",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "ExtraConnectorPinInfo",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Container for connector pin view information required to fully construct a WorkspaceViewModel from JSON",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs",
+  "constructors": [
+    {
+      "name": "ExtraConnectorPinInfo()",
+      "signature": "void ExtraConnectorPinInfo()",
+      "summary": "ExtraConnectorPinInfo.ExtraConnectorPinInfo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceModel.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

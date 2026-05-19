@@ -1,0 +1,41 @@
+{
+  "name": "UnresolvedFunctionException",
+  "namespace": "Dynamo.Graph.Nodes.ZeroTouch",
+  "kind": "class",
+  "summary": "The exception that is thrown when definition for a custom node cannot be found",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/UnresolvedFunctionException.cs",
+  "constructors": [
+    {
+      "name": "UnresolvedFunctionException(string)",
+      "signature": "void UnresolvedFunctionException(string functionName)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Nodes.ZeroTouch.UnresolvedFunctionException class with the name of the custom node that causes this exception.",
+      "params": [
+        {
+          "name": "functionName",
+          "type": "string",
+          "doc": "User friendly name of custom node on UI.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/UnresolvedFunctionException.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FunctionName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns user friendly name of not found custom node.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Nodes/ZeroTouch/UnresolvedFunctionException.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

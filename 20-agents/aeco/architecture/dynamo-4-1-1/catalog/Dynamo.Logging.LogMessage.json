@@ -1,0 +1,123 @@
+{
+  "name": "LogMessage",
+  "namespace": "Dynamo.Logging",
+  "kind": "static-class",
+  "summary": "Factory methods for creating log messages.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/LogMessage.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Error(System.Exception)",
+      "signature": "Dynamo.Logging.ILogMessage Error(System.Exception exception)",
+      "summary": "Creates a LogMessage representing an error.",
+      "params": [
+        {
+          "name": "exception",
+          "type": "System.Exception",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Logging.ILogMessage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/LogMessage.cs"
+    },
+    {
+      "name": "Error(string)",
+      "signature": "Dynamo.Logging.ILogMessage Error(string message)",
+      "summary": "Creates a LogMessage representing an error.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Logging.ILogMessage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/LogMessage.cs"
+    },
+    {
+      "name": "Info(string)",
+      "signature": "Dynamo.Logging.ILogMessage Info(string message)",
+      "summary": "Creates a basic LogMessage.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Logging.ILogMessage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/LogMessage.cs"
+    },
+    {
+      "name": "Log(Dynamo.Logging.ILogger, Dynamo.Logging.ILogMessage)",
+      "signature": "void Log(Dynamo.Logging.ILogger logger, Dynamo.Logging.ILogMessage message)",
+      "summary": "Logs a LogMessage.",
+      "params": [
+        {
+          "name": "logger",
+          "type": "Dynamo.Logging.ILogger",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "Dynamo.Logging.ILogMessage",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/LogMessage.cs"
+    },
+    {
+      "name": "Warning(string, Dynamo.Logging.WarningLevel)",
+      "signature": "Dynamo.Logging.ILogMessage Warning(string message, Dynamo.Logging.WarningLevel severity)",
+      "summary": "Creates a LogMessage representing a warning.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "severity",
+          "type": "Dynamo.Logging.WarningLevel",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Dynamo.Logging.ILogMessage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Logging/LogMessage.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

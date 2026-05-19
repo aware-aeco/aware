@@ -1,0 +1,42 @@
+{
+  "name": "IProfilingExecutionTimeData",
+  "namespace": "Dynamo.Engine.Profiling",
+  "kind": "interface",
+  "summary": "Returns information about time spent compiling and executing nodes.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Engine/Profiling/IProfilingExecutionTimeData.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "NodeExecutionTime(Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "System.Nullable\u003CSystem.TimeSpan\u003E NodeExecutionTime(Dynamo.Graph.Nodes.NodeModel node)",
+      "summary": "Returns the amount of time spent compiling and executing a specific node. Returns null if the node was not executed during the most recent graph run.",
+      "params": [
+        {
+          "name": "node",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Nullable\u003CSystem.TimeSpan\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Engine/Profiling/IProfilingExecutionTimeData.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TotalExecutionTime",
+      "type": "System.Nullable\u003CSystem.TimeSpan\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the total amount of time spent compiling and executing nodes during the most recent graph run.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Engine/Profiling/IProfilingExecutionTimeData.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

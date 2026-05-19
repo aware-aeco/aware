@@ -1,0 +1,186 @@
+{
+  "name": "NoteModel",
+  "namespace": "Dynamo.Graph.Notes",
+  "kind": "class",
+  "summary": "NoteModel represents notes in Dynamo.",
+  "base": "Dynamo.Graph.ModelBase",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs",
+  "constructors": [
+    {
+      "name": "NoteModel(double, double, string, System.Guid)",
+      "signature": "void NoteModel(double x, double y, string text, System.Guid guid)",
+      "summary": "Creates NoteModel.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "X coordinate of note.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "Y coordinate of note.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "Text of note",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "Unique id of note",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    },
+    {
+      "name": "NoteModel(double, double, string, System.Guid, Dynamo.Graph.Nodes.NodeModel)",
+      "signature": "void NoteModel(double x, double y, string text, System.Guid guid, Dynamo.Graph.Nodes.NodeModel pinnedNode)",
+      "summary": "Creates NoteModel with a reference to a pinned node.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "doc": "X coordinate of note.",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "doc": "Y coordinate of note.",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "Text of note",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "doc": "Unique id of note",
+          "optional": false
+        },
+        {
+          "name": "pinnedNode",
+          "type": "Dynamo.Graph.Nodes.NodeModel",
+          "doc": "Pinned NodeModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void DeserializeCore(System.Xml.XmlElement nodeElement, Dynamo.Graph.SaveContext context)",
+      "summary": "NoteModel.DeserializeCore",
+      "params": [
+        {
+          "name": "nodeElement",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement, Dynamo.Graph.SaveContext)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element, Dynamo.Graph.SaveContext context)",
+      "summary": "NoteModel.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Dynamo.Graph.SaveContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    },
+    {
+      "name": "UpdateValueCore(Dynamo.Graph.UpdateValueParams)",
+      "signature": "bool UpdateValueCore(Dynamo.Graph.UpdateValueParams updateValueParams)",
+      "summary": "NoteModel.UpdateValueCore",
+      "params": [
+        {
+          "name": "updateValueParams",
+          "type": "Dynamo.Graph.UpdateValueParams",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PinnedNode",
+      "type": "Dynamo.Graph.Nodes.NodeModel",
+      "getter": true,
+      "setter": true,
+      "summary": "NodeModel which this Note is pinned to When using the pin to node command note and node become entangled so that if you select and move one the other one moves as well.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    },
+    {
+      "name": "PinnedNodeGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "NoteModel.PinnedNodeGuid",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the text inside the note.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    },
+    {
+      "name": "UndoRedoAction",
+      "type": "Dynamo.Graph.Notes.NoteModel.UndoAction",
+      "getter": true,
+      "setter": true,
+      "summary": "NoteModel.UndoRedoAction",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Notes/NoteModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

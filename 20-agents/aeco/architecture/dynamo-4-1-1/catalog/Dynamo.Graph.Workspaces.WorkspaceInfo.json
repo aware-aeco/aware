@@ -1,0 +1,176 @@
+{
+  "name": "WorkspaceInfo",
+  "namespace": "Dynamo.Graph.Workspaces",
+  "kind": "class",
+  "summary": "Contains sufficient data to create a Dynamo.Graph.Workspaces.WorkspaceModel object",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs",
+  "constructors": [
+    {
+      "name": "WorkspaceInfo()",
+      "signature": "void WorkspaceInfo()",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Workspaces.WorkspaceInfo class with default workspace data.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "WorkspaceInfo(string, string, string, Dynamo.Models.RunType)",
+      "signature": "void WorkspaceInfo(string id, string name, string description, Dynamo.Models.RunType runType)",
+      "summary": "Initializes a new instance of the Dynamo.Graph.Workspaces.WorkspaceInfo class with default workspace data.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "runType",
+          "type": "Dynamo.Models.RunType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns full category name of custom node",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns description of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns file name of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "HasRunWithoutCrash",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if the workspace was executed successfully at last time",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "ID",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns System.Guid identifier string value of custom node workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "IsCustomNodeWorkspace",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates whether the workspace is custom node or home workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "IsVisibleInDynamoLibrary",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Indicates if the custom node is visible node library",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns name of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "RunPeriod",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns run period value of the home workspace if RunType is Periodic",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "RunType",
+      "type": "Dynamo.Models.RunType",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns run type of the home workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "ScaleFactor",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the scale factor for ProtoGeometry geometries",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns version of Dynamo where the workspace was created",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns X coordinate of top left corner of visible workspace part",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns Y coordinate of top left corner of visible workspace part",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    },
+    {
+      "name": "Zoom",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns zoom value of the workspace",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Graph/Workspaces/WorkspaceInfo.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

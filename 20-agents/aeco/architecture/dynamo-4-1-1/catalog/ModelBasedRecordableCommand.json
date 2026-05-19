@@ -1,0 +1,90 @@
+{
+  "name": "ModelBasedRecordableCommand",
+  "namespace": "",
+  "kind": "class",
+  "summary": "Type ModelBasedRecordableCommand",
+  "base": "Dynamo.Models.DynamoModel.RecordableCommand",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs",
+  "constructors": [
+    {
+      "name": "ModelBasedRecordableCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E)",
+      "signature": "void ModelBasedRecordableCommand(System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E guids)",
+      "summary": "A collection of System.Guid identifying the objects on which to operate.",
+      "params": [
+        {
+          "name": "guids",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "DeserializeGuid(System.Xml.XmlElement, Dynamo.Utilities.XmlElementHelper)",
+      "signature": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E DeserializeGuid(System.Xml.XmlElement element, Dynamo.Utilities.XmlElementHelper helper)",
+      "summary": "ModelBasedRecordableCommand.DeserializeGuid",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        },
+        {
+          "name": "helper",
+          "type": "Dynamo.Utilities.XmlElementHelper",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "SerializeCore(System.Xml.XmlElement)",
+      "signature": "void SerializeCore(System.Xml.XmlElement element)",
+      "summary": "ModelBasedRecordableCommand.SerializeCore",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Xml.XmlElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ModelGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "The first System.Guid in the Dynamo.Models.DynamoModel.ModelBasedRecordableCommand.ModelGuid collection, or an empty System.Guid.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    },
+    {
+      "name": "ModelGuids",
+      "type": "System.Collections.Generic.IEnumerable\u003CSystem.Guid\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "A collection of System.Guid.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/RecordableCommands.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

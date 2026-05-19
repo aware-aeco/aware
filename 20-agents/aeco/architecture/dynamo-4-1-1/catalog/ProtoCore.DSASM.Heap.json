@@ -1,0 +1,295 @@
+{
+  "name": "Heap",
+  "namespace": "ProtoCore.DSASM",
+  "kind": "class",
+  "summary": "Type Heap",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs",
+  "constructors": [
+    {
+      "name": "Heap()",
+      "signature": "void Heap()",
+      "summary": "Heap.Heap",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AllocateArray(ProtoCore.DSASM.StackValue[])",
+      "signature": "ProtoCore.DSASM.StackValue AllocateArray(ProtoCore.DSASM.StackValue[] values)",
+      "summary": "Allocate an array. Exceptions: ProtoCore.Exceptions.RunOutOfMemoryException",
+      "params": [
+        {
+          "name": "values",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "doc": "Array elements whose indices are integer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "AllocateFixedString(string)",
+      "signature": "ProtoCore.DSASM.StackValue AllocateFixedString(string str)",
+      "summary": "Allocate string constant. String constant won\u0027t be garbage collected.",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "AllocatePointer(ProtoCore.DSASM.StackValue[])",
+      "signature": "ProtoCore.DSASM.StackValue AllocatePointer(ProtoCore.DSASM.StackValue[] values)",
+      "summary": "Allocate an object pointer. Exceptions: ProtoCore.Exceptions.RunOutOfMemoryException",
+      "params": [
+        {
+          "name": "values",
+          "type": "ProtoCore.DSASM.StackValue[]",
+          "doc": "Values of object properties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "AllocatePointer(int, ProtoCore.DSASM.MetaData)",
+      "signature": "ProtoCore.DSASM.StackValue AllocatePointer(int size, ProtoCore.DSASM.MetaData metadata)",
+      "summary": "Allocate an object pointer. Exceptions: ProtoCore.Exceptions.RunOutOfMemoryException",
+      "params": [
+        {
+          "name": "size",
+          "type": "int",
+          "doc": "The size of object properties.",
+          "optional": false
+        },
+        {
+          "name": "metadata",
+          "type": "ProtoCore.DSASM.MetaData",
+          "doc": "Object type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "AllocateString(string)",
+      "signature": "ProtoCore.DSASM.StackValue AllocateString(string str)",
+      "summary": "Allocate string.",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ProtoCore.DSASM.StackValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "Free",
+      "signature": "void Free()",
+      "summary": "Heap.Free",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "FullGC(System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.Executive)",
+      "signature": "void FullGC(System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E gcroots, ProtoCore.DSASM.Executive exe)",
+      "summary": "Do a full GC cycle",
+      "params": [
+        {
+          "name": "gcroots",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "exe",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "GC",
+      "signature": "void GC()",
+      "summary": "GC",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "GetString(ProtoCore.DSASM.DSString)",
+      "signature": "string GetString(ProtoCore.DSASM.DSString dsString)",
+      "summary": "Returns string that pointer represents.",
+      "params": [
+        {
+          "name": "dsString",
+          "type": "ProtoCore.DSASM.DSString",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "ReportAllocation(int)",
+      "signature": "void ReportAllocation(int newSize)",
+      "summary": "Heap.ReportAllocation",
+      "params": [
+        {
+          "name": "newSize",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "SetRoots(System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E, ProtoCore.DSASM.Executive)",
+      "signature": "bool SetRoots(System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E gcroots, ProtoCore.DSASM.Executive exe)",
+      "summary": "Notify the heap that gc roots are ready so that gc could move forward. The executive is passed for dispoing objects.",
+      "params": [
+        {
+          "name": "gcroots",
+          "type": "System.Collections.Generic.IEnumerable\u003CProtoCore.DSASM.StackValue\u003E",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "exe",
+          "type": "ProtoCore.DSASM.Executive",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "ToHeapObject(ProtoCore.DSASM.StackValue)",
+      "signature": "T ToHeapObject\u003CT\u003E(ProtoCore.DSASM.StackValue heapObject)",
+      "summary": "Heap.ToHeapObject",
+      "params": [
+        {
+          "name": "heapObject",
+          "type": "ProtoCore.DSASM.StackValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "WriteBarrierForward(ProtoCore.DSASM.HeapElement, ProtoCore.DSASM.StackValue)",
+      "signature": "void WriteBarrierForward(ProtoCore.DSASM.HeapElement hp, ProtoCore.DSASM.StackValue value)",
+      "summary": "If the heap object is modified, mark the new value that it references to.",
+      "params": [
+        {
+          "name": "hp",
+          "type": "ProtoCore.DSASM.HeapElement",
+          "doc": "Heap object that is to be modified",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "ProtoCore.DSASM.StackValue",
+          "doc": "The value that will be put in the heap object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsGCRunning",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Heap.IsGCRunning",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    },
+    {
+      "name": "IsWaitingForRoots",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if the heap is waiting for GC root objects.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Heap.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

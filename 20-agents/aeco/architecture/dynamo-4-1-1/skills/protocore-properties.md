@@ -1,0 +1,295 @@
+---
+name: dynamo-protocore-properties
+description: This skill encodes the dynamo 4.1.1 surface of the ProtoCore.Properties namespace — 1 types with full vendor-documented methods, properties, events, and behavioral remarks. Read when composing apps that touch any of: Resources.
+---
+
+# ProtoCore.Properties
+
+Auto-generated from vendor docs for dynamo 4.1.1. 1 types in this namespace.
+
+## Resources (class)
+
+A strongly-typed resource class, for looking up localized strings, etc.
+
+[Vendor docs](https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs)
+
+### Properties
+- `AlgorithmNotSupported` (string, get) — Looks up a localized string similar to Selected algorithm not supported.
+- `ArgumentNullException` (string, get) — Looks up a localized string similar to Value cannot be null. Parameter name: {0} href-ArgumentNullException.html.
+- `ArrayWithNotSupported` (string, get) — Looks up a localized string similar to Array with no common superclass not yet supported: {0}.
+- `AttributeArgMustBeConstant` (string, get) — Looks up a localized string similar to An attribute argument must be a constant expression.
+- `BaseIsExpectedToCallBaseConstructor` (string, get) — Looks up a localized string similar to The keyword 'base' is expected here to call the base class constructor.
+- `CheckIfTheElementsInListAreSameType` (string, get) — Looks up a localized string similar to Checks if all the elements in the specified list are of the same type.
+- `ChecksIfLengthsAreSameInMultiDimentionalList` (string, get) — Looks up a localized string similar to Checks if each of rows in multidimensional list has the same number of elements .
+- `ChecksIfListContainsTheElement` (string, get) — Looks up a localized string similar to Checks if the specified element is present in the specified list.
+- `ChecksIfTheListIsAllFalse` (string, get) — Looks up a localized string similar to Checks if all elements in the specified list are false.
+- `ChecksIfTheListIsAllTrue` (string, get) — Looks up a localized string similar to Checks if all elements in the specified list are true.
+- `ChecksListWithUniformDepth` (string, get) — Looks up a localized string similar to Checks if the list has a uniform depth.
+- `ClassDeclarationNotSupported` (string, get) — Looks up a localized string similar to Class declarations are not supported in CodeBlock Nodes, only function definitions and assignment statements.
+- `CloseBracketExpected` (string, get) — Looks up a localized string similar to ')' expected - Incomplete Closure.
+- `ContainsKeys` (string, get) — Looks up a localized string similar to Checks if the specified key is present in the specified key-value pair list.
+- `Culture` (System.Globalization.CultureInfo, get/set) — Overrides the current thread's CurrentUICulture property for all resource lookups using this strongly typed resource class.
+- `DeprecatedListInitializationSyntax` (string, get) — Looks up a localized string similar to Curly braces are no longer used for list creation. Use square brackets instead, like [] or [1,2,3]..
+- `DeterminesObjectsAreEqual` (string, get) — Looks up a localized string similar to Determines whether two object instances are equal.
+- `EOF_expected` (string, get) — Looks up a localized string similar to EOF expected.
+- `EmptyCharacterLiteral` (string, get) — Looks up a localized string similar to Empty character literal.
+- `FailedToCastFromNull` (string, get) — Looks up a localized string similar to Null value cannot be cast to {0} href=FailedToCastFromNull.html.
+- `FailedToConvertArrayToDictionary` (string, get) — Looks up a localized string similar to Cannot convert List to Dictionary type..
+- `FailedToImport` (string, get) — Looks up a localized string similar to Failed to import {0}.
+- `FailedToResolveSortingFunction` (string, get) — Looks up a localized string similar to Failed to resolve the comparison function for sorting, expected def sorter : int(x,y).
+- `FunctionCallCannotBeAtLeftSide` (string, get) — Looks up a localized string similar to A function call is not allowed on the left hand side of an assignment.
+- `FunctionDispatchFailed` (string, get) — Looks up a localized string similar to Function dispatch could not be completed {0}.
+- `FunctionGroupNotFound` (string, get) — Looks up a localized string similar to No function called {0} on a {1} could be found.
+- `FunctionGroupWithParameterNotFound` (string, get) — Looks up a localized string similar to No function called {0} on a {1} that takes {2} could be found.
+- `GetKeys` (string, get) — Looks up a localized string similar to Gets all keys from the specified key-value pair list.
+- `GetValues` (string, get) — Looks up a localized string similar to Gets all values stored in the specified key-value pair list and for a simple list it returns all elements in the list.
+- `Gettypes` (string, get) — Looks up a localized string similar to Gets the Type of the current instance.
+- `ImportFileByGivenFilePath` (string, get) — Looks up a localized string similar to Imports data from a text file containing comma separated values into two-dimensional list.
+- `ImportFileByGivenFilePathWithMode` (string, get) — Looks up a localized string similar to Imports data from a text file containing comma separated values into two-dimensional list and also transpose the output list if specified.
+- `ImportStatementNotSupported` (string, get) — Looks up a localized string similar to Imports statements are not supported in CodeBlock Nodes, please use the Library UI instead.
+- `IndexIntoNonArrayObject` (string, get) — Looks up a localized string similar to No item exists at specified index address.
+- `InsertsAnElementIntoList` (string, get) — Looks up a localized string similar to Inserts an element into a list at specified index.
+- `IntegerOverflow` (string, get) — Looks up a localized string similar to The operation resulted in an integer overflow. Its result may be unexpected..
+- `InvalidArrayIndexType` (string, get) — Looks up a localized string similar to List indices must be numeric. href=InvalidArrayIndexType.html.
+- `InvalidFunction` (string, get) — Looks up a localized string similar to Not an valid function..
+- `InvalidLanguageBlockIdentifier` (string, get) — Looks up a localized string similar to \"{0}\" is not a valid language block identifier, do you mean \"Associative\" or \"Imperative\"?.
+- `InvalidSymbol` (string, get) — Looks up a localized string similar to Syntax Error: invalid symbol '{0}'. (Did you mean to use Modifier Stack \" => \").
+- `KCallingConstructorOnInstance` (string, get) — Looks up a localized string similar to Cannot call the constructor '{0}()' on an existing object.
+- `ListMethodDeprecated` (string, get) — Looks up a localized string similar to Method '{0}' has been deprecated, please use method '{1}' instead with Dictionary type.
+- `MapsValueFromOneRangeToAnotherRange` (string, get) — Looks up a localized string similar to Maps a vlaue from one range to another range.
+- `MapsValueIntoInputRange` (string, get) — Looks up a localized string similar to Maps a value into an input range.
+- `MaxDimensionExceeded` (string, get) — Looks up a localized string similar to Replication requested exceeds the available dimensions of the array. This case is not yet supported {0}.
+- `ModuloByZero` (string, get) — Looks up a localized string similar to Integer modulo by zero.
+- `MoreThanOneDominantList` (string, get) — Looks up a localized string similar to Only one dominant list is allowed.
+- `MultipleFunctionsFound` (string, get) — Looks up a localized string similar to Couldn't decide which function to execute. Please provide more specific type information. Possible functions were: .
+- `MultipleGuidesNotSupported` (string, get) — Looks up a localized string similar to Sorry, multiple guides on a single argument that are not in increasing order are not yet supported, please use a for loop instead. .
+- `NoConstructorForAttribute` (string, get) — Looks up a localized string similar to No constructors for Attribute '{0}' takes {1} arguments.
+- `NoSuchFileOrDirectoryToImport` (string, get) — Looks up a localized string similar to Cannot import file: '{0}': No such file or directory.
+- `NonOverloadMethodResolutionError` (string, get) — Looks up a localized string similar to {0} expects argument type(s) ({1}), but was called with ({2}). href=NonOverloadMethodResolutionError.html.
+- `ObjectsContainsInList1NotInList2` (string, get) — Looks up a localized string similar to Returns objects that are included in List1 but excluded in List2.
+- `OneDArrayExpected` (string, get) — Looks up a localized string similar to Both arguments were expected to be one-dimensional array type!.
+- `OperationFailType1` (string, get) — Looks up a localized string similar to {0}.{1} operation failed..
+- `OperationFailType2` (string, get) — Looks up a localized string similar to {0}.{1} operation failed. {2}.
+- `ProducesTheSetIntersection` (string, get) — Looks up a localized string similar to Produces the set intersection of two sequences.
+- `ProducesTheSetUnion` (string, get) — Looks up a localized string similar to Produces the set union of two sequences by using the default equality comparer.
+- `RangeExpressionOutOfMemory` (string, get) — Looks up a localized string similar to The number of items in range expression is over limit.
+- `RemoveKeys` (string, get) — Looks up a localized string similar to Removes key from list.
+- `RemoveKeys1` (string, get) — Looks up a localized string similar to Removes a copy of array with specified key removed.
+- `RemovesTheMembersofTheList` (string, get) — Looks up a localized string similar to Removes the members of the list which are not members of the specified type.
+- `ReordersList` (string, get) — Looks up a localized string similar to Reorders the list using the specified indices.
+- `ResourceManager` (System.Resources.ResourceManager, get) — Returns the cached ResourceManager instance used by this class.
+- `ReturnStatementIsNotAllowedInConstructor` (string, get) — Looks up a localized string similar to return statement is not allowed in constructor.
+- `ReturnsConcatenatingList` (string, get) — Looks up a localized string similar to Joins two lists into a single list.
+- `ReturnsListWithRankDepth` (string, get) — Looks up a localized string similar to Returns multidimentional list according the rank given.
+- `ReturnsListWithUniformDepth` (string, get) — Looks up a localized string similar to Returns a list with uniform depth as specified by the input depth.
+- `ReturnsNumberOfItems` (string, get) — Looks up a localized string similar to Returns number of items in the specified list.
+- `ReturnsTheDeepestDepthOfTheList` (string, get) — Looks up a localized string similar to Returns the deepest depth of the list.
+- `ReturnsTheFlattened1DList` (string, get) — Looks up a localized string similar to Returns the flattened 1D list of the multi-dimensional input list. If the input is a single value, returns that value..
+- `ReturnsTheIndex` (string, get) — Looks up a localized string similar to Returns the index of the member in the list.
+- `ReturnsTheNumberOfFalseValueInList` (string, get) — Looks up a localized string similar to Returns the number of false values in the list.
+- `ReturnsTheNumberOfTrueValue` (string, get) — Looks up a localized string similar to Returns the number of true values in the list.
+- `RunOutOfMemory` (string, get) — Looks up a localized string similar to There is not enough memory to finish the operation..
+- `SemiColonExpected` (string, get) — Looks up a localized string similar to ';' is expected.
+- `SortsListByValue` (string, get) — Looks up a localized string similar to Sorts a specified list by the values of its members in either ascending or descending order.
+- `SortsListByValueInAscending` (string, get) — Looks up a localized string similar to Sorts a specified list by values of its members in ascending order.
+- `TooManyCharacters` (string, get) — Looks up a localized string similar to Too many characters in character literal.
+- `UnknownAttribute` (string, get) — Looks up a localized string similar to Unknown attribute {0}.
+- `UseInlineConditional` (string, get) — Looks up a localized string similar to '{0}' statement can only be used in imperative language block, consider using an inline conditional instead?.
+- `UseListJoinNode` (string, get) — Looks up a localized string similar to Use List.Join node instead.
+- `ValidForImperativeBlockOnly` (string, get) — Looks up a localized string similar to '{0}' statement can only be used in imperative language block.
+- `VariableRecursiveReference` (string, get) — Looks up a localized string similar to Variable {0} is used in the same statement that you defined it. Recursive dependency is not allowed..
+- `VariableRedifinitionError` (string, get) — Looks up a localized string similar to Variable {0} has been defined in this code block node. You cannot define a variable more than once..
+- `ZipAlgorithmError` (string, get) — Looks up a localized string similar to Cannot support Longest and shortest zipped collections.
+- `add_expected` (string, get) — Looks up a localized string similar to "+" expected.
+- `addadd_expected` (string, get) — Looks up a localized string similar to "++" expected.
+- `and_expected` (string, get) — Looks up a localized string similar to "&" expected.
+- `andand_expected` (string, get) — Looks up a localized string similar to "&&" expected.
+- `asterisk_expected` (string, get) — Looks up a localized string similar to "*" expected.
+- `catch_expected` (string, get) — Looks up a localized string similar to "catch" expected.
+- `char_expected` (string, get) — Looks up a localized string similar to char expected.
+- `closebrace_expected` (string, get) — Looks up a localized string similar to "}" expected.
+- `closebracket_expected` (string, get) — Looks up a localized string similar to closebracket expected.
+- `closeparen_expected` (string, get) — Looks up a localized string similar to closeparen expected.
+- `comma_expected` (string, get) — Looks up a localized string similar to "," expected.
+- `curvedash_expected` (string, get) — Looks up a localized string similar to "~\" expected.
+- `dashdash_expected` (string, get) — Looks up a localized string similar to "--" expected.
+- `divider_expected` (string, get) — Looks up a localized string similar to "/" expected.
+- `doublecolumn_expected` (string, get) — Looks up a localized string similar to ":" expected.
+- `endline_expected` (string, get) — Looks up a localized string similar to endline expected.
+- `equal_expected` (string, get) — Looks up a localized string similar to equal expected.
+- `equalmark_expected` (string, get) — Looks up a localized string similar to "=" expected.
+- `equalright_expected` (string, get) — Looks up a localized string similar to "=>" expected.
+- `error` (string, get) — Looks up a localized string similar to error.
+- `float_expected` (string, get) — Looks up a localized string similar to float expected.
+- `greaterequal_expected` (string, get) — Looks up a localized string similar to greaterequal expected.
+- `greaterthan_expected` (string, get) — Looks up a localized string similar to greaterthan expected.
+- `hax_expected` (string, get) — Looks up a localized string similar to "#" expected.
+- `ident_expected` (string, get) — Looks up a localized string similar to ident expected.
+- `in_expected` (string, get) — Looks up a localized string similar to "in" expected.
+- `invalid_Associative_AccessSpecifier` (string, get) — Looks up a localized string similar to invalid Associative_AccessSpecifier.
+- `invalid_Associative_AddOp` (string, get) — Looks up a localized string similar to invalid_Associative_AddOp.
+- `invalid_Associative_BinaryOps` (string, get) — Looks up a localized string similar to invalid Associative_BinaryOps.
+- `invalid_Associative_BitOp` (string, get) — Looks up a localized string similar to invalid Associative_BitOp.
+- `invalid_Associative_ComparisonOp` (string, get) — Looks up a localized string similar to invalid Associative_ComparisonOp.
+- `invalid_Associative_DecoratedIdentifier` (string, get) — Looks up a localized string similar to invalid Associative_DecoratedIdentifier.
+- `invalid_Associative_Factor` (string, get) — Looks up a localized string similar to invalid Associative_Factor.
+- `invalid_Associative_FunctionalStatement` (string, get) — Looks up a localized string similar to invalid Associative_FunctionalStatement.
+- `invalid_Associative_LanguageBlock` (string, get) — Looks up a localized string similar to invalid Associative_LanguageBlock.
+- `invalid_Associative_Level` (string, get) — Looks up a localized string similar to Invalid list@level syntax, consider using @L1 for level 1..
+- `invalid_Associative_LogicalOp` (string, get) — Looks up a localized string similar to invalid Associative_LogicalOp.
+- `invalid_Associative_MulOp` (string, get) — Looks up a localized string similar to invalid Associative_MulOp.
+- `invalid_Associative_NameReference` (string, get) — Looks up a localized string similar to invalid Associative_NameReference.
+- `invalid_Associative_Number` (string, get) — Looks up a localized string similar to invalid Associative_Number.
+- `invalid_Associative_PostFixOp` (string, get) — Looks up a localized string similar to invalid Associative_PostFixOp.
+- `invalid_Associative_Statement` (string, get) — Looks up a localized string similar to invalid Associative_Statement.
+- `invalid_Associative_UnaryExpression` (string, get) — Looks up a localized string similar to invalid Associative_UnaryExpression.
+- `invalid_Associative_classdecl` (string, get) — Looks up a localized string similar to invalid Associative_classdecl.
+- `invalid_Associative_functiondecl` (string, get) — Looks up a localized string similar to invalid Associative_functiondecl.
+- `invalid_Associative_negop` (string, get) — Looks up a localized string similar to invalid Associative_negop.
+- `invalid_Associative_unaryop` (string, get) — Looks up a localized string similar to invalid Associative_unaryop.
+- `invalid_Hydrogen` (string, get) — Looks up a localized string similar to invalid Hydrogen.
+- `invalid_Imperative_NameReference` (string, get) — Looks up a localized string similar to invalid Imperative_NameReference.
+- `invalid_Imperative_PostFixOp` (string, get) — Looks up a localized string similar to invalid Imperative_PostFixOp.
+- `invalid_Imperative_addop` (string, get) — Looks up a localized string similar to invalid Imperative_addop.
+- `invalid_Imperative_assignstmt` (string, get) — Looks up a localized string similar to invalid Imperative_assignstmt.
+- `invalid_Imperative_bitop` (string, get) — Looks up a localized string similar to invalid Imperative_bitop.
+- `invalid_Imperative_decoratedIdentifier` (string, get) — Looks up a localized string similar to invalid Imperative_decoratedIdentifier.
+- `invalid_Imperative_factor` (string, get) — Looks up a localized string similar to invalid Imperative_factor.
+- `invalid_Imperative_forloop` (string, get) — Looks up a localized string similar to invalid Imperative_forloop.
+- `invalid_Imperative_functiondecl` (string, get) — Looks up a localized string similar to invalid Imperative_functiondecl.
+- `invalid_Imperative_ifstmt` (string, get) — Looks up a localized string similar to invalid Imperative_ifstmt.
+- `invalid_Imperative_languageblock` (string, get) — Looks up a localized string similar to invalid Imperative_languageblock.
+- `invalid_Imperative_logicalop` (string, get) — Looks up a localized string similar to invalid Imperative_logicalop.
+- `invalid_Imperative_mulop` (string, get) — Looks up a localized string similar to invalid Imperative_mulop.
+- `invalid_Imperative_num` (string, get) — Looks up a localized string similar to invalid Imperative_num.
+- `invalid_Imperative_relop` (string, get) — Looks up a localized string similar to invalid Imperative_relop.
+- `invalid_Imperative_stmt` (string, get) — Looks up a localized string similar to invalid Imperative_stmt.
+- `invalid_Imperative_unaryexpr` (string, get) — Looks up a localized string similar to invalid Imperative_unaryexpr.
+- `invalid_Imperative_unaryop` (string, get) — Looks up a localized string similar to invalid Imperative_unaryop.
+- `invalid_Import_Statement` (string, get) — Looks up a localized string similar to invalid Import_Statement.
+- `kAlreadyImported` (string, get) — Looks up a localized string similar to File : '{0}' is already imported.
+- `kAmbigousMethodDispatch` (string, get) — Looks up a localized string similar to Internal error, please report: Function could not be found on final dispatch..
+- `kArgumentTypeUndefined` (string, get) — Looks up a localized string similar to Type '{0}' of argument '{1}' is not defined.
+- `kArrayOverIndexed` (string, get) — Looks up a localized string similar to The index is outside the given range href=kArrayOverIndexed.html.
+- `kArrayRankReduction` (string, get) — Looks up a localized string similar to Type conversion would cause array rank reduction. This is not permitted outside of replication. {511ED65F-FB66-4709-BDDA-DCD5E053B87F}.
+- `kAssignNonCharacterToString` (string, get) — Looks up a localized string similar to A string must be made up of characters.
+- `kAssingToThis` (string, get) — Looks up a localized string similar to 'this' is readonly and cannot be assigned to.
+- `kCallingConstructorInConstructor` (string, get) — Looks up a localized string similar to Cannot call the constructor '{0}()' inside itself.
+- `kCallingNonStaticMethod` (string, get) — Looks up a localized string similar to '{0}.{1}()' is not a static method.
+- `kCallingNonStaticProperty` (string, get) — Looks up a localized string similar to '{0}.{1}' is not a static property.
+- `kConsoleWarningMessage` (string, get) — Looks up a localized string similar to > Runtime warning: {0}\n - \"{1}\" <line: {2}, col: {3}>.
+- `kConvertArrayToNonArray` (string, get) — Looks up a localized string similar to Converting an array to {0} would cause array rank reduction and is not permitted href=kConvertArrayToNonArray.html.
+- `kConvertDoubleToInt` (string, get) — Looks up a localized string similar to Converting a double to an int may lose information..
+- `kConvertNonConvertibleTypes` (string, get) — Looks up a localized string similar to Asked to convert non-convertible types.
+- `kCyclicDependency` (string, get) — Looks up a localized string similar to A cyclic dependency exists between two variables href=kCyclicDependency.html.
+- `kDereferencingNonPointer` (string, get) — Looks up a localized string similar to Internal error, please report: Dereferencing a non-pointer. href=DereferencingNonPointer.html.
+- `kExceptionTypeUndefined` (string, get) — Looks up a localized string similar to The exception type '{0}' is not defined.
+- `kFFIFailedToObtainObject` (string, get) — Looks up a localized string similar to Failed to obtain object '{0}' for '{1}.{2}'.
+- `kFFIFailedToObtainThisObject` (string, get) — Looks up a localized string similar to Failed to obtain this object for '{0}.{1}'.
+- `kFFIInvalidCast` (string, get) — Looks up a localized string similar to '{0}' is being cast to '{1}', but the allowed range is [{2}..{3}].
+- `kFailToConverToFunction` (string, get) — Looks up a localized string similar to Converting objects to a function pointer is not allowed.
+- `kFailToConverToNull` (string, get) — Looks up a localized string similar to Converting other things to null is not allowed.
+- `kFailToConverToPointer` (string, get) — Looks up a localized string similar to Cannot convert objects to function pointers.
+- `kFileNotFound` (string, get) — Looks up a localized string similar to File : '{0}' not found.
+- `kFunctionNotFound` (string, get) — Looks up a localized string similar to No candidate function could be found.
+- `kFunctionNotReturnAtAllCodePaths` (string, get) — Looks up a localized string similar to All paths through the method '{0}()' must return a value.
+- `kIndexOutOfRange` (string, get) — Looks up a localized string similar to Index is out of range href=kIndexOutOfRange.html.
+- `kInvalidAmountInRangeExpression` (string, get) — Looks up a localized string similar to The amount in range expression should be an positive integer.
+- `kInvalidArguments` (string, get) — Looks up a localized string similar to Argument is invalid.
+- `kInvalidArgumentsInRangeExpression` (string, get) — Looks up a localized string similar to The value used in a range expression must be a number or a letter.
+- `kInvalidBreakForFunction` (string, get) — Looks up a localized string similar to Internal error, please report: Statement break causes function to abnormally return null..
+- `kInvalidContinueForFunction` (string, get) — Looks up a localized string similar to Internal error, please report: Statement continue cause function to abnormally return null..
+- `kInvalidListLevelName` (string, get) — Looks up a localized string similar to '{0}' cannot be used as list level name, consider using L1 for level 1..
+- `kInvalidStaticCyclicDependency` (string, get) — Looks up a localized string similar to A cyclic dependency exists between two variables.
+- `kInvalidStringArgumentInRangeExpression` (string, get) — Looks up a localized string similar to Start value can be just number or single letter.
+- `kInvalidThis` (string, get) — Looks up a localized string similar to 'this' can only be used in methods that are members of a class.
+- `kInvalidType` (string, get) — Looks up a localized string similar to The type is invalid.
+- `kInvalidUnicodeArgumentInRangeExpression` (string, get) — Looks up a localized string similar to Range and Sequence expressions support only ASCII characters.
+- `kInvokeMethodOnInvalidObject` (string, get) — Looks up a localized string similar to Method '{0}()' is invoked on an invalid object..
+- `kMethodAlreadyDefined` (string, get) — Looks up a localized string similar to Method '{0}()' is already defined.
+- `kMethodDeprecated` (string, get) — Looks up a localized string similar to Method '{0}' has been deprecated, please use method '{1}' instead href=Deprecated.html.
+- `kMethodHasInvalidArguments` (string, get) — Looks up a localized string similar to '{0}()' has some invalid arguments href=kMethodHasInvalidArguments.html.
+- `kMethodIsInaccessible` (string, get) — Looks up a localized string similar to Method '{0}()' can't be reached from here.
+- `kMethodNotFound` (string, get) — Looks up a localized string similar to Method '{0}()' not found href=kMethodNotFound.html.
+- `kMethodResolutionFailure` (string, get) — Looks up a localized string similar to Internal error, please report: Method resolution failure on: {0}().
+- `kMethodResolutionFailureForOperator` (string, get) — Looks up a localized string similar to Operator '{0}' cannot be applied to operands of type '{1}' and '{2}'.
+- `kMethodResolutionFailureWithTypes` (string, get) — Looks up a localized string similar to There is no version of {0} that accepts argument type(s) ({1}). href=NonOverloadMethodResolutionError.html.
+- `kMethodStackOverflow` (string, get) — Looks up a localized string similar to '{0}()' recursed until Dynamo ran out of memory, please add a base case..
+- `kMultipleSymbolFound` (string, get) — Looks up a localized string similar to Multiple definitions for '{0}' are found as {1} href=kMultipleSymbolFound.html.
+- `kMultipleSymbolFoundFromName` (string, get) — Looks up a localized string similar to Multiple definitions for '{0}' are found as {1}.
+- `kNoStepSizeInAmountRangeExpression` (string, get) — Looks up a localized string similar to No step size is specified in amount range expression.
+- `kPropertyInaccessible` (string, get) — Looks up a localized string similar to Property '{0}' is inaccessible.
+- `kPropertyIsInaccessible` (string, get) — Looks up a localized string similar to Property '{0}' is inaccessible.
+- `kPropertyNotFound` (string, get) — Looks up a localized string similar to Property '{0}' not found.
+- `kPropertyOfClassNotFound` (string, get) — Looks up a localized string similar to No property called {0} on {1} could be found href=kPropertyOfClassNotFound.html.
+- `kRangeExpressionConflictOperator` (string, get) — Looks up a localized string similar to An amount operator cannot be used together with a step operator.
+- `kRangeExpressionWithInvalidAmount` (string, get) — Looks up a localized string similar to The amount of step is invalid..
+- `kRangeExpressionWithInvalidStepSize` (string, get) — Looks up a localized string similar to The step size of range expression is invalid..
+- `kRangeExpressionWithNegativeStepNumber` (string, get) — Looks up a localized string similar to The step number of range expression should be greater than 0.
+- `kRangeExpressionWithNonIntegerStepNumber` (string, get) — Looks up a localized string similar to The step number of range expression should be integer.
+- `kRangeExpressionWithStepSizeZero` (string, get) — Looks up a localized string similar to The step size of range expression should not be 0.
+- `kReturnTypeUndefined` (string, get) — Looks up a localized string similar to Return type '{0}' of method '{1}()' is not defined.
+- `kStaticMethodNotFound` (string, get) — Looks up a localized string similar to Cannot find static method or constructor {0}.{1}().
+- `kStringIndexOutOfRange` (string, get) — Looks up a localized string similar to The index to string is out of range.
+- `kStringIndexingCannotBeAssigned` (string, get) — Looks up a localized string similar to String indexing cannot be assigned to, it is read only.
+- `kStringOverIndexed` (string, get) — Looks up a localized string similar to String is over indexed.
+- `kTypeUndefined` (string, get) — Looks up a localized string similar to Type '{0}' is not defined.
+- `kUnboundIdentifierMsg` (string, get) — Looks up a localized string similar to Variable '{0}' hasn't been defined yet.
+- `kUsingNonStaticMemberInStaticContext` (string, get) — Looks up a localized string similar to '{0}' is not a static property, so cannot be assigned to static properties or used in static methods..
+- `kUsingThisInStaticFunction` (string, get) — Looks up a localized string similar to 'this' cannot be used in static method.
+- `keywordCannotBeUsedAsConstructorName` (string, get) — Looks up a localized string similar to \"{0}\" is a keyword, it can't be used as constructor name.
+- `keywordCantBeUsedAsIdentifier` (string, get) — Looks up a localized string similar to \"{0}\" is a keyword, but an identifier was expected.
+- `kw_break_expected` (string, get) — Looks up a localized string similar to kw_break expected.
+- `kw_class_expected` (string, get) — Looks up a localized string similar to kw_class expected.
+- `kw_constructor_expected` (string, get) — Looks up a localized string similar to kw_constructor expected.
+- `kw_continue_expected` (string, get) — Looks up a localized string similar to kw_continue expected.
+- `kw_def_expected` (string, get) — Looks up a localized string similar to kw_def expected.
+- `kw_else_expected` (string, get) — Looks up a localized string similar to kw_else expected.
+- `kw_elseif_expected` (string, get) — Looks up a localized string similar to kw_elseif expected.
+- `kw_extend_expected` (string, get) — Looks up a localized string similar to kw_extend expected.
+- `kw_external_expected` (string, get) — Looks up a localized string similar to kw_external expected.
+- `kw_for_expected` (string, get) — Looks up a localized string similar to kw_for expected.
+- `kw_from_expected` (string, get) — Looks up a localized string similar to kw_from expected.
+- `kw_heap_expected` (string, get) — Looks up a localized string similar to kw_heap expected.
+- `kw_if_expected` (string, get) — Looks up a localized string similar to kw_if expected.
+- `kw_import_expected` (string, get) — Looks up a localized string similar to kw_import expected.
+- `kw_local_expected` (string, get) — Looks up a localized string similar to kw_local expected.
+- `kw_native_expected` (string, get) — Looks up a localized string similar to kw_native expected.
+- `kw_prefix_expected` (string, get) — Looks up a localized string similar to kw_prefix expected.
+- `kw_static_expected` (string, get) — Looks up a localized string similar to kw_static expected.
+- `kw_while_expected` (string, get) — Looks up a localized string similar to kw_while expected.
+- `lessequal_expected` (string, get) — Looks up a localized string similar to lessequal expected.
+- `lessthan_expected` (string, get) — Looks up a localized string similar to lessthan expected.
+- `literal_false_expected` (string, get) — Looks up a localized string similar to literal_false expected.
+- `literal_null_expected` (string, get) — Looks up a localized string similar to literal_null expected.
+- `literal_true_expected` (string, get) — Looks up a localized string similar to literal_true expected.
+- `neg_expected` (string, get) — Looks up a localized string similar to neg expected.
+- `not_expected` (string, get) — Looks up a localized string similar to not expected.
+- `notequal_expected` (string, get) — Looks up a localized string similar to notequal expected.
+- `number_expected` (string, get) — Looks up a localized string similar to number expected.
+- `openbrace_expected` (string, get) — Looks up a localized string similar to "{" expected.
+- `openbracket_expected` (string, get) — Looks up a localized string similar to openbracket expected.
+- `openparen_expected` (string, get) — Looks up a localized string similar to openparen expected.
+- `oror_expected` (string, get) — Looks up a localized string similar to "||" expected.
+- `period_expected` (string, get) — Looks up a localized string similar to period expected.
+- `pipe_expected` (string, get) — Looks up a localized string similar to pipe expected.
+- `postfixed_replicationguide_expected` (string, get) — Looks up a localized string similar to postfixed replicationguide expected.
+- `power_expected` (string, get) — Looks up a localized string similar to "^" expected.
+- `private_expected` (string, get) — Looks up a localized string similar to "private" expected.
+- `protected_expected` (string, get) — Looks up a localized string similar to "protected" expected.
+- `public_expected` (string, get) — Looks up a localized string similar to "public" expected.
+- `question_expected` (string, get) — Looks up a localized string similar to "?" expected.
+- `rangeop_expected` (string, get) — Looks up a localized string similar to rangeop expected.
+- `reminder_expected` (string, get) — Looks up a localized string similar to "%" expected.
+- `replicationguide_postfix_expected` (string, get) — Looks up a localized string similar to replicationguide_postfix expected.
+- `textstring_expected` (string, get) — Looks up a localized string similar to textstring expected.
+- `this_symbo_no_expected_in_Associative_NonAssignmentStatement` (string, get) — Looks up a localized string similar to this symbol not expected in Associative_NonAssignmentStatement.
+- `this_symbol_no_expected_in_Associative_FunctionalStatement` (string, get) — Looks up a localized string similar to this symbol not expected in Associative_FunctionalStatement.
+- `this_symbol_not_expected_in_Associative_FunctionCallStatement` (string, get) — Looks up a localized string similar to this symbol not expected in Associative_FunctionCallStatement.
+- `this_symbol_not_expected_in_Associative_FunctionalStatement` (string, get) — Looks up a localized string similar to this symbol not expected in Associative_FunctionalStatement.
+- `this_symbol_not_expected_in_Associative_Statement` (string, get) — Looks up a localized string similar to this symbol not expected in Associative_Statement.
+- `this_symbol_not_expected_in_Import_Statement` (string, get) — Looks up a localized string similar to this symbol not expected in Import_Statement.
+- `throw_expected` (string, get) — Looks up a localized string similar to throw expected.
+- `triquestionmark_expected` (string, get) — Looks up a localized string similar to ??? expected.
+- `try_expected` (string, get) — Looks up a localized string similar to "try" expected.
+

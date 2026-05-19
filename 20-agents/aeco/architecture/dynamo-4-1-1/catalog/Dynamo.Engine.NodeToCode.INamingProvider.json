@@ -1,0 +1,34 @@
+{
+  "name": "INamingProvider",
+  "namespace": "Dynamo.Engine.NodeToCode",
+  "kind": "interface",
+  "summary": "Node to code will create some variables, and if it is able to know the type of expression, it could give a more meaningful variable prefix.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Engine/NodeToCode/NodeToCode.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetTypeDependentName(ProtoCore.Type)",
+      "signature": "string GetTypeDependentName(ProtoCore.Type type)",
+      "summary": "Returns a name for specified type. This name will be used as the prefix for variable that created in node to code. It should return a empty string if fails to generate one.",
+      "params": [
+        {
+          "name": "type",
+          "type": "ProtoCore.Type",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Engine/NodeToCode/NodeToCode.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

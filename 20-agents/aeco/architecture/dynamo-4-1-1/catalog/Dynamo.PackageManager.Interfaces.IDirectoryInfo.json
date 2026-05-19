@@ -1,0 +1,22 @@
+{
+  "name": "IDirectoryInfo",
+  "namespace": "Dynamo.PackageManager.Interfaces",
+  "kind": "interface",
+  "summary": "Type IDirectoryInfo",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Interfaces/IDirectoryInfo.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FullName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "IDirectoryInfo.FullName",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoPackages/Interfaces/IDirectoryInfo.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

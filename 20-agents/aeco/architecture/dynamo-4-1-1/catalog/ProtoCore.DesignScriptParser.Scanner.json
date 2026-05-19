@@ -1,0 +1,83 @@
+{
+  "name": "Scanner",
+  "namespace": "ProtoCore.DesignScriptParser",
+  "kind": "class",
+  "summary": "Type Scanner",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs",
+  "constructors": [
+    {
+      "name": "Scanner(System.IO.Stream)",
+      "signature": "void Scanner(System.IO.Stream s)",
+      "summary": "Scanner.Scanner",
+      "params": [
+        {
+          "name": "s",
+          "type": "System.IO.Stream",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "Scanner(string)",
+      "signature": "void Scanner(string fileName)",
+      "summary": "Scanner.Scanner",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Peek",
+      "signature": "ProtoCore.DesignScriptParser.Token Peek()",
+      "summary": "Scanner.Peek",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DesignScriptParser.Token",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "ResetPeek",
+      "signature": "void ResetPeek()",
+      "summary": "Scanner.ResetPeek",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    },
+    {
+      "name": "Scan",
+      "signature": "ProtoCore.DesignScriptParser.Token Scan()",
+      "summary": "Scanner.Scan",
+      "params": [],
+      "returns": {
+        "type": "ProtoCore.DesignScriptParser.Token",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Parser/Scanner.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

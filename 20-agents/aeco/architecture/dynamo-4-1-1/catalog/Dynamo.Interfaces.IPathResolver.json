@@ -1,0 +1,68 @@
+{
+  "name": "IPathResolver",
+  "namespace": "Dynamo.Interfaces",
+  "kind": "interface",
+  "summary": "This interface provides paths to external assemblies and node directories.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDynamoUserDataLocations",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E GetDynamoUserDataLocations()",
+      "summary": "Returns a list of user data folders on this system.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": "The implementation of this interface method should return a list of user data folders, one for each of Dynamo product installed on the system. When there is no Dynamo product installed, this method returns an empty list."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AdditionalNodeDirectories",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Additional directories in which node assemblies can be located. The return value of this property should never be null. Each entry must represent a valid directory, otherwise DirectoryNotFoundException exception is thrown.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "AdditionalResolutionPaths",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Additional directories that should be considered when path resolution is done for a library that does not contain full path information. The return value of this property should never be null. Each entry must represent a valid directory, otherwise DirectoryNotFoundException exception is thrown.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "CommonDataRootFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "This property represents the root folder where application common data files (i.e. shared among all users on the same machine) are stored. If this property returns a null or empty string, then PathManager falls back to using \u0022%AppData%\\Dynamo\\Dynamo Core\u0022. If this property returns a string that does not represent an existing folder, PathManager will attempt to create a new directory. If the property does not represent a valid path string, an exception will be thrown by the underlying system IO API invoked. Note that this path should not include the version number as it will be appended by PathManager.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "PreloadedLibraryPaths",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Libraries to be preloaded as part of Dynamo start up sequence. Each entry in this list can either represent full path to a library, or just the assembly name. If absolute path information is not supplied, the library will be looked up through both predefined and additional resolution paths. The return value of this property should never be null.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    },
+    {
+      "name": "UserDataRootFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "This property represents the root folder where user specific data files are stored. If this property returns a null or empty string, then PathManager falls back to using \u0022%ProgramData%\\Dynamo\\Dynamo Core\u0022. If this property returns a string that does not represent an existing folder, PathManager will attempt to create a new directory. If the property does not represent a valid path string, an exception will be thrown by the underlying system IO API invoked. Note that this path should not include the version number as it will be appended by PathManager.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Configuration/IPathResolver.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

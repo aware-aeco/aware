@@ -1,0 +1,26 @@
+{
+  "name": "MessageType",
+  "namespace": "",
+  "kind": "enum",
+  "summary": "Type MessageType",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/BuildStatus.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Error",
+      "value": 2
+    },
+    {
+      "name": "Info",
+      "value": 0
+    },
+    {
+      "name": "Warning",
+      "value": 1
+    }
+  ]
+}

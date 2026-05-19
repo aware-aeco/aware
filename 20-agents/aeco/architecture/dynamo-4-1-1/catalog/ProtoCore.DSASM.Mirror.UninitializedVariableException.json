@@ -1,0 +1,34 @@
+{
+  "name": "UninitializedVariableException",
+  "namespace": "ProtoCore.DSASM.Mirror",
+  "kind": "class",
+  "summary": "Type UninitializedVariableException",
+  "base": "System.Exception",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs",
+  "constructors": [
+    {
+      "name": "UninitializedVariableException()",
+      "signature": "void UninitializedVariableException()",
+      "summary": "UninitializedVariableException.UninitializedVariableException",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "UninitializedVariableException.Name",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/DSASM/Mirror/ExecutionMirror.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

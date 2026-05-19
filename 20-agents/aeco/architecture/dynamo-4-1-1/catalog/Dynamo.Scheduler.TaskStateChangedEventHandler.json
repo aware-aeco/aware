@@ -1,0 +1,108 @@
+{
+  "name": "TaskStateChangedEventHandler",
+  "namespace": "Dynamo.Scheduler",
+  "kind": "delegate",
+  "summary": "Represents the method that will handle Dynamo.Scheduler.DynamoScheduler.TaskStateChanged events.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/DynamoScheduler.cs",
+  "constructors": [
+    {
+      "name": "TaskStateChangedEventHandler(object, IntPtr)",
+      "signature": "void TaskStateChangedEventHandler(object object, IntPtr method)",
+      "summary": "TaskStateChangedEventHandler.TaskStateChangedEventHandler",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "IntPtr",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BeginInvoke(Dynamo.Scheduler.DynamoScheduler, Dynamo.Scheduler.TaskStateChangedEventArgs, System.AsyncCallback, object)",
+      "signature": "System.IAsyncResult BeginInvoke(Dynamo.Scheduler.DynamoScheduler sender, Dynamo.Scheduler.TaskStateChangedEventArgs e, System.AsyncCallback callback, object object)",
+      "summary": "TaskStateChangedEventHandler.BeginInvoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Scheduler.TaskStateChangedEventArgs",
+          "optional": false
+        },
+        {
+          "name": "callback",
+          "type": "System.AsyncCallback",
+          "optional": false
+        },
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IAsyncResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "EndInvoke(System.IAsyncResult)",
+      "signature": "void EndInvoke(System.IAsyncResult result)",
+      "summary": "TaskStateChangedEventHandler.EndInvoke",
+      "params": [
+        {
+          "name": "result",
+          "type": "System.IAsyncResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    },
+    {
+      "name": "Invoke(Dynamo.Scheduler.DynamoScheduler, Dynamo.Scheduler.TaskStateChangedEventArgs)",
+      "signature": "void Invoke(Dynamo.Scheduler.DynamoScheduler sender, Dynamo.Scheduler.TaskStateChangedEventArgs e)",
+      "summary": "TaskStateChangedEventHandler.Invoke",
+      "params": [
+        {
+          "name": "sender",
+          "type": "Dynamo.Scheduler.DynamoScheduler",
+          "optional": false
+        },
+        {
+          "name": "e",
+          "type": "Dynamo.Scheduler.TaskStateChangedEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Scheduler/DynamoScheduler.cs"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Dynamo.Scheduler.DynamoScheduler sender, Dynamo.Scheduler.TaskStateChangedEventArgs e)"
+}

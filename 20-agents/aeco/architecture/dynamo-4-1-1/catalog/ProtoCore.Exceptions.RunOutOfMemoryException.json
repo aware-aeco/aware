@@ -1,0 +1,41 @@
+{
+  "name": "RunOutOfMemoryException",
+  "namespace": "ProtoCore.Exceptions",
+  "kind": "class",
+  "summary": "Type RunOutOfMemoryException",
+  "base": "System.OutOfMemoryException",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs",
+  "constructors": [
+    {
+      "name": "RunOutOfMemoryException()",
+      "signature": "void RunOutOfMemoryException()",
+      "summary": "RunOutOfMemoryException.RunOutOfMemoryException",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs"
+    },
+    {
+      "name": "RunOutOfMemoryException(string)",
+      "signature": "void RunOutOfMemoryException(string message)",
+      "summary": "RunOutOfMemoryException.RunOutOfMemoryException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Exceptions/CompileErrorsOccured.cs"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

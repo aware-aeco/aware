@@ -1,0 +1,22 @@
+{
+  "name": "IEngineControllerManager",
+  "namespace": "Dynamo.Models",
+  "kind": "interface",
+  "summary": "This class creates an interface for Engine controller.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EngineController",
+      "type": "Dynamo.Engine.EngineController",
+      "getter": true,
+      "setter": false,
+      "summary": "A controller to coordinate the interactions between some DesignScript sub components like library management, live runner and so on.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/DynamoCore/Models/DynamoModel.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

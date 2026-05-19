@@ -1,0 +1,2238 @@
+{
+  "name": "Resources",
+  "namespace": "ProtoCore.Properties",
+  "kind": "class",
+  "summary": "A strongly-typed resource class, for looking up localized strings, etc.",
+  "interfaces": [],
+  "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AlgorithmNotSupported",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Selected algorithm not supported.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ArgumentNullException",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Value cannot be null. Parameter name: {0} href-ArgumentNullException.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ArrayWithNotSupported",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Array with no common superclass not yet supported: {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "AttributeArgMustBeConstant",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to An attribute argument must be a constant expression.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "BaseIsExpectedToCallBaseConstructor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The keyword \u0027base\u0027 is expected here to call the base class constructor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CheckIfTheElementsInListAreSameType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if all the elements in the specified list are of the same type.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ChecksIfLengthsAreSameInMultiDimentionalList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if each of rows in multidimensional list has the same number of elements .",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ChecksIfListContainsTheElement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if the specified element is present in the specified list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ChecksIfTheListIsAllFalse",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if all elements in the specified list are false.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ChecksIfTheListIsAllTrue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if all elements in the specified list are true.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ChecksListWithUniformDepth",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if the list has a uniform depth.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ClassDeclarationNotSupported",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Class declarations are not supported in CodeBlock Nodes, only function definitions and assignment statements.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "CloseBracketExpected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027)\u0027 expected - Incomplete Closure.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ContainsKeys",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Checks if the specified key is present in the specified key-value pair list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "Culture",
+      "type": "System.Globalization.CultureInfo",
+      "getter": true,
+      "setter": true,
+      "summary": "Overrides the current thread\u0027s CurrentUICulture property for all resource lookups using this strongly typed resource class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DeprecatedListInitializationSyntax",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Curly braces are no longer used for list creation. Use square brackets instead, like [] or [1,2,3]..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "DeterminesObjectsAreEqual",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Determines whether two object instances are equal.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "EOF_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to EOF expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "EmptyCharacterLiteral",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Empty character literal.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToCastFromNull",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Null value cannot be cast to {0} href=FailedToCastFromNull.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToConvertArrayToDictionary",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot convert List to Dictionary type..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToImport",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to import {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FailedToResolveSortingFunction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to resolve the comparison function for sorting, expected def sorter : int(x,y).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionCallCannotBeAtLeftSide",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A function call is not allowed on the left hand side of an assignment.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionDispatchFailed",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Function dispatch could not be completed {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionGroupNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No function called {0} on a {1} could be found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "FunctionGroupWithParameterNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No function called {0} on a {1} that takes {2} could be found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GetKeys",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Gets all keys from the specified key-value pair list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "GetValues",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Gets all values stored in the specified key-value pair list and for a simple list it returns all elements in the list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "Gettypes",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Gets the Type of the current instance.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ImportFileByGivenFilePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Imports data from a text file containing comma separated values into two-dimensional list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ImportFileByGivenFilePathWithMode",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Imports data from a text file containing comma separated values into two-dimensional list and also transpose the output list if specified.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ImportStatementNotSupported",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Imports statements are not supported in CodeBlock Nodes, please use the Library UI instead.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IndexIntoNonArrayObject",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No item exists at specified index address.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InsertsAnElementIntoList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Inserts an element into a list at specified index.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "IntegerOverflow",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The operation resulted in an integer overflow. Its result may be unexpected..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidArrayIndexType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to List indices must be numeric. href=InvalidArrayIndexType.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidFunction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Not an valid function..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidLanguageBlockIdentifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \\\u0022{0}\\\u0022 is not a valid language block identifier, do you mean \\\u0022Associative\\\u0022 or \\\u0022Imperative\\\u0022?.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "InvalidSymbol",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Syntax Error: invalid symbol \u0027{0}\u0027. (Did you mean to use Modifier Stack \\\u0022 =\u003E \\\u0022).",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "KCallingConstructorOnInstance",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot call the constructor \u0027{0}()\u0027 on an existing object.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ListMethodDeprecated",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Method \u0027{0}\u0027 has been deprecated, please use method \u0027{1}\u0027 instead with Dictionary type.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MapsValueFromOneRangeToAnotherRange",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Maps a vlaue from one range to another range.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MapsValueIntoInputRange",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Maps a value into an input range.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MaxDimensionExceeded",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Replication requested exceeds the available dimensions of the array. This case is not yet supported {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ModuloByZero",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Integer modulo by zero.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MoreThanOneDominantList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Only one dominant list is allowed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MultipleFunctionsFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Couldn\u0027t decide which function to execute. Please provide more specific type information. Possible functions were: .",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "MultipleGuidesNotSupported",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Sorry, multiple guides on a single argument that are not in increasing order are not yet supported, please use a for loop instead. .",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoConstructorForAttribute",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No constructors for Attribute \u0027{0}\u0027 takes {1} arguments.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NoSuchFileOrDirectoryToImport",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot import file: \u0027{0}\u0027: No such file or directory.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "NonOverloadMethodResolutionError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0} expects argument type(s) ({1}), but was called with ({2}). href=NonOverloadMethodResolutionError.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ObjectsContainsInList1NotInList2",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns objects that are included in List1 but excluded in List2.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OneDArrayExpected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Both arguments were expected to be one-dimensional array type!.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OperationFailType1",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0}.{1} operation failed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "OperationFailType2",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to {0}.{1} operation failed. {2}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ProducesTheSetIntersection",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Produces the set intersection of two sequences.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ProducesTheSetUnion",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Produces the set union of two sequences by using the default equality comparer.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RangeExpressionOutOfMemory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The number of items in range expression is over limit.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RemoveKeys",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Removes key from list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RemoveKeys1",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Removes a copy of array with specified key removed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RemovesTheMembersofTheList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Removes the members of the list which are not members of the specified type.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReordersList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Reorders the list using the specified indices.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ResourceManager",
+      "type": "System.Resources.ResourceManager",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the cached ResourceManager instance used by this class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnStatementIsNotAllowedInConstructor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to return statement is not allowed in constructor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsConcatenatingList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Joins two lists into a single list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsListWithRankDepth",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns multidimentional list according the rank given.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsListWithUniformDepth",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns a list with uniform depth as specified by the input depth.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsNumberOfItems",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns number of items in the specified list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsTheDeepestDepthOfTheList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns the deepest depth of the list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsTheFlattened1DList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns the flattened 1D list of the multi-dimensional input list. If the input is a single value, returns that value..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsTheIndex",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns the index of the member in the list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsTheNumberOfFalseValueInList",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns the number of false values in the list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ReturnsTheNumberOfTrueValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Returns the number of true values in the list.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "RunOutOfMemory",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to There is not enough memory to finish the operation..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SemiColonExpected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027;\u0027 is expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SortsListByValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Sorts a specified list by the values of its members in either ascending or descending order.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "SortsListByValueInAscending",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Sorts a specified list by values of its members in ascending order.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "TooManyCharacters",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Too many characters in character literal.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UnknownAttribute",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Unknown attribute {0}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UseInlineConditional",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}\u0027 statement can only be used in imperative language block, consider using an inline conditional instead?.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "UseListJoinNode",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Use List.Join node instead.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ValidForImperativeBlockOnly",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}\u0027 statement can only be used in imperative language block.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "VariableRecursiveReference",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Variable {0} is used in the same statement that you defined it. Recursive dependency is not allowed..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "VariableRedifinitionError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Variable {0} has been defined in this code block node. You cannot define a variable more than once..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ZipAlgorithmError",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot support Longest and shortest zipped collections.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "add_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022\u002B\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "addadd_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022\u002B\u002B\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "and_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022\u0026\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "andand_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022\u0026\u0026\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "asterisk_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022*\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "catch_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022catch\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "char_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to char expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "closebrace_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022}\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "closebracket_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to closebracket expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "closeparen_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to closeparen expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "comma_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022,\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "curvedash_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022~\\\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "dashdash_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022--\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "divider_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022/\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "doublecolumn_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022:\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "endline_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to endline expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "equal_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to equal expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "equalmark_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022=\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "equalright_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022=\u003E\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "error",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to error.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "float_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to float expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "greaterequal_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to greaterequal expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "greaterthan_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to greaterthan expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "hax_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022#\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "ident_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to ident expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "in_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022in\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_AccessSpecifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_AccessSpecifier.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_AddOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid_Associative_AddOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_BinaryOps",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_BinaryOps.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_BitOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_BitOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_ComparisonOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_ComparisonOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_DecoratedIdentifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_DecoratedIdentifier.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_Factor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_Factor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_FunctionalStatement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_FunctionalStatement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_LanguageBlock",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_LanguageBlock.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_Level",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Invalid list@level syntax, consider using @L1 for level 1..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_LogicalOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_LogicalOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_MulOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_MulOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_NameReference",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_NameReference.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_Number",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_Number.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_PostFixOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_PostFixOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_Statement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_Statement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_UnaryExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_UnaryExpression.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_classdecl",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_classdecl.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_functiondecl",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_functiondecl.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_negop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_negop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Associative_unaryop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Associative_unaryop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Hydrogen",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Hydrogen.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_NameReference",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_NameReference.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_PostFixOp",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_PostFixOp.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_addop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_addop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_assignstmt",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_assignstmt.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_bitop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_bitop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_decoratedIdentifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_decoratedIdentifier.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_factor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_factor.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_forloop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_forloop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_functiondecl",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_functiondecl.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_ifstmt",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_ifstmt.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_languageblock",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_languageblock.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_logicalop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_logicalop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_mulop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_mulop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_num",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_num.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_relop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_relop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_stmt",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_stmt.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_unaryexpr",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_unaryexpr.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Imperative_unaryop",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Imperative_unaryop.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "invalid_Import_Statement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to invalid Import_Statement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kAlreadyImported",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to File : \u0027{0}\u0027 is already imported.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kAmbigousMethodDispatch",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Internal error, please report: Function could not be found on final dispatch..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kArgumentTypeUndefined",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Type \u0027{0}\u0027 of argument \u0027{1}\u0027 is not defined.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kArrayOverIndexed",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The index is outside the given range href=kArrayOverIndexed.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kArrayRankReduction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Type conversion would cause array rank reduction. This is not permitted outside of replication. {511ED65F-FB66-4709-BDDA-DCD5E053B87F}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kAssignNonCharacterToString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A string must be made up of characters.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kAssingToThis",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027this\u0027 is readonly and cannot be assigned to.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kCallingConstructorInConstructor",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot call the constructor \u0027{0}()\u0027 inside itself.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kCallingNonStaticMethod",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}.{1}()\u0027 is not a static method.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kCallingNonStaticProperty",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}.{1}\u0027 is not a static property.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kConsoleWarningMessage",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u003E Runtime warning: {0}\\n - \\\u0022{1}\\\u0022 \u003Cline: {2}, col: {3}\u003E.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kConvertArrayToNonArray",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Converting an array to {0} would cause array rank reduction and is not permitted href=kConvertArrayToNonArray.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kConvertDoubleToInt",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Converting a double to an int may lose information..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kConvertNonConvertibleTypes",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Asked to convert non-convertible types.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kCyclicDependency",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A cyclic dependency exists between two variables href=kCyclicDependency.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kDereferencingNonPointer",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Internal error, please report: Dereferencing a non-pointer. href=DereferencingNonPointer.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kExceptionTypeUndefined",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The exception type \u0027{0}\u0027 is not defined.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFFIFailedToObtainObject",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to obtain object \u0027{0}\u0027 for \u0027{1}.{2}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFFIFailedToObtainThisObject",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Failed to obtain this object for \u0027{0}.{1}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFFIInvalidCast",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}\u0027 is being cast to \u0027{1}\u0027, but the allowed range is [{2}..{3}].",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFailToConverToFunction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Converting objects to a function pointer is not allowed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFailToConverToNull",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Converting other things to null is not allowed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFailToConverToPointer",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot convert objects to function pointers.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFileNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to File : \u0027{0}\u0027 not found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFunctionNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No candidate function could be found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kFunctionNotReturnAtAllCodePaths",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to All paths through the method \u0027{0}()\u0027 must return a value.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kIndexOutOfRange",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Index is out of range href=kIndexOutOfRange.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidAmountInRangeExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The amount in range expression should be an positive integer.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidArguments",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Argument is invalid.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidArgumentsInRangeExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The value used in a range expression must be a number or a letter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidBreakForFunction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Internal error, please report: Statement break causes function to abnormally return null..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidContinueForFunction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Internal error, please report: Statement continue cause function to abnormally return null..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidListLevelName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}\u0027 cannot be used as list level name, consider using L1 for level 1..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidStaticCyclicDependency",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to A cyclic dependency exists between two variables.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidStringArgumentInRangeExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Start value can be just number or single letter.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidThis",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027this\u0027 can only be used in methods that are members of a class.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The type is invalid.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvalidUnicodeArgumentInRangeExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Range and Sequence expressions support only ASCII characters.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kInvokeMethodOnInvalidObject",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Method \u0027{0}()\u0027 is invoked on an invalid object..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodAlreadyDefined",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Method \u0027{0}()\u0027 is already defined.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodDeprecated",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Method \u0027{0}\u0027 has been deprecated, please use method \u0027{1}\u0027 instead href=Deprecated.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodHasInvalidArguments",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}()\u0027 has some invalid arguments href=kMethodHasInvalidArguments.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodIsInaccessible",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Method \u0027{0}()\u0027 can\u0027t be reached from here.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Method \u0027{0}()\u0027 not found href=kMethodNotFound.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodResolutionFailure",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Internal error, please report: Method resolution failure on: {0}().",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodResolutionFailureForOperator",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Operator \u0027{0}\u0027 cannot be applied to operands of type \u0027{1}\u0027 and \u0027{2}\u0027.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodResolutionFailureWithTypes",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to There is no version of {0} that accepts argument type(s) ({1}). href=NonOverloadMethodResolutionError.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMethodStackOverflow",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}()\u0027 recursed until Dynamo ran out of memory, please add a base case..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMultipleSymbolFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Multiple definitions for \u0027{0}\u0027 are found as {1} href=kMultipleSymbolFound.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kMultipleSymbolFoundFromName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Multiple definitions for \u0027{0}\u0027 are found as {1}.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kNoStepSizeInAmountRangeExpression",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No step size is specified in amount range expression.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kPropertyInaccessible",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Property \u0027{0}\u0027 is inaccessible.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kPropertyIsInaccessible",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Property \u0027{0}\u0027 is inaccessible.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kPropertyNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Property \u0027{0}\u0027 not found.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kPropertyOfClassNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to No property called {0} on {1} could be found href=kPropertyOfClassNotFound.html.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kRangeExpressionConflictOperator",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to An amount operator cannot be used together with a step operator.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kRangeExpressionWithInvalidAmount",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The amount of step is invalid..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kRangeExpressionWithInvalidStepSize",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The step size of range expression is invalid..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kRangeExpressionWithNegativeStepNumber",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The step number of range expression should be greater than 0.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kRangeExpressionWithNonIntegerStepNumber",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The step number of range expression should be integer.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kRangeExpressionWithStepSizeZero",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The step size of range expression should not be 0.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kReturnTypeUndefined",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Return type \u0027{0}\u0027 of method \u0027{1}()\u0027 is not defined.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kStaticMethodNotFound",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Cannot find static method or constructor {0}.{1}().",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kStringIndexOutOfRange",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to The index to string is out of range.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kStringIndexingCannotBeAssigned",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to String indexing cannot be assigned to, it is read only.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kStringOverIndexed",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to String is over indexed.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kTypeUndefined",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Type \u0027{0}\u0027 is not defined.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kUnboundIdentifierMsg",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to Variable \u0027{0}\u0027 hasn\u0027t been defined yet.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kUsingNonStaticMemberInStaticContext",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027{0}\u0027 is not a static property, so cannot be assigned to static properties or used in static methods..",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kUsingThisInStaticFunction",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0027this\u0027 cannot be used in static method.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "keywordCannotBeUsedAsConstructorName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \\\u0022{0}\\\u0022 is a keyword, it can\u0027t be used as constructor name.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "keywordCantBeUsedAsIdentifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \\\u0022{0}\\\u0022 is a keyword, but an identifier was expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_break_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_break expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_class_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_class expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_constructor_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_constructor expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_continue_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_continue expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_def_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_def expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_else_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_else expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_elseif_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_elseif expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_extend_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_extend expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_external_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_external expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_for_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_for expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_from_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_from expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_heap_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_heap expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_if_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_if expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_import_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_import expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_local_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_local expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_native_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_native expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_prefix_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_prefix expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_static_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_static expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "kw_while_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to kw_while expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "lessequal_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to lessequal expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "lessthan_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to lessthan expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "literal_false_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to literal_false expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "literal_null_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to literal_null expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "literal_true_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to literal_true expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "neg_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to neg expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "not_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to not expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "notequal_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to notequal expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "number_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to number expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "openbrace_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022{\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "openbracket_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to openbracket expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "openparen_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to openparen expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "oror_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022||\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "period_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to period expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "pipe_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to pipe expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "postfixed_replicationguide_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to postfixed replicationguide expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "power_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022^\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "private_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022private\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "protected_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022protected\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "public_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022public\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "question_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022?\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "rangeop_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to rangeop expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "reminder_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022%\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "replicationguide_postfix_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to replicationguide_postfix expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "textstring_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to textstring expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "this_symbo_no_expected_in_Associative_NonAssignmentStatement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to this symbol not expected in Associative_NonAssignmentStatement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "this_symbol_no_expected_in_Associative_FunctionalStatement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to this symbol not expected in Associative_FunctionalStatement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "this_symbol_not_expected_in_Associative_FunctionCallStatement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to this symbol not expected in Associative_FunctionCallStatement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "this_symbol_not_expected_in_Associative_FunctionalStatement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to this symbol not expected in Associative_FunctionalStatement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "this_symbol_not_expected_in_Associative_Statement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to this symbol not expected in Associative_Statement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "this_symbol_not_expected_in_Import_Statement",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to this symbol not expected in Import_Statement.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "throw_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to throw expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "triquestionmark_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to ??? expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    },
+    {
+      "name": "try_expected",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Looks up a localized string similar to \u0022try\u0022 expected.",
+      "doc_url": "https://github.com/DynamoDS/Dynamo/blob/RC4.1.1_master/src/Engine/ProtoCore/Properties/Resources.Designer.cs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
