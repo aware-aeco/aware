@@ -26,11 +26,15 @@ Pawel, here's what ran while you were asleep.
 | Vendor | Sidecar verbs | Curated workflow verbs | Craft skills | Live drill |
 |---|---|---|---|---|
 | Tekla (reference) | 5 (pre-session) | yes | 33 (pre-session) | 13/20 v0.31 |
-| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | owed |
-| Revit | 5 (#77) | 10 (already in main) | (deferred) | owed |
-| SketchUp | 5 (#76) | 10 (#72 + #74) | (deferred) | blocked on one click |
+| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | owed (no Rhino on machine) |
+| Revit | 5 (#77) | 10 (already in main) | 6 (#79) | **17/20 PASS** (subagent ran it) |
+| SketchUp | 5 (#76) | 10 (#72 + #74) | 6 (#78) | blocked on Welcome-dialog click |
 
-**All three vendors now meet sidecar + curated-workflow parity with tekla.** Live drills are user-action items (rhino: no Rhino installed; revit: install-addin + open; sketchup: dismiss Welcome dialog).
+**All three vendors meet sidecar + curated-workflow + craft-skills parity with tekla.** **Revit's live drill is DONE — 17/20 PASS against the Snowdon Towers sample**, exceeding tekla's 13/20 baseline. See `cli-revit/Ingest/Output/drill-summary.md` on the v0.33-revit-exec branch.
+
+Plus craft-skills coverage extended to other audit-priority vendors:
+- Navisworks (#80) — was 3, now 8 craft skills
+- AutoCAD (#81) — was 0, now 6 craft skills
 
 ## The live drill is what's owed
 
