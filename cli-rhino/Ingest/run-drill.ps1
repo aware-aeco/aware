@@ -44,8 +44,11 @@ $pass = 0; $fail = 0
 foreach ($fix in $fixtures) {
     $name = $fix.BaseName
     Write-Host -NoNewline ("  {0} ... " -f $name)
-    $payload = Get-Content $fix.FullName -Raw
-    $rawOutput = $payload | & $AwareRhino --json-stdin 2>&1
+    # Use cmd's stdin redirection instead of PowerShell's pipe. PS5/PS7 pipes
+    # re-encode native-cmd stdin through the console output encoding which adds
+    # a UTF-16 BOM in PS5; the sidecar's JSON parser then rejects the leading
+    # 0xEF byte. cmd's '<' is a byte-faithful redirect.
+    $rawOutput = cmd /c "`"$AwareRhino`" --json-stdin < `"$($fix.FullName)`"" 2>&1
     $exit = $LASTEXITCODE
     # Stringify in case of mixed stdout/stderr capture from 2>&1
     if ($rawOutput -is [array]) { $rawOutput = ($rawOutput -join "`n") }
