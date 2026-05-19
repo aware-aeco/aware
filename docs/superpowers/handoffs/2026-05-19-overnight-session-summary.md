@@ -15,33 +15,35 @@ Pawel, here's what ran while you were asleep.
 | [#72](https://github.com/aware-aeco/aware/pull/72) | feat(v0.33): sketchup-2026 curated workflow verbs round 1 (5 verbs) | main | green; pure content |
 | [#73](https://github.com/aware-aeco/aware/pull/73) | feat(v0.33b): rhino-8 curated workflow verbs round 2 (total: 10) | v0.33-rhino-curated-workflow | stacked on #69 |
 | [#74](https://github.com/aware-aeco/aware/pull/74) | feat(v0.33b): sketchup-2026 curated workflow verbs round 2 (total: 10) | v0.33-sketchup-curated-workflow | stacked on #72 |
+| [#75](https://github.com/aware-aeco/aware/pull/75) | feat(v0.33c): rhino-8 craft skills (5 hand-written narrative skills) | main | first craft skills outside tekla |
+| [#76](https://github.com/aware-aeco/aware/pull/76) | feat(v0.34): sketchup.exec runtime sidecar -- Ruby in-process bridge + .NET sidecar | main | **subagent**; live drill blocked on Welcome-dialog click |
+| [#77](https://github.com/aware-aeco/aware/pull/77) | feat(v0.33): revit.exec runtime sidecar -- in-Revit add-in + .NET sidecar over named pipe | main | **subagent**; live drill ready (install-addin first) |
 
-Plus two more PRs (Revit + SketchUp sidecars) pending from the background subagents — see "Background work" below.
+12 PRs total from this session.
 
 ## Goal status (per the active /goal directive)
 
-| Vendor | Sidecar verbs | Curated workflow verbs | Live drill |
-|---|---|---|---|
-| Tekla (reference) | 5 (shipped pre-session) | yes | shipped (13/20 v0.31) |
-| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | owed (recipe in handoff) |
-| Revit | in flight (subagent) | **10 already in main** (verified during session) | depends on sidecar |
-| SketchUp | in flight (subagent) | 10 (#72 + #74) | depends on sidecar |
+| Vendor | Sidecar verbs | Curated workflow verbs | Craft skills | Live drill |
+|---|---|---|---|---|
+| Tekla (reference) | 5 (pre-session) | yes | 33 (pre-session) | 13/20 v0.31 |
+| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | owed |
+| Revit | 5 (#77) | 10 (already in main) | (deferred) | owed |
+| SketchUp | 5 (#76) | 10 (#72 + #74) | (deferred) | blocked on one click |
 
-All three vendors now have curation parity with tekla on the workflow surface. The sidecar runtime is what's still in flight for Revit + SketchUp.
+**All three vendors now meet sidecar + curated-workflow parity with tekla.** Live drills are user-action items (rhino: no Rhino installed; revit: install-addin + open; sketchup: dismiss Welcome dialog).
 
 ## The live drill is what's owed
 
 #66 and #67 ship rhino.exec to feature parity with cli-tekla but Rhino isn't installed on the build machine. Run the drill recipe in [`2026-05-19-v032-rhino-exec-ready.md`](./2026-05-19-v032-rhino-exec-ready.md) (the launch+close lifecycle test is in [`2026-05-19-v032.1-rhino-launch-close.md`](./2026-05-19-v032.1-rhino-launch-close.md)) — 5 minutes if Rhino starts cleanly. If PASS rate is at or above tekla's 13/20, merge #66 + #67.
 
-## Background work — Revit + SketchUp
+## Background work — Revit + SketchUp (both LANDED)
 
-Two parallel subagents were dispatched at session start to build:
-- **`cli-revit`** — Revit 2026 add-in + sidecar (in-Revit named-pipe Roslyn host since Revit has no out-of-process CLI). Target: all 5 verbs + live drill on the build machine (Revit 2026 IS installed at `C:/Program Files/Autodesk/Revit 2026/`).
-- **`cli-sketchup`** — SketchUp Ruby extension + .NET sidecar. Target: all 5 verbs + live drill (SketchUp 2026 IS installed at `C:/Program Files/SketchUp/SketchUp 2026/`).
+Two parallel subagents dispatched at session start finished and landed PRs:
 
-Both are in **isolated worktrees** so they don't conflict with each other or with my main-checkout work. Both have authority to open their own PRs. Check `gh pr list --author @me` in the morning to see what they produced.
+- **#76 — v0.34 SketchUp sidecar** (3 commits, 34/34 tests PASS). Architectural innovation: SketchUp has NO out-of-process CLI bridge, so the subagent invented one — auto-loaded SketchUp Ruby extension hosts an in-process TCP socket; `aware-sketchup.exe` connects to it. Proves the AWARE substrate generalises to vendors with only in-process scripting. **Live drill blocked by SketchUp 2026's CEF-rendered Welcome dialog** that gates plugin loading until human click — see the subagent's handoff for the 10-second action.
+- **#77 — v0.33 Revit sidecar** (18 commits, comprehensive tests). First dual-binary vendor: `AwareRevit.dll` loaded INTO Revit (via .addin manifest), `aware-revit.exe` as external sidecar — they communicate over a named pipe. The add-in uses `IExternalEventHandler` to safely call RevitAPI from the pipe-server thread. Mac/Linux N/A (Revit is Windows-only).
 
-If either is BLOCKED (Revit add-in load failure, SketchUp socket sandbox, etc.) the subagent's PR body or last message describes what they tried. The notification I get when they complete (success or BLOCKED) will land in your morning Claude Code transcript.
+Both subagents wrote their own design docs, plans, and handoffs. See the PR bodies for full context.
 
 ## What I shipped vs deferred
 
