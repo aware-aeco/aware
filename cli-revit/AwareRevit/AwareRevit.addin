@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>AWARE Runtime Bridge</Name>
+    <!-- install-addin.ps1 rewrites this to the absolute deployed path. -->
+    <Assembly>AwareRevit.dll</Assembly>
+    <ClientId>4F2A1D6C-9B81-4C7E-A0F5-1E3C58A6D9C0</ClientId>
+    <FullClassName>AwareRevit.AddIn.AddInApplication</FullClassName>
+    <VendorId>AWRE</VendorId>
+    <VendorDescription>AWARE Project — https://github.com/aware-aeco/aware</VendorDescription>
+  </AddIn>
+</RevitAddIns>
