@@ -20,4 +20,10 @@
   <ItemGroup>
     <InternalsVisibleTo Include="AwareRhino.Tests" />
   </ItemGroup>
+  <!-- Tests/ has its own csproj; don't drag its sources into the main project. -->
+  <ItemGroup>
+    <Compile Remove="Tests/**" />
+    <None Remove="Tests/**" />
+    <EmbeddedResource Remove="Tests/**" />
+  </ItemGroup>
 </Project>
