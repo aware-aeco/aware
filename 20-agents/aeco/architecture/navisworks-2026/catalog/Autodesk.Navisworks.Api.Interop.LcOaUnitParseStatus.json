@@ -1,0 +1,26 @@
+{
+  "name": "LcOaUnitParseStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaUnitParseStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaUnitParseStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePARSE_NOT_NUMBER",
+      "value": 0
+    },
+    {
+      "name": "ePARSE_NO_UNITS",
+      "value": 1
+    },
+    {
+      "name": "ePARSE_UNITS",
+      "value": 2
+    }
+  ]
+}

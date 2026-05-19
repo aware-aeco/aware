@@ -1,0 +1,13 @@
+{
+  "name": "IPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "IPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.IPlugin",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

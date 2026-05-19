@@ -1,0 +1,390 @@
+{
+  "name": "LcOpOptionSet",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpOptionSet class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpOptionSet",
+  "constructors": [
+    {
+      "name": "LcOpOptionSet()",
+      "signature": "LcOpOptionSet()",
+      "summary": "Constructs a new LcOpOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetElementItemPathInfo",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement GetElementItemPathInfo(int index, Autodesk.Navisworks.Api.Interop.LcUInt32Vector type_list)",
+      "summary": "GetElementItemPathInfo method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "type_list",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.GetElementItemPathInfo%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "EditElementItemPath",
+      "signature": "Autodesk.Navisworks.Api.SavedItemReference EditElementItemPath(int index)",
+      "summary": "EditElementItemPath method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemReference",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.EditElementItemPath%28System.Int32%29"
+    },
+    {
+      "name": "GetElementItemPath",
+      "signature": "Autodesk.Navisworks.Api.SavedItemReference GetElementItemPath(int index)",
+      "summary": "GetElementItemPath method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemReference",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.GetElementItemPath%28System.Int32%29"
+    },
+    {
+      "name": "EditFindSelection",
+      "signature": "Autodesk.Navisworks.Api.Selection EditFindSelection(int index)",
+      "summary": "EditFindSelection method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Selection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.EditFindSelection%28System.Int32%29"
+    },
+    {
+      "name": "GetFindSelection",
+      "signature": "Autodesk.Navisworks.Api.Selection GetFindSelection(int index)",
+      "summary": "GetFindSelection method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Selection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.GetFindSelection%28System.Int32%29"
+    },
+    {
+      "name": "DefineElementItemPath",
+      "signature": "bool DefineElementItemPath(string name, Autodesk.Navisworks.Api.SavedItemReference path)",
+      "summary": "DefineElementItemPath method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.DefineElementItemPath%28System.String%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "DefineElementItemPath",
+      "signature": "bool DefineElementItemPath(string name, Autodesk.Navisworks.Api.SavedItemReference path, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineElementItemPath method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.DefineElementItemPath%28System.String%2CAutodesk.Navisworks.Api.SavedItemReference%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineFindSelection",
+      "signature": "bool DefineFindSelection(string name, Autodesk.Navisworks.Api.Selection selection)",
+      "summary": "DefineFindSelection method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.Selection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.DefineFindSelection%28System.String%2CAutodesk.Navisworks.Api.Selection%29"
+    },
+    {
+      "name": "DefineFindSelection",
+      "signature": "bool DefineFindSelection(string name, Autodesk.Navisworks.Api.Selection selection, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineFindSelection method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.Selection",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.DefineFindSelection%28System.String%2CAutodesk.Navisworks.Api.Selection%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpOptionSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcOpOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.IsInitialised"
+    },
+    {
+      "name": "ElementItemPathClass",
+      "signature": "static string ElementItemPathClass()",
+      "summary": "ElementItemPathClass method of LcOpOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.ElementItemPathClass"
+    },
+    {
+      "name": "FindSelectionClass",
+      "signature": "static string FindSelectionClass()",
+      "summary": "FindSelectionClass method of LcOpOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.FindSelectionClass"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcOpOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.Initialise"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcOpOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.Terminate"
+    },
+    {
+      "name": "SetElementItemPath",
+      "signature": "void SetElementItemPath(int index, Autodesk.Navisworks.Api.SavedItemReference path)",
+      "summary": "SetElementItemPath method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.SetElementItemPath%28System.Int32%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "SetFindSelection",
+      "signature": "void SetFindSelection(int index, Autodesk.Navisworks.Api.Selection selection)",
+      "summary": "SetFindSelection method of LcOpOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.Selection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.SetFindSelection%28System.Int32%2CAutodesk.Navisworks.Api.Selection%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpOptionSet.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpOptionSet.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

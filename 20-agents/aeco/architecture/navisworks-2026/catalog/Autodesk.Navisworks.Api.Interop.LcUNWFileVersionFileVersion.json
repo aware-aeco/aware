@@ -1,0 +1,1010 @@
+{
+  "name": "LcUNWFileVersionFileVersion",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUNWFileVersionFileVersion enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUNWFileVersionFileVersion",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eINVALID",
+      "value": -1
+    },
+    {
+      "name": "e1_2",
+      "value": 0
+    },
+    {
+      "name": "e1_3",
+      "value": 1
+    },
+    {
+      "name": "e1_3a",
+      "value": 2
+    },
+    {
+      "name": "e1_4",
+      "value": 3
+    },
+    {
+      "name": "e1_5",
+      "value": 4
+    },
+    {
+      "name": "e3_0",
+      "value": 5
+    },
+    {
+      "name": "e3_0_10313",
+      "value": 6
+    },
+    {
+      "name": "e3_0_10503",
+      "value": 7
+    },
+    {
+      "name": "e3_0_10790",
+      "value": 8
+    },
+    {
+      "name": "e3_0_11045",
+      "value": 9
+    },
+    {
+      "name": "e3_0_11095",
+      "value": 10
+    },
+    {
+      "name": "e3_0_11129",
+      "value": 11
+    },
+    {
+      "name": "e3_0_11432",
+      "value": 12
+    },
+    {
+      "name": "e3_0_11436",
+      "value": 13
+    },
+    {
+      "name": "e3_0_11461",
+      "value": 14
+    },
+    {
+      "name": "e3_0_11742",
+      "value": 15
+    },
+    {
+      "name": "e3_0_11959",
+      "value": 16
+    },
+    {
+      "name": "e3_0_12195",
+      "value": 17
+    },
+    {
+      "name": "e3_0_12224",
+      "value": 18
+    },
+    {
+      "name": "e3_0_12295",
+      "value": 19
+    },
+    {
+      "name": "e4_0_13350",
+      "value": 20
+    },
+    {
+      "name": "e4_0_13744",
+      "value": 21
+    },
+    {
+      "name": "e4_0_13846",
+      "value": 22
+    },
+    {
+      "name": "e4_0_13918",
+      "value": 23
+    },
+    {
+      "name": "e4_0_13963",
+      "value": 24
+    },
+    {
+      "name": "e4_0_14367",
+      "value": 25
+    },
+    {
+      "name": "e4_0_14405",
+      "value": 26
+    },
+    {
+      "name": "e4_0_15442",
+      "value": 27
+    },
+    {
+      "name": "e4_0_15688",
+      "value": 28
+    },
+    {
+      "name": "e4_0_15924",
+      "value": 29
+    },
+    {
+      "name": "e4_0_15933",
+      "value": 30
+    },
+    {
+      "name": "e4_0_16014",
+      "value": 31
+    },
+    {
+      "name": "e4_0_16035",
+      "value": 32
+    },
+    {
+      "name": "e4_0_16057",
+      "value": 33
+    },
+    {
+      "name": "e4_0_16058",
+      "value": 34
+    },
+    {
+      "name": "e4_0_16088",
+      "value": 35
+    },
+    {
+      "name": "e4_0_16104",
+      "value": 36
+    },
+    {
+      "name": "e4_0_16150",
+      "value": 37
+    },
+    {
+      "name": "e4_0_16238",
+      "value": 38
+    },
+    {
+      "name": "e4_0_16265",
+      "value": 39
+    },
+    {
+      "name": "e4_0_16351",
+      "value": 40
+    },
+    {
+      "name": "e4_0_16521",
+      "value": 41
+    },
+    {
+      "name": "e4_0_16602",
+      "value": 42
+    },
+    {
+      "name": "e4_0_16657",
+      "value": 43
+    },
+    {
+      "name": "e4_0_16956",
+      "value": 44
+    },
+    {
+      "name": "e4_0_17018",
+      "value": 45
+    },
+    {
+      "name": "e4_0_17663",
+      "value": 46
+    },
+    {
+      "name": "e4_0_17666",
+      "value": 47
+    },
+    {
+      "name": "e4_0_17718",
+      "value": 48
+    },
+    {
+      "name": "e4_0_17765",
+      "value": 49
+    },
+    {
+      "name": "e4_0_17774",
+      "value": 50
+    },
+    {
+      "name": "e4_0_17923",
+      "value": 51
+    },
+    {
+      "name": "e4_0_18214",
+      "value": 52
+    },
+    {
+      "name": "e4_0_18232",
+      "value": 53
+    },
+    {
+      "name": "e4_0_18331",
+      "value": 54
+    },
+    {
+      "name": "e4_0_18427",
+      "value": 55
+    },
+    {
+      "name": "e4_0_18438",
+      "value": 56
+    },
+    {
+      "name": "e4_0_18448",
+      "value": 57
+    },
+    {
+      "name": "e4_0_18463",
+      "value": 58
+    },
+    {
+      "name": "e4_0_18516",
+      "value": 59
+    },
+    {
+      "name": "e4_0_18543",
+      "value": 60
+    },
+    {
+      "name": "e4_0_18563",
+      "value": 61
+    },
+    {
+      "name": "e4_0_18693",
+      "value": 62
+    },
+    {
+      "name": "e4_0_18697",
+      "value": 63
+    },
+    {
+      "name": "e4_0_18743",
+      "value": 64
+    },
+    {
+      "name": "e4_0_18744",
+      "value": 65
+    },
+    {
+      "name": "e4_0_18805",
+      "value": 66
+    },
+    {
+      "name": "e4_0_18830",
+      "value": 67
+    },
+    {
+      "name": "e4_0_19119",
+      "value": 68
+    },
+    {
+      "name": "e4_0_19210",
+      "value": 69
+    },
+    {
+      "name": "e4_0_19632",
+      "value": 70
+    },
+    {
+      "name": "e4_0_19637",
+      "value": 71
+    },
+    {
+      "name": "e4_0_19655",
+      "value": 72
+    },
+    {
+      "name": "e5_0_22480",
+      "value": 73
+    },
+    {
+      "name": "e5_0_22523",
+      "value": 74
+    },
+    {
+      "name": "e5_0_22524",
+      "value": 75
+    },
+    {
+      "name": "e5_0_23130",
+      "value": 76
+    },
+    {
+      "name": "e5_0_23844",
+      "value": 77
+    },
+    {
+      "name": "e5_0_24040",
+      "value": 78
+    },
+    {
+      "name": "e5_0_24256",
+      "value": 79
+    },
+    {
+      "name": "e5_0_24266",
+      "value": 80
+    },
+    {
+      "name": "e5_0_24296",
+      "value": 81
+    },
+    {
+      "name": "e5_0_24342",
+      "value": 82
+    },
+    {
+      "name": "e5_0_24458",
+      "value": 83
+    },
+    {
+      "name": "e5_0_24669",
+      "value": 84
+    },
+    {
+      "name": "e5_0_24788",
+      "value": 85
+    },
+    {
+      "name": "e5_0_24886",
+      "value": 86
+    },
+    {
+      "name": "e5_0_25123",
+      "value": 87
+    },
+    {
+      "name": "e5_0_25403",
+      "value": 88
+    },
+    {
+      "name": "e5_0_25457",
+      "value": 89
+    },
+    {
+      "name": "e5_0_26006",
+      "value": 90
+    },
+    {
+      "name": "e6_0_35608",
+      "value": 91
+    },
+    {
+      "name": "e6_0_38315",
+      "value": 92
+    },
+    {
+      "name": "e6_0_40891",
+      "value": 93
+    },
+    {
+      "name": "e6_0_40950",
+      "value": 94
+    },
+    {
+      "name": "e6_0_41237",
+      "value": 95
+    },
+    {
+      "name": "e6_0_41342",
+      "value": 96
+    },
+    {
+      "name": "e6_0_41594",
+      "value": 97
+    },
+    {
+      "name": "e6_0_41656",
+      "value": 98
+    },
+    {
+      "name": "e6_0_41714",
+      "value": 99
+    },
+    {
+      "name": "e6_0_41869",
+      "value": 100
+    },
+    {
+      "name": "e6_0_42561",
+      "value": 101
+    },
+    {
+      "name": "e6_0_42954",
+      "value": 102
+    },
+    {
+      "name": "eRELEASE_6",
+      "value": 103
+    },
+    {
+      "name": "e6_0_42996",
+      "value": 103
+    },
+    {
+      "name": "e7_0_46174",
+      "value": 104
+    },
+    {
+      "name": "e7_0_46363",
+      "value": 105
+    },
+    {
+      "name": "e7_0_46624",
+      "value": 106
+    },
+    {
+      "name": "e7_0_47235",
+      "value": 107
+    },
+    {
+      "name": "e7_0_47478",
+      "value": 108
+    },
+    {
+      "name": "e7_0_47867",
+      "value": 109
+    },
+    {
+      "name": "e7_0_47939",
+      "value": 110
+    },
+    {
+      "name": "e7_0_47979",
+      "value": 111
+    },
+    {
+      "name": "e7_0_48117",
+      "value": 112
+    },
+    {
+      "name": "e7_0_48333",
+      "value": 113
+    },
+    {
+      "name": "eRELEASE_7",
+      "value": 114
+    },
+    {
+      "name": "e7_0_48373",
+      "value": 114
+    },
+    {
+      "name": "e8_0_52662",
+      "value": 115
+    },
+    {
+      "name": "e8_0_55739",
+      "value": 116
+    },
+    {
+      "name": "e8_0_56451",
+      "value": 117
+    },
+    {
+      "name": "e8_0_56816",
+      "value": 118
+    },
+    {
+      "name": "e8_0_56822",
+      "value": 119
+    },
+    {
+      "name": "e8_0_56859",
+      "value": 120
+    },
+    {
+      "name": "eRELEASE_8",
+      "value": 120
+    },
+    {
+      "name": "e9_0_55092",
+      "value": 200
+    },
+    {
+      "name": "e9_0_55311",
+      "value": 201
+    },
+    {
+      "name": "e9_0_62464",
+      "value": 202
+    },
+    {
+      "name": "e9_0_62468",
+      "value": 203
+    },
+    {
+      "name": "e9_0_62869",
+      "value": 205
+    },
+    {
+      "name": "e9_0_63045",
+      "value": 207
+    },
+    {
+      "name": "e9_0_63262",
+      "value": 208
+    },
+    {
+      "name": "e9_0_63300",
+      "value": 209
+    },
+    {
+      "name": "e9_0_63737",
+      "value": 210
+    },
+    {
+      "name": "e9_0_63959",
+      "value": 212
+    },
+    {
+      "name": "e9_0_64020",
+      "value": 213
+    },
+    {
+      "name": "e9_0_64105",
+      "value": 214
+    },
+    {
+      "name": "e9_0_63924",
+      "value": 215
+    },
+    {
+      "name": "e9_0_64170",
+      "value": 216
+    },
+    {
+      "name": "e9_0_64326",
+      "value": 217
+    },
+    {
+      "name": "e9_0_64559",
+      "value": 218
+    },
+    {
+      "name": "e9_0_64571",
+      "value": 219
+    },
+    {
+      "name": "e9_0_64689",
+      "value": 220
+    },
+    {
+      "name": "e9_0_64734",
+      "value": 221
+    },
+    {
+      "name": "e9_0_64994",
+      "value": 222
+    },
+    {
+      "name": "e9_0_65134",
+      "value": 223
+    },
+    {
+      "name": "e9_0_65262",
+      "value": 224
+    },
+    {
+      "name": "e9_0_65525",
+      "value": 225
+    },
+    {
+      "name": "e9_0_65845",
+      "value": 226
+    },
+    {
+      "name": "e9_0_65955",
+      "value": 227
+    },
+    {
+      "name": "e9_0_65979",
+      "value": 228
+    },
+    {
+      "name": "e9_0_66007",
+      "value": 229
+    },
+    {
+      "name": "e9_0_65966",
+      "value": 230
+    },
+    {
+      "name": "e9_0_66343",
+      "value": 231
+    },
+    {
+      "name": "e9_0_66829",
+      "value": 232
+    },
+    {
+      "name": "e9_0_67142",
+      "value": 233
+    },
+    {
+      "name": "e9_0_67440",
+      "value": 234
+    },
+    {
+      "name": "e9_0_67553",
+      "value": 235
+    },
+    {
+      "name": "e9_0_67848",
+      "value": 236
+    },
+    {
+      "name": "e9_0_68570",
+      "value": 237
+    },
+    {
+      "name": "e9_0_68991",
+      "value": 238
+    },
+    {
+      "name": "eRELEASE_9",
+      "value": 238
+    },
+    {
+      "name": "e10_0_69717",
+      "value": 239
+    },
+    {
+      "name": "e10_0_70175",
+      "value": 240
+    },
+    {
+      "name": "e10_0_70332",
+      "value": 241
+    },
+    {
+      "name": "e10_0_70996",
+      "value": 242
+    },
+    {
+      "name": "e10_0_71122",
+      "value": 243
+    },
+    {
+      "name": "e10_0_71246",
+      "value": 244
+    },
+    {
+      "name": "e10_0_71485",
+      "value": 245
+    },
+    {
+      "name": "e10_0_71224",
+      "value": 246
+    },
+    {
+      "name": "e10_0_71670",
+      "value": 247
+    },
+    {
+      "name": "e10_0_71649",
+      "value": 248
+    },
+    {
+      "name": "e10_0_71507",
+      "value": 249
+    },
+    {
+      "name": "e10_0_71510",
+      "value": 250
+    },
+    {
+      "name": "e10_0_72575",
+      "value": 251
+    },
+    {
+      "name": "e10_0_73037",
+      "value": 252
+    },
+    {
+      "name": "e10_0_73252",
+      "value": 253
+    },
+    {
+      "name": "e10_0_74171",
+      "value": 254
+    },
+    {
+      "name": "e10_0_74616",
+      "value": 255
+    },
+    {
+      "name": "e10_0_62760",
+      "value": 300
+    },
+    {
+      "name": "e10_0_62874",
+      "value": 301
+    },
+    {
+      "name": "e10_0_63914",
+      "value": 302
+    },
+    {
+      "name": "e10_0_73653",
+      "value": 303
+    },
+    {
+      "name": "e10_0_73654",
+      "value": 304
+    },
+    {
+      "name": "e10_0_76138",
+      "value": 305
+    },
+    {
+      "name": "e10_0_76430",
+      "value": 306
+    },
+    {
+      "name": "e10_0_75854",
+      "value": 400
+    },
+    {
+      "name": "e10_0_78275",
+      "value": 401
+    },
+    {
+      "name": "e10_0_78781",
+      "value": 402
+    },
+    {
+      "name": "e10_0_79133",
+      "value": 403
+    },
+    {
+      "name": "e10_0_79254",
+      "value": 404
+    },
+    {
+      "name": "e10_0_81890",
+      "value": 405
+    },
+    {
+      "name": "eRELEASE_10",
+      "value": 405
+    },
+    {
+      "name": "e11_0_84853",
+      "value": 406
+    },
+    {
+      "name": "e11_0_85080",
+      "value": 407
+    },
+    {
+      "name": "e11_0_85000",
+      "value": 408
+    },
+    {
+      "name": "e11_0_86104",
+      "value": 409
+    },
+    {
+      "name": "e11_0_86666",
+      "value": 410
+    },
+    {
+      "name": "e11_0_87555",
+      "value": 411
+    },
+    {
+      "name": "e11_0_87595",
+      "value": 412
+    },
+    {
+      "name": "e11_0_87869",
+      "value": 413
+    },
+    {
+      "name": "e11_0_88874",
+      "value": 414
+    },
+    {
+      "name": "e11_0_89540",
+      "value": 415
+    },
+    {
+      "name": "e11_0_90180",
+      "value": 416
+    },
+    {
+      "name": "e11_0_90183",
+      "value": 417
+    },
+    {
+      "name": "e11_0_90233",
+      "value": 418
+    },
+    {
+      "name": "e11_0_90960",
+      "value": 419
+    },
+    {
+      "name": "e11_0_91022",
+      "value": 420
+    },
+    {
+      "name": "e11_0_91045",
+      "value": 421
+    },
+    {
+      "name": "e11_0_91611",
+      "value": 422
+    },
+    {
+      "name": "e11_0_91750",
+      "value": 423
+    },
+    {
+      "name": "e11_0_91790",
+      "value": 424
+    },
+    {
+      "name": "e11_0_91970",
+      "value": 425
+    },
+    {
+      "name": "e11_0_91989",
+      "value": 426
+    },
+    {
+      "name": "e11_0_92223",
+      "value": 427
+    },
+    {
+      "name": "e11_0_92545",
+      "value": 428
+    },
+    {
+      "name": "e11_0_94444",
+      "value": 429
+    },
+    {
+      "name": "e11_0_94775",
+      "value": 430
+    },
+    {
+      "name": "eRELEASE_11",
+      "value": 431
+    },
+    {
+      "name": "e11_0_95153",
+      "value": 431
+    },
+    {
+      "name": "e12_0_102132",
+      "value": 432
+    },
+    {
+      "name": "e12_0_103468",
+      "value": 433
+    },
+    {
+      "name": "e12_0_103655",
+      "value": 434
+    },
+    {
+      "name": "e12_0_103699",
+      "value": 435
+    },
+    {
+      "name": "e12_0_105360",
+      "value": 436
+    },
+    {
+      "name": "e12_0_105389",
+      "value": 437
+    },
+    {
+      "name": "e12_0_106146",
+      "value": 438
+    },
+    {
+      "name": "e12_0_106466",
+      "value": 439
+    },
+    {
+      "name": "e12_0_106637",
+      "value": 440
+    },
+    {
+      "name": "eRELEASE_12",
+      "value": 441
+    },
+    {
+      "name": "e12_0_109031",
+      "value": 441
+    },
+    {
+      "name": "e13_0_115360",
+      "value": 442
+    },
+    {
+      "name": "e13_0_115603",
+      "value": 443
+    },
+    {
+      "name": "e13_0_116546",
+      "value": 444
+    },
+    {
+      "name": "e13_0_117176",
+      "value": 445
+    },
+    {
+      "name": "e13_0_117671",
+      "value": 446
+    },
+    {
+      "name": "e13_0_119694",
+      "value": 447
+    },
+    {
+      "name": "e13_0_119729",
+      "value": 448
+    },
+    {
+      "name": "eRELEASE_13",
+      "value": 448
+    },
+    {
+      "name": "eCURRENT_GLUE_VERSION",
+      "value": 448
+    },
+    {
+      "name": "eCURRENT_CACHE_VERSION",
+      "value": 448
+    },
+    {
+      "name": "e21_0_0",
+      "value": 449
+    },
+    {
+      "name": "e23_0_0",
+      "value": 450
+    },
+    {
+      "name": "e23_0_1",
+      "value": 451
+    },
+    {
+      "name": "eCURRENT_FILE_VERSION",
+      "value": 451
+    },
+    {
+      "name": "eRELEASE_23",
+      "value": 451
+    },
+    {
+      "name": "eCURRENT",
+      "value": 451
+    },
+    {
+      "name": "eCURRENT_IN_MEMORY_VERSION",
+      "value": 451
+    },
+    {
+      "name": "eNUM_VERSIONS",
+      "value": 452
+    }
+  ]
+}

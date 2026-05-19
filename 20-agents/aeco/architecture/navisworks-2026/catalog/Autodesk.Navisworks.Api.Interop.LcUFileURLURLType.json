@@ -1,0 +1,26 @@
+{
+  "name": "LcUFileURLURLType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUFileURLURLType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUFileURLURLType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Local",
+      "value": 0
+    },
+    {
+      "name": "Remote",
+      "value": 1
+    },
+    {
+      "name": "Unsupported",
+      "value": 2
+    }
+  ]
+}

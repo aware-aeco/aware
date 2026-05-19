@@ -1,0 +1,198 @@
+{
+  "name": "Int32Field",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "Represents the definition of a Int32 value within a SchemaDefinition.",
+  "base": "Autodesk.Navisworks.Api.Schema.SimpleField",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.Int32Field",
+  "constructors": [
+    {
+      "name": "Int32Field()",
+      "signature": "Int32Field()",
+      "summary": "Default constructor. No identifier specified.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Int32Field.%23ctor"
+    },
+    {
+      "name": "Int32Field(string)",
+      "signature": "Int32Field(string id)",
+      "summary": "Constructs the field with a given identifier.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Provided field ID is invalid or missing. 7-bit ASCII without spaces must be used."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027id\u0027 is not convertable to a 7-bit ASCII string"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Int32Field.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetValue",
+      "signature": "int GetValue(Autodesk.Navisworks.Api.Schema.ReadAccessor accessor)",
+      "summary": "Gets a value from a given SchemaData via the associated ReadAccessor.",
+      "params": [
+        {
+          "name": "accessor",
+          "type": "Autodesk.Navisworks.Api.Schema.ReadAccessor",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaNotCompiledException\u0027 thrown"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidAccessorException\u0027 thrown"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027accessor\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027accessor\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Int32Field.GetValue%28Autodesk.Navisworks.Api.Schema.ReadAccessor%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Int32Field.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Int32Field.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.Int32Field InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Int32Field.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.Int32Field",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Int32Field.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Schema.EditAccessor accessor, int value)",
+      "summary": "Sets a value into a given SchemaData via the associated EditAccessor.",
+      "params": [
+        {
+          "name": "accessor",
+          "type": "Autodesk.Navisworks.Api.Schema.EditAccessor",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaNotCompiledException\u0027 thrown"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidAccessorException\u0027 thrown"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027accessor\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027accessor\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.Int32Field.SetValue%28Autodesk.Navisworks.Api.Schema.EditAccessor%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultValue",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Default value that created SchemaData objects will contain at creation time.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.Int32Field.DefaultValue"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.Int32Field.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

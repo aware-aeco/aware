@@ -1,0 +1,88 @@
+{
+  "name": "HomeScreenExtensionPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin for implementing a home screen extension",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetErrorHtml",
+      "signature": "string GetErrorHtml(Autodesk.Navisworks.Api.Plugins.HomeScreenError error)",
+      "summary": "The HTML to load in the iframe if the FrameUrl cannot be loaded.",
+      "params": [
+        {
+          "name": "error",
+          "type": "Autodesk.Navisworks.Api.Plugins.HomeScreenError",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin.GetErrorHtml%28Autodesk.Navisworks.Api.Plugins.HomeScreenError%29"
+    },
+    {
+      "name": "GetHostObjectOrigins",
+      "signature": "string[] GetHostObjectOrigins()",
+      "summary": "Returns the host object origins.",
+      "params": [],
+      "returns": {
+        "type": "string[]",
+        "doc": "The host object origins"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin.GetHostObjectOrigins"
+    },
+    {
+      "name": "SetHostObjectOrigins",
+      "signature": "void SetHostObjectOrigins(string[] hostObjectOrigins)",
+      "summary": "Sets the host object origins. The host object is only accessible if the iframe\u0027s origin matches one of the provided origins (for security reasons).",
+      "params": [
+        {
+          "name": "hostObjectOrigins",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin.SetHostObjectOrigins%28System.String%5B%5D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FrameUrl",
+      "type": "System.Uri",
+      "getter": true,
+      "setter": false,
+      "summary": "The URL for the iframe to display.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin.FrameUrl"
+    },
+    {
+      "name": "HostObject",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "The host object for the iframe.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin.HostObject"
+    },
+    {
+      "name": "HostObjectName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name to access HostObject.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.HomeScreenExtensionPlugin.HostObjectName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

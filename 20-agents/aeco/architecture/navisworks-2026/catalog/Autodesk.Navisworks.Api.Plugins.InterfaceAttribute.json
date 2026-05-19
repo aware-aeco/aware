@@ -1,0 +1,71 @@
+{
+  "name": "InterfaceAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Attribute that declares a plugin implements a particular interface or behaviours.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.InterfaceAttribute",
+  "constructors": [
+    {
+      "name": "InterfaceAttribute(string, string)",
+      "signature": "InterfaceAttribute(string name, string developerId)",
+      "summary": "Attribute that declares a plugin implements particular interface or behaviour. The combination of Name and DeveloperId is used to form an Id that identifies which interface is being supported.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the interface.",
+          "optional": false
+        },
+        {
+          "name": "developerId",
+          "type": "string",
+          "doc": "The 4 character ADN developer code or a GUID.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.InterfaceAttribute.%23ctor%28System.String%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DeveloperId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 4 character ADN developer code or a GUID. The combination of this and Name is used to form and Id that identifies which interface is being supported.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceAttribute.DeveloperId"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Optional additional information about the interface implementation",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceAttribute.DisplayName"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the Inteface. The combination of this and DeveloperId is used to form an Id that identifies which interface is being supported.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceAttribute.Name"
+    },
+    {
+      "name": "UserData",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Optional additional information about the interface implementation",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.InterfaceAttribute.UserData"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

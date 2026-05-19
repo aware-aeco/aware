@@ -1,0 +1,364 @@
+{
+  "name": "LcOpAnimationEngineController",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimationEngineController class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationEngineController",
+  "constructors": [
+    {
+      "name": "LcOpAnimationEngineController(Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine, double)",
+      "signature": "LcOpAnimationEngineController(Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine engine, double duration)",
+      "summary": "Constructs a new LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "engine",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetStatus",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus GetStatus()",
+      "summary": "GetStatus method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.GetStatus"
+    },
+    {
+      "name": "IsActive",
+      "signature": "bool IsActive()",
+      "summary": "IsActive method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.IsActive"
+    },
+    {
+      "name": "OnUpdatePause",
+      "signature": "bool OnUpdatePause(ref bool is_active)",
+      "summary": "OnUpdatePause method of LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdatePause%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnUpdatePlay",
+      "signature": "bool OnUpdatePlay(ref bool is_active)",
+      "summary": "OnUpdatePlay method of LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdatePlay%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnUpdateReversePlay",
+      "signature": "bool OnUpdateReversePlay(ref bool is_active)",
+      "summary": "OnUpdateReversePlay method of LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdateReversePlay%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnUpdateStepBack",
+      "signature": "bool OnUpdateStepBack()",
+      "summary": "OnUpdateStepBack method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdateStepBack"
+    },
+    {
+      "name": "OnUpdateStepForward",
+      "signature": "bool OnUpdateStepForward()",
+      "summary": "OnUpdateStepForward method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdateStepForward"
+    },
+    {
+      "name": "OnUpdateStop",
+      "signature": "bool OnUpdateStop()",
+      "summary": "OnUpdateStop method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdateStop"
+    },
+    {
+      "name": "OnUpdateWindToEnd",
+      "signature": "bool OnUpdateWindToEnd()",
+      "summary": "OnUpdateWindToEnd method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdateWindToEnd"
+    },
+    {
+      "name": "OnUpdateWindToStart",
+      "signature": "bool OnUpdateWindToStart()",
+      "summary": "OnUpdateWindToStart method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnUpdateWindToStart"
+    },
+    {
+      "name": "GetDuration",
+      "signature": "double GetDuration()",
+      "summary": "GetDuration method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.GetDuration"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "double GetPosition()",
+      "summary": "GetPosition method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.GetPosition"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimationEngineController InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationEngineController",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "OnPause",
+      "signature": "void OnPause()",
+      "summary": "OnPause method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnPause"
+    },
+    {
+      "name": "OnPlay",
+      "signature": "void OnPlay()",
+      "summary": "OnPlay method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnPlay"
+    },
+    {
+      "name": "OnReversePlay",
+      "signature": "void OnReversePlay()",
+      "summary": "OnReversePlay method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnReversePlay"
+    },
+    {
+      "name": "OnStepBack",
+      "signature": "void OnStepBack()",
+      "summary": "OnStepBack method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnStepBack"
+    },
+    {
+      "name": "OnStepForward",
+      "signature": "void OnStepForward()",
+      "summary": "OnStepForward method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnStepForward"
+    },
+    {
+      "name": "OnStop",
+      "signature": "void OnStop()",
+      "summary": "OnStop method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnStop"
+    },
+    {
+      "name": "OnWindToEnd",
+      "signature": "void OnWindToEnd()",
+      "summary": "OnWindToEnd method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnWindToEnd"
+    },
+    {
+      "name": "OnWindToStart",
+      "signature": "void OnWindToStart()",
+      "summary": "OnWindToStart method of LcOpAnimationEngineController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.OnWindToStart"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "void SetPosition(double time)",
+      "summary": "SetPosition method of LcOpAnimationEngineController.",
+      "params": [
+        {
+          "name": "time",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.SetPosition%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimationEngineController.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngineController.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

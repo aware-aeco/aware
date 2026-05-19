@@ -1,0 +1,224 @@
+{
+  "name": "LcOpTextureSpaceCylinder",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpTextureSpaceCylinder class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetEnableCap",
+      "signature": "bool GetEnableCap()",
+      "summary": "GetEnableCap method of LcOpTextureSpaceCylinder.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.GetEnableCap"
+    },
+    {
+      "name": "GetCapThreshold",
+      "signature": "double GetCapThreshold()",
+      "summary": "GetCapThreshold method of LcOpTextureSpaceCylinder.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.GetCapThreshold"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetCapDirection",
+      "signature": "void GetCapDirection(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection cap, ref Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection udir, ref Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection vdir)",
+      "summary": "GetCapDirection method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "cap",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        },
+        {
+          "name": "udir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        },
+        {
+          "name": "vdir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.GetCapDirection%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%40%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%40%29"
+    },
+    {
+      "name": "GetDomain",
+      "signature": "void GetDomain(Autodesk.Navisworks.Api.Vector3D min, Autodesk.Navisworks.Api.Vector3D max)",
+      "summary": "GetDomain method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "min",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.GetDomain%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetCapDirection",
+      "signature": "void SetCapDirection(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection cap, Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection udir, Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection vdir)",
+      "summary": "SetCapDirection method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "cap",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        },
+        {
+          "name": "udir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        },
+        {
+          "name": "vdir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.SetCapDirection%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%29"
+    },
+    {
+      "name": "SetCapThreshold",
+      "signature": "void SetCapThreshold(double threshold)",
+      "summary": "SetCapThreshold method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "threshold",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.SetCapThreshold%28System.Double%29"
+    },
+    {
+      "name": "SetDomain",
+      "signature": "void SetDomain(Autodesk.Navisworks.Api.Vector3D min, Autodesk.Navisworks.Api.Vector3D max)",
+      "summary": "SetDomain method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "min",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "max",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.SetDomain%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetEnableCap",
+      "signature": "void SetEnableCap(bool cap)",
+      "summary": "SetEnableCap method of LcOpTextureSpaceCylinder.",
+      "params": [
+        {
+          "name": "cap",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.SetEnableCap%28System.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpTextureSpaceCylinder.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceCylinder.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

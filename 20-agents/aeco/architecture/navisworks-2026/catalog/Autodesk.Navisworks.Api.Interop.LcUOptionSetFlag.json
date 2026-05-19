@@ -1,0 +1,38 @@
+{
+  "name": "LcUOptionSetFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFLAG_CACHE",
+      "value": 1
+    },
+    {
+      "name": "eFLAG_COMPOSITE",
+      "value": 2
+    },
+    {
+      "name": "eFLAG_LOCAL_NAME",
+      "value": 4
+    },
+    {
+      "name": "eFLAG_RESTART_NEEDED",
+      "value": 8
+    },
+    {
+      "name": "eFLAG_COMBINED_LABEL",
+      "value": 16
+    },
+    {
+      "name": "eFLAG_EQUAL_COLUMNS",
+      "value": 32
+    }
+  ]
+}

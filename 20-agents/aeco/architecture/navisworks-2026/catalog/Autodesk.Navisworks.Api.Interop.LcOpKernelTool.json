@@ -1,0 +1,172 @@
+{
+  "name": "LcOpKernelTool",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpKernelTool class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpKernel",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernelTool",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetGizmoType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKernelToolGizmoType GetGizmoType()",
+      "summary": "GetGizmoType method of LcOpKernelTool.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelToolGizmoType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.GetGizmoType"
+    },
+    {
+      "name": "GetTool",
+      "signature": "Autodesk.Navisworks.Api.Tool GetTool()",
+      "summary": "GetTool method of LcOpKernelTool.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.GetTool"
+    },
+    {
+      "name": "GetToolElementClass",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElementClass GetToolElementClass()",
+      "summary": "GetToolElementClass method of LcOpKernelTool.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.GetToolElementClass"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpKernelTool InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpKernelTool.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpKernelTool.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetCustomToolId",
+      "signature": "string GetCustomToolId()",
+      "summary": "GetCustomToolId method of LcOpKernelTool.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.GetCustomToolId"
+    },
+    {
+      "name": "SetCustomTool",
+      "signature": "void SetCustomTool(string id)",
+      "summary": "SetCustomTool method of LcOpKernelTool.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.SetCustomTool%28System.String%29"
+    },
+    {
+      "name": "SetGizmoType",
+      "signature": "void SetGizmoType(Autodesk.Navisworks.Api.Interop.LcOpKernelToolGizmoType gizmo_type)",
+      "summary": "SetGizmoType method of LcOpKernelTool.",
+      "params": [
+        {
+          "name": "gizmo_type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelToolGizmoType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.SetGizmoType%28Autodesk.Navisworks.Api.Interop.LcOpKernelToolGizmoType%29"
+    },
+    {
+      "name": "SetTool",
+      "signature": "void SetTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "SetTool method of LcOpKernelTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.SetTool%28Autodesk.Navisworks.Api.Tool%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpKernelTool.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpKernelTool.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

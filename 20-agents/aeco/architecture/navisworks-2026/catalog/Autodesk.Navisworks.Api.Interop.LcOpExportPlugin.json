@@ -1,0 +1,346 @@
+{
+  "name": "LcOpExportPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpExportPlugin class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpPlugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpExportPlugin",
+  "constructors": [
+    {
+      "name": "LcOpExportPlugin()",
+      "signature": "LcOpExportPlugin()",
+      "summary": "Constructs a new LcOpExportPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetContextState",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpExportPluginContextState GetContextState(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "GetContextState method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpExportPluginContextState",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.GetContextState%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "Export",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus Export(Autodesk.Navisworks.Api.Interop.LcOpPluginCaps reason, Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Export method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginCaps",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.Export%28Autodesk.Navisworks.Api.Interop.LcOpPluginCaps%2CAutodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "Export",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus Export(Autodesk.Navisworks.Api.Interop.LcOpPluginCaps reason, Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Progress cb)",
+      "summary": "Export method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginCaps",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "cb",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.Export%28Autodesk.Navisworks.Api.Interop.LcOpPluginCaps%2CAutodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "Export",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus Export(Autodesk.Navisworks.Api.Interop.LcOpPluginCaps reason, Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Progress cb, string filename)",
+      "summary": "Export method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginCaps",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "cb",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.Export%28Autodesk.Navisworks.Api.Interop.LcOpPluginCaps%2CAutodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Progress%2CSystem.String%29"
+    },
+    {
+      "name": "CanExport",
+      "signature": "bool CanExport(Autodesk.Navisworks.Api.Interop.LcOpPluginCaps reason, Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "CanExport method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginCaps",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.CanExport%28Autodesk.Navisworks.Api.Interop.LcOpPluginCaps%2CAutodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "Dialog",
+      "signature": "bool Dialog(Autodesk.Navisworks.Api.Interop.LcOpPluginCaps reason, Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Dialog method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "reason",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpPluginCaps",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.Dialog%28Autodesk.Navisworks.Api.Interop.LcOpPluginCaps%2CAutodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "HelpExport",
+      "signature": "bool HelpExport()",
+      "summary": "HelpExport method of LcOpExportPlugin.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.HelpExport"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpExportPlugin InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpExportPlugin",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "BeginContext",
+      "signature": "void BeginContext(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "BeginContext method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.BeginContext%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "EndContext",
+      "signature": "void EndContext(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "EndContext method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.EndContext%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "GetExportedFileName",
+      "signature": "void GetExportedFileName(out string exported)",
+      "summary": "GetExportedFileName method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "exported",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.GetExportedFileName%28System.String%40%29"
+    },
+    {
+      "name": "GetFormatName",
+      "signature": "void GetFormatName(out string format_name)",
+      "summary": "GetFormatName method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "format_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.GetFormatName%28System.String%40%29"
+    },
+    {
+      "name": "GetFormatSuffix",
+      "signature": "void GetFormatSuffix(out string format_suffix)",
+      "summary": "GetFormatSuffix method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "format_suffix",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.GetFormatSuffix%28System.String%40%29"
+    },
+    {
+      "name": "GetUserString",
+      "signature": "void GetUserString(out string user_string)",
+      "summary": "GetUserString method of LcOpExportPlugin.",
+      "params": [
+        {
+          "name": "user_string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.GetUserString%28System.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpExportPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpExportPlugin.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

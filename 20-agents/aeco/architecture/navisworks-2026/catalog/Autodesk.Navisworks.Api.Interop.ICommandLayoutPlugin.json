@@ -1,0 +1,117 @@
+{
+  "name": "ICommandLayoutPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "ICommandLayoutPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.Interop.IPlugin"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.ICommandLayoutPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Category",
+      "signature": "string Category(int ndx)",
+      "summary": "Category method of ICommandLayoutPlugin.",
+      "params": [
+        {
+          "name": "ndx",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.Category%28System.Int32%29"
+    },
+    {
+      "name": "CmdId",
+      "signature": "string CmdId(int ndx)",
+      "summary": "CmdId method of ICommandLayoutPlugin.",
+      "params": [
+        {
+          "name": "ndx",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.CmdId%28System.Int32%29"
+    },
+    {
+      "name": "HelpID",
+      "signature": "string HelpID(int ndx)",
+      "summary": "HelpID method of ICommandLayoutPlugin.",
+      "params": [
+        {
+          "name": "ndx",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.HelpID%28System.Int32%29"
+    },
+    {
+      "name": "ParentCmdId",
+      "signature": "string ParentCmdId(int ndx)",
+      "summary": "ParentCmdId method of ICommandLayoutPlugin.",
+      "params": [
+        {
+          "name": "ndx",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.ParentCmdId%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CmdCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "CmdCount property of ICommandLayoutPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.CmdCount"
+    },
+    {
+      "name": "CommandFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "CommandFile property of ICommandLayoutPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.CommandFile"
+    },
+    {
+      "name": "HelpFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "HelpFile property of ICommandLayoutPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.ICommandLayoutPlugin.HelpFile"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

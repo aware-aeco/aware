@@ -1,0 +1,30 @@
+{
+  "name": "LcOpSavedItemGuiState",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemGuiState enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuiState",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFLAG_GUI_EXPAND_NOT_SET",
+      "value": 0
+    },
+    {
+      "name": "eFLAG_GUI_EXPANDED",
+      "value": 268435456
+    },
+    {
+      "name": "eFLAG_GUI_COLLAPSED",
+      "value": 536870912
+    },
+    {
+      "name": "eFLAG_GUI_BITMASK",
+      "value": 805306368
+    }
+  ]
+}

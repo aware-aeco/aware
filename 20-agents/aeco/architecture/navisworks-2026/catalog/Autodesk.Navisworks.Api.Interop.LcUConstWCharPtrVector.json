@@ -1,0 +1,173 @@
+{
+  "name": "LcUConstWCharPtrVector",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUConstWCharPtrVector class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+  "constructors": [
+    {
+      "name": "LcUConstWCharPtrVector()",
+      "signature": "LcUConstWCharPtrVector()",
+      "summary": "Constructs a new LcUConstWCharPtrVector.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Size",
+      "signature": "int Size()",
+      "summary": "Size method of LcUConstWCharPtrVector.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.Size"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUConstWCharPtrVector.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUConstWCharPtrVector.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ItemAt",
+      "signature": "string ItemAt(int n)",
+      "summary": "ItemAt method of LcUConstWCharPtrVector.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.ItemAt%28System.Int32%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcUConstWCharPtrVector.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.Clear"
+    },
+    {
+      "name": "PushBack",
+      "signature": "void PushBack(string x)",
+      "summary": "PushBack method of LcUConstWCharPtrVector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.PushBack%28System.String%29"
+    },
+    {
+      "name": "Reserve",
+      "signature": "void Reserve(int n)",
+      "summary": "Reserve method of LcUConstWCharPtrVector.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.Reserve%28System.Int32%29"
+    },
+    {
+      "name": "Swap",
+      "signature": "void Swap(Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector x)",
+      "summary": "Swap method of LcUConstWCharPtrVector.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.Swap%28Autodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUConstWCharPtrVector.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUConstWCharPtrVector.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

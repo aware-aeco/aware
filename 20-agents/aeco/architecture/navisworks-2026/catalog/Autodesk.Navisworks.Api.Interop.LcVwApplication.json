@@ -1,0 +1,691 @@
+{
+  "name": "LcVwApplication",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwApplication class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwApplication",
+  "constructors": [
+    {
+      "name": "LcVwApplication()",
+      "signature": "LcVwApplication()",
+      "summary": "Constructs a new LcVwApplication.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ResolveFileInteractive",
+      "signature": "Autodesk.Navisworks.Api.FileResolutionResponse ResolveFileInteractive(Autodesk.Navisworks.Api.FileReferenceResolver resolver, string file, out string resolved_to_open)",
+      "summary": "ResolveFileInteractive method of LcVwApplication.",
+      "params": [
+        {
+          "name": "resolver",
+          "type": "Autodesk.Navisworks.Api.FileReferenceResolver",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_to_open",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ResolveFileInteractive%28Autodesk.Navisworks.Api.FileReferenceResolver%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "InputBox",
+      "signature": "bool InputBox(string prompt, string text, out string result)",
+      "summary": "InputBox method of LcVwApplication.",
+      "params": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.InputBox%28System.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwApplication InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwApplication.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwApplication",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwApplication.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ClearDownloadCache",
+      "signature": "static bool ClearDownloadCache()",
+      "summary": "ClearDownloadCache method of LcVwApplication.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ClearDownloadCache"
+    },
+    {
+      "name": "ConvertJsonObject",
+      "signature": "static bool ConvertJsonObject(string jsonObjectIn, int requestedVersion, out string jsonObject)",
+      "summary": "ConvertJsonObject method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonObjectIn",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "requestedVersion",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonObject",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ConvertJsonObject%28System.String%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ConvertJsonObjectImpl",
+      "signature": "static bool ConvertJsonObjectImpl(string jsonObjectIn, int requestedVersion, out string jsonObject)",
+      "summary": "ConvertJsonObjectImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonObjectIn",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "requestedVersion",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonObject",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ConvertJsonObjectImpl%28System.String%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "CreateDefaultJsonObject",
+      "signature": "static bool CreateDefaultJsonObject(string objectType, int requestedVersion, out string jsonObject)",
+      "summary": "CreateDefaultJsonObject method of LcVwApplication.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "requestedVersion",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonObject",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.CreateDefaultJsonObject%28System.String%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "CreateDefaultJsonObjectImpl",
+      "signature": "static bool CreateDefaultJsonObjectImpl(string objectType, int requestedVersion, out string jsonObject)",
+      "summary": "CreateDefaultJsonObjectImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "objectType",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "requestedVersion",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonObject",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.CreateDefaultJsonObjectImpl%28System.String%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetApplicationOptions",
+      "signature": "static bool GetApplicationOptions(out string jsonApplicationOptions)",
+      "summary": "GetApplicationOptions method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonApplicationOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.GetApplicationOptions%28System.String%40%29"
+    },
+    {
+      "name": "GetApplicationOptionsImpl",
+      "signature": "static bool GetApplicationOptionsImpl(out string jsonApplicationOptions)",
+      "summary": "GetApplicationOptionsImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonApplicationOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.GetApplicationOptionsImpl%28System.String%40%29"
+    },
+    {
+      "name": "GetSSAOInputs",
+      "signature": "static bool GetSSAOInputs(out string jsonSSAOInputs)",
+      "summary": "GetSSAOInputs method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonSSAOInputs",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.GetSSAOInputs%28System.String%40%29"
+    },
+    {
+      "name": "GetSSAOInputsImpl",
+      "signature": "static bool GetSSAOInputsImpl(out string jsonSSAOInputs)",
+      "summary": "GetSSAOInputsImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonSSAOInputs",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.GetSSAOInputsImpl%28System.String%40%29"
+    },
+    {
+      "name": "Matrix4ToTransform3D",
+      "signature": "static bool Matrix4ToTransform3D(string jsonMatrix4, out string jsonTransform3D)",
+      "summary": "Matrix4ToTransform3D method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonMatrix4",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.Matrix4ToTransform3D%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "RegisterBitmapImage",
+      "signature": "static bool RegisterBitmapImage(int width, int height, int image_format, nint data, ref int index)",
+      "summary": "RegisterBitmapImage method of LcVwApplication.",
+      "params": [
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "image_format",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.RegisterBitmapImage%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.IntPtr%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "RegisterFont",
+      "signature": "static bool RegisterFont(string type_face, int point_size, ref int font_index)",
+      "summary": "RegisterFont method of LcVwApplication.",
+      "params": [
+        {
+          "name": "type_face",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "point_size",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "font_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.RegisterFont%28System.String%2CSystem.Int32%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "ScaleFactor",
+      "signature": "static bool ScaleFactor(int from, int to, ref double scaleFactor)",
+      "summary": "ScaleFactor method of LcVwApplication.",
+      "params": [
+        {
+          "name": "from",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "scaleFactor",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ScaleFactor%28System.Int32%2CSystem.Int32%2CSystem.Double%40%29"
+    },
+    {
+      "name": "ScaleFactorImpl",
+      "signature": "static bool ScaleFactorImpl(int from, int to, ref double scale_factor)",
+      "summary": "ScaleFactorImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "from",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "to",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "scale_factor",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ScaleFactorImpl%28System.Int32%2CSystem.Int32%2CSystem.Double%40%29"
+    },
+    {
+      "name": "SetApplicationOptions",
+      "signature": "static bool SetApplicationOptions(string jsonApplicationOptions)",
+      "summary": "SetApplicationOptions method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonApplicationOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.SetApplicationOptions%28System.String%29"
+    },
+    {
+      "name": "SetApplicationOptionsImpl",
+      "signature": "static bool SetApplicationOptionsImpl(string jsonApplicationOptions)",
+      "summary": "SetApplicationOptionsImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonApplicationOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.SetApplicationOptionsImpl%28System.String%29"
+    },
+    {
+      "name": "SetDebugMode",
+      "signature": "static bool SetDebugMode(bool enable)",
+      "summary": "SetDebugMode method of LcVwApplication.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.SetDebugMode%28System.Boolean%29"
+    },
+    {
+      "name": "SetDebugModeImpl",
+      "signature": "static bool SetDebugModeImpl(bool enable)",
+      "summary": "SetDebugModeImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.SetDebugModeImpl%28System.Boolean%29"
+    },
+    {
+      "name": "SetSSAOInputs",
+      "signature": "static bool SetSSAOInputs(string jsonSSAOInputs)",
+      "summary": "SetSSAOInputs method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonSSAOInputs",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.SetSSAOInputs%28System.String%29"
+    },
+    {
+      "name": "SetSSAOInputsImpl",
+      "signature": "static bool SetSSAOInputsImpl(string jsonSSAOInputs)",
+      "summary": "SetSSAOInputsImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonSSAOInputs",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.SetSSAOInputsImpl%28System.String%29"
+    },
+    {
+      "name": "Transform3DToMatrix4",
+      "signature": "static bool Transform3DToMatrix4(string jsonTransform3D, out string jsonMatrix4)",
+      "summary": "Transform3DToMatrix4 method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonMatrix4",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.Transform3DToMatrix4%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "UnregisterBitmapImage",
+      "signature": "static bool UnregisterBitmapImage(int index)",
+      "summary": "UnregisterBitmapImage method of LcVwApplication.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.UnregisterBitmapImage%28System.Int32%29"
+    },
+    {
+      "name": "ValidateJsonObject",
+      "signature": "static bool ValidateJsonObject(string jsonObjectIn)",
+      "summary": "ValidateJsonObject method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonObjectIn",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ValidateJsonObject%28System.String%29"
+    },
+    {
+      "name": "ValidateJsonObjectImpl",
+      "signature": "static bool ValidateJsonObjectImpl(string jsonObjectIn)",
+      "summary": "ValidateJsonObjectImpl method of LcVwApplication.",
+      "params": [
+        {
+          "name": "jsonObjectIn",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.ValidateJsonObjectImpl%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwApplication.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwApplication.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

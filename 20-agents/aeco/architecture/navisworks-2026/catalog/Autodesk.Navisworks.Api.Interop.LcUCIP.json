@@ -1,0 +1,497 @@
+{
+  "name": "LcUCIP",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUCIP class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUCIP",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUCIP InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUCIP.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUCIP",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUCIP.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsCEREnabled",
+      "signature": "static bool IsCEREnabled()",
+      "summary": "IsCEREnabled method of LcUCIP.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.IsCEREnabled"
+    },
+    {
+      "name": "IsEnabled",
+      "signature": "static bool IsEnabled()",
+      "summary": "IsEnabled method of LcUCIP.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.IsEnabled"
+    },
+    {
+      "name": "SendRecoverableCrashDump",
+      "signature": "static bool SendRecoverableCrashDump(string process_name, string dump_file)",
+      "summary": "SendRecoverableCrashDump method of LcUCIP.",
+      "params": [
+        {
+          "name": "process_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "dump_file",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.SendRecoverableCrashDump%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "BeginAction",
+      "signature": "static void BeginAction(string action_name, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "BeginAction method of LcUCIP.",
+      "params": [
+        {
+          "name": "action_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.BeginAction%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    },
+    {
+      "name": "BeginCommand",
+      "signature": "static void BeginCommand(string command_name, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "BeginCommand method of LcUCIP.",
+      "params": [
+        {
+          "name": "command_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.BeginCommand%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    },
+    {
+      "name": "BeginPlugin",
+      "signature": "static void BeginPlugin(string plugin_name, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "BeginPlugin method of LcUCIP.",
+      "params": [
+        {
+          "name": "plugin_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.BeginPlugin%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    },
+    {
+      "name": "EndAction",
+      "signature": "static void EndAction(string action_name)",
+      "summary": "EndAction method of LcUCIP.",
+      "params": [
+        {
+          "name": "action_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.EndAction%28System.String%29"
+    },
+    {
+      "name": "EndCommand",
+      "signature": "static void EndCommand(string command_name)",
+      "summary": "EndCommand method of LcUCIP.",
+      "params": [
+        {
+          "name": "command_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.EndCommand%28System.String%29"
+    },
+    {
+      "name": "EndPlugin",
+      "signature": "static void EndPlugin(string plugin_name)",
+      "summary": "EndPlugin method of LcUCIP.",
+      "params": [
+        {
+          "name": "plugin_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.EndPlugin%28System.String%29"
+    },
+    {
+      "name": "FileClosed",
+      "signature": "static void FileClosed(string fileName)",
+      "summary": "FileClosed method of LcUCIP.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileClosed%28System.String%29"
+    },
+    {
+      "name": "FileCreated",
+      "signature": "static void FileCreated(string file_name, string action_name)",
+      "summary": "FileCreated method of LcUCIP.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "action_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileCreated%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "FileOpened",
+      "signature": "static void FileOpened(string file_name)",
+      "summary": "FileOpened method of LcUCIP.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileOpened%28System.String%29"
+    },
+    {
+      "name": "FileOpened3D",
+      "signature": "static void FileOpened3D(string file_name, int num_3d_objects)",
+      "summary": "FileOpened3D method of LcUCIP.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "num_3d_objects",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileOpened3D%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "FileOpenedFull",
+      "signature": "static void FileOpenedFull(string fileName, long size, bool isNetworkPath, int num2dObjects, int num3dObjects, int numAnnotationObjects, int numUnknownObjects, int numDistinctXRefs, int numXRefInstances, int numDistinctImageRefs, int numImageRefInstances, string prevOpenProductLine, string prevOpenProductRelease, string prevOpenProductLicenseFeatureName)",
+      "summary": "FileOpenedFull method of LcUCIP.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "isNetworkPath",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "num2dObjects",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "num3dObjects",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numAnnotationObjects",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numUnknownObjects",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numDistinctXRefs",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numXRefInstances",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numDistinctImageRefs",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numImageRefInstances",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "prevOpenProductLine",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "prevOpenProductRelease",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "prevOpenProductLicenseFeatureName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileOpenedFull%28System.String%2CSystem.Int64%2CSystem.Boolean%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.String%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "FileOpenedLogical",
+      "signature": "static void FileOpenedLogical(string file_name, long size, int num_3d_objects)",
+      "summary": "FileOpenedLogical method of LcUCIP.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "size",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "num_3d_objects",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileOpenedLogical%28System.String%2CSystem.Int64%2CSystem.Int32%29"
+    },
+    {
+      "name": "FileSavedAs",
+      "signature": "static void FileSavedAs(string previousFileName, string newFileName)",
+      "summary": "FileSavedAs method of LcUCIP.",
+      "params": [
+        {
+          "name": "previousFileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "newFileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.FileSavedAs%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "OptionLoaded",
+      "signature": "static void OptionLoaded(string option_name, Autodesk.Navisworks.Api.VariantData value)",
+      "summary": "OptionLoaded method of LcUCIP.",
+      "params": [
+        {
+          "name": "option_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.OptionLoaded%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "SetLicenseInfo",
+      "signature": "static void SetLicenseInfo(string productKey, string featureName, string featureVersion, int licenseBehavior, int licenseUsage, int licenseExpiration)",
+      "summary": "SetLicenseInfo method of LcUCIP.",
+      "params": [
+        {
+          "name": "productKey",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "featureName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "featureVersion",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "licenseBehavior",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "licenseUsage",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "licenseExpiration",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUCIP.SetLicenseInfo%28System.String%2CSystem.String%2CSystem.String%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUCIP.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUCIP.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

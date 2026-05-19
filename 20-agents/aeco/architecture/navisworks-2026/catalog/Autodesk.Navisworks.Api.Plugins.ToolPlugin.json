@@ -1,0 +1,600 @@
+{
+  "name": "ToolPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin that provides the behaviour of a custom tool.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.ToolPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MakeRenderBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D MakeRenderBoundingBox(Autodesk.Navisworks.Api.View viewer)",
+      "summary": "Should return bounding box of any additional model space geometry that will be rendered so that near/far clipping planes can be adjusted accordingly.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": "Bounding box"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.MakeRenderBoundingBox%28Autodesk.Navisworks.Api.View%29"
+    },
+    {
+      "name": "GetCursor",
+      "signature": "Autodesk.Navisworks.Api.Cursor GetCursor(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier)",
+      "summary": "GetCursor handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Cursor",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.GetCursor%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%29"
+    },
+    {
+      "name": "GetHelpIdAtPoint",
+      "signature": "Autodesk.Navisworks.Api.HelpIdResult GetHelpIdAtPoint(Autodesk.Navisworks.Api.View view, int x, int y)",
+      "summary": "GetHelpIdAtPoint handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.HelpIdResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.GetHelpIdAtPoint%28Autodesk.Navisworks.Api.View%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHelpIdForHighlight",
+      "signature": "Autodesk.Navisworks.Api.HelpIdResult GetHelpIdForHighlight(Autodesk.Navisworks.Api.View view)",
+      "summary": "GetHelpIdForHighlight handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.HelpIdResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.GetHelpIdForHighlight%28Autodesk.Navisworks.Api.View%29"
+    },
+    {
+      "name": "GetTooltip",
+      "signature": "Autodesk.Navisworks.Api.TooltipResult GetTooltip(Autodesk.Navisworks.Api.View view, int x, int y)",
+      "summary": "GetTooltip handler",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.TooltipResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.GetTooltip%28Autodesk.Navisworks.Api.View%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "ContextMenu",
+      "signature": "bool ContextMenu(Autodesk.Navisworks.Api.View view, int x, int y)",
+      "summary": "ContextMenu handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.ContextMenu%28Autodesk.Navisworks.Api.View%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "KeyDown",
+      "signature": "bool KeyDown(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort key, double timeOffset)",
+      "summary": "MouseLeave handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.KeyDown%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Double%29"
+    },
+    {
+      "name": "KeyDrag",
+      "signature": "bool KeyDrag(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier, double timeOffset)",
+      "summary": "KeyDrag handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.KeyDrag%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Double%29"
+    },
+    {
+      "name": "KeyUp",
+      "signature": "bool KeyUp(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier, ushort key, double timeOffset)",
+      "summary": "KeyUp handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.KeyUp%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Double%29"
+    },
+    {
+      "name": "ModifierKeyDown",
+      "signature": "bool ModifierKeyDown(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier, double timeOffset)",
+      "summary": "ModifierKeyDown handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.ModifierKeyDown%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Double%29"
+    },
+    {
+      "name": "ModifierKeyUp",
+      "signature": "bool ModifierKeyUp(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier, double timeOffset)",
+      "summary": "ModifierKeyUp handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.ModifierKeyUp%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseDown",
+      "signature": "bool MouseDown(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifiers, ushort button, int x, int y, double timeOffset)",
+      "summary": "Mouse down handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.MouseDown%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseDrag",
+      "signature": "bool MouseDrag(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifiers, int x, int y, double timeOffset)",
+      "summary": "Mouse drag handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.MouseDrag%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseLeave",
+      "signature": "bool MouseLeave(Autodesk.Navisworks.Api.View view, double timeOffset)",
+      "summary": "Mouse leave handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.MouseLeave%28Autodesk.Navisworks.Api.View%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseMove",
+      "signature": "bool MouseMove(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifiers, int x, int y, double timeOffset)",
+      "summary": "Mouse move handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.MouseMove%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "MouseUp",
+      "signature": "bool MouseUp(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifiers, ushort button, int x, int y, double timeOffset)",
+      "summary": "Mouse up handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifiers",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "button",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.MouseUp%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.UInt16%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%29"
+    },
+    {
+      "name": "WheelDrag",
+      "signature": "bool WheelDrag(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.KeyModifiers modifier, int x, int y, ushort wheel, double len, double timeOffset)",
+      "summary": "WheelDrag handler.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "modifier",
+          "type": "Autodesk.Navisworks.Api.KeyModifiers",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "wheel",
+          "type": "ushort",
+          "optional": false
+        },
+        {
+          "name": "len",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "timeOffset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.WheelDrag%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.KeyModifiers%2CSystem.Int32%2CSystem.Int32%2CSystem.UInt16%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "OverlayRender",
+      "signature": "void OverlayRender(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.Graphics graphics)",
+      "summary": "Override to allow custom drawing overlayed on main render.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "Autodesk.Navisworks.Api.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.OverlayRender%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.Graphics%29"
+    },
+    {
+      "name": "Render",
+      "signature": "void Render(Autodesk.Navisworks.Api.View view, Autodesk.Navisworks.Api.Graphics graphics)",
+      "summary": "Override to allow custom drawing in main render.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.View",
+          "optional": false
+        },
+        {
+          "name": "graphics",
+          "type": "Autodesk.Navisworks.Api.Graphics",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ToolPlugin.Render%28Autodesk.Navisworks.Api.View%2CAutodesk.Navisworks.Api.Graphics%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

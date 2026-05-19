@@ -1,0 +1,14 @@
+{
+  "name": "CustomPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A custom plugin is the most basic plugin that can be defined. It can be used when none of the specialized behaviour of other plugin tyes is required.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CustomPlugin",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

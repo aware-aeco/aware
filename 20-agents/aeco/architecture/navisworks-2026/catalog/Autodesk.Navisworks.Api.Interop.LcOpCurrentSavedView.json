@@ -1,0 +1,152 @@
+{
+  "name": "LcOpCurrentSavedView",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpCurrentSavedView class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpCurrentSavedView",
+  "constructors": [
+    {
+      "name": "LcOpCurrentSavedView(Autodesk.Navisworks.Api.Interop.LcOpKernelEx)",
+      "signature": "LcOpCurrentSavedView(Autodesk.Navisworks.Api.Interop.LcOpKernelEx kernel)",
+      "summary": "Constructs a new LcOpCurrentSavedView.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelEx",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpKernelEx%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Get",
+      "signature": "Autodesk.Navisworks.Api.SavedItem Get()",
+      "summary": "Get method of LcOpCurrentSavedView.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.Get"
+    },
+    {
+      "name": "GetAnim",
+      "signature": "Autodesk.Navisworks.Api.SavedViewpointAnimation GetAnim()",
+      "summary": "GetAnim method of LcOpCurrentSavedView.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedViewpointAnimation",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.GetAnim"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpCurrentSavedView InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpCurrentSavedView.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpCurrentSavedView",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpCurrentSavedView.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Set",
+      "signature": "void Set(Autodesk.Navisworks.Api.SavedItem view)",
+      "summary": "Set method of LcOpCurrentSavedView.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.Set%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Set",
+      "signature": "void Set(Autodesk.Navisworks.Api.SavedItem view, Autodesk.Navisworks.Api.Interop.LcOpStateWatcher watcher)",
+      "summary": "Set method of LcOpCurrentSavedView.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "watcher",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateWatcher",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.Set%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.Interop.LcOpStateWatcher%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpCurrentSavedView.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpCurrentSavedView.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

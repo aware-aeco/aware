@@ -1,0 +1,159 @@
+{
+  "name": "Cursor",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Enumerates cursors used in input into Navisworks",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Cursor",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unhandled",
+      "value": 0,
+      "summary": "Special case. Returned by GetCursor() if handled already."
+    },
+    {
+      "name": "Handled",
+      "value": 1,
+      "summary": "Handled Cursor."
+    },
+    {
+      "name": "Walk",
+      "value": 2,
+      "summary": "Walk Cursor."
+    },
+    {
+      "name": "Fly",
+      "value": 3,
+      "summary": "Fly Cursor."
+    },
+    {
+      "name": "Orbit",
+      "value": 4,
+      "summary": "Orbit Cursor."
+    },
+    {
+      "name": "Swivel",
+      "value": 5,
+      "summary": "Swivel Cursor."
+    },
+    {
+      "name": "Examine",
+      "value": 6,
+      "summary": "Examine Cursor."
+    },
+    {
+      "name": "Pan",
+      "value": 7,
+      "summary": "Pan Cursor."
+    },
+    {
+      "name": "Zoom",
+      "value": 8,
+      "summary": "Zoom Cursor."
+    },
+    {
+      "name": "Turntable",
+      "value": 9,
+      "summary": "Turntable Cursor."
+    },
+    {
+      "name": "Focus",
+      "value": 10,
+      "summary": "Focus Cursor."
+    },
+    {
+      "name": "Application",
+      "value": 11,
+      "summary": "Application Cursor."
+    },
+    {
+      "name": "ZoomBox",
+      "value": 12,
+      "summary": "ZoomBox Cursor."
+    },
+    {
+      "name": "Measure",
+      "value": 13,
+      "summary": "Measure Cursor."
+    },
+    {
+      "name": "HyperHand",
+      "value": 14,
+      "summary": "HyperHand Cursor."
+    },
+    {
+      "name": "PanWorld",
+      "value": 15,
+      "summary": "PanWorld Cursor."
+    },
+    {
+      "name": "Roll",
+      "value": 16,
+      "summary": "Roll Cursor."
+    },
+    {
+      "name": "Stop",
+      "value": 17,
+      "summary": "Stop Cursor."
+    },
+    {
+      "name": "MeasureEdge",
+      "value": 18,
+      "summary": "MeasureEdge Cursor."
+    },
+    {
+      "name": "MeasureVertex",
+      "value": 19,
+      "summary": "MeasureVertex Cursor."
+    },
+    {
+      "name": "Redline",
+      "value": 20,
+      "summary": "Redline Cursor."
+    },
+    {
+      "name": "Erase",
+      "value": 21,
+      "summary": "Erase Cursor."
+    },
+    {
+      "name": "Wheel",
+      "value": 22,
+      "summary": "Wheel Cursor."
+    },
+    {
+      "name": "MarkupSelection",
+      "value": 23,
+      "summary": "Markup Selection Cursor."
+    },
+    {
+      "name": "MarkupSnapping",
+      "value": 24,
+      "summary": "Markup Snapping Cursor."
+    },
+    {
+      "name": "MarkupEraser",
+      "value": 25,
+      "summary": "Markup Eraser Cursor."
+    },
+    {
+      "name": "MarkupQuickPick",
+      "value": 26,
+      "summary": "Markup QuickPick Cursor."
+    },
+    {
+      "name": "MarkupBucket",
+      "value": 27,
+      "summary": "Markup Bucket Cursor."
+    },
+    {
+      "name": "MarkupAutoPoly",
+      "value": 28,
+      "summary": "Markup AutoPoly Cursor."
+    }
+  ]
+}

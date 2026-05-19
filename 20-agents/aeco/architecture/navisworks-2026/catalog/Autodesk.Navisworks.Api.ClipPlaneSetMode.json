@@ -1,0 +1,24 @@
+{
+  "name": "ClipPlaneSetMode",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The mode of the clip plane set.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ClipPlaneSetMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Planes",
+      "value": 0,
+      "summary": "Planes"
+    },
+    {
+      "name": "Box",
+      "value": 1,
+      "summary": "Box"
+    }
+  ]
+}

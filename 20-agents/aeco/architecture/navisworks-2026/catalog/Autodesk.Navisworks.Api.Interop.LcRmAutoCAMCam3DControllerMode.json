@@ -1,0 +1,34 @@
+{
+  "name": "LcRmAutoCAMCam3DControllerMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcRmAutoCAMCam3DControllerMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eOBJECT_MODE",
+      "value": 0
+    },
+    {
+      "name": "eWALK_MODE",
+      "value": 1
+    },
+    {
+      "name": "eFLY_MODE",
+      "value": 2
+    },
+    {
+      "name": "eCAM_2D_MODE",
+      "value": 3
+    },
+    {
+      "name": "eMODE_COUNT",
+      "value": 4
+    }
+  ]
+}

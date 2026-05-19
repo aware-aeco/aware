@@ -1,0 +1,212 @@
+{
+  "name": "LcOwViewerPtrVecBase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwViewerPtrVecBase class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase",
+  "constructors": [
+    {
+      "name": "LcOwViewerPtrVecBase()",
+      "signature": "LcOwViewerPtrVecBase()",
+      "summary": "Constructs a new LcOwViewerPtrVecBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ItemAt",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOwViewer ItemAt(int n)",
+      "summary": "ItemAt method of LcOwViewerPtrVecBase.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.ItemAt%28System.Int32%29"
+    },
+    {
+      "name": "Empty",
+      "signature": "bool Empty()",
+      "summary": "Empty method of LcOwViewerPtrVecBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.Empty"
+    },
+    {
+      "name": "Capacity",
+      "signature": "int Capacity()",
+      "summary": "Capacity method of LcOwViewerPtrVecBase.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.Capacity"
+    },
+    {
+      "name": "Find",
+      "signature": "int Find(Autodesk.Navisworks.Api.Interop.LcOwViewer to_find)",
+      "summary": "Find method of LcOwViewerPtrVecBase.",
+      "params": [
+        {
+          "name": "to_find",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.Find%28Autodesk.Navisworks.Api.Interop.LcOwViewer%29"
+    },
+    {
+      "name": "Size",
+      "signature": "int Size()",
+      "summary": "Size method of LcOwViewerPtrVecBase.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.Size"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwViewerPtrVecBase.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwViewerPtrVecBase.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcOwViewerPtrVecBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.Clear"
+    },
+    {
+      "name": "PopBack",
+      "signature": "void PopBack()",
+      "summary": "PopBack method of LcOwViewerPtrVecBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.PopBack"
+    },
+    {
+      "name": "PushBack",
+      "signature": "void PushBack(Autodesk.Navisworks.Api.Interop.LcOwViewer x)",
+      "summary": "PushBack method of LcOwViewerPtrVecBase.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.PushBack%28Autodesk.Navisworks.Api.Interop.LcOwViewer%29"
+    },
+    {
+      "name": "Reserve",
+      "signature": "void Reserve(int n)",
+      "summary": "Reserve method of LcOwViewerPtrVecBase.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.Reserve%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwViewerPtrVecBase.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwViewerPtrVecBase.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,237 @@
+{
+  "name": "LcOaUnitProps",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaUnitProps class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaUnitProps",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAngularUnitPref",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaUnitAngular GetAngularUnitPref()",
+      "summary": "GetAngularUnitPref method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetAngularUnitPref"
+    },
+    {
+      "name": "GetAngularFormatPref",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat GetAngularFormatPref()",
+      "summary": "GetAngularFormatPref method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetAngularFormatPref"
+    },
+    {
+      "name": "GetLinearFormatPref",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat GetLinearFormatPref()",
+      "summary": "GetLinearFormatPref method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetLinearFormatPref"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaUnitProps InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaUnitProps.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitProps",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaUnitProps.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetLinearUnitPref",
+      "signature": "static Autodesk.Navisworks.Api.Units GetLinearUnitPref()",
+      "summary": "GetLinearUnitPref method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Units",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetLinearUnitPref"
+    },
+    {
+      "name": "GetChangeId",
+      "signature": "static int GetChangeId()",
+      "summary": "GetChangeId method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetChangeId"
+    },
+    {
+      "name": "GetDecimalPlacesPref",
+      "signature": "static int GetDecimalPlacesPref()",
+      "summary": "GetDecimalPlacesPref method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetDecimalPlacesPref"
+    },
+    {
+      "name": "GetFractionalPrecisionPref",
+      "signature": "static int GetFractionalPrecisionPref()",
+      "summary": "GetFractionalPrecisionPref method of LcOaUnitProps.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.GetFractionalPrecisionPref"
+    },
+    {
+      "name": "SetAngularUnits",
+      "signature": "static void SetAngularUnits(Autodesk.Navisworks.Api.Interop.LcOaUnitAngular value, Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat format)",
+      "summary": "SetAngularUnits method of LcOaUnitProps.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.SetAngularUnits%28Autodesk.Navisworks.Api.Interop.LcOaUnitAngular%2CAutodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat%29"
+    },
+    {
+      "name": "SetDecimalPlacesPref",
+      "signature": "static void SetDecimalPlacesPref(int value)",
+      "summary": "SetDecimalPlacesPref method of LcOaUnitProps.",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.SetDecimalPlacesPref%28System.Int32%29"
+    },
+    {
+      "name": "SetFractionalPrecisionPref",
+      "signature": "static void SetFractionalPrecisionPref(int value)",
+      "summary": "SetFractionalPrecisionPref method of LcOaUnitProps.",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.SetFractionalPrecisionPref%28System.Int32%29"
+    },
+    {
+      "name": "SetLinearUnits",
+      "signature": "static void SetLinearUnits(Autodesk.Navisworks.Api.Units value, Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat format)",
+      "summary": "SetLinearUnits method of LcOaUnitProps.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "format",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.SetLinearUnits%28Autodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaUnitProps.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaUnitProps.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

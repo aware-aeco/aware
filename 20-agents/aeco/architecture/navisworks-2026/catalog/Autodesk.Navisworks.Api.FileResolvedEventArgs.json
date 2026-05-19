@@ -1,0 +1,39 @@
+{
+  "name": "FileResolvedEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::FileResolved event",
+  "base": "Autodesk.Navisworks.Api.FileResolutionEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileResolvedEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileNameToOpen",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get file name to open to read contents of resolved reference. Same as ResolvedFileReference if file is local. Null if not resolved or file is remote and has not been downloaded.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolvedEventArgs.FileNameToOpen"
+    },
+    {
+      "name": "ResolvedFileReference",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get file reference that FileReference has been resolved to, or null if not resolved",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolvedEventArgs.ResolvedFileReference"
+    },
+    {
+      "name": "ResolvedFileReferenceType",
+      "type": "Autodesk.Navisworks.Api.FileReferenceType",
+      "getter": true,
+      "setter": false,
+      "summary": "Get type of file reference to be resolved",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolvedEventArgs.ResolvedFileReferenceType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

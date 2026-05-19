@@ -1,0 +1,30 @@
+{
+  "name": "LcOpAnimationAtEnd",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpAnimationAtEnd enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationAtEnd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEND_HOLD",
+      "value": 0
+    },
+    {
+      "name": "eEND_PAUSE",
+      "value": 1
+    },
+    {
+      "name": "eEND_REWIND",
+      "value": 2
+    },
+    {
+      "name": "eEND_DIE",
+      "value": 3
+    }
+  ]
+}

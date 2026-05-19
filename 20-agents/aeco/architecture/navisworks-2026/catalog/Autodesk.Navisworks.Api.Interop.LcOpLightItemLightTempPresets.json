@@ -1,0 +1,98 @@
+{
+  "name": "LcOpLightItemLightTempPresets",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightTempPresets enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightTempPresets",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePRESET_HALOGENWARM",
+      "value": 0
+    },
+    {
+      "name": "ePRESET_HALOGEN",
+      "value": 1
+    },
+    {
+      "name": "ePRESET_HALOGENCOOL",
+      "value": 2
+    },
+    {
+      "name": "ePRESET_A_INCANDESCENT",
+      "value": 3
+    },
+    {
+      "name": "ePRESET_F4_FLUORESCENTWARMWHITE",
+      "value": 4
+    },
+    {
+      "name": "ePRESET_F2_FLUORESCENTCOOLWHITE",
+      "value": 5
+    },
+    {
+      "name": "ePRESET_F3_FLUORESCENTWHITE",
+      "value": 6
+    },
+    {
+      "name": "ePRESET_F5_FLUORESCENTDAYLIGHT",
+      "value": 7
+    },
+    {
+      "name": "ePRESET_F6_FLUORESCENTLIGHTWHITE",
+      "value": 8
+    },
+    {
+      "name": "ePRESET_CERAMICWARM",
+      "value": 9
+    },
+    {
+      "name": "ePRESET_CERAMICCOOL",
+      "value": 10
+    },
+    {
+      "name": "ePRESET_QUARTZWARM",
+      "value": 11
+    },
+    {
+      "name": "ePRESET_QUARTZ",
+      "value": 12
+    },
+    {
+      "name": "ePRESET_QUARTZCOOL",
+      "value": 13
+    },
+    {
+      "name": "ePRESET_MERCURY",
+      "value": 14
+    },
+    {
+      "name": "ePRESET_XENON",
+      "value": 15
+    },
+    {
+      "name": "ePRESET_HIGHPRESSURESODIUM",
+      "value": 16
+    },
+    {
+      "name": "ePRESET_LOWPRESSURESODIUM",
+      "value": 17
+    },
+    {
+      "name": "ePRESET_D65",
+      "value": 18
+    },
+    {
+      "name": "ePRESET_D50",
+      "value": 19
+    },
+    {
+      "name": "ePRESET_CUSTOM",
+      "value": 20
+    }
+  ]
+}

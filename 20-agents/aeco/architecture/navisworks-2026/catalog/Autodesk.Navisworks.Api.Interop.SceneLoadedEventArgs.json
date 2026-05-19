@@ -1,0 +1,23 @@
+{
+  "name": "SceneLoadedEventArgs",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "SceneLoadedEventArgs class in Autodesk.Navisworks.Api.Interop.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.SceneLoadedEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Model",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpModel",
+      "getter": true,
+      "setter": true,
+      "summary": "Model property of SceneLoadedEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.SceneLoadedEventArgs.Model"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,111 @@
+{
+  "name": "DocumentTool",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The active tool in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentTool",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ToTool",
+      "signature": "Autodesk.Navisworks.Api.Tool ToTool()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.ToTool"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.Tool op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentTool that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentTool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentTool%29~Autodesk.Navisworks.Api.Tool"
+    },
+    {
+      "name": "Set",
+      "signature": "void Set(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "Explicit method that sets Value",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.Set%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "SetCustomToolPlugin",
+      "signature": "void SetCustomToolPlugin(Autodesk.Navisworks.Api.Plugins.ToolPlugin toolPlugin)",
+      "summary": "Sets the current Tool to a custom ToolPlugin.",
+      "params": [
+        {
+          "name": "toolPlugin",
+          "type": "Autodesk.Navisworks.Api.Plugins.ToolPlugin",
+          "doc": "Loaded ToolPlugin",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027toolPlugin\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.SetCustomToolPlugin%28Autodesk.Navisworks.Api.Plugins.ToolPlugin%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomToolPluginId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "For the case where Value is CustomToolPlugin, this will return the the passed in ToolPlugin identifier.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.CustomToolPluginId"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.Tool",
+      "getter": true,
+      "setter": true,
+      "summary": "The value of the active Tool within the document Attempts to set Value to CustomToolPlugin will be ignored.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the current Tool has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentTool.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

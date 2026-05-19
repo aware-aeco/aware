@@ -1,0 +1,274 @@
+{
+  "name": "NamedConstant",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A named integer constant with localized display name. Immutable.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.NamedConstant",
+  "constructors": [
+    {
+      "name": "NamedConstant(int, string)",
+      "signature": "NamedConstant(int value, string baseName)",
+      "summary": "Construct a named integer constant",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value of constant",
+          "optional": false
+        },
+        {
+          "name": "baseName",
+          "type": "string",
+          "doc": "Base name for constant - actual name will be \u0022baseName:value\u0022",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.%23ctor%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "NamedConstant(int, string, string)",
+      "signature": "NamedConstant(int value, string baseName, string displayName)",
+      "summary": "Construct a named integer constant",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "doc": "Value of constant",
+          "optional": false
+        },
+        {
+          "name": "baseName",
+          "type": "string",
+          "doc": "Base name for constant - actual name will be \u0022baseName:value\u0022",
+          "optional": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "doc": "Display name (may be overridden by localized version in .name file)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.%23ctor%28System.Int32%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "NamedConstant(string)",
+      "signature": "NamedConstant(string name)",
+      "summary": "Construct a named integer constant with value 0",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of constant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.%23ctor%28System.String%29"
+    },
+    {
+      "name": "NamedConstant(string, string)",
+      "signature": "NamedConstant(string name, string displayName)",
+      "summary": "Construct a named integer constant with value 0",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of constant",
+          "optional": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "doc": "Display name (may be overridden by localized version in .name file)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.%23ctor%28System.String%2CSystem.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.Equals%28System.Object%29"
+    },
+    {
+      "name": "UserEquals",
+      "signature": "bool UserEquals(Autodesk.Navisworks.Api.NamedConstant other)",
+      "summary": "Is this constant the same as another constant.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.UserEquals%28Autodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.NamedConstant InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of NamedConstant.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NamedConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of NamedConstant.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.NamedConstant.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BaseName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Base name for constant. Related constants (enumerations) have the same base name.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NamedConstant.BaseName"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Display name of constant (localized)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NamedConstant.DisplayName"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NamedConstant.IsReadOnly"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of constant",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NamedConstant.Name"
+    },
+    {
+      "name": "Value",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Value of constant",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.NamedConstant.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

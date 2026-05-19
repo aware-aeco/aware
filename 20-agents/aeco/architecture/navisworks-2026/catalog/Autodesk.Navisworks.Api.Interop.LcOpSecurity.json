@@ -1,0 +1,341 @@
+{
+  "name": "LcOpSecurity",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSecurity class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSecurity",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSecurity InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetLicensingMode",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSecurityLicensingMode GetLicensingMode()",
+      "summary": "GetLicensingMode method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityLicensingMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.GetLicensingMode"
+    },
+    {
+      "name": "GetSecurityProvider",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSecurityProvider GetSecurityProvider()",
+      "summary": "GetSecurityProvider method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityProvider",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.GetSecurityProvider"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Check",
+      "signature": "static bool Check(string p_module_name)",
+      "summary": "Check method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "p_module_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.Check%28System.String%29"
+    },
+    {
+      "name": "CheckPlugin",
+      "signature": "static bool CheckPlugin(string plugin_path, string encrypted)",
+      "summary": "CheckPlugin method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "plugin_path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "encrypted",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.CheckPlugin%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "DisableUI",
+      "signature": "static bool DisableUI()",
+      "summary": "DisableUI method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.DisableUI"
+    },
+    {
+      "name": "IsBeta",
+      "signature": "static bool IsBeta()",
+      "summary": "IsBeta method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.IsBeta"
+    },
+    {
+      "name": "IsDevelopment",
+      "signature": "static bool IsDevelopment()",
+      "summary": "IsDevelopment method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.IsDevelopment"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.IsInitialised"
+    },
+    {
+      "name": "ResumeHeartbeat",
+      "signature": "static bool ResumeHeartbeat()",
+      "summary": "ResumeHeartbeat method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.ResumeHeartbeat"
+    },
+    {
+      "name": "SuspendHeartbeat",
+      "signature": "static bool SuspendHeartbeat()",
+      "summary": "SuspendHeartbeat method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.SuspendHeartbeat"
+    },
+    {
+      "name": "GetInternalVersion",
+      "signature": "static string GetInternalVersion()",
+      "summary": "GetInternalVersion method of LcOpSecurity.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.GetInternalVersion"
+    },
+    {
+      "name": "GetSecurityTitle",
+      "signature": "static void GetSecurityTitle(out string title)",
+      "summary": "GetSecurityTitle method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.GetSecurityTitle%28System.String%40%29"
+    },
+    {
+      "name": "GetSerialNumber",
+      "signature": "static void GetSerialNumber(out string sn, bool trial_sn_if_empty)",
+      "summary": "GetSerialNumber method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "sn",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "trial_sn_if_empty",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.GetSerialNumber%28System.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcOpSecurity.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.Initialise"
+    },
+    {
+      "name": "RunClicAction",
+      "signature": "static void RunClicAction(out string action, uint left, uint top, uint right, uint bottom)",
+      "summary": "RunClicAction method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "action",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "uint",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "uint",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "uint",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.RunClicAction%28System.String%40%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32%2CSystem.UInt32%29"
+    },
+    {
+      "name": "SetClicUI",
+      "signature": "static void SetClicUI(Autodesk.Navisworks.Api.Interop.LcOpClicUI clic_ui)",
+      "summary": "SetClicUI method of LcOpSecurity.",
+      "params": [
+        {
+          "name": "clic_ui",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpClicUI",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.SetClicUI%28Autodesk.Navisworks.Api.Interop.LcOpClicUI%29"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcOpSecurity.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.Terminate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSecurity.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSecurity.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

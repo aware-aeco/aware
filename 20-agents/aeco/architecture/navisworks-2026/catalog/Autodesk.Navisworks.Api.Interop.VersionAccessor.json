@@ -1,0 +1,33 @@
+{
+  "name": "VersionAccessor",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "VersionAccessor class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.VersionAccessor",
+  "constructors": [
+    {
+      "name": "VersionAccessor()",
+      "signature": "VersionAccessor()",
+      "summary": "Constructs a new VersionAccessor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.VersionAccessor.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Version",
+      "type": "Autodesk.Navisworks.Api.ApplicationParts.ApplicationVersion",
+      "getter": true,
+      "setter": false,
+      "summary": "Version property of VersionAccessor.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.VersionAccessor.Version"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

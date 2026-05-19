@@ -1,0 +1,22 @@
+{
+  "name": "LcOpSaveSceneEventPhase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSaveSceneEventPhase enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSaveSceneEventPhase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePRE_SAVE",
+      "value": 0
+    },
+    {
+      "name": "ePOST_SAVE",
+      "value": 1
+    }
+  ]
+}

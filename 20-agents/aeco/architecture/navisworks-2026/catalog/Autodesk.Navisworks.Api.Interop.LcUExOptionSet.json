@@ -1,0 +1,1693 @@
+{
+  "name": "LcUExOptionSet",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUExOptionSet class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+  "constructors": [
+    {
+      "name": "LcUExOptionSet()",
+      "signature": "LcUExOptionSet()",
+      "summary": "Constructs a new LcUExOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUExOptionSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUExOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddOptionCopy",
+      "signature": "void AddOptionCopy(Autodesk.Navisworks.Api.Interop.LcUOptionData data)",
+      "summary": "AddOptionCopy method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.AddOptionCopy%28Autodesk.Navisworks.Api.Interop.LcUOptionData%29"
+    },
+    {
+      "name": "DefineAngularFloat",
+      "signature": "void DefineAngularFloat(string path, double default_value)",
+      "summary": "DefineAngularFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineAngularFloat%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "DefineAngularFloat",
+      "signature": "void DefineAngularFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineAngularFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineAngularFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineAngularFloat",
+      "signature": "void DefineAngularFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineAngularFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineAngularFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineAngularFloat",
+      "signature": "void DefineAngularFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineAngularFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineAngularFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineAngularFloat",
+      "signature": "void DefineAngularFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineAngularFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineAngularFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineBoolean",
+      "signature": "void DefineBoolean(string path, bool default_value)",
+      "summary": "DefineBoolean method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineBoolean%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "DefineBoolean",
+      "signature": "void DefineBoolean(string path, bool default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineBoolean method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineBoolean%28System.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineBoolean",
+      "signature": "void DefineBoolean(string path, bool default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineBoolean method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineBoolean%28System.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineBoolean",
+      "signature": "void DefineBoolean(string path, bool default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineBoolean method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineBoolean%28System.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineBoolean",
+      "signature": "void DefineBoolean(string path, bool default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineBoolean method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineBoolean%28System.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineData",
+      "signature": "void DefineData(string path, Autodesk.Navisworks.Api.VariantData default_value)",
+      "summary": "DefineData method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineData%28System.String%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "DefineData",
+      "signature": "void DefineData(string path, Autodesk.Navisworks.Api.VariantData default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineData method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineData%28System.String%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineData",
+      "signature": "void DefineData(string path, Autodesk.Navisworks.Api.VariantData default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineData method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineData%28System.String%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineData",
+      "signature": "void DefineData(string path, Autodesk.Navisworks.Api.VariantData default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineData method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineData%28System.String%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineData",
+      "signature": "void DefineData(string path, Autodesk.Navisworks.Api.VariantData default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineData method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineData%28System.String%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineFloat",
+      "signature": "void DefineFloat(string path, double default_value)",
+      "summary": "DefineFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineFloat%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "DefineFloat",
+      "signature": "void DefineFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineFloat",
+      "signature": "void DefineFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineFloat",
+      "signature": "void DefineFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineFloat",
+      "signature": "void DefineFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineInt32",
+      "signature": "void DefineInt32(string path, int default_value)",
+      "summary": "DefineInt32 method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineInt32%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "DefineInt32",
+      "signature": "void DefineInt32(string path, int default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineInt32 method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineInt32%28System.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineInt32",
+      "signature": "void DefineInt32(string path, int default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineInt32 method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineInt32%28System.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineInt32",
+      "signature": "void DefineInt32(string path, int default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineInt32 method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineInt32%28System.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineInt32",
+      "signature": "void DefineInt32(string path, int default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineInt32 method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineInt32%28System.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineLinearFloat",
+      "signature": "void DefineLinearFloat(string path, double default_value)",
+      "summary": "DefineLinearFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineLinearFloat%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "DefineLinearFloat",
+      "signature": "void DefineLinearFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineLinearFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineLinearFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineLinearFloat",
+      "signature": "void DefineLinearFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineLinearFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineLinearFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineLinearFloat",
+      "signature": "void DefineLinearFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineLinearFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineLinearFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineLinearFloat",
+      "signature": "void DefineLinearFloat(string path, double default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineLinearFloat method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineLinearFloat%28System.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineName",
+      "signature": "void DefineName(string path, Autodesk.Navisworks.Api.NamedConstant default_value)",
+      "summary": "DefineName method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineName%28System.String%2CAutodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "DefineName",
+      "signature": "void DefineName(string path, Autodesk.Navisworks.Api.NamedConstant default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineName method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineName%28System.String%2CAutodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineName",
+      "signature": "void DefineName(string path, Autodesk.Navisworks.Api.NamedConstant default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineName method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineName%28System.String%2CAutodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineName",
+      "signature": "void DefineName(string path, Autodesk.Navisworks.Api.NamedConstant default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineName method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineName%28System.String%2CAutodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineName",
+      "signature": "void DefineName(string path, Autodesk.Navisworks.Api.NamedConstant default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineName method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineName%28System.String%2CAutodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineSet",
+      "signature": "void DefineSet(string path, Autodesk.Navisworks.Api.Interop.LcUOptionSet set)",
+      "summary": "DefineSet method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineSet%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSet%29"
+    },
+    {
+      "name": "DefineSet",
+      "signature": "void DefineSet(string path, Autodesk.Navisworks.Api.Interop.LcUOptionSet set, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineSet method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineSet%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSet%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineSet",
+      "signature": "void DefineSet(string path, Autodesk.Navisworks.Api.Interop.LcUOptionSet set, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineSet method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineSet%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSet%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineSet",
+      "signature": "void DefineSet(string path, Autodesk.Navisworks.Api.Interop.LcUOptionSet set, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineSet method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineSet%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSet%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineTime",
+      "signature": "void DefineTime(string path, System.DateTime default_value)",
+      "summary": "DefineTime method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineTime%28System.String%2CSystem.DateTime%29"
+    },
+    {
+      "name": "DefineTime",
+      "signature": "void DefineTime(string path, System.DateTime default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineTime method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineTime%28System.String%2CSystem.DateTime%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineTime",
+      "signature": "void DefineTime(string path, System.DateTime default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineTime method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineTime%28System.String%2CSystem.DateTime%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineTime",
+      "signature": "void DefineTime(string path, System.DateTime default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineTime method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineTime%28System.String%2CSystem.DateTime%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineTime",
+      "signature": "void DefineTime(string path, System.DateTime default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineTime method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineTime%28System.String%2CSystem.DateTime%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "DefineWideString",
+      "signature": "void DefineWideString(string path, string default_value)",
+      "summary": "DefineWideString method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineWideString%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "DefineWideString",
+      "signature": "void DefineWideString(string path, string default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "DefineWideString method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineWideString%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "DefineWideString",
+      "signature": "void DefineWideString(string path, string default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags)",
+      "summary": "DefineWideString method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineWideString%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%29"
+    },
+    {
+      "name": "DefineWideString",
+      "signature": "void DefineWideString(string path, string default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name)",
+      "summary": "DefineWideString method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineWideString%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%29"
+    },
+    {
+      "name": "DefineWideString",
+      "signature": "void DefineWideString(string path, string default_value, Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile, Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag flags, string class_name, Autodesk.Navisworks.Api.Interop.LcUOptionValidator validator)",
+      "summary": "DefineWideString method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+          "optional": false
+        },
+        {
+          "name": "class_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "validator",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionValidator",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.DefineWideString%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetProfile%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetFlag%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcUOptionValidator%29"
+    },
+    {
+      "name": "InsertOptionCopy",
+      "signature": "void InsertOptionCopy(int index, Autodesk.Navisworks.Api.Interop.LcUOptionData data)",
+      "summary": "InsertOptionCopy method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.InsertOptionCopy%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionData%29"
+    },
+    {
+      "name": "RemoveOption",
+      "signature": "void RemoveOption(int index)",
+      "summary": "RemoveOption method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.RemoveOption%28System.Int32%29"
+    },
+    {
+      "name": "SetHelpId",
+      "signature": "void SetHelpId(string id)",
+      "summary": "SetHelpId method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.SetHelpId%28System.String%29"
+    },
+    {
+      "name": "SetMyFlags",
+      "signature": "void SetMyFlags(Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag flags)",
+      "summary": "SetMyFlags method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.SetMyFlags%28Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag%29"
+    },
+    {
+      "name": "SetMyName",
+      "signature": "void SetMyName(string name)",
+      "summary": "SetMyName method of LcUExOptionSet.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.SetMyName%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUExOptionSet.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUExOptionSet.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,134 @@
+{
+  "name": "LcUSQLiteStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUSQLiteStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCONNECTION_NULL",
+      "value": -1
+    },
+    {
+      "name": "eOK",
+      "value": 0
+    },
+    {
+      "name": "eERROR",
+      "value": 1
+    },
+    {
+      "name": "eINTERAL",
+      "value": 2
+    },
+    {
+      "name": "ePERMISSION",
+      "value": 3
+    },
+    {
+      "name": "eABORT",
+      "value": 4
+    },
+    {
+      "name": "eBUSY",
+      "value": 5
+    },
+    {
+      "name": "eLOCKED",
+      "value": 6
+    },
+    {
+      "name": "eNOMEM",
+      "value": 7
+    },
+    {
+      "name": "eREADONLY",
+      "value": 8
+    },
+    {
+      "name": "eINTERRUPT",
+      "value": 9
+    },
+    {
+      "name": "eIOERR",
+      "value": 10
+    },
+    {
+      "name": "eCORRUPT",
+      "value": 11
+    },
+    {
+      "name": "eNOTFOUND",
+      "value": 12
+    },
+    {
+      "name": "eFULL",
+      "value": 13
+    },
+    {
+      "name": "eCANTOPEN",
+      "value": 14
+    },
+    {
+      "name": "ePROTOCOL",
+      "value": 15
+    },
+    {
+      "name": "eEMPTY",
+      "value": 16
+    },
+    {
+      "name": "eSCHEMA",
+      "value": 17
+    },
+    {
+      "name": "eTOOBIG",
+      "value": 18
+    },
+    {
+      "name": "eCONSTRAINT",
+      "value": 19
+    },
+    {
+      "name": "eMISMATCH",
+      "value": 20
+    },
+    {
+      "name": "eMISUSE",
+      "value": 21
+    },
+    {
+      "name": "eNOLFS",
+      "value": 22
+    },
+    {
+      "name": "eAUTH",
+      "value": 23
+    },
+    {
+      "name": "eFORMAT",
+      "value": 24
+    },
+    {
+      "name": "eRANGE",
+      "value": 25
+    },
+    {
+      "name": "eNOTDATABASE",
+      "value": 26
+    },
+    {
+      "name": "eROW",
+      "value": 100
+    },
+    {
+      "name": "eDONE",
+      "value": 101
+    }
+  ]
+}

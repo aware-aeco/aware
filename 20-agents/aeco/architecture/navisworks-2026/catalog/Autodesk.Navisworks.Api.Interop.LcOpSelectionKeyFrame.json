@@ -1,0 +1,477 @@
+{
+  "name": "LcOpSelectionKeyFrame",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSelectionKeyFrame class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame",
+  "constructors": [
+    {
+      "name": "LcOpSelectionKeyFrame()",
+      "signature": "LcOpSelectionKeyFrame()",
+      "summary": "Constructs a new LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetColor()",
+      "summary": "GetColor method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetColor"
+    },
+    {
+      "name": "Copy",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame Copy()",
+      "summary": "Copy method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.Copy"
+    },
+    {
+      "name": "GetParts",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts GetParts()",
+      "summary": "GetParts method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetParts"
+    },
+    {
+      "name": "GetRotation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D GetRotation()",
+      "summary": "GetRotation method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetRotation"
+    },
+    {
+      "name": "GetScaleOrientation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D GetScaleOrientation()",
+      "summary": "GetScaleOrientation method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetScaleOrientation"
+    },
+    {
+      "name": "GetToolOrientation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D GetToolOrientation()",
+      "summary": "GetToolOrientation method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetToolOrientation"
+    },
+    {
+      "name": "GetTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3DComponents GetTransform()",
+      "summary": "GetTransform method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3DComponents",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetTransform"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetCenter()",
+      "summary": "GetCenter method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetCenter"
+    },
+    {
+      "name": "GetScale",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetScale()",
+      "summary": "GetScale method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetScale"
+    },
+    {
+      "name": "GetTrans",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetTrans()",
+      "summary": "GetTrans method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetTrans"
+    },
+    {
+      "name": "HasTool",
+      "signature": "bool HasTool()",
+      "summary": "HasTool method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.HasTool"
+    },
+    {
+      "name": "GetTransparency",
+      "signature": "double GetTransparency()",
+      "summary": "GetTransparency method of LcOpSelectionKeyFrame.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetTransparency"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ApplyInterpolated",
+      "signature": "void ApplyInterpolated(Autodesk.Navisworks.Api.Interop.LcOpAnimation anim, Autodesk.Navisworks.Api.Interop.LcOpKeyFrame other, double factor, bool continued, Autodesk.Navisworks.Api.Interop.LcOpModelInterface model)",
+      "summary": "ApplyInterpolated method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+          "optional": false
+        },
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame",
+          "optional": false
+        },
+        {
+          "name": "factor",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "continued",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "model",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.ApplyInterpolated%28Autodesk.Navisworks.Api.Interop.LcOpAnimation%2CAutodesk.Navisworks.Api.Interop.LcOpKeyFrame%2CSystem.Double%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcOpModelInterface%29"
+    },
+    {
+      "name": "GetTransform",
+      "signature": "void GetTransform(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "GetTransform method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.GetTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "SetColor",
+      "signature": "void SetColor(Autodesk.Navisworks.Api.Color color)",
+      "summary": "SetColor method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetColor%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetHasTool",
+      "signature": "void SetHasTool(bool b)",
+      "summary": "SetHasTool method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetHasTool%28System.Boolean%29"
+    },
+    {
+      "name": "SetParts",
+      "signature": "void SetParts(Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts parts)",
+      "summary": "SetParts method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "parts",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetParts%28Autodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrameParts%29"
+    },
+    {
+      "name": "SetRotation",
+      "signature": "void SetRotation(Autodesk.Navisworks.Api.Rotation3D rotation)",
+      "summary": "SetRotation method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetRotation%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetRotation",
+      "signature": "void SetRotation(Autodesk.Navisworks.Api.Rotation3D rotation, Autodesk.Navisworks.Api.Vector3D center)",
+      "summary": "SetRotation method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetRotation%28Autodesk.Navisworks.Api.Rotation3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetScale",
+      "signature": "void SetScale(Autodesk.Navisworks.Api.Vector3D scale)",
+      "summary": "SetScale method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "scale",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetScale%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetScale",
+      "signature": "void SetScale(Autodesk.Navisworks.Api.Vector3D scale, Autodesk.Navisworks.Api.Rotation3D scale_orientation)",
+      "summary": "SetScale method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "scale",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "scale_orientation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetScale%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetToolOrientation",
+      "signature": "void SetToolOrientation(Autodesk.Navisworks.Api.Rotation3D r)",
+      "summary": "SetToolOrientation method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "r",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetToolOrientation%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetTrans",
+      "signature": "void SetTrans(Autodesk.Navisworks.Api.Vector3D trans)",
+      "summary": "SetTrans method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetTrans%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetTransform",
+      "signature": "void SetTransform(Autodesk.Navisworks.Api.Transform3DComponents trans)",
+      "summary": "SetTransform method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3DComponents",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetTransform%28Autodesk.Navisworks.Api.Transform3DComponents%29"
+    },
+    {
+      "name": "SetTransparency",
+      "signature": "void SetTransparency(double t)",
+      "summary": "SetTransparency method of LcOpSelectionKeyFrame.",
+      "params": [
+        {
+          "name": "t",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.SetTransparency%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSelectionKeyFrame.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSelectionKeyFrame.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

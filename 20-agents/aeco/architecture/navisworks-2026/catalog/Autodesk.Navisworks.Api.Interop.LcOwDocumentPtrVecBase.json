@@ -1,0 +1,212 @@
+{
+  "name": "LcOwDocumentPtrVecBase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwDocumentPtrVecBase class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase",
+  "constructors": [
+    {
+      "name": "LcOwDocumentPtrVecBase()",
+      "signature": "LcOwDocumentPtrVecBase()",
+      "summary": "Constructs a new LcOwDocumentPtrVecBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ItemAt",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOwDocument ItemAt(int n)",
+      "summary": "ItemAt method of LcOwDocumentPtrVecBase.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwDocument",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.ItemAt%28System.Int32%29"
+    },
+    {
+      "name": "Empty",
+      "signature": "bool Empty()",
+      "summary": "Empty method of LcOwDocumentPtrVecBase.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.Empty"
+    },
+    {
+      "name": "Capacity",
+      "signature": "int Capacity()",
+      "summary": "Capacity method of LcOwDocumentPtrVecBase.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.Capacity"
+    },
+    {
+      "name": "Find",
+      "signature": "int Find(Autodesk.Navisworks.Api.Interop.LcOwDocument to_find)",
+      "summary": "Find method of LcOwDocumentPtrVecBase.",
+      "params": [
+        {
+          "name": "to_find",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwDocument",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.Find%28Autodesk.Navisworks.Api.Interop.LcOwDocument%29"
+    },
+    {
+      "name": "Size",
+      "signature": "int Size()",
+      "summary": "Size method of LcOwDocumentPtrVecBase.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.Size"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwDocumentPtrVecBase.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwDocumentPtrVecBase.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcOwDocumentPtrVecBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.Clear"
+    },
+    {
+      "name": "PopBack",
+      "signature": "void PopBack()",
+      "summary": "PopBack method of LcOwDocumentPtrVecBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.PopBack"
+    },
+    {
+      "name": "PushBack",
+      "signature": "void PushBack(Autodesk.Navisworks.Api.Interop.LcOwDocument x)",
+      "summary": "PushBack method of LcOwDocumentPtrVecBase.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwDocument",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.PushBack%28Autodesk.Navisworks.Api.Interop.LcOwDocument%29"
+    },
+    {
+      "name": "Reserve",
+      "signature": "void Reserve(int n)",
+      "summary": "Reserve method of LcOwDocumentPtrVecBase.",
+      "params": [
+        {
+          "name": "n",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.Reserve%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwDocumentPtrVecBase.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwDocumentPtrVecBase.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

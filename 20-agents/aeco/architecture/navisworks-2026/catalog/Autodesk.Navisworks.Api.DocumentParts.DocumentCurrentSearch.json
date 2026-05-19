@@ -1,0 +1,121 @@
+{
+  "name": "DocumentCurrentSearch",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The current search in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.Search CreateCopy()",
+      "summary": "Creates a copy of the Search associated with this object",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Search",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.CreateCopy"
+    },
+    {
+      "name": "ToSearch",
+      "signature": "Autodesk.Navisworks.Api.Search ToSearch()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Search",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.ToSearch"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.Search op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Search",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch%29~Autodesk.Navisworks.Api.Search"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clears the current search",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.Search search)",
+      "summary": "Copies the Search from search",
+      "params": [
+        {
+          "name": "search",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.CopyFrom%28Autodesk.Navisworks.Api.Search%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsClear",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true when there is no selection or search conditions in the search",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.IsClear"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.Search",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the current search within the document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the Search contained in this object has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the Search contained in this object is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

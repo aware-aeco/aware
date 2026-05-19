@@ -1,0 +1,49 @@
+{
+  "name": "EulerAngleResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents Euler angles returned from a method",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.EulerAngleResult",
+  "constructors": [
+    {
+      "name": "EulerAngleResult()",
+      "signature": "EulerAngleResult()",
+      "summary": "Constructor for a Euler angle result.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.EulerAngleResult.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "\u0027X\u0027 Euler angle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.EulerAngleResult.X"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "\u0027Y\u0027 Euler angle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.EulerAngleResult.Y"
+    },
+    {
+      "name": "Z",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "\u0027Z\u0027 Euler angle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.EulerAngleResult.Z"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

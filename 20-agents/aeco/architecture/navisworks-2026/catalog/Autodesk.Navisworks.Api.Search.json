@@ -1,0 +1,488 @@
+{
+  "name": "Search",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Defines a search that can be run to find ModelItems",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Search",
+  "constructors": [
+    {
+      "name": "Search()",
+      "signature": "Search()",
+      "summary": "Create a clear search",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.%23ctor"
+    },
+    {
+      "name": "Search(Autodesk.Navisworks.Api.Search)",
+      "signature": "Search(Autodesk.Navisworks.Api.Search from)",
+      "summary": "Create a copy of another search",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027from\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.%23ctor%28Autodesk.Navisworks.Api.Search%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FindFirst",
+      "signature": "Autodesk.Navisworks.Api.ModelItem FindFirst(Autodesk.Navisworks.Api.Document document, bool reportProgress)",
+      "summary": "Returns the first ModelItem specified by this Search in document. Returns null if none found.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Autodesk.Navisworks.Api.Document",
+          "doc": "Document to search",
+          "optional": false
+        },
+        {
+          "name": "reportProgress",
+          "type": "bool",
+          "doc": "true if progress should be reported via normal Application progress reporting",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027document\u0027 is null"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Search Selection contains explicit items from a different document"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.CanceledOperationException",
+          "when": "End user cancels operation through progress interface"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.FindFirst%28Autodesk.Navisworks.Api.Document%2CSystem.Boolean%29"
+    },
+    {
+      "name": "FindFirst",
+      "signature": "Autodesk.Navisworks.Api.ModelItem FindFirst(bool reportProgress)",
+      "summary": "Returns the first ModelItem specified by this Search in the document which it is associated with. Returns null if none found.",
+      "params": [
+        {
+          "name": "reportProgress",
+          "type": "bool",
+          "doc": "true if progress should be reported via normal Application progress reporting",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "No document is associated with this Search"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.CanceledOperationException",
+          "when": "End user cancels operation through progress interface"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.FindFirst%28System.Boolean%29"
+    },
+    {
+      "name": "FindAll",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection FindAll(Autodesk.Navisworks.Api.Document document, bool reportProgress)",
+      "summary": "Returns a ModelItemCollection that represents the items specified by this Search in document.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Autodesk.Navisworks.Api.Document",
+          "doc": "Document to search",
+          "optional": false
+        },
+        {
+          "name": "reportProgress",
+          "type": "bool",
+          "doc": "true if progress should be reported via normal Application progress reporting",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027document\u0027 is null"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Search Selection contains explicit items from a different document"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.CanceledOperationException",
+          "when": "End user cancels operation through progress interface"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.FindAll%28Autodesk.Navisworks.Api.Document%2CSystem.Boolean%29"
+    },
+    {
+      "name": "FindAll",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection FindAll(bool reportProgress)",
+      "summary": "Returns a ModelItemCollection that represents the items specified by this Search in the document which it is associated with.",
+      "params": [
+        {
+          "name": "reportProgress",
+          "type": "bool",
+          "doc": "true if progress should be reported via normal Application progress reporting",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "No document is associated with this Search"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.CanceledOperationException",
+          "when": "End user cancels operation through progress interface"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.FindAll%28System.Boolean%29"
+    },
+    {
+      "name": "FindIncremental",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E FindIncremental(Autodesk.Navisworks.Api.Document document, bool reportProgress)",
+      "summary": "Returns an enumerable that steps through the items specified by this Search in document.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Autodesk.Navisworks.Api.Document",
+          "doc": "Document to search",
+          "optional": false
+        },
+        {
+          "name": "reportProgress",
+          "type": "bool",
+          "doc": "true if progress should be reported via normal Application progress reporting",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027document\u0027 is null"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Search Selection contains explicit items from a different document"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.CanceledOperationException",
+          "when": "End user cancels operation through progress interface"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.FindIncremental%28Autodesk.Navisworks.Api.Document%2CSystem.Boolean%29"
+    },
+    {
+      "name": "FindIncremental",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E FindIncremental(bool reportProgress)",
+      "summary": "Returns a an enumerable that steps through the items specified by this Search in the document which it is associated with.",
+      "params": [
+        {
+          "name": "reportProgress",
+          "type": "bool",
+          "doc": "true if progress should be reported via normal Application progress reporting",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "No document is associated with this Search"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.CanceledOperationException",
+          "when": "End user cancels operation through progress interface"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.FindIncremental%28System.Boolean%29"
+    },
+    {
+      "name": "CanMerge",
+      "signature": "bool CanMerge(Autodesk.Navisworks.Api.Search spec)",
+      "summary": "True if the search conditions and selection critera are compatible between this and another search",
+      "params": [
+        {
+          "name": "spec",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027spec\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027spec\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.CanMerge%28Autodesk.Navisworks.Api.Search%29"
+    },
+    {
+      "name": "TryMerge",
+      "signature": "bool TryMerge(Autodesk.Navisworks.Api.Search search)",
+      "summary": "Attempts to merge another Search into this Search, combining conditions of search as a new group of conditions. Returns true if the merge is successful, and false if the Searches are incompatible e.g. different model selections searched.",
+      "params": [
+        {
+          "name": "search",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "doc": "Search to merge.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.TryMerge%28Autodesk.Navisworks.Api.Search%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.Search value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.ValueEquals%28Autodesk.Navisworks.Api.Search%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Search.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Search InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Search.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Search",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.Search value1, Autodesk.Navisworks.Api.Search value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.ValueEquals%28Autodesk.Navisworks.Api.Search%2CAutodesk.Navisworks.Api.Search%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clears search back to it\u0027s default state",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.Clear"
+    },
+    {
+      "name": "Merge",
+      "signature": "void Merge(Autodesk.Navisworks.Api.Search search)",
+      "summary": "Merges another Search into this Search, appending its conditions as a new group of conditions.",
+      "params": [
+        {
+          "name": "search",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "doc": "Search to merge.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "A merge could not be performed, as the searches are incompatible e.g. different model selections searched."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Search.Merge%28Autodesk.Navisworks.Api.Search%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsClear",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "True if selection is clear, and there are no search conditions",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Search.IsClear"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Search.IsReadOnly"
+    },
+    {
+      "name": "Locations",
+      "type": "Autodesk.Navisworks.Api.SearchLocations",
+      "getter": true,
+      "setter": true,
+      "summary": "Locations within Selection to search. Default is DescendantsAndSelf.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Search.Locations"
+    },
+    {
+      "name": "PruneBelowMatch",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "When value is true, search ignores descendants of any matching model items. Default is true.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Search.PruneBelowMatch"
+    },
+    {
+      "name": "SearchConditions",
+      "type": "Autodesk.Navisworks.Api.SearchConditionCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Search conditions that will be applied during search",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Search.SearchConditions"
+    },
+    {
+      "name": "Selection",
+      "type": "Autodesk.Navisworks.Api.Selection",
+      "getter": true,
+      "setter": false,
+      "summary": "Selection that will be searched",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Search.Selection"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

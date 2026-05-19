@@ -1,0 +1,109 @@
+{
+  "name": "PickPrimitives",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Different types of primitive used to define geometry",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PickPrimitives",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Nothing extra to return or do"
+    },
+    {
+      "name": "Edge0To1",
+      "value": 1,
+      "summary": "Snap to tri edge between vertex 0 and 1"
+    },
+    {
+      "name": "Edge1To2",
+      "value": 2,
+      "summary": "Snap to tri edge between vertex 1 and 2"
+    },
+    {
+      "name": "Edge2To0",
+      "value": 4,
+      "summary": "Snap to tri edge between vertex 2 and 0"
+    },
+    {
+      "name": "Edge",
+      "value": 7,
+      "summary": "Snap to any tri edge"
+    },
+    {
+      "name": "Vertex0",
+      "value": 16,
+      "summary": "Snap to tri vertex 0"
+    },
+    {
+      "name": "Vertex1",
+      "value": 32,
+      "summary": "Snap to tri vertex 1"
+    },
+    {
+      "name": "Vertex2",
+      "value": 64,
+      "summary": "Snap to tri vertex 2"
+    },
+    {
+      "name": "Vertex",
+      "value": 112,
+      "summary": "Snap to any vertex"
+    },
+    {
+      "name": "Point",
+      "value": 256,
+      "summary": "Point at pick"
+    },
+    {
+      "name": "Distance",
+      "value": 512,
+      "summary": "Distance at pick"
+    },
+    {
+      "name": "NearThreshold",
+      "value": 4096,
+      "summary": "Nearer than near_threshold"
+    },
+    {
+      "name": "Center",
+      "value": 8192,
+      "summary": "Nearest to center, rather than to camera"
+    },
+    {
+      "name": "CenterExactSurface",
+      "value": 16384,
+      "summary": "Ignore surface not under center"
+    },
+    {
+      "name": "LineVertex0",
+      "value": 65536,
+      "summary": "Snap to line vertex 0"
+    },
+    {
+      "name": "LineVertex1",
+      "value": 131072,
+      "summary": "Snap to line vertex 1"
+    },
+    {
+      "name": "LineVertex",
+      "value": 196608,
+      "summary": "Snap to any line vertex"
+    },
+    {
+      "name": "LineMiddle",
+      "value": 262144,
+      "summary": "Snap to middle of the line"
+    },
+    {
+      "name": "ArcCenter",
+      "value": 1048576,
+      "summary": "Snap to the center of circular and elliptical arcs"
+    }
+  ]
+}

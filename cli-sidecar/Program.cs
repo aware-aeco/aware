@@ -171,11 +171,14 @@ internal static class Program
                             "dynamo" => Ingest.Extractors.Dynamo.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
                             // Bluebeam extractor (Phase B B14) — Bluebeam Studio API from the
-                            // public Postman v2.1 collection at
-                            // https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json.
-                            // Auth-walled developer portal; the Postman JSON is the only public
-                            // machine-readable description.
+                            // public Postman v2.1 collection. Auth-walled developer portal.
                             "bluebeam" => Ingest.Extractors.Bluebeam.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Navisworks extractor (Phase B B12) — Autodesk.Navisworks.Api.dll +
+                            // sibling XML doc from the community NuGet package
+                            // Chuongmep.Navis.Api.Autodesk.Navisworks.Api. Source.kind = "nuget".
+                            // Reflection runs against PE metadata (no IL execution), AOT-clean.
+                            "navisworks" => Ingest.Extractors.Navisworks.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")

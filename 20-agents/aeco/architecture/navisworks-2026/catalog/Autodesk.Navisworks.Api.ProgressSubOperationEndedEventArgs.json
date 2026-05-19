@@ -1,0 +1,31 @@
+{
+  "name": "ProgressSubOperationEndedEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::ProgressSubOperationEnded event",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressSubOperationEndedEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Completed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether the sub-operation was fully completed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressSubOperationEndedEventArgs.Completed"
+    },
+    {
+      "name": "Progress",
+      "type": "Autodesk.Navisworks.Api.Progress",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a reference to the Progress class instance relating to this Event.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressSubOperationEndedEventArgs.Progress"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,267 @@
+{
+  "name": "CommandHandlerPluginRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents an CommandHandlerPlugin record in Navisworks",
+  "base": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.CommandHandlerPlugin LoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.CommandHandlerPlugin",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.LoadPlugin"
+    },
+    {
+      "name": "TryLoadPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.CommandHandlerPlugin TryLoadPlugin()",
+      "summary": "Returns the plugin, loads it if required",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.CommandHandlerPlugin",
+        "doc": "null if plugin failed to load"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.TryLoadPlugin"
+    },
+    {
+      "name": "CanExecuteCommand",
+      "signature": "Autodesk.Navisworks.Api.Plugins.CommandState CanExecuteCommand(string commandId)",
+      "summary": "Calls CanExecuteCommand on the plugin",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "string",
+          "doc": "The Id of the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.CommandState",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Invalid Id"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.CanExecuteCommand%28System.String%29"
+    },
+    {
+      "name": "CanExecuteRibbonTab",
+      "signature": "bool CanExecuteRibbonTab(string ribbonId)",
+      "summary": "Calls CanExecuteRibbonTab on the plugin",
+      "params": [
+        {
+          "name": "ribbonId",
+          "type": "string",
+          "doc": "The Id of the ribbon tab",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Invalid Id"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.CanExecuteRibbonTab%28System.String%29"
+    },
+    {
+      "name": "ShowCommandHelp",
+      "signature": "bool ShowCommandHelp(string commandId)",
+      "summary": "Calls TryShowCommandHelp on the plugin",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "string",
+          "doc": "The Id of the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Invalid Id"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.ShowCommandHelp%28System.String%29"
+    },
+    {
+      "name": "TryShowCommandHelp",
+      "signature": "bool TryShowCommandHelp(string commandId)",
+      "summary": "Calls TryShowCommandHelp on the plugin",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "string",
+          "doc": "The Id of the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.TryShowCommandHelp%28System.String%29"
+    },
+    {
+      "name": "ExecuteCommand",
+      "signature": "int ExecuteCommand(string commandId, string[] parameters)",
+      "summary": "Calls ExecuteCommand on the plugin",
+      "params": [
+        {
+          "name": "commandId",
+          "type": "string",
+          "doc": "The Id of the command",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "string[]",
+          "doc": "Paramaters to be passed to the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.ExecuteDisabledException",
+          "when": "Execute is Disabled via CanExecute"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Plugin failed to load"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Invalid Id"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.ExecuteCommand%28System.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "ExtractNameFromId",
+      "signature": "string ExtractNameFromId(string id)",
+      "summary": "Helper to extract a name from a Id.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.ExtractNameFromId%28System.String%29"
+    },
+    {
+      "name": "MakeIdFromName",
+      "signature": "string MakeIdFromName(string name)",
+      "summary": "Helper to make an Id from a name",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.MakeIdFromName%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommandRecords",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.CommandRecord\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Commands defined by this plugin",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.CommandRecords"
+    },
+    {
+      "name": "LoadedPlugin",
+      "type": "Autodesk.Navisworks.Api.Plugins.CommandHandlerPlugin",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the plugin if loaded, otherwise null",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.LoadedPlugin"
+    },
+    {
+      "name": "RibbonLayoutRecords",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.RibbonLayoutRecord\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Xaml files that define the layout of the RibbonTabs and Commands",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.RibbonLayoutRecords"
+    },
+    {
+      "name": "RibbonTabRecords",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.RibbonTabRecord\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Ribbon Tabs defined by this plugin",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.RibbonTabRecords"
+    },
+    {
+      "name": "ToolTipsRecords",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.ToolTipsRecord\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "ToolTips files that define tooltips for RibbonTabs and Commands",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPluginRecord.ToolTipsRecords"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

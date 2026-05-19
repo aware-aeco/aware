@@ -1,0 +1,80 @@
+{
+  "name": "IDockToolPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "IDockToolPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.Interop.IPlugin"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.IDockToolPlugin",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AutoScroll",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "AutoScroll property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.AutoScroll"
+    },
+    {
+      "name": "Control",
+      "type": "System.Windows.Forms.Control",
+      "getter": true,
+      "setter": false,
+      "summary": "Control property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.Control"
+    },
+    {
+      "name": "GUID",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "GUID property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.GUID"
+    },
+    {
+      "name": "HelpFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "HelpFile property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.HelpFile"
+    },
+    {
+      "name": "HelpID",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "HelpID property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.HelpID"
+    },
+    {
+      "name": "Icon",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Icon property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.Icon"
+    },
+    {
+      "name": "ShowWindowShortcut",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ShowWindowShortcut property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.ShowWindowShortcut"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Title property of IDockToolPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.IDockToolPlugin.Title"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

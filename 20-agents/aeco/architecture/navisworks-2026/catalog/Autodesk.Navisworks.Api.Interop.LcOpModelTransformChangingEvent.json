@@ -1,0 +1,220 @@
+{
+  "name": "LcOpModelTransformChangingEvent",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpModelTransformChangingEvent class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpStateEvent",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPhase",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEventPhase GetPhase()",
+      "summary": "GetPhase method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEventPhase",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetPhase"
+    },
+    {
+      "name": "GetModel",
+      "signature": "Autodesk.Navisworks.Api.Model GetModel()",
+      "summary": "GetModel method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Model",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetModel"
+    },
+    {
+      "name": "GetTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3D GetTransform()",
+      "summary": "GetTransform method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetTransform"
+    },
+    {
+      "name": "GetLinearUnits",
+      "signature": "Autodesk.Navisworks.Api.Units GetLinearUnits()",
+      "summary": "GetLinearUnits method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Units",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetLinearUnits"
+    },
+    {
+      "name": "GetAllowChange",
+      "signature": "bool GetAllowChange()",
+      "summary": "GetAllowChange method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetAllowChange"
+    },
+    {
+      "name": "GetSourceIsUI",
+      "signature": "bool GetSourceIsUI()",
+      "summary": "GetSourceIsUI method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetSourceIsUI"
+    },
+    {
+      "name": "GetTransformReverses",
+      "signature": "bool GetTransformReverses()",
+      "summary": "GetTransformReverses method of LcOpModelTransformChangingEvent.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.GetTransformReverses"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpModelTransformChangingEvent.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpModelTransformChangingEvent.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetAllowChange",
+      "signature": "void SetAllowChange(bool allow_change)",
+      "summary": "SetAllowChange method of LcOpModelTransformChangingEvent.",
+      "params": [
+        {
+          "name": "allow_change",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.SetAllowChange%28System.Boolean%29"
+    },
+    {
+      "name": "SetTransformData",
+      "signature": "void SetTransformData(Autodesk.Navisworks.Api.Interop.LcOaPartition partition, Autodesk.Navisworks.Api.Transform3D transform, bool transform_reverses, Autodesk.Navisworks.Api.Units linear_units, Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEventPhase phase, bool source_is_ui)",
+      "summary": "SetTransformData method of LcOpModelTransformChangingEvent.",
+      "params": [
+        {
+          "name": "partition",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPartition",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        },
+        {
+          "name": "transform_reverses",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "linear_units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        },
+        {
+          "name": "phase",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEventPhase",
+          "optional": false
+        },
+        {
+          "name": "source_is_ui",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.SetTransformData%28Autodesk.Navisworks.Api.Interop.LcOaPartition%2CAutodesk.Navisworks.Api.Transform3D%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Units%2CAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEventPhase%2CSystem.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpModelTransformChangingEvent.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEvent.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

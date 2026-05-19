@@ -1,0 +1,748 @@
+{
+  "name": "LcNvCamera",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcNvCamera class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvCamera",
+  "constructors": [
+    {
+      "name": "LcNvCamera()",
+      "signature": "LcNvCamera()",
+      "summary": "Constructs a new LcNvCamera.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFarClipPlane",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f GetFarClipPlane()",
+      "summary": "GetFarClipPlane method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetFarClipPlane"
+    },
+    {
+      "name": "GetNearClipPlane",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcLPlane3f GetNearClipPlane()",
+      "summary": "GetNearClipPlane method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLPlane3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetNearClipPlane"
+    },
+    {
+      "name": "EditPosition",
+      "signature": "Autodesk.Navisworks.Api.Point3D EditPosition()",
+      "summary": "EditPosition method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.EditPosition"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "Autodesk.Navisworks.Api.Point3D GetPosition()",
+      "summary": "GetPosition method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetPosition"
+    },
+    {
+      "name": "GetRotation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D GetRotation()",
+      "summary": "GetRotation method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetRotation"
+    },
+    {
+      "name": "RightVector",
+      "signature": "Autodesk.Navisworks.Api.Vector3D RightVector()",
+      "summary": "RightVector method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.RightVector"
+    },
+    {
+      "name": "UpVector",
+      "signature": "Autodesk.Navisworks.Api.Vector3D UpVector()",
+      "summary": "UpVector method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.UpVector"
+    },
+    {
+      "name": "ViewDir",
+      "signature": "Autodesk.Navisworks.Api.Vector3D ViewDir()",
+      "summary": "ViewDir method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.ViewDir"
+    },
+    {
+      "name": "GetProjection",
+      "signature": "Autodesk.Navisworks.Api.ViewpointProjection GetProjection()",
+      "summary": "GetProjection method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ViewpointProjection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetProjection"
+    },
+    {
+      "name": "IsAsymmetric",
+      "signature": "bool IsAsymmetric()",
+      "summary": "IsAsymmetric method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.IsAsymmetric"
+    },
+    {
+      "name": "DistanceAlongViewDir",
+      "signature": "double DistanceAlongViewDir(Autodesk.Navisworks.Api.Point3D to)",
+      "summary": "DistanceAlongViewDir method of LcNvCamera.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.DistanceAlongViewDir%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GetAspectRatio",
+      "signature": "double GetAspectRatio()",
+      "summary": "GetAspectRatio method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetAspectRatio"
+    },
+    {
+      "name": "GetFar",
+      "signature": "double GetFar()",
+      "summary": "GetFar method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetFar"
+    },
+    {
+      "name": "GetHeightField",
+      "signature": "double GetHeightField()",
+      "summary": "GetHeightField method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetHeightField"
+    },
+    {
+      "name": "GetHorizontalExtentAtDistance",
+      "signature": "double GetHorizontalExtentAtDistance(double distance)",
+      "summary": "GetHorizontalExtentAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetHorizontalExtentAtDistance%28System.Double%29"
+    },
+    {
+      "name": "GetNear",
+      "signature": "double GetNear()",
+      "summary": "GetNear method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetNear"
+    },
+    {
+      "name": "GetRightOffsetAtDistance",
+      "signature": "double GetRightOffsetAtDistance(double distance)",
+      "summary": "GetRightOffsetAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetRightOffsetAtDistance%28System.Double%29"
+    },
+    {
+      "name": "GetRightOffsetFactor",
+      "signature": "double GetRightOffsetFactor()",
+      "summary": "GetRightOffsetFactor method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetRightOffsetFactor"
+    },
+    {
+      "name": "GetUpOffsetAtDistance",
+      "signature": "double GetUpOffsetAtDistance(double distance)",
+      "summary": "GetUpOffsetAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetUpOffsetAtDistance%28System.Double%29"
+    },
+    {
+      "name": "GetUpOffsetFactor",
+      "signature": "double GetUpOffsetFactor()",
+      "summary": "GetUpOffsetFactor method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetUpOffsetFactor"
+    },
+    {
+      "name": "GetVerticalExtentAtDistance",
+      "signature": "double GetVerticalExtentAtDistance(double distance)",
+      "summary": "GetVerticalExtentAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.GetVerticalExtentAtDistance%28System.Double%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcNvCamera InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcNvCamera.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcNvCamera.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcNvCamera.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.IsInitialised"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcNvCamera.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.Initialise"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcNvCamera.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.Terminate"
+    },
+    {
+      "name": "AlignDirection",
+      "signature": "void AlignDirection(Autodesk.Navisworks.Api.Vector3D target_dir)",
+      "summary": "AlignDirection method of LcNvCamera.",
+      "params": [
+        {
+          "name": "target_dir",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.AlignDirection%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "AlignUp",
+      "signature": "void AlignUp(Autodesk.Navisworks.Api.Vector3D up)",
+      "summary": "AlignUp method of LcNvCamera.",
+      "params": [
+        {
+          "name": "up",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.AlignUp%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "PanCenterAt",
+      "signature": "void PanCenterAt(Autodesk.Navisworks.Api.Point3D to)",
+      "summary": "PanCenterAt method of LcNvCamera.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.PanCenterAt%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "PanCenterAt",
+      "signature": "void PanCenterAt(Autodesk.Navisworks.Api.Point3D to, double aspect_ratio)",
+      "summary": "PanCenterAt method of LcNvCamera.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "aspect_ratio",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.PanCenterAt%28Autodesk.Navisworks.Api.Point3D%2CSystem.Double%29"
+    },
+    {
+      "name": "PointAt",
+      "signature": "void PointAt(Autodesk.Navisworks.Api.Point3D to)",
+      "summary": "PointAt method of LcNvCamera.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.PointAt%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "RotateCenterAt",
+      "signature": "void RotateCenterAt(Autodesk.Navisworks.Api.Point3D to)",
+      "summary": "RotateCenterAt method of LcNvCamera.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.RotateCenterAt%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetAspectRatio",
+      "signature": "void SetAspectRatio(double a)",
+      "summary": "SetAspectRatio method of LcNvCamera.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetAspectRatio%28System.Double%29"
+    },
+    {
+      "name": "SetExtentsAtDistance",
+      "signature": "void SetExtentsAtDistance(double distance, double horizontal, double vertical)",
+      "summary": "SetExtentsAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "horizontal",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "vertical",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetExtentsAtDistance%28System.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetFar",
+      "signature": "void SetFar(double f)",
+      "summary": "SetFar method of LcNvCamera.",
+      "params": [
+        {
+          "name": "f",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetFar%28System.Double%29"
+    },
+    {
+      "name": "SetHeightField",
+      "signature": "void SetHeightField(double h)",
+      "summary": "SetHeightField method of LcNvCamera.",
+      "params": [
+        {
+          "name": "h",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetHeightField%28System.Double%29"
+    },
+    {
+      "name": "SetNear",
+      "signature": "void SetNear(double n)",
+      "summary": "SetNear method of LcNvCamera.",
+      "params": [
+        {
+          "name": "n",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetNear%28System.Double%29"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "void SetPosition(Autodesk.Navisworks.Api.Point3D pos)",
+      "summary": "SetPosition method of LcNvCamera.",
+      "params": [
+        {
+          "name": "pos",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetPosition%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetProjection",
+      "signature": "void SetProjection(Autodesk.Navisworks.Api.ViewpointProjection proj)",
+      "summary": "SetProjection method of LcNvCamera.",
+      "params": [
+        {
+          "name": "proj",
+          "type": "Autodesk.Navisworks.Api.ViewpointProjection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetProjection%28Autodesk.Navisworks.Api.ViewpointProjection%29"
+    },
+    {
+      "name": "SetRightOffsetAtDistance",
+      "signature": "void SetRightOffsetAtDistance(double distance, double right_offset)",
+      "summary": "SetRightOffsetAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "right_offset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetRightOffsetAtDistance%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetRightOffsetFactor",
+      "signature": "void SetRightOffsetFactor(double right_offset_factor)",
+      "summary": "SetRightOffsetFactor method of LcNvCamera.",
+      "params": [
+        {
+          "name": "right_offset_factor",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetRightOffsetFactor%28System.Double%29"
+    },
+    {
+      "name": "SetRotation",
+      "signature": "void SetRotation(Autodesk.Navisworks.Api.Rotation3D rot)",
+      "summary": "SetRotation method of LcNvCamera.",
+      "params": [
+        {
+          "name": "rot",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetRotation%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetUpOffsetAtDistance",
+      "signature": "void SetUpOffsetAtDistance(double distance, double up_offset)",
+      "summary": "SetUpOffsetAtDistance method of LcNvCamera.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "up_offset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetUpOffsetAtDistance%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetUpOffsetFactor",
+      "signature": "void SetUpOffsetFactor(double up_offset_factor)",
+      "summary": "SetUpOffsetFactor method of LcNvCamera.",
+      "params": [
+        {
+          "name": "up_offset_factor",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetUpOffsetFactor%28System.Double%29"
+    },
+    {
+      "name": "SetValue",
+      "signature": "void SetValue(Autodesk.Navisworks.Api.Interop.LcNvCamera camera)",
+      "summary": "SetValue method of LcNvCamera.",
+      "params": [
+        {
+          "name": "camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.SetValue%28Autodesk.Navisworks.Api.Interop.LcNvCamera%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcNvCamera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcNvCamera.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

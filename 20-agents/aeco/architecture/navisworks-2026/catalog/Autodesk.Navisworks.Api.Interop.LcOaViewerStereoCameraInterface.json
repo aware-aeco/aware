@@ -1,0 +1,114 @@
+{
+  "name": "LcOaViewerStereoCameraInterface",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaViewerStereoCameraInterface class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface",
+  "constructors": [
+    {
+      "name": "LcOaViewerStereoCameraInterface()",
+      "signature": "LcOaViewerStereoCameraInterface()",
+      "summary": "Constructs a new LcOaViewerStereoCameraInterface.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaViewerStereoCameraInterface.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaViewerStereoCameraInterface.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CalcStereoCamera",
+      "signature": "void CalcStereoCamera(Autodesk.Navisworks.Api.Interop.LcNvCamera base_camera, Autodesk.Navisworks.Api.ViewpointStereoProjection stereo_proj, Autodesk.Navisworks.Api.Interop.LcNvViewPoint view_point_props, Autodesk.Navisworks.Api.Interop.LcNvCamera stereo_camera)",
+      "summary": "CalcStereoCamera method of LcOaViewerStereoCameraInterface.",
+      "params": [
+        {
+          "name": "base_camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "stereo_proj",
+          "type": "Autodesk.Navisworks.Api.ViewpointStereoProjection",
+          "optional": false
+        },
+        {
+          "name": "view_point_props",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "stereo_camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface.CalcStereoCamera%28Autodesk.Navisworks.Api.Interop.LcNvCamera%2CAutodesk.Navisworks.Api.ViewpointStereoProjection%2CAutodesk.Navisworks.Api.Interop.LcNvViewPoint%2CAutodesk.Navisworks.Api.Interop.LcNvCamera%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaViewerStereoCameraInterface.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

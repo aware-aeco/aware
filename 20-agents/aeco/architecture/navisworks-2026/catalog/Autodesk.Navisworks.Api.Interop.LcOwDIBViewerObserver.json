@@ -1,0 +1,120 @@
+{
+  "name": "LcOwDIBViewerObserver",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwDIBViewerObserver class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver",
+  "constructors": [
+    {
+      "name": "LcOwDIBViewerObserver()",
+      "signature": "LcOwDIBViewerObserver()",
+      "summary": "Constructs a new LcOwDIBViewerObserver.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwDIBViewerObserver.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwDIBViewerObserver.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "OnCreate",
+      "signature": "void OnCreate(Autodesk.Navisworks.Api.Interop.LcOpKernelEx kernel, Autodesk.Navisworks.Api.Interop.LcOwDIBViewer viewer)",
+      "summary": "OnCreate method of LcOwDIBViewerObserver.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelEx",
+          "optional": false
+        },
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwDIBViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver.OnCreate%28Autodesk.Navisworks.Api.Interop.LcOpKernelEx%2CAutodesk.Navisworks.Api.Interop.LcOwDIBViewer%29"
+    },
+    {
+      "name": "OnDestroy",
+      "signature": "void OnDestroy(Autodesk.Navisworks.Api.Interop.LcOwDIBViewer viewer)",
+      "summary": "OnDestroy method of LcOwDIBViewerObserver.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOwDIBViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver.OnDestroy%28Autodesk.Navisworks.Api.Interop.LcOwDIBViewer%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwDIBViewerObserver.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwDIBViewerObserver.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

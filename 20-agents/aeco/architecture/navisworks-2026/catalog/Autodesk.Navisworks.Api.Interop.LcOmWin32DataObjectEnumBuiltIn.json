@@ -1,0 +1,18 @@
+{
+  "name": "LcOmWin32DataObjectEnumBuiltIn",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOmWin32DataObjectEnumBuiltIn enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOmWin32DataObjectEnumBuiltIn",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CurrentSelection",
+      "value": 0
+    }
+  ]
+}

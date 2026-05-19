@@ -1,0 +1,99 @@
+{
+  "name": "VariantDataType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Type of data stored in a VariantData class.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.VariantDataType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Empty. No data stored."
+    },
+    {
+      "name": "Double",
+      "value": 1,
+      "summary": "Unitless double value"
+    },
+    {
+      "name": "Int32",
+      "value": 2,
+      "summary": "Unitless 32 bit integer value"
+    },
+    {
+      "name": "Boolean",
+      "value": 3,
+      "summary": "Boolean (true/false) value"
+    },
+    {
+      "name": "DisplayString",
+      "value": 4,
+      "summary": "String intended for display to the end user (normally localized)"
+    },
+    {
+      "name": "DateTime",
+      "value": 5,
+      "summary": "A specific date and time (usually UTC)"
+    },
+    {
+      "name": "DoubleLength",
+      "value": 6,
+      "summary": "A double that represents a length (specific units depend on context)"
+    },
+    {
+      "name": "DoubleAngle",
+      "value": 7,
+      "summary": "A double that represents an angle in radians"
+    },
+    {
+      "name": "NamedConstant",
+      "value": 8,
+      "summary": "A named constant"
+    },
+    {
+      "name": "IdentifierString",
+      "value": 9,
+      "summary": "String intended to be used as a programmatic identifier. 7-bit ASCII characters only."
+    },
+    {
+      "name": "DoubleArea",
+      "value": 10,
+      "summary": "A double that species an area (specific units depend on context)"
+    },
+    {
+      "name": "DoubleVolume",
+      "value": 11,
+      "summary": "A double that species a volume (specific units depend on context)"
+    },
+    {
+      "name": "Point3D",
+      "value": 12,
+      "summary": "A 3D point value"
+    },
+    {
+      "name": "Point2D",
+      "value": 13,
+      "summary": "A 2D point value"
+    },
+    {
+      "name": "Nat32",
+      "value": 14,
+      "summary": "Unsigned 32 bit integer value"
+    },
+    {
+      "name": "Int64",
+      "value": 15,
+      "summary": "64 bit integer value"
+    },
+    {
+      "name": "Nat64",
+      "value": 16,
+      "summary": "Unsigned 64 bit integer value"
+    }
+  ]
+}

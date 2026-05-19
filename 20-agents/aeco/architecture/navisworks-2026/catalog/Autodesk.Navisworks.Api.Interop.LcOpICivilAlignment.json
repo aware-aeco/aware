@@ -1,0 +1,236 @@
+{
+  "name": "LcOpICivilAlignment",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpICivilAlignment class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpICivilAlignment",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPointForDistance",
+      "signature": "bool GetPointForDistance(double distance, Autodesk.Navisworks.Api.Point3D position, Autodesk.Navisworks.Api.UnitVector3D direction)",
+      "summary": "GetPointForDistance method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetPointForDistance%28System.Double%2CAutodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "GetDistanceForStation",
+      "signature": "double GetDistanceForStation(double station)",
+      "summary": "GetDistanceForStation method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetDistanceForStation%28System.Double%29"
+    },
+    {
+      "name": "GetEndStation",
+      "signature": "double GetEndStation()",
+      "summary": "GetEndStation method of LcOpICivilAlignment.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetEndStation"
+    },
+    {
+      "name": "GetNextMajorStation",
+      "signature": "double GetNextMajorStation(double station)",
+      "summary": "GetNextMajorStation method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetNextMajorStation%28System.Double%29"
+    },
+    {
+      "name": "GetNextStation",
+      "signature": "double GetNextStation(double station, double majorStationDelta)",
+      "summary": "GetNextStation method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "majorStationDelta",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetNextStation%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "GetStartStation",
+      "signature": "double GetStartStation()",
+      "summary": "GetStartStation method of LcOpICivilAlignment.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetStartStation"
+    },
+    {
+      "name": "GetMajorStationDistance",
+      "signature": "int GetMajorStationDistance()",
+      "summary": "GetMajorStationDistance method of LcOpICivilAlignment.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetMajorStationDistance"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpICivilAlignment InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpICivilAlignment",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetName",
+      "signature": "string GetName()",
+      "summary": "GetName method of LcOpICivilAlignment.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.GetName"
+    },
+    {
+      "name": "MakeStationLabel",
+      "signature": "void MakeStationLabel(double station, out string label)",
+      "summary": "MakeStationLabel method of LcOpICivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.MakeStationLabel%28System.Double%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpICivilAlignment.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpICivilAlignment.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

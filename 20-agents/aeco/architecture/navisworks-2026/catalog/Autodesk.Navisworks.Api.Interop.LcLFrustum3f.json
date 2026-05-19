@@ -1,0 +1,176 @@
+{
+  "name": "LcLFrustum3f",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcLFrustum3f class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+  "constructors": [
+    {
+      "name": "LcLFrustum3f()",
+      "signature": "LcLFrustum3f()",
+      "summary": "Constructs a new LcLFrustum3f.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.%23ctor"
+    },
+    {
+      "name": "LcLFrustum3f(Autodesk.Navisworks.Api.Interop.LcLFrustum3f)",
+      "signature": "LcLFrustum3f(Autodesk.Navisworks.Api.Interop.LcLFrustum3f p)",
+      "summary": "Constructs a new LcLFrustum3f.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.%23ctor%28Autodesk.Navisworks.Api.Interop.LcLFrustum3f%29"
+    },
+    {
+      "name": "LcLFrustum3f(Autodesk.Navisworks.Api.Interop.LcLFrustum3fFrustumType, double, double, double, double, double, double)",
+      "signature": "LcLFrustum3f(Autodesk.Navisworks.Api.Interop.LcLFrustum3fFrustumType proj, double left, double right, double bottom, double top, double neard, double fard)",
+      "summary": "Constructs a new LcLFrustum3f.",
+      "params": [
+        {
+          "name": "proj",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3fFrustumType",
+          "optional": false
+        },
+        {
+          "name": "left",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "neard",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "fard",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.%23ctor%28Autodesk.Navisworks.Api.Interop.LcLFrustum3fFrustumType%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "LcLFrustum3f(double, double, double, double)",
+      "signature": "LcLFrustum3f(double fovy, double aspect, double neard, double fard)",
+      "summary": "Constructs a new LcLFrustum3f.",
+      "params": [
+        {
+          "name": "fovy",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "aspect",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "neard",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "fard",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcLFrustum3f InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcLFrustum3f.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcLFrustum3f.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcLFrustum3f.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcLFrustum3f.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

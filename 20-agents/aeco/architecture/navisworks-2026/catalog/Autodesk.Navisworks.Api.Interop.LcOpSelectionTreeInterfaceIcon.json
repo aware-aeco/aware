@@ -1,0 +1,158 @@
+{
+  "name": "LcOpSelectionTreeInterfaceIcon",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSelectionTreeInterfaceIcon enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSelectionTreeInterfaceIcon",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eICON_UNKNOWN_NORMAL",
+      "value": 0
+    },
+    {
+      "name": "eICON_MODEL_NORMAL",
+      "value": 1
+    },
+    {
+      "name": "eICON_LAYER_NORMAL",
+      "value": 2
+    },
+    {
+      "name": "eICON_COLLECTION_NORMAL",
+      "value": 3
+    },
+    {
+      "name": "eICON_GROUP_NORMAL",
+      "value": 4
+    },
+    {
+      "name": "eICON_COMPOSITE_NORMAL",
+      "value": 5
+    },
+    {
+      "name": "eICON_INSERT_GROUP_NORMAL",
+      "value": 6
+    },
+    {
+      "name": "eICON_INSERT_GEOMETRY_NORMAL",
+      "value": 7
+    },
+    {
+      "name": "eICON_GEOMETRY_NORMAL",
+      "value": 8
+    },
+    {
+      "name": "eICON_SELECTION_SET_NORMAL",
+      "value": 9
+    },
+    {
+      "name": "eICON_FIND_SET_NORMAL",
+      "value": 10
+    },
+    {
+      "name": "eICON_RESERVED_NORMAL",
+      "value": 11
+    },
+    {
+      "name": "eICON_UNKNOWN_HIDDEN",
+      "value": 12
+    },
+    {
+      "name": "eICON_MODEL_HIDDEN",
+      "value": 13
+    },
+    {
+      "name": "eICON_LAYER_HIDDEN",
+      "value": 14
+    },
+    {
+      "name": "eICON_COLLECTION_HIDDEN",
+      "value": 15
+    },
+    {
+      "name": "eICON_GROUP_HIDDEN",
+      "value": 16
+    },
+    {
+      "name": "eICON_COMPOSITE_HIDDEN",
+      "value": 17
+    },
+    {
+      "name": "eICON_INSERT_GROUP_HIDDEN",
+      "value": 18
+    },
+    {
+      "name": "eICON_INSERT_GEOMETRY_HIDDEN",
+      "value": 19
+    },
+    {
+      "name": "eICON_GEOMETRY_HIDDEN",
+      "value": 20
+    },
+    {
+      "name": "eICON_SELECTION_SET_HIDDEN",
+      "value": 21
+    },
+    {
+      "name": "eICON_FIND_SET_HIDDEN",
+      "value": 22
+    },
+    {
+      "name": "eICON_RESERVED_HIDDEN",
+      "value": 23
+    },
+    {
+      "name": "eICON_UNKNOWN_REQUIRED",
+      "value": 24
+    },
+    {
+      "name": "eICON_MODEL_REQUIRED",
+      "value": 25
+    },
+    {
+      "name": "eICON_LAYER_REQUIRED",
+      "value": 26
+    },
+    {
+      "name": "eICON_COLLECTION_REQUIRED",
+      "value": 27
+    },
+    {
+      "name": "eICON_GROUP_REQUIRED",
+      "value": 28
+    },
+    {
+      "name": "eICON_COMPOSITE_REQUIRED",
+      "value": 29
+    },
+    {
+      "name": "eICON_INSERT_GROUP_REQUIRED",
+      "value": 30
+    },
+    {
+      "name": "eICON_INSERT_GEOMETRY_REQUIRED",
+      "value": 31
+    },
+    {
+      "name": "eICON_GEOMETRY_REQUIRED",
+      "value": 32
+    },
+    {
+      "name": "eICON_SELECTION_SET_REQUIRED",
+      "value": 33
+    },
+    {
+      "name": "eICON_FIND_SET_REQUIRED",
+      "value": 34
+    },
+    {
+      "name": "eICON_RESERVED_REQUIRED",
+      "value": 35
+    }
+  ]
+}

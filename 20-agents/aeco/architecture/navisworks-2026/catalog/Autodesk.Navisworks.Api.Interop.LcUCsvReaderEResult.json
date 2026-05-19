@@ -1,0 +1,26 @@
+{
+  "name": "LcUCsvReaderEResult",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUCsvReaderEResult enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUCsvReaderEResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eTOKEN",
+      "value": 0
+    },
+    {
+      "name": "eEOL",
+      "value": 1
+    },
+    {
+      "name": "eEOF",
+      "value": 2
+    }
+  ]
+}

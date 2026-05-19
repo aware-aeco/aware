@@ -1,0 +1,82 @@
+{
+  "name": "LcOpPluginLoadStatusFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpPluginLoadStatusFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPluginLoadStatusFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLOAD_OK",
+      "value": 0
+    },
+    {
+      "name": "eLOAD_CANT_OPEN",
+      "value": 1
+    },
+    {
+      "name": "eLOAD_FILE_CORRUPT",
+      "value": 2
+    },
+    {
+      "name": "eLOAD_UNSUPPORTED",
+      "value": 3
+    },
+    {
+      "name": "eLOAD_BAD_VERSION",
+      "value": 4
+    },
+    {
+      "name": "eLOAD_UNIMPLEMENTED",
+      "value": 5
+    },
+    {
+      "name": "eLOAD_CANCELED",
+      "value": 6
+    },
+    {
+      "name": "eLOAD_PERMISSIONS",
+      "value": 7
+    },
+    {
+      "name": "eLOAD_NO_PASSWORD",
+      "value": 8
+    },
+    {
+      "name": "eLOAD_PERMISSIONS_EX",
+      "value": 9
+    },
+    {
+      "name": "eLOAD_NO_TEMP",
+      "value": 10
+    },
+    {
+      "name": "eLOAD_INVALID_FILENAME",
+      "value": 11
+    },
+    {
+      "name": "eLOAD_NO_ENGINE",
+      "value": 12
+    },
+    {
+      "name": "eLOAD_ERROR",
+      "value": 255
+    },
+    {
+      "name": "eLOAD_PARTIAL",
+      "value": 1048576
+    },
+    {
+      "name": "eLOAD_IGNORE_ANY",
+      "value": 1048576
+    },
+    {
+      "name": "eLOAD_IGNORE_USER",
+      "value": 1048576
+    }
+  ]
+}

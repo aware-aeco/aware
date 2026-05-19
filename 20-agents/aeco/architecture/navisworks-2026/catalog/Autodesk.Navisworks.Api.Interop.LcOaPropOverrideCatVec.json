@@ -1,0 +1,324 @@
+{
+  "name": "LcOaPropOverrideCatVec",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaPropOverrideCatVec class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+    "System.Collections.Generic.IList\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+    "System.Collections.ICollection",
+    "System.Collections.IEnumerable",
+    "System.Collections.IList"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec",
+  "constructors": [
+    {
+      "name": "LcOaPropOverrideCatVec()",
+      "signature": "LcOaPropOverrideCatVec()",
+      "summary": "Constructs a new LcOaPropOverrideCatVec.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.%23ctor"
+    },
+    {
+      "name": "LcOaPropOverrideCatVec(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec)",
+      "signature": "LcOaPropOverrideCatVec(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec vec)",
+      "summary": "Constructs a new LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of LcOaPropOverrideCatVec.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.GetEnumerator"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory item)",
+      "summary": "Contains method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Contains%28Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory item)",
+      "summary": "Remove method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Remove%28Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%29"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "int IndexOf(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory item)",
+      "summary": "IndexOf method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.IndexOf%28Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory item)",
+      "summary": "Add method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Add%28Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%29"
+    },
+    {
+      "name": "AddRange",
+      "signature": "void AddRange(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E from)",
+      "summary": "AddRange method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.AddRange%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%7D%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcOaPropOverrideCatVec.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E from)",
+      "summary": "CopyFrom method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%7D%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory[] array, int arrayIndex)",
+      "summary": "CopyTo method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory[]",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.CopyTo%28Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%5B%5D%2CSystem.Int32%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E to)",
+      "summary": "CopyTo method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "to",
+          "type": "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.CopyTo%28System.Collections.Generic.ICollection%7BAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%7D%29"
+    },
+    {
+      "name": "Insert",
+      "signature": "void Insert(int index, Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory item)",
+      "summary": "Insert method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Insert%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(int index)",
+      "summary": "RemoveAt method of LcOaPropOverrideCatVec.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.RemoveAt%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Count property of LcOaPropOverrideCatVec.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Count"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaPropOverrideCatVec.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of LcOaPropOverrideCatVec.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

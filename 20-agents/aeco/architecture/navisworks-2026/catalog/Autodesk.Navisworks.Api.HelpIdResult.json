@@ -1,0 +1,41 @@
+{
+  "name": "HelpIdResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a Help Id returned from a call to a ToolPlugin or Input Plugin.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.HelpIdResult",
+  "constructors": [
+    {
+      "name": "HelpIdResult()",
+      "signature": "HelpIdResult()",
+      "summary": "Constructor for a HelpIdResult.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.HelpIdResult.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Handled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "The status of whether the plugin handled the call. If true then HelpId should containg the Help Id.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.HelpIdResult.Handled"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Help Id being returned.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.HelpIdResult.Id"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

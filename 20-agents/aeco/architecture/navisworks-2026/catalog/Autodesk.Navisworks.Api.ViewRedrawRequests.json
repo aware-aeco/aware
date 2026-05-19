@@ -1,0 +1,34 @@
+{
+  "name": "ViewRedrawRequests",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Flags specifying which sorts of redraw are requested.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewRedrawRequests",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No redraw requested unless other flags specified."
+    },
+    {
+      "name": "Render",
+      "value": 1,
+      "summary": "Main Render requested."
+    },
+    {
+      "name": "OverlayRender",
+      "value": 2,
+      "summary": "Overlay Render requested."
+    },
+    {
+      "name": "All",
+      "value": 3,
+      "summary": "Main Render and Overlay Render requested."
+    }
+  ]
+}

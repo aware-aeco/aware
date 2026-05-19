@@ -1,0 +1,26 @@
+{
+  "name": "SavedViewpointAnimationSmoothing",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "SavedViewpointAnimationSmoothing enum in Autodesk.Navisworks.Api.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SavedViewpointAnimationSmoothing",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Sync",
+      "value": 1
+    },
+    {
+      "name": "Spline",
+      "value": 2
+    }
+  ]
+}

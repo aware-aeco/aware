@@ -1,0 +1,25 @@
+{
+  "name": "RoamerPluginFactory",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "RoamerPluginFactory class in Autodesk.Navisworks.Api.Interop.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.RoamerPluginFactory",
+  "constructors": [
+    {
+      "name": "RoamerPluginFactory()",
+      "signature": "RoamerPluginFactory()",
+      "summary": "Constructs a new RoamerPluginFactory.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.RoamerPluginFactory.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

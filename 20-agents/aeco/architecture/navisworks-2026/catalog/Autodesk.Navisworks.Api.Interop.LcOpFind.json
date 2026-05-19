@@ -1,0 +1,231 @@
+{
+  "name": "LcOpFind",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpFind class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpFind",
+  "constructors": [
+    {
+      "name": "LcOpFind(Autodesk.Navisworks.Api.Interop.LcOpState)",
+      "signature": "LcOpFind(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Constructs a new LcOpFind.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "LcOpFind(Autodesk.Navisworks.Api.Interop.LcOpState, Autodesk.Navisworks.Api.Search)",
+      "signature": "LcOpFind(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Search spec)",
+      "summary": "Constructs a new LcOpFind.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "spec",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Search%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FindAll",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpFindResult FindAll(Autodesk.Navisworks.Api.ModelItemCollection ret)",
+      "summary": "FindAll method of LcOpFind.",
+      "params": [
+        {
+          "name": "ret",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFindResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.FindAll%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "FindFirst",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpFindResult FindFirst()",
+      "summary": "FindFirst method of LcOpFind.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFindResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.FindFirst"
+    },
+    {
+      "name": "FindNext",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpFindResult FindNext()",
+      "summary": "FindNext method of LcOpFind.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFindResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.FindNext"
+    },
+    {
+      "name": "FindNextNotContained",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpFindResult FindNextNotContained()",
+      "summary": "FindNextNotContained method of LcOpFind.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFindResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.FindNextNotContained"
+    },
+    {
+      "name": "GetCurrentPath",
+      "signature": "Autodesk.Navisworks.Api.ModelItem GetCurrentPath()",
+      "summary": "GetCurrentPath method of LcOpFind.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.GetCurrentPath"
+    },
+    {
+      "name": "GetMatchingValue",
+      "signature": "Autodesk.Navisworks.Api.VariantData GetMatchingValue(int index)",
+      "summary": "GetMatchingValue method of LcOpFind.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.GetMatchingValue%28System.Int32%29"
+    },
+    {
+      "name": "GetNumMatchingValues",
+      "signature": "int GetNumMatchingValues()",
+      "summary": "GetNumMatchingValues method of LcOpFind.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.GetNumMatchingValues"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpFind InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpFind.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFind",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpFind.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Reset",
+      "signature": "void Reset()",
+      "summary": "Reset method of LcOpFind.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFind.Reset"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayProgress",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DisplayProgress property of LcOpFind.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpFind.DisplayProgress"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpFind.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpFind.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

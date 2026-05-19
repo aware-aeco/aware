@@ -1,0 +1,54 @@
+{
+  "name": "GridsOptions",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Provides access to Grids Options",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.GridsOptions",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AboveColor",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the Grid lines on the level directly above the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridsOptions.AboveColor"
+    },
+    {
+      "name": "BelowColor",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the Grid lines on the level directly below the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridsOptions.BelowColor"
+    },
+    {
+      "name": "Enabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if Grids will rendered.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridsOptions.Enabled"
+    },
+    {
+      "name": "OtherColor",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": true,
+      "summary": "The color of the Grid lines on levels not directly above or below the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridsOptions.OtherColor"
+    },
+    {
+      "name": "XRayMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Renders occluded grid lines.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridsOptions.XRayMode"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

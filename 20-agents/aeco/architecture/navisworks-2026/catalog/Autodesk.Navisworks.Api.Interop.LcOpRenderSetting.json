@@ -1,0 +1,273 @@
+{
+  "name": "LcOpRenderSetting",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpRenderSetting class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRenderSetting",
+  "constructors": [
+    {
+      "name": "LcOpRenderSetting()",
+      "signature": "LcOpRenderSetting()",
+      "summary": "Constructs a new LcOpRenderSetting.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.%23ctor"
+    },
+    {
+      "name": "LcOpRenderSetting(Autodesk.Navisworks.Api.Interop.LcOpRenderSetting)",
+      "signature": "LcOpRenderSetting(Autodesk.Navisworks.Api.Interop.LcOpRenderSetting other)",
+      "summary": "Constructs a new LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSetting",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpRenderSetting%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetLightingMode",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingLightingMode GetLightingMode()",
+      "summary": "GetLightingMode method of LcOpRenderSetting.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingLightingMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.GetLightingMode"
+    },
+    {
+      "name": "GetPrecision",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingNumericPrecision GetPrecision()",
+      "summary": "GetPrecision method of LcOpRenderSetting.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingNumericPrecision",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.GetPrecision"
+    },
+    {
+      "name": "GetRenderCondition",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderCondition GetRenderCondition()",
+      "summary": "GetRenderCondition method of LcOpRenderSetting.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderCondition",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.GetRenderCondition"
+    },
+    {
+      "name": "GetQualityPreset",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderQuality GetQualityPreset()",
+      "summary": "GetQualityPreset method of LcOpRenderSetting.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderQuality",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.GetQualityPreset"
+    },
+    {
+      "name": "GetRenderTimeCondition",
+      "signature": "int GetRenderTimeCondition()",
+      "summary": "GetRenderTimeCondition method of LcOpRenderSetting.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.GetRenderTimeCondition"
+    },
+    {
+      "name": "GetRenderlevelCondition",
+      "signature": "int GetRenderlevelCondition()",
+      "summary": "GetRenderlevelCondition method of LcOpRenderSetting.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.GetRenderlevelCondition"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpRenderSetting InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSetting",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetLightingMode",
+      "signature": "void SetLightingMode(Autodesk.Navisworks.Api.Interop.LcOpRenderSettingLightingMode lighting_mode)",
+      "summary": "SetLightingMode method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "lighting_mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingLightingMode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.SetLightingMode%28Autodesk.Navisworks.Api.Interop.LcOpRenderSettingLightingMode%29"
+    },
+    {
+      "name": "SetPrecision",
+      "signature": "void SetPrecision(Autodesk.Navisworks.Api.Interop.LcOpRenderSettingNumericPrecision numeric_precision)",
+      "summary": "SetPrecision method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "numeric_precision",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingNumericPrecision",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.SetPrecision%28Autodesk.Navisworks.Api.Interop.LcOpRenderSettingNumericPrecision%29"
+    },
+    {
+      "name": "SetQualityPreset",
+      "signature": "void SetQualityPreset(Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderQuality quality_preset)",
+      "summary": "SetQualityPreset method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "quality_preset",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderQuality",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.SetQualityPreset%28Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderQuality%29"
+    },
+    {
+      "name": "SetRenderCondition",
+      "signature": "void SetRenderCondition(Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderCondition render_condition)",
+      "summary": "SetRenderCondition method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "render_condition",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderCondition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.SetRenderCondition%28Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderCondition%29"
+    },
+    {
+      "name": "SetRenderTimeCondition",
+      "signature": "void SetRenderTimeCondition(int rendertime_condition)",
+      "summary": "SetRenderTimeCondition method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "rendertime_condition",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.SetRenderTimeCondition%28System.Int32%29"
+    },
+    {
+      "name": "SetRenderlevelCondition",
+      "signature": "void SetRenderlevelCondition(int renderlevel_condition)",
+      "summary": "SetRenderlevelCondition method of LcOpRenderSetting.",
+      "params": [
+        {
+          "name": "renderlevel_condition",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.SetRenderlevelCondition%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpRenderSetting.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpRenderSetting.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

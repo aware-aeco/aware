@@ -1,0 +1,60 @@
+Sampled 50 types from 779 (seed = 1229352836):
+
+
+idx ns                                       name                             kind      result issues
+--- --                                       ----                             ----      ------ ------
+ 54 Autodesk.Navisworks.Api                  DocumentInfoParts                enum      PASS         
+ 94 Autodesk.Navisworks.Api                  GridsData                        class     PASS         
+333 Autodesk.Navisworks.Api.Interop          LcOpMeasureTool                  class     PASS         
+168 Autodesk.Navisworks.Api.Interop          LcOglProteinAsset                class     PASS         
+393 Autodesk.Navisworks.Api.Interop          LcOpRulePlugin                   class     PASS         
+426 Autodesk.Navisworks.Api.Interop          LcOpSecurityStatus               enum      PASS         
+508 Autodesk.Navisworks.Api.Interop          LcOwWebServices                  class     PASS         
+408 Autodesk.Navisworks.Api.Interop          LcOpSavedItemsDeltaType          enum      PASS         
+402 Autodesk.Navisworks.Api.Interop          LcOpSavedItemGuidSet             class     PASS         
+363 Autodesk.Navisworks.Api.Interop          LcOpPropertyCategoryInfo         class     PASS         
+594 Autodesk.Navisworks.Api.Interop          LcVwGraphics                     class     PASS         
+233 Autodesk.Navisworks.Api.Interop          LcOpClicUIPosition               enum      PASS         
+264 Autodesk.Navisworks.Api.Interop          LcOpElementFlags                 enum      PASS         
+645 Autodesk.Navisworks.Api.Plugins          ExecuteDisabledException         class     PASS         
+  7 Autodesk.Navisworks.Api.ApplicationParts ApplicationResources             class     PASS         
+661 Autodesk.Navisworks.Api.Plugins          PluginLoadException              class     PASS         
+108 Autodesk.Navisworks.Api.Interop          ICommandLayoutPlugin             interface PASS         
+ 76 Autodesk.Navisworks.Api                  FileReferenceResolveResult       class     PASS         
+ 19 Autodesk.Navisworks.Api                  CanceledOperationException       class     PASS         
+485 Autodesk.Navisworks.Api.Interop          LcOpUserPropertyEvent            class     PASS         
+456 Autodesk.Navisworks.Api.Interop          LcOpStatePart                    enum      PASS         
+513 Autodesk.Navisworks.Api.Interop          LcRmFrameworkInterface           class     PASS         
+131 Autodesk.Navisworks.Api.Interop          LcNvNavDriver                    class     PASS         
+440 Autodesk.Navisworks.Api.Interop          LcOpSelectionTreeInterface       class     PASS         
+258 Autodesk.Navisworks.Api.Interop          LcOpDiffInfoVector               class     PASS         
+194 Autodesk.Navisworks.Api.Interop          LcOpAnimationEngine              class     PASS         
+291 Autodesk.Navisworks.Api.Interop          LcOpGraphicsSystemElement        class     PASS         
+751 Autodesk.Navisworks.Api                  TextFontMetrics                  class     PASS         
+364 Autodesk.Navisworks.Api.Interop          LcOpPropertyCategoryInfoDiffType enum      PASS         
+276 Autodesk.Navisworks.Api.Interop          LcOpFilePluginNameContext        enum      PASS         
+683 Autodesk.Navisworks.Api                  ProgressEndedEventArgs           class     PASS         
+118 Autodesk.Navisworks.Api.Interop          LcLFrustum3fCornerIndex          enum      PASS         
+706 Autodesk.Navisworks.Api                  SavedViewpoint                   class     PASS         
+384 Autodesk.Navisworks.Api.Interop          LcOpRenderHandler                class     PASS         
+505 Autodesk.Navisworks.Api.Interop          LcOwViewer                       class     PASS         
+356 Autodesk.Navisworks.Api.Interop          LcOpPluginCaps                   enum      PASS         
+ 26 Autodesk.Navisworks.Api                  Color                            class     PASS         
+136 Autodesk.Navisworks.Api.Interop          LcNvViewPointParadigm            enum      PASS         
+603 Autodesk.Navisworks.Api.Interop          RoamerPluginFactoryAssmAttribute class     PASS         
+425 Autodesk.Navisworks.Api.Interop          LcOpSecurityProvider             class     PASS         
+720 Autodesk.Navisworks.Api.Schema           Int32Field                       class     PASS         
+575 Autodesk.Navisworks.Api.Interop          LcUSQLiteDataType                enum      PASS         
+480 Autodesk.Navisworks.Api.Interop          LcOpTransform3fR                 class     PASS         
+103 Autodesk.Navisworks.Api                  InfoPropertyCategory             class     PASS         
+145 Autodesk.Navisworks.Api.Interop          LcOaGroup                        class     PASS         
+545 Autodesk.Navisworks.Api.Interop          LcUOptSwigValidator              class     PASS         
+119 Autodesk.Navisworks.Api.Interop          LcLFrustum3fFrustumType          enum      PASS         
+ 68 Autodesk.Navisworks.Api.DocumentParts    DocumentTool                     class     PASS         
+102 Autodesk.Navisworks.Api                  ImageGenerationStyle             enum      PASS         
+709 Autodesk.Navisworks.Api                  SavedViewpointAnimationSmoothing enum      PASS         
+
+
+
+
+Strict verification summary: 50 pass / 0 fail / 50 total

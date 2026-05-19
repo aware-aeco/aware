@@ -1,0 +1,35 @@
+{
+  "name": "EventWatcherPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Differs fom other plugin types in that the plugin is not delay loaded. A typical implementation will subscribe to some API events in OnLoaded and unsubscribe in OnUnloading.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.EventWatcherPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnLoaded",
+      "signature": "void OnLoaded()",
+      "summary": "Called once immediately after the plugin has been loaded (created). Default implementation does nothing. This is a good place to subscribe to API events.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.EventWatcherPlugin.OnLoaded"
+    },
+    {
+      "name": "OnUnloading",
+      "signature": "void OnUnloading()",
+      "summary": "Called once just before the plugin is unloaded. If the plugin implements IDisposable, then Dispose will be called immediately after the plugin is unloaded. Plugins are typically unloaded at application shutdown or when the end user has disabled a plugin. Default implementation does nothing. This is a good place to unsubscribe from API events.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.EventWatcherPlugin.OnUnloading"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

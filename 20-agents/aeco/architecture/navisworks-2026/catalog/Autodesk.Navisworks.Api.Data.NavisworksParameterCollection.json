@@ -1,0 +1,367 @@
+{
+  "name": "NavisworksParameterCollection",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbParameterCollection.",
+  "base": "System.Data.Common.DbParameterCollection",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisworksParameterCollection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddWithValue",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisworksParameter AddWithValue(string parameterName, object value)",
+      "summary": "Adds a named/unnamed parameter and its value to the parameter collection.",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "string",
+          "doc": "Name of the parameter, or null to indicate an unnamed parameter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The initial value of the parameter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisworksParameter",
+        "doc": "Returns the NavisworksParameter object created during the call."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.AddWithValue%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.IEnumerator GetEnumerator()",
+      "summary": "GetEnumerator method of NavisworksParameterCollection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.GetEnumerator"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(object value)",
+      "summary": "Determines if the parameter exists in the collection",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The NavisworksParameter to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the parameter is in the collection"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Contains%28System.Object%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(string value)",
+      "summary": "Determines if the named parameter exists in the collection",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "doc": "The name of the parameter to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True if the parameter is in the collection"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Contains%28System.String%29"
+    },
+    {
+      "name": "Add",
+      "signature": "int Add(Autodesk.Navisworks.Api.Data.NavisworksParameter parameter)",
+      "summary": "Adds a parameter to the collection",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "Autodesk.Navisworks.Api.Data.NavisworksParameter",
+          "doc": "The parameter to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "A zero-based index of where the parameter is located in the array"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Add%28Autodesk.Navisworks.Api.Data.NavisworksParameter%29"
+    },
+    {
+      "name": "Add",
+      "signature": "int Add(object value)",
+      "summary": "Adds a parameter to the collection",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The parameter to add",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "A zero-based index of where the parameter is located in the array"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Add%28System.Object%29"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "int IndexOf(object value)",
+      "summary": "Returns the index of a parameter",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The parameter to find",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "-1 if not found, otherwise a zero-based index of the parameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.IndexOf%28System.Object%29"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "int IndexOf(string parameterName)",
+      "summary": "Returns the index of a parameter given its name",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "string",
+          "doc": "The name of the parameter to find",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "-1 if not found, otherwise a zero-based index of the parameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.IndexOf%28System.String%29"
+    },
+    {
+      "name": "AddRange",
+      "signature": "void AddRange(System.Array values)",
+      "summary": "Adds an array of parameters to the collection",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Array",
+          "doc": "The array of parameters to add",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.AddRange%28System.Array%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clears the array and resets the collection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Clear"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(System.Array values, int index)",
+      "summary": "Not implemented",
+      "params": [
+        {
+          "name": "values",
+          "type": "System.Array",
+          "doc": "",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.CopyTo%28System.Array%2CSystem.Int32%29"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of NavisworksParameterCollection.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Dispose"
+    },
+    {
+      "name": "Insert",
+      "signature": "void Insert(int index, object value)",
+      "summary": "Inserts a parameter into the array at the specified location",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "The zero-based index to insert the parameter at",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The parameter to insert",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Insert%28System.Int32%2CSystem.Object%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "void Remove(object value)",
+      "summary": "Removes specified parameter from the collection",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The parameter to remove",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Remove%28System.Object%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(int index)",
+      "summary": "Removes a parameter from the collection given its index",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "The zero-based parameter index to remove",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.RemoveAt%28System.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(string parameterName)",
+      "summary": "Removes a parameter from the collection given its name",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "string",
+          "doc": "The name of the parameter to remove",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.RemoveAt%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a count of parameters in the collection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Count"
+    },
+    {
+      "name": "IsFixedSize",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns false",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.IsFixedSize"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns false",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.IsReadOnly"
+    },
+    {
+      "name": "IsSynchronized",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.IsSynchronized"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksParameter",
+      "getter": true,
+      "setter": true,
+      "summary": "Overloaded to specialize the return value of the default indexer",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Item%28System.Int32%29"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksParameter",
+      "getter": true,
+      "setter": true,
+      "summary": "Overloaded to specialize the return value of the default indexer",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.Item%28System.String%29"
+    },
+    {
+      "name": "SyncRoot",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns null",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameterCollection.SyncRoot"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

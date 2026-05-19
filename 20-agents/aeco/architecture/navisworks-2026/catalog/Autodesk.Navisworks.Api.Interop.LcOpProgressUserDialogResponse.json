@@ -1,0 +1,26 @@
+{
+  "name": "LcOpProgressUserDialogResponse",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpProgressUserDialogResponse enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eOK",
+      "value": 0
+    },
+    {
+      "name": "eCANCEL",
+      "value": 1
+    },
+    {
+      "name": "eNOT_IMPLEMENTED",
+      "value": 2
+    }
+  ]
+}

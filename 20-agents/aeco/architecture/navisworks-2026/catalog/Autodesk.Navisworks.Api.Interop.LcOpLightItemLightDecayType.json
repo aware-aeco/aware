@@ -1,0 +1,26 @@
+{
+  "name": "LcOpLightItemLightDecayType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLightItemLightDecayType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLightItemLightDecayType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDECAY_NONE",
+      "value": 0
+    },
+    {
+      "name": "eDECAY_INVERSE",
+      "value": 1
+    },
+    {
+      "name": "eDECAY_INVERSESQUARE",
+      "value": 2
+    }
+  ]
+}

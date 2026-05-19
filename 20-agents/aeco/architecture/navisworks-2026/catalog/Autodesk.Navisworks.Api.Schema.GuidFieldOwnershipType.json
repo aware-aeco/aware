@@ -1,0 +1,49 @@
+{
+  "name": "GuidFieldOwnershipType",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "enum",
+  "summary": "Ownership semantics for a given GUID.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.GuidFieldOwnershipType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Generic",
+      "value": 0,
+      "summary": "GUID has no implied meaning."
+    },
+    {
+      "name": "Identifier",
+      "value": 1,
+      "summary": "Uniquely identifies a given resource. There are no ownership implications as this is on the resource itself."
+    },
+    {
+      "name": "UniqueReference",
+      "value": 2,
+      "summary": "A unique reference to another resource. Ownership is implicit as no other resource can own this reference."
+    },
+    {
+      "name": "SharedReference",
+      "value": 3,
+      "summary": "A shared reference to another resource. Ownership is akin to reference counting."
+    },
+    {
+      "name": "WeakReference",
+      "value": 4,
+      "summary": "A reference to another resource that explicitly has no ownership. The reference may be invalid (i.e. the resource could be missing)."
+    },
+    {
+      "name": "OwnerReference",
+      "value": 5,
+      "summary": "A reference to another resource that explicitly has direct ownership. Similar to UniqueReference but may be referenced by WeakReference GUIDs."
+    },
+    {
+      "name": "ExternalReference",
+      "value": 6,
+      "summary": "A reference to an external resource that is not specified via Identifier."
+    }
+  ]
+}

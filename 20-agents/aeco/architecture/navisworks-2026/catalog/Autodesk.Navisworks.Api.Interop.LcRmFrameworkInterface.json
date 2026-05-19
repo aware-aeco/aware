@@ -1,0 +1,426 @@
+{
+  "name": "LcRmFrameworkInterface",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcRmFrameworkInterface class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface",
+  "constructors": [
+    {
+      "name": "LcRmFrameworkInterface()",
+      "signature": "LcRmFrameworkInterface()",
+      "summary": "Constructs a new LcRmFrameworkInterface.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SupportMultipleKernel",
+      "signature": "bool SupportMultipleKernel()",
+      "summary": "SupportMultipleKernel method of LcRmFrameworkInterface.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.SupportMultipleKernel"
+    },
+    {
+      "name": "GetImpl",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface GetImpl()",
+      "summary": "GetImpl method of LcRmFrameworkInterface.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.GetImpl"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CleanImpl",
+      "signature": "static bool CleanImpl(Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface impl)",
+      "summary": "CleanImpl method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "impl",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.CleanImpl%28Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface%29"
+    },
+    {
+      "name": "SetImpl",
+      "signature": "static bool SetImpl(Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface impl)",
+      "summary": "SetImpl method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "impl",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.SetImpl%28Autodesk.Navisworks.Api.Interop.LcRmFrameworkInterface%29"
+    },
+    {
+      "name": "ExecuteCommand",
+      "signature": "static void ExecuteCommand(string id, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "ExecuteCommand method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    },
+    {
+      "name": "ExecuteCommand",
+      "signature": "static void ExecuteCommand(string id, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "ExecuteCommand method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ExecuteCommand%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "ShowContextMenu",
+      "signature": "static void ShowContextMenu(string id, int x, int y, string title)",
+      "summary": "ShowContextMenu method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ShowContextMenu%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "ShowContextMenu",
+      "signature": "static void ShowContextMenu(string id, int x, int y, string title, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "ShowContextMenu method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.ShowContextMenu%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "TrackPopupMenu",
+      "signature": "static void TrackPopupMenu(string id, int x, int y, string title, out string command)",
+      "summary": "TrackPopupMenu method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.TrackPopupMenu%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "TrackPopupMenu",
+      "signature": "static void TrackPopupMenu(string id, int x, int y, string title, out string command, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "TrackPopupMenu method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.TrackPopupMenu%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%2CSystem.String%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "DoExecuteCommand",
+      "signature": "void DoExecuteCommand(string id, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "DoExecuteCommand method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.DoExecuteCommand%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    },
+    {
+      "name": "DoShowContextMenu",
+      "signature": "void DoShowContextMenu(string id, int x, int y, string title)",
+      "summary": "DoShowContextMenu method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.DoShowContextMenu%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "DoTrackPopupMenu",
+      "signature": "void DoTrackPopupMenu(string id, int x, int y, string title, out string command)",
+      "summary": "DoTrackPopupMenu method of LcRmFrameworkInterface.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.DoTrackPopupMenu%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcRmFrameworkInterface.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcRmFrameworkInterface.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

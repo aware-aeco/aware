@@ -1,0 +1,607 @@
+{
+  "name": "View",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a view of a document.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.View",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PickItemsFromRectangle",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection PickItemsFromRectangle(int x, int y, int width, int height, bool containedOnly)",
+      "summary": "Picks multiple items from the given window coordinate rectangle.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "containedOnly",
+          "type": "bool",
+          "doc": "Whether picking should operate only on items that are contained in the rectangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": "A ModelItemCollection containing the picked items.\nReturns null if nothing is picked or coordinates are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.PickItemsFromRectangle%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "PickItemsFromRectangle",
+      "signature": "Autodesk.Navisworks.Api.ModelItemCollection PickItemsFromRectangle(int x, int y, int width, int height, bool containedOnly, bool asRendered)",
+      "summary": "Picks multiple items from the given window coordinate rectangle.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "containedOnly",
+          "type": "bool",
+          "doc": "Whether picking should operate only on items that are contained in the rectangle.",
+          "optional": false
+        },
+        {
+          "name": "asRendered",
+          "type": "bool",
+          "doc": "Whether picking should operate only on items that were rendered during the last frame. Normally true.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": "A ModelItemCollection containing the picked items.\nReturns null if nothing is picked or coordinates are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.PickItemsFromRectangle%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "PickItemFromPoint",
+      "signature": "Autodesk.Navisworks.Api.PickItemResult PickItemFromPoint(int x, int y)",
+      "summary": "Picks a single item from the given window coordinate point.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PickItemResult",
+        "doc": "A PickItemResult object that contains the picked item.\nReturns null if nothing is picked or coordinates are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.PickItemFromPoint%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "PickItemFromPoint",
+      "signature": "Autodesk.Navisworks.Api.PickItemResult PickItemFromPoint(int x, int y, int pickingWidth, bool asRendered, Autodesk.Navisworks.Api.PickPrimitives pickPrimitives)",
+      "summary": "Picks a single item from the given window coordinate point.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "pickingWidth",
+          "type": "int",
+          "doc": "Width of picking region in pixels. Normally 1.",
+          "optional": false
+        },
+        {
+          "name": "asRendered",
+          "type": "bool",
+          "doc": "Whether picking should operate only on items that were rendered during the last frame. Normally true.",
+          "optional": false
+        },
+        {
+          "name": "pickPrimitives",
+          "type": "Autodesk.Navisworks.Api.PickPrimitives",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PickItemResult",
+        "doc": "A PickItemResult object that contains the picked item.\nReturns null if nothing is picked or coordinates are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.PickItemFromPoint%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%2CAutodesk.Navisworks.Api.PickPrimitives%29"
+    },
+    {
+      "name": "PickItemFromRectangle",
+      "signature": "Autodesk.Navisworks.Api.PickItemResult PickItemFromRectangle(int x, int y, int width, int height)",
+      "summary": "Picks a single item from the given window coordinate rectangle.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PickItemResult",
+        "doc": "A PickItemResult object that contains the picked item\nReturns null if nothing is picked or coordinates are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.PickItemFromRectangle%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "PickItemFromRectangle",
+      "signature": "Autodesk.Navisworks.Api.PickItemResult PickItemFromRectangle(int x, int y, int width, int height, bool asRendered, Autodesk.Navisworks.Api.PickPrimitives pickPrimitives)",
+      "summary": "Picks a single item from the given window coordinate rectangle.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "asRendered",
+          "type": "bool",
+          "doc": "Whether picking should operate only on items that were rendered during the last frame. Normally true.",
+          "optional": false
+        },
+        {
+          "name": "pickPrimitives",
+          "type": "Autodesk.Navisworks.Api.PickPrimitives",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.PickItemResult",
+        "doc": "A PickItemResult object that contains the picked item\nReturns null if nothing is picked or coordinates are invalid."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.PickItemFromRectangle%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%2CAutodesk.Navisworks.Api.PickPrimitives%29"
+    },
+    {
+      "name": "ProjectPoint",
+      "signature": "Autodesk.Navisworks.Api.ProjectionResult ProjectPoint(Autodesk.Navisworks.Api.Point3D point, bool sectionClip, bool frustumClip)",
+      "summary": "Converts a point in world space into view coordinates.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "sectionClip",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "frustumClip",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ProjectionResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.ProjectPoint%28Autodesk.Navisworks.Api.Point3D%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "CreateViewpointCopy",
+      "signature": "Autodesk.Navisworks.Api.Viewpoint CreateViewpointCopy()",
+      "summary": "Returns a viewpoint representing this view.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.CreateViewpointCopy"
+    },
+    {
+      "name": "GenerateImage",
+      "signature": "System.Drawing.Bitmap GenerateImage(Autodesk.Navisworks.Api.ImageGenerationStyle style, int width, int height, bool enableSectioning)",
+      "summary": "Generates an Image for this View.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Autodesk.Navisworks.Api.ImageGenerationStyle",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "enableSectioning",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Drawing.Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.GenerateImage%28Autodesk.Navisworks.Api.ImageGenerationStyle%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "GenerateImage",
+      "signature": "System.Drawing.Bitmap GenerateImage(Autodesk.Navisworks.Api.ImageGenerationStyle style, int width, int height, double maxTimeHint, bool enableSectioning)",
+      "summary": "Generates an Image for this View.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Autodesk.Navisworks.Api.ImageGenerationStyle",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "maxTimeHint",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "enableSectioning",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Drawing.Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.GenerateImage%28Autodesk.Navisworks.Api.ImageGenerationStyle%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "TrySetClippingPlanes",
+      "signature": "bool TrySetClippingPlanes(string jsonClipPlaneSet)",
+      "summary": "Sets clipping planes.",
+      "params": [
+        {
+          "name": "jsonClipPlaneSet",
+          "type": "string",
+          "doc": "Clipping planes in the form of a JSON ClipPlaneSet object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.TrySetClippingPlanes%28System.String%29"
+    },
+    {
+      "name": "TrySetRedlines",
+      "signature": "bool TrySetRedlines(string jsonRedlineCollection)",
+      "summary": "Sets redlines.",
+      "params": [
+        {
+          "name": "jsonRedlineCollection",
+          "type": "string",
+          "doc": "Redlines in the form of a JSON RedlineCollection object.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.TrySetRedlines%28System.String%29"
+    },
+    {
+      "name": "GetClippingPlanes",
+      "signature": "string GetClippingPlanes()",
+      "summary": "Gets clipping planes in the form of a JSON ClipPlaneSet object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.GetClippingPlanes"
+    },
+    {
+      "name": "GetRedlines",
+      "signature": "string GetRedlines()",
+      "summary": "Gets redlines in the form of a JSON RedlineCollection object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.GetRedlines"
+    },
+    {
+      "name": "CopyViewpointFrom",
+      "signature": "void CopyViewpointFrom(Autodesk.Navisworks.Api.Viewpoint viewpoint, Autodesk.Navisworks.Api.ViewChange change)",
+      "summary": "Updates the viewpoint in this view based on change required.",
+      "params": [
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Viewpoint",
+          "optional": false
+        },
+        {
+          "name": "change",
+          "type": "Autodesk.Navisworks.Api.ViewChange",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.CopyViewpointFrom%28Autodesk.Navisworks.Api.Viewpoint%2CAutodesk.Navisworks.Api.ViewChange%29"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of View.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.Dispose"
+    },
+    {
+      "name": "EndInteractive",
+      "signature": "void EndInteractive()",
+      "summary": "Decrements an internal counter that determines if the view is in interactive mode. As the count goes from 1 to 0 the View is set out of interactive mode. Should be used with a matched call to StartInteractive.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.EndInteractive"
+    },
+    {
+      "name": "FocusOnCurrentSelection",
+      "signature": "void FocusOnCurrentSelection()",
+      "summary": "Focuses the view on the currently selected objects.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.FocusOnCurrentSelection"
+    },
+    {
+      "name": "LookFromFrontRightTop",
+      "signature": "void LookFromFrontRightTop()",
+      "summary": "Move\u0027s the Camera to look from FrontRightTop.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.LookFromFrontRightTop"
+    },
+    {
+      "name": "RequestDelayedRedraw",
+      "signature": "void RequestDelayedRedraw(Autodesk.Navisworks.Api.ViewRedrawRequests redrawRequests)",
+      "summary": "Asks for Render after all other events have been processed.",
+      "params": [
+        {
+          "name": "redrawRequests",
+          "type": "Autodesk.Navisworks.Api.ViewRedrawRequests",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.RequestDelayedRedraw%28Autodesk.Navisworks.Api.ViewRedrawRequests%29"
+    },
+    {
+      "name": "SetClippingPlanes",
+      "signature": "void SetClippingPlanes(string jsonClipPlaneSet)",
+      "summary": "Sets clipping planes.",
+      "params": [
+        {
+          "name": "jsonClipPlaneSet",
+          "type": "string",
+          "doc": "Clipping planes in the form of a JSON ClipPlaneSet object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Failed to set clipping planes."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.SetClippingPlanes%28System.String%29"
+    },
+    {
+      "name": "SetRedlines",
+      "signature": "void SetRedlines(string jsonRedlineCollection)",
+      "summary": "Sets redlines.",
+      "params": [
+        {
+          "name": "jsonRedlineCollection",
+          "type": "string",
+          "doc": "Redlines in the form of a JSON RedlineCollection object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Failed to set redlines."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.SetRedlines%28System.String%29"
+    },
+    {
+      "name": "StartInteractive",
+      "signature": "void StartInteractive()",
+      "summary": "Increments an internal counter that determines if the view is in interactive mode. As the count goes from 0 to 1 the View is set into interactive mode. Should be used with a matched call to EndInteractive.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.View.StartInteractive"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "Autodesk.Navisworks.Api.Document",
+      "getter": true,
+      "setter": false,
+      "summary": "The document associated with this View.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.View.Document"
+    },
+    {
+      "name": "Height",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The renderable height of the view in Windows screen pixels",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.View.Height"
+    },
+    {
+      "name": "IsDisposed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Has this view been disposed ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.View.IsDisposed"
+    },
+    {
+      "name": "IsInteractive",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the view is in interactive mode.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.View.IsInteractive"
+    },
+    {
+      "name": "Viewer",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelExViewer",
+      "getter": true,
+      "setter": false,
+      "summary": "Viewer property of View.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.View.Viewer"
+    },
+    {
+      "name": "Width",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "The renderable width of the view in Windows screen pixels",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.View.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

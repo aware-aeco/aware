@@ -1,0 +1,1779 @@
+{
+  "name": "Document",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents the contents of one or more loaded files.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Document",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetBoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D GetBoundingBox(bool ignoreHidden)",
+      "summary": "Returns the bounding box for the entire document.",
+      "params": [
+        {
+          "name": "ignoreHidden",
+          "type": "bool",
+          "doc": "If true, bounding box will not include hidden items, otherwise hidden items will be taken into account.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": "Bounding box for all items in the document."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.GetBoundingBox%28System.Boolean%29"
+    },
+    {
+      "name": "CreateCommentWithUniqueId",
+      "signature": "Autodesk.Navisworks.Api.Comment CreateCommentWithUniqueId(string body, Autodesk.Navisworks.Api.CommentStatus status)",
+      "summary": "Create a Comment with an Id that is unique within this Document",
+      "params": [
+        {
+          "name": "body",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "Autodesk.Navisworks.Api.CommentStatus",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Comment",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.CreateCommentWithUniqueId%28System.String%2CAutodesk.Navisworks.Api.CommentStatus%29"
+    },
+    {
+      "name": "CreateCommentWithUniqueId",
+      "signature": "Autodesk.Navisworks.Api.Comment CreateCommentWithUniqueId(string body, Autodesk.Navisworks.Api.CommentStatus status, string author)",
+      "summary": "Create a Comment with an Id that is unique within this Document",
+      "params": [
+        {
+          "name": "body",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "Autodesk.Navisworks.Api.CommentStatus",
+          "optional": false
+        },
+        {
+          "name": "author",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Comment",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.CreateCommentWithUniqueId%28System.String%2CAutodesk.Navisworks.Api.CommentStatus%2CSystem.String%29"
+    },
+    {
+      "name": "ResolveReference",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveReference(Autodesk.Navisworks.Api.SavedItemReference reference)",
+      "summary": "Finds an item specified by the reference within this document.",
+      "params": [
+        {
+          "name": "reference",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": "Null if the item can\u0027t be found."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "reference does not refer to a specific part (documentPartId is empty/null)."
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "if reference is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.ResolveReference%28Autodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "BeginTransaction",
+      "signature": "Autodesk.Navisworks.Api.Transaction BeginTransaction(string displayName)",
+      "summary": "Returns a new Transaction object. This is used to batch together edits. In the future it may support rollback.",
+      "params": [
+        {
+          "name": "displayName",
+          "type": "string",
+          "doc": "String that may be displayed in the GUI for undoing this transaction.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transaction",
+        "doc": "New Transaction object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.BeginTransaction%28System.String%29"
+    },
+    {
+      "name": "GetPointInfo",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.PointInfo\u003E GetPointInfo(Autodesk.Navisworks.Api.Point3D worldPoint)",
+      "summary": "Returns information relevant to the specified point.",
+      "params": [
+        {
+          "name": "worldPoint",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "doc": "A 3D point in the world",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.PointInfo\u003E",
+        "doc": "A list of PointInfo objects related to the world point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.GetPointInfo%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GenerateImage",
+      "signature": "System.Drawing.Bitmap GenerateImage(Autodesk.Navisworks.Api.ImageGenerationStyle style, int width, int height, bool enableSectioning)",
+      "summary": "Generates an Image for this Document.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Autodesk.Navisworks.Api.ImageGenerationStyle",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "enableSectioning",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Drawing.Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.GenerateImage%28Autodesk.Navisworks.Api.ImageGenerationStyle%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%29"
+    },
+    {
+      "name": "GenerateImage",
+      "signature": "System.Drawing.Bitmap GenerateImage(Autodesk.Navisworks.Api.ImageGenerationStyle style, int width, int height, double maxTimeHint, bool enableSectioning)",
+      "summary": "Generates an Image for this Document.",
+      "params": [
+        {
+          "name": "style",
+          "type": "Autodesk.Navisworks.Api.ImageGenerationStyle",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "maxTimeHint",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "enableSectioning",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Drawing.Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.GenerateImage%28Autodesk.Navisworks.Api.ImageGenerationStyle%2CSystem.Int32%2CSystem.Int32%2CSystem.Double%2CSystem.Boolean%29"
+    },
+    {
+      "name": "TryAppendFile",
+      "signature": "bool TryAppendFile(string fileName)",
+      "summary": "Try to append file with files already in document, adding to current contents.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and append file from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if append fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryAppendFile%28System.String%29"
+    },
+    {
+      "name": "TryAppendFiles",
+      "signature": "bool TryAppendFiles(System.Collections.Generic.IEnumerable\u003Cstring\u003E fileNames)",
+      "summary": "Try to append files with files already in document, adding to current contents. More efficient than appending each file separately.",
+      "params": [
+        {
+          "name": "fileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "doc": "Paths to append files from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if append fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryAppendFiles%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29"
+    },
+    {
+      "name": "TryAppendSheet",
+      "signature": "bool TryAppendSheet(Autodesk.Navisworks.Api.SheetInfo sheet)",
+      "summary": "Try to append contents of sheet to current active sheet.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "doc": "SheetInfo to try and append sheet from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if append fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryAppendSheet%28Autodesk.Navisworks.Api.SheetInfo%29"
+    },
+    {
+      "name": "TryCloseFileHandles",
+      "signature": "bool TryCloseFileHandles()",
+      "summary": "Try to close all file handles for currently loaded files, completing load for current sheet. File handles may be reopened in future (e.g. when changing the active sheet).",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "false if load cannot be completed or file handles cannot be closed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryCloseFileHandles"
+    },
+    {
+      "name": "TryConvertSheet",
+      "signature": "bool TryConvertSheet(string sheetId)",
+      "summary": "Try to Convert sheet with sheetId.",
+      "params": [
+        {
+          "name": "sheetId",
+          "type": "string",
+          "doc": "Id of sheet to try to convert",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if sheet could not be converted"
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryConvertSheet%28System.String%29"
+    },
+    {
+      "name": "TryDescribeAsAggregate",
+      "signature": "bool TryDescribeAsAggregate(out string aggregateJson)",
+      "summary": "Describes current contents in terms of an JSON AggregateModelDefinition object.",
+      "params": [
+        {
+          "name": "aggregateJson",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if current contents cannot be described as an aggregate."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryDescribeAsAggregate%28System.String%40%29"
+    },
+    {
+      "name": "TryExportToNwd",
+      "signature": "bool TryExportToNwd(string fileName, Autodesk.Navisworks.Api.NwdExportOptions options)",
+      "summary": "Exports contents of document to an NWD file..",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and publish file to",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "doc": "Options to export file with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryExportToNwd%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%29"
+    },
+    {
+      "name": "TryMergeFile",
+      "signature": "bool TryMergeFile(string fileName)",
+      "summary": "Try to merge file into document, merging with current contents, ignoring duplicates.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and merge file from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if merge fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryMergeFile%28System.String%29"
+    },
+    {
+      "name": "TryMergeFiles",
+      "signature": "bool TryMergeFiles(System.Collections.Generic.IEnumerable\u003Cstring\u003E fileNames)",
+      "summary": "Try to merge files with files already in document, merging with current contents. More efficient than merging each file separately.",
+      "params": [
+        {
+          "name": "fileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "doc": "Paths to merge files from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if merge fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryMergeFiles%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29"
+    },
+    {
+      "name": "TryMergeSheet",
+      "signature": "bool TryMergeSheet(Autodesk.Navisworks.Api.SheetInfo sheet)",
+      "summary": "Try to merge contents of sheet to current active sheet, ignoring duplicates.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "doc": "SheetInfo to try and merge sheet from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if merge fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryMergeSheet%28Autodesk.Navisworks.Api.SheetInfo%29"
+    },
+    {
+      "name": "TryOpenAggregate",
+      "signature": "bool TryOpenAggregate(string aggregateJson, string progressMedia)",
+      "summary": "Try to load aggregate into document, replacing current contents..",
+      "params": [
+        {
+          "name": "aggregateJson",
+          "type": "string",
+          "doc": "Aggregate in the form of a JSON AggregateModelDefinition object.",
+          "optional": false
+        },
+        {
+          "name": "progressMedia",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if load fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryOpenAggregate%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "TryOpenFile",
+      "signature": "bool TryOpenFile(string fileName)",
+      "summary": "Try to load file into document, replacing current contents.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and load file from",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if load fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryOpenFile%28System.String%29"
+    },
+    {
+      "name": "TryPublishFile",
+      "signature": "bool TryPublishFile(string fileName, Autodesk.Navisworks.Api.NwdExportOptions options, Autodesk.Navisworks.Api.PublishProperties properties)",
+      "summary": "Try to publish contents of document to a file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and publish file to",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "doc": "Publishing properties to publish file with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if publish fails"
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryPublishFile%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%2CAutodesk.Navisworks.Api.PublishProperties%29"
+    },
+    {
+      "name": "TryRedo",
+      "signature": "bool TryRedo()",
+      "summary": "Tries to redo the last completed transaction and make it available for Undo again.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "False if nothing can be redone or there is an active transaction in progress"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryRedo"
+    },
+    {
+      "name": "TryRemoveFile",
+      "signature": "bool TryRemoveFile(int index)",
+      "summary": "Try to remove the file with the provided index from the document.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the file to remove from the document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if the file could not be removed"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryRemoveFile%28System.Int32%29"
+    },
+    {
+      "name": "TryRollback",
+      "signature": "bool TryRollback()",
+      "summary": "Tries to roll back (undo) the last completed transaction and make it available for Redo.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "False if nothing can be undone or there is an active transaction in progress"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryRollback"
+    },
+    {
+      "name": "TrySaveFile",
+      "signature": "bool TrySaveFile(string fileName)",
+      "summary": "Try to save contents of document to a file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and save file to",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if save fails"
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TrySaveFile%28System.String%29"
+    },
+    {
+      "name": "TrySaveFile",
+      "signature": "bool TrySaveFile(string fileName, Autodesk.Navisworks.Api.DocumentFileVersion fileVersion)",
+      "summary": "Try to save contents of document to a file using a specific file version.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and save file to",
+          "optional": false
+        },
+        {
+          "name": "fileVersion",
+          "type": "Autodesk.Navisworks.Api.DocumentFileVersion",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if save fails"
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "fileName does not have .nwd or .nwf extension"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TrySaveFile%28System.String%2CAutodesk.Navisworks.Api.DocumentFileVersion%29"
+    },
+    {
+      "name": "TrySetActiveSheet",
+      "signature": "bool TrySetActiveSheet(string sheetId)",
+      "summary": "Try to switch to the sheet with Id sheetId.",
+      "params": [
+        {
+          "name": "sheetId",
+          "type": "string",
+          "doc": "Id of sheet to make active",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if sheet could not be made active"
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TrySetActiveSheet%28System.String%29"
+    },
+    {
+      "name": "TryUndo",
+      "signature": "bool TryUndo()",
+      "summary": "Tries to undo the last completed transaction and make it available for Redo.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "False if nothing can be undone or there is an active transaction in progress"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.TryUndo"
+    },
+    {
+      "name": "UpdateFiles",
+      "signature": "bool UpdateFiles()",
+      "summary": "Updates loaded files to match files on disk (i.e. if file has been changed since it was first loaded).",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true if anything in document was updated"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.UpdateFiles"
+    },
+    {
+      "name": "DescribeAsAggregate",
+      "signature": "string DescribeAsAggregate()",
+      "summary": "Describes current contents in terms of an JSON AggregateModelDefinition object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Current contents cannot be described as an aggregate."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.DescribeAsAggregate"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.ToString"
+    },
+    {
+      "name": "AppendFile",
+      "signature": "void AppendFile(string fileName)",
+      "summary": "Append file with files already in document, adding to current contents.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and append file from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to append file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.AppendFile%28System.String%29"
+    },
+    {
+      "name": "AppendFiles",
+      "signature": "void AppendFiles(System.Collections.Generic.IEnumerable\u003Cstring\u003E fileNames)",
+      "summary": "Append files with files already in document, adding to current contents. More efficient than appending each file separately.",
+      "params": [
+        {
+          "name": "fileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "doc": "Paths to append files from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to append files"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.AppendFiles%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29"
+    },
+    {
+      "name": "AppendSheet",
+      "signature": "void AppendSheet(Autodesk.Navisworks.Api.SheetInfo sheet)",
+      "summary": "Append contents of sheet to current active sheet.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "doc": "SheetInfo to try and append sheet from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to append sheet"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.AppendSheet%28Autodesk.Navisworks.Api.SheetInfo%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Delete entire contents of document, returning to default (untitled, empty) state.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.Clear"
+    },
+    {
+      "name": "CloseFileHandles",
+      "signature": "void CloseFileHandles()",
+      "summary": "Closes all file handles for currently loaded files, completing load for current sheet. File handles may be reopened in future (e.g. when changing the active sheet).",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to close file handles"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.CloseFileHandles"
+    },
+    {
+      "name": "ConvertSheet",
+      "signature": "void ConvertSheet(string sheetId)",
+      "summary": "Convert sheet with sheetId.",
+      "params": [
+        {
+          "name": "sheetId",
+          "type": "string",
+          "doc": "Id of sheet to convert",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027sheetId\u0027 is not contained in current document."
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to convert"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.ConvertSheet%28System.String%29"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.Dispose"
+    },
+    {
+      "name": "EndDisableUndo",
+      "signature": "void EndDisableUndo()",
+      "summary": "Decrements an internal counter that determines if the undo mechanism is disabled. As the count goes from 1 to 0 Undo is re-enabled. Should be used with a matched call to StartDisableUndo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.EndDisableUndo"
+    },
+    {
+      "name": "ExportAsDwf",
+      "signature": "void ExportAsDwf(string fileName)",
+      "summary": "Exports the document as a \u0027DWF\u0027 file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.ExportAsDwf%28System.String%29"
+    },
+    {
+      "name": "ExportToNwd",
+      "signature": "void ExportToNwd(string fileName, Autodesk.Navisworks.Api.NwdExportOptions options)",
+      "summary": "Exports contents of document to an NWD file..",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and publish file to",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "doc": "Options to export file with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to export file"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.ExportToNwd%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%29"
+    },
+    {
+      "name": "MergeFile",
+      "signature": "void MergeFile(string fileName)",
+      "summary": "Merge file into document, merging with current contents, ignoring duplicates.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and merge file from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to merge file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.MergeFile%28System.String%29"
+    },
+    {
+      "name": "MergeFiles",
+      "signature": "void MergeFiles(System.Collections.Generic.IEnumerable\u003Cstring\u003E fileNames)",
+      "summary": "Merge files with files already in document, merging with current contents. More efficient than merging each file separately.",
+      "params": [
+        {
+          "name": "fileNames",
+          "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+          "doc": "Paths to merge files from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to merge files"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.MergeFiles%28System.Collections.Generic.IEnumerable%7BSystem.String%7D%29"
+    },
+    {
+      "name": "MergeSheet",
+      "signature": "void MergeSheet(Autodesk.Navisworks.Api.SheetInfo sheet)",
+      "summary": "Merge contents of sheet to current active sheet, ignoring duplicates.",
+      "params": [
+        {
+          "name": "sheet",
+          "type": "Autodesk.Navisworks.Api.SheetInfo",
+          "doc": "SheetInfo to try and merge sheet from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to merge sheet"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.MergeSheet%28Autodesk.Navisworks.Api.SheetInfo%29"
+    },
+    {
+      "name": "OpenAggregate",
+      "signature": "void OpenAggregate(string aggregateJson, string progressMedia)",
+      "summary": "Loads aggregate into document, replacing current contents.",
+      "params": [
+        {
+          "name": "aggregateJson",
+          "type": "string",
+          "doc": "Aggregate in the form of a JSON AggregateModelDefinition object.",
+          "optional": false
+        },
+        {
+          "name": "progressMedia",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to open aggregate."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.OpenAggregate%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "OpenFile",
+      "signature": "void OpenFile(string fileName)",
+      "summary": "Load file into document, replacing current contents.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and load file from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to open file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.OpenFile%28System.String%29"
+    },
+    {
+      "name": "PublishFile",
+      "signature": "void PublishFile(string fileName, Autodesk.Navisworks.Api.NwdExportOptions options, Autodesk.Navisworks.Api.PublishProperties properties)",
+      "summary": "Publish contents of document to a file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and publish file to",
+          "optional": false
+        },
+        {
+          "name": "options",
+          "type": "Autodesk.Navisworks.Api.NwdExportOptions",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "doc": "Publishing properties to publish file with",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to publish file"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.PublishFile%28System.String%2CAutodesk.Navisworks.Api.NwdExportOptions%2CAutodesk.Navisworks.Api.PublishProperties%29"
+    },
+    {
+      "name": "Redo",
+      "signature": "void Redo()",
+      "summary": "Redoes the last completed transaction and makes it available for Undo again.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "No transaction is available to Redo or there is an active transaction in progress."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.Redo"
+    },
+    {
+      "name": "RemoveFile",
+      "signature": "void RemoveFile(int index)",
+      "summary": "Remove the file with the provided index from the document.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "doc": "Index of the file to remove from the document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to remove the file"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.RemoveFile%28System.Int32%29"
+    },
+    {
+      "name": "Rollback",
+      "signature": "void Rollback()",
+      "summary": "Rolls back (undoes) the last completed transaction. It will not be available for Redo.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "No transaction is available to Undo or there is an active transaction in progress."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.Rollback"
+    },
+    {
+      "name": "SaveFile",
+      "signature": "void SaveFile(string fileName)",
+      "summary": "Save contents of document to a file.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and save file to",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to save file"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.SaveFile%28System.String%29"
+    },
+    {
+      "name": "SaveFile",
+      "signature": "void SaveFile(string fileName, Autodesk.Navisworks.Api.DocumentFileVersion fileVersion)",
+      "summary": "Save contents of document to a file using a specific file version.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "doc": "Path to try and save file to",
+          "optional": false
+        },
+        {
+          "name": "fileVersion",
+          "type": "Autodesk.Navisworks.Api.DocumentFileVersion",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to save file"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Document IsClear"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "fileName does not have .nwd or .nwf extension"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.SaveFile%28System.String%2CAutodesk.Navisworks.Api.DocumentFileVersion%29"
+    },
+    {
+      "name": "SetActiveSheet",
+      "signature": "void SetActiveSheet(string sheetId)",
+      "summary": "Switch to the sheet with Id sheetId.",
+      "params": [
+        {
+          "name": "sheetId",
+          "type": "string",
+          "doc": "Id of sheet to make active",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027sheetId\u0027 is not contained in current document."
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.DocumentFileException",
+          "when": "Failed to load sheet"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.SetActiveSheet%28System.String%29"
+    },
+    {
+      "name": "SetGraduatedBackground",
+      "signature": "void SetGraduatedBackground(Autodesk.Navisworks.Api.Color topColor, Autodesk.Navisworks.Api.Color bottomColor)",
+      "summary": "Sets a graduated background.",
+      "params": [
+        {
+          "name": "topColor",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "bottomColor",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.SetGraduatedBackground%28Autodesk.Navisworks.Api.Color%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetHorizonBackground",
+      "signature": "void SetHorizonBackground(Autodesk.Navisworks.Api.Color skyTopColor, Autodesk.Navisworks.Api.Color skyBottomColor, Autodesk.Navisworks.Api.Color groundTopColor, Autodesk.Navisworks.Api.Color groundBottomColor)",
+      "summary": "Sets a horizon background.",
+      "params": [
+        {
+          "name": "skyTopColor",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "skyBottomColor",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "groundTopColor",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "groundBottomColor",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.SetHorizonBackground%28Autodesk.Navisworks.Api.Color%2CAutodesk.Navisworks.Api.Color%2CAutodesk.Navisworks.Api.Color%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetPlainBackground",
+      "signature": "void SetPlainBackground(Autodesk.Navisworks.Api.Color color)",
+      "summary": "Sets a plain background.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.SetPlainBackground%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "ShowMatchingItemInSheet",
+      "signature": "void ShowMatchingItemInSheet(string sheetId, Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Search for items with same guid in item, if have, make the sheet with sheetId active, and select the matching model items.",
+      "params": [
+        {
+          "name": "sheetId",
+          "type": "string",
+          "doc": "Id of sheet to search in",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "ModelItem to search with same Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "item is null."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027sheetId\u0027 is not contained in current document."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.ShowMatchingItemInSheet%28System.String%2CAutodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "StartDisableUndo",
+      "signature": "void StartDisableUndo()",
+      "summary": "Increments an internal counter that determines if the undo mechanism is disabled. As the count goes from 0 to 1 Undo is disabled. Should be used with a matched call to EndDisableUndo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.StartDisableUndo"
+    },
+    {
+      "name": "Undo",
+      "signature": "void Undo()",
+      "summary": "Undoes the last completed transaction and makes it available for Redo.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "No transaction is available to Undo or there is an active transaction in progress."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Document.Undo"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ActiveSheet",
+      "type": "Autodesk.Navisworks.Api.SheetInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets current active sheet",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.ActiveSheet"
+    },
+    {
+      "name": "ActiveSheetType",
+      "type": "Autodesk.Navisworks.Api.SheetType",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets current active sheet type",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.ActiveSheetType"
+    },
+    {
+      "name": "ActiveView",
+      "type": "Autodesk.Navisworks.Api.View",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a reference to the currently active View",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.ActiveView"
+    },
+    {
+      "name": "Alignments",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentAlignments",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentAlignments object containing the Civil Alignment data.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Alignments"
+    },
+    {
+      "name": "CanDescribeAsAggregate",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if current contents can described in terms of an JSON AggregateModelDefinition object.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CanDescribeAsAggregate"
+    },
+    {
+      "name": "Clash",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.IDocumentClash",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the associated DocumentClash part as discoverable IDocumentClash",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Clash"
+    },
+    {
+      "name": "CurrentComments",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentCurrentComments object containing the current Comments data.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CurrentComments"
+    },
+    {
+      "name": "CurrentFileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Current file name. Different from suggested file name in that SuggestedFileName will return a friendly name for a remote file on the basis that it expects you are trying to save locally and will return a \u0022Untitled\u0022 name for files that aren\u0027t saved yet.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CurrentFileName"
+    },
+    {
+      "name": "CurrentMeasurement",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentMeasurement",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentCurrentMeasurement object containing the current measurement data.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CurrentMeasurement"
+    },
+    {
+      "name": "CurrentSearch",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSearch",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentSearch object containing the current search.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CurrentSearch"
+    },
+    {
+      "name": "CurrentSelection",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentSelection",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentCurrentSelection object containing the current selection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CurrentSelection"
+    },
+    {
+      "name": "CurrentViewpoint",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentCurrentViewpoint object containing the current Viewpoint data.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.CurrentViewpoint"
+    },
+    {
+      "name": "Database",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentDatabase",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentDatabase object containing embedded database.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Database"
+    },
+    {
+      "name": "DocumentInfo",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentInfoPart",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets DocumentInfoPart",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.DocumentInfo"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "File name (or URL) for document. May be null if document is empty or has no associated file name.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.FileName"
+    },
+    {
+      "name": "FileVersion",
+      "type": "Autodesk.Navisworks.Api.DocumentFileVersion",
+      "getter": true,
+      "setter": false,
+      "summary": "Current file version for document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.FileVersion"
+    },
+    {
+      "name": "FrontRightTopViewUpVector",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns view direction up vector to look at model from front-right-top direction.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.FrontRightTopViewUpVector"
+    },
+    {
+      "name": "FrontRightTopViewVector",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns view direction to look at model from front-right-top direction.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.FrontRightTopViewVector"
+    },
+    {
+      "name": "FrontVector",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Natural front vector for this model. Will be Zero if no front vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.FrontVector"
+    },
+    {
+      "name": "Grids",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentGrids",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentGrids object containing the Grids data.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Grids"
+    },
+    {
+      "name": "HomeView",
+      "type": "Autodesk.Navisworks.Api.Viewpoint",
+      "getter": true,
+      "setter": false,
+      "summary": "The home view for the current document (if one is defined).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.HomeView"
+    },
+    {
+      "name": "Hyperlinks",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentHyperlinks",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentHyperlinks object containing document hyperlinks.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Hyperlinks"
+    },
+    {
+      "name": "IsActiveTransaction",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there a transaction in progress ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.IsActiveTransaction"
+    },
+    {
+      "name": "IsClear",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is document in its default (untitled, empty) state ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.IsClear"
+    },
+    {
+      "name": "IsDisposed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Has this document been disposed ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.IsDisposed"
+    },
+    {
+      "name": "IsModified",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if modifications requiring a save have been performed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.IsModified"
+    },
+    {
+      "name": "IsUndoDisabled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the disabled state of the Undo mechanism.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.IsUndoDisabled"
+    },
+    {
+      "name": "Models",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentModels",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentModels object containing the current list of Models.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Models"
+    },
+    {
+      "name": "NextRedo",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Display name of transaction that will be redone next time Redo() is called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.NextRedo"
+    },
+    {
+      "name": "NextUndo",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Display name of transaction that will be undone next time Undo() is called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.NextUndo"
+    },
+    {
+      "name": "RightVector",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Natural right vector for this model. Will be Zero if no right vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.RightVector"
+    },
+    {
+      "name": "SavedViewpoints",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentCurrentViewpoint object containing the current Viewpoint data.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.SavedViewpoints"
+    },
+    {
+      "name": "SelectionSets",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the SelectionSets stored in the document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.SelectionSets"
+    },
+    {
+      "name": "State",
+      "type": "Autodesk.Navisworks.Api.Interop.LcOwDocument",
+      "getter": true,
+      "setter": false,
+      "summary": "State property of Document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.State"
+    },
+    {
+      "name": "SuggestedFileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Suggested file name which document could be saved to. Always a valid filename (absolute if file already exists, relative if suggested name for new file).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.SuggestedFileName"
+    },
+    {
+      "name": "Takeoff",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.IDocumentTakeoff",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the associated DocumentTakeoff part as discoverable IDocumentTakeoff",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Takeoff"
+    },
+    {
+      "name": "Timeliner",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.IDocumentTimeliner",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the associated DocumentTimeliner part as discoverable IDocumentTimeliner",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Timeliner"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Title for document. Suitable for display in window title bar, or similar.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Title"
+    },
+    {
+      "name": "Tool",
+      "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentTool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a DocumentTool object containing the active Tool.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Tool"
+    },
+    {
+      "name": "Units",
+      "type": "Autodesk.Navisworks.Api.Units",
+      "getter": true,
+      "setter": false,
+      "summary": "Units for document. Apply to all geometry, properties, transforms, viewpoints, etc. in the document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Units"
+    },
+    {
+      "name": "UpVector",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Natural up vector for this model. Will be Zero if no up vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.UpVector"
+    },
+    {
+      "name": "Views",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.View\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a ReadOnlyCollection object containing the current list of Views of the Document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Document.Views"
+    }
+  ],
+  "events": [
+    {
+      "name": "ActiveSheetChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E ActiveSheetChanged",
+      "summary": "Occurs when the ActiveSheet has changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.ActiveSheetChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ActiveSheetChanging",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E ActiveSheetChanging",
+      "summary": "Occurs when the ActiveSheet is about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.ActiveSheetChanging",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ActiveViewChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E ActiveViewChanged",
+      "summary": "Occurs when the ActiveView has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.ActiveViewChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ActiveViewChanging",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E ActiveViewChanging",
+      "summary": "Occurs when the ActiveView is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.ActiveViewChanging",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileNameChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E FileNameChanged",
+      "summary": "Occurs when the file name of the Document is changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.FileNameChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileSaved",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileSaveEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileSaveEventArgs\u003E FileSaved",
+      "summary": "Occurs when the document has been saved into a file",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.FileSaved",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FileSaving",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileSaveEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileSaveEventArgs\u003E FileSaving",
+      "summary": "Occurs when the document is about to be saved into a file",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.FileSaving",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FilesUpdated",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileUpdateEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileUpdateEventArgs\u003E FilesUpdated",
+      "summary": "Occurs when the document has updated files.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.FilesUpdated",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "FilesUpdating",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.FileUpdateEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.FileUpdateEventArgs\u003E FilesUpdating",
+      "summary": "Occurs when the document is about to update files.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.FilesUpdating",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TransactionBeginning",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E TransactionBeginning",
+      "summary": "Occurs when a Transaction (multiple batched edits) begins, before any of the edits in the transaction take place.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.TransactionBeginning",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TransactionEnded",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E TransactionEnded",
+      "summary": "Occurs when a Transaction (multiple batched edits) has ended and all the edits have been completed or rolled back.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.TransactionEnded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "UnitsChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E UnitsChanged",
+      "summary": "Occurs when the units of the Document are changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.UnitsChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ViewAdded",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ViewEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ViewEventArgs\u003E ViewAdded",
+      "summary": "Occurs when a View has been added to the Views collection. Typically soon after the View has been created.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.ViewAdded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "ViewRemoved",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.ViewEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.ViewEventArgs\u003E ViewRemoved",
+      "summary": "Occurs when a View has been removed from the Views collection. Typically shortly before the View is destroyed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.Document.ViewRemoved",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

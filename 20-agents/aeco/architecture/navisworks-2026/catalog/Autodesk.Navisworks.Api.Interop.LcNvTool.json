@@ -1,0 +1,414 @@
+{
+  "name": "LcNvTool",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcNvTool class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvTool",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcNvTool InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcNvTool.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ToDriverParadigm",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcNvToolDriverParadigm ToDriverParadigm(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "ToDriverParadigm method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvToolDriverParadigm",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.ToDriverParadigm%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcNvTool.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToTool",
+      "signature": "static Autodesk.Navisworks.Api.Tool ToTool(Autodesk.Navisworks.Api.Interop.LcNvToolDriverParadigm p)",
+      "summary": "ToTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvToolDriverParadigm",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.ToTool%28Autodesk.Navisworks.Api.Interop.LcNvToolDriverParadigm%29"
+    },
+    {
+      "name": "IsActiveXTool",
+      "signature": "static bool IsActiveXTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsActiveXTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsActiveXTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsAutocamTool",
+      "signature": "static bool IsAutocamTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsAutocamTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsAutocamTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsCustomToolPluginTool",
+      "signature": "static bool IsCustomToolPluginTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsCustomToolPluginTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsCustomToolPluginTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsMeasureTool",
+      "signature": "static bool IsMeasureTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsMeasureTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsMeasureTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsNavigatorTool",
+      "signature": "static bool IsNavigatorTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsNavigatorTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsNavigatorTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsRedlineTool",
+      "signature": "static bool IsRedlineTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsRedlineTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsRedlineTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsSteeringWheelTool",
+      "signature": "static bool IsSteeringWheelTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsSteeringWheelTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsSteeringWheelTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolCollisionDetectionAllowed",
+      "signature": "static bool IsToolCollisionDetectionAllowed(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolCollisionDetectionAllowed method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolCollisionDetectionAllowed%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolFixedFocalPoint",
+      "signature": "static bool IsToolFixedFocalPoint(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolFixedFocalPoint method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolFixedFocalPoint%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolGravityAllowed",
+      "signature": "static bool IsToolGravityAllowed(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolGravityAllowed method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolGravityAllowed%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolModelCentered",
+      "signature": "static bool IsToolModelCentered(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolModelCentered method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolModelCentered%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolPerspectiveOnly",
+      "signature": "static bool IsToolPerspectiveOnly(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolPerspectiveOnly method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolPerspectiveOnly%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolRotateAboutCamera",
+      "signature": "static bool IsToolRotateAboutCamera(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolRotateAboutCamera method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolRotateAboutCamera%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolRotateAboutFocalPoint",
+      "signature": "static bool IsToolRotateAboutFocalPoint(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolRotateAboutFocalPoint method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolRotateAboutFocalPoint%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsToolWorldUpBased",
+      "signature": "static bool IsToolWorldUpBased(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "IsToolWorldUpBased method of LcNvTool.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsToolWorldUpBased%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "IsViewPointTool",
+      "signature": "static bool IsViewPointTool(Autodesk.Navisworks.Api.Tool tool)",
+      "summary": "IsViewPointTool method of LcNvTool.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsViewPointTool%28Autodesk.Navisworks.Api.Tool%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcNvTool.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcNvTool.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

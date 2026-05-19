@@ -1,0 +1,29 @@
+{
+  "name": "DatabaseActionType",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "enum",
+  "summary": "Enumeration of database edit.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseActionType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Do",
+      "value": 0,
+      "summary": "A normal database edit"
+    },
+    {
+      "name": "Redo",
+      "value": 1,
+      "summary": "A redo database edit"
+    },
+    {
+      "name": "Undo",
+      "value": 2,
+      "summary": "An undo database edit"
+    }
+  ]
+}

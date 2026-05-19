@@ -1,0 +1,70 @@
+{
+  "name": "LcNvToolDriverParadigm",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcNvToolDriverParadigm enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvToolDriverParadigm",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePARADIGM_FIXED",
+      "value": 0
+    },
+    {
+      "name": "ePARADIGM_SWIVEL",
+      "value": 1
+    },
+    {
+      "name": "ePARADIGM_EXAMINE",
+      "value": 2
+    },
+    {
+      "name": "ePARADIGM_WALK",
+      "value": 3
+    },
+    {
+      "name": "ePARADIGM_FLY",
+      "value": 4
+    },
+    {
+      "name": "ePARADIGM_TURNTABLE",
+      "value": 5
+    },
+    {
+      "name": "ePARADIGM_APPLICATION",
+      "value": 6
+    },
+    {
+      "name": "ePARADIGM_ZOOM",
+      "value": 7
+    },
+    {
+      "name": "ePARADIGM_PAN_LOCAL",
+      "value": 8
+    },
+    {
+      "name": "ePARADIGM_PAN_WORLD",
+      "value": 9
+    },
+    {
+      "name": "ePARADIGM_SWIVEL_WORLD",
+      "value": 10
+    },
+    {
+      "name": "ePARADIGM_ORBIT_WORLD",
+      "value": 11
+    },
+    {
+      "name": "ePARADIGM_ZOOM_BOX",
+      "value": 12
+    },
+    {
+      "name": "eNUM_PARADIGMS",
+      "value": 13
+    }
+  ]
+}

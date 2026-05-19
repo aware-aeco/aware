@@ -1,0 +1,34 @@
+{
+  "name": "LcOpSavedItemGuidSetFlags",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemGuidSetFlags enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSetFlags",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFLAG_NONE",
+      "value": 0
+    },
+    {
+      "name": "eFLAG_CREATE_IF_NULL",
+      "value": 1
+    },
+    {
+      "name": "eFLAG_CREATE_IF_DUPLICATE",
+      "value": 2
+    },
+    {
+      "name": "eFLAG_RECURSE",
+      "value": 4
+    },
+    {
+      "name": "eFLAG_CHILDREN_ONLY",
+      "value": 8
+    }
+  ]
+}

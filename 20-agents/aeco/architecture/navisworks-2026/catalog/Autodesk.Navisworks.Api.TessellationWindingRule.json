@@ -1,0 +1,39 @@
+{
+  "name": "TessellationWindingRule",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Tessellation winding rule",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.TessellationWindingRule",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Odd",
+      "value": 100130,
+      "summary": "Winding rule odd"
+    },
+    {
+      "name": "Nonzero",
+      "value": 100131,
+      "summary": "Winding rule non-zero"
+    },
+    {
+      "name": "Positive",
+      "value": 100132,
+      "summary": "Winding rule positive"
+    },
+    {
+      "name": "Negative",
+      "value": 100133,
+      "summary": "Winding rule negative"
+    },
+    {
+      "name": "AbsGEqTwo",
+      "value": 100134,
+      "summary": "Winding rule Abs_GEq_Two"
+    }
+  ]
+}

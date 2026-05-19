@@ -1,0 +1,71 @@
+{
+  "name": "ApplicationDragDrop",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "class",
+  "summary": "Represents Application level Drag \u0026 Drop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.ApplicationDragDrop",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "DecodeData",
+      "signature": "bool DecodeData(System.Windows.Forms.IDataObject data, out int processId)",
+      "summary": "Tries to decode the data passed in drag drop operations. If successful determines the source Process Id.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Windows.Forms.IDataObject",
+          "optional": false
+        },
+        {
+          "name": "processId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationDragDrop.DecodeData%28System.Windows.Forms.IDataObject%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "DecodeDataWpf",
+      "signature": "bool DecodeDataWpf(System.Windows.IDataObject data, out int processId)",
+      "summary": "Tries to decode the data passed in drag drop operations. If successful determines the source Process Id.",
+      "params": [
+        {
+          "name": "data",
+          "type": "System.Windows.IDataObject",
+          "optional": false
+        },
+        {
+          "name": "processId",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationDragDrop.DecodeDataWpf%28System.Windows.IDataObject%2CSystem.Int32%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Format",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the format used for Navisworks drag drop operations. Currently is just a notification theat Current Selection has been dragged.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationDragDrop.Format"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

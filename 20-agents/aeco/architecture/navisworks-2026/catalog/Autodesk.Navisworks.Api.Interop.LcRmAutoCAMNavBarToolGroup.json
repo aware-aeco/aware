@@ -1,0 +1,70 @@
+{
+  "name": "LcRmAutoCAMNavBarToolGroup",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcRmAutoCAMNavBarToolGroup enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNAVBAR_GROUP_NONE",
+      "value": 0
+    },
+    {
+      "name": "eNAVBAR_GROUP_VIEWCUBE",
+      "value": 1
+    },
+    {
+      "name": "eNAVBAR_GROUP_STEERINGWHEELS",
+      "value": 2
+    },
+    {
+      "name": "eNAVBAR_GROUP_PAN",
+      "value": 3
+    },
+    {
+      "name": "eNAVBAR_GROUP_ZOOM",
+      "value": 4
+    },
+    {
+      "name": "eNAVBAR_GROUP_ORBIT",
+      "value": 5
+    },
+    {
+      "name": "eNAVBAR_GROUP_LOOK",
+      "value": 6
+    },
+    {
+      "name": "eNAVBAR_GROUP_WALK_FLY",
+      "value": 7
+    },
+    {
+      "name": "eNAVBAR_GROUP_SELECT",
+      "value": 8
+    },
+    {
+      "name": "eNAVBAR_GROUP_STEERINGWHEELS_2D",
+      "value": 9
+    },
+    {
+      "name": "eNAVBAR_GROUP_PAN_2D",
+      "value": 10
+    },
+    {
+      "name": "eNAVBAR_GROUP_ZOOM_2D",
+      "value": 11
+    },
+    {
+      "name": "eNAVBAR_GROUP_SPACEMOUSE",
+      "value": 12
+    },
+    {
+      "name": "eNAVBAR_GROUP_SPACEMOUSE_2D",
+      "value": 13
+    }
+  ]
+}

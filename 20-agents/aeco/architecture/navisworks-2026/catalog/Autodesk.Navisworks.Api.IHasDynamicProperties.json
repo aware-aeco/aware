@@ -1,0 +1,89 @@
+{
+  "name": "IHasDynamicProperties",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "interface",
+  "summary": "Extends the NET interface IDynamicMetaObjectProvider to include provision of dynamic properties.",
+  "interfaces": [
+    "System.Dynamic.IDynamicMetaObjectProvider"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.IHasDynamicProperties",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetProperty",
+      "signature": "object GetProperty(string name)",
+      "summary": "Fetches the property value specified by the string argument.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the dynamic property to obtain. As with real NET properties, this name is case-sensitive.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Value of the dynamic property retrieved."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Name is not a valid dynamic property."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.IHasDynamicProperties.GetProperty%28System.String%29"
+    },
+    {
+      "name": "SetProperty",
+      "signature": "object SetProperty(string name, object value)",
+      "summary": "Sets a value to the property specified by the string argument.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "Name of the dynamic property to set. As with real NET properties, this name is case-sensitive.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "Value to set. This should match the type of the dynamic property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "The same object as was passed to argument \u0027value\u0027. This enables settor chaining."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Name is not a valid dynamic property."
+        },
+        {
+          "type": "System.InvalidCastException",
+          "when": "Value does not cast to the expected dynamic property type."
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Setting to the property is not supported."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.IHasDynamicProperties.SetProperty%28System.String%2CSystem.Object%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DynamicMemberNames",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Enumerates the dynamically added members of the object by name.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.IHasDynamicProperties.DynamicMemberNames"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,888 @@
+{
+  "name": "LcNvViewPoint",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcNvViewPoint class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+  "constructors": [
+    {
+      "name": "LcNvViewPoint()",
+      "signature": "LcNvViewPoint()",
+      "summary": "Constructs a new LcNvViewPoint.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCamera",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvCamera GetCamera()",
+      "summary": "GetCamera method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetCamera"
+    },
+    {
+      "name": "EditViewer",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvViewer EditViewer()",
+      "summary": "EditViewer method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.EditViewer"
+    },
+    {
+      "name": "GetViewer",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvViewer GetViewer()",
+      "summary": "GetViewer method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetViewer"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "Autodesk.Navisworks.Api.Point3D GetPosition()",
+      "summary": "GetPosition method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetPosition"
+    },
+    {
+      "name": "GetRotation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D GetRotation()",
+      "summary": "GetRotation method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetRotation"
+    },
+    {
+      "name": "GetTool",
+      "signature": "Autodesk.Navisworks.Api.Tool GetTool()",
+      "summary": "GetTool method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetTool"
+    },
+    {
+      "name": "GetWorldUpVector",
+      "signature": "Autodesk.Navisworks.Api.UnitVector3D GetWorldUpVector()",
+      "summary": "GetWorldUpVector method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.UnitVector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetWorldUpVector"
+    },
+    {
+      "name": "GetFarDistanceType",
+      "signature": "Autodesk.Navisworks.Api.ViewpointDistanceType GetFarDistanceType()",
+      "summary": "GetFarDistanceType method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ViewpointDistanceType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetFarDistanceType"
+    },
+    {
+      "name": "GetNearDistanceType",
+      "signature": "Autodesk.Navisworks.Api.ViewpointDistanceType GetNearDistanceType()",
+      "summary": "GetNearDistanceType method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ViewpointDistanceType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetNearDistanceType"
+    },
+    {
+      "name": "GetImageFit",
+      "signature": "Autodesk.Navisworks.Api.ViewpointImageFit GetImageFit()",
+      "summary": "GetImageFit method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ViewpointImageFit",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetImageFit"
+    },
+    {
+      "name": "GetLighting",
+      "signature": "Autodesk.Navisworks.Api.ViewpointLighting GetLighting()",
+      "summary": "GetLighting method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ViewpointLighting",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetLighting"
+    },
+    {
+      "name": "GetRenderStyle",
+      "signature": "Autodesk.Navisworks.Api.ViewpointRenderStyle GetRenderStyle()",
+      "summary": "GetRenderStyle method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ViewpointRenderStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetRenderStyle"
+    },
+    {
+      "name": "HasPart",
+      "signature": "bool HasPart(Autodesk.Navisworks.Api.Interop.LcNvViewPointParts p)",
+      "summary": "HasPart method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPointParts",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.HasPart%28Autodesk.Navisworks.Api.Interop.LcNvViewPointParts%29"
+    },
+    {
+      "name": "IsToolCollisionDetectionAllowed",
+      "signature": "bool IsToolCollisionDetectionAllowed()",
+      "summary": "IsToolCollisionDetectionAllowed method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsToolCollisionDetectionAllowed"
+    },
+    {
+      "name": "IsToolFixedFocalPoint",
+      "signature": "bool IsToolFixedFocalPoint()",
+      "summary": "IsToolFixedFocalPoint method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsToolFixedFocalPoint"
+    },
+    {
+      "name": "IsToolGravityAllowed",
+      "signature": "bool IsToolGravityAllowed()",
+      "summary": "IsToolGravityAllowed method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsToolGravityAllowed"
+    },
+    {
+      "name": "IsToolModelCentered",
+      "signature": "bool IsToolModelCentered()",
+      "summary": "IsToolModelCentered method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsToolModelCentered"
+    },
+    {
+      "name": "IsToolPerspectiveOnly",
+      "signature": "bool IsToolPerspectiveOnly()",
+      "summary": "IsToolPerspectiveOnly method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsToolPerspectiveOnly"
+    },
+    {
+      "name": "IsToolWorldUpBased",
+      "signature": "bool IsToolWorldUpBased()",
+      "summary": "IsToolWorldUpBased method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsToolWorldUpBased"
+    },
+    {
+      "name": "GetAngularSpeed",
+      "signature": "double GetAngularSpeed()",
+      "summary": "GetAngularSpeed method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetAngularSpeed"
+    },
+    {
+      "name": "GetApertureDiameter",
+      "signature": "double GetApertureDiameter()",
+      "summary": "GetApertureDiameter method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetApertureDiameter"
+    },
+    {
+      "name": "GetFarDistance",
+      "signature": "double GetFarDistance()",
+      "summary": "GetFarDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetFarDistance"
+    },
+    {
+      "name": "GetFocalDistance",
+      "signature": "double GetFocalDistance()",
+      "summary": "GetFocalDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetFocalDistance"
+    },
+    {
+      "name": "GetHorizontalExtentAtFocalDistance",
+      "signature": "double GetHorizontalExtentAtFocalDistance()",
+      "summary": "GetHorizontalExtentAtFocalDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetHorizontalExtentAtFocalDistance"
+    },
+    {
+      "name": "GetHorizontalScale",
+      "signature": "double GetHorizontalScale()",
+      "summary": "GetHorizontalScale method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetHorizontalScale"
+    },
+    {
+      "name": "GetLinearSpeed",
+      "signature": "double GetLinearSpeed()",
+      "summary": "GetLinearSpeed method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetLinearSpeed"
+    },
+    {
+      "name": "GetNearDistance",
+      "signature": "double GetNearDistance()",
+      "summary": "GetNearDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetNearDistance"
+    },
+    {
+      "name": "GetRightOffsetAtFocalDistance",
+      "signature": "double GetRightOffsetAtFocalDistance()",
+      "summary": "GetRightOffsetAtFocalDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetRightOffsetAtFocalDistance"
+    },
+    {
+      "name": "GetShutterSpeed",
+      "signature": "double GetShutterSpeed()",
+      "summary": "GetShutterSpeed method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetShutterSpeed"
+    },
+    {
+      "name": "GetUpOffsetAtFocalDistance",
+      "signature": "double GetUpOffsetAtFocalDistance()",
+      "summary": "GetUpOffsetAtFocalDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetUpOffsetAtFocalDistance"
+    },
+    {
+      "name": "GetVerticalExtentAtFocalDistance",
+      "signature": "double GetVerticalExtentAtFocalDistance()",
+      "summary": "GetVerticalExtentAtFocalDistance method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetVerticalExtentAtFocalDistance"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcNvViewPoint InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetParts",
+      "signature": "uint GetParts()",
+      "summary": "GetParts method of LcNvViewPoint.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetParts"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.Interop.LcNvViewPoint vp)",
+      "summary": "CopyFrom method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.CopyFrom%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.Interop.LcNvViewPoint vp, uint parts_to_copy)",
+      "summary": "CopyFrom method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "vp",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "parts_to_copy",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.CopyFrom%28Autodesk.Navisworks.Api.Interop.LcNvViewPoint%2CSystem.UInt32%29"
+    },
+    {
+      "name": "GetTiltLimits",
+      "signature": "void GetTiltLimits(ref double tilt_min, ref double tilt_max)",
+      "summary": "GetTiltLimits method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "tilt_min",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "tilt_max",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.GetTiltLimits%28System.Double%40%2CSystem.Double%40%29"
+    },
+    {
+      "name": "SetAngularSpeed",
+      "signature": "void SetAngularSpeed(double radiansPerSecond)",
+      "summary": "SetAngularSpeed method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "radiansPerSecond",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetAngularSpeed%28System.Double%29"
+    },
+    {
+      "name": "SetApertureDiameter",
+      "signature": "void SetApertureDiameter(double aperture_diameter)",
+      "summary": "SetApertureDiameter method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "aperture_diameter",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetApertureDiameter%28System.Double%29"
+    },
+    {
+      "name": "SetCamera",
+      "signature": "void SetCamera(Autodesk.Navisworks.Api.Interop.LcNvCamera camera)",
+      "summary": "SetCamera method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetCamera%28Autodesk.Navisworks.Api.Interop.LcNvCamera%29"
+    },
+    {
+      "name": "SetExtentsAtFocalDistance",
+      "signature": "void SetExtentsAtFocalDistance(double horizontal, double vertical)",
+      "summary": "SetExtentsAtFocalDistance method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "horizontal",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "vertical",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetExtentsAtFocalDistance%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SetFarDistance",
+      "signature": "void SetFarDistance(double far_distance)",
+      "summary": "SetFarDistance method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "far_distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetFarDistance%28System.Double%29"
+    },
+    {
+      "name": "SetFarDistanceType",
+      "signature": "void SetFarDistanceType(Autodesk.Navisworks.Api.ViewpointDistanceType far_distance_type)",
+      "summary": "SetFarDistanceType method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "far_distance_type",
+          "type": "Autodesk.Navisworks.Api.ViewpointDistanceType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetFarDistanceType%28Autodesk.Navisworks.Api.ViewpointDistanceType%29"
+    },
+    {
+      "name": "SetFocalDistance",
+      "signature": "void SetFocalDistance(double dist)",
+      "summary": "SetFocalDistance method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "dist",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetFocalDistance%28System.Double%29"
+    },
+    {
+      "name": "SetHorizontalScale",
+      "signature": "void SetHorizontalScale(double horizontal_scale)",
+      "summary": "SetHorizontalScale method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "horizontal_scale",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetHorizontalScale%28System.Double%29"
+    },
+    {
+      "name": "SetImageFit",
+      "signature": "void SetImageFit(Autodesk.Navisworks.Api.ViewpointImageFit image_fit)",
+      "summary": "SetImageFit method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "image_fit",
+          "type": "Autodesk.Navisworks.Api.ViewpointImageFit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetImageFit%28Autodesk.Navisworks.Api.ViewpointImageFit%29"
+    },
+    {
+      "name": "SetLighting",
+      "signature": "void SetLighting(Autodesk.Navisworks.Api.ViewpointLighting p)",
+      "summary": "SetLighting method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.ViewpointLighting",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetLighting%28Autodesk.Navisworks.Api.ViewpointLighting%29"
+    },
+    {
+      "name": "SetLinearSpeed",
+      "signature": "void SetLinearSpeed(double unitsPerSecond)",
+      "summary": "SetLinearSpeed method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "unitsPerSecond",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetLinearSpeed%28System.Double%29"
+    },
+    {
+      "name": "SetNearDistance",
+      "signature": "void SetNearDistance(double near_distance)",
+      "summary": "SetNearDistance method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "near_distance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetNearDistance%28System.Double%29"
+    },
+    {
+      "name": "SetNearDistanceType",
+      "signature": "void SetNearDistanceType(Autodesk.Navisworks.Api.ViewpointDistanceType near_distance_type)",
+      "summary": "SetNearDistanceType method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "near_distance_type",
+          "type": "Autodesk.Navisworks.Api.ViewpointDistanceType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetNearDistanceType%28Autodesk.Navisworks.Api.ViewpointDistanceType%29"
+    },
+    {
+      "name": "SetRenderStyle",
+      "signature": "void SetRenderStyle(Autodesk.Navisworks.Api.ViewpointRenderStyle p)",
+      "summary": "SetRenderStyle method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.ViewpointRenderStyle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetRenderStyle%28Autodesk.Navisworks.Api.ViewpointRenderStyle%29"
+    },
+    {
+      "name": "SetRightOffsetAtFocalDistance",
+      "signature": "void SetRightOffsetAtFocalDistance(double right_offset)",
+      "summary": "SetRightOffsetAtFocalDistance method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "right_offset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetRightOffsetAtFocalDistance%28System.Double%29"
+    },
+    {
+      "name": "SetShutterSpeed",
+      "signature": "void SetShutterSpeed(double shutter_speed)",
+      "summary": "SetShutterSpeed method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "shutter_speed",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetShutterSpeed%28System.Double%29"
+    },
+    {
+      "name": "SetTool",
+      "signature": "void SetTool(Autodesk.Navisworks.Api.Tool p)",
+      "summary": "SetTool method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "SetUpOffsetAtFocalDistance",
+      "signature": "void SetUpOffsetAtFocalDistance(double up_offset)",
+      "summary": "SetUpOffsetAtFocalDistance method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "up_offset",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetUpOffsetAtFocalDistance%28System.Double%29"
+    },
+    {
+      "name": "SetWorldUpVector",
+      "signature": "void SetWorldUpVector(Autodesk.Navisworks.Api.UnitVector3D vec)",
+      "summary": "SetWorldUpVector method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "vec",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.SetWorldUpVector%28Autodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "ViewAll",
+      "signature": "void ViewAll(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "ViewAll method of LcNvViewPoint.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.ViewAll%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcNvViewPoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcNvViewPoint.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

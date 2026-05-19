@@ -1,0 +1,193 @@
+{
+  "name": "LcOpSwigTargetHandler",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigTargetHandler class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpTargetHandler",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler",
+  "constructors": [
+    {
+      "name": "LcOpSwigTargetHandler()",
+      "signature": "LcOpSwigTargetHandler()",
+      "summary": "Constructs a new LcOpSwigTargetHandler.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "SwigGetInitialTransform",
+      "signature": "Autodesk.Navisworks.Api.Transform3D SwigGetInitialTransform()",
+      "summary": "SwigGetInitialTransform method of LcOpSwigTargetHandler.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Transform3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.SwigGetInitialTransform"
+    },
+    {
+      "name": "CanSnapToFragment",
+      "signature": "bool CanSnapToFragment(Autodesk.Navisworks.Api.Interop.LcOaFragment fragment)",
+      "summary": "CanSnapToFragment method of LcOpSwigTargetHandler.",
+      "params": [
+        {
+          "name": "fragment",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaFragment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.CanSnapToFragment%28Autodesk.Navisworks.Api.Interop.LcOaFragment%29"
+    },
+    {
+      "name": "IsTargetValid",
+      "signature": "bool IsTargetValid()",
+      "summary": "IsTargetValid method of LcOpSwigTargetHandler.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.IsTargetValid"
+    },
+    {
+      "name": "ShouldResetOnTransform",
+      "signature": "bool ShouldResetOnTransform()",
+      "summary": "ShouldResetOnTransform method of LcOpSwigTargetHandler.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.ShouldResetOnTransform"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigTargetHandler.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigTargetHandler.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CommitTransform",
+      "signature": "void CommitTransform(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "CommitTransform method of LcOpSwigTargetHandler.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.CommitTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "EndDrag",
+      "signature": "void EndDrag()",
+      "summary": "EndDrag method of LcOpSwigTargetHandler.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.EndDrag"
+    },
+    {
+      "name": "InDrag",
+      "signature": "void InDrag(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "InDrag method of LcOpSwigTargetHandler.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.InDrag%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "StartDrag",
+      "signature": "void StartDrag()",
+      "summary": "StartDrag method of LcOpSwigTargetHandler.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.StartDrag"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigTargetHandler.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigTargetHandler.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

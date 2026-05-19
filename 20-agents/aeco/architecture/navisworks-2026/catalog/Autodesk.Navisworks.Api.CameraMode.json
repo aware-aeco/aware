@@ -1,0 +1,24 @@
+{
+  "name": "CameraMode",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Describes the relationship of camera to viewer.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.CameraMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FirstPerson",
+      "value": 0,
+      "summary": "First person mode."
+    },
+    {
+      "name": "ThirdPerson",
+      "value": 1,
+      "summary": "Third person mode."
+    }
+  ]
+}

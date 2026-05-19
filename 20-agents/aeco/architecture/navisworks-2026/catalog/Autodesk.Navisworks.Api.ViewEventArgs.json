@@ -1,0 +1,23 @@
+{
+  "name": "ViewEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for View related events",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "View",
+      "type": "Autodesk.Navisworks.Api.View",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the View that the event is describing.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ViewEventArgs.View"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

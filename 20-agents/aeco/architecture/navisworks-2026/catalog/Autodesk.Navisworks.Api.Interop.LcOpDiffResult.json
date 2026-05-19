@@ -1,0 +1,161 @@
+{
+  "name": "LcOpDiffResult",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpDiffResult class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDiffResult",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindCorrespondingItem",
+      "signature": "Autodesk.Navisworks.Api.ModelItem FindCorrespondingItem(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "FindCorrespondingItem method of LcOpDiffResult.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.FindCorrespondingItem%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "FindDifferingItem",
+      "signature": "Autodesk.Navisworks.Api.ModelItem FindDifferingItem(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "FindDifferingItem method of LcOpDiffResult.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.FindDifferingItem%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "FindMatchingItem",
+      "signature": "Autodesk.Navisworks.Api.ModelItem FindMatchingItem(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "FindMatchingItem method of LcOpDiffResult.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.FindMatchingItem%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDiffResult InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpDiffResult.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDiffResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpDiffResult.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Differences",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Differences property of LcOpDiffResult.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.Differences"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpDiffResult.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.IsReadOnly"
+    },
+    {
+      "name": "Matched",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Matched property of LcOpDiffResult.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.Matched"
+    },
+    {
+      "name": "Unmatched",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Unmatched property of LcOpDiffResult.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.Unmatched"
+    },
+    {
+      "name": "UnmatchedComplete",
+      "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "UnmatchedComplete property of LcOpDiffResult.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpDiffResult.UnmatchedComplete"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ITestPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "ITestPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.Interop.IPlugin"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.ITestPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Run",
+      "signature": "void Run()",
+      "summary": "Run method of ITestPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ITestPlugin.Run"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

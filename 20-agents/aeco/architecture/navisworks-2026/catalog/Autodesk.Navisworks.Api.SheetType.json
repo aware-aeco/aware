@@ -1,0 +1,24 @@
+{
+  "name": "SheetType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Determines which type the sheet is",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SheetType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Sheet3D",
+      "value": 0,
+      "summary": "Sheet contains a 3D model"
+    },
+    {
+      "name": "Sheet2D",
+      "value": 1,
+      "summary": "Sheet contains a 2D model (plot)"
+    }
+  ]
+}

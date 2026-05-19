@@ -1,0 +1,630 @@
+{
+  "name": "LcOpShadFragMaterialElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpShadFragMaterialElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPermanentColor",
+      "signature": "static Autodesk.Navisworks.Api.Color GetPermanentColor(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelGeometry path)",
+      "summary": "GetPermanentColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelGeometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.GetPermanentColor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelGeometry%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetTempOverrideColor",
+      "signature": "static bool GetTempOverrideColor(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelGeometry path, Autodesk.Navisworks.Api.Color color)",
+      "summary": "GetTempOverrideColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelGeometry",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.GetTempOverrideColor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelGeometry%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "GetTempOverrideTransparency",
+      "signature": "static bool GetTempOverrideTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelGeometry path, ref double transparency)",
+      "summary": "GetTempOverrideTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelGeometry",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.GetTempOverrideTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelGeometry%2CSystem.Double%40%29"
+    },
+    {
+      "name": "GetPermanentTransparency",
+      "signature": "static double GetPermanentTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelGeometry path)",
+      "summary": "GetPermanentTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelGeometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.GetPermanentTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelGeometry%29"
+    },
+    {
+      "name": "OverrideColor",
+      "signature": "static void OverrideColor(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Color color)",
+      "summary": "OverrideColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.OverrideColor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "OverrideProteinMaterial",
+      "signature": "static void OverrideProteinMaterial(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOglJsonProteinAsset asset)",
+      "summary": "OverrideProteinMaterial method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "asset",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOglJsonProteinAsset",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.OverrideProteinMaterial%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOglJsonProteinAsset%29"
+    },
+    {
+      "name": "OverrideTempColor",
+      "signature": "static void OverrideTempColor(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Color color)",
+      "summary": "OverrideTempColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.OverrideTempColor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "OverrideTempTransparency",
+      "signature": "static void OverrideTempTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, double transparency)",
+      "summary": "OverrideTempTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.OverrideTempTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CSystem.Double%29"
+    },
+    {
+      "name": "OverrideTransparency",
+      "signature": "static void OverrideTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, double transparency)",
+      "summary": "OverrideTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.OverrideTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CSystem.Double%29"
+    },
+    {
+      "name": "ResetAllAppearances",
+      "signature": "static void ResetAllAppearances(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllAppearances method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllAppearances%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllAppearancesThatCanHaveTempOverrides",
+      "signature": "static void ResetAllAppearancesThatCanHaveTempOverrides(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllAppearancesThatCanHaveTempOverrides method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllAppearancesThatCanHaveTempOverrides%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllPermAndTempAppearances",
+      "signature": "static void ResetAllPermAndTempAppearances(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetAllPermAndTempAppearances method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllPermAndTempAppearances%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetAllTempColor",
+      "signature": "static void ResetAllTempColor(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllTempColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllTempColor%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllTempOverrides",
+      "signature": "static void ResetAllTempOverrides(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllTempOverrides method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllTempOverrides%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllTempPolygonMode",
+      "signature": "static void ResetAllTempPolygonMode(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllTempPolygonMode method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllTempPolygonMode%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllTempTransparency",
+      "signature": "static void ResetAllTempTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllTempTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAllTempTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAppearances",
+      "signature": "static void ResetAppearances(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetAppearances method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetAppearances%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetColor",
+      "signature": "static void ResetColor(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetColor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetMaterial",
+      "signature": "static void ResetMaterial(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetMaterial method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetMaterial%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetMaterialAll",
+      "signature": "static void ResetMaterialAll(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetMaterialAll method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetMaterialAll%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetProteinMaterial",
+      "signature": "static void ResetProteinMaterial(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetProteinMaterial method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetProteinMaterial%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetTempColor",
+      "signature": "static void ResetTempColor(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetTempColor method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetTempColor%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetTempOverrides",
+      "signature": "static void ResetTempOverrides(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetTempOverrides method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetTempOverrides%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetTempPolygonMode",
+      "signature": "static void ResetTempPolygonMode(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetTempPolygonMode method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetTempPolygonMode%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetTempTransparency",
+      "signature": "static void ResetTempTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetTempTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetTempTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetTransparency",
+      "signature": "static void ResetTransparency(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetTransparency method of LcOpShadFragMaterialElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.ResetTransparency%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpShadFragMaterialElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragMaterialElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

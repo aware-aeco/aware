@@ -1,0 +1,146 @@
+{
+  "name": "LcOpModel",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpModel class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpSceneRef",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpModel",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpModel InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpModel.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModel.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpModel.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModel.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetOrientation",
+      "signature": "void SetOrientation(Autodesk.Navisworks.Api.Vector3D up_vector, Autodesk.Navisworks.Api.Vector3D north_vector, Autodesk.Navisworks.Api.Vector3D front_vector)",
+      "summary": "SetOrientation method of LcOpModel.",
+      "params": [
+        {
+          "name": "up_vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "north_vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "front_vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModel.SetOrientation%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetOriginalUnits",
+      "signature": "void SetOriginalUnits(Autodesk.Navisworks.Api.Units units)",
+      "summary": "SetOriginalUnits method of LcOpModel.",
+      "params": [
+        {
+          "name": "units",
+          "type": "Autodesk.Navisworks.Api.Units",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpModel.SetOriginalUnits%28Autodesk.Navisworks.Api.Units%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DisplayName property of LcOpModel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpModel.DisplayName"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpModel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpModel.IsReadOnly"
+    },
+    {
+      "name": "LogicalFilename",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "LogicalFilename property of LcOpModel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpModel.LogicalFilename"
+    },
+    {
+      "name": "PhysicalFilename",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "PhysicalFilename property of LcOpModel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpModel.PhysicalFilename"
+    },
+    {
+      "name": "Transform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Transform property of LcOpModel.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpModel.Transform"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

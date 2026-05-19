@@ -1,0 +1,59 @@
+{
+  "name": "SelectionBehavior",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Determines which ModelItem is selected when using the Select tool to pick an object",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SelectionBehavior",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Model",
+      "value": 0,
+      "summary": "First item containing object picked that HasModel (File)"
+    },
+    {
+      "name": "Layer",
+      "value": 1,
+      "summary": "First item containing object picked that IsLayer"
+    },
+    {
+      "name": "FirstObject",
+      "value": 2,
+      "summary": "First item containing object picked that is child of IsLayer item"
+    },
+    {
+      "name": "LastUnique",
+      "value": 3,
+      "summary": "Last item containing object picked that has Instances count of 1"
+    },
+    {
+      "name": "Geometry",
+      "value": 4,
+      "summary": "Last item containing object picked that HasGeometry"
+    },
+    {
+      "name": "UniqueGeometryParent",
+      "value": 5,
+      "summary": "First item that only contains object picked"
+    },
+    {
+      "name": "NoSelectionChange",
+      "value": 6,
+      "summary": "Picking has no effect (selection does not change)"
+    },
+    {
+      "name": "LastComposite",
+      "value": 7,
+      "summary": "Last item containing object picked that IsComposite"
+    },
+    {
+      "name": "Custom",
+      "value": 8,
+      "summary": "Custom selection behaviour, defined by the application"
+    }
+  ]
+}

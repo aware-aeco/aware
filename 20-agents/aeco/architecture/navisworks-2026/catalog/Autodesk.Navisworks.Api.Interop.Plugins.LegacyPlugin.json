@@ -1,0 +1,65 @@
+{
+  "name": "LegacyPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop.Plugins",
+  "kind": "class",
+  "summary": "LegacyPlugin class in Autodesk.Navisworks.Api.Interop.Plugins.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.Plugins.LegacyPlugin",
+  "constructors": [
+    {
+      "name": "LegacyPlugin(System.Reflection.Assembly, Autodesk.Navisworks.Api.Interop.IPlugin, string)",
+      "signature": "LegacyPlugin(System.Reflection.Assembly assembly, Autodesk.Navisworks.Api.Interop.IPlugin iPlugin, string DataDir)",
+      "summary": "Constructs a new LegacyPlugin.",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        },
+        {
+          "name": "iPlugin",
+          "type": "Autodesk.Navisworks.Api.Interop.IPlugin",
+          "optional": false
+        },
+        {
+          "name": "DataDir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.Plugins.LegacyPlugin.%23ctor%28System.Reflection.Assembly%2CAutodesk.Navisworks.Api.Interop.IPlugin%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AssemblyPrefix",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "AssemblyPrefix property of LegacyPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.Plugins.LegacyPlugin.AssemblyPrefix"
+    },
+    {
+      "name": "DataDir",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DataDir property of LegacyPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.Plugins.LegacyPlugin.DataDir"
+    },
+    {
+      "name": "PluginInterface",
+      "type": "Autodesk.Navisworks.Api.Interop.IPlugin",
+      "getter": true,
+      "setter": false,
+      "summary": "PluginInterface property of LegacyPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.Plugins.LegacyPlugin.PluginInterface"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

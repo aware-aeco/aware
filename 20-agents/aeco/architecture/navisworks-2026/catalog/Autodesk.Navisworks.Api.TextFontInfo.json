@@ -1,0 +1,204 @@
+{
+  "name": "TextFontInfo",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Information about a text font. Immutable.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.TextFontInfo",
+  "constructors": [
+    {
+      "name": "TextFontInfo()",
+      "signature": "TextFontInfo()",
+      "summary": "Creates an empty font info object.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.%23ctor"
+    },
+    {
+      "name": "TextFontInfo(string, int, int, bool, bool)",
+      "signature": "TextFontInfo(string typeface, int pointSize, int weight, bool italic, bool strikeout)",
+      "summary": "Creates a new font info object.",
+      "params": [
+        {
+          "name": "typeface",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "pointSize",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "weight",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "italic",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "strikeout",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.%23ctor%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%2CSystem.Boolean%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.GetHashCode"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of TextFontInfo.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.TextFontInfo InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of TextFontInfo.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.TextFontInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.TextFontInfo.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TextFontInfo.IsReadOnly"
+    },
+    {
+      "name": "Italic",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Italics",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TextFontInfo.Italic"
+    },
+    {
+      "name": "PointSize",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Font size in points",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TextFontInfo.PointSize"
+    },
+    {
+      "name": "Strikeout",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Strikeout",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TextFontInfo.Strikeout"
+    },
+    {
+      "name": "Typeface",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Font typeface",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TextFontInfo.Typeface"
+    },
+    {
+      "name": "Weight",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Font weight",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.TextFontInfo.Weight"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

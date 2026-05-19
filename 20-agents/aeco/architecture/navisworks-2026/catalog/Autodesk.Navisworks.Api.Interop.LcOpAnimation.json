@@ -1,0 +1,685 @@
+{
+  "name": "LcOpAnimation",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimation class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpAnimBase",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+  "constructors": [
+    {
+      "name": "LcOpAnimation()",
+      "signature": "LcOpAnimation()",
+      "summary": "Constructs a new LcOpAnimation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAtDuration",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationAtDuration GetAtDuration()",
+      "summary": "GetAtDuration method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationAtDuration",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetAtDuration"
+    },
+    {
+      "name": "GetAtEnd",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationAtEnd GetAtEnd()",
+      "summary": "GetAtEnd method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationAtEnd",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetAtEnd"
+    },
+    {
+      "name": "GetDirection",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationDirection GetDirection()",
+      "summary": "GetDirection method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationDirection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetDirection"
+    },
+    {
+      "name": "GetStatus",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus GetStatus()",
+      "summary": "GetStatus method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetStatus"
+    },
+    {
+      "name": "GetKeyFrame",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame GetKeyFrame(int index)",
+      "summary": "GetKeyFrame method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetKeyFrame%28System.Int32%29"
+    },
+    {
+      "name": "EditKeyFrames",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrameVector EditKeyFrames()",
+      "summary": "EditKeyFrames method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrameVector",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.EditKeyFrames"
+    },
+    {
+      "name": "HasTarget",
+      "signature": "bool HasTarget()",
+      "summary": "HasTarget method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.HasTarget"
+    },
+    {
+      "name": "IsLoop",
+      "signature": "bool IsLoop()",
+      "summary": "IsLoop method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.IsLoop"
+    },
+    {
+      "name": "IsPingPong",
+      "signature": "bool IsPingPong()",
+      "summary": "IsPingPong method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.IsPingPong"
+    },
+    {
+      "name": "IsValid",
+      "signature": "bool IsValid()",
+      "summary": "IsValid method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.IsValid"
+    },
+    {
+      "name": "GetCurrentFrameTime",
+      "signature": "double GetCurrentFrameTime()",
+      "summary": "GetCurrentFrameTime method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetCurrentFrameTime"
+    },
+    {
+      "name": "GetCurrentPosition",
+      "signature": "double GetCurrentPosition()",
+      "summary": "GetCurrentPosition method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetCurrentPosition"
+    },
+    {
+      "name": "GetDuration",
+      "signature": "double GetDuration()",
+      "summary": "GetDuration method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetDuration"
+    },
+    {
+      "name": "GetEndTime",
+      "signature": "double GetEndTime()",
+      "summary": "GetEndTime method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetEndTime"
+    },
+    {
+      "name": "GetNaturalDuration",
+      "signature": "double GetNaturalDuration()",
+      "summary": "GetNaturalDuration method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetNaturalDuration"
+    },
+    {
+      "name": "GetTarget",
+      "signature": "double GetTarget()",
+      "summary": "GetTarget method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetTarget"
+    },
+    {
+      "name": "GetTickCount",
+      "signature": "double GetTickCount()",
+      "summary": "GetTickCount method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetTickCount"
+    },
+    {
+      "name": "GetCurrentKeyFrame",
+      "signature": "int GetCurrentKeyFrame()",
+      "summary": "GetCurrentKeyFrame method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetCurrentKeyFrame"
+    },
+    {
+      "name": "GetKeyFrameForTime",
+      "signature": "int GetKeyFrameForTime(double t)",
+      "summary": "GetKeyFrameForTime method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "t",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetKeyFrameForTime%28System.Double%29"
+    },
+    {
+      "name": "GetNextKeyFrame",
+      "signature": "int GetNextKeyFrame()",
+      "summary": "GetNextKeyFrame method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetNextKeyFrame"
+    },
+    {
+      "name": "GetNumKeyFrames",
+      "signature": "int GetNumKeyFrames()",
+      "summary": "GetNumKeyFrames method of LcOpAnimation.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.GetNumKeyFrames"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimation InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddKeyFrameOwn",
+      "signature": "void AddKeyFrameOwn(Autodesk.Navisworks.Api.Interop.LcOpKeyFrame frame)",
+      "summary": "AddKeyFrameOwn method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.AddKeyFrameOwn%28Autodesk.Navisworks.Api.Interop.LcOpKeyFrame%29"
+    },
+    {
+      "name": "AdjustDuration",
+      "signature": "void AdjustDuration(double new_duration)",
+      "summary": "AdjustDuration method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "new_duration",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.AdjustDuration%28System.Double%29"
+    },
+    {
+      "name": "AdjustDuration",
+      "signature": "void AdjustDuration(double new_duration, double old_duration)",
+      "summary": "AdjustDuration method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "new_duration",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "old_duration",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.AdjustDuration%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "ApplyFrame",
+      "signature": "void ApplyFrame(Autodesk.Navisworks.Api.Interop.LcOpModelInterface model)",
+      "summary": "ApplyFrame method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.ApplyFrame%28Autodesk.Navisworks.Api.Interop.LcOpModelInterface%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcOpAnimation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.Clear"
+    },
+    {
+      "name": "ClearTarget",
+      "signature": "void ClearTarget()",
+      "summary": "ClearTarget method of LcOpAnimation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.ClearTarget"
+    },
+    {
+      "name": "End",
+      "signature": "void End(Autodesk.Navisworks.Api.Interop.LcOpModelInterface model)",
+      "summary": "End method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.End%28Autodesk.Navisworks.Api.Interop.LcOpModelInterface%29"
+    },
+    {
+      "name": "SetAtDuration",
+      "signature": "void SetAtDuration(Autodesk.Navisworks.Api.Interop.LcOpAnimationAtDuration at_duration)",
+      "summary": "SetAtDuration method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "at_duration",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationAtDuration",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetAtDuration%28Autodesk.Navisworks.Api.Interop.LcOpAnimationAtDuration%29"
+    },
+    {
+      "name": "SetAtEnd",
+      "signature": "void SetAtEnd(Autodesk.Navisworks.Api.Interop.LcOpAnimationAtEnd end)",
+      "summary": "SetAtEnd method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationAtEnd",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetAtEnd%28Autodesk.Navisworks.Api.Interop.LcOpAnimationAtEnd%29"
+    },
+    {
+      "name": "SetCurrentPosition",
+      "signature": "void SetCurrentPosition(double t)",
+      "summary": "SetCurrentPosition method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "t",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetCurrentPosition%28System.Double%29"
+    },
+    {
+      "name": "SetCurrentTime",
+      "signature": "void SetCurrentTime(double t)",
+      "summary": "SetCurrentTime method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "t",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetCurrentTime%28System.Double%29"
+    },
+    {
+      "name": "SetDirection",
+      "signature": "void SetDirection(Autodesk.Navisworks.Api.Interop.LcOpAnimationDirection d)",
+      "summary": "SetDirection method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "d",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationDirection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetDirection%28Autodesk.Navisworks.Api.Interop.LcOpAnimationDirection%29"
+    },
+    {
+      "name": "SetDuration",
+      "signature": "void SetDuration(double f)",
+      "summary": "SetDuration method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "f",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetDuration%28System.Double%29"
+    },
+    {
+      "name": "SetLoop",
+      "signature": "void SetLoop(bool p)",
+      "summary": "SetLoop method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "p",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetLoop%28System.Boolean%29"
+    },
+    {
+      "name": "SetPingPong",
+      "signature": "void SetPingPong(bool p)",
+      "summary": "SetPingPong method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "p",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetPingPong%28System.Boolean%29"
+    },
+    {
+      "name": "SetStatus",
+      "signature": "void SetStatus(Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus status)",
+      "summary": "SetStatus method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "status",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetStatus%28Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus%29"
+    },
+    {
+      "name": "SetTarget",
+      "signature": "void SetTarget(double f)",
+      "summary": "SetTarget method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "f",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetTarget%28System.Double%29"
+    },
+    {
+      "name": "SetTargetPosition",
+      "signature": "void SetTargetPosition(double t)",
+      "summary": "SetTargetPosition method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "t",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetTargetPosition%28System.Double%29"
+    },
+    {
+      "name": "SetupInfiniteLoop",
+      "signature": "void SetupInfiniteLoop()",
+      "summary": "SetupInfiniteLoop method of LcOpAnimation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetupInfiniteLoop"
+    },
+    {
+      "name": "SetupSingleRepeat",
+      "signature": "void SetupSingleRepeat()",
+      "summary": "SetupSingleRepeat method of LcOpAnimation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.SetupSingleRepeat"
+    },
+    {
+      "name": "Start",
+      "signature": "void Start(Autodesk.Navisworks.Api.Interop.LcOpModelInterface model)",
+      "summary": "Start method of LcOpAnimation.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.Start%28Autodesk.Navisworks.Api.Interop.LcOpModelInterface%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimation.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimation.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

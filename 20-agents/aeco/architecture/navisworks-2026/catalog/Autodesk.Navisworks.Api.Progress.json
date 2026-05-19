@@ -1,0 +1,382 @@
+{
+  "name": "Progress",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Used to report progress of lengthy operations",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Progress",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ReportError",
+      "signature": "bool ReportError(int errorCode)",
+      "summary": "Report an error immediately to the user.",
+      "params": [
+        {
+          "name": "errorCode",
+          "type": "int",
+          "doc": "Application/operation-defined error code.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if user wants to cancel operation, true if they want to ignore and continue."
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.ReportError%28System.Int32%29"
+    },
+    {
+      "name": "ReportError",
+      "signature": "bool ReportError(int errorCode, string message)",
+      "summary": "Report an error immediately to the user.",
+      "params": [
+        {
+          "name": "errorCode",
+          "type": "int",
+          "doc": "Application/operation-defined error code.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "User error message.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if user wants to cancel operation, true if they want to ignore and continue."
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.ReportError%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "ReportError",
+      "signature": "bool ReportError(int errorCode, string message, bool isFileError)",
+      "summary": "Report an error immediately to the user.",
+      "params": [
+        {
+          "name": "errorCode",
+          "type": "int",
+          "doc": "Application/operation-defined error code.",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "User error message.",
+          "optional": false
+        },
+        {
+          "name": "isFileError",
+          "type": "bool",
+          "doc": "Is the error related to the current working filename ?",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if user wants to cancel operation, true if they want to ignore and continue."
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.ReportError%28System.Int32%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Update",
+      "signature": "bool Update(double fractionDone)",
+      "summary": "Updates progress on the current operation or sub-operation",
+      "params": [
+        {
+          "name": "fractionDone",
+          "type": "double",
+          "doc": "Fraction of operation or sub-operation completed, between 0 and 1",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if user wants to cancel operation, true if they want to continue."
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.Update%28System.Double%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Progress.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Progress InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Progress.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Progress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "BeginSubOperation",
+      "signature": "void BeginSubOperation(double fractionOfRemainingTime)",
+      "summary": "Starts a sub operation. Progress in sub op between 0 and 1 maps to fraction of remaining time in main operation. Can be nested.",
+      "params": [
+        {
+          "name": "fractionOfRemainingTime",
+          "type": "double",
+          "doc": "Fraction of remaining time this sub operation will take, between 0 and 1",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.BeginSubOperation%28System.Double%29"
+    },
+    {
+      "name": "BeginSubOperation",
+      "signature": "void BeginSubOperation(double fractionOfRemainingTime, string message)",
+      "summary": "Starts a sub operation. Progress in sub op between 0 and 1 maps to fraction of remaining time in main operation. Can be nested.",
+      "params": [
+        {
+          "name": "fractionOfRemainingTime",
+          "type": "double",
+          "doc": "Fraction of remaining time this sub operation will take, between 0 and 1",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "User message to display for this sub operation.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.BeginSubOperation%28System.Double%2CSystem.String%29"
+    },
+    {
+      "name": "Cancel",
+      "signature": "void Cancel()",
+      "summary": "Forces operation to cancel next time Double) is called",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.Cancel"
+    },
+    {
+      "name": "EndSubOperation",
+      "signature": "void EndSubOperation()",
+      "summary": "Ends the current sub operation. It may have either fully completed or ended early.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.EndSubOperation"
+    },
+    {
+      "name": "EndSubOperation",
+      "signature": "void EndSubOperation(bool completed)",
+      "summary": "Ends the current sub operation. It may have either fully completed or ended early.",
+      "params": [
+        {
+          "name": "completed",
+          "type": "bool",
+          "doc": "States whether the sub operation completed or not.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.EndSubOperation%28System.Boolean%29"
+    },
+    {
+      "name": "Hide",
+      "signature": "void Hide()",
+      "summary": "Hide the progress if it is a dialog and it needs to get out of the way of another window that is about to open.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.Hide"
+    },
+    {
+      "name": "Show",
+      "signature": "void Show()",
+      "summary": "Show the progress if it is a dialog and was previously hidden.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Progress.Show"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsCanceled",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the operation is cancelled.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Progress.IsCanceled"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Progress.IsReadOnly"
+    },
+    {
+      "name": "WorkingFileName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The working filename. Set if multiple files are being processed in this operation to give more detailed information.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Progress.WorkingFileName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

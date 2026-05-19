@@ -1,0 +1,66 @@
+{
+  "name": "LcOpFileResolverFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpFileResolverFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpFileResolverFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFLAG_ABSOLUTE",
+      "value": 1
+    },
+    {
+      "name": "eFLAG_RELATIVE",
+      "value": 2
+    },
+    {
+      "name": "eFLAG_SEARCH_PATH",
+      "value": 4
+    },
+    {
+      "name": "eFLAG_SEARCH_DIR",
+      "value": 8
+    },
+    {
+      "name": "eFLAG_CHECK_CACHE",
+      "value": 16
+    },
+    {
+      "name": "eFLAG_AROUND_REFER",
+      "value": 32
+    },
+    {
+      "name": "eFLAG_AROUND_CACHE",
+      "value": 64
+    },
+    {
+      "name": "eFLAG_INTERACTIVE",
+      "value": 256
+    },
+    {
+      "name": "eFLAG_CACHE_RESOLVED",
+      "value": 512
+    },
+    {
+      "name": "eFLAG_CACHE_IGNORED",
+      "value": 1024
+    },
+    {
+      "name": "eFLAG_EXTERNAL",
+      "value": 2048
+    },
+    {
+      "name": "eFLAG_AUTO",
+      "value": 2303
+    },
+    {
+      "name": "eFLAG_DEFAULT",
+      "value": 3071
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "name": "FileProtocolHandle",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A file handle opened via the FileProtocolPlugin.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.FileProtocolHandle",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "bool Close()",
+      "summary": "Closes an open file handle.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolHandle.Close"
+    },
+    {
+      "name": "Read",
+      "signature": "bool Read(in byte[] data, ulong offset, ulong count)",
+      "summary": "Reads data from a file.",
+      "params": [
+        {
+          "name": "data",
+          "type": "byte[]",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "ulong",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolHandle.Read%28System.Byte%5B%5D%2CSystem.UInt64%2CSystem.UInt64%29"
+    },
+    {
+      "name": "Write",
+      "signature": "bool Write(byte[] data, ulong offset, ulong count)",
+      "summary": "Writes data to a file.",
+      "params": [
+        {
+          "name": "data",
+          "type": "byte[]",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "ulong",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolHandle.Write%28System.Byte%5B%5D%2CSystem.UInt64%2CSystem.UInt64%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

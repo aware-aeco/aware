@@ -1,0 +1,301 @@
+{
+  "name": "LcOpTextureSpaceElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpTextureSpaceElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpPathDictElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElement Create()",
+      "summary": "Create method of LcOpTextureSpaceElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.Create"
+    },
+    {
+      "name": "GetClass",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElementClass GetClass()",
+      "summary": "GetClass method of LcOpTextureSpaceElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.GetClass"
+    },
+    {
+      "name": "GetSelectedTextureSpace",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpace GetSelectedTextureSpace(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "GetSelectedTextureSpace method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.GetSelectedTextureSpace%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "Edit",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement Edit(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Edit method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.Edit%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "Get",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement Get(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Get method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.Get%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetSelectedTextureSpaceMapping",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping GetSelectedTextureSpaceMapping(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "GetSelectedTextureSpaceMapping method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.GetSelectedTextureSpaceMapping%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ApplyTextureSpace",
+      "signature": "static bool ApplyTextureSpace(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping mapping)",
+      "summary": "ApplyTextureSpace method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "mapping",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.ApplyTextureSpace%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping%29"
+    },
+    {
+      "name": "ApplyTextureSpaceAndTakeOwn",
+      "signature": "static bool ApplyTextureSpaceAndTakeOwn(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path_link, Autodesk.Navisworks.Api.Interop.LcOpTextureSpace tex_space)",
+      "summary": "ApplyTextureSpaceAndTakeOwn method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "tex_space",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.ApplyTextureSpaceAndTakeOwn%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpace%29"
+    },
+    {
+      "name": "CheckSelectedHasTextureCoordinates",
+      "signature": "static bool CheckSelectedHasTextureCoordinates(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "CheckSelectedHasTextureCoordinates method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.CheckSelectedHasTextureCoordinates%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "static bool Delete(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Delete method of LcOpTextureSpaceElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.Delete%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "GetClassUserName",
+      "signature": "static string GetClassUserName()",
+      "summary": "GetClassUserName method of LcOpTextureSpaceElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.GetClassUserName"
+    },
+    {
+      "name": "GetElementClassName",
+      "signature": "static string GetElementClassName()",
+      "summary": "GetElementClassName method of LcOpTextureSpaceElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.GetElementClassName"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpTextureSpaceElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

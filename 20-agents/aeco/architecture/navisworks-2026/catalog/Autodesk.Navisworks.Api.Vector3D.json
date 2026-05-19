@@ -1,0 +1,1263 @@
+{
+  "name": "Vector3D",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a direction with magnitude in 3D space. Immutable.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Vector3D",
+  "constructors": [
+    {
+      "name": "Vector3D()",
+      "signature": "Vector3D()",
+      "summary": "Create a zero vector",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Exception when \u0027false\u0027"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.%23ctor"
+    },
+    {
+      "name": "Vector3D(double, double, double)",
+      "signature": "Vector3D(double x, double y, double z)",
+      "summary": "Create a vector from X, Y and Z components",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToColor",
+      "signature": "Autodesk.Navisworks.Api.Color ToColor()",
+      "summary": "Convert vector to a color",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Unable to return a valid value"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.ToColor"
+    },
+    {
+      "name": "Add",
+      "signature": "Autodesk.Navisworks.Api.Point3D Add(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Translates a point by this vector and returns the resulting point",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Add%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "ToPoint3D",
+      "signature": "Autodesk.Navisworks.Api.Point3D ToPoint3D()",
+      "summary": "Convert vector to a point (equivalent to point from adding vector to origin)",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.ToPoint3D"
+    },
+    {
+      "name": "Add",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Add(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Adds another vector to this to produce a new vector",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Add%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Add(double value)",
+      "summary": "Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Add%28System.Double%29"
+    },
+    {
+      "name": "Cross",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Cross(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Returns the cross product between this vector and another",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Cross%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Divide",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Divide(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Divides this vector by another to produce a new vector",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Divide%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Divide",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Divide(double value)",
+      "summary": "Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Divide%28System.Double%29"
+    },
+    {
+      "name": "Invert",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Invert()",
+      "summary": "Returns an inverted version of this vector (all components inverted)",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Invert"
+    },
+    {
+      "name": "Multiply",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Multiply(Autodesk.Navisworks.Api.Matrix3 matrix)",
+      "summary": "Multiply method of Vector3D.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Multiply%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "Multiply",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Multiply(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Multiply method of Vector3D.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Multiply%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Multiply",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Multiply(double value)",
+      "summary": "Multiply method of Vector3D.",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Multiply%28System.Double%29"
+    },
+    {
+      "name": "Negate",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Negate()",
+      "summary": "Returns a negated version of this vector (all components negated)",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Negate"
+    },
+    {
+      "name": "Normalize",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Normalize()",
+      "summary": "Returns a normalized version of this vector (magnitude of 1)",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Normalize"
+    },
+    {
+      "name": "Subtract",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Subtract(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Subtracts a vector from this to produce a new vector",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Subtract%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Subtract",
+      "signature": "Autodesk.Navisworks.Api.Vector3D Subtract(double value)",
+      "summary": "Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Subtract%28System.Double%29"
+    },
+    {
+      "name": "DirectionEquals",
+      "signature": "bool DirectionEquals(Autodesk.Navisworks.Api.UnitVector3D vector)",
+      "summary": "Compare direction of vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.DirectionEquals%28Autodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "DirectionEquals",
+      "signature": "bool DirectionEquals(Autodesk.Navisworks.Api.UnitVector3D vector, double tolerance)",
+      "summary": "Compare direction of vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.DirectionEquals%28Autodesk.Navisworks.Api.UnitVector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "DirectionEquals",
+      "signature": "bool DirectionEquals(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Compare direction of vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.DirectionEquals%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "DirectionEquals",
+      "signature": "bool DirectionEquals(Autodesk.Navisworks.Api.Vector3D vector, double tolerance)",
+      "summary": "Compare direction of vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.DirectionEquals%28Autodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Equals%28System.Object%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "bool TolerantEquals(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Compare vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.TolerantEquals%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "bool TolerantEquals(Autodesk.Navisworks.Api.Vector3D vector, double tolerance)",
+      "summary": "Compare vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.TolerantEquals%28Autodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "Angle",
+      "signature": "double Angle(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Returns the angle between this vector and another vector in the range [0, PI]",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "vector to calculate angle with",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": "angle in radians between this and vector"
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Angle%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "AngleWithReference",
+      "signature": "double AngleWithReference(Autodesk.Navisworks.Api.Vector3D vector, Autodesk.Navisworks.Api.Vector3D reference)",
+      "summary": "Returns the angle between this vector and another vector in the range [-PI, PI], using a reference vector to determine the sign of the angle",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "vector to calculate angle with",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "doc": "reference vector pointing away from the plane containing this and vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": "angle in radians between this and vector"
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027reference\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027reference\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.AngleWithReference%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "Dot",
+      "signature": "double Dot(Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Returns the dot product between this vector and another",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.Dot%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.GetHashCode"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Vector3D.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Vector3D.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Addition(Autodesk.Navisworks.Api.Vector3D value1, Autodesk.Navisworks.Api.Vector3D value2)",
+      "summary": "Adds two vectors to produce a new vector",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Addition%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Addition(Autodesk.Navisworks.Api.Vector3D vector, double value)",
+      "summary": "Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Addition%28Autodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Addition(double value, Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Adds a value to every X, Y and Z coordinate in the Vector and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Addition%28System.Double%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Division(Autodesk.Navisworks.Api.Vector3D value1, Autodesk.Navisworks.Api.Vector3D value2)",
+      "summary": "Divides two vectors to produce a new vector",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Division%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Division(Autodesk.Navisworks.Api.Vector3D vector, double value)",
+      "summary": "Divides every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Division%28Autodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Multiply(Autodesk.Navisworks.Api.Vector3D value1, Autodesk.Navisworks.Api.Vector3D value2)",
+      "summary": "Multiplies two vectors to produce a new vector",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Multiply%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Multiply(Autodesk.Navisworks.Api.Vector3D vector, double value)",
+      "summary": "Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Multiply%28Autodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Multiply(double value, Autodesk.Navisworks.Api.Vector3D vector)",
+      "summary": "Multiplies every X, Y and Z coordinate in the Vector by a value and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Multiply%28System.Double%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Subtraction(Autodesk.Navisworks.Api.Vector3D value1, Autodesk.Navisworks.Api.Vector3D value2)",
+      "summary": "Subtracts two vectors to produce a new vector",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Subtraction%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Autodesk.Navisworks.Api.Vector3D op_Subtraction(Autodesk.Navisworks.Api.Vector3D vector, double value)",
+      "summary": "Subtracts a value from every X, Y and Z coordinate in the Vector and returns a new Vector with the result",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.op_Subtraction%28Autodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "static bool TolerantEquals(Autodesk.Navisworks.Api.Vector3D vector0, Autodesk.Navisworks.Api.Vector3D vector1)",
+      "summary": "Compare vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector0",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "vector1",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector0\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector0\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector1\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.TolerantEquals%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "static bool TolerantEquals(Autodesk.Navisworks.Api.Vector3D vector0, Autodesk.Navisworks.Api.Vector3D vector1, double tolerance)",
+      "summary": "Compare vectors using a tolerance",
+      "params": [
+        {
+          "name": "vector0",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "vector1",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector0\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector0\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector1\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.TolerantEquals%28Autodesk.Navisworks.Api.Vector3D%2CAutodesk.Navisworks.Api.Vector3D%2CSystem.Double%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Vector3D.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.IsReadOnly"
+    },
+    {
+      "name": "IsZero",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this a zero vector (all components are zero) ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.IsZero"
+    },
+    {
+      "name": "Item",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Item property of Vector3D.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.Item%28System.Int32%29"
+    },
+    {
+      "name": "Length",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Magnitude of vector",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.Length"
+    },
+    {
+      "name": "LengthSquared",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Magnitude of vector squared",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.LengthSquared"
+    },
+    {
+      "name": "UnitX",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a unit vector in the X direction (1,0,0)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.UnitX"
+    },
+    {
+      "name": "UnitY",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a unit vector in the Y direction (0,1,0)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.UnitY"
+    },
+    {
+      "name": "UnitZ",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a unit vector in the Z direction (0,0,1)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.UnitZ"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the X component of the vector",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.X"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Y component of the vector",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.Y"
+    },
+    {
+      "name": "Z",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Z component of the vector",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.Z"
+    },
+    {
+      "name": "Zero",
+      "type": "Autodesk.Navisworks.Api.Vector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a zero vector (0,0,0)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Vector3D.Zero"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

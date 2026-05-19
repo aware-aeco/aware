@@ -1,0 +1,265 @@
+{
+  "name": "LcVwISimplePrimitives",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwISimplePrimitives class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives",
+  "constructors": [
+    {
+      "name": "LcVwISimplePrimitives()",
+      "signature": "LcVwISimplePrimitives()",
+      "summary": "Constructs a new LcVwISimplePrimitives.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "BeginFragment",
+      "signature": "void BeginFragment()",
+      "summary": "BeginFragment method of LcVwISimplePrimitives.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.BeginFragment"
+    },
+    {
+      "name": "BeginIndexed",
+      "signature": "void BeginIndexed(Autodesk.Navisworks.Api.Interop.LcVwIArrayContext array_context, int start, int end)",
+      "summary": "BeginIndexed method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "array_context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwIArrayContext",
+          "optional": false
+        },
+        {
+          "name": "start",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.BeginIndexed%28Autodesk.Navisworks.Api.Interop.LcVwIArrayContext%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "EndFragment",
+      "signature": "void EndFragment()",
+      "summary": "EndFragment method of LcVwISimplePrimitives.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.EndFragment"
+    },
+    {
+      "name": "EndIndexed",
+      "signature": "void EndIndexed()",
+      "summary": "EndIndexed method of LcVwISimplePrimitives.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.EndIndexed"
+    },
+    {
+      "name": "IndexedLine",
+      "signature": "void IndexedLine(int vertex1, int vertex2)",
+      "summary": "IndexedLine method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.IndexedLine%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "IndexedPoint",
+      "signature": "void IndexedPoint(int vertex1)",
+      "summary": "IndexedPoint method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.IndexedPoint%28System.Int32%29"
+    },
+    {
+      "name": "IndexedTriangle",
+      "signature": "void IndexedTriangle(int vertex1, int vertex2, int vertex3)",
+      "summary": "IndexedTriangle method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.IndexedTriangle%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Line",
+      "signature": "void Line(Autodesk.Navisworks.Api.Interop.LcVwData3f vertex1, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex2)",
+      "summary": "Line method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.Line%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%29"
+    },
+    {
+      "name": "Point",
+      "signature": "void Point(Autodesk.Navisworks.Api.Interop.LcVwData3f vertex1)",
+      "summary": "Point method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.Point%28Autodesk.Navisworks.Api.Interop.LcVwData3f%29"
+    },
+    {
+      "name": "Triangle",
+      "signature": "void Triangle(Autodesk.Navisworks.Api.Interop.LcVwData3f vertex1, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex2, Autodesk.Navisworks.Api.Interop.LcVwData3f vertex3)",
+      "summary": "Triangle method of LcVwISimplePrimitives.",
+      "params": [
+        {
+          "name": "vertex1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        },
+        {
+          "name": "vertex3",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwData3f",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.Triangle%28Autodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%2CAutodesk.Navisworks.Api.Interop.LcVwData3f%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwISimplePrimitives.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

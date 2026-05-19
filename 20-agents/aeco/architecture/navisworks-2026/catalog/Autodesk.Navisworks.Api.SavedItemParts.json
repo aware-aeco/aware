@@ -1,0 +1,144 @@
+{
+  "name": "SavedItemParts",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Specifies parts of a SavedItem",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SavedItemParts",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No parts"
+    },
+    {
+      "name": "DisplayName",
+      "value": 1,
+      "summary": "DisplayName property"
+    },
+    {
+      "name": "Comments",
+      "value": 2,
+      "summary": "Comments"
+    },
+    {
+      "name": "XData",
+      "value": 4,
+      "summary": "Additional data attached to a SavedItem"
+    },
+    {
+      "name": "SubclassPart1",
+      "value": 256,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart2",
+      "value": 512,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart3",
+      "value": 1024,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart4",
+      "value": 2048,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart5",
+      "value": 4096,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart6",
+      "value": 8192,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart7",
+      "value": 16384,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart8",
+      "value": 32768,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart9",
+      "value": 65536,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart10",
+      "value": 131072,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart11",
+      "value": 262144,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart12",
+      "value": 524288,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart13",
+      "value": 1048576,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart14",
+      "value": 2097152,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart15",
+      "value": 4194304,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart16",
+      "value": 8388608,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart17",
+      "value": 16777216,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart18",
+      "value": 33554432,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart19",
+      "value": 67108864,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassPart20",
+      "value": 134217728,
+      "summary": "A part specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "SubclassParts",
+      "value": 268435200,
+      "summary": "All parts specific to a particular subclass of SavedItem"
+    },
+    {
+      "name": "All",
+      "value": 268435207,
+      "summary": "All parts"
+    }
+  ]
+}

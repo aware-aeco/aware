@@ -1,0 +1,19 @@
+{
+  "name": "DocumentInfoParts",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Specifies parts of a DocumentInfo",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentInfoParts",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CurrentSheetId",
+      "value": 256,
+      "summary": "Current sheet Id"
+    }
+  ]
+}

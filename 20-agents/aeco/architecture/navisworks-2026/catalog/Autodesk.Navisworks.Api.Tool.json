@@ -1,0 +1,258 @@
+{
+  "name": "Tool",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "View tool enumeration.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Tool",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No active tool"
+    },
+    {
+      "name": "Select",
+      "value": 1,
+      "summary": "Select"
+    },
+    {
+      "name": "SelectBox",
+      "value": 100,
+      "summary": "Select Box"
+    },
+    {
+      "name": "RedlineFreehand",
+      "value": 200,
+      "summary": "Redline Freehand"
+    },
+    {
+      "name": "RedlineLine",
+      "value": 201,
+      "summary": "Redline Line"
+    },
+    {
+      "name": "RedlineEllipse",
+      "value": 202,
+      "summary": "Redline Ellipse"
+    },
+    {
+      "name": "RedlineCloud",
+      "value": 203,
+      "summary": "Redline Cloud"
+    },
+    {
+      "name": "RedlineLineString",
+      "value": 204,
+      "summary": "Redline Line String"
+    },
+    {
+      "name": "RedlineTag",
+      "value": 205,
+      "summary": "Redline Tag"
+    },
+    {
+      "name": "RedlineText",
+      "value": 206,
+      "summary": "Redline Text"
+    },
+    {
+      "name": "RedlineErase",
+      "value": 207,
+      "summary": "Redline Erase"
+    },
+    {
+      "name": "RedlineArrow",
+      "value": 208,
+      "summary": "Redline Arrow"
+    },
+    {
+      "name": "MeasurePointToPoint",
+      "value": 300,
+      "summary": "Measure Point To Point"
+    },
+    {
+      "name": "MeasurePointToMultiplePoints",
+      "value": 301,
+      "summary": "Measure Point To Multiple Points"
+    },
+    {
+      "name": "MeasurePointLine",
+      "value": 302,
+      "summary": "Measure Point Line"
+    },
+    {
+      "name": "MeasureAccumulate",
+      "value": 303,
+      "summary": "Measure Accumulate"
+    },
+    {
+      "name": "MeasureAngle",
+      "value": 304,
+      "summary": "Measure Angle"
+    },
+    {
+      "name": "MeasureArea",
+      "value": 305,
+      "summary": "Measure Area"
+    },
+    {
+      "name": "MeasureSingle",
+      "value": 306
+    },
+    {
+      "name": "BasicViewObjectWheel",
+      "value": 400,
+      "summary": "Basic View Object Wheel"
+    },
+    {
+      "name": "BasicTourBuildingWheel",
+      "value": 401,
+      "summary": "Basic Tour Building Wheel"
+    },
+    {
+      "name": "FullNavigationWheel",
+      "value": 402,
+      "summary": "Full Navigation Wheel"
+    },
+    {
+      "name": "MiniViewObjectWheel",
+      "value": 403,
+      "summary": "Mini View Object Wheel"
+    },
+    {
+      "name": "MiniTourBuildingWheel",
+      "value": 404,
+      "summary": "Mini Tour Building Wheel"
+    },
+    {
+      "name": "MiniFullNavigationWheel",
+      "value": 405,
+      "summary": "Mini Full Navigation Wheel"
+    },
+    {
+      "name": "Full2DNavigationWheel",
+      "value": 406,
+      "summary": "Full 2D Navigation Wheel"
+    },
+    {
+      "name": "CommonPan",
+      "value": 500,
+      "summary": "Pan common across all Autodesk products"
+    },
+    {
+      "name": "CommonZoom",
+      "value": 501,
+      "summary": "Zoom common across all Autodesk products"
+    },
+    {
+      "name": "CommonZoomWindow",
+      "value": 502,
+      "summary": "Zoom Window common across all Autodesk products"
+    },
+    {
+      "name": "CommonOrbit",
+      "value": 503,
+      "summary": "Orbit common across all Autodesk products"
+    },
+    {
+      "name": "CommonFreeOrbit",
+      "value": 504,
+      "summary": "Free Orbit common across all Autodesk products"
+    },
+    {
+      "name": "CommonConstrainedOrbit",
+      "value": 505,
+      "summary": "Constrained Orbit common across all Autodesk products"
+    },
+    {
+      "name": "CommonLookAt",
+      "value": 506,
+      "summary": "Look At common across all Autodesk products"
+    },
+    {
+      "name": "CommonLookAround",
+      "value": 507,
+      "summary": "Look Around common across all Autodesk products"
+    },
+    {
+      "name": "CommonWalk",
+      "value": 508,
+      "summary": "Walk common across all Autodesk products"
+    },
+    {
+      "name": "CommonCenter",
+      "value": 509,
+      "summary": "Center common across all Autodesk products"
+    },
+    {
+      "name": "NavigateFixed",
+      "value": 600,
+      "summary": "Camera fixed in place"
+    },
+    {
+      "name": "NavigateFreeLookAround",
+      "value": 601,
+      "summary": "Classic Navisworks Free Look Around (Swivel)"
+    },
+    {
+      "name": "NavigateFreeOrbit",
+      "value": 602,
+      "summary": "Classic Navisworks Free Orbit (Examine)"
+    },
+    {
+      "name": "NavigateWalk",
+      "value": 603,
+      "summary": "Classic Navisworks Walk"
+    },
+    {
+      "name": "NavigateFly",
+      "value": 604,
+      "summary": "Classic Navisworks Fly"
+    },
+    {
+      "name": "NavigateConstrainedOrbit",
+      "value": 605,
+      "summary": "Classic Navisworks Constrained Orbit (Turntable)"
+    },
+    {
+      "name": "NavigateZoom",
+      "value": 607,
+      "summary": "Classic Navisworks Zoom"
+    },
+    {
+      "name": "NavigatePan",
+      "value": 608,
+      "summary": "Classic Navisworks Pan"
+    },
+    {
+      "name": "NavigateConstrainedPan",
+      "value": 609,
+      "summary": "Classic Navisworks Constrained Pan"
+    },
+    {
+      "name": "NavigateLookAround",
+      "value": 610,
+      "summary": "Clasic Navisworks Look Around (Swivel)"
+    },
+    {
+      "name": "NavigateOrbit",
+      "value": 611,
+      "summary": "Classic Navisworks Orbit"
+    },
+    {
+      "name": "NavigateZoomWindow",
+      "value": 612,
+      "summary": "Classic Navisworks Zoom Window (Zoom Box)"
+    },
+    {
+      "name": "CustomToolPlugin",
+      "value": 700,
+      "summary": "Functionality is provided by a ToolPlugin"
+    }
+  ]
+}

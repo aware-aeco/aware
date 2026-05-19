@@ -1,0 +1,93 @@
+{
+  "name": "ApplicationResources",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "class",
+  "summary": "Provides access to Application Resources",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.ApplicationResources",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetString",
+      "signature": "string GetString(string name)",
+      "summary": "Looks up a localizable string",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The identifier of the string to lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns localized string"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "The identifier is Null."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Failed to look up string with specified identifier"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationResources.GetString%28System.String%29"
+    },
+    {
+      "name": "GetStringSafe",
+      "signature": "string GetStringSafe(string name)",
+      "summary": "Looks up a localizable string",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The identifier of the string to lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns localized string or value of \u0027name\u0027 if it cannot be found"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "The identifier is Null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationResources.GetStringSafe%28System.String%29"
+    },
+    {
+      "name": "TryGetString",
+      "signature": "string TryGetString(string name)",
+      "summary": "Looks up a localizable string",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The identifier of the string to lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns localized string or Null if it cannot be found"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "The identifier is Null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationResources.TryGetString%28System.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,173 @@
+{
+  "name": "Rule",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "An instance of a rule that is used by plugins to apply behaviour.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Rule",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.Rule CreateCopy()",
+      "summary": "Creates a copy of the rule.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rule",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Rule.CreateCopy"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.Rule value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Rule",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Rule.ValueEquals%28Autodesk.Navisworks.Api.Rule%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Rule.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Rule.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Rule InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Rule.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rule",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Rule.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.Rule value1, Autodesk.Navisworks.Api.Rule value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Rule",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Rule",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Rule.ValueEquals%28Autodesk.Navisworks.Api.Rule%2CAutodesk.Navisworks.Api.Rule%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AllParamsAreSet",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if all of the required parameters for the rule have been set.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Rule.AllParamsAreSet"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of the rule as diplayed in the GUI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Rule.DisplayName"
+    },
+    {
+      "name": "IsEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if this rule is enabled.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Rule.IsEnabled"
+    },
+    {
+      "name": "IsImplemented",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if the plugin that implements this rule has been found.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Rule.IsImplemented"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Rule.IsReadOnly"
+    },
+    {
+      "name": "SomeParamsAreSet",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if any of the required parameters for the rule have been set.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Rule.SomeParamsAreSet"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

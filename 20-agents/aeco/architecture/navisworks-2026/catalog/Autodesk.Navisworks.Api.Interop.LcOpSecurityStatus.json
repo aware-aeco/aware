@@ -1,0 +1,38 @@
+{
+  "name": "LcOpSecurityStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSecurityStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSecurityStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSTATUS_OK",
+      "value": 0
+    },
+    {
+      "name": "eSTATUS_NONE_LEFT",
+      "value": 2
+    },
+    {
+      "name": "eSTATUS_EXPIRED",
+      "value": 3
+    },
+    {
+      "name": "eSTATUS_NO_LICENSE",
+      "value": 5
+    },
+    {
+      "name": "eSTATUS_FAILED",
+      "value": 6
+    },
+    {
+      "name": "eSTATUS_NONE_SUIT",
+      "value": 7
+    }
+  ]
+}

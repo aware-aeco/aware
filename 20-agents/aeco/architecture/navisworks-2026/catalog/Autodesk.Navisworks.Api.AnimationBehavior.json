@@ -1,0 +1,29 @@
+{
+  "name": "AnimationBehavior",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Animation behavior as applied by the TimeLiner simulation engine.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.AnimationBehavior",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Scale",
+      "value": 0,
+      "summary": "The animation duration is scaled to be same as task duration."
+    },
+    {
+      "name": "Start",
+      "value": 1,
+      "summary": "The animation starts when the task starts. The animation may be clipped if the task finishes before animation does."
+    },
+    {
+      "name": "End",
+      "value": 2,
+      "summary": "The animation starts so that it ends when the task ends. The animation start is clipped (starts part way through) if the animation needs to start before task does."
+    }
+  ]
+}

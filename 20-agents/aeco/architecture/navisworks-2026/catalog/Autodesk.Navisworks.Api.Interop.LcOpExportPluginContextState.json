@@ -1,0 +1,38 @@
+{
+  "name": "LcOpExportPluginContextState",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpExportPluginContextState enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpExportPluginContextState",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCONTEXT_NORMAL",
+      "value": 0
+    },
+    {
+      "name": "eCONTEXT_ENABLE",
+      "value": 0
+    },
+    {
+      "name": "eCONTEXT_CHECK",
+      "value": 1
+    },
+    {
+      "name": "eCONTEXT_RADIO",
+      "value": 2
+    },
+    {
+      "name": "eCONTEXT_DISABLE",
+      "value": 16
+    },
+    {
+      "name": "eCONTEXT_GREY",
+      "value": 32
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "LcUOptionSetMyFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetMyFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFLAG_ORDERED",
+      "value": 1
+    },
+    {
+      "name": "eFLAG_ARRAY",
+      "value": 2
+    },
+    {
+      "name": "eFLAG_CUSTOM_OPTION",
+      "value": 4
+    },
+    {
+      "name": "eFLAG_NO_SERIALIZE",
+      "value": 8
+    },
+    {
+      "name": "eFLAG_ARRAY_FIXED",
+      "value": 16
+    },
+    {
+      "name": "eFLAG_NO_CACHE",
+      "value": 32
+    },
+    {
+      "name": "eFLAG_NO_GC",
+      "value": 64
+    },
+    {
+      "name": "eFLAG_NO_TOOLBAR",
+      "value": 128
+    },
+    {
+      "name": "eFLAG_INHERIT_OPTS",
+      "value": 256
+    }
+  ]
+}

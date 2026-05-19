@@ -1,0 +1,23 @@
+{
+  "name": "ProgressEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Base class for progress related events where event handler can replace standard implementation",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Handled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets a value that indicates whether the event handler has completely handled the event or whether the system should continue its own processing.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressEventArgs.Handled"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

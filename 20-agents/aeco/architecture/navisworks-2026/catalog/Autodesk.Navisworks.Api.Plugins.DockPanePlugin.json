@@ -1,0 +1,177 @@
+{
+  "name": "DockPanePlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin that can be used to add a docking pane to the GUI.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.DockPanePlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateControlPane",
+      "signature": "System.Windows.Forms.Control CreateControlPane()",
+      "summary": "Called to tell the plugin to create it\u0027s pane. The pane will be resized as specified by the DockPanePluginAttribute. Should be overriden in conjunction with DestroyControlPane.",
+      "params": [],
+      "returns": {
+        "type": "System.Windows.Forms.Control",
+        "doc": "A Control that contains the pane content"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.CreateControlPane"
+    },
+    {
+      "name": "CreateHWndPane",
+      "signature": "System.Windows.Forms.IWin32Window CreateHWndPane(System.Windows.Forms.IWin32Window parent)",
+      "summary": "Called to tell the plugin to create it\u0027s pane. The pane will be resized as specified by the DockPanePluginAttribute. Should be overriden in conjunction with DestroyHWndPane.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "System.Windows.Forms.IWin32Window",
+          "doc": "The pane should be created using this window as it\u0027s parent",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Forms.IWin32Window",
+        "doc": "The handle of window that contains the pane content"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.CreateHWndPane%28System.Windows.Forms.IWin32Window%29"
+    },
+    {
+      "name": "TryShowHelp",
+      "signature": "bool TryShowHelp()",
+      "summary": "Called to tell the plugin to display help",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if you have handled this call"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.TryShowHelp"
+    },
+    {
+      "name": "TryShowHelpAtScreenPoint",
+      "signature": "bool TryShowHelpAtScreenPoint(int x, int y)",
+      "summary": "Called to tell the plugin to display help at a screen point",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if you have handled this call"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.TryShowHelpAtScreenPoint%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "TryShowHelpForHighlight",
+      "signature": "bool TryShowHelpForHighlight()",
+      "summary": "Called to tell the plugin to display help for highlight",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if you have handled this call"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.TryShowHelpForHighlight"
+    },
+    {
+      "name": "ActivatePane",
+      "signature": "void ActivatePane()",
+      "summary": "Activates the pane (i.e. makes it the window with keyboard focus), also making it visible first, if necessary.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.ActivatePane"
+    },
+    {
+      "name": "DestroyControlPane",
+      "signature": "void DestroyControlPane(System.Windows.Forms.Control pane)",
+      "summary": "Called to tell the plugin to destroy it\u0027s pane Should be overriden in conjunction with CreateControlPane.",
+      "params": [
+        {
+          "name": "pane",
+          "type": "System.Windows.Forms.Control",
+          "doc": "The pane to destroy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.DestroyControlPane%28System.Windows.Forms.Control%29"
+    },
+    {
+      "name": "DestroyHWndPane",
+      "signature": "void DestroyHWndPane(System.Windows.Forms.IWin32Window pane)",
+      "summary": "Called to tell the plugin to destroy it\u0027s pane. Should be overriden in conjunction with CreateHWndPane.",
+      "params": [
+        {
+          "name": "pane",
+          "type": "System.Windows.Forms.IWin32Window",
+          "doc": "The pane to destroy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.DestroyHWndPane%28System.Windows.Forms.IWin32Window%29"
+    },
+    {
+      "name": "OnActivePaneChanged",
+      "signature": "void OnActivePaneChanged(bool isActive)",
+      "summary": "Called when the active pane changes",
+      "params": [
+        {
+          "name": "isActive",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.OnActivePaneChanged%28System.Boolean%29"
+    },
+    {
+      "name": "OnVisibleChanged",
+      "signature": "void OnVisibleChanged()",
+      "summary": "Called when the visibility of the pane changes",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.OnVisibleChanged"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Visible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "The visibility of the pane",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePlugin.Visible"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

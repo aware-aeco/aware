@@ -1,0 +1,65 @@
+{
+  "name": "DocumentFileException",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "The exception that is thrown by file operation methods in Document",
+  "base": "System.IO.IOException",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentFileException",
+  "constructors": [
+    {
+      "name": "DocumentFileException()",
+      "signature": "DocumentFileException()",
+      "summary": "Creates a DocumentFileException",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentFileException.%23ctor"
+    },
+    {
+      "name": "DocumentFileException(string)",
+      "signature": "DocumentFileException(string message)",
+      "summary": "Creates a DocumentFileException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The error message that explains the reason for the exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentFileException.%23ctor%28System.String%29"
+    },
+    {
+      "name": "DocumentFileException(string, System.Exception)",
+      "signature": "DocumentFileException(string message, System.Exception innerException)",
+      "summary": "Creates a DocumentFileException",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "doc": "The error message that explains the reason for the exception.",
+          "optional": false
+        },
+        {
+          "name": "innerException",
+          "type": "System.Exception",
+          "doc": "The exception that is the cause of the current exception. If the innerException parameter is not null, the current exception is raised in a catch block that handles the inner exception.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentFileException.%23ctor%28System.String%2CSystem.Exception%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,33 @@
+{
+  "name": "IPluginFactory",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "IPluginFactory interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.IPluginFactory",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreatePlugins",
+      "signature": "System.Collections.Generic.IList\u003Cobject\u003E CreatePlugins(System.Attribute attribLoading)",
+      "summary": "CreatePlugins method of IPluginFactory.",
+      "params": [
+        {
+          "name": "attribLoading",
+          "type": "System.Attribute",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IList\u003Cobject\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.IPluginFactory.CreatePlugins%28System.Attribute%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

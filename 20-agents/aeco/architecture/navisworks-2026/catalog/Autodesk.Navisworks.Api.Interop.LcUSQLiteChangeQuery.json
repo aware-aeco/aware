@@ -1,0 +1,151 @@
+{
+  "name": "LcUSQLiteChangeQuery",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUSQLiteChangeQuery class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery",
+  "constructors": [
+    {
+      "name": "LcUSQLiteChangeQuery()",
+      "signature": "LcUSQLiteChangeQuery()",
+      "summary": "Constructs a new LcUSQLiteChangeQuery.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetChangeType",
+      "signature": "Autodesk.Navisworks.Api.Data.DatabaseChangeTypes GetChangeType()",
+      "summary": "GetChangeType method of LcUSQLiteChangeQuery.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.DatabaseChangeTypes",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.GetChangeType"
+    },
+    {
+      "name": "Reset",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Reset()",
+      "summary": "Reset method of LcUSQLiteChangeQuery.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.Reset"
+    },
+    {
+      "name": "Step",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus Step()",
+      "summary": "Step method of LcUSQLiteChangeQuery.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.Step"
+    },
+    {
+      "name": "GetRowId",
+      "signature": "long GetRowId()",
+      "summary": "GetRowId method of LcUSQLiteChangeQuery.",
+      "params": [],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.GetRowId"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUSQLiteChangeQuery.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUSQLiteChangeQuery.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetTableName",
+      "signature": "void GetTableName(out string name)",
+      "summary": "GetTableName method of LcUSQLiteChangeQuery.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.GetTableName%28System.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUSQLiteChangeQuery.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

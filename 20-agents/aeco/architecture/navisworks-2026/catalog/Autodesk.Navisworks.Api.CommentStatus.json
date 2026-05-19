@@ -1,0 +1,34 @@
+{
+  "name": "CommentStatus",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Specifies status of comment.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.CommentStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "New",
+      "value": 0,
+      "summary": "Newly created comment."
+    },
+    {
+      "name": "Active",
+      "value": 1,
+      "summary": "Active issue."
+    },
+    {
+      "name": "Approved",
+      "value": 2,
+      "summary": "Issue has been approved."
+    },
+    {
+      "name": "Resolved",
+      "value": 3,
+      "summary": "Issue has been resolved."
+    }
+  ]
+}

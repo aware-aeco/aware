@@ -1,0 +1,226 @@
+{
+  "name": "LcOpPluginCaps",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpPluginCaps enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPluginCaps",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCAP_LOAD",
+      "value": 1
+    },
+    {
+      "name": "eCAP_COMMENT_IMAGELIST",
+      "value": 1
+    },
+    {
+      "name": "eCAP_CLASH_IGNORE",
+      "value": 1
+    },
+    {
+      "name": "eCAP_PROPERTY_NAME",
+      "value": 1
+    },
+    {
+      "name": "eCAP_POLICY_BACKGROUND",
+      "value": 1
+    },
+    {
+      "name": "eCAP_EXPORT_PROGRESS",
+      "value": 1
+    },
+    {
+      "name": "eCAP_PROPERTY2_CLASS",
+      "value": 1
+    },
+    {
+      "name": "eCAP_PROPERTY_TEXT",
+      "value": 2
+    },
+    {
+      "name": "eCAP_COMMENT_POSITION",
+      "value": 2
+    },
+    {
+      "name": "eCAP_SAVE",
+      "value": 2
+    },
+    {
+      "name": "eCAP_POLICY_LIGHTS",
+      "value": 2
+    },
+    {
+      "name": "eCAP_PROPERTY2_ADD",
+      "value": 2
+    },
+    {
+      "name": "eCAP_EXPORT_EXPLICIT",
+      "value": 2
+    },
+    {
+      "name": "eCAP_CLASH_IGNORE_SLOW",
+      "value": 2
+    },
+    {
+      "name": "eCAP_POLICY_PRIORITY",
+      "value": 4
+    },
+    {
+      "name": "eCAP_PROPERTY2_NAME",
+      "value": 4
+    },
+    {
+      "name": "eCAP_LOAD_PROGRESS",
+      "value": 4
+    },
+    {
+      "name": "eCAP_CLASH_IGNORE2",
+      "value": 4
+    },
+    {
+      "name": "eCAP_EXPORT_CONTEXT_ITEM",
+      "value": 4
+    },
+    {
+      "name": "eCAP_COMMENT_BOUNDS",
+      "value": 4
+    },
+    {
+      "name": "eCAP_EXPORT_IMPORT",
+      "value": 8
+    },
+    {
+      "name": "eCAP_CLASH_RESULT",
+      "value": 8
+    },
+    {
+      "name": "eCAP_SAVE_PROGRESS",
+      "value": 8
+    },
+    {
+      "name": "eCAP_PROPERTY2_PROPS",
+      "value": 8
+    },
+    {
+      "name": "eCAP_PROPERTY2_REPLACE",
+      "value": 16
+    },
+    {
+      "name": "eCAP_CLASH_IGNORE_TIMELINER",
+      "value": 16
+    },
+    {
+      "name": "eCAP_FORMAT_OPTIONS",
+      "value": 16
+    },
+    {
+      "name": "eCAP_RESOLVE_XREFS",
+      "value": 16
+    },
+    {
+      "name": "eCAP_HOST",
+      "value": 32
+    },
+    {
+      "name": "eCAP_CLASH_RESULT_TIMELINER",
+      "value": 32
+    },
+    {
+      "name": "eCAP_CLASH_OBSOLETE",
+      "value": 64
+    },
+    {
+      "name": "eCAP_REMOTE",
+      "value": 64
+    },
+    {
+      "name": "eCAP_EXPORT_TO_FILE",
+      "value": 128
+    },
+    {
+      "name": "eCAP_EXPORT_TOOL",
+      "value": 256
+    },
+    {
+      "name": "eCAP_DONT_CACHE",
+      "value": 512
+    },
+    {
+      "name": "eCAP_EXPORT_DIALOG",
+      "value": 512
+    },
+    {
+      "name": "eCAP_EXPORT_HELP",
+      "value": 1024
+    },
+    {
+      "name": "eCAP_SCENE_XREFS",
+      "value": 1024
+    },
+    {
+      "name": "eCAP_INITIAL_VIEW",
+      "value": 2048
+    },
+    {
+      "name": "eCAP_EXPORT_ADD_IN",
+      "value": 2048
+    },
+    {
+      "name": "eCAP_LOAD_FILE_INFO",
+      "value": 4096
+    },
+    {
+      "name": "eCAP_SAVE_SETS_FILENAME",
+      "value": 8192
+    },
+    {
+      "name": "eCAP_OPTION_SET",
+      "value": 65536
+    },
+    {
+      "name": "eCAP_HAS_OPTIONS",
+      "value": 131072
+    },
+    {
+      "name": "eCAP_HAS_SUB_OPTIONS",
+      "value": 262144
+    },
+    {
+      "name": "eCAP_UI_INVISIBLE",
+      "value": 524288
+    },
+    {
+      "name": "eCAP_REQUIRED_PLUGIN",
+      "value": 16777216
+    },
+    {
+      "name": "eCAP_IGNORE_LOAD_ERROR",
+      "value": 33554432
+    },
+    {
+      "name": "eCAP_OPTIONAL_PLUGIN",
+      "value": 67108864
+    },
+    {
+      "name": "eCAP_DO_NOT_LOAD",
+      "value": 134217728
+    },
+    {
+      "name": "eCAP_NO_DELAY",
+      "value": 268435456
+    },
+    {
+      "name": "eCAP_CUSTOM_OPTION",
+      "value": 536870912
+    },
+    {
+      "name": "eCAP_NO_USER_PARAMS",
+      "value": 1073741824
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "name": "ModelItemEnumerableCollection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Collection of ModelItems that only supports Enumerable style interfaces",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E Where(Autodesk.Navisworks.Api.SearchCondition condition)",
+      "summary": "Filters the items based on a search condition",
+      "params": [
+        {
+          "name": "condition",
+          "type": "Autodesk.Navisworks.Api.SearchCondition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.Where%28Autodesk.Navisworks.Api.SearchCondition%29"
+    },
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E Where(Autodesk.Navisworks.Api.SearchConditionCollection conditions)",
+      "summary": "Filters the instances based on a set of search conditions",
+      "params": [
+        {
+          "name": "conditions",
+          "type": "Autodesk.Navisworks.Api.SearchConditionCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.Where%28Autodesk.Navisworks.Api.SearchConditionCollection%29"
+    },
+    {
+      "name": "WhereInstanceGuid",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E WhereInstanceGuid(System.Guid value)",
+      "summary": "Filters the instances to those with given InstanceGuid",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.WhereInstanceGuid%28System.Guid%29"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.ModelItem\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.GetEnumerator"
+    },
+    {
+      "name": "InternalGetEnumerator",
+      "signature": "System.Collections.IEnumerator InternalGetEnumerator()",
+      "summary": "InternalGetEnumerator method of ModelItemEnumerableCollection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.InternalGetEnumerator"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.ToString"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.ModelItem\u003E to)",
+      "summary": "Enumerates over the collection and copies the items into to",
+      "params": [
+        {
+          "name": "to",
+          "type": "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "Collection to copy into",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.CopyTo%28System.Collections.Generic.ICollection%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Empty",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns an empty ModelItemEnumerableCollection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.Empty"
+    },
+    {
+      "name": "First",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the first item in the enumeration, returns null if the collection is empty",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemEnumerableCollection.First"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

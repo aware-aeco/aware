@@ -1,0 +1,689 @@
+{
+  "name": "AbortOnException",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "AbortOnException class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.AbortOnException",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func1\u003CT, TResult\u003E del, T arg1)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func1\u003CT, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%602%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func1%7B%60%600%2C%60%601%7D%2C%60%600%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, T3, T4, T5, T6, T7, T8, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func8\u003CT1, T2, T3, T4, T5, T6, T7, T8, TResult\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func8\u003CT1, T2, T3, T4, T5, T6, T7, T8, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        },
+        {
+          "name": "arg6",
+          "type": "T6",
+          "optional": false
+        },
+        {
+          "name": "arg7",
+          "type": "T7",
+          "optional": false
+        },
+        {
+          "name": "arg8",
+          "type": "T8",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%609%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func8%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%2C%60%608%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, T3, T4, T5, T6, T7, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func7\u003CT1, T2, T3, T4, T5, T6, T7, TResult\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func7\u003CT1, T2, T3, T4, T5, T6, T7, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        },
+        {
+          "name": "arg6",
+          "type": "T6",
+          "optional": false
+        },
+        {
+          "name": "arg7",
+          "type": "T7",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%608%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func7%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, T3, T4, T5, T6, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func6\u003CT1, T2, T3, T4, T5, T6, TResult\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func6\u003CT1, T2, T3, T4, T5, T6, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        },
+        {
+          "name": "arg6",
+          "type": "T6",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%607%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func6%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, T3, T4, T5, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func5\u003CT1, T2, T3, T4, T5, TResult\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func5\u003CT1, T2, T3, T4, T5, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%606%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func5%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, T3, T4, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func4\u003CT1, T2, T3, T4, TResult\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func4\u003CT1, T2, T3, T4, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%605%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func4%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, T3, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func3\u003CT1, T2, T3, TResult\u003E del, T1 arg1, T2 arg2, T3 arg3)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func3\u003CT1, T2, T3, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%604%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func3%7B%60%600%2C%60%601%2C%60%602%2C%60%603%7D%2C%60%600%2C%60%601%2C%60%602%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CT1, T2, TResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func2\u003CT1, T2, TResult\u003E del, T1 arg1, T2 arg2)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func2\u003CT1, T2, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%603%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func2%7B%60%600%2C%60%601%2C%60%602%7D%2C%60%600%2C%60%601%29"
+    },
+    {
+      "name": "CallFunc",
+      "signature": "static TResult CallFunc\u003CTResult\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Func0\u003CTResult\u003E del)",
+      "summary": "CallFunc method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Func0\u003CTResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallFunc%60%601%28Autodesk.Navisworks.Api.Interop.AbortOnException.Func0%7B%60%600%7D%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction(Autodesk.Navisworks.Api.Interop.AbortOnException.Action0 del)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action0",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action0%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action8\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7, T8 arg8)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action8\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        },
+        {
+          "name": "arg6",
+          "type": "T6",
+          "optional": false
+        },
+        {
+          "name": "arg7",
+          "type": "T7",
+          "optional": false
+        },
+        {
+          "name": "arg8",
+          "type": "T8",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%608%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action8%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2, T3, T4, T5, T6, T7\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action7\u003CT1, T2, T3, T4, T5, T6, T7\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6, T7 arg7)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action7\u003CT1, T2, T3, T4, T5, T6, T7\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        },
+        {
+          "name": "arg6",
+          "type": "T6",
+          "optional": false
+        },
+        {
+          "name": "arg7",
+          "type": "T7",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%607%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action7%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2, T3, T4, T5, T6\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action6\u003CT1, T2, T3, T4, T5, T6\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5, T6 arg6)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action6\u003CT1, T2, T3, T4, T5, T6\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        },
+        {
+          "name": "arg6",
+          "type": "T6",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%606%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action6%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2, T3, T4, T5\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action5\u003CT1, T2, T3, T4, T5\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action5\u003CT1, T2, T3, T4, T5\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        },
+        {
+          "name": "arg5",
+          "type": "T5",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%605%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action5%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2, T3, T4\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action4\u003CT1, T2, T3, T4\u003E del, T1 arg1, T2 arg2, T3 arg3, T4 arg4)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action4\u003CT1, T2, T3, T4\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        },
+        {
+          "name": "arg4",
+          "type": "T4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%604%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action4%7B%60%600%2C%60%601%2C%60%602%2C%60%603%7D%2C%60%600%2C%60%601%2C%60%602%2C%60%603%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2, T3\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action3\u003CT1, T2, T3\u003E del, T1 arg1, T2 arg2, T3 arg3)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action3\u003CT1, T2, T3\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        },
+        {
+          "name": "arg3",
+          "type": "T3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%603%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action3%7B%60%600%2C%60%601%2C%60%602%7D%2C%60%600%2C%60%601%2C%60%602%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT1, T2\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action2\u003CT1, T2\u003E del, T1 arg1, T2 arg2)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action2\u003CT1, T2\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T1",
+          "optional": false
+        },
+        {
+          "name": "arg2",
+          "type": "T2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%602%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action2%7B%60%600%2C%60%601%7D%2C%60%600%2C%60%601%29"
+    },
+    {
+      "name": "CallAction",
+      "signature": "static void CallAction\u003CT\u003E(Autodesk.Navisworks.Api.Interop.AbortOnException.Action1\u003CT\u003E del, T arg1)",
+      "summary": "CallAction method of AbortOnException.",
+      "params": [
+        {
+          "name": "del",
+          "type": "Autodesk.Navisworks.Api.Interop.AbortOnException.Action1\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "arg1",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.AbortOnException.CallAction%60%601%28Autodesk.Navisworks.Api.Interop.AbortOnException.Action1%7B%60%600%7D%2C%60%600%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

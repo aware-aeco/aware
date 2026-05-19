@@ -1,0 +1,24 @@
+{
+  "name": "ViewpointProjection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The projection type of the viewpoint",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewpointProjection",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Perspective",
+      "value": 0,
+      "summary": "Perspective viewpoint"
+    },
+    {
+      "name": "Orthographic",
+      "value": 1,
+      "summary": "Orthographic viewpoint"
+    }
+  ]
+}

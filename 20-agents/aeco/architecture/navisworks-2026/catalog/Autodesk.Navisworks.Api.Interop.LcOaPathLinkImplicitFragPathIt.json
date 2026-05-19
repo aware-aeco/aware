@@ -1,0 +1,180 @@
+{
+  "name": "LcOaPathLinkImplicitFragPathIt",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaPathLinkImplicitFragPathIt class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt",
+  "constructors": [
+    {
+      "name": "LcOaPathLinkImplicitFragPathIt()",
+      "signature": "LcOaPathLinkImplicitFragPathIt()",
+      "summary": "Constructs a new LcOaPathLinkImplicitFragPathIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.%23ctor"
+    },
+    {
+      "name": "LcOaPathLinkImplicitFragPathIt(Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt)",
+      "signature": "LcOaPathLinkImplicitFragPathIt(Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt p)",
+      "summary": "Constructs a new LcOaPathLinkImplicitFragPathIt.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt%29"
+    },
+    {
+      "name": "LcOaPathLinkImplicitFragPathIt(Autodesk.Navisworks.Api.ModelItem)",
+      "signature": "LcOaPathLinkImplicitFragPathIt(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "Constructs a new LcOaPathLinkImplicitFragPathIt.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.%23ctor%28Autodesk.Navisworks.Api.ModelItem%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Current",
+      "signature": "Autodesk.Navisworks.Api.ModelGeometry Current()",
+      "summary": "Current method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelGeometry",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.Current"
+    },
+    {
+      "name": "Equal",
+      "signature": "bool Equal(Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt p)",
+      "summary": "Equal method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.Equal%28Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt%29"
+    },
+    {
+      "name": "IsValid",
+      "signature": "bool IsValid()",
+      "summary": "IsValid method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.IsValid"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Invalidate",
+      "signature": "void Invalidate()",
+      "summary": "Invalidate method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.Invalidate"
+    },
+    {
+      "name": "Next",
+      "signature": "void Next()",
+      "summary": "Next method of LcOaPathLinkImplicitFragPathIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.Next"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaPathLinkImplicitFragPathIt.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkImplicitFragPathIt.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "LcOpSaveFileEventSaveFileEventPhase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSaveFileEventSaveFileEventPhase enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSaveFileEventSaveFileEventPhase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSAVEFILE_PHASE_PRE",
+      "value": 0
+    },
+    {
+      "name": "eSAVEFILE_PHASE_POST",
+      "value": 1
+    }
+  ]
+}

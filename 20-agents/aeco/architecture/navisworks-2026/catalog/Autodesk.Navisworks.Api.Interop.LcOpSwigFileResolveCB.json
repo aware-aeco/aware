@@ -1,0 +1,252 @@
+{
+  "name": "LcOpSwigFileResolveCB",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigFileResolveCB class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB",
+  "constructors": [
+    {
+      "name": "LcOpSwigFileResolveCB()",
+      "signature": "LcOpSwigFileResolveCB()",
+      "summary": "Constructs a new LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ResolveInteractive",
+      "signature": "Autodesk.Navisworks.Api.FileResolutionResponse ResolveInteractive(Autodesk.Navisworks.Api.FileReferenceResolver resolver, string file, out string resolved_to_open)",
+      "summary": "ResolveInteractive method of LcOpSwigFileResolveCB.",
+      "params": [
+        {
+          "name": "resolver",
+          "type": "Autodesk.Navisworks.Api.FileReferenceResolver",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_to_open",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.ResolveInteractive%28Autodesk.Navisworks.Api.FileReferenceResolver%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "ResolveExternal",
+      "signature": "bool ResolveExternal(Autodesk.Navisworks.Api.FileReferenceResolver resolver, string file, bool resolving_to_open, out string resolved_to_open, out string resolved_to_store, ref Autodesk.Navisworks.Api.FileResolutionResponse status_to_return)",
+      "summary": "ResolveExternal method of LcOpSwigFileResolveCB.",
+      "params": [
+        {
+          "name": "resolver",
+          "type": "Autodesk.Navisworks.Api.FileReferenceResolver",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolving_to_open",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "resolved_to_open",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_to_store",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "status_to_return",
+          "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.ResolveExternal%28Autodesk.Navisworks.Api.FileReferenceResolver%2CSystem.String%2CSystem.Boolean%2CSystem.String%40%2CSystem.String%40%2CAutodesk.Navisworks.Api.FileResolutionResponse%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigFileResolveCB.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigFileResolveCB.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "RegisterAsResolveExternalCB",
+      "signature": "void RegisterAsResolveExternalCB()",
+      "summary": "RegisterAsResolveExternalCB method of LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.RegisterAsResolveExternalCB"
+    },
+    {
+      "name": "RegisterAsResolveInteractiveCB",
+      "signature": "void RegisterAsResolveInteractiveCB()",
+      "summary": "RegisterAsResolveInteractiveCB method of LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.RegisterAsResolveInteractiveCB"
+    },
+    {
+      "name": "RegisterAsResolveMonitorCB",
+      "signature": "void RegisterAsResolveMonitorCB()",
+      "summary": "RegisterAsResolveMonitorCB method of LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.RegisterAsResolveMonitorCB"
+    },
+    {
+      "name": "ResolveMonitor",
+      "signature": "void ResolveMonitor(Autodesk.Navisworks.Api.FileReferenceResolver resolver, string file, string resolved_to_open, string resolved_to_store, Autodesk.Navisworks.Api.FileResolutionResponse status)",
+      "summary": "ResolveMonitor method of LcOpSwigFileResolveCB.",
+      "params": [
+        {
+          "name": "resolver",
+          "type": "Autodesk.Navisworks.Api.FileReferenceResolver",
+          "optional": false
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_to_open",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_to_store",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.ResolveMonitor%28Autodesk.Navisworks.Api.FileReferenceResolver%2CSystem.String%2CSystem.String%2CSystem.String%2CAutodesk.Navisworks.Api.FileResolutionResponse%29"
+    },
+    {
+      "name": "UnregisterAsResolveExternalCB",
+      "signature": "void UnregisterAsResolveExternalCB()",
+      "summary": "UnregisterAsResolveExternalCB method of LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.UnregisterAsResolveExternalCB"
+    },
+    {
+      "name": "UnregisterAsResolveInteractiveCB",
+      "signature": "void UnregisterAsResolveInteractiveCB()",
+      "summary": "UnregisterAsResolveInteractiveCB method of LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.UnregisterAsResolveInteractiveCB"
+    },
+    {
+      "name": "UnregisterAsResolveMonitorCB",
+      "signature": "void UnregisterAsResolveMonitorCB()",
+      "summary": "UnregisterAsResolveMonitorCB method of LcOpSwigFileResolveCB.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.UnregisterAsResolveMonitorCB"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigFileResolveCB.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileResolveCB.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

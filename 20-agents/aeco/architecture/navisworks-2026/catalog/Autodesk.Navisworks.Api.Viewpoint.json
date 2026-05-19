@@ -1,0 +1,572 @@
+{
+  "name": "Viewpoint",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a viewpoint",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Viewpoint",
+  "constructors": [
+    {
+      "name": "Viewpoint()",
+      "signature": "Viewpoint()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Exception when \u0027false\u0027"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.Viewpoint CreateCopy()",
+      "summary": "Creates a copy of the Viewpoint.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.CreateCopy"
+    },
+    {
+      "name": "TrySetCamera",
+      "signature": "bool TrySetCamera(string cameraJson)",
+      "summary": "Try to set viewpoint from JSON AutodeskCommonCamera.",
+      "params": [
+        {
+          "name": "cameraJson",
+          "type": "string",
+          "doc": "Camera in the form of a JSON AutodeskCommonCamera.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if operation fails"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.TrySetCamera%28System.String%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Viewpoint.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Viewpoint InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Viewpoint.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetCamera",
+      "signature": "string GetCamera()",
+      "summary": "Describes viewpoint in terms of an JSON AutodeskCommonCamera object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.GetCamera"
+    },
+    {
+      "name": "AlignDirection",
+      "signature": "void AlignDirection(Autodesk.Navisworks.Api.Vector3D direction)",
+      "summary": "Rotate camera so that it points in given direction using shortest rotation path.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.AlignDirection%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "AlignUp",
+      "signature": "void AlignUp(Autodesk.Navisworks.Api.Vector3D up)",
+      "summary": "Rotate camera about view direction so that camera up vector is aligned with given up vector (in same plane as view direction and given up vector).",
+      "params": [
+        {
+          "name": "up",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.AlignUp%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "PointAt",
+      "signature": "void PointAt(Autodesk.Navisworks.Api.Point3D to)",
+      "summary": "Rotate camera so that it points at given location using shortest rotation path.",
+      "params": [
+        {
+          "name": "to",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.PointAt%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetCamera",
+      "signature": "void SetCamera(string cameraJson)",
+      "summary": "Set viewpoint from JSON AutodeskCommonCamera.",
+      "params": [
+        {
+          "name": "cameraJson",
+          "type": "string",
+          "doc": "Camera in the form of a JSON AutodeskCommonCamera object.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Failed to set camera."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.SetCamera%28System.String%29"
+    },
+    {
+      "name": "SetExtentsAtFocalDistance",
+      "signature": "void SetExtentsAtFocalDistance(double horizontal, double vertical)",
+      "summary": "Set the distances between the left and right planes, and the top and bottom planes of the view frustum at the focal distance along the view direction from the camera position. Need to call SetFocalDistance before calling this method.",
+      "params": [
+        {
+          "name": "horizontal",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "vertical",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "FocalDistance not set"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.SetExtentsAtFocalDistance%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "ZoomBox",
+      "signature": "void ZoomBox(Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "Zooms the viewpoint to view a given bounding box.",
+      "params": [
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "doc": "The bounding box to zoom to view.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Viewpoint.ZoomBox%28Autodesk.Navisworks.Api.BoundingBox3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AngularSpeed",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Angular speed of the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.AngularSpeed"
+    },
+    {
+      "name": "ApertureDiameter",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The diameter of the physical camera aperture in camera units. Used for advanced rendering effects.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.ApertureDiameter"
+    },
+    {
+      "name": "AspectRatio",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Aspect ratio of camera (width/height). Default 1.0 (square).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.AspectRatio"
+    },
+    {
+      "name": "ClipPlanes",
+      "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+      "getter": true,
+      "setter": true,
+      "summary": "ClipPlanes property of Viewpoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.ClipPlanes"
+    },
+    {
+      "name": "FarDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance from eye point to far plane along view direction. Must be greater than near distance.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.FarDistance"
+    },
+    {
+      "name": "FarDistanceType",
+      "type": "Autodesk.Navisworks.Api.ViewpointDistanceType",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes the users intentions if the product has to modify the far distance (typically because of graphics system limitations).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.FarDistanceType"
+    },
+    {
+      "name": "FarPlaneDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Far plane distance.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.FarPlaneDistance"
+    },
+    {
+      "name": "FocalDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The focal distance of the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.FocalDistance"
+    },
+    {
+      "name": "HasAngularSpeed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if AngularSpeed has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasAngularSpeed"
+    },
+    {
+      "name": "HasFocalDistance",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if FocalDistance has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasFocalDistance"
+    },
+    {
+      "name": "HasLighting",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if Lighting has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasLighting"
+    },
+    {
+      "name": "HasLinearSpeed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if LinearSpeed has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasLinearSpeed"
+    },
+    {
+      "name": "HasRenderStyle",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if RenderStyle has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasRenderStyle"
+    },
+    {
+      "name": "HasTool",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if Tool has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasTool"
+    },
+    {
+      "name": "HasViewer",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if Viewer has been set.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasViewer"
+    },
+    {
+      "name": "HasWorldUpVector",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines if WorldUpVector has been set",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HasWorldUpVector"
+    },
+    {
+      "name": "HeightField",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines camera field of view in combination with aspect ratio. For a perspective camera, this is the vertical field of view (the angle between top and bottom planes of the camera view frustum). For an orthographic camera, this is the distance between top and bottom planes of the camera view frustum. Default 0.785398 (45 degrees)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HeightField"
+    },
+    {
+      "name": "HorizontalExtentAtFocalDistance",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "The distance between the left and right planes of the view frustum at the focal distance along the view direction from the camera position.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HorizontalExtentAtFocalDistance"
+    },
+    {
+      "name": "HorizontalScale",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Required horizontal scaling of the image when adapting the camera view to the display window.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.HorizontalScale"
+    },
+    {
+      "name": "ImageFit",
+      "type": "Autodesk.Navisworks.Api.ViewpointImageFit",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes how to adapt the camera view so that it\u0027s aspect ratio matches that of the display window.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.ImageFit"
+    },
+    {
+      "name": "InternalViewpoint",
+      "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+      "getter": true,
+      "setter": false,
+      "summary": "InternalViewpoint property of Viewpoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.InternalViewpoint"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.IsReadOnly"
+    },
+    {
+      "name": "Lighting",
+      "type": "Autodesk.Navisworks.Api.ViewpointLighting",
+      "getter": true,
+      "setter": true,
+      "summary": "Lighting used for this viewpoint",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.Lighting"
+    },
+    {
+      "name": "LinearSpeed",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Linear speed of the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.LinearSpeed"
+    },
+    {
+      "name": "NearDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance from eye point to near plane along view direction. Must be greater than zero.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.NearDistance"
+    },
+    {
+      "name": "NearDistanceType",
+      "type": "Autodesk.Navisworks.Api.ViewpointDistanceType",
+      "getter": true,
+      "setter": true,
+      "summary": "Describes the users intentions if the product has to modify the near distance (typically because of graphics system limitations).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.NearDistanceType"
+    },
+    {
+      "name": "NearPlaneDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Near plane distance.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.NearPlaneDistance"
+    },
+    {
+      "name": "Position",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Position of the camera.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.Position"
+    },
+    {
+      "name": "Projection",
+      "type": "Autodesk.Navisworks.Api.ViewpointProjection",
+      "getter": true,
+      "setter": true,
+      "summary": "The projection type of the current viewpoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.Projection"
+    },
+    {
+      "name": "RenderStyle",
+      "type": "Autodesk.Navisworks.Api.ViewpointRenderStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "The style used for rendering.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.RenderStyle"
+    },
+    {
+      "name": "RightOffsetAtFocalDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance that the plane normal to the view direction, at the focal distance along the view direction from the camera position, is offset to the right. Need to call SetFocalDistance before using this property.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.RightOffsetAtFocalDistance"
+    },
+    {
+      "name": "RightOffsetFactor",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The ratio between the right offset (the distance that the target plane is offset to the right) and the horizontal extent (the distance between the left and right planes of the view frustum at the target distance).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.RightOffsetFactor"
+    },
+    {
+      "name": "Rotation",
+      "type": "Autodesk.Navisworks.Api.Rotation3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Rotation of camera from base orientation. The base orientation is looking down the negative Z-axis with \u002BX to the right and \u002BY up. Default 0 0 0 1 (no rotation).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.Rotation"
+    },
+    {
+      "name": "ShutterSpeed",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The time measured in seconds that the physical aperture is open. Used for advanced rendering effects.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.ShutterSpeed"
+    },
+    {
+      "name": "Tool",
+      "type": "Autodesk.Navisworks.Api.Tool",
+      "getter": true,
+      "setter": true,
+      "summary": "The Tool in use.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.Tool"
+    },
+    {
+      "name": "UpOffsetAtFocalDistance",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Distance that the plane normal to the view direction, at the focal distance along the view direction from the camera position, is offset upwards. Need to call SetFocalDistance before using this property.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.UpOffsetAtFocalDistance"
+    },
+    {
+      "name": "UpOffsetFactor",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "The ratio between the up offset (the distance that the target plane is offset upwards) and the vertical extent (the distance between the top and bottom planes of the view frustum at the target distance).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.UpOffsetFactor"
+    },
+    {
+      "name": "VerticalExtentAtFocalDistance",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "The distance between the top and bottom planes of the view frustum at the focal distance along the view direction from the camera position.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.VerticalExtentAtFocalDistance"
+    },
+    {
+      "name": "ViewerAvatar",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Avatar used for this viewpoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.ViewerAvatar"
+    },
+    {
+      "name": "ViewerCameraMode",
+      "type": "Autodesk.Navisworks.Api.CameraMode",
+      "getter": true,
+      "setter": true,
+      "summary": "Avatar used for this viewpoint.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.ViewerCameraMode"
+    },
+    {
+      "name": "WorldUpVector",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Preferred up vector. Used by \u0022walk\u0022 paradigm navigation methods to move on a plane.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Viewpoint.WorldUpVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

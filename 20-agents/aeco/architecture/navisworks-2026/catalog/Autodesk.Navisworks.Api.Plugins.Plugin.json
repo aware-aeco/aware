@@ -1,0 +1,126 @@
+{
+  "name": "Plugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Base class for all plugins",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.Plugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetString",
+      "signature": "string GetString(string name)",
+      "summary": "Looks up a localizable string that is specific to this plugin",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The identifier of the string to lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns localized string"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "The identifier is Null."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Failed to look up string with specified identifier"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.Plugin.GetString%28System.String%29"
+    },
+    {
+      "name": "GetStringSafe",
+      "signature": "string GetStringSafe(string name)",
+      "summary": "Looks up a localizable string that is specific to this plugin",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The identifier of the string to lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns localized string or value of \u0027name\u0027 if it cannot be found"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "The identifier is Null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.Plugin.GetStringSafe%28System.String%29"
+    },
+    {
+      "name": "TryGetString",
+      "signature": "string TryGetString(string name)",
+      "summary": "Looks up a localizable string that is specific to this plugin",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The identifier of the string to lookup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": "Returns localized string or Null if it cannot be found"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "The identifier is Null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.Plugin.TryGetString%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DeveloperId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The 4 character ADN developer code or a GUID. The combination of this and Name should make the plugin unique",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.Plugin.DeveloperId"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The full identifier for the plugin. This is formed as Name.DeveloperId",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.Plugin.Id"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the Plugin. The combination of this and DeveloperId should make the plugin unique",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.Plugin.Name"
+    },
+    {
+      "name": "PluginRecord",
+      "type": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+      "getter": true,
+      "setter": false,
+      "summary": "The PluginRecord that provides access to the attribute defined properties for this plugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.Plugin.PluginRecord"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

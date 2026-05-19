@@ -1,0 +1,139 @@
+{
+  "name": "LcOpSavedViewAnimation",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSavedViewAnimation class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpViewAnimation",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation",
+  "constructors": [
+    {
+      "name": "LcOpSavedViewAnimation()",
+      "signature": "LcOpSavedViewAnimation()",
+      "summary": "Constructs a new LcOpSavedViewAnimation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetKeyFrame",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedViewKeyFrame GetKeyFrame(int index)",
+      "summary": "GetKeyFrame method of LcOpSavedViewAnimation.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedViewKeyFrame",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.GetKeyFrame%28System.Int32%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSavedViewAnimation.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSavedViewAnimation.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddKeyFrameOwn",
+      "signature": "void AddKeyFrameOwn(Autodesk.Navisworks.Api.Interop.LcOpSavedViewKeyFrame frame)",
+      "summary": "AddKeyFrameOwn method of LcOpSavedViewAnimation.",
+      "params": [
+        {
+          "name": "frame",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedViewKeyFrame",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.AddKeyFrameOwn%28Autodesk.Navisworks.Api.Interop.LcOpSavedViewKeyFrame%29"
+    },
+    {
+      "name": "SetAnimation",
+      "signature": "void SetAnimation(Autodesk.Navisworks.Api.SavedViewpointAnimation anim, Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "SetAnimation method of LcOpSavedViewAnimation.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.SavedViewpointAnimation",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.SetAnimation%28Autodesk.Navisworks.Api.SavedViewpointAnimation%2CAutodesk.Navisworks.Api.Interop.LcOpState%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSavedViewAnimation.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSavedViewAnimation.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

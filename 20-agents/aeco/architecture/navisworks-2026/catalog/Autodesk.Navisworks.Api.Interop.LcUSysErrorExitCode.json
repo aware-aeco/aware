@@ -1,0 +1,34 @@
+{
+  "name": "LcUSysErrorExitCode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUSysErrorExitCode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSysErrorExitCode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEXIT_OK",
+      "value": 0
+    },
+    {
+      "name": "eEXIT_FAIL",
+      "value": 1
+    },
+    {
+      "name": "eEXIT_SECURITY",
+      "value": 2
+    },
+    {
+      "name": "eEXIT_ENVIRONMENT",
+      "value": 3
+    },
+    {
+      "name": "eEXIT_ABORT",
+      "value": 4
+    }
+  ]
+}

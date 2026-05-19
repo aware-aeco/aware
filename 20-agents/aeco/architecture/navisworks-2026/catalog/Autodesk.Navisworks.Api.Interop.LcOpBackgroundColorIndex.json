@@ -1,0 +1,42 @@
+{
+  "name": "LcOpBackgroundColorIndex",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpBackgroundColorIndex enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpBackgroundColorIndex",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePLAIN_COLOR",
+      "value": 0
+    },
+    {
+      "name": "eGRADUATED_COLOR_1",
+      "value": 1
+    },
+    {
+      "name": "eGRADUATED_COLOR_2",
+      "value": 2
+    },
+    {
+      "name": "eHORIZON_COLOR_1",
+      "value": 3
+    },
+    {
+      "name": "eHORIZON_COLOR_2",
+      "value": 4
+    },
+    {
+      "name": "eHORIZON_COLOR_3",
+      "value": 5
+    },
+    {
+      "name": "eHORIZON_COLOR_4",
+      "value": 6
+    }
+  ]
+}

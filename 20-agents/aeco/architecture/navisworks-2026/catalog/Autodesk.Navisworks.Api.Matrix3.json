@@ -1,0 +1,365 @@
+{
+  "name": "Matrix3",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A 3x3 matrix.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Matrix3",
+  "constructors": [
+    {
+      "name": "Matrix3()",
+      "signature": "Matrix3()",
+      "summary": "Default constructor. Makes an identity matrix.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.%23ctor"
+    },
+    {
+      "name": "Matrix3(Autodesk.Navisworks.Api.Rotation3D)",
+      "signature": "Matrix3(Autodesk.Navisworks.Api.Rotation3D rotation)",
+      "summary": "Make from a rotation.",
+      "params": [
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027rotation\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rotation\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.%23ctor%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "Matrix3(double, double, double, double, double, double, double, double, double)",
+      "signature": "Matrix3(double e00, double e01, double e02, double e10, double e11, double e12, double e20, double e21, double e22)",
+      "summary": "Make from elements specified in row major order.",
+      "params": [
+        {
+          "name": "e00",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e01",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e02",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e10",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e11",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e12",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e20",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e21",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "e22",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Matrix3 matrix)",
+      "summary": "Equal within a tolerance, each element of matrix is equal to corresponding element within given tolerance.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027matrix\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027matrix\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.Equals%28Autodesk.Navisworks.Api.Matrix3%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Autodesk.Navisworks.Api.Matrix3 matrix, double tolerance)",
+      "summary": "Equal within a tolerance, each element of matrix is equal to corresponding element within given tolerance.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Autodesk.Navisworks.Api.Matrix3",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027matrix\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027matrix\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.Equals%28Autodesk.Navisworks.Api.Matrix3%2CSystem.Double%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.Equals%28System.Object%29"
+    },
+    {
+      "name": "IsIdentity",
+      "signature": "bool IsIdentity()",
+      "summary": "Is matrix the identity matrix ?",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.IsIdentity"
+    },
+    {
+      "name": "IsZero",
+      "signature": "bool IsZero()",
+      "summary": "Is matrix a zero matrix? A zero matrix is one where every component is 0.0.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.IsZero"
+    },
+    {
+      "name": "Determinant",
+      "signature": "double Determinant()",
+      "summary": "Get determinant of matrix.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.Determinant"
+    },
+    {
+      "name": "Get",
+      "signature": "double Get(int row, int column)",
+      "summary": "\u0022Get a single matrix element.\u0022",
+      "params": [
+        {
+          "name": "row",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "column",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027row\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027column\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.Get%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Matrix3 InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Matrix3.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Matrix3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Matrix3.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Matrix3.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Matrix3.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

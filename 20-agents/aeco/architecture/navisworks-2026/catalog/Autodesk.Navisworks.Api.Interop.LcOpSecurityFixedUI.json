@@ -1,0 +1,193 @@
+{
+  "name": "LcOpSecurityFixedUI",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSecurityFixedUI class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI",
+  "constructors": [
+    {
+      "name": "LcOpSecurityFixedUI()",
+      "signature": "LcOpSecurityFixedUI()",
+      "summary": "Constructs a new LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMenuItem",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSecurityUIMenuItem GetMenuItem(uint i)",
+      "summary": "GetMenuItem method of LcOpSecurityFixedUI.",
+      "params": [
+        {
+          "name": "i",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityUIMenuItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetMenuItem%28System.UInt32%29"
+    },
+    {
+      "name": "GetMenuStyle",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSecurityUIStyle GetMenuStyle()",
+      "summary": "GetMenuStyle method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityUIStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetMenuStyle"
+    },
+    {
+      "name": "GetStyle",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSecurityUIStyle GetStyle()",
+      "summary": "GetStyle method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityUIStyle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetStyle"
+    },
+    {
+      "name": "GetDisplay",
+      "signature": "bool GetDisplay()",
+      "summary": "GetDisplay method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetDisplay"
+    },
+    {
+      "name": "GetEnabled",
+      "signature": "bool GetEnabled()",
+      "summary": "GetEnabled method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetEnabled"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSecurityFixedUI.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSecurityFixedUI.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetAvatar",
+      "signature": "string GetAvatar()",
+      "summary": "GetAvatar method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetAvatar"
+    },
+    {
+      "name": "GetText",
+      "signature": "string GetText()",
+      "summary": "GetText method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetText"
+    },
+    {
+      "name": "GetMenuItems",
+      "signature": "uint GetMenuItems()",
+      "summary": "GetMenuItems method of LcOpSecurityFixedUI.",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.GetMenuItems"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSecurityFixedUI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

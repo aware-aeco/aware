@@ -278,13 +278,15 @@ public class SchemaTests
     }
 
     /// <summary>
-    /// Validate the Bluebeam Studio API IR against the root schema. The IR is committed
-    /// to cli-sidecar/Ingest/Output/ — if the Postman-collection-derived shape ever
-    /// regresses against the schema, this test catches it before commit.
+    /// Validate the Bluebeam Studio API + Navisworks 2026 IRs against the root
+    /// schema. The IRs are committed to cli-sidecar/Ingest/Output/ — if either
+    /// extractor's output shape ever regresses against the schema, this catches
+    /// it before commit.
     /// </summary>
     [Theory]
     [InlineData("bluebeam-v1.ir.json")]
-    public void Bluebeam_IR_Validates_Against_Schema(string fileName)
+    [InlineData("navisworks-2026.0.ir.json")]
+    public void Bluebeam_Navisworks_IR_Validates_Against_Schema(string fileName)
     {
         var schema = LoadSchema();
         string? Find(string here)
@@ -299,7 +301,11 @@ public class SchemaTests
             return null;
         }
         var path = Find(AppContext.BaseDirectory);
+<<<<<<< HEAD
         if (path is null) return;  // IR not generated yet — skip rather than fail.
+=======
+        if (path is null) return;
+>>>>>>> worktree-agent-a5a9cc409d6da5342
         var ir = JsonDocument.Parse(File.ReadAllText(path));
         var result = schema.Evaluate(ir.RootElement, new EvaluationOptions { OutputFormat = OutputFormat.Hierarchical });
         if (!result.IsValid)

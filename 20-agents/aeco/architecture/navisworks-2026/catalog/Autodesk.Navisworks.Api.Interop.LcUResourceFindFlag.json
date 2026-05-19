@@ -1,0 +1,66 @@
+{
+  "name": "LcUResourceFindFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUResourceFindFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUResourceFindFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFIND_USER",
+      "value": 1
+    },
+    {
+      "name": "eFIND_LOCAL",
+      "value": 2
+    },
+    {
+      "name": "eFIND_ALL_USER",
+      "value": 3
+    },
+    {
+      "name": "eFIND_PROJECT",
+      "value": 4
+    },
+    {
+      "name": "eFIND_SITE",
+      "value": 8
+    },
+    {
+      "name": "eFIND_APP",
+      "value": 16
+    },
+    {
+      "name": "eFIND_INSTALL",
+      "value": 32
+    },
+    {
+      "name": "eFIND_ALL_INSTALLED",
+      "value": 60
+    },
+    {
+      "name": "eFIND_ALL_CURRENT",
+      "value": 63
+    },
+    {
+      "name": "eFIND_USER_INHERIT",
+      "value": 128
+    },
+    {
+      "name": "eFIND_LOCAL_INHERIT",
+      "value": 256
+    },
+    {
+      "name": "eFIND_ALL_INHERIT",
+      "value": 384
+    },
+    {
+      "name": "eFIND_ALL",
+      "value": 447
+    }
+  ]
+}

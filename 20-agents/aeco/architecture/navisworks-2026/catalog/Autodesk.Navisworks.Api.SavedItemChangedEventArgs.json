@@ -1,0 +1,79 @@
+{
+  "name": "SavedItemChangedEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments when a SavedItem hierarchy changes",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SavedItemChangedEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Action",
+      "type": "Autodesk.Navisworks.Api.SavedItemChangedAction",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the action that caused the event",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.Action"
+    },
+    {
+      "name": "EditedParts",
+      "type": "Autodesk.Navisworks.Api.SavedItemParts",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the parts of the item that were edited (None if Action is not equal to Edit)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.EditedParts"
+    },
+    {
+      "name": "NewIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index within NewParent at which a Add, Replace, Edit or Move action occurred.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.NewIndex"
+    },
+    {
+      "name": "NewItem",
+      "type": "Autodesk.Navisworks.Api.SavedItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the item effected by a Add, Replace, Edit or Move action.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.NewItem"
+    },
+    {
+      "name": "NewParent",
+      "type": "Autodesk.Navisworks.Api.GroupItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the new Parent of the item effected by a Add, Replace, Edit or Move action.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.NewParent"
+    },
+    {
+      "name": "OldIndex",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the index within OldParent at which a Remove, Replace, Edit or Move action occurred.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.OldIndex"
+    },
+    {
+      "name": "OldItem",
+      "type": "Autodesk.Navisworks.Api.SavedItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the old item effected by a Remove, Replace, Edit or Move action. For an Edit action only the parts of the item specified by EditedParts are valid.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.OldItem"
+    },
+    {
+      "name": "OldParent",
+      "type": "Autodesk.Navisworks.Api.GroupItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the old Parent of the item effected by a Remove, Replace, Edit or Move action.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SavedItemChangedEventArgs.OldParent"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

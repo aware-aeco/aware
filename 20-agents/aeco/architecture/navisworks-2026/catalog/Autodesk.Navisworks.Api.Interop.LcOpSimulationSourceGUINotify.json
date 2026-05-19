@@ -1,0 +1,140 @@
+{
+  "name": "LcOpSimulationSourceGUINotify",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSimulationSourceGUINotify class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify",
+  "constructors": [
+    {
+      "name": "LcOpSimulationSourceGUINotify()",
+      "signature": "LcOpSimulationSourceGUINotify()",
+      "summary": "Constructs a new LcOpSimulationSourceGUINotify.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSimulationSourceGUINotify.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSimulationSourceGUINotify.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "HighlightChanged",
+      "signature": "void HighlightChanged(double start, double end, Autodesk.Navisworks.Api.SavedItemReference animator_link, Autodesk.Navisworks.Api.SavedItemReference animator_item)",
+      "summary": "HighlightChanged method of LcOpSimulationSourceGUINotify.",
+      "params": [
+        {
+          "name": "start",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "animator_link",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        },
+        {
+          "name": "animator_item",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.HighlightChanged%28System.Double%2CSystem.Double%2CAutodesk.Navisworks.Api.SavedItemReference%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "RestoreAnimPlayer",
+      "signature": "void RestoreAnimPlayer()",
+      "summary": "RestoreAnimPlayer method of LcOpSimulationSourceGUINotify.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.RestoreAnimPlayer"
+    },
+    {
+      "name": "SwitchAnimPlayer",
+      "signature": "void SwitchAnimPlayer(Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase player)",
+      "summary": "SwitchAnimPlayer method of LcOpSimulationSourceGUINotify.",
+      "params": [
+        {
+          "name": "player",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.SwitchAnimPlayer%28Autodesk.Navisworks.Api.Interop.LcOpAnimationControllerBase%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSimulationSourceGUINotify.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSimulationSourceGUINotify.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

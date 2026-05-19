@@ -1,0 +1,52 @@
+{
+  "name": "NavisworksTransaction",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbTransaction.",
+  "base": "System.Data.Common.DbTransaction",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisworksTransaction",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Commit",
+      "signature": "void Commit()",
+      "summary": "Commits the current transaction.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksTransaction.Commit"
+    },
+    {
+      "name": "Rollback",
+      "signature": "void Rollback()",
+      "summary": "Rolls back the active transaction.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksTransaction.Rollback"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Connection",
+      "type": "Autodesk.Navisworks.Api.Data.NavisworksConnection",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the underlying connection to which this transaction applies.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksTransaction.Connection"
+    },
+    {
+      "name": "IsolationLevel",
+      "type": "System.Data.IsolationLevel",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the isolation level of the transaction. NavisworksTransaction only supports Serializable transactions.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksTransaction.IsolationLevel"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

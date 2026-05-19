@@ -1,0 +1,569 @@
+{
+  "name": "Point2D",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a position in 2D space.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Point2D",
+  "constructors": [
+    {
+      "name": "Point2D()",
+      "signature": "Point2D()",
+      "summary": "Create a zero vector",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Exception when \u0027false\u0027"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.%23ctor"
+    },
+    {
+      "name": "Point2D(Autodesk.Navisworks.Api.VariantData)",
+      "signature": "Point2D(Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "Create a point from a data object of type Point2D",
+      "params": [
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027data\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027data\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.%23ctor%28Autodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "Point2D(double, double)",
+      "signature": "Point2D(double x, double y)",
+      "summary": "Create a point from X and Y components",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.%23ctor%28System.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Autodesk.Navisworks.Api.Point2D Add(Autodesk.Navisworks.Api.Vector2D vector)",
+      "summary": "Translates a point by a vector to produce a new point",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.Add%28Autodesk.Navisworks.Api.Vector2D%29"
+    },
+    {
+      "name": "Subtract",
+      "signature": "Autodesk.Navisworks.Api.Point2D Subtract(Autodesk.Navisworks.Api.Vector2D vector)",
+      "summary": "Translates a point by a vector to produce a new point",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Autodesk.Navisworks.Api.Vector2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027vector\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027vector\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.Subtract%28Autodesk.Navisworks.Api.Vector2D%29"
+    },
+    {
+      "name": "ToData",
+      "signature": "Autodesk.Navisworks.Api.VariantData ToData()",
+      "summary": "Converts point to a data object of type Point3D",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.ToData"
+    },
+    {
+      "name": "Subtract",
+      "signature": "Autodesk.Navisworks.Api.Vector2D Subtract(Autodesk.Navisworks.Api.Point2D point)",
+      "summary": "Creates a new vector from point to this",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector2D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.Subtract%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.Equals%28System.Object%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "bool TolerantEquals(Autodesk.Navisworks.Api.Point2D point)",
+      "summary": "Compare points using a tolerance",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.TolerantEquals%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "bool TolerantEquals(Autodesk.Navisworks.Api.Point2D point, double tolerance)",
+      "summary": "Compare points using a tolerance",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.TolerantEquals%28Autodesk.Navisworks.Api.Point2D%2CSystem.Double%29"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "double DistanceTo(Autodesk.Navisworks.Api.Point2D other)",
+      "summary": "Distance from this point to another point",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.DistanceTo%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "DistanceToSquared",
+      "signature": "double DistanceToSquared(Autodesk.Navisworks.Api.Point2D other)",
+      "summary": "Distance squared from this point to another point",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027other\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027other\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.DistanceToSquared%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.GetHashCode"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Point2D.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Point2D InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Point2D.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "static bool TolerantEquals(Autodesk.Navisworks.Api.Point2D point0, Autodesk.Navisworks.Api.Point2D point1)",
+      "summary": "Compare points using a tolerance",
+      "params": [
+        {
+          "name": "point0",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point0\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point0\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point1\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.TolerantEquals%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "TolerantEquals",
+      "signature": "static bool TolerantEquals(Autodesk.Navisworks.Api.Point2D point0, Autodesk.Navisworks.Api.Point2D point1, double tolerance)",
+      "summary": "Compare points using a tolerance",
+      "params": [
+        {
+          "name": "point0",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "point1",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point0\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point0\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point1\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point1\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.TolerantEquals%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%2CSystem.Double%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Point2D.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Distance",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Distance of point from origin",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.Distance"
+    },
+    {
+      "name": "DistanceSquared",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Distance of point from origin squared",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.DistanceSquared"
+    },
+    {
+      "name": "IsOrigin",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is this point at the origin (all components zero) ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.IsOrigin"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Item property of Point2D.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.Item%28System.Int32%29"
+    },
+    {
+      "name": "Origin",
+      "type": "Autodesk.Navisworks.Api.Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Return point at the origin (all components zero)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.Origin"
+    },
+    {
+      "name": "X",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the X component of the point",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.X"
+    },
+    {
+      "name": "Y",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the Y component of the point",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Point2D.Y"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

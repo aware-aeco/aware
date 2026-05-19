@@ -1,0 +1,171 @@
+{
+  "name": "DocumentInfo",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Information about a Document that can be accessed without loading the entire document",
+  "base": "Autodesk.Navisworks.Api.GroupItem",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentInfo",
+  "constructors": [
+    {
+      "name": "DocumentInfo()",
+      "signature": "DocumentInfo()",
+      "summary": "Create an empty DocumentInfoDocumentInfo",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentInfo.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FindSheet",
+      "signature": "Autodesk.Navisworks.Api.SheetInfo FindSheet(string id)",
+      "summary": "Find Sheet by sheet Id",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SheetInfo",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentInfo.FindSheet%28System.String%29"
+    },
+    {
+      "name": "IndexOfSheetId",
+      "signature": "int IndexOfSheetId(string id)",
+      "summary": "Get Index by sheet Id",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentInfo.IndexOfSheetId%28System.String%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.DocumentInfo InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of DocumentInfo.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DocumentInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentInfo.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of DocumentInfo.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentInfo.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentSheet",
+      "type": "Autodesk.Navisworks.Api.SheetInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the currently active sheet",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentInfo.CurrentSheet"
+    },
+    {
+      "name": "CurrentSheetId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the id of the currently active sheet",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentInfo.CurrentSheetId"
+    },
+    {
+      "name": "FileVersionGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get Guid generated when current version of corresponding file was saved. Changes whenever document is saved.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentInfo.FileVersionGuid"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentInfo.IsReadOnly"
+    },
+    {
+      "name": "PropertyCategories",
+      "type": "Autodesk.Navisworks.Api.InfoPropertyCategoryCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the property category collection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentInfo.PropertyCategories"
+    },
+    {
+      "name": "SourceGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get original Guid when FileInfo was first created. Once set remains the same while Guid changes when saving to a file of a different type.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentInfo.SourceGuid"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

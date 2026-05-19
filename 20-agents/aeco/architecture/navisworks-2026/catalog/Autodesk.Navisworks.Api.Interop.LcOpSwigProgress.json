@@ -1,0 +1,305 @@
+{
+  "name": "LcOpSwigProgress",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigProgress class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Progress",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigProgress",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ProgressPublished",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse ProgressPublished(Autodesk.Navisworks.Api.PublishProperties attrib, out string password)",
+      "summary": "ProgressPublished method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "optional": false
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.ProgressPublished%28Autodesk.Navisworks.Api.PublishProperties%2CSystem.String%40%29"
+    },
+    {
+      "name": "Progress",
+      "signature": "bool Progress(double fraction_done)",
+      "summary": "Progress method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "fraction_done",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.Progress%28System.Double%29"
+    },
+    {
+      "name": "ProgressError",
+      "signature": "bool ProgressError(int error_code)",
+      "summary": "ProgressError method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "error_code",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.ProgressError%28System.Int32%29"
+    },
+    {
+      "name": "ProgressError",
+      "signature": "bool ProgressError(int error_code, string message)",
+      "summary": "ProgressError method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "error_code",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.ProgressError%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "ProgressError",
+      "signature": "bool ProgressError(int error_code, string message, bool append_filename)",
+      "summary": "ProgressError method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "error_code",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "append_filename",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.ProgressError%28System.Int32%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "WasCanceled",
+      "signature": "bool WasCanceled()",
+      "summary": "WasCanceled method of LcOpSwigProgress.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.WasCanceled"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigProgress InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigProgress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "BeginSubOp",
+      "signature": "void BeginSubOp(double fraction)",
+      "summary": "BeginSubOp method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "fraction",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.BeginSubOp%28System.Double%29"
+    },
+    {
+      "name": "BeginSubOp",
+      "signature": "void BeginSubOp(double fraction, string message)",
+      "summary": "BeginSubOp method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "fraction",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.BeginSubOp%28System.Double%2CSystem.String%29"
+    },
+    {
+      "name": "Cancel",
+      "signature": "void Cancel()",
+      "summary": "Cancel method of LcOpSwigProgress.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.Cancel"
+    },
+    {
+      "name": "EndSubOp",
+      "signature": "void EndSubOp()",
+      "summary": "EndSubOp method of LcOpSwigProgress.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.EndSubOp"
+    },
+    {
+      "name": "EndSubOp",
+      "signature": "void EndSubOp(bool completed)",
+      "summary": "EndSubOp method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "completed",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.EndSubOp%28System.Boolean%29"
+    },
+    {
+      "name": "SetVisible",
+      "signature": "void SetVisible(bool v)",
+      "summary": "SetVisible method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "v",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.SetVisible%28System.Boolean%29"
+    },
+    {
+      "name": "ValidPasswordEntered",
+      "signature": "void ValidPasswordEntered(string password)",
+      "summary": "ValidPasswordEntered method of LcOpSwigProgress.",
+      "params": [
+        {
+          "name": "password",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.ValidPasswordEntered%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigProgress.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigProgress.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
