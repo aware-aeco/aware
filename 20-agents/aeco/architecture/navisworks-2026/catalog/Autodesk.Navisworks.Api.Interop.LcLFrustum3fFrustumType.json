@@ -1,0 +1,22 @@
+{
+  "name": "LcLFrustum3fFrustumType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcLFrustum3fFrustumType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcLFrustum3fFrustumType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePERSPECTIVE",
+      "value": 0
+    },
+    {
+      "name": "eORTHOGRAPHIC",
+      "value": 1
+    }
+  ]
+}

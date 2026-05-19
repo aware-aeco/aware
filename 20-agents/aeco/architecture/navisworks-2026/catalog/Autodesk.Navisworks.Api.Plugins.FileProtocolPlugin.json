@@ -1,0 +1,350 @@
+{
+  "name": "FileProtocolPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin for implementing a custom file protocol.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.FileProtocolPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OpenFile",
+      "signature": "Autodesk.Navisworks.Api.Plugins.FileProtocolHandle OpenFile(System.Uri uri, Autodesk.Navisworks.Api.Plugins.FileProtocolOpenMode mode)",
+      "summary": "Directly opens a URI.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Plugins.FileProtocolOpenMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.FileProtocolHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.OpenFile%28System.Uri%2CAutodesk.Navisworks.Api.Plugins.FileProtocolOpenMode%29"
+    },
+    {
+      "name": "GetFile",
+      "signature": "bool GetFile(System.Uri uri, string localPath, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "Downloads a remote URI to a local path.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "localPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.GetFile%28System.Uri%2CSystem.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "GetFileInfo",
+      "signature": "bool GetFileInfo(System.Uri uri, Autodesk.Navisworks.Api.Plugins.FileMetadata info)",
+      "summary": "Returns information about a URI.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Autodesk.Navisworks.Api.Plugins.FileMetadata",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.GetFileInfo%28System.Uri%2CAutodesk.Navisworks.Api.Plugins.FileMetadata%29"
+    },
+    {
+      "name": "GetFileToCache",
+      "signature": "bool GetFileToCache(System.Uri uri, Autodesk.Navisworks.Api.Progress progress, out string cachePath)",
+      "summary": "Downloads a remote URI to the protocols internal cache.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        },
+        {
+          "name": "cachePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.GetFileToCache%28System.Uri%2CAutodesk.Navisworks.Api.Progress%2CSystem.String%40%29"
+    },
+    {
+      "name": "PutFile",
+      "signature": "bool PutFile(string localPath, System.Uri uri, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "Uploads a file to a remote URI.",
+      "params": [
+        {
+          "name": "localPath",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.PutFile%28System.String%2CSystem.Uri%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "TryGetDisplayName",
+      "signature": "bool TryGetDisplayName(System.Uri uri, out string displayName)",
+      "summary": "Returns the normal display name for a given URI.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.TryGetDisplayName%28System.Uri%2CSystem.String%40%29"
+    },
+    {
+      "name": "TryGetMRUPath",
+      "signature": "bool TryGetMRUPath(System.Uri logicalUri, out string mruPath)",
+      "summary": "Returns the path to store in the MRU list for a given URI.",
+      "params": [
+        {
+          "name": "logicalUri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "mruPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.TryGetMRUPath%28System.Uri%2CSystem.String%40%29"
+    },
+    {
+      "name": "TryGetPhysicalPath",
+      "signature": "bool TryGetPhysicalPath(System.Uri logicalUri, out string physicalPath)",
+      "summary": "Returns the verbose display name for a given URI.",
+      "params": [
+        {
+          "name": "logicalUri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "physicalPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.TryGetPhysicalPath%28System.Uri%2CSystem.String%40%29"
+    },
+    {
+      "name": "TryGetVerboseDisplayName",
+      "signature": "bool TryGetVerboseDisplayName(System.Uri uri, out string displayName)",
+      "summary": "Returns the verbose display name for a given URI.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "System.Uri",
+          "optional": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.TryGetVerboseDisplayName%28System.Uri%2CSystem.String%40%29"
+    },
+    {
+      "name": "TryResolveAbsolute",
+      "signature": "bool TryResolveAbsolute(string originalParent, string originalChild, string resolvedParent, out string resolvedChild)",
+      "summary": "Called to resolve an absolute URI.",
+      "params": [
+        {
+          "name": "originalParent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "originalChild",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolvedParent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolvedChild",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.TryResolveAbsolute%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "TryResolveRelative",
+      "signature": "bool TryResolveRelative(string resolvedParent, string relativeChild, out string resolvedChild)",
+      "summary": "Called to resolve an relative URI.",
+      "params": [
+        {
+          "name": "resolvedParent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "relativeChild",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolvedChild",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.TryResolveRelative%28System.String%2CSystem.String%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsRemote",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this protocol access remote data?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.IsRemote"
+    },
+    {
+      "name": "SupportedSchemes",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "List of schemes that this protocol supports.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.SupportedSchemes"
+    },
+    {
+      "name": "SupportsDirectOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this protocol support direct opening of a file?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.SupportsDirectOpen"
+    },
+    {
+      "name": "SupportsGetPut",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this protocol support the GetFile and PutFile methods?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.SupportsGetPut"
+    },
+    {
+      "name": "SupportsOwnCache",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this protocol support it\u0027s own cache?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileProtocolPlugin.SupportsOwnCache"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

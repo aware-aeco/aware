@@ -1,0 +1,301 @@
+{
+  "name": "LcOpClicUI",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpClicUI class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpClicUI",
+  "constructors": [
+    {
+      "name": "LcOpClicUI()",
+      "signature": "LcOpClicUI()",
+      "summary": "Constructs a new LcOpClicUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDialogWindow",
+      "signature": "nint GetDialogWindow(int height, int width, int position)",
+      "summary": "GetDialogWindow method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.GetDialogWindow%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetToolbarWindow",
+      "signature": "nint GetToolbarWindow(int height, int width, int position)",
+      "summary": "GetToolbarWindow method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.GetToolbarWindow%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpClicUI InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpClicUI",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AbortExit",
+      "signature": "void AbortExit()",
+      "summary": "AbortExit method of LcOpClicUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.AbortExit"
+    },
+    {
+      "name": "EnterModalState",
+      "signature": "void EnterModalState()",
+      "summary": "EnterModalState method of LcOpClicUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.EnterModalState"
+    },
+    {
+      "name": "ExitCB",
+      "signature": "void ExitCB()",
+      "summary": "ExitCB method of LcOpClicUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.ExitCB"
+    },
+    {
+      "name": "ExitModalState",
+      "signature": "void ExitModalState()",
+      "summary": "ExitModalState method of LcOpClicUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.ExitModalState"
+    },
+    {
+      "name": "Reauthorize",
+      "signature": "void Reauthorize()",
+      "summary": "Reauthorize method of LcOpClicUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.Reauthorize"
+    },
+    {
+      "name": "RegisterModelessHtmlPopup",
+      "signature": "void RegisterModelessHtmlPopup(string id, nint parent_window, nint dialog_window, nint html_render_window, nint owner_window, bool stuck_to_owner, int position)",
+      "summary": "RegisterModelessHtmlPopup method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parent_window",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "dialog_window",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "html_render_window",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "owner_window",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "stuck_to_owner",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.RegisterModelessHtmlPopup%28System.String%2CSystem.IntPtr%2CSystem.IntPtr%2CSystem.IntPtr%2CSystem.IntPtr%2CSystem.Boolean%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetFixedUI",
+      "signature": "void SetFixedUI(Autodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI fixed_ui)",
+      "summary": "SetFixedUI method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "fixed_ui",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.SetFixedUI%28Autodesk.Navisworks.Api.Interop.LcOpSecurityFixedUI%29"
+    },
+    {
+      "name": "SetFocusToMainWindow",
+      "signature": "void SetFocusToMainWindow(nint main_window)",
+      "summary": "SetFocusToMainWindow method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "main_window",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.SetFocusToMainWindow%28System.IntPtr%29"
+    },
+    {
+      "name": "SetTemporalUI",
+      "signature": "void SetTemporalUI(Autodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUI temp_ui)",
+      "summary": "SetTemporalUI method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "temp_ui",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUI",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.SetTemporalUI%28Autodesk.Navisworks.Api.Interop.LcOpSecurityTemporalUI%29"
+    },
+    {
+      "name": "UnRegisterModelessHtmlPopup",
+      "signature": "void UnRegisterModelessHtmlPopup(nint hwnd)",
+      "summary": "UnRegisterModelessHtmlPopup method of LcOpClicUI.",
+      "params": [
+        {
+          "name": "hwnd",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.UnRegisterModelessHtmlPopup%28System.IntPtr%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpClicUI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpClicUI.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

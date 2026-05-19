@@ -1,0 +1,22 @@
+{
+  "name": "LcOpModelTransformChangingEventPhase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpModelTransformChangingEventPhase enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpModelTransformChangingEventPhase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCHANGING",
+      "value": 0
+    },
+    {
+      "name": "eCHANGED",
+      "value": 1
+    }
+  ]
+}

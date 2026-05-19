@@ -1,0 +1,38 @@
+{
+  "name": "FileReferenceResolveResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Result of calling FileReferenceResolver::Resolve",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileReferenceResolveResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileNameToOpen",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "File name that can be opened to read contents of file referred to",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolveResult.FileNameToOpen"
+    },
+    {
+      "name": "ResolvedFileReference",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Resolved (updated) reference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolveResult.ResolvedFileReference"
+    },
+    {
+      "name": "Response",
+      "type": "Autodesk.Navisworks.Api.FileResolutionResponse",
+      "getter": true,
+      "setter": true,
+      "summary": "OK if reference was resolved successfully",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileReferenceResolveResult.Response"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

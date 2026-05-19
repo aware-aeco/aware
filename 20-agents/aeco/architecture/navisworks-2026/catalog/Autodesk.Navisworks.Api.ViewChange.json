@@ -1,0 +1,24 @@
+{
+  "name": "ViewChange",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Specifies type of change being made to a View.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewChange",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "JumpCut",
+      "value": 0,
+      "summary": "The current viewpoint jumps straight to the new viewpoint. Collision detection and gravity have no effect."
+    },
+    {
+      "name": "Navigation",
+      "value": 1,
+      "summary": "User is interactively navigating from current viewpoint to new viewpoint. Actual viewpoint set may be modified due to collision detection and gravity."
+    }
+  ]
+}

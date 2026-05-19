@@ -1,0 +1,185 @@
+{
+  "name": "PropertyCategory",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A named category of properties",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PropertyCategory",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetBinaryData",
+      "signature": "byte[] GetBinaryData()",
+      "summary": "Obtain any associated binary data if HasBinaryData is true",
+      "params": [],
+      "returns": {
+        "type": "byte[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategory.GetBinaryData"
+    },
+    {
+      "name": "GetInt64StableId",
+      "signature": "long GetInt64StableId()",
+      "summary": "Returns value of the Int64 stable id contained in this category.",
+      "params": [],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "HasInt64StableId is false"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategory.GetInt64StableId"
+    },
+    {
+      "name": "GetStringStableId",
+      "signature": "string GetStringStableId()",
+      "summary": "Returns value of the String stable id contained in this category.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "HasStringStableId is false"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategory.GetStringStableId"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategory.ToString"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of PropertyCategory.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PropertyCategory.Dispose"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CombinedName",
+      "type": "Autodesk.Navisworks.Api.NamedConstant",
+      "getter": true,
+      "setter": false,
+      "summary": "Combined name of category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.CombinedName"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Display name of category (localized)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.DisplayName"
+    },
+    {
+      "name": "HasBinaryData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this category represent binary data?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.HasBinaryData"
+    },
+    {
+      "name": "HasInt64StableId",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this category contain an Int64 stable id ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.HasInt64StableId"
+    },
+    {
+      "name": "HasSchemaData",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this category represent any type of SchemaData?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.HasSchemaData"
+    },
+    {
+      "name": "HasStableId",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this category contain any type of stable id ? A stable id can be used to identify the same ModelItem across multiple versions of a Model. A category with a stable id contains only a single property with the value of the id.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.HasStableId"
+    },
+    {
+      "name": "HasStringStableId",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does this category contain a String stable id ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.HasStringStableId"
+    },
+    {
+      "name": "IsDisposed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Has this object been disposed ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.IsDisposed"
+    },
+    {
+      "name": "IsEditable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsEditable property of PropertyCategory.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.IsEditable"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of category (suitable for programmatic use)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.Name"
+    },
+    {
+      "name": "Properties",
+      "type": "Autodesk.Navisworks.Api.DataPropertyCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The properties in this category",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.Properties"
+    },
+    {
+      "name": "SchemaData",
+      "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+      "getter": true,
+      "setter": false,
+      "summary": "Obtain any associated SchemaData if HasSchemaData is true",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PropertyCategory.SchemaData"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,79 @@
+{
+  "name": "DocumentFileVersion",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Enumeration of Navisworks Document file format versions.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentFileVersion",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Current",
+      "value": 0,
+      "summary": "Use the most recent version of the file format supported by the runtime"
+    },
+    {
+      "name": "Navisworks2015",
+      "value": 441,
+      "summary": "Version of file format used by Navisworks 2015"
+    },
+    {
+      "name": "Navisworks2016",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2016"
+    },
+    {
+      "name": "Navisworks2017",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2017"
+    },
+    {
+      "name": "Navisworks2018",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2018"
+    },
+    {
+      "name": "Navisworks2019",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2019"
+    },
+    {
+      "name": "Navisworks2020",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2020"
+    },
+    {
+      "name": "Navisworks2021",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2021"
+    },
+    {
+      "name": "Navisworks2022",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2022"
+    },
+    {
+      "name": "Navisworks2023",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2023"
+    },
+    {
+      "name": "Navisworks2024",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2024"
+    },
+    {
+      "name": "Navisworks2025",
+      "value": 448,
+      "summary": "Version of file format used by Navisworks 2025"
+    },
+    {
+      "name": "Navisworks2026",
+      "value": 451,
+      "summary": "Version of file format used by Navisworks 2026"
+    }
+  ]
+}

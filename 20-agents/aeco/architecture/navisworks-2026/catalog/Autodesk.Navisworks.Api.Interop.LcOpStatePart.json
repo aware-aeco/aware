@@ -1,0 +1,198 @@
+{
+  "name": "LcOpStatePart",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpStatePart enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePART_EVENT",
+      "value": "2147483648"
+    },
+    {
+      "name": "ePART_NONE",
+      "value": 0
+    },
+    {
+      "name": "ePART_SAVED_VIEWS",
+      "value": 1
+    },
+    {
+      "name": "ePART_BACKGROUND",
+      "value": 2
+    },
+    {
+      "name": "ePART_HEADLIGHT",
+      "value": 4
+    },
+    {
+      "name": "ePART_HEADLIGHT_INTENSITY",
+      "value": 4
+    },
+    {
+      "name": "ePART_HEADLIGHT_AMBIENT",
+      "value": 4
+    },
+    {
+      "name": "ePART_FRAG_TRANSFORM_TEMP",
+      "value": 8
+    },
+    {
+      "name": "ePART_TARGET_FRAME_TIME",
+      "value": 16
+    },
+    {
+      "name": "ePART_SPEED",
+      "value": 16
+    },
+    {
+      "name": "ePART_CULLING",
+      "value": 32
+    },
+    {
+      "name": "ePART_AREA_CULL_THRESHOLD",
+      "value": 32
+    },
+    {
+      "name": "ePART_ADJUST_NEAR_DISTANCE",
+      "value": 32
+    },
+    {
+      "name": "ePART_ADJUST_FAR_DISTANCE",
+      "value": 32
+    },
+    {
+      "name": "ePART_CURRENT_VIEW",
+      "value": 256
+    },
+    {
+      "name": "ePART_CURRENT_PLAN_VIEW",
+      "value": 512
+    },
+    {
+      "name": "ePART_CURRENT_SECTION_VIEW",
+      "value": 1024
+    },
+    {
+      "name": "ePART_CURRENT_ANIMATION",
+      "value": 2048
+    },
+    {
+      "name": "ePART_PROP_ALL",
+      "value": 3895
+    },
+    {
+      "name": "ePART_UNDO_LOCK_NONE",
+      "value": 4096
+    },
+    {
+      "name": "ePART_UNDO_NOTIFY",
+      "value": 4096
+    },
+    {
+      "name": "ePART_REDO_NOTIFY",
+      "value": 8192
+    },
+    {
+      "name": "ePART_UNDO_MASK",
+      "value": 12288
+    },
+    {
+      "name": "ePART_GLOBAL_PROPS",
+      "value": 16384
+    },
+    {
+      "name": "ePART_SCENE_REF",
+      "value": 32768
+    },
+    {
+      "name": "ePART_PARTITION",
+      "value": 65536
+    },
+    {
+      "name": "ePART_SCENE_SET",
+      "value": 131072
+    },
+    {
+      "name": "ePART_SCENE_SET_ALL",
+      "value": 163840
+    },
+    {
+      "name": "ePART_SELECTION",
+      "value": 262144
+    },
+    {
+      "name": "ePART_SCENE_LIGHTS",
+      "value": 524288
+    },
+    {
+      "name": "ePART_NODE_NAMES",
+      "value": 1048576
+    },
+    {
+      "name": "ePART_SPARE_FLAG",
+      "value": 2097152
+    },
+    {
+      "name": "ePART_FRAG_FLAGS",
+      "value": 4194304
+    },
+    {
+      "name": "ePART_FRAG_APP_INDEX",
+      "value": 8388608
+    },
+    {
+      "name": "ePART_FRAG_APPEARANCE",
+      "value": 16777216
+    },
+    {
+      "name": "ePART_FRAG_GEOMETRY",
+      "value": 33554432
+    },
+    {
+      "name": "ePART_FRAG_TRANSFORM_PERM",
+      "value": 67108864
+    },
+    {
+      "name": "ePART_FRAG_TRANSFORM",
+      "value": 67108872
+    },
+    {
+      "name": "ePART_FRAG_ALL",
+      "value": 130023432
+    },
+    {
+      "name": "ePART_NODE_ATTRIBS",
+      "value": 134217728
+    },
+    {
+      "name": "ePART_NODE_CHILDREN",
+      "value": 268435456
+    },
+    {
+      "name": "ePART_SCENE_ALL",
+      "value": 315686912
+    },
+    {
+      "name": "ePART_NODE_ALL",
+      "value": 405798912
+    },
+    {
+      "name": "ePART_ATTRIB",
+      "value": 536870912
+    },
+    {
+      "name": "ePART_ALL",
+      "value": 1073712959
+    },
+    {
+      "name": "ePART_VIEWER",
+      "value": 1073741824
+    }
+  ]
+}

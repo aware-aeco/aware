@@ -1,0 +1,29 @@
+{
+  "name": "ServerType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Sign In Server Type.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ServerType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Production",
+      "value": 0,
+      "summary": "Production."
+    },
+    {
+      "name": "Staging",
+      "value": 1,
+      "summary": "Staging."
+    },
+    {
+      "name": "Development",
+      "value": 2,
+      "summary": "Development."
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "name": "AccountInfo",
+  "namespace": "Autodesk.Navisworks.Api.Bim360",
+  "kind": "class",
+  "summary": "Provides information about a BIM 360 Account.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Bim360.AccountInfo",
+  "constructors": [
+    {
+      "name": "AccountInfo()",
+      "signature": "AccountInfo()",
+      "summary": "Constructs a new AccountInfo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Bim360.AccountInfo.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AccountGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Guid identifier of Account.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.AccountInfo.AccountGuid"
+    },
+    {
+      "name": "AccountId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Identifier of Account.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.AccountInfo.AccountId"
+    },
+    {
+      "name": "AuthToken",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "AuthToken related to this Account.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.AccountInfo.AuthToken"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Name of this Account.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.AccountInfo.Name"
+    },
+    {
+      "name": "UserType",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "User type of this Account.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.AccountInfo.UserType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,93 @@
+{
+  "name": "ICommandHandlerPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "interface",
+  "summary": "ICommandHandlerPlugin interface in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.Interop.IPlugin"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.ICommandHandlerPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OnCmd",
+      "signature": "void OnCmd(Autodesk.Navisworks.Api.Interop.IGUICommand cmd)",
+      "summary": "OnCmd method of ICommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "cmd",
+          "type": "Autodesk.Navisworks.Api.Interop.IGUICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.OnCmd%28Autodesk.Navisworks.Api.Interop.IGUICommand%29"
+    },
+    {
+      "name": "OnPopup",
+      "signature": "void OnPopup()",
+      "summary": "OnPopup method of ICommandHandlerPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.OnPopup"
+    },
+    {
+      "name": "OnPopupClosed",
+      "signature": "void OnPopupClosed()",
+      "summary": "OnPopupClosed method of ICommandHandlerPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.OnPopupClosed"
+    },
+    {
+      "name": "OnUpdateCmd",
+      "signature": "void OnUpdateCmd(Autodesk.Navisworks.Api.Interop.IGUICommand cmd)",
+      "summary": "OnUpdateCmd method of ICommandHandlerPlugin.",
+      "params": [
+        {
+          "name": "cmd",
+          "type": "Autodesk.Navisworks.Api.Interop.IGUICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.OnUpdateCmd%28Autodesk.Navisworks.Api.Interop.IGUICommand%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CmdId",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "CmdId property of ICommandHandlerPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.CmdId"
+    },
+    {
+      "name": "InitialStatusText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "InitialStatusText property of ICommandHandlerPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.InitialStatusText"
+    },
+    {
+      "name": "InitialText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "InitialText property of ICommandHandlerPlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.ICommandHandlerPlugin.InitialText"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

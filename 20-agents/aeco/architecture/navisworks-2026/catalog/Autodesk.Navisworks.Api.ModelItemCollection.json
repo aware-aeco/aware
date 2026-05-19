@@ -1,0 +1,847 @@
+{
+  "name": "ModelItemCollection",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A collection of ModelItems. Often used to represent an explicit selection",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ModelItemCollection",
+  "constructors": [
+    {
+      "name": "ModelItemCollection()",
+      "signature": "ModelItemCollection()",
+      "summary": "Create an empty collection",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.%23ctor"
+    },
+    {
+      "name": "ModelItemCollection(Autodesk.Navisworks.Api.ModelItemCollection)",
+      "signature": "ModelItemCollection(Autodesk.Navisworks.Api.ModelItemCollection from)",
+      "summary": "Create a copy of another collection",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027from\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 is associated with a different document"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.%23ctor%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D BoundingBox()",
+      "summary": "Calculates bounding box of all items contained in the selection",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.BoundingBox"
+    },
+    {
+      "name": "BoundingBox",
+      "signature": "Autodesk.Navisworks.Api.BoundingBox3D BoundingBox(bool ignoreHidden)",
+      "summary": "Calculates bounding box of all items contained in the selection",
+      "params": [
+        {
+          "name": "ignoreHidden",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.BoundingBox%28System.Boolean%29"
+    },
+    {
+      "name": "InternalGetPaths",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector InternalGetPaths()",
+      "summary": "InternalGetPaths method of ModelItemCollection.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.InternalGetPaths"
+    },
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E Where(Autodesk.Navisworks.Api.SearchCondition condition)",
+      "summary": "Filters the items based on a search condition",
+      "params": [
+        {
+          "name": "condition",
+          "type": "Autodesk.Navisworks.Api.SearchCondition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Where%28Autodesk.Navisworks.Api.SearchCondition%29"
+    },
+    {
+      "name": "Where",
+      "signature": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E Where(Autodesk.Navisworks.Api.SearchConditionCollection conditions)",
+      "summary": "Filters the items based on a set of search conditions",
+      "params": [
+        {
+          "name": "conditions",
+          "type": "Autodesk.Navisworks.Api.SearchConditionCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Where%28Autodesk.Navisworks.Api.SearchConditionCollection%29"
+    },
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.ModelItem\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.GetEnumerator"
+    },
+    {
+      "name": "InternalGetEnumerator",
+      "signature": "System.Collections.IEnumerator InternalGetEnumerator()",
+      "summary": "InternalGetEnumerator method of ModelItemCollection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.IEnumerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.InternalGetEnumerator"
+    },
+    {
+      "name": "AreAllInstancesSelected",
+      "signature": "bool AreAllInstancesSelected()",
+      "summary": "Are all instances of items included in the selection also in the selection?",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.AreAllInstancesSelected"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Determines whether the Selection contains a specific value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "The ModelItem to locate in the Selection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if item is found in the Selection; otherwise, false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Contains%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsAnyContained",
+      "signature": "bool IsAnyContained(Autodesk.Navisworks.Api.ModelItemCollection value)",
+      "summary": "Is any item in sel contained in selection? Are any items in value contained in any of the items in this selection?",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsAnyContained%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsContained",
+      "signature": "bool IsContained(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Is item contained in selection? Item must be contained in any of the items in this selection",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsContained%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsContained",
+      "signature": "bool IsContained(Autodesk.Navisworks.Api.ModelItemCollection value)",
+      "summary": "Is sel contained in selection? Are all items in value contained in any of the items in this selection?",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsContained%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsContentsIntersected",
+      "signature": "bool IsContentsIntersected(Autodesk.Navisworks.Api.ModelItemCollection value)",
+      "summary": "Are any paths contained by this selection also contained by value?",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsContentsIntersected%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsDisjoint",
+      "signature": "bool IsDisjoint()",
+      "summary": "Is no item contained by any other item?",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsDisjoint"
+    },
+    {
+      "name": "IsSelected",
+      "signature": "bool IsSelected(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Is item a member of this selection?",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsSelected%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsSelected",
+      "signature": "bool IsSelected(Autodesk.Navisworks.Api.ModelItemCollection value)",
+      "summary": "Is value a subset of this selection? All paths in value must also be in this selection",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.IsSelected%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Removes the first occurrence of a specific ModelItem from the Selection.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "The object to remove from the Selection.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if item was successfully removed from the Selection; otherwise, false. This method also returns false if item is not found in the original Selection."
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The Selection is read-only."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Remove%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.ModelItemCollection value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.ValueEquals%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.ModelItemCollection InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of ModelItemCollection.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of ModelItemCollection.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.ModelItemCollection value1, Autodesk.Navisworks.Api.ModelItemCollection value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.ValueEquals%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Adds an item to the ICollection\u00601.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "The object to add to the ICollection\u00601.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The ICollection\u00601 is read-only."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Add%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "AddAllInstances",
+      "signature": "void AddAllInstances()",
+      "summary": "Add all instances of items included in the selection",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.AddAllInstances"
+    },
+    {
+      "name": "AddRange",
+      "signature": "void AddRange(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E from)",
+      "summary": "Add the items of the specified collection to the ModelItemCollection",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "The collection to add items from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.AddRange%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all items from the ICollection\u00601.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "The ICollection\u00601 is read-only."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.ModelItemCollection from)",
+      "summary": "Sets the contents of the collection to the items in from",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027from\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 is associated with a different document"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.CopyFrom%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E from)",
+      "summary": "Sets the contents of the collection to the items in from",
+      "params": [
+        {
+          "name": "from",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "The collection to copy contents from",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(Autodesk.Navisworks.Api.ModelItem[] array, int arrayIndex)",
+      "summary": "Copies the elements of the ICollection\u00601 to an Array, starting at a particular Array index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Autodesk.Navisworks.Api.ModelItem[]",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from ICollection\u00601. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "int",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "arrayIndex is less than 0."
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "array is null."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source ICollection\u00601 is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.CopyTo%28Autodesk.Navisworks.Api.ModelItem%5B%5D%2CSystem.Int32%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.ModelItem\u003E to)",
+      "summary": "Copies the contents of the collection into to",
+      "params": [
+        {
+          "name": "to",
+          "type": "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.ModelItem\u003E",
+          "doc": "The collection to copy contents into",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.CopyTo%28System.Collections.Generic.ICollection%7BAutodesk.Navisworks.Api.ModelItem%7D%29"
+    },
+    {
+      "name": "Invert",
+      "signature": "void Invert(Autodesk.Navisworks.Api.Document doc)",
+      "summary": "Inverts the selection.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Autodesk.Navisworks.Api.Document",
+          "doc": "The document to invert the selection relative to.\nShould be the same document that you got the original collection from.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027doc\u0027 in null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Invert%28Autodesk.Navisworks.Api.Document%29"
+    },
+    {
+      "name": "MakeDisjoint",
+      "signature": "void MakeDisjoint()",
+      "summary": "Remove any selected items that are contained by other items",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.MakeDisjoint"
+    },
+    {
+      "name": "Minimize",
+      "signature": "void Minimize()",
+      "summary": "Replaces this selection by one which contains the same items as this one does while including the minimum number of items.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.NotSupportedException",
+          "when": "Object is Read-Only"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ModelItemCollection.Minimize"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in the collection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.Count"
+    },
+    {
+      "name": "Descendants",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All descendants of the items in the collection (excluding the items themselves)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.Descendants"
+    },
+    {
+      "name": "DescendantsAndSelf",
+      "type": "Autodesk.Navisworks.Api.ModelItemEnumerableCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "All descendants of the items in the collection (including the items themselves)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.DescendantsAndSelf"
+    },
+    {
+      "name": "First",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Return the first item in the collection or null if empty",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.First"
+    },
+    {
+      "name": "InternalIsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "InternalIsReadOnly property of ModelItemCollection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.InternalIsReadOnly"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does the collection represent nothing selected?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.IsEmpty"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Item property of ModelItemCollection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelItemCollection.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

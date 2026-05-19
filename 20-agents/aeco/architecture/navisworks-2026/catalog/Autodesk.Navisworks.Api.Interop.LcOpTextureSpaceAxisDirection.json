@@ -1,0 +1,38 @@
+{
+  "name": "LcOpTextureSpaceAxisDirection",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpTextureSpaceAxisDirection enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDIRECTION_PLUSX",
+      "value": 0
+    },
+    {
+      "name": "eDIRECTION_MINUSX",
+      "value": 1
+    },
+    {
+      "name": "eDIRECTION_PLUSY",
+      "value": 2
+    },
+    {
+      "name": "eDIRECTION_MINUSY",
+      "value": 3
+    },
+    {
+      "name": "eDIRECTION_PLUSZ",
+      "value": 4
+    },
+    {
+      "name": "eDIRECTION_MINUSZ",
+      "value": 5
+    }
+  ]
+}

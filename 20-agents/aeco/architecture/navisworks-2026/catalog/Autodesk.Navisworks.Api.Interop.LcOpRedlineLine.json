@@ -1,0 +1,133 @@
+{
+  "name": "LcOpRedlineLine",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpRedlineLine class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpRedline",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRedlineLine",
+  "constructors": [
+    {
+      "name": "LcOpRedlineLine(Autodesk.Navisworks.Api.Point2D, Autodesk.Navisworks.Api.Point2D)",
+      "signature": "LcOpRedlineLine(Autodesk.Navisworks.Api.Point2D start, Autodesk.Navisworks.Api.Point2D end)",
+      "summary": "Constructs a new LcOpRedlineLine.",
+      "params": [
+        {
+          "name": "start",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        },
+        {
+          "name": "end",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.%23ctor%28Autodesk.Navisworks.Api.Point2D%2CAutodesk.Navisworks.Api.Point2D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetRedlineType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRedlineType GetRedlineType()",
+      "summary": "GetRedlineType method of LcOpRedlineLine.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.GetRedlineType"
+    },
+    {
+      "name": "GetEnd",
+      "signature": "Autodesk.Navisworks.Api.Point2D GetEnd()",
+      "summary": "GetEnd method of LcOpRedlineLine.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.GetEnd"
+    },
+    {
+      "name": "GetStart",
+      "signature": "Autodesk.Navisworks.Api.Point2D GetStart()",
+      "summary": "GetStart method of LcOpRedlineLine.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.GetStart"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpRedlineLine InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpRedlineLine.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineLine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpRedlineLine.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpRedlineLine.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpRedlineLine.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

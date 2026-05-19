@@ -1,0 +1,39 @@
+{
+  "name": "FileSaveEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for Document SaveFile related events",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileSaveEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the name of the file that is being saved to",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileSaveEventArgs.FileName"
+    },
+    {
+      "name": "IsPublish",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the save is a publish",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileSaveEventArgs.IsPublish"
+    },
+    {
+      "name": "SaveComplete",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether the save has completed successfully",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileSaveEventArgs.SaveComplete"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

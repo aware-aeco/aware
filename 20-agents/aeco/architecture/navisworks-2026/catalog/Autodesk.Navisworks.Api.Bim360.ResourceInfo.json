@@ -1,0 +1,81 @@
+{
+  "name": "ResourceInfo",
+  "namespace": "Autodesk.Navisworks.Api.Bim360",
+  "kind": "class",
+  "summary": "Provides information about a BIM 360 Resource.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Bim360.ResourceInfo",
+  "constructors": [
+    {
+      "name": "ResourceInfo()",
+      "signature": "ResourceInfo()",
+      "summary": "Constructs a new ResourceInfo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AccountId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Identifier of Account the resource belongs to.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.AccountId"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Display name of the resource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.DisplayName"
+    },
+    {
+      "name": "Id",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Version independent identifier for the resource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.Id"
+    },
+    {
+      "name": "ParentId",
+      "type": "System.Guid?",
+      "getter": true,
+      "setter": true,
+      "summary": "Optional identifier of Parent of the resource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.ParentId"
+    },
+    {
+      "name": "ProjectId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Identifier of Project the resource belongs to.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.ProjectId"
+    },
+    {
+      "name": "Type",
+      "type": "Autodesk.Navisworks.Api.Bim360.ResourceType",
+      "getter": true,
+      "setter": true,
+      "summary": "Type of the resource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.Type"
+    },
+    {
+      "name": "VersionId",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": true,
+      "summary": "Version dependent identifier for the resource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Bim360.ResourceInfo.VersionId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

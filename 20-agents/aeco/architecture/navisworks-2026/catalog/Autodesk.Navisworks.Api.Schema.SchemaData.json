@@ -1,0 +1,201 @@
+{
+  "name": "SchemaData",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "Contains data values defined by a given schema definition. May be traversed manually or accessed via NET DLR dynamic typing.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "Autodesk.Navisworks.Api.IHasDynamicProperties",
+    "System.Collections.IStructuralComparable",
+    "System.Collections.IStructuralEquatable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.SchemaData",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Copy",
+      "signature": "Autodesk.Navisworks.Api.Schema.SchemaData Copy()",
+      "summary": "Creates a copy of the current state of this data object.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidException\u0027 thrown"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaData.Copy"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "bool ValueEquals(Autodesk.Navisworks.Api.Schema.SchemaData value)",
+      "summary": "Performs comparison \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaData.ValueEquals%28Autodesk.Navisworks.Api.Schema.SchemaData%29"
+    },
+    {
+      "name": "ValueCompares",
+      "signature": "int ValueCompares(Autodesk.Navisworks.Api.Schema.SchemaData rhs)",
+      "summary": "Performs a value comparison.",
+      "params": [
+        {
+          "name": "rhs",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidException\u0027 thrown"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027rhs\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027rhs\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaData.ValueCompares%28Autodesk.Navisworks.Api.Schema.SchemaData%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SchemaData.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaData.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.SchemaData InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SchemaData.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaData.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ValueEquals",
+      "signature": "static bool ValueEquals(Autodesk.Navisworks.Api.Schema.SchemaData value1, Autodesk.Navisworks.Api.Schema.SchemaData value2)",
+      "summary": "Compares the two references \u0027By Value\u0027",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaData.ValueEquals%28Autodesk.Navisworks.Api.Schema.SchemaData%2CAutodesk.Navisworks.Api.Schema.SchemaData%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Definition",
+      "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "Schema definition that defines this data object.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaData.Definition"
+    },
+    {
+      "name": "EditAccessor",
+      "type": "Autodesk.Navisworks.Api.Schema.EditAccessor",
+      "getter": true,
+      "setter": false,
+      "summary": "Accessor for editing values when beginning a query into this data object.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaData.EditAccessor"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaData.IsReadOnly"
+    },
+    {
+      "name": "ReadAccessor",
+      "type": "Autodesk.Navisworks.Api.Schema.ReadAccessor",
+      "getter": true,
+      "setter": false,
+      "summary": "Read-only accessor for beginning a query into this data object.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaData.ReadAccessor"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

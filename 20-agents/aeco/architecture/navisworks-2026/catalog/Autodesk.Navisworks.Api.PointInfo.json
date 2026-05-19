@@ -1,0 +1,57 @@
+{
+  "name": "PointInfo",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "PointInfo class in Autodesk.Navisworks.Api.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PointInfo",
+  "constructors": [
+    {
+      "name": "PointInfo()",
+      "signature": "PointInfo()",
+      "summary": "Constructs a new PointInfo.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PointInfo.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DisplayName property of PointInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PointInfo.DisplayName"
+    },
+    {
+      "name": "InternalName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "InternalName property of PointInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PointInfo.InternalName"
+    },
+    {
+      "name": "LongInfo",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "LongInfo property of PointInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PointInfo.LongInfo"
+    },
+    {
+      "name": "ShortInfo",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ShortInfo property of PointInfo.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PointInfo.ShortInfo"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

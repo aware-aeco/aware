@@ -1,0 +1,674 @@
+{
+  "name": "DocumentInfoPart",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The DocumentInfo stored in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentInfoPart",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.DocumentInfo CreateCopy()",
+      "summary": "Creates a copy of Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DocumentInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.CreateCopy"
+    },
+    {
+      "name": "ToDocumentInfo",
+      "signature": "Autodesk.Navisworks.Api.DocumentInfo ToDocumentInfo()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DocumentInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.ToDocumentInfo"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.GroupItem parent, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Removes specified item from the specified parent group contained by DocumentInfo.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to remove from. null to remove directly from DocumentInfo",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if item not found in DocumentInfo"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Remove%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Removes specified item from DocumentInfo.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if item not found in DocumentInfo"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Remove%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.DocumentInfo op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentInfoPart that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentInfoPart",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.DocumentInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentInfoPart%29~Autodesk.Navisworks.Api.DocumentInfo"
+    },
+    {
+      "name": "AddCopy",
+      "signature": "void AddCopy(Autodesk.Navisworks.Api.GroupItem parent, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Adds a copy of item to the end of the specified parent group contained by DocumentInfo.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to add to. RootItem or null to add directly to Value",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.AddCopy%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "AddCopy",
+      "signature": "void AddCopy(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Adds a copy of item to the end of Value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.AddCopy%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "AddUniqueCopy",
+      "signature": "void AddUniqueCopy(Autodesk.Navisworks.Api.SavedItem item, string sourceFileName)",
+      "summary": "Adds an unique copy of item to the end of Value",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "sourceFileName",
+          "type": "string",
+          "doc": "If the parent group have the same name, will add it to item name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.AddUniqueCopy%28Autodesk.Navisworks.Api.SavedItem%2CSystem.String%29"
+    },
+    {
+      "name": "EditDisplayName",
+      "signature": "void EditDisplayName(Autodesk.Navisworks.Api.SavedItem item, string newDisplayName)",
+      "summary": "Edit item and update it\u0027s DisplayName",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "newDisplayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by DocumentInfo"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.EditDisplayName%28Autodesk.Navisworks.Api.SavedItem%2CSystem.String%29"
+    },
+    {
+      "name": "InsertCopy",
+      "signature": "void InsertCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Inserts a copy of item into the specified parent group contained by DocumentInfo.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.InsertCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "InsertCopy",
+      "signature": "void InsertCopy(int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Inserts a copy of item into Value.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.InsertCopy%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "InsertUniqueCopy",
+      "signature": "void InsertUniqueCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item, string sourceFileName)",
+      "summary": "Inserts a copy of item into the specified parent group contained by DocumentInfo. If have same sheet, will reset id and rename",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "sourceFileName",
+          "type": "string",
+          "doc": "If the parent group have the same name, will add it to item name",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.InsertUniqueCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%2CSystem.String%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(Autodesk.Navisworks.Api.GroupItem oldParent, int oldIndex, Autodesk.Navisworks.Api.GroupItem newParent, int newIndex)",
+      "summary": "Moves item at oldIndex in OldParent to newIndex in newParent",
+      "params": [
+        {
+          "name": "oldParent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to move the item from.",
+          "optional": false
+        },
+        {
+          "name": "oldIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "newParent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to move to.\nIf newParent is equal to oldParent, the item will be moved within the same SavedItemCollection.",
+          "optional": false
+        },
+        {
+          "name": "newIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027oldParent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027oldParent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027newParent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027newParent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027oldIndex\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027newIndex\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Move%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(int oldIndex, int newIndex)",
+      "summary": "Move sheet from oldIndex to new position in collection.",
+      "params": [
+        {
+          "name": "oldIndex",
+          "type": "int",
+          "doc": "The sheet in this position to move",
+          "optional": false
+        },
+        {
+          "name": "newIndex",
+          "type": "int",
+          "doc": "The moved sheet place in this position",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Two arguments \u0027oldIndex\u0027 and \u0027newIndex are equal, they should not be equal."
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027oldIndex\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027newIndex\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Move%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(Autodesk.Navisworks.Api.GroupItem parent, int index)",
+      "summary": "Removes item from the specified parent group contained by DocumentInfo.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to remove from. RootItem or null to remove directly from DocumentInfo",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.RemoveAt%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(int index)",
+      "summary": "Removes item at the specified index from DocumentInfo.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.RemoveAt%28System.Int32%29"
+    },
+    {
+      "name": "ReplaceWithCopy",
+      "signature": "void ReplaceWithCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Replaces item from the specified parent group with a copy of item",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by DocumentInfo"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.ReplaceWithCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "ReplaceWithCopy",
+      "signature": "void ReplaceWithCopy(int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Replaces item at given index within DocumentInfo with a copy of item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.ReplaceWithCopy%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.DocumentInfo",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the current DocumentInfo within the document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.SavedItemChangedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.SavedItemChangedEventArgs\u003E Changed",
+      "summary": "Occurs when the DocumentInfo contained in this object has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the DocumentInfo contained in this object is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentInfoPart.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

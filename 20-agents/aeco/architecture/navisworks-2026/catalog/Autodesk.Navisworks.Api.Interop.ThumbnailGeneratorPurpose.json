@@ -1,0 +1,22 @@
+{
+  "name": "ThumbnailGeneratorPurpose",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "ThumbnailGeneratorPurpose enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ExportViewport",
+      "value": 0
+    },
+    {
+      "name": "Thumbnail",
+      "value": 1
+    }
+  ]
+}

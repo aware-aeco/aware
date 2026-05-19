@@ -1,0 +1,114 @@
+{
+  "name": "LcOpTextureSpaceUVDirectionEachFace",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpTextureSpaceUVDirectionEachFace enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePLUSY_PLUSZ",
+      "value": 0
+    },
+    {
+      "name": "eMINUSY_PLUSZ",
+      "value": 1
+    },
+    {
+      "name": "ePLUSY_MINUSZ",
+      "value": 2
+    },
+    {
+      "name": "eMINUSY_MINUSZ",
+      "value": 3
+    },
+    {
+      "name": "ePLUSZ_PLUSY",
+      "value": 4
+    },
+    {
+      "name": "ePLUSZ_MINUSY",
+      "value": 5
+    },
+    {
+      "name": "eMINUSZ_PLUSY",
+      "value": 6
+    },
+    {
+      "name": "eMINUSZ_MINUSY",
+      "value": 7
+    },
+    {
+      "name": "ePLUSX_PLUSZ",
+      "value": 8
+    },
+    {
+      "name": "eMINUSX_PLUSZ",
+      "value": 9
+    },
+    {
+      "name": "ePLUSX_MINUSZ",
+      "value": 10
+    },
+    {
+      "name": "eMINUSX_MINUSZ",
+      "value": 11
+    },
+    {
+      "name": "ePLUSZ_PLUSX",
+      "value": 12
+    },
+    {
+      "name": "ePLUSZ_MINUSX",
+      "value": 13
+    },
+    {
+      "name": "eMINUSZ_PLUSX",
+      "value": 14
+    },
+    {
+      "name": "eMINUSZ_MINUSX",
+      "value": 15
+    },
+    {
+      "name": "ePLUSX_PLUSY",
+      "value": 16
+    },
+    {
+      "name": "eMINUSX_PLUSY",
+      "value": 17
+    },
+    {
+      "name": "ePLUSX_MINUSY",
+      "value": 18
+    },
+    {
+      "name": "eMINUSX_MINUSY",
+      "value": 19
+    },
+    {
+      "name": "ePLUSY_PLUSX",
+      "value": 20
+    },
+    {
+      "name": "ePLUSY_MINUSX",
+      "value": 21
+    },
+    {
+      "name": "eMINUSY_PLUSX",
+      "value": 22
+    },
+    {
+      "name": "eMINUSY_MINUSX",
+      "value": 23
+    },
+    {
+      "name": "eUV_DIRECTION_COUNT",
+      "value": 24
+    }
+  ]
+}

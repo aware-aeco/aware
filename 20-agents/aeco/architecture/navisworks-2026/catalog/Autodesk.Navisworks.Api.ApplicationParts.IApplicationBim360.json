@@ -1,0 +1,148 @@
+{
+  "name": "IApplicationBim360",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "interface",
+  "summary": "Provides access to the BIM360 state of the application which is hosting the API.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.IApplicationBim360",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ParseBim360Uri",
+      "signature": "Autodesk.Navisworks.Api.Bim360.ResourceInfo ParseBim360Uri(string input)",
+      "summary": "Attempts to parse a string as a BIM 360 URI, and then determines resource information.",
+      "params": [
+        {
+          "name": "input",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Bim360.ResourceInfo",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027input\u0027 is null."
+        },
+        {
+          "type": "System.FormatException",
+          "when": "Failed to parse \u0027input\u0027 into a BIM 360 URI."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.ParseBim360Uri%28System.String%29"
+    },
+    {
+      "name": "TryParseBim360Uri",
+      "signature": "bool TryParseBim360Uri(string input, out Autodesk.Navisworks.Api.Bim360.ResourceInfo uriInfo)",
+      "summary": "Attempts to parse a string as a BIM 360 URI, and then determines resource information.",
+      "params": [
+        {
+          "name": "input",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "uriInfo",
+          "type": "Autodesk.Navisworks.Api.Bim360.ResourceInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.TryParseBim360Uri%28System.String%2CAutodesk.Navisworks.Api.Bim360.ResourceInfo%40%29"
+    },
+    {
+      "name": "GetRestApi",
+      "signature": "object GetRestApi(Autodesk.Navisworks.Api.Bim360.AccountInfo accountInfo)",
+      "summary": "Rest Api access.",
+      "params": [
+        {
+          "name": "accountInfo",
+          "type": "Autodesk.Navisworks.Api.Bim360.AccountInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.GetRestApi%28Autodesk.Navisworks.Api.Bim360.AccountInfo%29"
+    },
+    {
+      "name": "GetRestApiV3",
+      "signature": "object GetRestApiV3(Autodesk.Navisworks.Api.Bim360.AccountInfo accountInfo)",
+      "summary": "Rest Api access.",
+      "params": [
+        {
+          "name": "accountInfo",
+          "type": "Autodesk.Navisworks.Api.Bim360.AccountInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.GetRestApiV3%28Autodesk.Navisworks.Api.Bim360.AccountInfo%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Accounts",
+      "type": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.Bim360.AccountInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gives access to all current Accounts. Youu\u0027ll only get these once SignedIn.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.Accounts"
+    },
+    {
+      "name": "HasAnyBim360ModelOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns true if any BIM 360 Models are loaded.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.HasAnyBim360ModelOpen"
+    },
+    {
+      "name": "IsSignedIn",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "BIM 360 SignIn support.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.IsSignedIn"
+    }
+  ],
+  "events": [
+    {
+      "name": "RefreshBeginning",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler RefreshBeginning",
+      "summary": "Occurs when BIM 360 data is about to refresh.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.RefreshBeginning",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "RefreshComplete",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler RefreshComplete",
+      "summary": "Occurs when the refresh of BIM 360 data is complete.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.IApplicationBim360.RefreshComplete",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

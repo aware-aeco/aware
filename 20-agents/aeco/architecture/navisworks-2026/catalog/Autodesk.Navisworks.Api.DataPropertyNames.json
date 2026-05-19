@@ -1,0 +1,150 @@
+{
+  "name": "DataPropertyNames",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Names (values of Name) of commonly found properties.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DataPropertyNames",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AutoCadEntityHandleValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of AutoCad Entity Handle (AutoCadEntityHandle) \u0022Value\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.AutoCadEntityHandleValue"
+    },
+    {
+      "name": "ItemCreator",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Creator\u0022 property (same as Creator)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemCreator"
+    },
+    {
+      "name": "ItemFileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022File Name\u0022 property (same as FileName)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemFileName"
+    },
+    {
+      "name": "ItemGuid",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022GUID\u0022 property (same as InstanceGuid)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemGuid"
+    },
+    {
+      "name": "ItemHidden",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Hidden\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemHidden"
+    },
+    {
+      "name": "ItemIcon",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Icon\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemIcon"
+    },
+    {
+      "name": "ItemInternalType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Internal Type\u0022 property (same as ClassName)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemInternalType"
+    },
+    {
+      "name": "ItemLayer",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Layer\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemLayer"
+    },
+    {
+      "name": "ItemMaterial",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Material\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemMaterial"
+    },
+    {
+      "name": "ItemName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Name\u0022 property (same as DisplayName)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemName"
+    },
+    {
+      "name": "ItemRequired",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Required\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemRequired"
+    },
+    {
+      "name": "ItemSourceFile",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Source File\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemSourceFile"
+    },
+    {
+      "name": "ItemSourceFileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Source File Name\u0022 property (same as SourceFileName)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemSourceFileName"
+    },
+    {
+      "name": "ItemType",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Type\u0022 property (same as ClassDisplayName)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemType"
+    },
+    {
+      "name": "ItemUnit",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Item \u0022Unit\u0022 property (same as Units)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.ItemUnit"
+    },
+    {
+      "name": "MicrostationElementIdValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Microstation Element Id (MicrostationElementId) \u0022Value\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.MicrostationElementIdValue"
+    },
+    {
+      "name": "RevitElementIdValue",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of Revit Element Id (RevitElementId) \u0022Value\u0022 property",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DataPropertyNames.RevitElementIdValue"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

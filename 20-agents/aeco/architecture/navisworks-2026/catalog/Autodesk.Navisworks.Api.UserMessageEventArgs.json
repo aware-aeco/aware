@@ -1,0 +1,63 @@
+{
+  "name": "UserMessageEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "UserMessageEventArgs class in Autodesk.Navisworks.Api.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.UserMessageEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Category",
+      "type": "Autodesk.Navisworks.Api.MessageCenterCategory",
+      "getter": true,
+      "setter": true,
+      "summary": "Category property of UserMessageEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.UserMessageEventArgs.Category"
+    },
+    {
+      "name": "ExtendedMessage",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ExtendedMessage property of UserMessageEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.UserMessageEventArgs.ExtendedMessage"
+    },
+    {
+      "name": "InternalId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "InternalId property of UserMessageEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.UserMessageEventArgs.InternalId"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Message property of UserMessageEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.UserMessageEventArgs.Message"
+    },
+    {
+      "name": "MessageFlags",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "MessageFlags property of UserMessageEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.UserMessageEventArgs.MessageFlags"
+    },
+    {
+      "name": "Source",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Source property of UserMessageEventArgs.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.UserMessageEventArgs.Source"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

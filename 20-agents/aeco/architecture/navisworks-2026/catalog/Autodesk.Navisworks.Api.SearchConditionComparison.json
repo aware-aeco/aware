@@ -1,0 +1,94 @@
+{
+  "name": "SearchConditionComparison",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Specifies comparison operator used to see whether a SearchCondition will match",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SearchConditionComparison",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Never matches"
+    },
+    {
+      "name": "HasCategory",
+      "value": 1,
+      "summary": "Matches if item has specified category"
+    },
+    {
+      "name": "NotHasCategory",
+      "value": 2,
+      "summary": "Matches if item does not have specified category"
+    },
+    {
+      "name": "HasProperty",
+      "value": 3,
+      "summary": "Matches if item has the specified property in the specified category"
+    },
+    {
+      "name": "NotHasProperty",
+      "value": 4,
+      "summary": "Matches if item does not have the specified property in the specified category"
+    },
+    {
+      "name": "SameType",
+      "value": 5,
+      "summary": "Matches if specified property exists and value has the same VariantDataType"
+    },
+    {
+      "name": "Equal",
+      "value": 6,
+      "summary": "Matches if specified property exists and has the same value"
+    },
+    {
+      "name": "NotEqual",
+      "value": 7,
+      "summary": "Matches if specified property exists and does not have the same value"
+    },
+    {
+      "name": "NumericLessThan",
+      "value": 8,
+      "summary": "Matches if specified property exists, has the same numeric VariantDataType (Int32, AnyDouble, DateTime) and property value less than condition value"
+    },
+    {
+      "name": "NumericLessThanOrEqual",
+      "value": 9,
+      "summary": "Matches if specified property exists, has the same numeric VariantDataType (Int32, AnyDouble, DateTime) and property value less than or equal to condition value"
+    },
+    {
+      "name": "NumericGreaterThanOrEqual",
+      "value": 10,
+      "summary": "Matches if specified property exists, has the same numeric VariantDataType (Int32, AnyDouble, DateTime) and property value greater than or equal to condition value"
+    },
+    {
+      "name": "NumericGreaterThan",
+      "value": 11,
+      "summary": "Matches if specified property exists, has the same numeric VariantDataType (Int32, AnyDouble, DateTime) and property value greater than condition value"
+    },
+    {
+      "name": "DisplayStringContains",
+      "value": 12,
+      "summary": "Matches if specified property exists, is of DisplayString type and contains the display string in condition value"
+    },
+    {
+      "name": "DisplayStringWildcard",
+      "value": 13,
+      "summary": "Matches if specified property exists, is of DisplayString type and matches the wildcard display string in condition value"
+    },
+    {
+      "name": "DateTimeWithinDay",
+      "value": 14,
+      "summary": "Matches if specified property exists, is of DateTime type and is within one day prior to the DateTime in condition value"
+    },
+    {
+      "name": "DateTimeWithinWeek",
+      "value": 15,
+      "summary": "Matches if specified property exists, is of DateTime type and is within one week prior to the DateTime in condition value"
+    }
+  ]
+}

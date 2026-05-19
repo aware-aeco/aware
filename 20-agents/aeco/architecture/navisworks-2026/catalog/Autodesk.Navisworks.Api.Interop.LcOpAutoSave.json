@@ -1,0 +1,223 @@
+{
+  "name": "LcOpAutoSave",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAutoSave class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAutoSave",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAutoSave InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAutoSave.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAutoSave",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAutoSave.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "NotifyAutoRecoverBegin",
+      "signature": "static bool NotifyAutoRecoverBegin(string autosave_filename, string original_filename)",
+      "summary": "NotifyAutoRecoverBegin method of LcOpAutoSave.",
+      "params": [
+        {
+          "name": "autosave_filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "original_filename",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.NotifyAutoRecoverBegin%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "NotifyAutoSaveBegin",
+      "signature": "static bool NotifyAutoSaveBegin()",
+      "summary": "NotifyAutoSaveBegin method of LcOpAutoSave.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.NotifyAutoSaveBegin"
+    },
+    {
+      "name": "RequestAutoSave",
+      "signature": "static bool RequestAutoSave()",
+      "summary": "RequestAutoSave method of LcOpAutoSave.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.RequestAutoSave"
+    },
+    {
+      "name": "SetHandler",
+      "signature": "static bool SetHandler(Autodesk.Navisworks.Api.Interop.LcOpAutoSaveHandler handler)",
+      "summary": "SetHandler method of LcOpAutoSave.",
+      "params": [
+        {
+          "name": "handler",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAutoSaveHandler",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.SetHandler%28Autodesk.Navisworks.Api.Interop.LcOpAutoSaveHandler%29"
+    },
+    {
+      "name": "BeginDisableAutoSave",
+      "signature": "static void BeginDisableAutoSave()",
+      "summary": "BeginDisableAutoSave method of LcOpAutoSave.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.BeginDisableAutoSave"
+    },
+    {
+      "name": "BeginIgnoreSaves",
+      "signature": "static void BeginIgnoreSaves()",
+      "summary": "BeginIgnoreSaves method of LcOpAutoSave.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.BeginIgnoreSaves"
+    },
+    {
+      "name": "EndDisableAutoSave",
+      "signature": "static void EndDisableAutoSave()",
+      "summary": "EndDisableAutoSave method of LcOpAutoSave.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.EndDisableAutoSave"
+    },
+    {
+      "name": "EndIgnoreSaves",
+      "signature": "static void EndIgnoreSaves()",
+      "summary": "EndIgnoreSaves method of LcOpAutoSave.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.EndIgnoreSaves"
+    },
+    {
+      "name": "NotifyAutoRecoverComplete",
+      "signature": "static void NotifyAutoRecoverComplete(bool successful)",
+      "summary": "NotifyAutoRecoverComplete method of LcOpAutoSave.",
+      "params": [
+        {
+          "name": "successful",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.NotifyAutoRecoverComplete%28System.Boolean%29"
+    },
+    {
+      "name": "NotifyAutoSaveComplete",
+      "signature": "static void NotifyAutoSaveComplete(bool successful)",
+      "summary": "NotifyAutoSaveComplete method of LcOpAutoSave.",
+      "params": [
+        {
+          "name": "successful",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.NotifyAutoSaveComplete%28System.Boolean%29"
+    },
+    {
+      "name": "ResetAutoSaveState",
+      "signature": "static void ResetAutoSaveState()",
+      "summary": "ResetAutoSaveState method of LcOpAutoSave.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.ResetAutoSaveState"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAutoSave.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAutoSave.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

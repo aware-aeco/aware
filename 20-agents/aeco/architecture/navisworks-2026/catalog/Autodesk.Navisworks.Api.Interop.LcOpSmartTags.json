@@ -1,0 +1,186 @@
+{
+  "name": "LcOpSmartTags",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSmartTags class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSmartTags",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSmartTags InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSmartTags.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSmartTags",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSmartTags.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AddSmartTag",
+      "signature": "static void AddSmartTag(Autodesk.Navisworks.Api.NamedConstant category, Autodesk.Navisworks.Api.NamedConstant property)",
+      "summary": "AddSmartTag method of LcOpSmartTags.",
+      "params": [
+        {
+          "name": "category",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        },
+        {
+          "name": "property",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.AddSmartTag%28Autodesk.Navisworks.Api.NamedConstant%2CAutodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "AddSmartTagCategory",
+      "signature": "static void AddSmartTagCategory(Autodesk.Navisworks.Api.NamedConstant category)",
+      "summary": "AddSmartTagCategory method of LcOpSmartTags.",
+      "params": [
+        {
+          "name": "category",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.AddSmartTagCategory%28Autodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "ClearSmartTags",
+      "signature": "static void ClearSmartTags()",
+      "summary": "ClearSmartTags method of LcOpSmartTags.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.ClearSmartTags"
+    },
+    {
+      "name": "FormatSmartTagsForPath",
+      "signature": "static void FormatSmartTagsForPath(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path, string line_seperator, out string tag_text)",
+      "summary": "FormatSmartTagsForPath method of LcOpSmartTags.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "line_seperator",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "tag_text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.FormatSmartTagsForPath%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "FormatSmartTagsForPath",
+      "signature": "static void FormatSmartTagsForPath(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path, string line_seperator, out string tag_text, uint max_items)",
+      "summary": "FormatSmartTagsForPath method of LcOpSmartTags.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "line_seperator",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "tag_text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "max_items",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.FormatSmartTagsForPath%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CSystem.String%2CSystem.String%40%2CSystem.UInt32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSmartTags.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSmartTags.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

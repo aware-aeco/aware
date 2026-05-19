@@ -1,0 +1,44 @@
+{
+  "name": "FileReferenceType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Specifies type of FileReference",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileReferenceType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Null or empty file reference"
+    },
+    {
+      "name": "Local",
+      "value": 1,
+      "summary": "Absolute path to file on disk"
+    },
+    {
+      "name": "Remote",
+      "value": 2,
+      "summary": "URL for remote file"
+    },
+    {
+      "name": "Embedded",
+      "value": 3,
+      "summary": "File embedded in referring file"
+    },
+    {
+      "name": "Relative",
+      "value": 4,
+      "summary": "Path relative to referring file"
+    },
+    {
+      "name": "Unknown",
+      "value": 5,
+      "summary": "Unknown type of file reference"
+    }
+  ]
+}

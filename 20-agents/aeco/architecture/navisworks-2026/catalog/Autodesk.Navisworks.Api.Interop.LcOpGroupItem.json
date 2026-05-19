@@ -1,0 +1,163 @@
+{
+  "name": "LcOpGroupItem",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "static-class",
+  "summary": "LcOpGroupItem static class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpGroupItem",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetChild",
+      "signature": "static Autodesk.Navisworks.Api.SavedItem GetChild(Autodesk.Navisworks.Api.GroupItem that, Autodesk.Navisworks.Api.Interop.LcUInt32Vector path)",
+      "summary": "GetChild method of LcOpGroupItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGroupItem.GetChild%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "GetChild",
+      "signature": "static Autodesk.Navisworks.Api.SavedItem GetChild(Autodesk.Navisworks.Api.GroupItem that, Autodesk.Navisworks.Api.SavedItemReference reference)",
+      "summary": "GetChild method of LcOpGroupItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "reference",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGroupItem.GetChild%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "CanAddType",
+      "signature": "static bool CanAddType(Autodesk.Navisworks.Api.GroupItem that, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "CanAddType method of LcOpGroupItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGroupItem.CanAddType%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "CanAddType",
+      "signature": "static bool CanAddType(Autodesk.Navisworks.Api.GroupItem that, int type)",
+      "summary": "CanAddType method of LcOpGroupItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGroupItem.CanAddType%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "MakeUniqueName",
+      "signature": "static string MakeUniqueName(Autodesk.Navisworks.Api.GroupItem that, string name)",
+      "summary": "MakeUniqueName method of LcOpGroupItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGroupItem.MakeUniqueName%28Autodesk.Navisworks.Api.GroupItem%2CSystem.String%29"
+    },
+    {
+      "name": "GetCountOfType",
+      "signature": "static uint GetCountOfType(Autodesk.Navisworks.Api.GroupItem that, int type, bool recurse)",
+      "summary": "GetCountOfType method of LcOpGroupItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "recurse",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpGroupItem.GetCountOfType%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CSystem.Boolean%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

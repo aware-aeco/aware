@@ -254,6 +254,54 @@ public class SchemaTests
     }
 
     /// <summary>
+    /// Validate the Navisworks 2026 IR against the schema. Same pattern as the
+    /// Tedds tests below — IR is committed to cli-sidecar/Ingest/Output/ and the
+    /// extractor regenerates it before commit. The test fails fast if the parser
+    /// or schema drifts.
+    /// </summary>
+    [Theory]
+    [InlineData("navisworks-2026.0.ir.json")]
+    public void Navisworks_IR_Validates_Against_Schema(string fileName)
+    {
+        var schema = LoadSchema();
+        string? Find(string here)
+        {
+            string? cursor = here;
+            for (int i = 0; i < 8 && cursor is not null; i++)
+            {
+                var probe = Path.Combine(cursor, "cli-sidecar", "Ingest", "Output", fileName);
+                if (File.Exists(probe)) return probe;
+                cursor = Path.GetDirectoryName(cursor);
+            }
+            return null;
+        }
+        var path = Find(AppContext.BaseDirectory);
+        if (path is null) return;
+        var ir = JsonDocument.Parse(File.ReadAllText(path));
+        var result = schema.Evaluate(ir.RootElement, new EvaluationOptions { OutputFormat = OutputFormat.Hierarchical });
+        if (!result.IsValid)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine($"Schema violations in {fileName}:");
+            void Walk(EvaluationResults r, int depth)
+            {
+                if (r.Errors is not null)
+                {
+                    foreach (var (k, v) in r.Errors)
+                        sb.AppendLine(new string(' ', depth * 2) + $"@{r.InstanceLocation}: {k} = {v}");
+                }
+                if (r.Details is not null)
+                {
+                    foreach (var d in r.Details)
+                        if (!d.IsValid) Walk(d, depth + 1);
+                }
+            }
+            Walk(result, 0);
+            Assert.Fail(sb.ToString());
+        }
+    }
+
+    /// <summary>
     /// Validate the Tedds-25 and Tedds-26 IRs against the schema. These are committed to
     /// cli-sidecar/Ingest/Output/ — when the parser changes shape they get re-generated
     /// and this test catches schema regressions before they ship.

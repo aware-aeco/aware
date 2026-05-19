@@ -1,0 +1,34 @@
+{
+  "name": "LcOpStateAccess",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpStateAccess enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpStateAccess",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eACCESS_NOTIFY",
+      "value": 0
+    },
+    {
+      "name": "eACCESS_READ",
+      "value": 1
+    },
+    {
+      "name": "eACCESS_WRITE",
+      "value": 2
+    },
+    {
+      "name": "eACCESS_NOTIFY_WRITE_LOCK",
+      "value": 3
+    },
+    {
+      "name": "eACCESS_NOTIFY_WRITE_UNLOCK",
+      "value": 4
+    }
+  ]
+}

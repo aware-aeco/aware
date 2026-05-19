@@ -1,0 +1,209 @@
+{
+  "name": "LcOaPathLinkIt",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaPathLinkIt class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt",
+  "constructors": [
+    {
+      "name": "LcOaPathLinkIt()",
+      "signature": "LcOaPathLinkIt()",
+      "summary": "Constructs a new LcOaPathLinkIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.%23ctor"
+    },
+    {
+      "name": "LcOaPathLinkIt(Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt)",
+      "signature": "LcOaPathLinkIt(Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt p)",
+      "summary": "Constructs a new LcOaPathLinkIt.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt%29"
+    },
+    {
+      "name": "LcOaPathLinkIt(Autodesk.Navisworks.Api.ModelItem)",
+      "signature": "LcOaPathLinkIt(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "Constructs a new LcOaPathLinkIt.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.%23ctor%28Autodesk.Navisworks.Api.ModelItem%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Current",
+      "signature": "Autodesk.Navisworks.Api.ModelItem Current()",
+      "summary": "Current method of LcOaPathLinkIt.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.Current"
+    },
+    {
+      "name": "Equal",
+      "signature": "bool Equal(Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt p)",
+      "summary": "Equal method of LcOaPathLinkIt.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.Equal%28Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt%29"
+    },
+    {
+      "name": "IsValid",
+      "signature": "bool IsValid()",
+      "summary": "IsValid method of LcOaPathLinkIt.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.IsValid"
+    },
+    {
+      "name": "SetCurrent",
+      "signature": "bool SetCurrent(Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "SetCurrent method of LcOaPathLinkIt.",
+      "params": [
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.SetCurrent%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaPathLinkIt.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkIt",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaPathLinkIt.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Invalidate",
+      "signature": "void Invalidate()",
+      "summary": "Invalidate method of LcOaPathLinkIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.Invalidate"
+    },
+    {
+      "name": "Next",
+      "signature": "void Next()",
+      "summary": "Next method of LcOaPathLinkIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.Next"
+    },
+    {
+      "name": "NextSibling",
+      "signature": "void NextSibling()",
+      "summary": "NextSibling method of LcOaPathLinkIt.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.NextSibling"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaPathLinkIt.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaPathLinkIt.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

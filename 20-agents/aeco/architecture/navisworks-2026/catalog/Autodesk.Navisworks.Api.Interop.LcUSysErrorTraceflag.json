@@ -1,0 +1,34 @@
+{
+  "name": "LcUSysErrorTraceflag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUSysErrorTraceflag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSysErrorTraceflag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLEVEL",
+      "value": 1
+    },
+    {
+      "name": "eMETHOD_NAME",
+      "value": 2
+    },
+    {
+      "name": "eTHREAD_ID",
+      "value": 4
+    },
+    {
+      "name": "eTIME_STAMP",
+      "value": 8
+    },
+    {
+      "name": "eALL",
+      "value": 15
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "LcUOptionSetUserFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetUserFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFLAG_LOCKED",
+      "value": 16
+    },
+    {
+      "name": "eFLAG_DEFAULT",
+      "value": 32
+    }
+  ]
+}

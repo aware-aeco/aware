@@ -1,0 +1,58 @@
+{
+  "name": "LcUOptionSetCopyFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetCopyFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetCopyFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCOPY_ALL",
+      "value": 0
+    },
+    {
+      "name": "eCOPY_DEFAULT",
+      "value": 1
+    },
+    {
+      "name": "eCOPY_NOT_DEFAULT",
+      "value": 2
+    },
+    {
+      "name": "eCOPY_LOCKED",
+      "value": 4
+    },
+    {
+      "name": "eCOPY_NOT_LOCKED",
+      "value": 8
+    },
+    {
+      "name": "eCOPY_SUB_OPTIONS",
+      "value": 16
+    },
+    {
+      "name": "eCOPY_NOT_SUB_OPTIONS",
+      "value": 32
+    },
+    {
+      "name": "eCOPY_COMPOSITE",
+      "value": 64
+    },
+    {
+      "name": "eCOPY_NOT_COMPOSITE",
+      "value": 128
+    },
+    {
+      "name": "eCOPY_DATA",
+      "value": 256
+    },
+    {
+      "name": "eCOPY_NOT_DATA",
+      "value": 512
+    }
+  ]
+}

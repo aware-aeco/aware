@@ -1,0 +1,66 @@
+{
+  "name": "LcOpKernelToolGizmoType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpKernelToolGizmoType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernelToolGizmoType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eGIZMO_NONE",
+      "value": -1
+    },
+    {
+      "name": "eGIZMO_TRANSLATE",
+      "value": 0
+    },
+    {
+      "name": "eGIZMO_ROTATE",
+      "value": 1
+    },
+    {
+      "name": "eGIZMO_SCALE",
+      "value": 2
+    },
+    {
+      "name": "eANIMATOR_GIZMO_TRANSLATE",
+      "value": 3
+    },
+    {
+      "name": "eANIMATOR_GIZMO_ROTATE",
+      "value": 4
+    },
+    {
+      "name": "eANIMATOR_GIZMO_SCALE",
+      "value": 5
+    },
+    {
+      "name": "eGIZMO_CP_TRANSLATE",
+      "value": 6
+    },
+    {
+      "name": "eGIZMO_CP_ROTATE",
+      "value": 7
+    },
+    {
+      "name": "eGIZMO_CP_SCALE",
+      "value": 8
+    },
+    {
+      "name": "eGIZMO_LIGHT_TRANSLATE3D",
+      "value": 9
+    },
+    {
+      "name": "eGIZMO_LIGHT_TRANSLATE1D",
+      "value": 10
+    },
+    {
+      "name": "eNUM_GIZMOS",
+      "value": 11
+    }
+  ]
+}

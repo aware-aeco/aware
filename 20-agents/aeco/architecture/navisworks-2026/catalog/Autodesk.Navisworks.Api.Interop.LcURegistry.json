@@ -1,0 +1,884 @@
+{
+  "name": "LcURegistry",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcURegistry class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcURegistry",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcURegistry InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcURegistry.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcURegistry",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcURegistry.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetTime",
+      "signature": "static System.DateTime GetTime(string section, string key, System.DateTime default_value)",
+      "summary": "GetTime method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.DateTime",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetTime%28System.String%2CSystem.String%2CSystem.DateTime%29"
+    },
+    {
+      "name": "GetTime",
+      "signature": "static System.DateTime GetTime(string section, string key, System.DateTime default_value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "GetTime method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.DateTime",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetTime%28System.String%2CSystem.String%2CSystem.DateTime%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "GetBoolean",
+      "signature": "static bool GetBoolean(string section, string key, bool default_value)",
+      "summary": "GetBoolean method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetBoolean%28System.String%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "GetBoolean",
+      "signature": "static bool GetBoolean(string section, string key, bool default_value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "GetBoolean method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetBoolean%28System.String%2CSystem.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "SetBoolean",
+      "signature": "static bool SetBoolean(string section, string key, bool value)",
+      "summary": "SetBoolean method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetBoolean%28System.String%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBoolean",
+      "signature": "static bool SetBoolean(string section, string key, bool value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "SetBoolean method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetBoolean%28System.String%2CSystem.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "SetFloat",
+      "signature": "static bool SetFloat(string section, string key, double value)",
+      "summary": "SetFloat method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetFloat%28System.String%2CSystem.String%2CSystem.Double%29"
+    },
+    {
+      "name": "SetFloat",
+      "signature": "static bool SetFloat(string section, string key, double value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "SetFloat method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetFloat%28System.String%2CSystem.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "SetInt32",
+      "signature": "static bool SetInt32(string section, string key, int value)",
+      "summary": "SetInt32 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetInt32%28System.String%2CSystem.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "SetInt32",
+      "signature": "static bool SetInt32(string section, string key, int value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "SetInt32 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetInt32%28System.String%2CSystem.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "SetInt64",
+      "signature": "static bool SetInt64(string section, string key, long value)",
+      "summary": "SetInt64 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetInt64%28System.String%2CSystem.String%2CSystem.Int64%29"
+    },
+    {
+      "name": "SetInt64",
+      "signature": "static bool SetInt64(string section, string key, long value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "SetInt64 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetInt64%28System.String%2CSystem.String%2CSystem.Int64%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "SetString",
+      "signature": "static bool SetString(string section, string key, string value)",
+      "summary": "SetString method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetString%28System.String%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "SetString",
+      "signature": "static bool SetString(string section, string key, string value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "SetString method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetString%28System.String%2CSystem.String%2CSystem.String%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "SetTime",
+      "signature": "static bool SetTime(string section, string key, System.DateTime value)",
+      "summary": "SetTime method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetTime%28System.String%2CSystem.String%2CSystem.DateTime%29"
+    },
+    {
+      "name": "SetTime",
+      "signature": "static bool SetTime(string section, string key, System.DateTime value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "SetTime method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.SetTime%28System.String%2CSystem.String%2CSystem.DateTime%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "GetFloat",
+      "signature": "static double GetFloat(string section, string key, double default_value)",
+      "summary": "GetFloat method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetFloat%28System.String%2CSystem.String%2CSystem.Double%29"
+    },
+    {
+      "name": "GetFloat",
+      "signature": "static double GetFloat(string section, string key, double default_value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "GetFloat method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetFloat%28System.String%2CSystem.String%2CSystem.Double%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "GetInt32",
+      "signature": "static int GetInt32(string section, string key, int default_value)",
+      "summary": "GetInt32 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetInt32%28System.String%2CSystem.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetInt32",
+      "signature": "static int GetInt32(string section, string key, int default_value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "GetInt32 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetInt32%28System.String%2CSystem.String%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "GetInt64",
+      "signature": "static long GetInt64(string section, string key, long default_value)",
+      "summary": "GetInt64 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetInt64%28System.String%2CSystem.String%2CSystem.Int64%29"
+    },
+    {
+      "name": "GetInt64",
+      "signature": "static long GetInt64(string section, string key, long default_value, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "GetInt64 method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetInt64%28System.String%2CSystem.String%2CSystem.Int64%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "GetInstallRoot",
+      "signature": "static string GetInstallRoot()",
+      "summary": "GetInstallRoot method of LcURegistry.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetInstallRoot"
+    },
+    {
+      "name": "GetUserRoot",
+      "signature": "static string GetUserRoot()",
+      "summary": "GetUserRoot method of LcURegistry.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetUserRoot"
+    },
+    {
+      "name": "GetString",
+      "signature": "static void GetString(string section, string key, string default_value, out string buffer)",
+      "summary": "GetString method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetString%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetString",
+      "signature": "static void GetString(string section, string key, string default_value, out string buffer, Autodesk.Navisworks.Api.Interop.LcURegistryMode mode)",
+      "summary": "GetString method of LcURegistry.",
+      "params": [
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcURegistryMode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.GetString%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%2CAutodesk.Navisworks.Api.Interop.LcURegistryMode%29"
+    },
+    {
+      "name": "MakeSubSection",
+      "signature": "static void MakeSubSection(out string buffer, string section, string sub_section)",
+      "summary": "MakeSubSection method of LcURegistry.",
+      "params": [
+        {
+          "name": "buffer",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "section",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "sub_section",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcURegistry.MakeSubSection%28System.String%40%2CSystem.String%2CSystem.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcURegistry.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcURegistry.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

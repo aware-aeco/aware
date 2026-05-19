@@ -1,0 +1,26 @@
+{
+  "name": "LcOpRenderSettingLightingMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpRenderSettingLightingMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRenderSettingLightingMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSIMPLISTIC",
+      "value": 0
+    },
+    {
+      "name": "eBASIC",
+      "value": 1
+    },
+    {
+      "name": "eADVANCED",
+      "value": 2
+    }
+  ]
+}

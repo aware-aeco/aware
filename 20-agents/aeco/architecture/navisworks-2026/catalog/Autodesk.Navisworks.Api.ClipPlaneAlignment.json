@@ -1,0 +1,69 @@
+{
+  "name": "ClipPlaneAlignment",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Alignment of a clip plane.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ClipPlaneAlignment",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Not aligned"
+    },
+    {
+      "name": "View",
+      "value": 1,
+      "summary": "Aligned with the view"
+    },
+    {
+      "name": "Back",
+      "value": 2,
+      "summary": "Aligned to the back"
+    },
+    {
+      "name": "Front",
+      "value": 3,
+      "summary": "Aligned to the front"
+    },
+    {
+      "name": "Left",
+      "value": 4,
+      "summary": "Aligned to the left"
+    },
+    {
+      "name": "Right",
+      "value": 5,
+      "summary": "Aligned to the right"
+    },
+    {
+      "name": "Top",
+      "value": 6,
+      "summary": "Aligned to the top"
+    },
+    {
+      "name": "Bottom",
+      "value": 7,
+      "summary": "Aligned to the bottom"
+    },
+    {
+      "name": "Surface",
+      "value": 8,
+      "summary": "Aligned with a surface"
+    },
+    {
+      "name": "Line",
+      "value": 9,
+      "summary": "Aligned with a line"
+    },
+    {
+      "name": "Custom",
+      "value": 10,
+      "summary": "Custom alignment"
+    }
+  ]
+}

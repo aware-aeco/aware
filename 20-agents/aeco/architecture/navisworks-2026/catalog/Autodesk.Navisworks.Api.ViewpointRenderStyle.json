@@ -1,0 +1,39 @@
+{
+  "name": "ViewpointRenderStyle",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The render style of the viewpoint",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewpointRenderStyle",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "FullRender",
+      "value": 0,
+      "summary": "Highest quality, as specified in model"
+    },
+    {
+      "name": "Preview",
+      "value": 1,
+      "summary": "Lower quality, same appearance"
+    },
+    {
+      "name": "Shaded",
+      "value": 2,
+      "summary": "Smooth shaded (simple shade model, no textures)"
+    },
+    {
+      "name": "Wireframe",
+      "value": 3,
+      "summary": "Wire frame"
+    },
+    {
+      "name": "HiddenLine",
+      "value": 4,
+      "summary": "Hidden line wire frame"
+    }
+  ]
+}

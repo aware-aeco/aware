@@ -1,0 +1,74 @@
+{
+  "name": "LcUCIPExecutionContext",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUCIPExecutionContext enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eUNKNOWN",
+      "value": 0
+    },
+    {
+      "name": "eCOMMANDLINE",
+      "value": 1
+    },
+    {
+      "name": "eSCRIPT",
+      "value": 2
+    },
+    {
+      "name": "eDIALOG",
+      "value": 4
+    },
+    {
+      "name": "eMENU",
+      "value": 8
+    },
+    {
+      "name": "eTOOLBAR",
+      "value": 16
+    },
+    {
+      "name": "eACCELERATOR",
+      "value": 32
+    },
+    {
+      "name": "ePANEL",
+      "value": 64
+    },
+    {
+      "name": "eCONTEXTMENU",
+      "value": 128
+    },
+    {
+      "name": "eBROWSERBAR",
+      "value": 256
+    },
+    {
+      "name": "eBROWSERMENU",
+      "value": 512
+    },
+    {
+      "name": "eRIBBON",
+      "value": 1024
+    },
+    {
+      "name": "eAUTOCAM",
+      "value": 2048
+    },
+    {
+      "name": "eMARKINGMENU",
+      "value": 4096
+    },
+    {
+      "name": "eQUICKACCESSPANEL",
+      "value": 8192
+    }
+  ]
+}

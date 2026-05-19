@@ -26,6 +26,20 @@
     <ProjectReference Include="FixtureAssembly\FixtureAssembly.csproj" />
   </ItemGroup>
 
+  <!--
+    The default Microsoft.NET.Sdk wildcards sweep up every *.cs file under this
+    directory. That accidentally re-compiles `FixtureAssembly\PublicApi.cs` into
+    `cli-sidecar.Tests.dll` (in addition to being compiled into FixtureAssembly.dll
+    via the FixtureAssembly.csproj ProjectReference above), producing CS0436 type-
+    conflict warnings ("type X conflicts with imported type X"). Exclude that
+    subtree from this project's Compile glob so each type lives in exactly one
+    assembly. The Navisworks parser tests assert against the imported type via the
+    `FixtureAssembly` namespace, which is the FixtureAssembly.dll version.
+  -->
+  <ItemGroup>
+    <Compile Remove="FixtureAssembly\**\*.cs" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Include="fixtures\sample.h">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

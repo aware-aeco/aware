@@ -1,0 +1,295 @@
+{
+  "name": "LcOwThumbnailGenerator",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwThumbnailGenerator class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator",
+  "constructors": [
+    {
+      "name": "LcOwThumbnailGenerator(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel, Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose, int, int)",
+      "signature": "LcOwThumbnailGenerator(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel, Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose purpose, int width, int height)",
+      "summary": "Constructs a new LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        },
+        {
+          "name": "purpose",
+          "type": "Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%2CAutodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "LcOwThumbnailGenerator(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel, Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose, int, int, int)",
+      "signature": "LcOwThumbnailGenerator(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel, Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose purpose, int width, int height, int num_aa_passes)",
+      "summary": "Constructs a new LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        },
+        {
+          "name": "purpose",
+          "type": "Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "num_aa_passes",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%2CAutodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "LcOwThumbnailGenerator(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel, Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose, int, int, int, bool)",
+      "signature": "LcOwThumbnailGenerator(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel, Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose purpose, int width, int height, int num_aa_passes, bool enable_sectioning)",
+      "summary": "Constructs a new LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        },
+        {
+          "name": "purpose",
+          "type": "Autodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "num_aa_passes",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "enable_sectioning",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%2CAutodesk.Navisworks.Api.Interop.ThumbnailGeneratorPurpose%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Boolean%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetDIB",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOwDIB GetDIB()",
+      "summary": "GetDIB method of LcOwThumbnailGenerator.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwDIB",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.GetDIB"
+    },
+    {
+      "name": "GenerateDIB",
+      "signature": "bool GenerateDIB()",
+      "summary": "GenerateDIB method of LcOwThumbnailGenerator.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.GenerateDIB"
+    },
+    {
+      "name": "GenerateDIB",
+      "signature": "bool GenerateDIB(double max_time_hint_secs)",
+      "summary": "GenerateDIB method of LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "max_time_hint_secs",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.GenerateDIB%28System.Double%29"
+    },
+    {
+      "name": "GenerateDIB",
+      "signature": "bool GenerateDIB(double max_time_hint_secs, Autodesk.Navisworks.Api.Interop.LcOpRedlineList redlines)",
+      "summary": "GenerateDIB method of LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "max_time_hint_secs",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "redlines",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineList",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.GenerateDIB%28System.Double%2CAutodesk.Navisworks.Api.Interop.LcOpRedlineList%29"
+    },
+    {
+      "name": "GenerateRRT",
+      "signature": "bool GenerateRRT()",
+      "summary": "GenerateRRT method of LcOwThumbnailGenerator.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.GenerateRRT"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetView",
+      "signature": "void SetView(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer)",
+      "summary": "SetView method of LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.SetView%28Autodesk.Navisworks.Api.Interop.LcOaViewer%29"
+    },
+    {
+      "name": "SetView",
+      "signature": "void SetView(Autodesk.Navisworks.Api.SavedViewpoint view)",
+      "summary": "SetView method of LcOwThumbnailGenerator.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.SetView%28Autodesk.Navisworks.Api.SavedViewpoint%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwThumbnailGenerator.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwThumbnailGenerator.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

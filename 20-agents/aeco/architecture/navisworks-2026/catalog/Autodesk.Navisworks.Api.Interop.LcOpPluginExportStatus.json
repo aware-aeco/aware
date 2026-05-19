@@ -1,0 +1,50 @@
+{
+  "name": "LcOpPluginExportStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpPluginExportStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPluginExportStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEXPORT_OK",
+      "value": 0
+    },
+    {
+      "name": "eEXPORT_CANT_OPEN",
+      "value": 1
+    },
+    {
+      "name": "eEXPORT_NO_ROOM",
+      "value": 2
+    },
+    {
+      "name": "eEXPORT_FAIL",
+      "value": 3
+    },
+    {
+      "name": "eEXPORT_UNIMPLEMENTED",
+      "value": 4
+    },
+    {
+      "name": "eEXPORT_CANCELED",
+      "value": 5
+    },
+    {
+      "name": "eEXPORT_NA",
+      "value": 6
+    },
+    {
+      "name": "eEXPORT_OUTPUT_TOO_LARGE",
+      "value": 7
+    },
+    {
+      "name": "eEXPORT_RESAVE_DISALLOWED",
+      "value": 8
+    }
+  ]
+}

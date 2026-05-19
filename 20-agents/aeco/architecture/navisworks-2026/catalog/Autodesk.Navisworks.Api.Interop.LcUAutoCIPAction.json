@@ -1,0 +1,125 @@
+{
+  "name": "LcUAutoCIPAction",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUAutoCIPAction class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUAutoCIPAction",
+  "constructors": [
+    {
+      "name": "LcUAutoCIPAction()",
+      "signature": "LcUAutoCIPAction()",
+      "summary": "Constructs a new LcUAutoCIPAction.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUAutoCIPAction.%23ctor"
+    },
+    {
+      "name": "LcUAutoCIPAction(string, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext)",
+      "signature": "LcUAutoCIPAction(string action_name, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "Constructs a new LcUAutoCIPAction.",
+      "params": [
+        {
+          "name": "action_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUAutoCIPAction.%23ctor%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUAutoCIPAction InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUAutoCIPAction.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUAutoCIPAction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUAutoCIPAction.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUAutoCIPAction.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUAutoCIPAction.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "SetAction",
+      "signature": "void SetAction(string action_name, Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext context)",
+      "summary": "SetAction method of LcUAutoCIPAction.",
+      "params": [
+        {
+          "name": "action_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUCIPExecutionContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUAutoCIPAction.SetAction%28System.String%2CAutodesk.Navisworks.Api.Interop.LcUCIPExecutionContext%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUAutoCIPAction.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUAutoCIPAction.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

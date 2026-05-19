@@ -1,0 +1,44 @@
+{
+  "name": "SavedItemChangedAction",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Describes the action that caused a changed event for a SavedItemCollection-based Document part.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SavedItemChangedAction",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Add",
+      "value": 0,
+      "summary": "An item was added or inserted"
+    },
+    {
+      "name": "Remove",
+      "value": 1,
+      "summary": "An item was removed"
+    },
+    {
+      "name": "Replace",
+      "value": 2,
+      "summary": "An item was replaced"
+    },
+    {
+      "name": "Move",
+      "value": 3,
+      "summary": "An item was moved within the SavedItem hierarchy"
+    },
+    {
+      "name": "Edit",
+      "value": 4,
+      "summary": "An item was edited within the SavedItem hierarchy"
+    },
+    {
+      "name": "Reset",
+      "value": 5,
+      "summary": "The contents of the Document part have changed dramatically"
+    }
+  ]
+}

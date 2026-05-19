@@ -1,0 +1,214 @@
+{
+  "name": "ModelCreatorNames",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Names (values of Creator) of commonly found model creators.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ModelCreatorNames",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ArchicadExporter",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by export from Archicad",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.ArchicadExporter"
+    },
+    {
+      "name": "AsciiLaserReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by ASCII Laser reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.AsciiLaserReader"
+    },
+    {
+      "name": "AutodeskRealDwgReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Autodesk RealDWG reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.AutodeskRealDwgReader"
+    },
+    {
+      "name": "Cis2Reader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by CIS/2 reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.Cis2Reader"
+    },
+    {
+      "name": "DwfReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by DWF reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.DwfReader"
+    },
+    {
+      "name": "FaroReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Faro reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.FaroReader"
+    },
+    {
+      "name": "IfcReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by IFC reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.IfcReader"
+    },
+    {
+      "name": "IgesReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by IGES reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.IgesReader"
+    },
+    {
+      "name": "InventorReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Inventor reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.InventorReader"
+    },
+    {
+      "name": "JTOpenReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by JTOpen reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.JTOpenReader"
+    },
+    {
+      "name": "LeicaReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Leica reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.LeicaReader"
+    },
+    {
+      "name": "MaxExporter",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by export from 3D Studio Max",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.MaxExporter"
+    },
+    {
+      "name": "MicrostationExporter",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by export from Microstation",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.MicrostationExporter"
+    },
+    {
+      "name": "MicrostationReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Microstation design file (DGN) reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.MicrostationReader"
+    },
+    {
+      "name": "ParasolidReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Parasolid reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.ParasolidReader"
+    },
+    {
+      "name": "RevitExporter",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by export from Revit",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.RevitExporter"
+    },
+    {
+      "name": "RieglReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Riegl reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.RieglReader"
+    },
+    {
+      "name": "RvmReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by RVM reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.RvmReader"
+    },
+    {
+      "name": "SatReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by SAT reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.SatReader"
+    },
+    {
+      "name": "SketchUpReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by SketchUp reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.SketchUpReader"
+    },
+    {
+      "name": "StepReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by STEP reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.StepReader"
+    },
+    {
+      "name": "StlReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by STL reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.StlReader"
+    },
+    {
+      "name": "The3DStudioReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by 3D Studio reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.The3DStudioReader"
+    },
+    {
+      "name": "VrmlReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by VRML reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.VrmlReader"
+    },
+    {
+      "name": "ZAndFReader",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Models created by Z\u002BF reader",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ModelCreatorNames.ZAndFReader"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

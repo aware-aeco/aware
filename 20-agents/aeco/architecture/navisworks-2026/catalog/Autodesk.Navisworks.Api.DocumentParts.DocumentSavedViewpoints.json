@@ -1,0 +1,871 @@
+{
+  "name": "DocumentSavedViewpoints",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The saved viewpoints stored in a Document.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ResolveGuid",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveGuid(System.Guid value)",
+      "summary": "Returns the saved item referenced by a guid.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ResolveGuid%28System.Guid%29"
+    },
+    {
+      "name": "ResolveIndexPath",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveIndexPath(System.Collections.Generic.IEnumerable\u003Cint\u003E path)",
+      "summary": "Returns the saved item referenced by a collection of indices that define a path from the root item through its descendents to the specified item.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": "null if source cannot be resolved"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027path\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ResolveIndexPath%28System.Collections.Generic.IEnumerable%7BSystem.Int32%7D%29"
+    },
+    {
+      "name": "ResolveReference",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveReference(Autodesk.Navisworks.Api.SavedItemReference reference)",
+      "summary": "Returns the saved item referenced by a SavedItemReference.",
+      "params": [
+        {
+          "name": "reference",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "DocumentPartId on reference does not match the Id of this part"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027reference\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ResolveReference%28Autodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "ToSavedItemCollection",
+      "signature": "Autodesk.Navisworks.Api.SavedItemCollection ToSavedItemCollection()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ToSavedItemCollection"
+    },
+    {
+      "name": "CreateReference",
+      "signature": "Autodesk.Navisworks.Api.SavedItemReference CreateReference(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Returns a reference to a saved item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemReference",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained in this document part"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CreateReference%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "CaptureRuntimeOverrides",
+      "signature": "Autodesk.Navisworks.Api.SavedViewpoint CaptureRuntimeOverrides()",
+      "summary": "Creates a view that captures current runtime overrides.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CaptureRuntimeOverrides"
+    },
+    {
+      "name": "CreateCopy",
+      "signature": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.SavedItem\u003E CreateCopy()",
+      "summary": "Creates a copy of the SavedViewpoints associated with this object",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.SavedItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CreateCopy"
+    },
+    {
+      "name": "CreateIndexPath",
+      "signature": "System.Collections.ObjectModel.Collection\u003Cint\u003E CreateIndexPath(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Returns a collection of indices that defines a path from the root item through its descendents to the specified item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.Collection\u003Cint\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Item is not contained in this document part"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CreateIndexPath%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.GroupItem parent, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Removes specified item from the specified parent group contained by SavedViewpoints.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to remove from. RootItem or null to remove directly from Value",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if item not found in Value"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Remove%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Removes specified item from Value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if item not found in Value"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Remove%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.SavedItemCollection op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints%29~Autodesk.Navisworks.Api.SavedItemCollection"
+    },
+    {
+      "name": "AddComment",
+      "signature": "void AddComment(Autodesk.Navisworks.Api.SavedItem item, Autodesk.Navisworks.Api.Comment comment)",
+      "summary": "Edit item and add Comment to item\u0027s Comments",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "comment",
+          "type": "Autodesk.Navisworks.Api.Comment",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by SavedViewpoints"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.AddComment%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.Comment%29"
+    },
+    {
+      "name": "AddCopy",
+      "signature": "void AddCopy(Autodesk.Navisworks.Api.GroupItem parent, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Adds a copy of item to the end of the specified parent group contained by SavedViewpoints.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to add to. RootItem or null to add directly to Value",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.AddCopy%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "AddCopy",
+      "signature": "void AddCopy(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Adds a copy of item to the end of Value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.AddCopy%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all items in Value",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.SavedItemCollection value)",
+      "summary": "Copies the SavedViewpoints from value and replaces the list of entries held in Value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CopyFrom%28Autodesk.Navisworks.Api.SavedItemCollection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.SavedItem\u003E value)",
+      "summary": "Copies the SavedViewpoints from value and replaces the list of entries held in Value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.SavedItem\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.SavedItem%7D%29"
+    },
+    {
+      "name": "EditComments",
+      "signature": "void EditComments(Autodesk.Navisworks.Api.SavedItem item, Autodesk.Navisworks.Api.CommentCollection newComments)",
+      "summary": "Edit item and update it\u0027s Comments",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "newComments",
+          "type": "Autodesk.Navisworks.Api.CommentCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by SavedViewpoints"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.EditComments%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.CommentCollection%29"
+    },
+    {
+      "name": "EditDisplayName",
+      "signature": "void EditDisplayName(Autodesk.Navisworks.Api.SavedItem item, string newDisplayName)",
+      "summary": "Edit item and update it\u0027s DisplayName",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "newDisplayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by SavedViewpoints"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.EditDisplayName%28Autodesk.Navisworks.Api.SavedItem%2CSystem.String%29"
+    },
+    {
+      "name": "InsertCopy",
+      "signature": "void InsertCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Inserts a copy of item into the specified parent group contained by SavedViewpoints.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.InsertCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "InsertCopy",
+      "signature": "void InsertCopy(int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Inserts a copy of item into Value.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.InsertCopy%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(Autodesk.Navisworks.Api.GroupItem oldParent, int oldIndex, Autodesk.Navisworks.Api.GroupItem newParent, int newIndex)",
+      "summary": "Moves item at oldIndex in OldParent to newIndex in newParent",
+      "params": [
+        {
+          "name": "oldParent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to move the item from. RootItem or null to remove directly from Value",
+          "optional": false
+        },
+        {
+          "name": "oldIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "newParent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to move to. RootItem or null to move directly into Value.\nIf newParent is equal to oldParent, the item will be moved within the same SavedItemCollection.",
+          "optional": false
+        },
+        {
+          "name": "newIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027oldParent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027oldParent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027newParent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027newParent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027oldIndex\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027newIndex\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Move%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(int oldIndex, int newIndex)",
+      "summary": "Moves item from oldIndex to newIndex within Value",
+      "params": [
+        {
+          "name": "oldIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "newIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027oldIndex\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027newIndex\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Move%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(Autodesk.Navisworks.Api.GroupItem parent, int index)",
+      "summary": "Removes item from the specified parent group contained by SavedViewpoints.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to remove from. RootItem or null to remove directly from Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.RemoveAt%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(int index)",
+      "summary": "Removes item at the specified index from Value.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.RemoveAt%28System.Int32%29"
+    },
+    {
+      "name": "ReplaceFromCurrentView",
+      "signature": "void ReplaceFromCurrentView(Autodesk.Navisworks.Api.SavedViewpoint savedViewpoint)",
+      "summary": "Replaces the SavedViewpoint within Value with an updated copy. Viewpoint, Redlines and visibility are updated to those in the current View.",
+      "params": [
+        {
+          "name": "savedViewpoint",
+          "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027savedViewpoint\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027savedViewpoint\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027savedViewpoint\u0027 is not contained by SavedViewpoints"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ReplaceFromCurrentView%28Autodesk.Navisworks.Api.SavedViewpoint%29"
+    },
+    {
+      "name": "ReplaceWithCopy",
+      "signature": "void ReplaceWithCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Replaces item from the specified parent group with a copy of item",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by SavedViewpoints"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ReplaceWithCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "ReplaceWithCopy",
+      "signature": "void ReplaceWithCopy(int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Replaces item at given index within Value with a copy of item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.ReplaceWithCopy%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CurrentSavedViewpoint",
+      "type": "Autodesk.Navisworks.Api.SavedItem",
+      "getter": true,
+      "setter": true,
+      "summary": "The current item as displayed in the GUI. Must exist in Value or be null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CurrentSavedViewpoint"
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The internal identifier for this type of document part.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Id"
+    },
+    {
+      "name": "RootItem",
+      "type": "Autodesk.Navisworks.Api.FolderItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Value as the children of a FolderItem",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.RootItem"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The collection of SavedViewpoints stored in the Document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.SavedItemChangedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.SavedItemChangedEventArgs\u003E Changed",
+      "summary": "Occurs when the SavedViewpoints contained in this object has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the SavedViewpoint contained in this object is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "CurrentSavedViewpointChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E CurrentSavedViewpointChanged",
+      "summary": "Occurs when CurrentSavedViewpoint has changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSavedViewpoints.CurrentSavedViewpointChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

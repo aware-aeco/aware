@@ -1,0 +1,38 @@
+{
+  "name": "LcOpFindCacheEnumValidateMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpFindCacheEnumValidateMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpFindCacheEnumValidateMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMODE_NONE",
+      "value": 0
+    },
+    {
+      "name": "eMODE_FORCE_FULL",
+      "value": 1
+    },
+    {
+      "name": "eMODE_FULL",
+      "value": 2
+    },
+    {
+      "name": "eMODE_TIMEOUT_AFTER_FIRST",
+      "value": 3
+    },
+    {
+      "name": "eMODE_FIRST",
+      "value": 4
+    },
+    {
+      "name": "eMODE_TIMEOUT",
+      "value": 5
+    }
+  ]
+}

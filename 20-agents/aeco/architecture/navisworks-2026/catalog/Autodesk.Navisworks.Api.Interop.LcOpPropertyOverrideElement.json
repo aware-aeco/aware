@@ -1,0 +1,148 @@
+{
+  "name": "LcOpPropertyOverrideElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpPropertyOverrideElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpPathDictElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCategories",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec GetCategories(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path)",
+      "summary": "GetCategories method of LcOpPropertyOverrideElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement.GetCategories%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpPropertyOverrideElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpPropertyOverrideElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AppendCategory",
+      "signature": "static void AppendCategory(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path, Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory cat)",
+      "summary": "AppendCategory method of LcOpPropertyOverrideElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "cat",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement.AppendCategory%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCategory%29"
+    },
+    {
+      "name": "SetCategories",
+      "signature": "static void SetCategories(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path, Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec vec)",
+      "summary": "SetCategories method of LcOpPropertyOverrideElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "vec",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement.SetCategories%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Interop.LcOaPropOverrideCatVec%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpPropertyOverrideElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpPropertyOverrideElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

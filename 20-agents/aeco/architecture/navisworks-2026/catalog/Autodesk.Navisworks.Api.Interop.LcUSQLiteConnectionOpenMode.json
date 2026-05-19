@@ -1,0 +1,86 @@
+{
+  "name": "LcUSQLiteConnectionOpenMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUSQLiteConnectionOpenMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSQLiteConnectionOpenMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eREADONLY",
+      "value": 1
+    },
+    {
+      "name": "eREADWRITE",
+      "value": 2
+    },
+    {
+      "name": "eCREATE",
+      "value": 4
+    },
+    {
+      "name": "eDELETEONCLOSE",
+      "value": 8
+    },
+    {
+      "name": "eEXCLUSIVE",
+      "value": 16
+    },
+    {
+      "name": "eAUTOPROXY",
+      "value": 32
+    },
+    {
+      "name": "eMAINDB",
+      "value": 256
+    },
+    {
+      "name": "eTEMPDB",
+      "value": 512
+    },
+    {
+      "name": "eTRANSIENTDB",
+      "value": 1024
+    },
+    {
+      "name": "eMAINJOURNAL",
+      "value": 2048
+    },
+    {
+      "name": "eTEMPJOURNAL",
+      "value": 4096
+    },
+    {
+      "name": "eSUBJOURNAL",
+      "value": 8192
+    },
+    {
+      "name": "eMASTER_JOURNAL",
+      "value": 16384
+    },
+    {
+      "name": "eNOMUTEX",
+      "value": 32768
+    },
+    {
+      "name": "eFULLMUTEX",
+      "value": 65536
+    },
+    {
+      "name": "eSHAREDCACHE",
+      "value": 131072
+    },
+    {
+      "name": "ePRIVATECACHE",
+      "value": 262144
+    },
+    {
+      "name": "eWAL",
+      "value": 524288
+    }
+  ]
+}

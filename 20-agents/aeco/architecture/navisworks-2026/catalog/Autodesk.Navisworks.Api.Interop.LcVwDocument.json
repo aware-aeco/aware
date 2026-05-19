@@ -1,0 +1,3774 @@
+{
+  "name": "LcVwDocument",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwDocument class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpStateWatcher",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwDocument",
+  "constructors": [
+    {
+      "name": "LcVwDocument(Autodesk.Navisworks.Api.Interop.LcOpKernelEx)",
+      "signature": "LcVwDocument(Autodesk.Navisworks.Api.Interop.LcOpKernelEx kernel)",
+      "summary": "Constructs a new LcVwDocument.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelEx",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpKernelEx%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetParentModelPathIdImpl",
+      "signature": "Autodesk.Navisworks.Api.ModelItem GetParentModelPathIdImpl(Autodesk.Navisworks.Api.ModelItem path_link, ref bool success)",
+      "summary": "GetParentModelPathIdImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetParentModelPathIdImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "GetRootModelPathIdImpl",
+      "signature": "Autodesk.Navisworks.Api.ModelItem GetRootModelPathIdImpl(int model_index, ref bool success)",
+      "summary": "GetRootModelPathIdImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetRootModelPathIdImpl%28System.Int32%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "SimpleFindNextItemImpl",
+      "signature": "Autodesk.Navisworks.Api.ModelItem SimpleFindNextItemImpl(string query, bool match_case, Autodesk.Navisworks.Api.ModelItem from, ref bool success, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress)",
+      "summary": "SimpleFindNextItemImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "query",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "match_case",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ModelItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimpleFindNextItemImpl%28System.String%2CSystem.Boolean%2CAutodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%29"
+    },
+    {
+      "name": "CreateFindSimilarModelItemsSearchImpl",
+      "signature": "Autodesk.Navisworks.Api.Search CreateFindSimilarModelItemsSearchImpl(Autodesk.Navisworks.Api.ModelItem from, string categoryUserName, string propertyUserName, ref bool success)",
+      "summary": "CreateFindSimilarModelItemsSearchImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "categoryUserName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyUserName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "success",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Search",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CreateFindSimilarModelItemsSearchImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.String%2CSystem.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "AddPointToPointMeasurement",
+      "signature": "bool AddPointToPointMeasurement(string jsonPointToPointMeasurementData)",
+      "summary": "AddPointToPointMeasurement method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonPointToPointMeasurementData",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.AddPointToPointMeasurement%28System.String%29"
+    },
+    {
+      "name": "AppendModel",
+      "signature": "bool AppendModel(string media, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress, ref bool was_cancelled)",
+      "summary": "AppendModel method of LcVwDocument.",
+      "params": [
+        {
+          "name": "media",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        },
+        {
+          "name": "was_cancelled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.AppendModel%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "AppendModelImpl",
+      "signature": "bool AppendModelImpl(string media, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress, ref bool was_cancelled)",
+      "summary": "AppendModelImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "media",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        },
+        {
+          "name": "was_cancelled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.AppendModelImpl%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "BeginInteractiveTransform",
+      "signature": "bool BeginInteractiveTransform(string jsonVectorModelPathId, ref int handle)",
+      "summary": "BeginInteractiveTransform method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.BeginInteractiveTransform%28System.String%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "BeginInteractiveTransformImpl",
+      "signature": "bool BeginInteractiveTransformImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, ref int handle)",
+      "summary": "BeginInteractiveTransformImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.BeginInteractiveTransformImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "CalculateMinimumClearanceData",
+      "signature": "bool CalculateMinimumClearanceData(string vectorModelPathId1, string vectorModelPathId2, bool use_center_lines, out string jsonPointToPointMeasurementData)",
+      "summary": "CalculateMinimumClearanceData method of LcVwDocument.",
+      "params": [
+        {
+          "name": "vectorModelPathId1",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "vectorModelPathId2",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "use_center_lines",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "jsonPointToPointMeasurementData",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CalculateMinimumClearanceData%28System.String%2CSystem.String%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "CalculateMinimumClearanceDataImpl",
+      "signature": "bool CalculateMinimumClearanceDataImpl(Autodesk.Navisworks.Api.ModelItemCollection selection1, Autodesk.Navisworks.Api.ModelItemCollection selection2, bool use_center_lines, out string jsonPointToPointMeasurementData)",
+      "summary": "CalculateMinimumClearanceDataImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection1",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "selection2",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "use_center_lines",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "jsonPointToPointMeasurementData",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CalculateMinimumClearanceDataImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "bool Clear()",
+      "summary": "Clear method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.Clear"
+    },
+    {
+      "name": "ClearImpl",
+      "signature": "bool ClearImpl()",
+      "summary": "ClearImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ClearImpl"
+    },
+    {
+      "name": "ClearMeasurement",
+      "signature": "bool ClearMeasurement()",
+      "summary": "ClearMeasurement method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ClearMeasurement"
+    },
+    {
+      "name": "ClearMeasurementImpl",
+      "signature": "bool ClearMeasurementImpl()",
+      "summary": "ClearMeasurementImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ClearMeasurementImpl"
+    },
+    {
+      "name": "CreateFindSimilarModelItemsSearch",
+      "signature": "bool CreateFindSimilarModelItemsSearch(string jsonModelPathId, string categoryUserName, string propertyUserName, out string jsonFindSpecResult)",
+      "summary": "CreateFindSimilarModelItemsSearch method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "categoryUserName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyUserName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonFindSpecResult",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CreateFindSimilarModelItemsSearch%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "CurrentAnimationCommand",
+      "signature": "bool CurrentAnimationCommand(int command)",
+      "summary": "CurrentAnimationCommand method of LcVwDocument.",
+      "params": [
+        {
+          "name": "command",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationCommand%28System.Int32%29"
+    },
+    {
+      "name": "CurrentAnimationCommandImpl",
+      "signature": "bool CurrentAnimationCommandImpl(int command)",
+      "summary": "CurrentAnimationCommandImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "command",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationCommandImpl%28System.Int32%29"
+    },
+    {
+      "name": "CurrentAnimationCommandIsActive",
+      "signature": "bool CurrentAnimationCommandIsActive(int command, ref bool is_active)",
+      "summary": "CurrentAnimationCommandIsActive method of LcVwDocument.",
+      "params": [
+        {
+          "name": "command",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationCommandIsActive%28System.Int32%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "CurrentAnimationCommandIsActiveImpl",
+      "signature": "bool CurrentAnimationCommandIsActiveImpl(int command, ref bool is_active)",
+      "summary": "CurrentAnimationCommandIsActiveImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "command",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "is_active",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationCommandIsActiveImpl%28System.Int32%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "CurrentAnimationCommandIsEnabled",
+      "signature": "bool CurrentAnimationCommandIsEnabled(int command, ref bool is_enabled)",
+      "summary": "CurrentAnimationCommandIsEnabled method of LcVwDocument.",
+      "params": [
+        {
+          "name": "command",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "is_enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationCommandIsEnabled%28System.Int32%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "CurrentAnimationCommandIsEnabledImpl",
+      "signature": "bool CurrentAnimationCommandIsEnabledImpl(int command, ref bool is_enabled)",
+      "summary": "CurrentAnimationCommandIsEnabledImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "command",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "is_enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationCommandIsEnabledImpl%28System.Int32%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "CurrentAnimationGetDuration",
+      "signature": "bool CurrentAnimationGetDuration(ref double duration)",
+      "summary": "CurrentAnimationGetDuration method of LcVwDocument.",
+      "params": [
+        {
+          "name": "duration",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationGetDuration%28System.Double%40%29"
+    },
+    {
+      "name": "CurrentAnimationGetDurationImpl",
+      "signature": "bool CurrentAnimationGetDurationImpl(ref double duration)",
+      "summary": "CurrentAnimationGetDurationImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "duration",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationGetDurationImpl%28System.Double%40%29"
+    },
+    {
+      "name": "CurrentAnimationGetPosition",
+      "signature": "bool CurrentAnimationGetPosition(ref double position)",
+      "summary": "CurrentAnimationGetPosition method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationGetPosition%28System.Double%40%29"
+    },
+    {
+      "name": "CurrentAnimationGetPositionImpl",
+      "signature": "bool CurrentAnimationGetPositionImpl(ref double position)",
+      "summary": "CurrentAnimationGetPositionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationGetPositionImpl%28System.Double%40%29"
+    },
+    {
+      "name": "CurrentAnimationSetPosition",
+      "signature": "bool CurrentAnimationSetPosition(double position)",
+      "summary": "CurrentAnimationSetPosition method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationSetPosition%28System.Double%29"
+    },
+    {
+      "name": "CurrentAnimationSetPositionImpl",
+      "signature": "bool CurrentAnimationSetPositionImpl(double position)",
+      "summary": "CurrentAnimationSetPositionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.CurrentAnimationSetPositionImpl%28System.Double%29"
+    },
+    {
+      "name": "DescribeAsAggregateModel",
+      "signature": "bool DescribeAsAggregateModel(out string jsonAggregateModelDefinition)",
+      "summary": "DescribeAsAggregateModel method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonAggregateModelDefinition",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.DescribeAsAggregateModel%28System.String%40%29"
+    },
+    {
+      "name": "DescribeAsAggregateModelImpl",
+      "signature": "bool DescribeAsAggregateModelImpl(out string jsonAggregateModelDefinition)",
+      "summary": "DescribeAsAggregateModelImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonAggregateModelDefinition",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.DescribeAsAggregateModelImpl%28System.String%40%29"
+    },
+    {
+      "name": "EndInteractiveTransform",
+      "signature": "bool EndInteractiveTransform(int handle, bool cancel, bool override_file_transform)",
+      "summary": "EndInteractiveTransform method of LcVwDocument.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "cancel",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "override_file_transform",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.EndInteractiveTransform%28System.Int32%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ExecuteFindSimilarModelItemsSearch",
+      "signature": "bool ExecuteFindSimilarModelItemsSearch(string jsonSearch, bool onlyObjects, bool pruneResults, out string jsonFoundModelItemsResult)",
+      "summary": "ExecuteFindSimilarModelItemsSearch method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonSearch",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "onlyObjects",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "pruneResults",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "jsonFoundModelItemsResult",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ExecuteFindSimilarModelItemsSearch%28System.String%2CSystem.Boolean%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "ExecuteFindSimilarModelItemsSearchImpl",
+      "signature": "bool ExecuteFindSimilarModelItemsSearchImpl(Autodesk.Navisworks.Api.Search findSpec, Autodesk.Navisworks.Api.ModelItemCollection found)",
+      "summary": "ExecuteFindSimilarModelItemsSearchImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "findSpec",
+          "type": "Autodesk.Navisworks.Api.Search",
+          "optional": false
+        },
+        {
+          "name": "found",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ExecuteFindSimilarModelItemsSearchImpl%28Autodesk.Navisworks.Api.Search%2CAutodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "GenerateGeometryItemPrimitives",
+      "signature": "bool GenerateGeometryItemPrimitives(string jsonModelPathId, Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives simple_primitives_cb)",
+      "summary": "GenerateGeometryItemPrimitives method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "simple_primitives_cb",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GenerateGeometryItemPrimitives%28System.String%2CAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives%29"
+    },
+    {
+      "name": "GenerateGeometryItemPrimitivesImpl",
+      "signature": "bool GenerateGeometryItemPrimitivesImpl(Autodesk.Navisworks.Api.ModelItem item, Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives simple_primitives_cb)",
+      "summary": "GenerateGeometryItemPrimitivesImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "simple_primitives_cb",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwISimplePrimitives",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GenerateGeometryItemPrimitivesImpl%28Autodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Interop.LcVwISimplePrimitives%29"
+    },
+    {
+      "name": "GetAllHidden",
+      "signature": "bool GetAllHidden(out string jsonVectorModelPathId, bool pruneResults)",
+      "summary": "GetAllHidden method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "pruneResults",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetAllHidden%28System.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "GetAllHiddenImpl",
+      "signature": "bool GetAllHiddenImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, bool pruneResults)",
+      "summary": "GetAllHiddenImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "pruneResults",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetAllHiddenImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%29"
+    },
+    {
+      "name": "GetCurrentAnimationSet",
+      "signature": "bool GetCurrentAnimationSet(out string jsonAnimationSet)",
+      "summary": "GetCurrentAnimationSet method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonAnimationSet",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetCurrentAnimationSet%28System.String%40%29"
+    },
+    {
+      "name": "GetCurrentSelection",
+      "signature": "bool GetCurrentSelection(out string jsonVectorModelPathId)",
+      "summary": "GetCurrentSelection method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetCurrentSelection%28System.String%40%29"
+    },
+    {
+      "name": "GetCurrentSelectionImpl",
+      "signature": "bool GetCurrentSelectionImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "GetCurrentSelectionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetCurrentSelectionImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "GetDocumentOptions",
+      "signature": "bool GetDocumentOptions(out string jsonDocumentOptions)",
+      "summary": "GetDocumentOptions method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonDocumentOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetDocumentOptions%28System.String%40%29"
+    },
+    {
+      "name": "GetDocumentOptionsImpl",
+      "signature": "bool GetDocumentOptionsImpl(out string jsonDocumentOptions)",
+      "summary": "GetDocumentOptionsImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonDocumentOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetDocumentOptionsImpl%28System.String%40%29"
+    },
+    {
+      "name": "GetGridLevelLabels",
+      "signature": "bool GetGridLevelLabels(out string jsonVectorLabels, int systemIndex)",
+      "summary": "GetGridLevelLabels method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorLabels",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "systemIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetGridLevelLabels%28System.String%40%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetGridSystemLabels",
+      "signature": "bool GetGridSystemLabels(out string jsonVectorLabels)",
+      "summary": "GetGridSystemLabels method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorLabels",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetGridSystemLabels%28System.String%40%29"
+    },
+    {
+      "name": "GetModelCount",
+      "signature": "bool GetModelCount(ref int count)",
+      "summary": "GetModelCount method of LcVwDocument.",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelCount%28System.Int32%40%29"
+    },
+    {
+      "name": "GetModelCountImpl",
+      "signature": "bool GetModelCountImpl(ref int count)",
+      "summary": "GetModelCountImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelCountImpl%28System.Int32%40%29"
+    },
+    {
+      "name": "GetModelItemChildren",
+      "signature": "bool GetModelItemChildren(string jsonModelPathId, int startIndex, int lastIndex, out string jsonVectorModelPathId)",
+      "summary": "GetModelItemChildren method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "lastIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelItemChildren%28System.String%2CSystem.Int32%2CSystem.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetModelItemChildrenCount",
+      "signature": "bool GetModelItemChildrenCount(string jsonModelPathId, ref int count)",
+      "summary": "GetModelItemChildrenCount method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelItemChildrenCount%28System.String%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "GetModelItemChildrenCountImpl",
+      "signature": "bool GetModelItemChildrenCountImpl(Autodesk.Navisworks.Api.ModelItem path_link, ref int count)",
+      "summary": "GetModelItemChildrenCountImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelItemChildrenCountImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "GetModelItemChildrenImpl",
+      "signature": "bool GetModelItemChildrenImpl(Autodesk.Navisworks.Api.ModelItem path_link, int startIndex, int lastIndex, Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "GetModelItemChildrenImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "startIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "lastIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelItemChildrenImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Int32%2CSystem.Int32%2CAutodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "GetModelItemLabel",
+      "signature": "bool GetModelItemLabel(string jsonModelPathId, out string label)",
+      "summary": "GetModelItemLabel method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelItemLabel%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetModelItemLabelImpl",
+      "signature": "bool GetModelItemLabelImpl(Autodesk.Navisworks.Api.ModelItem path_link, out string label)",
+      "summary": "GetModelItemLabelImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelItemLabelImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetModelTransform",
+      "signature": "bool GetModelTransform(int modelIndex, out string jsonTransform3D)",
+      "summary": "GetModelTransform method of LcVwDocument.",
+      "params": [
+        {
+          "name": "modelIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelTransform%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetModelTransformImpl",
+      "signature": "bool GetModelTransformImpl(int model_index, Autodesk.Navisworks.Api.Interop.LcOpTransform3fR transformr)",
+      "summary": "GetModelTransformImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "transformr",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTransform3fR",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelTransformImpl%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpTransform3fR%29"
+    },
+    {
+      "name": "GetModelUnits",
+      "signature": "bool GetModelUnits(int modelIndex, ref int units)",
+      "summary": "GetModelUnits method of LcVwDocument.",
+      "params": [
+        {
+          "name": "modelIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelUnits%28System.Int32%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "GetModelUnitsImpl",
+      "signature": "bool GetModelUnitsImpl(int model_index, ref int units)",
+      "summary": "GetModelUnitsImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetModelUnitsImpl%28System.Int32%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "GetParentModelPathId",
+      "signature": "bool GetParentModelPathId(string jsonModelPathId, out string jsonModelPathIdParent)",
+      "summary": "GetParentModelPathId method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonModelPathIdParent",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetParentModelPathId%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetPropertyCategories",
+      "signature": "bool GetPropertyCategories(string jsonModelPathId, bool formatForUser, out string data)",
+      "summary": "GetPropertyCategories method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatForUser",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetPropertyCategories%28System.String%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetPropertyCategoriesImpl",
+      "signature": "bool GetPropertyCategoriesImpl(Autodesk.Navisworks.Api.ModelItem path_link, bool formatForUser, out string json_data)",
+      "summary": "GetPropertyCategoriesImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "formatForUser",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "json_data",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetPropertyCategoriesImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetRootModelPathId",
+      "signature": "bool GetRootModelPathId(int modelIndex, out string jsonModelPathId)",
+      "summary": "GetRootModelPathId method of LcVwDocument.",
+      "params": [
+        {
+          "name": "modelIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetRootModelPathId%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetSelectionBoundingBox",
+      "signature": "bool GetSelectionBoundingBox(string jsonVectorModelPathId, bool includeHidden, out string jsonBox3D)",
+      "summary": "GetSelectionBoundingBox method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "includeHidden",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "jsonBox3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetSelectionBoundingBox%28System.String%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetSelectionBoundingBoxImpl",
+      "signature": "bool GetSelectionBoundingBoxImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, bool include_hidden, Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "GetSelectionBoundingBoxImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "include_hidden",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetSelectionBoundingBoxImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%2CAutodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "GetTool",
+      "signature": "bool GetTool(ref int tool)",
+      "summary": "GetTool method of LcVwDocument.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetTool%28System.Int32%40%29"
+    },
+    {
+      "name": "GetToolImpl",
+      "signature": "bool GetToolImpl(ref int tool)",
+      "summary": "GetToolImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetToolImpl%28System.Int32%40%29"
+    },
+    {
+      "name": "GetUserFilteredPropertyCategories",
+      "signature": "bool GetUserFilteredPropertyCategories(string jsonModelPathId, bool formatForUser, out string data)",
+      "summary": "GetUserFilteredPropertyCategories method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatForUser",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetUserFilteredPropertyCategories%28System.String%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetUserFilteredPropertyCategoriesImpl",
+      "signature": "bool GetUserFilteredPropertyCategoriesImpl(Autodesk.Navisworks.Api.ModelItem path_link, bool formatForUser, out string json_data)",
+      "summary": "GetUserFilteredPropertyCategoriesImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "formatForUser",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "json_data",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetUserFilteredPropertyCategoriesImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetWorldBoundingBox",
+      "signature": "bool GetWorldBoundingBox(bool includeHidden, out string jsonBox3D)",
+      "summary": "GetWorldBoundingBox method of LcVwDocument.",
+      "params": [
+        {
+          "name": "includeHidden",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "jsonBox3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetWorldBoundingBox%28System.Boolean%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetWorldBoundingBoxImpl",
+      "signature": "bool GetWorldBoundingBoxImpl(bool include_hidden, Autodesk.Navisworks.Api.BoundingBox3D box)",
+      "summary": "GetWorldBoundingBoxImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "include_hidden",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "box",
+          "type": "Autodesk.Navisworks.Api.BoundingBox3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetWorldBoundingBoxImpl%28System.Boolean%2CAutodesk.Navisworks.Api.BoundingBox3D%29"
+    },
+    {
+      "name": "GetWorldDirection",
+      "signature": "bool GetWorldDirection(int direction, out string jsonDirection3D)",
+      "summary": "GetWorldDirection method of LcVwDocument.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonDirection3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetWorldDirection%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetWorldDirectionImpl",
+      "signature": "bool GetWorldDirectionImpl(int direction, Autodesk.Navisworks.Api.UnitVector3D dir)",
+      "summary": "GetWorldDirectionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "dir",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetWorldDirectionImpl%28System.Int32%2CAutodesk.Navisworks.Api.UnitVector3D%29"
+    },
+    {
+      "name": "GetWorldUnits",
+      "signature": "bool GetWorldUnits(ref int units)",
+      "summary": "GetWorldUnits method of LcVwDocument.",
+      "params": [
+        {
+          "name": "units",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetWorldUnits%28System.Int32%40%29"
+    },
+    {
+      "name": "GetWorldUnitsImpl",
+      "signature": "bool GetWorldUnitsImpl(ref int units)",
+      "summary": "GetWorldUnitsImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "units",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.GetWorldUnitsImpl%28System.Int32%40%29"
+    },
+    {
+      "name": "HideSelection",
+      "signature": "bool HideSelection(string jsonVectorModelPathId)",
+      "summary": "HideSelection method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.HideSelection%28System.String%29"
+    },
+    {
+      "name": "HideSelectionImpl",
+      "signature": "bool HideSelectionImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "HideSelectionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.HideSelectionImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "InvertCurrentSelection",
+      "signature": "bool InvertCurrentSelection()",
+      "summary": "InvertCurrentSelection method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.InvertCurrentSelection"
+    },
+    {
+      "name": "InvertCurrentSelectionImpl",
+      "signature": "bool InvertCurrentSelectionImpl()",
+      "summary": "InvertCurrentSelectionImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.InvertCurrentSelectionImpl"
+    },
+    {
+      "name": "Is2D",
+      "signature": "bool Is2D(ref bool status)",
+      "summary": "Is2D method of LcVwDocument.",
+      "params": [
+        {
+          "name": "status",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.Is2D%28System.Boolean%40%29"
+    },
+    {
+      "name": "Is2DImpl",
+      "signature": "bool Is2DImpl(ref bool status)",
+      "summary": "Is2DImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "status",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.Is2DImpl%28System.Boolean%40%29"
+    },
+    {
+      "name": "IsCompositeItem",
+      "signature": "bool IsCompositeItem(string jsonModelPathId, ref bool status)",
+      "summary": "IsCompositeItem method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsCompositeItem%28System.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "IsCompositeItemImpl",
+      "signature": "bool IsCompositeItemImpl(Autodesk.Navisworks.Api.ModelItem item, ref bool status)",
+      "summary": "IsCompositeItemImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsCompositeItemImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "IsGeometryItem",
+      "signature": "bool IsGeometryItem(string jsonModelPathId, ref bool status)",
+      "summary": "IsGeometryItem method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsGeometryItem%28System.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "IsGeometryItemImpl",
+      "signature": "bool IsGeometryItemImpl(Autodesk.Navisworks.Api.ModelItem item, ref bool status)",
+      "summary": "IsGeometryItemImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "status",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsGeometryItemImpl%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "IsSelectionHidden",
+      "signature": "bool IsSelectionHidden(string jsonVectorModelPathId, ref bool hidden)",
+      "summary": "IsSelectionHidden method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "hidden",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsSelectionHidden%28System.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "IsSelectionHiddenImpl",
+      "signature": "bool IsSelectionHiddenImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, ref bool hidden)",
+      "summary": "IsSelectionHiddenImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "hidden",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsSelectionHiddenImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OpenAggregateModel",
+      "signature": "bool OpenAggregateModel(string jsonAggregateModelDefinition, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress, string progress_uri, ref bool was_cancelled)",
+      "summary": "OpenAggregateModel method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonAggregateModelDefinition",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        },
+        {
+          "name": "progress_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "was_cancelled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OpenAggregateModel%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%2CSystem.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OpenAggregateModelImpl",
+      "signature": "bool OpenAggregateModelImpl(string jsonAggregateModelDefinition, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress, string progress_uri, ref bool was_cancelled)",
+      "summary": "OpenAggregateModelImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonAggregateModelDefinition",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        },
+        {
+          "name": "progress_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "was_cancelled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OpenAggregateModelImpl%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%2CSystem.String%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OpenModel",
+      "signature": "bool OpenModel(string media, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress, ref bool was_cancelled)",
+      "summary": "OpenModel method of LcVwDocument.",
+      "params": [
+        {
+          "name": "media",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        },
+        {
+          "name": "was_cancelled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OpenModel%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OpenModelImpl",
+      "signature": "bool OpenModelImpl(string media, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress, ref bool was_cancelled)",
+      "summary": "OpenModelImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "media",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        },
+        {
+          "name": "was_cancelled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OpenModelImpl%28System.String%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OverrideSelectionAppearance",
+      "signature": "bool OverrideSelectionAppearance(string jsonVectorModelPathId, string jsonAppearance)",
+      "summary": "OverrideSelectionAppearance method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonAppearance",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionAppearance%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "OverrideSelectionColor",
+      "signature": "bool OverrideSelectionColor(string jsonVectorModelPathId, string jsonColor)",
+      "summary": "OverrideSelectionColor method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonColor",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionColor%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "OverrideSelectionColorImpl",
+      "signature": "bool OverrideSelectionColorImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, Autodesk.Navisworks.Api.Color color)",
+      "summary": "OverrideSelectionColorImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionColorImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "OverrideSelectionConsistentMaterial",
+      "signature": "bool OverrideSelectionConsistentMaterial(string jsonVectorModelPathId)",
+      "summary": "OverrideSelectionConsistentMaterial method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionConsistentMaterial%28System.String%29"
+    },
+    {
+      "name": "OverrideSelectionConsistentMaterialImpl",
+      "signature": "bool OverrideSelectionConsistentMaterialImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "OverrideSelectionConsistentMaterialImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionConsistentMaterialImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideSelectionRenderStyle",
+      "signature": "bool OverrideSelectionRenderStyle(string jsonVectorModelPathId, int renderStyle)",
+      "summary": "OverrideSelectionRenderStyle method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "renderStyle",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionRenderStyle%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "OverrideSelectionRenderStyleImpl",
+      "signature": "bool OverrideSelectionRenderStyleImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, int renderStyle)",
+      "summary": "OverrideSelectionRenderStyleImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "renderStyle",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionRenderStyleImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Int32%29"
+    },
+    {
+      "name": "OverrideSelectionTransparency",
+      "signature": "bool OverrideSelectionTransparency(string jsonVectorModelPathId, double transparency)",
+      "summary": "OverrideSelectionTransparency method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionTransparency%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "OverrideSelectionTransparencyImpl",
+      "signature": "bool OverrideSelectionTransparencyImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, double transparency)",
+      "summary": "OverrideSelectionTransparencyImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideSelectionTransparencyImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Double%29"
+    },
+    {
+      "name": "OverrideTransform",
+      "signature": "bool OverrideTransform(string jsonVectorModelPathId, string jsonTransform3D, bool override_file_transform)",
+      "summary": "OverrideTransform method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "override_file_transform",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideTransform%28System.String%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "OverrideTransformImpl",
+      "signature": "bool OverrideTransformImpl(Autodesk.Navisworks.Api.ModelItemCollection selection, string jsonTransform3D, bool override_file_transform)",
+      "summary": "OverrideTransformImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "override_file_transform",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideTransformImpl%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "OverrideTransformReset",
+      "signature": "bool OverrideTransformReset(string jsonVectorModelPathId)",
+      "summary": "OverrideTransformReset method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideTransformReset%28System.String%29"
+    },
+    {
+      "name": "OverrideTransformResetAll",
+      "signature": "bool OverrideTransformResetAll()",
+      "summary": "OverrideTransformResetAll method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideTransformResetAll"
+    },
+    {
+      "name": "OverrideTransformResetImpl",
+      "signature": "bool OverrideTransformResetImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "OverrideTransformResetImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.OverrideTransformResetImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetAllAppearance",
+      "signature": "bool ResetAllAppearance()",
+      "summary": "ResetAllAppearance method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllAppearance"
+    },
+    {
+      "name": "ResetAllAppearanceImpl",
+      "signature": "bool ResetAllAppearanceImpl()",
+      "summary": "ResetAllAppearanceImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllAppearanceImpl"
+    },
+    {
+      "name": "ResetAllColor",
+      "signature": "bool ResetAllColor()",
+      "summary": "ResetAllColor method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllColor"
+    },
+    {
+      "name": "ResetAllColorAndTransparency",
+      "signature": "bool ResetAllColorAndTransparency()",
+      "summary": "ResetAllColorAndTransparency method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllColorAndTransparency"
+    },
+    {
+      "name": "ResetAllColorAndTransparencyImpl",
+      "signature": "bool ResetAllColorAndTransparencyImpl()",
+      "summary": "ResetAllColorAndTransparencyImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllColorAndTransparencyImpl"
+    },
+    {
+      "name": "ResetAllColorImpl",
+      "signature": "bool ResetAllColorImpl()",
+      "summary": "ResetAllColorImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllColorImpl"
+    },
+    {
+      "name": "ResetAllConsistentMaterial",
+      "signature": "bool ResetAllConsistentMaterial()",
+      "summary": "ResetAllConsistentMaterial method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllConsistentMaterial"
+    },
+    {
+      "name": "ResetAllConsistentMaterialImpl",
+      "signature": "bool ResetAllConsistentMaterialImpl()",
+      "summary": "ResetAllConsistentMaterialImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllConsistentMaterialImpl"
+    },
+    {
+      "name": "ResetAllHidden",
+      "signature": "bool ResetAllHidden()",
+      "summary": "ResetAllHidden method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllHidden"
+    },
+    {
+      "name": "ResetAllHiddenImpl",
+      "signature": "bool ResetAllHiddenImpl()",
+      "summary": "ResetAllHiddenImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllHiddenImpl"
+    },
+    {
+      "name": "ResetAllRenderStyle",
+      "signature": "bool ResetAllRenderStyle()",
+      "summary": "ResetAllRenderStyle method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllRenderStyle"
+    },
+    {
+      "name": "ResetAllRenderStyleImpl",
+      "signature": "bool ResetAllRenderStyleImpl()",
+      "summary": "ResetAllRenderStyleImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllRenderStyleImpl"
+    },
+    {
+      "name": "ResetAllTransparency",
+      "signature": "bool ResetAllTransparency()",
+      "summary": "ResetAllTransparency method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllTransparency"
+    },
+    {
+      "name": "ResetAllTransparencyImpl",
+      "signature": "bool ResetAllTransparencyImpl()",
+      "summary": "ResetAllTransparencyImpl method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetAllTransparencyImpl"
+    },
+    {
+      "name": "ResetSelectionAppearance",
+      "signature": "bool ResetSelectionAppearance(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionAppearance method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionAppearance%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionAppearanceImpl",
+      "signature": "bool ResetSelectionAppearanceImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionAppearanceImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionAppearanceImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetSelectionColor",
+      "signature": "bool ResetSelectionColor(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionColor method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionColor%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionColorAndTransparency",
+      "signature": "bool ResetSelectionColorAndTransparency(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionColorAndTransparency method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionColorAndTransparency%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionColorAndTransparencyImpl",
+      "signature": "bool ResetSelectionColorAndTransparencyImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionColorAndTransparencyImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionColorAndTransparencyImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetSelectionColorImpl",
+      "signature": "bool ResetSelectionColorImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionColorImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionColorImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetSelectionConsistentMaterial",
+      "signature": "bool ResetSelectionConsistentMaterial(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionConsistentMaterial method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionConsistentMaterial%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionConsistentMaterialImpl",
+      "signature": "bool ResetSelectionConsistentMaterialImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionConsistentMaterialImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionConsistentMaterialImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetSelectionHidden",
+      "signature": "bool ResetSelectionHidden(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionHidden method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionHidden%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionHiddenImpl",
+      "signature": "bool ResetSelectionHiddenImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionHiddenImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionHiddenImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetSelectionRenderStyle",
+      "signature": "bool ResetSelectionRenderStyle(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionRenderStyle method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionRenderStyle%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionRenderStyleImpl",
+      "signature": "bool ResetSelectionRenderStyleImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionRenderStyleImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionRenderStyleImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "ResetSelectionTransparency",
+      "signature": "bool ResetSelectionTransparency(string jsonVectorModelPathId)",
+      "summary": "ResetSelectionTransparency method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionTransparency%28System.String%29"
+    },
+    {
+      "name": "ResetSelectionTransparencyImpl",
+      "signature": "bool ResetSelectionTransparencyImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ResetSelectionTransparencyImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ResetSelectionTransparencyImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "SetCurrentAnimationSet",
+      "signature": "bool SetCurrentAnimationSet(string jsonAnimationSet, bool restore_original_camera)",
+      "summary": "SetCurrentAnimationSet method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonAnimationSet",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "restore_original_camera",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetCurrentAnimationSet%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetCurrentSelection",
+      "signature": "bool SetCurrentSelection(string jsonVectorModelPathId)",
+      "summary": "SetCurrentSelection method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetCurrentSelection%28System.String%29"
+    },
+    {
+      "name": "SetCurrentSelectionImpl",
+      "signature": "bool SetCurrentSelectionImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "SetCurrentSelectionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetCurrentSelectionImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "SetDocumentOptions",
+      "signature": "bool SetDocumentOptions(string jsonDocumentOptions)",
+      "summary": "SetDocumentOptions method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonDocumentOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetDocumentOptions%28System.String%29"
+    },
+    {
+      "name": "SetDocumentOptionsImpl",
+      "signature": "bool SetDocumentOptionsImpl(string jsonDocumentOptions)",
+      "summary": "SetDocumentOptionsImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonDocumentOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetDocumentOptionsImpl%28System.String%29"
+    },
+    {
+      "name": "SetModelUnitsAndTransform",
+      "signature": "bool SetModelUnitsAndTransform(int modelIndex, int units, string jsonTransform3D)",
+      "summary": "SetModelUnitsAndTransform method of LcVwDocument.",
+      "params": [
+        {
+          "name": "modelIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetModelUnitsAndTransform%28System.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "SetModelUnitsAndTransformImpl",
+      "signature": "bool SetModelUnitsAndTransformImpl(int model_index, int units, Autodesk.Navisworks.Api.Interop.LcOpTransform3fR transformr)",
+      "summary": "SetModelUnitsAndTransformImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "units",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "transformr",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTransform3fR",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetModelUnitsAndTransformImpl%28System.Int32%2CSystem.Int32%2CAutodesk.Navisworks.Api.Interop.LcOpTransform3fR%29"
+    },
+    {
+      "name": "SetTool",
+      "signature": "bool SetTool(int tool)",
+      "summary": "SetTool method of LcVwDocument.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetTool%28System.Int32%29"
+    },
+    {
+      "name": "SetToolImpl",
+      "signature": "bool SetToolImpl(int tool)",
+      "summary": "SetToolImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "tool",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SetToolImpl%28System.Int32%29"
+    },
+    {
+      "name": "ShowSelection",
+      "signature": "bool ShowSelection(string jsonVectorModelPathId)",
+      "summary": "ShowSelection method of LcVwDocument.",
+      "params": [
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ShowSelection%28System.String%29"
+    },
+    {
+      "name": "ShowSelectionImpl",
+      "signature": "bool ShowSelectionImpl(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "ShowSelectionImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ShowSelectionImpl%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "SimAddActionAppearanceOverride",
+      "signature": "bool SimAddActionAppearanceOverride(double position, int sort, int overrideType, int user_appearance_index, string jsonVectorModelPathId)",
+      "summary": "SimAddActionAppearanceOverride method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "overrideType",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "user_appearance_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddActionAppearanceOverride%28System.Double%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "SimAddActionDataCacheAdd",
+      "signature": "bool SimAddActionDataCacheAdd(double position, int sort, string key, string value)",
+      "summary": "SimAddActionDataCacheAdd method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddActionDataCacheAdd%28System.Double%2CSystem.Int32%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "SimAddActionDataNotify",
+      "signature": "bool SimAddActionDataNotify(double position, int sort, string key, string value)",
+      "summary": "SimAddActionDataNotify method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddActionDataNotify%28System.Double%2CSystem.Int32%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "SimAddActionUserAppearance",
+      "signature": "bool SimAddActionUserAppearance(double position, int sort, int user_appearance_index, string jsonColor, double transparency)",
+      "summary": "SimAddActionUserAppearance method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "user_appearance_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonColor",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddActionUserAppearance%28System.Double%2CSystem.Int32%2CSystem.Int32%2CSystem.String%2CSystem.Double%29"
+    },
+    {
+      "name": "SimAddAddActionDataCacheRemove",
+      "signature": "bool SimAddAddActionDataCacheRemove(double position, int sort, string key)",
+      "summary": "SimAddAddActionDataCacheRemove method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddAddActionDataCacheRemove%28System.Double%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "SimAddStartActionAppearanceOverride",
+      "signature": "bool SimAddStartActionAppearanceOverride(int sort, int overrideType, int user_appearance_index, string jsonVectorModelPathId)",
+      "summary": "SimAddStartActionAppearanceOverride method of LcVwDocument.",
+      "params": [
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "overrideType",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "user_appearance_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonVectorModelPathId",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddStartActionAppearanceOverride%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "SimAddStartActionUserAppearance",
+      "signature": "bool SimAddStartActionUserAppearance(int sort, int user_appearance_index, string jsonColor, double transparency)",
+      "summary": "SimAddStartActionUserAppearance method of LcVwDocument.",
+      "params": [
+        {
+          "name": "sort",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "user_appearance_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonColor",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "transparency",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimAddStartActionUserAppearance%28System.Int32%2CSystem.Int32%2CSystem.String%2CSystem.Double%29"
+    },
+    {
+      "name": "SimClearActions",
+      "signature": "bool SimClearActions()",
+      "summary": "SimClearActions method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimClearActions"
+    },
+    {
+      "name": "SimDataCacheGetKeys",
+      "signature": "bool SimDataCacheGetKeys(string prefix_filter, out string jsonKeys)",
+      "summary": "SimDataCacheGetKeys method of LcVwDocument.",
+      "params": [
+        {
+          "name": "prefix_filter",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonKeys",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimDataCacheGetKeys%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "SimDataCacheTryGetValue",
+      "signature": "bool SimDataCacheTryGetValue(string key, out string value, ref bool has_value)",
+      "summary": "SimDataCacheTryGetValue method of LcVwDocument.",
+      "params": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "has_value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimDataCacheTryGetValue%28System.String%2CSystem.String%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "SimFinish",
+      "signature": "bool SimFinish()",
+      "summary": "SimFinish method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimFinish"
+    },
+    {
+      "name": "SimGetPosition",
+      "signature": "bool SimGetPosition(ref double position)",
+      "summary": "SimGetPosition method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimGetPosition%28System.Double%40%29"
+    },
+    {
+      "name": "SimIsPlaying",
+      "signature": "bool SimIsPlaying(ref bool is_playing)",
+      "summary": "SimIsPlaying method of LcVwDocument.",
+      "params": [
+        {
+          "name": "is_playing",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimIsPlaying%28System.Boolean%40%29"
+    },
+    {
+      "name": "SimJumpTo",
+      "signature": "bool SimJumpTo(double position)",
+      "summary": "SimJumpTo method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimJumpTo%28System.Double%29"
+    },
+    {
+      "name": "SimPlayTo",
+      "signature": "bool SimPlayTo(double position, double scale)",
+      "summary": "SimPlayTo method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimPlayTo%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "SimStart",
+      "signature": "bool SimStart()",
+      "summary": "SimStart method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimStart"
+    },
+    {
+      "name": "SimStopPlaying",
+      "signature": "bool SimStopPlaying()",
+      "summary": "SimStopPlaying method of LcVwDocument.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimStopPlaying"
+    },
+    {
+      "name": "SimpleFindNextItem",
+      "signature": "bool SimpleFindNextItem(string query, bool match_case, string jsonModelPathIdFrom, out string jsonModelPathIdResult, Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress progress)",
+      "summary": "SimpleFindNextItem method of LcVwDocument.",
+      "params": [
+        {
+          "name": "query",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "match_case",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "jsonModelPathIdFrom",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonModelPathIdResult",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSimpleProgress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimpleFindNextItem%28System.String%2CSystem.Boolean%2CSystem.String%2CSystem.String%40%2CAutodesk.Navisworks.Api.Interop.LcOpSimpleProgress%29"
+    },
+    {
+      "name": "UnloadModel",
+      "signature": "bool UnloadModel(int model_index)",
+      "summary": "UnloadModel method of LcVwDocument.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.UnloadModel%28System.Int32%29"
+    },
+    {
+      "name": "UnloadModelImpl",
+      "signature": "bool UnloadModelImpl(int model_index)",
+      "summary": "UnloadModelImpl method of LcVwDocument.",
+      "params": [
+        {
+          "name": "model_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.UnloadModelImpl%28System.Int32%29"
+    },
+    {
+      "name": "UpdateInteractiveTransform",
+      "signature": "bool UpdateInteractiveTransform(int handle, string jsonTransform3D)",
+      "summary": "UpdateInteractiveTransform method of LcVwDocument.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "jsonTransform3D",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.UpdateInteractiveTransform%28System.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwDocument InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwDocument.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwDocument",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwDocument.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "AnimationUpdatePosition",
+      "signature": "void AnimationUpdatePosition()",
+      "summary": "AnimationUpdatePosition method of LcVwDocument.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.AnimationUpdatePosition"
+    },
+    {
+      "name": "AnimationUpdateStatus",
+      "signature": "void AnimationUpdateStatus()",
+      "summary": "AnimationUpdateStatus method of LcVwDocument.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.AnimationUpdateStatus"
+    },
+    {
+      "name": "SelectionChanged",
+      "signature": "void SelectionChanged()",
+      "summary": "SelectionChanged method of LcVwDocument.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SelectionChanged"
+    },
+    {
+      "name": "SimDataNotify",
+      "signature": "void SimDataNotify(double position, string key, string value, bool moving_forwards)",
+      "summary": "SimDataNotify method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "moving_forwards",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimDataNotify%28System.Double%2CSystem.String%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SimUpdateFramePosition",
+      "signature": "void SimUpdateFramePosition(double position)",
+      "summary": "SimUpdateFramePosition method of LcVwDocument.",
+      "params": [
+        {
+          "name": "position",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.SimUpdateFramePosition%28System.Double%29"
+    },
+    {
+      "name": "ToolChanged",
+      "signature": "void ToolChanged()",
+      "summary": "ToolChanged method of LcVwDocument.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.ToolChanged"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwDocument.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwDocument.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,96 @@
+{
+  "name": "AddInPluginAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Optional attribute for use with an AddInPlugin derived class. If this attribute is not used, the default location for an AddInPlugin is AddInLocation.AddIn",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.AddInPluginAttribute",
+  "constructors": [
+    {
+      "name": "AddInPluginAttribute(Autodesk.Navisworks.Api.Plugins.AddInLocation)",
+      "signature": "AddInPluginAttribute(Autodesk.Navisworks.Api.Plugins.AddInLocation location)",
+      "summary": "Constructor AddInPluginAttribute, takes a single parameter giving the location of the Plugin in the Navisworks menus system",
+      "params": [
+        {
+          "name": "location",
+          "type": "Autodesk.Navisworks.Api.Plugins.AddInLocation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.%23ctor%28Autodesk.Navisworks.Api.Plugins.AddInLocation%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CallCanExecute",
+      "type": "Autodesk.Navisworks.Api.Plugins.CallCanExecute",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines the conditions in which CanExecuteCommand should be called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.CallCanExecute"
+    },
+    {
+      "name": "CanToggle",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if the command can toggle",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.CanToggle"
+    },
+    {
+      "name": "Icon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The 16x16 icon to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.Icon"
+    },
+    {
+      "name": "LargeIcon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The 32x32 icon to display for this command",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.LargeIcon"
+    },
+    {
+      "name": "LoadForCanExecute",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if CanExecuteCommand should cause the Plugin to load",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.LoadForCanExecute"
+    },
+    {
+      "name": "Location",
+      "type": "Autodesk.Navisworks.Api.Plugins.AddInLocation",
+      "getter": true,
+      "setter": false,
+      "summary": "Determines where the plugin is displayed in Navisworks menus system",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.Location"
+    },
+    {
+      "name": "Shortcut",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies the keyboard shortcut for the command.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.Shortcut"
+    },
+    {
+      "name": "ShortcutWindowTypes",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The Ids of the windows for which the shortcut is valid. Multiple Ids can be specified by separating with \u0022;\u0022. If Ids are specified the shortcut should be valid in all contexts.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.AddInPluginAttribute.ShortcutWindowTypes"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

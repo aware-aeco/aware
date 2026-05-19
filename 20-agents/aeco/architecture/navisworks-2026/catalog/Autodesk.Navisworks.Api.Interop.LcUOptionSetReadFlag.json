@@ -1,0 +1,22 @@
+{
+  "name": "LcUOptionSetReadFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetReadFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetReadFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eREAD_ALL",
+      "value": 0
+    },
+    {
+      "name": "eREAD_IGNORE_TYPE_NONE",
+      "value": 1
+    }
+  ]
+}

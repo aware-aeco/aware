@@ -1,0 +1,734 @@
+{
+  "name": "LcUResource",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUResource class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUResource",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUResource InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUResource.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUResource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "OpenSection",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle OpenSection(string subdir)",
+      "summary": "OpenSection method of LcUResource.",
+      "params": [
+        {
+          "name": "subdir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.OpenSection%28System.String%29"
+    },
+    {
+      "name": "OpenSection",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle OpenSection(string subdir, uint find_flags)",
+      "summary": "OpenSection method of LcUResource.",
+      "params": [
+        {
+          "name": "subdir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "find_flags",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.OpenSection%28System.String%2CSystem.UInt32%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUResource.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "DetermineNavisworksLocaleTag",
+      "signature": "static bool DetermineNavisworksLocaleTag(string file_to_find, out string lang)",
+      "summary": "DetermineNavisworksLocaleTag method of LcUResource.",
+      "params": [
+        {
+          "name": "file_to_find",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.DetermineNavisworksLocaleTag%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "FindDataFile",
+      "signature": "static bool FindDataFile(string subdir, string filename, out string resolved_path)",
+      "summary": "FindDataFile method of LcUResource.",
+      "params": [
+        {
+          "name": "subdir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindDataFile%28System.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "FindDataFile",
+      "signature": "static bool FindDataFile(string subdir, string filename, out string resolved_path, uint find_flags)",
+      "summary": "FindDataFile method of LcUResource.",
+      "params": [
+        {
+          "name": "subdir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "find_flags",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindDataFile%28System.String%2CSystem.String%2CSystem.String%40%2CSystem.UInt32%29"
+    },
+    {
+      "name": "FindLocalisedDataFile",
+      "signature": "static bool FindLocalisedDataFile(string subdir, string filename, out string resolved_path)",
+      "summary": "FindLocalisedDataFile method of LcUResource.",
+      "params": [
+        {
+          "name": "subdir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindLocalisedDataFile%28System.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "FindLocalisedDataFile",
+      "signature": "static bool FindLocalisedDataFile(string subdir, string filename, out string resolved_path, uint find_flags)",
+      "summary": "FindLocalisedDataFile method of LcUResource.",
+      "params": [
+        {
+          "name": "subdir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "find_flags",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindLocalisedDataFile%28System.String%2CSystem.String%2CSystem.String%40%2CSystem.UInt32%29"
+    },
+    {
+      "name": "FindLocalisedFile",
+      "signature": "static bool FindLocalisedFile(string root_dir, string filename, out string result)",
+      "summary": "FindLocalisedFile method of LcUResource.",
+      "params": [
+        {
+          "name": "root_dir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindLocalisedFile%28System.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "HasString",
+      "signature": "static bool HasString(string name)",
+      "summary": "HasString method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.HasString%28System.String%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcUResource.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.IsInitialised"
+    },
+    {
+      "name": "LoadResString",
+      "signature": "static bool LoadResString(string name, out string ret_string)",
+      "summary": "LoadResString method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ret_string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.LoadResString%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "ReadAllNameFiles",
+      "signature": "static bool ReadAllNameFiles(string root_dir)",
+      "summary": "ReadAllNameFiles method of LcUResource.",
+      "params": [
+        {
+          "name": "root_dir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.ReadAllNameFiles%28System.String%29"
+    },
+    {
+      "name": "ReadAllNameFiles",
+      "signature": "static bool ReadAllNameFiles(string root_dir, string prefix)",
+      "summary": "ReadAllNameFiles method of LcUResource.",
+      "params": [
+        {
+          "name": "root_dir",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.ReadAllNameFiles%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "ReadNameFile",
+      "signature": "static bool ReadNameFile(string filename, string prefix)",
+      "summary": "ReadNameFile method of LcUResource.",
+      "params": [
+        {
+          "name": "filename",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "prefix",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.ReadNameFile%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "FindEnumStringRequired",
+      "signature": "static string FindEnumStringRequired(string name, int enum_value)",
+      "summary": "FindEnumStringRequired method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "enum_value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindEnumStringRequired%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "FindLocalisedString",
+      "signature": "static string FindLocalisedString(string display_name)",
+      "summary": "FindLocalisedString method of LcUResource.",
+      "params": [
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindLocalisedString%28System.String%29"
+    },
+    {
+      "name": "FindString",
+      "signature": "static string FindString(string name)",
+      "summary": "FindString method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindString%28System.String%29"
+    },
+    {
+      "name": "FindString",
+      "signature": "static string FindString(string name, string default_string)",
+      "summary": "FindString method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "default_string",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindString%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "FindStringRequired",
+      "signature": "static string FindStringRequired(string name)",
+      "summary": "FindStringRequired method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.FindStringRequired%28System.String%29"
+    },
+    {
+      "name": "GetAppDir",
+      "signature": "static string GetAppDir()",
+      "summary": "GetAppDir method of LcUResource.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.GetAppDir"
+    },
+    {
+      "name": "GetDataSearchDir",
+      "signature": "static string GetDataSearchDir(Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir which)",
+      "summary": "GetDataSearchDir method of LcUResource.",
+      "params": [
+        {
+          "name": "which",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.GetDataSearchDir%28Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir%29"
+    },
+    {
+      "name": "GetInstallDir",
+      "signature": "static string GetInstallDir()",
+      "summary": "GetInstallDir method of LcUResource.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.GetInstallDir"
+    },
+    {
+      "name": "AddEnumString",
+      "signature": "static void AddEnumString(string base_name, int enum_value, string user_name)",
+      "summary": "AddEnumString method of LcUResource.",
+      "params": [
+        {
+          "name": "base_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "enum_value",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "user_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.AddEnumString%28System.String%2CSystem.Int32%2CSystem.String%29"
+    },
+    {
+      "name": "AddString",
+      "signature": "static void AddString(string name, string user_name)",
+      "summary": "AddString method of LcUResource.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "user_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.AddString%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "CloseSection",
+      "signature": "static void CloseSection(Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle handle)",
+      "summary": "CloseSection method of LcUResource.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.CloseSection%28Autodesk.Navisworks.Api.Interop.LcUResourceSectionHandle%29"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcUResource.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.Initialise"
+    },
+    {
+      "name": "LocaleInfo",
+      "signature": "static void LocaleInfo(out string primary, out string secondary)",
+      "summary": "LocaleInfo method of LcUResource.",
+      "params": [
+        {
+          "name": "primary",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "secondary",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.LocaleInfo%28System.String%40%2CSystem.String%40%29"
+    },
+    {
+      "name": "LocaleInfo",
+      "signature": "static void LocaleInfo(out string primary, out string secondary, Autodesk.Navisworks.Api.Interop.LcUResourceLocaleInfoType info_type)",
+      "summary": "LocaleInfo method of LcUResource.",
+      "params": [
+        {
+          "name": "primary",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "secondary",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "info_type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUResourceLocaleInfoType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.LocaleInfo%28System.String%40%2CSystem.String%40%2CAutodesk.Navisworks.Api.Interop.LcUResourceLocaleInfoType%29"
+    },
+    {
+      "name": "SetDataSearchDir",
+      "signature": "static void SetDataSearchDir(Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir which, string dir)",
+      "summary": "SetDataSearchDir method of LcUResource.",
+      "params": [
+        {
+          "name": "which",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir",
+          "optional": false
+        },
+        {
+          "name": "dir",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.SetDataSearchDir%28Autodesk.Navisworks.Api.Interop.LcUResourceSearchDir%2CSystem.String%29"
+    },
+    {
+      "name": "SetOverrideLanguage",
+      "signature": "static void SetOverrideLanguage(string language)",
+      "summary": "SetOverrideLanguage method of LcUResource.",
+      "params": [
+        {
+          "name": "language",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.SetOverrideLanguage%28System.String%29"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcUResource.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUResource.Terminate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUResource.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUResource.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

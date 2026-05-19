@@ -1,0 +1,152 @@
+{
+  "name": "GridSystem",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A system of grid lines and levels",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.GridSystem",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClosestIntersection",
+      "signature": "Autodesk.Navisworks.Api.GridIntersection ClosestIntersection(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Returns the location closest to a given 3D point.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.GridIntersection",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027point\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027point\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridSystem.ClosestIntersection%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.GridSystem InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of GridSystem.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.GridSystem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridSystem.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of GridSystem.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.GridSystem.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of GridSystem as diplayed in the GUI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.DisplayName"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.IsReadOnly"
+    },
+    {
+      "name": "Levels",
+      "type": "Autodesk.Navisworks.Api.GridLevelCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Accesses Grid Levels contained in this System.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.Levels"
+    },
+    {
+      "name": "Lines",
+      "type": "Autodesk.Navisworks.Api.GridLineCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Accesses Grid Lines contained in this System.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.Lines"
+    },
+    {
+      "name": "LockedLevel",
+      "type": "Autodesk.Navisworks.Api.GridLevel",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the GridSystem is locked to a particular level",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.LockedLevel"
+    },
+    {
+      "name": "Origin",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Accesses origin point of this System.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.Origin"
+    },
+    {
+      "name": "UpDirection",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Accesses up direction of this System.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.GridSystem.UpDirection"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

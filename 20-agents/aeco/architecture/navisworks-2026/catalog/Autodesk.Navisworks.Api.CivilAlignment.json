@@ -1,0 +1,162 @@
+{
+  "name": "CivilAlignment",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "CivilAlignment class in Autodesk.Navisworks.Api.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.CivilAlignment",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetPointForDistance",
+      "signature": "bool GetPointForDistance(double distance, out Autodesk.Navisworks.Api.Point3D position, out Autodesk.Navisworks.Api.UnitVector3D direction)",
+      "summary": "GetPointForDistance method of CivilAlignment.",
+      "params": [
+        {
+          "name": "distance",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Autodesk.Navisworks.Api.UnitVector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.CivilAlignment.GetPointForDistance%28System.Double%2CAutodesk.Navisworks.Api.Point3D%40%2CAutodesk.Navisworks.Api.UnitVector3D%40%29"
+    },
+    {
+      "name": "GetDistanceForStation",
+      "signature": "double GetDistanceForStation(double station)",
+      "summary": "GetDistanceForStation method of CivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.CivilAlignment.GetDistanceForStation%28System.Double%29"
+    },
+    {
+      "name": "GetNextMajorStation",
+      "signature": "double GetNextMajorStation(double station)",
+      "summary": "GetNextMajorStation method of CivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.CivilAlignment.GetNextMajorStation%28System.Double%29"
+    },
+    {
+      "name": "GetNextStation",
+      "signature": "double GetNextStation(double station, double stationDelta)",
+      "summary": "GetNextStation method of CivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "stationDelta",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.CivilAlignment.GetNextStation%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "GetMajorStationDistance",
+      "signature": "int GetMajorStationDistance()",
+      "summary": "GetMajorStationDistance method of CivilAlignment.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.CivilAlignment.GetMajorStationDistance"
+    },
+    {
+      "name": "GetStationLabel",
+      "signature": "string GetStationLabel(double station)",
+      "summary": "GetStationLabel method of CivilAlignment.",
+      "params": [
+        {
+          "name": "station",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.CivilAlignment.GetStationLabel%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EndStation",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "EndStation property of CivilAlignment.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.CivilAlignment.EndStation"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name property of CivilAlignment.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.CivilAlignment.Name"
+    },
+    {
+      "name": "StartStation",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "StartStation property of CivilAlignment.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.CivilAlignment.StartStation"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

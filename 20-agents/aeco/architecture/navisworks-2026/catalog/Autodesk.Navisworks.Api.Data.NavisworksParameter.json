@@ -1,0 +1,132 @@
+{
+  "name": "NavisworksParameter",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbParameter.",
+  "base": "System.Data.Common.DbParameter",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisworksParameter",
+  "constructors": [
+    {
+      "name": "NavisworksParameter()",
+      "signature": "NavisworksParameter()",
+      "summary": "Default constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.%23ctor"
+    },
+    {
+      "name": "NavisworksParameter(string, object)",
+      "signature": "NavisworksParameter(string parameterName, object value)",
+      "summary": "Constructs a named parameter given the specified parameter name and initial value",
+      "params": [
+        {
+          "name": "parameterName",
+          "type": "string",
+          "doc": "The parameter name",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "The initial value of the parameter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.%23ctor%28System.String%2CSystem.Object%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ResetDbType",
+      "signature": "void ResetDbType()",
+      "summary": "ResetDbType method of NavisworksParameter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.ResetDbType"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DbType",
+      "type": "System.Data.DbType",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the datatype of the parameter",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.DbType"
+    },
+    {
+      "name": "Direction",
+      "type": "System.Data.ParameterDirection",
+      "getter": true,
+      "setter": true,
+      "summary": "Supports only input parameters",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.Direction"
+    },
+    {
+      "name": "IsNullable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Whether or not the parameter can contain a null value",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.IsNullable"
+    },
+    {
+      "name": "ParameterName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the parameter name",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.ParameterName"
+    },
+    {
+      "name": "Size",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns the size of the parameter",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.Size"
+    },
+    {
+      "name": "SourceColumn",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets/sets the source column",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.SourceColumn"
+    },
+    {
+      "name": "SourceColumnNullMapping",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Used by DbCommandBuilder to determine the mapping for nullable fields",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.SourceColumnNullMapping"
+    },
+    {
+      "name": "SourceVersion",
+      "type": "System.Data.DataRowVersion",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the row version",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.SourceVersion"
+    },
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets and sets the parameter value. If no datatype was specified, the datatype will assume the type from the value given.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksParameter.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

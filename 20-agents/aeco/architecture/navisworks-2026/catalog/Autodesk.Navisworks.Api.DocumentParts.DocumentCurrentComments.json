@@ -1,0 +1,173 @@
+{
+  "name": "DocumentCurrentComments",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "Stores the Current Comments information contained in a Document.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.CommentCollection CreateCopy()",
+      "summary": "Creates a copy of the CommentCollection associated with this object.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.CommentCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.CreateCopy"
+    },
+    {
+      "name": "ToCommentCollection",
+      "signature": "Autodesk.Navisworks.Api.CommentCollection ToCommentCollection()",
+      "summary": "Explicit form of conversion operator returning Value.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.CommentCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.ToCommentCollection"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.CommentCollection op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments that)",
+      "summary": "Conversion operator returning Value.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.CommentCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments%29~Autodesk.Navisworks.Api.CommentCollection"
+    },
+    {
+      "name": "ChangeSource",
+      "signature": "void ChangeSource(string sourceOwner, Autodesk.Navisworks.Api.CommentCollection sourceComments)",
+      "summary": "Changes the Current Comments. Typically called when the focus changes from one Comment Source to an other.",
+      "params": [
+        {
+          "name": "sourceOwner",
+          "type": "string",
+          "doc": "Internal string representing the owner of the comments.",
+          "optional": false
+        },
+        {
+          "name": "sourceComments",
+          "type": "Autodesk.Navisworks.Api.CommentCollection",
+          "doc": "The Comments.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.ChangeSource%28System.String%2CAutodesk.Navisworks.Api.CommentCollection%29"
+    },
+    {
+      "name": "ChangeSource",
+      "signature": "void ChangeSource(string sourceOwner, Autodesk.Navisworks.Api.CommentCollection sourceComments, int activeCommentIndex)",
+      "summary": "Changes the Current Comments. Typically called when the focus changes from one Comment Source to an other.",
+      "params": [
+        {
+          "name": "sourceOwner",
+          "type": "string",
+          "doc": "Internal string representing the owner of the comments.",
+          "optional": false
+        },
+        {
+          "name": "sourceComments",
+          "type": "Autodesk.Navisworks.Api.CommentCollection",
+          "doc": "The Comments.",
+          "optional": false
+        },
+        {
+          "name": "activeCommentIndex",
+          "type": "int",
+          "doc": "The Comment to select.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.ChangeSource%28System.String%2CAutodesk.Navisworks.Api.CommentCollection%2CSystem.Int32%29"
+    },
+    {
+      "name": "ClearSource",
+      "signature": "void ClearSource()",
+      "summary": "Sets situation that there is no owner, comments are cleared and editing prevented.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.ClearSource"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.CommentCollection comments)",
+      "summary": "Copies the CommentCollection from comments.",
+      "params": [
+        {
+          "name": "comments",
+          "type": "Autodesk.Navisworks.Api.CommentCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.CopyFrom%28Autodesk.Navisworks.Api.CommentCollection%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Owner",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Internal string representing the owner of the comments.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.Owner"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.CommentCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the current CommentsCollection within the Document.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the Value of this object has changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when when the Value of this object is about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentComments.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

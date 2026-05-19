@@ -1,0 +1,57 @@
+{
+  "name": "PickItemResult",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents the result of doing a HitTest in a view",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PickItemResult",
+  "constructors": [
+    {
+      "name": "PickItemResult()",
+      "signature": "PickItemResult()",
+      "summary": "Constructor for PickItemResult.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.PickItemResult.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ModelItem",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": true,
+      "summary": "The model item that was picked.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PickItemResult.ModelItem"
+    },
+    {
+      "name": "Normal",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The normal of the picked item",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PickItemResult.Normal"
+    },
+    {
+      "name": "Point",
+      "type": "Autodesk.Navisworks.Api.Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "The picked point on the surface of the picked model item (in world space).",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PickItemResult.Point"
+    },
+    {
+      "name": "ResultBits",
+      "type": "Autodesk.Navisworks.Api.PickResults",
+      "getter": true,
+      "setter": true,
+      "summary": "The type of item that was picked",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.PickItemResult.ResultBits"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

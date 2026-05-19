@@ -1,0 +1,101 @@
+{
+  "name": "CommandHandlerPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin that can be used to add commands to the GUI",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.CommandHandlerPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CanExecuteCommand",
+      "signature": "Autodesk.Navisworks.Api.Plugins.CommandState CanExecuteCommand(string name)",
+      "summary": "Called to determine if a command can be executed",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.CommandState",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPlugin.CanExecuteCommand%28System.String%29"
+    },
+    {
+      "name": "CanExecuteRibbonTab",
+      "signature": "bool CanExecuteRibbonTab(string name)",
+      "summary": "Called to determine if a ribbon tab can be executed",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the ribbon tab",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPlugin.CanExecuteRibbonTab%28System.String%29"
+    },
+    {
+      "name": "TryShowCommandHelp",
+      "signature": "bool TryShowCommandHelp(string name)",
+      "summary": "Called to tell the plugin to display help",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if you have handled this call"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPlugin.TryShowCommandHelp%28System.String%29"
+    },
+    {
+      "name": "ExecuteCommand",
+      "signature": "int ExecuteCommand(string name, string[] parameters)",
+      "summary": "Called when a command is executed",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the command",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "string[]",
+          "doc": "Paramaters to be passed to the command",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.CommandHandlerPlugin.ExecuteCommand%28System.String%2CSystem.String%5B%5D%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

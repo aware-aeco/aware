@@ -1,0 +1,284 @@
+{
+  "name": "LcOpBoolLineItem",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpBoolLineItem class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem",
+  "constructors": [
+    {
+      "name": "LcOpBoolLineItem()",
+      "signature": "LcOpBoolLineItem()",
+      "summary": "Constructs a new LcOpBoolLineItem.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.%23ctor"
+    },
+    {
+      "name": "LcOpBoolLineItem(Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem)",
+      "signature": "LcOpBoolLineItem(Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem other)",
+      "summary": "Constructs a new LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetOperator",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpBoolEvalOpType GetOperator()",
+      "summary": "GetOperator method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolEvalOpType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.GetOperator"
+    },
+    {
+      "name": "Clone",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem Clone()",
+      "summary": "Clone method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.Clone"
+    },
+    {
+      "name": "HasClosedBracket",
+      "signature": "bool HasClosedBracket()",
+      "summary": "HasClosedBracket method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.HasClosedBracket"
+    },
+    {
+      "name": "HasOpenBracket",
+      "signature": "bool HasOpenBracket()",
+      "summary": "HasOpenBracket method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.HasOpenBracket"
+    },
+    {
+      "name": "HasOperator",
+      "signature": "bool HasOperator()",
+      "summary": "HasOperator method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.HasOperator"
+    },
+    {
+      "name": "IsNegated",
+      "signature": "bool IsNegated()",
+      "summary": "IsNegated method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.IsNegated"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolLineItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.IsInitialised"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.Initialise"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.Terminate"
+    },
+    {
+      "name": "ClearOperator",
+      "signature": "void ClearOperator()",
+      "summary": "ClearOperator method of LcOpBoolLineItem.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.ClearOperator"
+    },
+    {
+      "name": "SetClosedBracket",
+      "signature": "void SetClosedBracket(bool b)",
+      "summary": "SetClosedBracket method of LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.SetClosedBracket%28System.Boolean%29"
+    },
+    {
+      "name": "SetNegated",
+      "signature": "void SetNegated(bool b)",
+      "summary": "SetNegated method of LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.SetNegated%28System.Boolean%29"
+    },
+    {
+      "name": "SetOpenBracket",
+      "signature": "void SetOpenBracket(bool b)",
+      "summary": "SetOpenBracket method of LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.SetOpenBracket%28System.Boolean%29"
+    },
+    {
+      "name": "SetOperator",
+      "signature": "void SetOperator(Autodesk.Navisworks.Api.Interop.LcOpBoolEvalOpType op)",
+      "summary": "SetOperator method of LcOpBoolLineItem.",
+      "params": [
+        {
+          "name": "op",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpBoolEvalOpType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.SetOperator%28Autodesk.Navisworks.Api.Interop.LcOpBoolEvalOpType%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpBoolLineItem.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpBoolLineItem.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

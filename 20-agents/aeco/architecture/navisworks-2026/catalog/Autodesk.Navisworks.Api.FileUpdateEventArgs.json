@@ -1,0 +1,23 @@
+{
+  "name": "FileUpdateEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for Document FileUpdate related events",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileUpdateEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AnyFilesUpdated",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets whether any files were updated.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileUpdateEventArgs.AnyFilesUpdated"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "ToolTipsRecord",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Represents the definition of tooltips for ribbon tabs and commands in the GUI system.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.ToolTipsRecord",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Xaml",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The path to the file that specifies the tool tips for the ribbon and commands",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.ToolTipsRecord.Xaml"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

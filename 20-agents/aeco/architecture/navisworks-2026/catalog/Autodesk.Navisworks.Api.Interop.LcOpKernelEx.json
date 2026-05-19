@@ -1,0 +1,1356 @@
+{
+  "name": "LcOpKernelEx",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpKernelEx class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpKernelTool",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpKernelEx",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EditGizmoTool",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpGizmoTool EditGizmoTool()",
+      "summary": "EditGizmoTool method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpGizmoTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.EditGizmoTool"
+    },
+    {
+      "name": "GetGizmoTool",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpGizmoTool GetGizmoTool()",
+      "summary": "GetGizmoTool method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpGizmoTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetGizmoTool"
+    },
+    {
+      "name": "GetIsolateTool",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpIsolateTool GetIsolateTool()",
+      "summary": "GetIsolateTool method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpIsolateTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetIsolateTool"
+    },
+    {
+      "name": "GetMeasureTool",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpMeasureTool GetMeasureTool()",
+      "summary": "GetMeasureTool method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpMeasureTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetMeasureTool"
+    },
+    {
+      "name": "EditRedlineTool",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRedlineTool EditRedlineTool()",
+      "summary": "EditRedlineTool method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.EditRedlineTool"
+    },
+    {
+      "name": "GetSavedViewAnimationController",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedViewAnimationController GetSavedViewAnimationController()",
+      "summary": "GetSavedViewAnimationController method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedViewAnimationController",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetSavedViewAnimationController"
+    },
+    {
+      "name": "GetCurrentSavedViewEvent",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpViewWatcher GetCurrentSavedViewEvent()",
+      "summary": "GetCurrentSavedViewEvent method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpViewWatcher",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetCurrentSavedViewEvent"
+    },
+    {
+      "name": "GetCurrentSavedView",
+      "signature": "Autodesk.Navisworks.Api.SavedItem GetCurrentSavedView()",
+      "summary": "GetCurrentSavedView method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetCurrentSavedView"
+    },
+    {
+      "name": "CreateViewRuntimeExAttributes",
+      "signature": "Autodesk.Navisworks.Api.SavedViewpoint CreateViewRuntimeExAttributes()",
+      "summary": "CreateViewRuntimeExAttributes method of LcOpKernelEx.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.CreateViewRuntimeExAttributes"
+    },
+    {
+      "name": "GetCurrentColor",
+      "signature": "bool GetCurrentColor(Autodesk.Navisworks.Api.ModelItemCollection selection, Autodesk.Navisworks.Api.Color color)",
+      "summary": "GetCurrentColor method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetCurrentColor%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "GetOverrideHyperlinks",
+      "signature": "bool GetOverrideHyperlinks(Autodesk.Navisworks.Api.ModelItem path, Autodesk.Navisworks.Api.HyperlinkCollection hyperlinks)",
+      "summary": "GetOverrideHyperlinks method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "hyperlinks",
+          "type": "Autodesk.Navisworks.Api.HyperlinkCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetOverrideHyperlinks%28Autodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.HyperlinkCollection%29"
+    },
+    {
+      "name": "IsOverrideForceRender",
+      "signature": "bool IsOverrideForceRender(Autodesk.Navisworks.Api.ModelItem path_link)",
+      "summary": "IsOverrideForceRender method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsOverrideForceRender%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsOverrideHideRender",
+      "signature": "bool IsOverrideHideRender(Autodesk.Navisworks.Api.ModelItem path_link)",
+      "summary": "IsOverrideHideRender method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsOverrideHideRender%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsOverrideIgnoreClip",
+      "signature": "bool IsOverrideIgnoreClip(Autodesk.Navisworks.Api.ModelItem path_link)",
+      "summary": "IsOverrideIgnoreClip method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsOverrideIgnoreClip%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsOverrideIgnorePick",
+      "signature": "bool IsOverrideIgnorePick(Autodesk.Navisworks.Api.ModelItem path_link)",
+      "summary": "IsOverrideIgnorePick method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsOverrideIgnorePick%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "IsSelectAll",
+      "signature": "bool IsSelectAll(Autodesk.Navisworks.Api.ModelItemCollection sel)",
+      "summary": "IsSelectAll method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "sel",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsSelectAll%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsSelectionHidden",
+      "signature": "bool IsSelectionHidden(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "IsSelectionHidden method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsSelectionHidden%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsSelectionIgnorePick",
+      "signature": "bool IsSelectionIgnorePick(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "IsSelectionIgnorePick method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsSelectionIgnorePick%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsSelectionRequired",
+      "signature": "bool IsSelectionRequired(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "IsSelectionRequired method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsSelectionRequired%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IsUnselectedHidden",
+      "signature": "bool IsUnselectedHidden(Autodesk.Navisworks.Api.ModelItemCollection sel)",
+      "summary": "IsUnselectedHidden method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "sel",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsUnselectedHidden%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "GetCurrentTransparency",
+      "signature": "double GetCurrentTransparency(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "GetCurrentTransparency method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetCurrentTransparency%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpKernelEx InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelEx",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "FindModelItemsById",
+      "signature": "uint FindModelItemsById(int scene_index, ulong id, Autodesk.Navisworks.Api.ModelItemCollection results)",
+      "summary": "FindModelItemsById method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "scene_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "id",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "results",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.FindModelItemsById%28System.Int32%2CSystem.UInt64%2CAutodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "FindIdForModelItem",
+      "signature": "ulong FindIdForModelItem(Autodesk.Navisworks.Api.ModelItem path)",
+      "summary": "FindIdForModelItem method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ulong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.FindIdForModelItem%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "ApplyGlobalProps",
+      "signature": "void ApplyGlobalProps()",
+      "summary": "ApplyGlobalProps method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.ApplyGlobalProps"
+    },
+    {
+      "name": "GetAllHiddenAtModelState",
+      "signature": "void GetAllHiddenAtModelState(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "GetAllHiddenAtModelState method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetAllHiddenAtModelState%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "GetViewSavedAttibuteHidden",
+      "signature": "void GetViewSavedAttibuteHidden(Autodesk.Navisworks.Api.SavedViewpoint view, Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "GetViewSavedAttibuteHidden method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+          "optional": false
+        },
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetViewSavedAttibuteHidden%28Autodesk.Navisworks.Api.SavedViewpoint%2CAutodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "GetViewSavedAttibuteMaterial",
+      "signature": "void GetViewSavedAttibuteMaterial(Autodesk.Navisworks.Api.SavedViewpoint view, Autodesk.Navisworks.Api.Interop.LcOpMaterialOverrideVec results)",
+      "summary": "GetViewSavedAttibuteMaterial method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+          "optional": false
+        },
+        {
+          "name": "results",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpMaterialOverrideVec",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetViewSavedAttibuteMaterial%28Autodesk.Navisworks.Api.SavedViewpoint%2CAutodesk.Navisworks.Api.Interop.LcOpMaterialOverrideVec%29"
+    },
+    {
+      "name": "GetViewSavedAttributeStatus",
+      "signature": "void GetViewSavedAttributeStatus(Autodesk.Navisworks.Api.SavedViewpoint p_view, ref bool b_hide, ref bool b_material)",
+      "summary": "GetViewSavedAttributeStatus method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_view",
+          "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+          "optional": false
+        },
+        {
+          "name": "b_hide",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "b_material",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.GetViewSavedAttributeStatus%28Autodesk.Navisworks.Api.SavedViewpoint%2CSystem.Boolean%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "HiddenItemsResetAll",
+      "signature": "void HiddenItemsResetAll()",
+      "summary": "HiddenItemsResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.HiddenItemsResetAll"
+    },
+    {
+      "name": "HiddenItemsResetAllToInitialState",
+      "signature": "void HiddenItemsResetAllToInitialState()",
+      "summary": "HiddenItemsResetAllToInitialState method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.HiddenItemsResetAllToInitialState"
+    },
+    {
+      "name": "HiddenItemsResetAllToModelState",
+      "signature": "void HiddenItemsResetAllToModelState()",
+      "summary": "HiddenItemsResetAllToModelState method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.HiddenItemsResetAllToModelState"
+    },
+    {
+      "name": "HiddenItemsResetToInitialState",
+      "signature": "void HiddenItemsResetToInitialState(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "HiddenItemsResetToInitialState method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.HiddenItemsResetToInitialState%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "IgnorePickItemsResetAll",
+      "signature": "void IgnorePickItemsResetAll()",
+      "summary": "IgnorePickItemsResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IgnorePickItemsResetAll"
+    },
+    {
+      "name": "InvertSelection",
+      "signature": "void InvertSelection()",
+      "summary": "InvertSelection method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.InvertSelection"
+    },
+    {
+      "name": "InvertSelection",
+      "signature": "void InvertSelection(Autodesk.Navisworks.Api.ModelItemCollection sel)",
+      "summary": "InvertSelection method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "sel",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.InvertSelection%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideAppearanceReset",
+      "signature": "void OverrideAppearanceReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideAppearanceReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideAppearanceReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideAppearanceResetAll",
+      "signature": "void OverrideAppearanceResetAll()",
+      "summary": "OverrideAppearanceResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideAppearanceResetAll"
+    },
+    {
+      "name": "OverrideColor",
+      "signature": "void OverrideColor(Autodesk.Navisworks.Api.ModelItemCollection p_selection, Autodesk.Navisworks.Api.Color color)",
+      "summary": "OverrideColor method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideColor%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "OverrideColorReset",
+      "signature": "void OverrideColorReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideColorReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideColorReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideColorResetAll",
+      "signature": "void OverrideColorResetAll()",
+      "summary": "OverrideColorResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideColorResetAll"
+    },
+    {
+      "name": "OverrideColorWithTempColorReset",
+      "signature": "void OverrideColorWithTempColorReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection, Autodesk.Navisworks.Api.Color color)",
+      "summary": "OverrideColorWithTempColorReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideColorWithTempColorReset%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "OverrideMaterialReset",
+      "signature": "void OverrideMaterialReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideMaterialReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideMaterialReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideMaterialResetAll",
+      "signature": "void OverrideMaterialResetAll()",
+      "summary": "OverrideMaterialResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideMaterialResetAll"
+    },
+    {
+      "name": "OverridePermTempMaterialReset",
+      "signature": "void OverridePermTempMaterialReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverridePermTempMaterialReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverridePermTempMaterialReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideProteinMaterial",
+      "signature": "void OverrideProteinMaterial(Autodesk.Navisworks.Api.ModelItemCollection p_selection, Autodesk.Navisworks.Api.Interop.LcOglJsonProteinAsset asset)",
+      "summary": "OverrideProteinMaterial method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "asset",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOglJsonProteinAsset",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideProteinMaterial%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Interop.LcOglJsonProteinAsset%29"
+    },
+    {
+      "name": "OverrideProteinMaterialReset",
+      "signature": "void OverrideProteinMaterialReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideProteinMaterialReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideProteinMaterialReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideProteinMaterialResetAll",
+      "signature": "void OverrideProteinMaterialResetAll()",
+      "summary": "OverrideProteinMaterialResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideProteinMaterialResetAll"
+    },
+    {
+      "name": "OverrideTempColor",
+      "signature": "void OverrideTempColor(Autodesk.Navisworks.Api.ModelItemCollection p_selection, Autodesk.Navisworks.Api.Color color)",
+      "summary": "OverrideTempColor method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempColor%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "OverrideTempColorReset",
+      "signature": "void OverrideTempColorReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideTempColorReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempColorReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideTempColorResetAll",
+      "signature": "void OverrideTempColorResetAll()",
+      "summary": "OverrideTempColorResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempColorResetAll"
+    },
+    {
+      "name": "OverrideTempMaterialReset",
+      "signature": "void OverrideTempMaterialReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideTempMaterialReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempMaterialReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideTempMaterialResetAll",
+      "signature": "void OverrideTempMaterialResetAll()",
+      "summary": "OverrideTempMaterialResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempMaterialResetAll"
+    },
+    {
+      "name": "OverrideTempPolygonModeReset",
+      "signature": "void OverrideTempPolygonModeReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideTempPolygonModeReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempPolygonModeReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideTempPolygonModeResetAll",
+      "signature": "void OverrideTempPolygonModeResetAll()",
+      "summary": "OverrideTempPolygonModeResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempPolygonModeResetAll"
+    },
+    {
+      "name": "OverrideTempTransparency",
+      "signature": "void OverrideTempTransparency(Autodesk.Navisworks.Api.ModelItemCollection p_selection, double transp)",
+      "summary": "OverrideTempTransparency method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "transp",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempTransparency%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Double%29"
+    },
+    {
+      "name": "OverrideTempTransparencyReset",
+      "signature": "void OverrideTempTransparencyReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideTempTransparencyReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempTransparencyReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideTempTransparencyResetAll",
+      "signature": "void OverrideTempTransparencyResetAll()",
+      "summary": "OverrideTempTransparencyResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTempTransparencyResetAll"
+    },
+    {
+      "name": "OverrideTransform",
+      "signature": "void OverrideTransform(Autodesk.Navisworks.Api.ModelItemCollection selection, Autodesk.Navisworks.Api.Transform3D mat, bool override_file_transform)",
+      "summary": "OverrideTransform method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "mat",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        },
+        {
+          "name": "override_file_transform",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransform%28Autodesk.Navisworks.Api.ModelItemCollection%2CAutodesk.Navisworks.Api.Transform3D%2CSystem.Boolean%29"
+    },
+    {
+      "name": "OverrideTransformReset",
+      "signature": "void OverrideTransformReset(Autodesk.Navisworks.Api.ModelItemCollection selection)",
+      "summary": "OverrideTransformReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransformReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideTransformResetAll",
+      "signature": "void OverrideTransformResetAll()",
+      "summary": "OverrideTransformResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransformResetAll"
+    },
+    {
+      "name": "OverrideTransparency",
+      "signature": "void OverrideTransparency(Autodesk.Navisworks.Api.ModelItemCollection p_selection, double transp)",
+      "summary": "OverrideTransparency method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "transp",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransparency%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Double%29"
+    },
+    {
+      "name": "OverrideTransparencyReset",
+      "signature": "void OverrideTransparencyReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "OverrideTransparencyReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransparencyReset%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "OverrideTransparencyResetAll",
+      "signature": "void OverrideTransparencyResetAll()",
+      "summary": "OverrideTransparencyResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransparencyResetAll"
+    },
+    {
+      "name": "OverrideTransparencyWithTempTransparencyReset",
+      "signature": "void OverrideTransparencyWithTempTransparencyReset(Autodesk.Navisworks.Api.ModelItemCollection p_selection, double transp)",
+      "summary": "OverrideTransparencyWithTempTransparencyReset method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "transp",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.OverrideTransparencyWithTempTransparencyReset%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Double%29"
+    },
+    {
+      "name": "RequiredItemsResetAll",
+      "signature": "void RequiredItemsResetAll()",
+      "summary": "RequiredItemsResetAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.RequiredItemsResetAll"
+    },
+    {
+      "name": "SelectAll",
+      "signature": "void SelectAll()",
+      "summary": "SelectAll method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SelectAll"
+    },
+    {
+      "name": "SelectAll",
+      "signature": "void SelectAll(Autodesk.Navisworks.Api.ModelItemCollection sel)",
+      "summary": "SelectAll method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "sel",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SelectAll%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    },
+    {
+      "name": "SelectNone",
+      "signature": "void SelectNone()",
+      "summary": "SelectNone method of LcOpKernelEx.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SelectNone"
+    },
+    {
+      "name": "SetCurrentSavedView",
+      "signature": "void SetCurrentSavedView(Autodesk.Navisworks.Api.SavedItem view)",
+      "summary": "SetCurrentSavedView method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "view",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetCurrentSavedView%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "SetOverrideForceRender",
+      "signature": "void SetOverrideForceRender(Autodesk.Navisworks.Api.ModelItem path_link, bool b)",
+      "summary": "SetOverrideForceRender method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetOverrideForceRender%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetOverrideHideRender",
+      "signature": "void SetOverrideHideRender(Autodesk.Navisworks.Api.ModelItem path_link, bool b)",
+      "summary": "SetOverrideHideRender method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetOverrideHideRender%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetOverrideIgnoreClip",
+      "signature": "void SetOverrideIgnoreClip(Autodesk.Navisworks.Api.ModelItem path_link, bool b)",
+      "summary": "SetOverrideIgnoreClip method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetOverrideIgnoreClip%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetOverrideIgnorePick",
+      "signature": "void SetOverrideIgnorePick(Autodesk.Navisworks.Api.ModelItem path_link, bool b)",
+      "summary": "SetOverrideIgnorePick method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "path_link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetOverrideIgnorePick%28Autodesk.Navisworks.Api.ModelItem%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetSelectionHidden",
+      "signature": "void SetSelectionHidden(Autodesk.Navisworks.Api.ModelItemCollection p_selection, bool flag)",
+      "summary": "SetSelectionHidden method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "flag",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetSelectionHidden%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetSelectionIgnorePick",
+      "signature": "void SetSelectionIgnorePick(Autodesk.Navisworks.Api.ModelItemCollection p_selection, bool flag)",
+      "summary": "SetSelectionIgnorePick method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "flag",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetSelectionIgnorePick%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetSelectionRequired",
+      "signature": "void SetSelectionRequired(Autodesk.Navisworks.Api.ModelItemCollection p_selection, bool flag)",
+      "summary": "SetSelectionRequired method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        },
+        {
+          "name": "flag",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetSelectionRequired%28Autodesk.Navisworks.Api.ModelItemCollection%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetViewSavedAttributeStatus",
+      "signature": "void SetViewSavedAttributeStatus(Autodesk.Navisworks.Api.SavedViewpoint p_view, bool save_hide, bool save_material, Autodesk.Navisworks.Api.Interop.SaveAttributeSource source)",
+      "summary": "SetViewSavedAttributeStatus method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_view",
+          "type": "Autodesk.Navisworks.Api.SavedViewpoint",
+          "optional": false
+        },
+        {
+          "name": "save_hide",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "save_material",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "source",
+          "type": "Autodesk.Navisworks.Api.Interop.SaveAttributeSource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.SetViewSavedAttributeStatus%28Autodesk.Navisworks.Api.SavedViewpoint%2CSystem.Boolean%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Interop.SaveAttributeSource%29"
+    },
+    {
+      "name": "ZoomInCurViewOnSel",
+      "signature": "void ZoomInCurViewOnSel(Autodesk.Navisworks.Api.ModelItemCollection p_selection)",
+      "summary": "ZoomInCurViewOnSel method of LcOpKernelEx.",
+      "params": [
+        {
+          "name": "p_selection",
+          "type": "Autodesk.Navisworks.Api.ModelItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.ZoomInCurViewOnSel%28Autodesk.Navisworks.Api.ModelItemCollection%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpKernelEx.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpKernelEx.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

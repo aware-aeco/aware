@@ -1,0 +1,860 @@
+{
+  "name": "DocumentSelectionSets",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The SelectionSets stored in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ResolveGuid",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveGuid(System.Guid value)",
+      "summary": "Returns the saved item referenced by a guid.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ResolveGuid%28System.Guid%29"
+    },
+    {
+      "name": "ResolveIndexPath",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveIndexPath(System.Collections.Generic.IEnumerable\u003Cint\u003E path)",
+      "summary": "Returns the saved item referenced by a collection of indices that define a path from the root item through its descendents to the specified item.",
+      "params": [
+        {
+          "name": "path",
+          "type": "System.Collections.Generic.IEnumerable\u003Cint\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": "null if source cannot be resolved"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027path\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ResolveIndexPath%28System.Collections.Generic.IEnumerable%7BSystem.Int32%7D%29"
+    },
+    {
+      "name": "ResolveReference",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveReference(Autodesk.Navisworks.Api.SavedItemReference reference)",
+      "summary": "Returns the saved item referenced by a SavedItemReference.",
+      "params": [
+        {
+          "name": "reference",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "DocumentPartId on reference does not match the Id of this part"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027reference\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ResolveReference%28Autodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "ResolveSelectionSource",
+      "signature": "Autodesk.Navisworks.Api.SavedItem ResolveSelectionSource(Autodesk.Navisworks.Api.SelectionSource source)",
+      "summary": "Returns the saved item referenced by a SelectionSource",
+      "params": [
+        {
+          "name": "source",
+          "type": "Autodesk.Navisworks.Api.SelectionSource",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": "null if source cannot be resolved"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027source\u0027 is null"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ResolveSelectionSource%28Autodesk.Navisworks.Api.SelectionSource%29"
+    },
+    {
+      "name": "ToSavedItemCollection",
+      "signature": "Autodesk.Navisworks.Api.SavedItemCollection ToSavedItemCollection()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ToSavedItemCollection"
+    },
+    {
+      "name": "CreateReference",
+      "signature": "Autodesk.Navisworks.Api.SavedItemReference CreateReference(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Returns a reference to a saved item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemReference",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained in this document part"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.CreateReference%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "CreateSelectionSource",
+      "signature": "Autodesk.Navisworks.Api.SelectionSource CreateSelectionSource(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Returns a selection source that refers to the selection defined by a Selection Set or folder of Selection Sets.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SelectionSource",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained in this document part"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.CreateSelectionSource%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "CreateCopy",
+      "signature": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.SavedItem\u003E CreateCopy()",
+      "summary": "Creates a copy of the SelectionSets associated with this object",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.ObjectModel.Collection\u003CAutodesk.Navisworks.Api.SavedItem\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.CreateCopy"
+    },
+    {
+      "name": "CreateIndexPath",
+      "signature": "System.Collections.ObjectModel.Collection\u003Cint\u003E CreateIndexPath(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Returns a collection of indices that defines a path from the root item through its descendents to the specified item.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.Collection\u003Cint\u003E",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Item is not contained in this document part"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.CreateIndexPath%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.GroupItem parent, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Removes specified item from the specified parent group contained by SelectionSets.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to remove from. RootItem or null to remove directly from Value",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if item not found in Value"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Remove%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Removes specified item from Value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "false if item not found in Value"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Remove%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.SavedItemCollection op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets%29~Autodesk.Navisworks.Api.SavedItemCollection"
+    },
+    {
+      "name": "AddComment",
+      "signature": "void AddComment(Autodesk.Navisworks.Api.SavedItem item, Autodesk.Navisworks.Api.Comment comment)",
+      "summary": "Edit item and add Comment to item\u0027s Comments",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "comment",
+          "type": "Autodesk.Navisworks.Api.Comment",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by SelectionSets"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.AddComment%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.Comment%29"
+    },
+    {
+      "name": "AddCopy",
+      "signature": "void AddCopy(Autodesk.Navisworks.Api.GroupItem parent, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Adds a copy of item to the end of the specified parent group contained by SelectionSets.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to add to. RootItem or null to add directly to Value",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.AddCopy%28Autodesk.Navisworks.Api.GroupItem%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "AddCopy",
+      "signature": "void AddCopy(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Adds a copy of item to the end of Value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.AddCopy%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all items in Value",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Clear"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.SavedItemCollection value)",
+      "summary": "Copies the SelectionSets from value and replaces the list of entries held in Value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.CopyFrom%28Autodesk.Navisworks.Api.SavedItemCollection%29"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.SavedItem\u003E value)",
+      "summary": "Copies the SelectionSets from value and replaces the list of entries held in Value.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.SavedItem\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.CopyFrom%28System.Collections.Generic.IEnumerable%7BAutodesk.Navisworks.Api.SavedItem%7D%29"
+    },
+    {
+      "name": "EditComments",
+      "signature": "void EditComments(Autodesk.Navisworks.Api.SavedItem item, Autodesk.Navisworks.Api.CommentCollection newComments)",
+      "summary": "Edit item and update it\u0027s Comments",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "newComments",
+          "type": "Autodesk.Navisworks.Api.CommentCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by SelectionSets"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.EditComments%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.CommentCollection%29"
+    },
+    {
+      "name": "EditDisplayName",
+      "signature": "void EditDisplayName(Autodesk.Navisworks.Api.SavedItem item, string newDisplayName)",
+      "summary": "Edit item and update it\u0027s DisplayName",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "newDisplayName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 is not contained by SelectionSets"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.EditDisplayName%28Autodesk.Navisworks.Api.SavedItem%2CSystem.String%29"
+    },
+    {
+      "name": "InsertCopy",
+      "signature": "void InsertCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Inserts a copy of item into the specified parent group contained by SelectionSets.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.InsertCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "InsertCopy",
+      "signature": "void InsertCopy(int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Inserts a copy of item into Value.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.InsertCopy%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(Autodesk.Navisworks.Api.GroupItem oldParent, int oldIndex, Autodesk.Navisworks.Api.GroupItem newParent, int newIndex)",
+      "summary": "Moves item at oldIndex in OldParent to newIndex in newParent",
+      "params": [
+        {
+          "name": "oldParent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to move the item from. RootItem or null to remove directly from Value",
+          "optional": false
+        },
+        {
+          "name": "oldIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "newParent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to move to. RootItem or null to move directly into Value.\nIf newParent is equal to oldParent, the item will be moved within the same SavedItemCollection.",
+          "optional": false
+        },
+        {
+          "name": "newIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027oldParent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027oldParent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027newParent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027newParent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027oldIndex\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027newIndex\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Move%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "Move",
+      "signature": "void Move(int oldIndex, int newIndex)",
+      "summary": "Moves item from oldIndex to newIndex within Value",
+      "params": [
+        {
+          "name": "oldIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "newIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027oldIndex\u0027 out of range"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027newIndex\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Move%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(Autodesk.Navisworks.Api.GroupItem parent, int index)",
+      "summary": "Removes item from the specified parent group contained by SelectionSets.",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to remove from. RootItem or null to remove directly from Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.RemoveAt%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%29"
+    },
+    {
+      "name": "RemoveAt",
+      "signature": "void RemoveAt(int index)",
+      "summary": "Removes item at the specified index from Value.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.RemoveAt%28System.Int32%29"
+    },
+    {
+      "name": "ReplaceWithCopy",
+      "signature": "void ReplaceWithCopy(Autodesk.Navisworks.Api.GroupItem parent, int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Replaces item from the specified parent group with a copy of item",
+      "params": [
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "doc": "The parent group to insert into. RootItem or null to insert directly into Value",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027parent\u0027 is not contained by Selectionsets"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ReplaceWithCopy%28Autodesk.Navisworks.Api.GroupItem%2CSystem.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "ReplaceWithCopy",
+      "signature": "void ReplaceWithCopy(int index, Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Replaces item at given index within Value with a copy of item",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027item\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 contains an unsupported type of SavedItem"
+        },
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "Argument \u0027index\u0027 out of range"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.ReplaceWithCopy%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The internal identifier for this type of document part.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Id"
+    },
+    {
+      "name": "RootItem",
+      "type": "Autodesk.Navisworks.Api.FolderItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Value as the children of a FolderItem",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.RootItem"
+    },
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.SavedItemCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "The collection of SelectionSets stored in the Document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CAutodesk.Navisworks.Api.SavedItemChangedEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CAutodesk.Navisworks.Api.SavedItemChangedEventArgs\u003E Changed",
+      "summary": "Occurs when the SelectionSets contained in this object has changed",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the Selection contained in this object is about to change",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentSelectionSets.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

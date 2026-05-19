@@ -1,0 +1,41 @@
+{
+  "name": "ModelItemPathId",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "Represent a combined id with model index and the path identifier.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.ModelItemPathId",
+  "constructors": [
+    {
+      "name": "ModelItemPathId()",
+      "signature": "ModelItemPathId()",
+      "summary": "Constructor for a ModelItemPathId.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.ModelItemPathId.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ModelIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "The model index",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.ModelItemPathId.ModelIndex"
+    },
+    {
+      "name": "PathId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The path identifier",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.ModelItemPathId.PathId"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

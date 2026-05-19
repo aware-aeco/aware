@@ -1,0 +1,31 @@
+{
+  "name": "ProgressMessageReportingEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application.ProgressMessageReporting event",
+  "base": "Autodesk.Navisworks.Api.ProgressEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressMessageReportingEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a message describing the current operation. Displayed in Navisworks progress dialog.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressMessageReportingEventArgs.Message"
+    },
+    {
+      "name": "Progress",
+      "type": "Autodesk.Navisworks.Api.Progress",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a reference to the Progress class instance relating to this Event.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressMessageReportingEventArgs.Progress"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

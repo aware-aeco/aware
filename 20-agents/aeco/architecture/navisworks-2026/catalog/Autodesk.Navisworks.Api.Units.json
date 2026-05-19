@@ -1,0 +1,69 @@
+{
+  "name": "Units",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Units of linear dimension.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Units",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Meters",
+      "value": 0,
+      "summary": "SI meter. Distance light travels, in a vacuum, in 1 299,792,458th of a second"
+    },
+    {
+      "name": "Centimeters",
+      "value": 1,
+      "summary": "1 100th of an SI meter"
+    },
+    {
+      "name": "Millimeters",
+      "value": 2,
+      "summary": "1 1000th of an SI meter"
+    },
+    {
+      "name": "Feet",
+      "value": 3,
+      "summary": "1 3rd of a yard"
+    },
+    {
+      "name": "Inches",
+      "value": 4,
+      "summary": "1 12th of a foot, 2.54 centimeters exactly"
+    },
+    {
+      "name": "Yards",
+      "value": 5,
+      "summary": "Imperial yard, 0.9144 SI meters exactly"
+    },
+    {
+      "name": "Kilometers",
+      "value": 6,
+      "summary": "1000 SI meters"
+    },
+    {
+      "name": "Miles",
+      "value": 7,
+      "summary": "1760 yards"
+    },
+    {
+      "name": "Micrometers",
+      "value": 8,
+      "summary": "1 1,000,000th of an SI meter, a micron"
+    },
+    {
+      "name": "Mils",
+      "value": 9,
+      "summary": "1 1,000th of an inch"
+    },
+    {
+      "name": "Microinches",
+      "value": 10,
+      "summary": "1 1,000,000th of an inch"
+    }
+  ]
+}

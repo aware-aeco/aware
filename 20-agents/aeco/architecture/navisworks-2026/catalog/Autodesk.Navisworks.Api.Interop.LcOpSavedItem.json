@@ -1,0 +1,134 @@
+{
+  "name": "LcOpSavedItem",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "static-class",
+  "summary": "LcOpSavedItem static class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItem",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetIconMapping",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedItemCommentImage GetIconMapping(Autodesk.Navisworks.Api.SavedItem that)",
+      "summary": "GetIconMapping method of LcOpSavedItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemCommentImage",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItem.GetIconMapping%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "GetGuiExpanded",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuiState GetGuiExpanded(Autodesk.Navisworks.Api.SavedItem that)",
+      "summary": "GetGuiExpanded method of LcOpSavedItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuiState",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItem.GetGuiExpanded%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "GetSavedItemType",
+      "signature": "static int GetSavedItemType(Autodesk.Navisworks.Api.SavedItem that)",
+      "summary": "GetSavedItemType method of LcOpSavedItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItem.GetSavedItemType%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "MakePath",
+      "signature": "static void MakePath(Autodesk.Navisworks.Api.SavedItem that, Autodesk.Navisworks.Api.Interop.LcUInt32Vector path)",
+      "summary": "MakePath method of LcOpSavedItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItem.MakePath%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "MakePath",
+      "signature": "static void MakePath(Autodesk.Navisworks.Api.SavedItem that, out string elementItemPath)",
+      "summary": "MakePath method of LcOpSavedItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "elementItemPath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItem.MakePath%28Autodesk.Navisworks.Api.SavedItem%2CSystem.String%40%29"
+    },
+    {
+      "name": "SetGuiExpanded",
+      "signature": "static void SetGuiExpanded(Autodesk.Navisworks.Api.SavedItem that, Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuiState set)",
+      "summary": "SetGuiExpanded method of LcOpSavedItem.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuiState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItem.SetGuiExpanded%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuiState%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

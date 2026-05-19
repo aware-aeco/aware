@@ -1,0 +1,146 @@
+{
+  "name": "LcVwClashHighlighter",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwClashHighlighter class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwClashHighlighter",
+  "constructors": [
+    {
+      "name": "LcVwClashHighlighter(Autodesk.Navisworks.Api.Interop.LcVwDocument)",
+      "signature": "LcVwClashHighlighter(Autodesk.Navisworks.Api.Interop.LcVwDocument doc)",
+      "summary": "Constructs a new LcVwClashHighlighter.",
+      "params": [
+        {
+          "name": "doc",
+          "type": "Autodesk.Navisworks.Api.Interop.LcVwDocument",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.%23ctor%28Autodesk.Navisworks.Api.Interop.LcVwDocument%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetClashHighlightOptions",
+      "signature": "bool GetClashHighlightOptions(out string jsonClashHighlightOptions)",
+      "summary": "GetClashHighlightOptions method of LcVwClashHighlighter.",
+      "params": [
+        {
+          "name": "jsonClashHighlightOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.GetClashHighlightOptions%28System.String%40%29"
+    },
+    {
+      "name": "HighlightClashes",
+      "signature": "bool HighlightClashes(string jsonVectorClashResult)",
+      "summary": "HighlightClashes method of LcVwClashHighlighter.",
+      "params": [
+        {
+          "name": "jsonVectorClashResult",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.HighlightClashes%28System.String%29"
+    },
+    {
+      "name": "SetClashHighlightOptions",
+      "signature": "bool SetClashHighlightOptions(string jsonClashHighlightOptions)",
+      "summary": "SetClashHighlightOptions method of LcVwClashHighlighter.",
+      "params": [
+        {
+          "name": "jsonClashHighlightOptions",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.SetClashHighlightOptions%28System.String%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwClashHighlighter InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwClashHighlighter.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwClashHighlighter",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwClashHighlighter.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwClashHighlighter.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwClashHighlighter.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

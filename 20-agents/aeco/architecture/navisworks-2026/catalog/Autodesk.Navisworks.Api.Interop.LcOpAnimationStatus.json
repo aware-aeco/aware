@@ -1,0 +1,26 @@
+{
+  "name": "LcOpAnimationStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpAnimationStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSTATUS_PLAY",
+      "value": 0
+    },
+    {
+      "name": "eSTATUS_PAUSED",
+      "value": 1
+    },
+    {
+      "name": "eSTATUS_DEAD",
+      "value": 2
+    }
+  ]
+}

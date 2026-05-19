@@ -1,0 +1,163 @@
+{
+  "name": "NavisworksConnection",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "class",
+  "summary": "Implementation of DbConnection.",
+  "base": "System.Data.Common.DbConnection",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.NavisworksConnection",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCommand",
+      "signature": "Autodesk.Navisworks.Api.Data.NavisworksCommand CreateCommand()",
+      "summary": "Create a new NavisworksCommand and associate it with this connection.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.NavisworksCommand",
+        "doc": "Returns an instantiated NavisworksCommand object already assigned to this connection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.CreateCommand"
+    },
+    {
+      "name": "InternalGetConnection",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection InternalGetConnection()",
+      "summary": "InternalGetConnection method of NavisworksConnection.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.InternalGetConnection"
+    },
+    {
+      "name": "BeginDbTransaction",
+      "signature": "System.Data.Common.DbTransaction BeginDbTransaction(System.Data.IsolationLevel A_0)",
+      "summary": "Not implement",
+      "params": [
+        {
+          "name": "A_0",
+          "type": "System.Data.IsolationLevel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Data.Common.DbTransaction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.BeginDbTransaction%28System.Data.IsolationLevel%29"
+    },
+    {
+      "name": "GetSchema",
+      "signature": "System.Data.DataTable GetSchema(string collectionName, string[] restrictionValues)",
+      "summary": "Returns schema information for the data source of this connection using the specified string for the schema name and the specified string array for the restriction values.",
+      "params": [
+        {
+          "name": "collectionName",
+          "type": "string",
+          "doc": "Specifies the name of the schema to return. Now only support \u0022INDEXES\u0022 and \u0022INDEXCOLUMNS\u0022",
+          "optional": false
+        },
+        {
+          "name": "restrictionValues",
+          "type": "string[]",
+          "doc": "Specifies a set of restriction values for the requested schema.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Data.DataTable",
+        "doc": "A System.Data.DataTable that contains schema information."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.GetSchema%28System.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "ChangeDatabase",
+      "signature": "void ChangeDatabase(string databaseName)",
+      "summary": "Not implement",
+      "params": [
+        {
+          "name": "databaseName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.ChangeDatabase%28System.String%29"
+    },
+    {
+      "name": "Close",
+      "signature": "void Close()",
+      "summary": "Does nothing, always keep open.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.Close"
+    },
+    {
+      "name": "Open",
+      "signature": "void Open()",
+      "summary": "Does nothing, connection is automatically opened by DocumentDatabase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.Open"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ConnectionString",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.ConnectionString"
+    },
+    {
+      "name": "DataSource",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.DataSource"
+    },
+    {
+      "name": "Database",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.Database"
+    },
+    {
+      "name": "ServerVersion",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Not implement",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.ServerVersion"
+    },
+    {
+      "name": "State",
+      "type": "System.Data.ConnectionState",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns the state of the connection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Data.NavisworksConnection.State"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

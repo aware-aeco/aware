@@ -1,0 +1,708 @@
+{
+  "name": "LcOpShadFragTransformElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpShadFragTransformElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElement Create()",
+      "summary": "Create method of LcOpShadFragTransformElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.Create"
+    },
+    {
+      "name": "GetClass",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElementClass GetClass()",
+      "summary": "GetClass method of LcOpShadFragTransformElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.GetClass"
+    },
+    {
+      "name": "Edit",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement Edit(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Edit method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.Edit%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "Get",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement Get(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Get method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.Get%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CaptureSnapshot",
+      "signature": "static bool CaptureSnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot)",
+      "summary": "CaptureSnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.CaptureSnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%29"
+    },
+    {
+      "name": "CaptureSnapshot",
+      "signature": "static bool CaptureSnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot, bool start_dynamic)",
+      "summary": "CaptureSnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        },
+        {
+          "name": "start_dynamic",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.CaptureSnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "static bool Delete(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Delete method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.Delete%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "GetOverride",
+      "signature": "static bool GetOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelGeometry link, Autodesk.Navisworks.Api.Transform3D perm_transform)",
+      "summary": "GetOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelGeometry",
+          "optional": false
+        },
+        {
+          "name": "perm_transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.GetOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelGeometry%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "GetTempOverride",
+      "signature": "static bool GetTempOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelGeometry link, Autodesk.Navisworks.Api.Transform3D temp_transform)",
+      "summary": "GetTempOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelGeometry",
+          "optional": false
+        },
+        {
+          "name": "temp_transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.GetTempOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelGeometry%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "GetClassUserName",
+      "signature": "static string GetClassUserName()",
+      "summary": "GetClassUserName method of LcOpShadFragTransformElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.GetClassUserName"
+    },
+    {
+      "name": "GetElementClassName",
+      "signature": "static string GetElementClassName()",
+      "summary": "GetElementClassName method of LcOpShadFragTransformElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.GetElementClassName"
+    },
+    {
+      "name": "ApplyOverride",
+      "signature": "static void ApplyOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "ApplyOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplyOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ApplyOverride",
+      "signature": "static void ApplyOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path, Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "ApplyOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplyOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ApplySnapshot",
+      "signature": "static void ApplySnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot)",
+      "summary": "ApplySnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplySnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%29"
+    },
+    {
+      "name": "ApplySnapshot",
+      "signature": "static void ApplySnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot, bool end_dynamic)",
+      "summary": "ApplySnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        },
+        {
+          "name": "end_dynamic",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplySnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ApplySnapshot",
+      "signature": "static void ApplySnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot, bool end_dynamic, Autodesk.Navisworks.Api.Transform3D permanent)",
+      "summary": "ApplySnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        },
+        {
+          "name": "end_dynamic",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "permanent",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplySnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ApplySnapshot",
+      "signature": "static void ApplySnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot, bool end_dynamic, Autodesk.Navisworks.Api.Transform3D permanent, Autodesk.Navisworks.Api.Transform3D temporary)",
+      "summary": "ApplySnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        },
+        {
+          "name": "end_dynamic",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "permanent",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        },
+        {
+          "name": "temporary",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplySnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Transform3D%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ApplyTempOverride",
+      "signature": "static void ApplyTempOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set, Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "ApplyTempOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplyTempOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ApplyTempOverride",
+      "signature": "static void ApplyTempOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem path, Autodesk.Navisworks.Api.Transform3D trans)",
+      "summary": "ApplyTempOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        },
+        {
+          "name": "trans",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplyTempOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "ApplyTempSnapshot",
+      "signature": "static void ApplyTempSnapshot(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot)",
+      "summary": "ApplyTempSnapshot method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ApplyTempSnapshot%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%29"
+    },
+    {
+      "name": "ResetAllOverrides",
+      "signature": "static void ResetAllOverrides(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllOverrides method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetAllOverrides%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllTempOverrides",
+      "signature": "static void ResetAllTempOverrides(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "ResetAllTempOverrides method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetAllTempOverrides%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "ResetAllTempOverrides",
+      "signature": "static void ResetAllTempOverrides(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot snapshot)",
+      "summary": "ResetAllTempOverrides method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "snapshot",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetAllTempOverrides%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformSnapshot%29"
+    },
+    {
+      "name": "ResetOverride",
+      "signature": "static void ResetOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetOverride",
+      "signature": "static void ResetOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "ResetOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "ResetTempOverride",
+      "signature": "static void ResetTempOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector set)",
+      "summary": "ResetTempOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaPathLinkVector",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetTempOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOaPathLinkVector%29"
+    },
+    {
+      "name": "ResetTempOverride",
+      "signature": "static void ResetTempOverride(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.ModelItem link)",
+      "summary": "ResetTempOverride method of LcOpShadFragTransformElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "link",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.ResetTempOverride%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.ModelItem%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpShadFragTransformElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpShadFragTransformElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

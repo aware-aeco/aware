@@ -1,0 +1,23 @@
+{
+  "name": "ProgressBeginningEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::ProgressBeginning event",
+  "base": "Autodesk.Navisworks.Api.ProgressEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressBeginningEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the title of the overall operation that progress is being reported for. Displayed in the title bar of the Navisworks progress dialog.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressBeginningEventArgs.Title"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

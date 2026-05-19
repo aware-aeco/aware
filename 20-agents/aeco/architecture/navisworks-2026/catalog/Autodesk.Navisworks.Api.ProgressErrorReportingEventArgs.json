@@ -1,0 +1,55 @@
+{
+  "name": "ProgressErrorReportingEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::ProgressErrorReporting event",
+  "base": "Autodesk.Navisworks.Api.ProgressEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressErrorReportingEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Canceled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets a value indicating whether the operation should be canceled.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs.Canceled"
+    },
+    {
+      "name": "ErrorCode",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the error code that describes the current Error.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs.ErrorCode"
+    },
+    {
+      "name": "IsFileError",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets whether the Error being reported was related to a file operation.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs.IsFileError"
+    },
+    {
+      "name": "Message",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a message that describes the current error.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs.Message"
+    },
+    {
+      "name": "Progress",
+      "type": "Autodesk.Navisworks.Api.Progress",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a reference to the Progress class instance relating to this Event.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressErrorReportingEventArgs.Progress"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

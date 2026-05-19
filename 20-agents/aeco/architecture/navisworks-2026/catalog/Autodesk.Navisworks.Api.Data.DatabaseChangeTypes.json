@@ -1,0 +1,39 @@
+{
+  "name": "DatabaseChangeTypes",
+  "namespace": "Autodesk.Navisworks.Api.Data",
+  "kind": "enum",
+  "summary": "Change type",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Data.DatabaseChangeTypes",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No change"
+    },
+    {
+      "name": "Insert",
+      "value": 1,
+      "summary": "Insert row"
+    },
+    {
+      "name": "Delete",
+      "value": 2,
+      "summary": "Delete row"
+    },
+    {
+      "name": "Update",
+      "value": 4,
+      "summary": "Update row"
+    },
+    {
+      "name": "All",
+      "value": 7,
+      "summary": "All change types"
+    }
+  ]
+}

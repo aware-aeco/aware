@@ -1,0 +1,74 @@
+{
+  "name": "PickResults",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The result of a pick action.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PickResults",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Edge0To1",
+      "value": 1
+    },
+    {
+      "name": "Edge1To2",
+      "value": 2
+    },
+    {
+      "name": "Edge2To0",
+      "value": 4
+    },
+    {
+      "name": "Edge",
+      "value": 7
+    },
+    {
+      "name": "Vertex0",
+      "value": 16
+    },
+    {
+      "name": "Vertex1",
+      "value": 32
+    },
+    {
+      "name": "Vertex2",
+      "value": 64
+    },
+    {
+      "name": "Vertex",
+      "value": 112
+    },
+    {
+      "name": "Contained",
+      "value": 128
+    },
+    {
+      "name": "LineVertex0",
+      "value": 65536
+    },
+    {
+      "name": "LineVertex1",
+      "value": 131072
+    },
+    {
+      "name": "LineVertex",
+      "value": 196608
+    },
+    {
+      "name": "LineMiddle",
+      "value": 262144
+    },
+    {
+      "name": "ArcCenter",
+      "value": 1048576
+    }
+  ]
+}

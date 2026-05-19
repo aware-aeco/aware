@@ -162,6 +162,16 @@ internal static class Program
                             // slug collision. IR stamps host="tedds".
                             "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Navisworks extractor (Phase B B12) — Autodesk.Navisworks.Api.dll +
+                            // sibling XML doc from the community NuGet package
+                            // Chuongmep.Navis.Api.Autodesk.Navisworks.Api (re-distributes the
+                            // product-shipped DLL + XML doc bit-for-bit). Source.kind = "nuget".
+                            // Reflection runs against PE metadata (no IL execution), AOT-clean.
+                            // Single version 2026.0 for now. See EXTRACTION-NOTES.md in
+                            // 20-agents/aeco/architecture/navisworks-2026/ for the CHM-vs-NuGet
+                            // rationale.
+                            "navisworks" => Ingest.Extractors.Navisworks.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };

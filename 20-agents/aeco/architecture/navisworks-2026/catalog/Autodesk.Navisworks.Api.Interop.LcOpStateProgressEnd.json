@@ -1,0 +1,26 @@
+{
+  "name": "LcOpStateProgressEnd",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpStateProgressEnd enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpStateProgressEnd",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEND_EXPLICIT",
+      "value": 0
+    },
+    {
+      "name": "eEND_MESSAGE",
+      "value": 1
+    },
+    {
+      "name": "eEND_SET",
+      "value": 2
+    }
+  ]
+}

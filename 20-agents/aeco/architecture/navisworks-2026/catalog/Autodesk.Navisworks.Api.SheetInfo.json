@@ -1,0 +1,184 @@
+{
+  "name": "SheetInfo",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Sheet information. Often used to represent a sheet in a multi-sheet file",
+  "base": "Autodesk.Navisworks.Api.SavedItem",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.SheetInfo",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateUniqueCopy",
+      "signature": "Autodesk.Navisworks.Api.SheetInfo CreateUniqueCopy()",
+      "summary": "Return a copy with unique sheet id",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SheetInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SheetInfo.CreateUniqueCopy"
+    },
+    {
+      "name": "CheckIsConvertedForLoad",
+      "signature": "bool CheckIsConvertedForLoad()",
+      "summary": "Checks whether this sheet has been previously converted and will load quickly if required",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SheetInfo.CheckIsConvertedForLoad"
+    },
+    {
+      "name": "CheckIsConvertedForSearch",
+      "signature": "bool CheckIsConvertedForSearch()",
+      "summary": "Checks whether this sheet has been previously converted and can be searched without loading",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SheetInfo.CheckIsConvertedForSearch"
+    },
+    {
+      "name": "ContainsMatchingItem",
+      "signature": "bool ContainsMatchingItem(Autodesk.Navisworks.Api.ModelItem item)",
+      "summary": "Checks whether this sheet contains matching modelItem.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.ModelItem",
+          "doc": "ModelItem to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Returns false if this sheet does not contain matching ModelItem or this sheet hasn\u0027t been previously converted"
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "item is null."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SheetInfo.ContainsMatchingItem%28Autodesk.Navisworks.Api.ModelItem%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SheetInfo.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SheetInfo.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.SheetInfo InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SheetInfo.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SheetInfo",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.SheetInfo.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Id",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Uniquely identifies a specific sheet within a file",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.Id"
+    },
+    {
+      "name": "IsLoaded",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get whether the sheet has been loaded during the current Navisworks session",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.IsLoaded"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.IsReadOnly"
+    },
+    {
+      "name": "PropertyCategories",
+      "type": "Autodesk.Navisworks.Api.InfoPropertyCategoryCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the property category collection",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.PropertyCategories"
+    },
+    {
+      "name": "SheetType",
+      "type": "Autodesk.Navisworks.Api.SheetType",
+      "getter": true,
+      "setter": false,
+      "summary": "Get type of sheet",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.SheetType"
+    },
+    {
+      "name": "SourceGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get original Guid that this sheet was created with. Guid may be modified to ensure all sheets have unique Guids. If the same sheet is added to a document twice, each sheet has the same SourceGuid but different Guids.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.SourceGuid"
+    },
+    {
+      "name": "Thumbnail",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the sheet thumbnail file name",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.SheetInfo.Thumbnail"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,38 @@
+{
+  "name": "LcOpLockType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpLockType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpLockType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eTYPE_GLOBAL",
+      "value": 0
+    },
+    {
+      "name": "eTYPE_NODE",
+      "value": 1
+    },
+    {
+      "name": "eTYPE_FRAG",
+      "value": 2
+    },
+    {
+      "name": "eTYPE_ELEM",
+      "value": 3
+    },
+    {
+      "name": "eTYPE_EVENT",
+      "value": 4
+    },
+    {
+      "name": "eTYPE_ELEM_NULL",
+      "value": 5
+    }
+  ]
+}

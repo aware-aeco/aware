@@ -1,0 +1,82 @@
+{
+  "name": "LcOpClicUIPosition",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpClicUIPosition enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpClicUIPosition",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DeadCenter",
+      "value": 0
+    },
+    {
+      "name": "TopCenter",
+      "value": 1
+    },
+    {
+      "name": "BottomCenter",
+      "value": 2
+    },
+    {
+      "name": "LeftCenter",
+      "value": 3
+    },
+    {
+      "name": "RightCenter",
+      "value": 4
+    },
+    {
+      "name": "TopLeft",
+      "value": 5
+    },
+    {
+      "name": "BottomLeft",
+      "value": 6
+    },
+    {
+      "name": "TopRight",
+      "value": 7
+    },
+    {
+      "name": "BottomRight",
+      "value": 8
+    },
+    {
+      "name": "TopRightCorner",
+      "value": 9
+    },
+    {
+      "name": "RightTop",
+      "value": 10
+    },
+    {
+      "name": "RightBottom",
+      "value": 11
+    },
+    {
+      "name": "RightBottomCorner",
+      "value": 12
+    },
+    {
+      "name": "BottomLeftCorner",
+      "value": 13
+    },
+    {
+      "name": "LeftBottom",
+      "value": 14
+    },
+    {
+      "name": "LeftTop",
+      "value": 15
+    },
+    {
+      "name": "LeftTopCorner",
+      "value": 16
+    }
+  ]
+}

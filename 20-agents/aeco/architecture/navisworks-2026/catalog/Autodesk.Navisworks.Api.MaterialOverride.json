@@ -1,0 +1,49 @@
+{
+  "name": "MaterialOverride",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Material Override",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.MaterialOverride",
+  "constructors": [
+    {
+      "name": "MaterialOverride()",
+      "signature": "MaterialOverride()",
+      "summary": "Constructs a new MaterialOverride.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.MaterialOverride.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": true,
+      "summary": "Material Override. May be null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.MaterialOverride.Color"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": true,
+      "summary": "Material Override.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.MaterialOverride.Item"
+    },
+    {
+      "name": "Transparency",
+      "type": "double?",
+      "getter": true,
+      "setter": true,
+      "summary": "Material Override. May be null.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.MaterialOverride.Transparency"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

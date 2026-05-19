@@ -1,0 +1,26 @@
+{
+  "name": "LcOpBackgroundBackgroundStyle",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpBackgroundBackgroundStyle enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpBackgroundBackgroundStyle",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSTYLE_PLAIN",
+      "value": 0
+    },
+    {
+      "name": "eSTYLE_GRADUATED",
+      "value": 1
+    },
+    {
+      "name": "eSTYLE_HORIZON",
+      "value": 2
+    }
+  ]
+}

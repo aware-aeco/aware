@@ -1,0 +1,38 @@
+{
+  "name": "LcOpMeasureToolMeasureAlong",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpMeasureToolMeasureAlong enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpMeasureToolMeasureAlong",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMEASUREALONG_NONE",
+      "value": 0
+    },
+    {
+      "name": "eMEASUREALONG_XAXIS",
+      "value": 1
+    },
+    {
+      "name": "eMEASUREALONG_YAXIS",
+      "value": 2
+    },
+    {
+      "name": "eMEASUREALONG_ZAXIS",
+      "value": 3
+    },
+    {
+      "name": "eMEASUREALONG_PERPENDICULAR",
+      "value": 4
+    },
+    {
+      "name": "eMEASUREALONG_PARALLEL",
+      "value": 5
+    }
+  ]
+}

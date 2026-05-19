@@ -1,0 +1,504 @@
+{
+  "name": "LcUSwigOptionSet",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcUSwigOptionSet class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSwigOptionSet",
+  "constructors": [
+    {
+      "name": "LcUSwigOptionSet()",
+      "signature": "LcUSwigOptionSet()",
+      "summary": "Constructs a new LcUSwigOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IGetValue",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSet IGetValue(int index, Autodesk.Navisworks.Api.VariantData data)",
+      "summary": "IGetValue method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetValue%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "IGetFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag IGetFlags(int index)",
+      "summary": "IGetFlags method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetFlags%28System.Int32%29"
+    },
+    {
+      "name": "IGetMyFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag IGetMyFlags()",
+      "summary": "IGetMyFlags method of LcUSwigOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetMyFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetMyFlags"
+    },
+    {
+      "name": "IGetProfile",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile IGetProfile(int index)",
+      "summary": "IGetProfile method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetProfile%28System.Int32%29"
+    },
+    {
+      "name": "IGetUserFlags",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag IGetUserFlags(int index)",
+      "summary": "IGetUserFlags method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetUserFlags%28System.Int32%29"
+    },
+    {
+      "name": "HasOptionsForProfile",
+      "signature": "bool HasOptionsForProfile(Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "HasOptionsForProfile method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.HasOptionsForProfile%28Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "HasSubOptionsForProfile",
+      "signature": "bool HasSubOptionsForProfile(Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile profile)",
+      "summary": "HasSubOptionsForProfile method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.HasSubOptionsForProfile%28Autodesk.Navisworks.Api.Interop.LcUOptionSetProfile%29"
+    },
+    {
+      "name": "IArrayInsert",
+      "signature": "bool IArrayInsert(int index)",
+      "summary": "IArrayInsert method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IArrayInsert%28System.Int32%29"
+    },
+    {
+      "name": "IArrayRemove",
+      "signature": "bool IArrayRemove(int index)",
+      "summary": "IArrayRemove method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IArrayRemove%28System.Int32%29"
+    },
+    {
+      "name": "IGetRange",
+      "signature": "bool IGetRange(int index, Autodesk.Navisworks.Api.VariantData min_valid, Autodesk.Navisworks.Api.VariantData max_valid)",
+      "summary": "IGetRange method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "min_valid",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "max_valid",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetRange%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "IInvokeHelp",
+      "signature": "bool IInvokeHelp()",
+      "summary": "IInvokeHelp method of LcUSwigOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IInvokeHelp"
+    },
+    {
+      "name": "IIsDisabled",
+      "signature": "bool IIsDisabled(int index, Autodesk.Navisworks.Api.VariantData display_data)",
+      "summary": "IIsDisabled method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "display_data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IIsDisabled%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%29"
+    },
+    {
+      "name": "ISetValue",
+      "signature": "bool ISetValue(int index, Autodesk.Navisworks.Api.VariantData data, out string error_msg)",
+      "summary": "ISetValue method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "Autodesk.Navisworks.Api.VariantData",
+          "optional": false
+        },
+        {
+          "name": "error_msg",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.ISetValue%28System.Int32%2CAutodesk.Navisworks.Api.VariantData%2CSystem.String%40%29"
+    },
+    {
+      "name": "IGetNumOptions",
+      "signature": "int IGetNumOptions()",
+      "summary": "IGetNumOptions method of LcUSwigOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetNumOptions"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcUSwigOptionSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSwigOptionSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetUserNameW",
+      "signature": "string GetUserNameW(int index)",
+      "summary": "GetUserNameW method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.GetUserNameW%28System.Int32%29"
+    },
+    {
+      "name": "IGetClassName",
+      "signature": "string IGetClassName(int index)",
+      "summary": "IGetClassName method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetClassName%28System.Int32%29"
+    },
+    {
+      "name": "IGetHelpId",
+      "signature": "string IGetHelpId()",
+      "summary": "IGetHelpId method of LcUSwigOptionSet.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetHelpId"
+    },
+    {
+      "name": "IGetName",
+      "signature": "string IGetName(int index)",
+      "summary": "IGetName method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetName%28System.Int32%29"
+    },
+    {
+      "name": "IDoCustomOption",
+      "signature": "void IDoCustomOption()",
+      "summary": "IDoCustomOption method of LcUSwigOptionSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IDoCustomOption"
+    },
+    {
+      "name": "IGetClassNameEx",
+      "signature": "void IGetClassNameEx(int index, out string name)",
+      "summary": "IGetClassNameEx method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetClassNameEx%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "IGetNameEx",
+      "signature": "void IGetNameEx(int index, out string name)",
+      "summary": "IGetNameEx method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IGetNameEx%28System.Int32%2CSystem.String%40%29"
+    },
+    {
+      "name": "ISetUserFlags",
+      "signature": "void ISetUserFlags(int index, Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag user_flags)",
+      "summary": "ISetUserFlags method of LcUSwigOptionSet.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "user_flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.ISetUserFlags%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcUOptionSetUserFlag%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcUSwigOptionSet.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcUSwigOptionSet.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

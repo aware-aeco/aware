@@ -1,0 +1,462 @@
+{
+  "name": "LcOpRedline",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpRedline class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRedline",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLineColor",
+      "signature": "Autodesk.Navisworks.Api.Color GetLineColor()",
+      "summary": "GetLineColor method of LcOpRedline.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.GetLineColor"
+    },
+    {
+      "name": "GetRedlineType",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpRedlineType GetRedlineType()",
+      "summary": "GetRedlineType method of LcOpRedline.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRedlineType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.GetRedlineType"
+    },
+    {
+      "name": "GetLineThickness",
+      "signature": "int GetLineThickness()",
+      "summary": "GetLineThickness method of LcOpRedline.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.GetLineThickness"
+    },
+    {
+      "name": "MakeCameraSpaceFrustum",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcLFrustum3f MakeCameraSpaceFrustum(Autodesk.Navisworks.Api.Interop.LcNvCamera camera, bool is_2d)",
+      "summary": "MakeCameraSpaceFrustum method of LcOpRedline.",
+      "params": [
+        {
+          "name": "camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "is_2d",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.MakeCameraSpaceFrustum%28Autodesk.Navisworks.Api.Interop.LcNvCamera%2CSystem.Boolean%29"
+    },
+    {
+      "name": "MakeCameraSpaceFrustum",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcLFrustum3f MakeCameraSpaceFrustum(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer)",
+      "summary": "MakeCameraSpaceFrustum method of LcOpRedline.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.MakeCameraSpaceFrustum%28Autodesk.Navisworks.Api.Interop.LcOaViewer%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpRedline InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpRedline.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpRedline",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpRedline.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CameraToWindowSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D CameraToWindowSpace(Autodesk.Navisworks.Api.Interop.LcLFrustum3f frustum, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "CameraToWindowSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "frustum",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.CameraToWindowSpace%28Autodesk.Navisworks.Api.Interop.LcLFrustum3f%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "CameraToWindowSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D CameraToWindowSpace(Autodesk.Navisworks.Api.Interop.LcNvCamera camera, bool is_2d, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "CameraToWindowSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "is_2d",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.CameraToWindowSpace%28Autodesk.Navisworks.Api.Interop.LcNvCamera%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "CameraToWindowSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D CameraToWindowSpace(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "CameraToWindowSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.CameraToWindowSpace%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "ScreenToCameraSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D ScreenToCameraSpace(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, int x, int y)",
+      "summary": "ScreenToCameraSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.ScreenToCameraSpace%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "ScreenToWindowSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D ScreenToWindowSpace(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "ScreenToWindowSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.ScreenToWindowSpace%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "WindowToCameraSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D WindowToCameraSpace(Autodesk.Navisworks.Api.Interop.LcLFrustum3f frustum, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "WindowToCameraSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "frustum",
+          "type": "Autodesk.Navisworks.Api.Interop.LcLFrustum3f",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.WindowToCameraSpace%28Autodesk.Navisworks.Api.Interop.LcLFrustum3f%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "WindowToCameraSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D WindowToCameraSpace(Autodesk.Navisworks.Api.Interop.LcNvCamera camera, bool is_2d, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "WindowToCameraSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "is_2d",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.WindowToCameraSpace%28Autodesk.Navisworks.Api.Interop.LcNvCamera%2CSystem.Boolean%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "WindowToCameraSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D WindowToCameraSpace(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "WindowToCameraSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.WindowToCameraSpace%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "WindowToScreenSpace",
+      "signature": "static Autodesk.Navisworks.Api.Point2D WindowToScreenSpace(Autodesk.Navisworks.Api.Interop.LcOaViewer viewer, Autodesk.Navisworks.Api.Point2D p)",
+      "summary": "WindowToScreenSpace method of LcOpRedline.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+          "optional": false
+        },
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.WindowToScreenSpace%28Autodesk.Navisworks.Api.Interop.LcOaViewer%2CAutodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "IsCompatibleCameras",
+      "signature": "static bool IsCompatibleCameras(Autodesk.Navisworks.Api.Interop.LcNvCamera cam1, Autodesk.Navisworks.Api.Interop.LcNvCamera cam2, bool is_2d)",
+      "summary": "IsCompatibleCameras method of LcOpRedline.",
+      "params": [
+        {
+          "name": "cam1",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "cam2",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "is_2d",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.IsCompatibleCameras%28Autodesk.Navisworks.Api.Interop.LcNvCamera%2CAutodesk.Navisworks.Api.Interop.LcNvCamera%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetLineColor",
+      "signature": "void SetLineColor(Autodesk.Navisworks.Api.Color colour)",
+      "summary": "SetLineColor method of LcOpRedline.",
+      "params": [
+        {
+          "name": "colour",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.SetLineColor%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "SetLinePattern",
+      "signature": "void SetLinePattern(ushort pattern)",
+      "summary": "SetLinePattern method of LcOpRedline.",
+      "params": [
+        {
+          "name": "pattern",
+          "type": "ushort",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.SetLinePattern%28System.UInt16%29"
+    },
+    {
+      "name": "SetLineThickness",
+      "signature": "void SetLineThickness(int thickness)",
+      "summary": "SetLineThickness method of LcOpRedline.",
+      "params": [
+        {
+          "name": "thickness",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.SetLineThickness%28System.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpRedline.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpRedline.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

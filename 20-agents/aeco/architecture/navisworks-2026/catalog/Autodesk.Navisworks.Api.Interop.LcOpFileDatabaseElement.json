@@ -1,0 +1,483 @@
+{
+  "name": "LcOpFileDatabaseElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpFileDatabaseElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetRequiredAction",
+      "signature": "Autodesk.Navisworks.Api.Data.DatabaseChangedAction GetRequiredAction()",
+      "summary": "GetRequiredAction method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Data.DatabaseChangedAction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetRequiredAction"
+    },
+    {
+      "name": "BeginTransaction",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection BeginTransaction()",
+      "summary": "BeginTransaction method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.BeginTransaction"
+    },
+    {
+      "name": "BeginTransaction",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection BeginTransaction(Autodesk.Navisworks.Api.Data.DatabaseChangedAction action)",
+      "summary": "BeginTransaction method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "action",
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseChangedAction",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.BeginTransaction%28Autodesk.Navisworks.Api.Data.DatabaseChangedAction%29"
+    },
+    {
+      "name": "BeginTransaction",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection BeginTransaction(Autodesk.Navisworks.Api.Data.DatabaseChangedAction action, Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "BeginTransaction method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "action",
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseChangedAction",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.BeginTransaction%28Autodesk.Navisworks.Api.Data.DatabaseChangedAction%2CAutodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "GetConnection",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection GetConnection()",
+      "summary": "GetConnection method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteConnection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetConnection"
+    },
+    {
+      "name": "EnableTableUndoable",
+      "signature": "bool EnableTableUndoable(string table_name)",
+      "summary": "EnableTableUndoable method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "table_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.EnableTableUndoable%28System.String%29"
+    },
+    {
+      "name": "EndTransaction",
+      "signature": "bool EndTransaction()",
+      "summary": "EndTransaction method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.EndTransaction"
+    },
+    {
+      "name": "EndTransaction",
+      "signature": "bool EndTransaction(bool commit)",
+      "summary": "EndTransaction method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "commit",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.EndTransaction%28System.Boolean%29"
+    },
+    {
+      "name": "EndTransaction",
+      "signature": "bool EndTransaction(bool commit, Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "EndTransaction method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "commit",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.EndTransaction%28System.Boolean%2CAutodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "GetLastError",
+      "signature": "int GetLastError()",
+      "summary": "GetLastError method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetLastError"
+    },
+    {
+      "name": "GetBegunTransactionEvent",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDatabaseBeginTransactionEvent GetBegunTransactionEvent()",
+      "summary": "GetBegunTransactionEvent method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDatabaseBeginTransactionEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetBegunTransactionEvent"
+    },
+    {
+      "name": "GetBeginningTransactionEvent",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDatabaseBeginningTransactionEvent GetBeginningTransactionEvent()",
+      "summary": "GetBeginningTransactionEvent method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDatabaseBeginningTransactionEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetBeginningTransactionEvent"
+    },
+    {
+      "name": "GetCommittingTransactionEvent",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDatabaseCommitTransactionEvent GetCommittingTransactionEvent()",
+      "summary": "GetCommittingTransactionEvent method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDatabaseCommitTransactionEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetCommittingTransactionEvent"
+    },
+    {
+      "name": "GetRollbackingTransactionEvent",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpDatabaseRollbackTransactionEvent GetRollbackingTransactionEvent()",
+      "summary": "GetRollbackingTransactionEvent method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpDatabaseRollbackTransactionEvent",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetRollbackingTransactionEvent"
+    },
+    {
+      "name": "Create",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElement Create()",
+      "summary": "Create method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.Create"
+    },
+    {
+      "name": "GetClass",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpElementClass GetClass()",
+      "summary": "GetClass method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetClass"
+    },
+    {
+      "name": "Edit",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement Edit(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Edit method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.Edit%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "Get",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement Get(Autodesk.Navisworks.Api.Interop.LcOpState state)",
+      "summary": "Get method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.Get%28Autodesk.Navisworks.Api.Interop.LcOpState%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "static bool Delete(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.Interop.LcOpLock lock)",
+      "summary": "Delete method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpLock",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.Delete%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.Interop.LcOpLock%29"
+    },
+    {
+      "name": "GetClassUserName",
+      "signature": "static string GetClassUserName()",
+      "summary": "GetClassUserName method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetClassUserName"
+    },
+    {
+      "name": "GetElementClassName",
+      "signature": "static string GetElementClassName()",
+      "summary": "GetElementClassName method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetElementClassName"
+    },
+    {
+      "name": "GetLastErrorMessage",
+      "signature": "string GetLastErrorMessage()",
+      "summary": "GetLastErrorMessage method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.GetLastErrorMessage"
+    },
+    {
+      "name": "ClearLastError",
+      "signature": "void ClearLastError()",
+      "summary": "ClearLastError method of LcOpFileDatabaseElement.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.ClearLastError"
+    },
+    {
+      "name": "QueryChanges",
+      "signature": "void QueryChanges(Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery p, string table_names)",
+      "summary": "QueryChanges method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery",
+          "optional": false
+        },
+        {
+          "name": "table_names",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.QueryChanges%28Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery%2CSystem.String%29"
+    },
+    {
+      "name": "QueryChanges",
+      "signature": "void QueryChanges(Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery p, string table_names, Autodesk.Navisworks.Api.Data.DatabaseChangeTypes change_type)",
+      "summary": "QueryChanges method of LcOpFileDatabaseElement.",
+      "params": [
+        {
+          "name": "p",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery",
+          "optional": false
+        },
+        {
+          "name": "table_names",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "change_type",
+          "type": "Autodesk.Navisworks.Api.Data.DatabaseChangeTypes",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.QueryChanges%28Autodesk.Navisworks.Api.Interop.LcUSQLiteChangeQuery%2CSystem.String%2CAutodesk.Navisworks.Api.Data.DatabaseChangeTypes%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpFileDatabaseElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpFileDatabaseElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

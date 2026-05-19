@@ -1,0 +1,428 @@
+{
+  "name": "LcOaViewer",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOaViewer class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaViewer",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "EditClipPlane",
+      "signature": "Autodesk.Navisworks.Api.ClipPlaneSet EditClipPlane()",
+      "summary": "EditClipPlane method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.EditClipPlane"
+    },
+    {
+      "name": "GetClipPlaneSet",
+      "signature": "Autodesk.Navisworks.Api.ClipPlaneSet GetClipPlaneSet()",
+      "summary": "GetClipPlaneSet method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.ClipPlaneSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetClipPlaneSet"
+    },
+    {
+      "name": "GetAspectMappedCamera",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvCamera GetAspectMappedCamera()",
+      "summary": "GetAspectMappedCamera method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetAspectMappedCamera"
+    },
+    {
+      "name": "GetNavigator",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcNvNavigator GetNavigator()",
+      "summary": "GetNavigator method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvNavigator",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetNavigator"
+    },
+    {
+      "name": "GetStereoMode",
+      "signature": "Autodesk.Navisworks.Api.StereoBehaviorMode GetStereoMode()",
+      "summary": "GetStereoMode method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.StereoBehaviorMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetStereoMode"
+    },
+    {
+      "name": "IsStereoEnabled",
+      "signature": "bool IsStereoEnabled()",
+      "summary": "IsStereoEnabled method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.IsStereoEnabled"
+    },
+    {
+      "name": "IsStereoSwapEyes",
+      "signature": "bool IsStereoSwapEyes()",
+      "summary": "IsStereoSwapEyes method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.IsStereoSwapEyes"
+    },
+    {
+      "name": "GetStereoBalance",
+      "signature": "double GetStereoBalance()",
+      "summary": "GetStereoBalance method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetStereoBalance"
+    },
+    {
+      "name": "GetStereoMagnitude",
+      "signature": "double GetStereoMagnitude()",
+      "summary": "GetStereoMagnitude method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetStereoMagnitude"
+    },
+    {
+      "name": "GetWindowContentScale",
+      "signature": "double GetWindowContentScale()",
+      "summary": "GetWindowContentScale method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetWindowContentScale"
+    },
+    {
+      "name": "GetInteractiveCount",
+      "signature": "int GetInteractiveCount()",
+      "summary": "GetInteractiveCount method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetInteractiveCount"
+    },
+    {
+      "name": "GetTextPixelDensity",
+      "signature": "int GetTextPixelDensity()",
+      "summary": "GetTextPixelDensity method of LcOaViewer.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetTextPixelDensity"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOaViewer InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOaViewer.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOaViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOaViewer.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CalcStereoCamera",
+      "signature": "void CalcStereoCamera(Autodesk.Navisworks.Api.Interop.LcNvCamera base_camera, Autodesk.Navisworks.Api.ViewpointStereoProjection stereo_proj, Autodesk.Navisworks.Api.Interop.LcNvViewPoint view_point_props, Autodesk.Navisworks.Api.Interop.LcNvCamera stereo_camera)",
+      "summary": "CalcStereoCamera method of LcOaViewer.",
+      "params": [
+        {
+          "name": "base_camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        },
+        {
+          "name": "stereo_proj",
+          "type": "Autodesk.Navisworks.Api.ViewpointStereoProjection",
+          "optional": false
+        },
+        {
+          "name": "view_point_props",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvViewPoint",
+          "optional": false
+        },
+        {
+          "name": "stereo_camera",
+          "type": "Autodesk.Navisworks.Api.Interop.LcNvCamera",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.CalcStereoCamera%28Autodesk.Navisworks.Api.Interop.LcNvCamera%2CAutodesk.Navisworks.Api.ViewpointStereoProjection%2CAutodesk.Navisworks.Api.Interop.LcNvViewPoint%2CAutodesk.Navisworks.Api.Interop.LcNvCamera%29"
+    },
+    {
+      "name": "EndInteractive",
+      "signature": "void EndInteractive()",
+      "summary": "EndInteractive method of LcOaViewer.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.EndInteractive"
+    },
+    {
+      "name": "GetWindowSize",
+      "signature": "void GetWindowSize(ref int w, ref int h)",
+      "summary": "GetWindowSize method of LcOaViewer.",
+      "params": [
+        {
+          "name": "w",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.GetWindowSize%28System.Int32%40%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "RequestDelayedRedraw",
+      "signature": "void RequestDelayedRedraw(Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType redraw_bits)",
+      "summary": "RequestDelayedRedraw method of LcOaViewer.",
+      "params": [
+        {
+          "name": "redraw_bits",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.RequestDelayedRedraw%28Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType%29"
+    },
+    {
+      "name": "RequestRedraw",
+      "signature": "void RequestRedraw(Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType redraw_bits)",
+      "summary": "RequestRedraw method of LcOaViewer.",
+      "params": [
+        {
+          "name": "redraw_bits",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.RequestRedraw%28Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType%29"
+    },
+    {
+      "name": "SetStereoBalance",
+      "signature": "void SetStereoBalance(double v)",
+      "summary": "SetStereoBalance method of LcOaViewer.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.SetStereoBalance%28System.Double%29"
+    },
+    {
+      "name": "SetStereoCameraInterface",
+      "signature": "void SetStereoCameraInterface(Autodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface stereo_camera_interface)",
+      "summary": "SetStereoCameraInterface method of LcOaViewer.",
+      "params": [
+        {
+          "name": "stereo_camera_interface",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.SetStereoCameraInterface%28Autodesk.Navisworks.Api.Interop.LcOaViewerStereoCameraInterface%29"
+    },
+    {
+      "name": "SetStereoEnabled",
+      "signature": "void SetStereoEnabled(bool b)",
+      "summary": "SetStereoEnabled method of LcOaViewer.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.SetStereoEnabled%28System.Boolean%29"
+    },
+    {
+      "name": "SetStereoMagnitude",
+      "signature": "void SetStereoMagnitude(double v)",
+      "summary": "SetStereoMagnitude method of LcOaViewer.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.SetStereoMagnitude%28System.Double%29"
+    },
+    {
+      "name": "SetStereoMode",
+      "signature": "void SetStereoMode(Autodesk.Navisworks.Api.StereoBehaviorMode mode)",
+      "summary": "SetStereoMode method of LcOaViewer.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.StereoBehaviorMode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.SetStereoMode%28Autodesk.Navisworks.Api.StereoBehaviorMode%29"
+    },
+    {
+      "name": "SetStereoSwapEyes",
+      "signature": "void SetStereoSwapEyes(bool b)",
+      "summary": "SetStereoSwapEyes method of LcOaViewer.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.SetStereoSwapEyes%28System.Boolean%29"
+    },
+    {
+      "name": "StartInteractive",
+      "signature": "void StartInteractive()",
+      "summary": "StartInteractive method of LcOaViewer.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.StartInteractive"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOaViewer.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOaViewer.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

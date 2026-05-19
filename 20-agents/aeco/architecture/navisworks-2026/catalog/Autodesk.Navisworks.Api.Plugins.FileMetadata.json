@@ -1,0 +1,123 @@
+{
+  "name": "FileMetadata",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Metadata about a file or URI.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.FileMetadata",
+  "constructors": [
+    {
+      "name": "FileMetadata()",
+      "signature": "FileMetadata()",
+      "summary": "Default constructor.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of FileMetadata.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Plugins.FileMetadata InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of FileMetadata.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.FileMetadata",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasModificationTime",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the ModificationTime property valid?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.HasModificationTime"
+    },
+    {
+      "name": "HasRevisionId",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the RevisionId property valid?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.HasRevisionId"
+    },
+    {
+      "name": "HasSize",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the Size property valid?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.HasSize"
+    },
+    {
+      "name": "ModificationTime",
+      "type": "System.DateTime",
+      "getter": true,
+      "setter": true,
+      "summary": "The modification time of the URI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.ModificationTime"
+    },
+    {
+      "name": "RevisionId",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The revision id of the URI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.RevisionId"
+    },
+    {
+      "name": "Size",
+      "type": "ulong",
+      "getter": true,
+      "setter": true,
+      "summary": "The size in bytes of the URI.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.FileMetadata.Size"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

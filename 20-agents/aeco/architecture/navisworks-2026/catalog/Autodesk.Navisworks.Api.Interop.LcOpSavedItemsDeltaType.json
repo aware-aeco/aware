@@ -1,0 +1,42 @@
+{
+  "name": "LcOpSavedItemsDeltaType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemsDeltaType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemsDeltaType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNONE",
+      "value": 0
+    },
+    {
+      "name": "eINSERT",
+      "value": 1
+    },
+    {
+      "name": "eDELETE",
+      "value": 2
+    },
+    {
+      "name": "eREPLACE",
+      "value": 3
+    },
+    {
+      "name": "eMOVE",
+      "value": 4
+    },
+    {
+      "name": "eEDIT",
+      "value": 5
+    },
+    {
+      "name": "eERROR",
+      "value": 6
+    }
+  ]
+}

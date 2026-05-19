@@ -1,0 +1,22 @@
+{
+  "name": "LcOaUnitAngularDisplayFormat",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaUnitAngularDisplayFormat enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaUnitAngularDisplayFormat",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFORMAT_ANGULAR_DECIMAL",
+      "value": 0
+    },
+    {
+      "name": "eFORMAT_DEGREES_MINUTES_SECONDS",
+      "value": 1
+    }
+  ]
+}

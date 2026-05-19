@@ -1,0 +1,278 @@
+{
+  "name": "LcOwUserInterfaceOptions",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOwUserInterfaceOptions class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions",
+  "constructors": [
+    {
+      "name": "LcOwUserInterfaceOptions()",
+      "signature": "LcOwUserInterfaceOptions()",
+      "summary": "Constructs a new LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOwUserInterfaceOptions.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOwUserInterfaceOptions.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InfoCenterEnabled",
+      "signature": "static bool InfoCenterEnabled()",
+      "summary": "InfoCenterEnabled method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.InfoCenterEnabled"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.IsInitialised"
+    },
+    {
+      "name": "IsUIScalingEnabled",
+      "signature": "static bool IsUIScalingEnabled()",
+      "summary": "IsUIScalingEnabled method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.IsUIScalingEnabled"
+    },
+    {
+      "name": "SetInfoCenterEnabled",
+      "signature": "static bool SetInfoCenterEnabled(bool enabled)",
+      "summary": "SetInfoCenterEnabled method of LcOwUserInterfaceOptions.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.SetInfoCenterEnabled%28System.Boolean%29"
+    },
+    {
+      "name": "ShowAppHomeOnStartup",
+      "signature": "static bool ShowAppHomeOnStartup()",
+      "summary": "ShowAppHomeOnStartup method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ShowAppHomeOnStartup"
+    },
+    {
+      "name": "ToolTipsEnabled",
+      "signature": "static bool ToolTipsEnabled()",
+      "summary": "ToolTipsEnabled method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipsEnabled"
+    },
+    {
+      "name": "ToolTipsExtendedContent",
+      "signature": "static bool ToolTipsExtendedContent()",
+      "summary": "ToolTipsExtendedContent method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipsExtendedContent"
+    },
+    {
+      "name": "ToolTipsShowShortcuts",
+      "signature": "static bool ToolTipsShowShortcuts()",
+      "summary": "ToolTipsShowShortcuts method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipsShowShortcuts"
+    },
+    {
+      "name": "GetThemeType",
+      "signature": "static int GetThemeType()",
+      "summary": "GetThemeType method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.GetThemeType"
+    },
+    {
+      "name": "ToolTipDelay",
+      "signature": "static int ToolTipDelay()",
+      "summary": "ToolTipDelay method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipDelay"
+    },
+    {
+      "name": "ToolTipDuration",
+      "signature": "static int ToolTipDuration()",
+      "summary": "ToolTipDuration method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipDuration"
+    },
+    {
+      "name": "ToolTipDurationInView",
+      "signature": "static int ToolTipDurationInView()",
+      "summary": "ToolTipDurationInView method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipDurationInView"
+    },
+    {
+      "name": "ToolTipExtendedContentDelay",
+      "signature": "static int ToolTipExtendedContentDelay()",
+      "summary": "ToolTipExtendedContentDelay method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.ToolTipExtendedContentDelay"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.Initialise"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcOwUserInterfaceOptions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.Terminate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOwUserInterfaceOptions.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOwUserInterfaceOptions.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

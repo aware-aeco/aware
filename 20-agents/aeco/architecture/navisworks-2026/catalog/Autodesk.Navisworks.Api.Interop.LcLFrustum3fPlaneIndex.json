@@ -1,0 +1,38 @@
+{
+  "name": "LcLFrustum3fPlaneIndex",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcLFrustum3fPlaneIndex enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcLFrustum3fPlaneIndex",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLEFT",
+      "value": 0
+    },
+    {
+      "name": "eRIGHT",
+      "value": 1
+    },
+    {
+      "name": "eTOP",
+      "value": 2
+    },
+    {
+      "name": "eBOTTOM",
+      "value": 3
+    },
+    {
+      "name": "eNEAR",
+      "value": 4
+    },
+    {
+      "name": "eFAR",
+      "value": 5
+    }
+  ]
+}

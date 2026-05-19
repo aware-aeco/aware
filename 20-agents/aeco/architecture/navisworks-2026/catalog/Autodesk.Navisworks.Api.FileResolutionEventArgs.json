@@ -1,0 +1,55 @@
+{
+  "name": "FileResolutionEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Base class for file resolution related events",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.FileResolutionEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FileReference",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get file reference to be resolved",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolutionEventArgs.FileReference"
+    },
+    {
+      "name": "FileReferenceType",
+      "type": "Autodesk.Navisworks.Api.FileReferenceType",
+      "getter": true,
+      "setter": false,
+      "summary": "Get type of file reference to be resolved",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolutionEventArgs.FileReferenceType"
+    },
+    {
+      "name": "ReferringFileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get file name that is referring to file to be resolved, or null if not known",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolutionEventArgs.ReferringFileName"
+    },
+    {
+      "name": "ReferringFileNameAsSaved",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Get file name that is referring to file to be resolved as it was when saved, or null if not known",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolutionEventArgs.ReferringFileNameAsSaved"
+    },
+    {
+      "name": "ResolveToOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get whether file is being resolved in order to open it.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.FileResolutionEventArgs.ResolveToOpen"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,178 @@
+{
+  "name": "LcOpFilePlugin",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpFilePlugin class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpPlugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpFilePlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpFilePlugin InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpFilePlugin",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetFormatDescription",
+      "signature": "void GetFormatDescription(out string description)",
+      "summary": "GetFormatDescription method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.GetFormatDescription%28System.String%40%29"
+    },
+    {
+      "name": "GetFormatDescription",
+      "signature": "void GetFormatDescription(out string description, Autodesk.Navisworks.Api.Interop.LcOpFilePluginNameContext name_context)",
+      "summary": "GetFormatDescription method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name_context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpFilePluginNameContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.GetFormatDescription%28System.String%40%2CAutodesk.Navisworks.Api.Interop.LcOpFilePluginNameContext%29"
+    },
+    {
+      "name": "GetFormatFilter",
+      "signature": "void GetFormatFilter(out string filter)",
+      "summary": "GetFormatFilter method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "filter",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.GetFormatFilter%28System.String%40%29"
+    },
+    {
+      "name": "GetFormatName",
+      "signature": "void GetFormatName(out string format_name)",
+      "summary": "GetFormatName method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "format_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.GetFormatName%28System.String%40%29"
+    },
+    {
+      "name": "GetFormatName",
+      "signature": "void GetFormatName(out string format_name, Autodesk.Navisworks.Api.Interop.LcOpFilePluginNameContext name_context)",
+      "summary": "GetFormatName method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "format_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "name_context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpFilePluginNameContext",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.GetFormatName%28System.String%40%2CAutodesk.Navisworks.Api.Interop.LcOpFilePluginNameContext%29"
+    },
+    {
+      "name": "GetFormatSuffix",
+      "signature": "void GetFormatSuffix(out string suffix)",
+      "summary": "GetFormatSuffix method of LcOpFilePlugin.",
+      "params": [
+        {
+          "name": "suffix",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.GetFormatSuffix%28System.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpFilePlugin.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpFilePlugin.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

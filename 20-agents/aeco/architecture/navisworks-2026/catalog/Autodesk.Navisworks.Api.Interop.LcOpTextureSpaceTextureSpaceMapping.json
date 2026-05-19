@@ -1,0 +1,38 @@
+{
+  "name": "LcOpTextureSpaceTextureSpaceMapping",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpTextureSpaceTextureSpaceMapping enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMAPPING_BOX",
+      "value": 0
+    },
+    {
+      "name": "eMAPPING_PLANE",
+      "value": 1
+    },
+    {
+      "name": "eMAPPING_CYLINDER",
+      "value": 2
+    },
+    {
+      "name": "eMAPPING_SPHERE",
+      "value": 3
+    },
+    {
+      "name": "eMAPPING_EXPLICIT",
+      "value": 4
+    },
+    {
+      "name": "eMAPPING_NUM",
+      "value": 5
+    }
+  ]
+}

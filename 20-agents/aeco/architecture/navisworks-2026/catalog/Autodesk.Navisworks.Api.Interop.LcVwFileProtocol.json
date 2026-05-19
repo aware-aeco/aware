@@ -1,0 +1,259 @@
+{
+  "name": "LcVwFileProtocol",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcVwFileProtocol class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcUFileProtocol",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcVwFileProtocol",
+  "constructors": [
+    {
+      "name": "LcVwFileProtocol()",
+      "signature": "LcVwFileProtocol()",
+      "summary": "Constructs a new LcVwFileProtocol.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ReadMedia",
+      "signature": "bool ReadMedia(string handle, long offset, int num_bytes, nint bytes)",
+      "summary": "ReadMedia method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "long",
+          "optional": false
+        },
+        {
+          "name": "num_bytes",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "bytes",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.ReadMedia%28System.String%2CSystem.Int64%2CSystem.Int32%2CSystem.IntPtr%29"
+    },
+    {
+      "name": "ResolveAbsolute",
+      "signature": "bool ResolveAbsolute(string original_parent, string original_child, string resolved_parent, out string resolved_child)",
+      "summary": "ResolveAbsolute method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "original_parent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "original_child",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_parent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_child",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.ResolveAbsolute%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "ResolveRelative",
+      "signature": "bool ResolveRelative(string resolved_parent, string relative_child, out string resolved_child)",
+      "summary": "ResolveRelative method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "resolved_parent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "relative_child",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_child",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.ResolveRelative%28System.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcVwFileProtocol InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcVwFileProtocol",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CloseMedia",
+      "signature": "void CloseMedia(string handle)",
+      "summary": "CloseMedia method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.CloseMedia%28System.String%29"
+    },
+    {
+      "name": "GetDisplayName",
+      "signature": "void GetDisplayName(string uri, out string display_name)",
+      "summary": "GetDisplayName method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.GetDisplayName%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetMediaInfo",
+      "signature": "void GetMediaInfo(string media, out string jsonMediaInfo)",
+      "summary": "GetMediaInfo method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "media",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "jsonMediaInfo",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.GetMediaInfo%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "OpenMedia",
+      "signature": "void OpenMedia(string media, out string handle)",
+      "summary": "OpenMedia method of LcVwFileProtocol.",
+      "params": [
+        {
+          "name": "media",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "handle",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.OpenMedia%28System.String%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcVwFileProtocol.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcVwFileProtocol.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

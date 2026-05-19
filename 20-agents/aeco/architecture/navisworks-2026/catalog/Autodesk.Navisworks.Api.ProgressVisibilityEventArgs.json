@@ -1,0 +1,31 @@
+{
+  "name": "ProgressVisibilityEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::ProgressVisibility event",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressVisibilityEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Progress",
+      "type": "Autodesk.Navisworks.Api.Progress",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a reference to the Progress class instance relating to this Event.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressVisibilityEventArgs.Progress"
+    },
+    {
+      "name": "WantVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether the progress dialog should be visible or not",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressVisibilityEventArgs.WantVisible"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

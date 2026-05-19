@@ -1,0 +1,23 @@
+{
+  "name": "DocumentEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for Document related events",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Document",
+      "type": "Autodesk.Navisworks.Api.Document",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the Document that the event is describing.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentEventArgs.Document"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

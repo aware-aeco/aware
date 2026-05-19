@@ -1,0 +1,46 @@
+{
+  "name": "LcLFrustum3fCornerIndex",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcLFrustum3fCornerIndex enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcLFrustum3fCornerIndex",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNEAR_BOTTOM_LEFT",
+      "value": 0
+    },
+    {
+      "name": "eNEAR_BOTTOM_RIGHT",
+      "value": 1
+    },
+    {
+      "name": "eNEAR_TOP_LEFT",
+      "value": 2
+    },
+    {
+      "name": "eNEAR_TOP_RIGHT",
+      "value": 3
+    },
+    {
+      "name": "eFAR_BOTTOM_LEFT",
+      "value": 4
+    },
+    {
+      "name": "eFAR_BOTTOM_RIGHT",
+      "value": 5
+    },
+    {
+      "name": "eFAR_TOP_LEFT",
+      "value": 6
+    },
+    {
+      "name": "eFAR_TOP_RIGHT",
+      "value": 7
+    }
+  ]
+}

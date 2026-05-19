@@ -1,0 +1,170 @@
+{
+  "name": "LcOmViewer",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOmViewer class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOmWin32KernelViewerEx",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOmViewer",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "IsFullScreen",
+      "signature": "bool IsFullScreen()",
+      "summary": "IsFullScreen method of LcOmViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.IsFullScreen"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOmViewer InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOmViewer.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOmViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOmViewer.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetRendererDisplayName",
+      "signature": "void GetRendererDisplayName(out string name)",
+      "summary": "GetRendererDisplayName method of LcOmViewer.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.GetRendererDisplayName%28System.String%40%29"
+    },
+    {
+      "name": "GetWindowSize",
+      "signature": "void GetWindowSize(ref int w, ref int h)",
+      "summary": "GetWindowSize method of LcOmViewer.",
+      "params": [
+        {
+          "name": "w",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "h",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.GetWindowSize%28System.Int32%40%2CSystem.Int32%40%29"
+    },
+    {
+      "name": "RequestDelayedRedraw",
+      "signature": "void RequestDelayedRedraw(Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType redraw_bits)",
+      "summary": "RequestDelayedRedraw method of LcOmViewer.",
+      "params": [
+        {
+          "name": "redraw_bits",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.RequestDelayedRedraw%28Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType%29"
+    },
+    {
+      "name": "RequestRedraw",
+      "signature": "void RequestRedraw(Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType redraw_bits)",
+      "summary": "RequestRedraw method of LcOmViewer.",
+      "params": [
+        {
+          "name": "redraw_bits",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.RequestRedraw%28Autodesk.Navisworks.Api.Interop.LcOaViewerRedrawType%29"
+    },
+    {
+      "name": "SetFullScreen",
+      "signature": "void SetFullScreen(bool b)",
+      "summary": "SetFullScreen method of LcOmViewer.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.SetFullScreen%28System.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOmViewer.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOmViewer.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

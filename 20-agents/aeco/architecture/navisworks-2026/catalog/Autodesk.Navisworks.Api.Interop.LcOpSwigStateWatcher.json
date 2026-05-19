@@ -1,0 +1,185 @@
+{
+  "name": "LcOpSwigStateWatcher",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigStateWatcher class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpStateWatcher",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher",
+  "constructors": [
+    {
+      "name": "LcOpSwigStateWatcher()",
+      "signature": "LcOpSwigStateWatcher()",
+      "summary": "Constructs a new LcOpSwigStateWatcher.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryNotifyDelta",
+      "signature": "bool TryNotifyDelta(Autodesk.Navisworks.Api.Interop.LcOpElementClass el_data, Autodesk.Navisworks.Api.Interop.LcOpDelta delta, Autodesk.Navisworks.Api.Interop.LcOpStatePart undo_flags, Autodesk.Navisworks.Api.Interop.LcOpStateAccess access)",
+      "summary": "TryNotifyDelta method of LcOpSwigStateWatcher.",
+      "params": [
+        {
+          "name": "el_data",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+          "optional": false
+        },
+        {
+          "name": "delta",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpDelta",
+          "optional": false
+        },
+        {
+          "name": "undo_flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateAccess",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.TryNotifyDelta%28Autodesk.Navisworks.Api.Interop.LcOpElementClass%2CAutodesk.Navisworks.Api.Interop.LcOpDelta%2CAutodesk.Navisworks.Api.Interop.LcOpStatePart%2CAutodesk.Navisworks.Api.Interop.LcOpStateAccess%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigStateWatcher.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigStateWatcher.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Notify",
+      "signature": "void Notify(Autodesk.Navisworks.Api.Interop.LcOpStatePart parts, Autodesk.Navisworks.Api.Interop.LcOpStateAccess access)",
+      "summary": "Notify method of LcOpSwigStateWatcher.",
+      "params": [
+        {
+          "name": "parts",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateAccess",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.Notify%28Autodesk.Navisworks.Api.Interop.LcOpStatePart%2CAutodesk.Navisworks.Api.Interop.LcOpStateAccess%29"
+    },
+    {
+      "name": "NotifyElement",
+      "signature": "void NotifyElement(Autodesk.Navisworks.Api.Interop.LcOpElementClass el_data, Autodesk.Navisworks.Api.Interop.LcOpStatePart undo_flags, Autodesk.Navisworks.Api.Interop.LcOpStateAccess access)",
+      "summary": "NotifyElement method of LcOpSwigStateWatcher.",
+      "params": [
+        {
+          "name": "el_data",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpElementClass",
+          "optional": false
+        },
+        {
+          "name": "undo_flags",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStatePart",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateAccess",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.NotifyElement%28Autodesk.Navisworks.Api.Interop.LcOpElementClass%2CAutodesk.Navisworks.Api.Interop.LcOpStatePart%2CAutodesk.Navisworks.Api.Interop.LcOpStateAccess%29"
+    },
+    {
+      "name": "NotifyEvent",
+      "signature": "void NotifyEvent(Autodesk.Navisworks.Api.Interop.LcOpStateEvent event, Autodesk.Navisworks.Api.Interop.LcOpStateAccess access)",
+      "summary": "NotifyEvent method of LcOpSwigStateWatcher.",
+      "params": [
+        {
+          "name": "event",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateEvent",
+          "optional": false
+        },
+        {
+          "name": "access",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpStateAccess",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.NotifyEvent%28Autodesk.Navisworks.Api.Interop.LcOpStateEvent%2CAutodesk.Navisworks.Api.Interop.LcOpStateAccess%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigStateWatcher.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigStateWatcher.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

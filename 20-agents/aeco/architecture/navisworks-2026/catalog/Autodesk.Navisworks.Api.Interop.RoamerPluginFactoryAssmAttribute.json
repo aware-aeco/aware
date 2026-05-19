@@ -1,0 +1,25 @@
+{
+  "name": "RoamerPluginFactoryAssmAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "RoamerPluginFactoryAssmAttribute class in Autodesk.Navisworks.Api.Interop.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.RoamerPluginFactoryAssmAttribute",
+  "constructors": [
+    {
+      "name": "RoamerPluginFactoryAssmAttribute()",
+      "signature": "RoamerPluginFactoryAssmAttribute()",
+      "summary": "Constructs a new RoamerPluginFactoryAssmAttribute.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.RoamerPluginFactoryAssmAttribute.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

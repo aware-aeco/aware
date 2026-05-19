@@ -1,0 +1,479 @@
+{
+  "name": "Color",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a color as three floating-point components (r,g,b) with a normal range 0.0 to 1.0. Immutable.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Color",
+  "constructors": [
+    {
+      "name": "Color(double, double, double)",
+      "signature": "Color(double red, double green, double blue)",
+      "summary": "Create a color from float (r,g,b) components in the range 0 to 1",
+      "params": [
+        {
+          "name": "red",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Add",
+      "signature": "Autodesk.Navisworks.Api.Color Add(Autodesk.Navisworks.Api.Color color)",
+      "summary": "Adds two colors to create another color. Same as operator\u002B",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027color\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027color\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.Add%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "Multiply",
+      "signature": "Autodesk.Navisworks.Api.Color Multiply(double value)",
+      "summary": "Scales intensity of color by value. Same as operator*",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.Multiply%28System.Double%29"
+    },
+    {
+      "name": "Subtract",
+      "signature": "Autodesk.Navisworks.Api.Color Subtract(Autodesk.Navisworks.Api.Color color)",
+      "summary": "Subtracts color to create another color. Same as operator-",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027color\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027color\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.Subtract%28Autodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "ToVector3D",
+      "signature": "Autodesk.Navisworks.Api.Vector3D ToVector3D()",
+      "summary": "Convert color to a Vector3D",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.ToVector3D"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetClampedByteValue",
+      "signature": "byte GetClampedByteValue(int index)",
+      "summary": "Return color components as clamped bytes (in range 0 to 255)",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "byte",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.GetClampedByteValue%28System.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.GetHashCode"
+    },
+    {
+      "name": "FromByteRGB",
+      "signature": "static Autodesk.Navisworks.Api.Color FromByteRGB(byte red, byte green, byte blue)",
+      "summary": "Create a color from byte (r,g,b) components in the range 0 to 255",
+      "params": [
+        {
+          "name": "red",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "green",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "blue",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.FromByteRGB%28System.Byte%2CSystem.Byte%2CSystem.Byte%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Color InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Color.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Autodesk.Navisworks.Api.Color op_Addition(Autodesk.Navisworks.Api.Color value1, Autodesk.Navisworks.Api.Color value2)",
+      "summary": "Adds the R, G and B values of value1 and value2 and returns the resulting Color",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.op_Addition%28Autodesk.Navisworks.Api.Color%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Autodesk.Navisworks.Api.Color op_Multiply(Autodesk.Navisworks.Api.Color color, double intensity)",
+      "summary": "Multiplies the R, G and B values of color by intensity and returns the Resulting Color",
+      "params": [
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "intensity",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.op_Multiply%28Autodesk.Navisworks.Api.Color%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Autodesk.Navisworks.Api.Color op_Multiply(double intensity, Autodesk.Navisworks.Api.Color color)",
+      "summary": "Multiplies the R, G and B values of color by intensity and returns the Resulting Color",
+      "params": [
+        {
+          "name": "intensity",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "color",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.op_Multiply%28System.Double%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Autodesk.Navisworks.Api.Color op_Subtraction(Autodesk.Navisworks.Api.Color value1, Autodesk.Navisworks.Api.Color value2)",
+      "summary": "Subtracts the R, G and B values of value2 from value1 and returns the resulting Color",
+      "params": [
+        {
+          "name": "value1",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "Autodesk.Navisworks.Api.Color",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Color",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.op_Subtraction%28Autodesk.Navisworks.Api.Color%2CAutodesk.Navisworks.Api.Color%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Color.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Color.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "B",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Blue color component (in range 0 to 1)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.B"
+    },
+    {
+      "name": "Black",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a Color initialized to black",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.Black"
+    },
+    {
+      "name": "Blue",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a Color initialized to blue",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.Blue"
+    },
+    {
+      "name": "G",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Green color component (in range 0 to 1)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.G"
+    },
+    {
+      "name": "Green",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a Color initialized to green",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.Green"
+    },
+    {
+      "name": "IsBlack",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is color black ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.IsBlack"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Item property of Color.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.Item%28System.Int32%29"
+    },
+    {
+      "name": "R",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Red color component (in range 0 to 1)",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.R"
+    },
+    {
+      "name": "Red",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a Color initialized to red",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.Red"
+    },
+    {
+      "name": "White",
+      "type": "Autodesk.Navisworks.Api.Color",
+      "getter": true,
+      "setter": false,
+      "summary": "Returns a Color initialized to white",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Color.White"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

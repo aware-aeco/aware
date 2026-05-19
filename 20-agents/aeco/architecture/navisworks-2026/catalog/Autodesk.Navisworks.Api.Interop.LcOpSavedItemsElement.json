@@ -1,0 +1,362 @@
+{
+  "name": "LcOpSavedItemsElement",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSavedItemsElement class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpDeltaElement",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Get",
+      "signature": "Autodesk.Navisworks.Api.FolderItem Get()",
+      "summary": "Get method of LcOpSavedItemsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FolderItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Get"
+    },
+    {
+      "name": "GetGuidSet",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet GetGuidSet()",
+      "summary": "GetGuidSet method of LcOpSavedItemsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.GetGuidSet"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElementStatus CopyFrom(Autodesk.Navisworks.Api.GroupItem value)",
+      "summary": "CopyFrom method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElementStatus",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.CopyFrom%28Autodesk.Navisworks.Api.GroupItem%29"
+    },
+    {
+      "name": "Get",
+      "signature": "Autodesk.Navisworks.Api.SavedItem Get(Autodesk.Navisworks.Api.Interop.LcUInt32Vector path)",
+      "summary": "Get method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Get%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "Get",
+      "signature": "Autodesk.Navisworks.Api.SavedItem Get(Autodesk.Navisworks.Api.SavedItemReference path)",
+      "summary": "Get method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Get%28Autodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "Get",
+      "signature": "Autodesk.Navisworks.Api.SavedItem Get(int index)",
+      "summary": "Get method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Get%28System.Int32%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.GroupItem item)",
+      "summary": "Contains method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.GroupItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Contains%28Autodesk.Navisworks.Api.GroupItem%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Contains method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Contains%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "GetNum",
+      "signature": "int GetNum()",
+      "summary": "GetNum method of LcOpSavedItemsElement.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.GetNum"
+    },
+    {
+      "name": "GetProxyRoot",
+      "signature": "static Autodesk.Navisworks.Api.FolderItem GetProxyRoot()",
+      "summary": "GetProxyRoot method of LcOpSavedItemsElement.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.FolderItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.GetProxyRoot"
+    },
+    {
+      "name": "Get",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement Get(Autodesk.Navisworks.Api.Interop.LcOpState state, int class_index)",
+      "summary": "Get method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "class_index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.Get%28Autodesk.Navisworks.Api.Interop.LcOpState%2CSystem.Int32%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemsElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetItem",
+      "signature": "static Autodesk.Navisworks.Api.SavedItem GetItem(Autodesk.Navisworks.Api.Interop.LcOpState state, Autodesk.Navisworks.Api.SavedItemReference path)",
+      "summary": "GetItem method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.GetItem%28Autodesk.Navisworks.Api.Interop.LcOpState%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "GetItem",
+      "signature": "static Autodesk.Navisworks.Api.SavedItem GetItem(Autodesk.Navisworks.Api.Interop.LcOpState state, int class_index, System.Guid guid)",
+      "summary": "GetItem method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "state",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpState",
+          "optional": false
+        },
+        {
+          "name": "class_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.GetItem%28Autodesk.Navisworks.Api.Interop.LcOpState%2CSystem.Int32%2CSystem.Guid%29"
+    },
+    {
+      "name": "MakePath",
+      "signature": "static void MakePath(int class_index, Autodesk.Navisworks.Api.SavedItem item, Autodesk.Navisworks.Api.SavedItemReference path)",
+      "summary": "MakePath method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "class_index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.MakePath%28System.Int32%2CAutodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "MakePath",
+      "signature": "void MakePath(Autodesk.Navisworks.Api.SavedItem item, Autodesk.Navisworks.Api.SavedItemReference path)",
+      "summary": "MakePath method of LcOpSavedItemsElement.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "path",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.MakePath%28Autodesk.Navisworks.Api.SavedItem%2CAutodesk.Navisworks.Api.SavedItemReference%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSavedItemsElement.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemsElement.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

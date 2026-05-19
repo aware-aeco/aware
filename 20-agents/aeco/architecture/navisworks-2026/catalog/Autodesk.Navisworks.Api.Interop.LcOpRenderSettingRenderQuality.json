@@ -1,0 +1,42 @@
+{
+  "name": "LcOpRenderSettingRenderQuality",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpRenderSettingRenderQuality enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderQuality",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLOW_QUALITY",
+      "value": 0
+    },
+    {
+      "name": "eMEDIUM_QUALITY",
+      "value": 1
+    },
+    {
+      "name": "eHIGH_QUALITY",
+      "value": 2
+    },
+    {
+      "name": "eCOFFEEBREAK_QUALITY",
+      "value": 3
+    },
+    {
+      "name": "eLUNCH_QUALITY",
+      "value": 4
+    },
+    {
+      "name": "eOVERNIGHT_QUALITY",
+      "value": 5
+    },
+    {
+      "name": "eCUSTOM_QUALITY",
+      "value": 6
+    }
+  ]
+}

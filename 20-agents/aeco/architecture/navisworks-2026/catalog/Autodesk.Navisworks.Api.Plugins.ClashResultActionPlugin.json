@@ -1,0 +1,86 @@
+{
+  "name": "ClashResultActionPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin for implementing an action to apply to clash results.",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.ClashResultActionPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CanExecute",
+      "signature": "bool CanExecute(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "Test whether the item is in a state that is appropriate to use this plugin.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ClashResultActionPlugin.CanExecute%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "ExecuteAction",
+      "signature": "bool ExecuteAction(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "ExecuteAction method of ClashResultActionPlugin.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ClashResultActionPlugin.ExecuteAction%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "SupportsMultipleItems",
+      "signature": "bool SupportsMultipleItems()",
+      "summary": "If false is returned then the plugin will only be available to be called when just a single item is selected in the clash UI Results list.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ClashResultActionPlugin.SupportsMultipleItems"
+    },
+    {
+      "name": "BeginExecute",
+      "signature": "void BeginExecute()",
+      "summary": "BeginExecute method of ClashResultActionPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ClashResultActionPlugin.BeginExecute"
+    },
+    {
+      "name": "EndExecute",
+      "signature": "void EndExecute()",
+      "summary": "EndExecute method of ClashResultActionPlugin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.ClashResultActionPlugin.EndExecute"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,332 @@
+{
+  "name": "VectorField",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "Represents the definition of a vector within a SchemaDefinition.",
+  "base": "Autodesk.Navisworks.Api.Schema.ComplexField",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.VectorField",
+  "constructors": [
+    {
+      "name": "VectorField(Autodesk.Navisworks.Api.Schema.Field)",
+      "signature": "VectorField(Autodesk.Navisworks.Api.Schema.Field value)",
+      "summary": "Default constructor. No identifier specified.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Schema.Field",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.%23ctor%28Autodesk.Navisworks.Api.Schema.Field%29"
+    },
+    {
+      "name": "VectorField(string, Autodesk.Navisworks.Api.Schema.Field)",
+      "signature": "VectorField(string id, Autodesk.Navisworks.Api.Schema.Field value)",
+      "summary": "Constructs the field with a given identifier.",
+      "params": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.Schema.Field",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Provided field ID is invalid or missing. 7-bit ASCII without spaces must be used."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027id\u0027 is not convertable to a 7-bit ASCII string"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027value\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.%23ctor%28System.String%2CAutodesk.Navisworks.Api.Schema.Field%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetIndexAccessor",
+      "signature": "Autodesk.Navisworks.Api.Schema.EditAccessor GetIndexAccessor(Autodesk.Navisworks.Api.Schema.EditAccessor accessor, int index)",
+      "summary": "Obtains the appropriate accessor for a given index into the vector.",
+      "params": [
+        {
+          "name": "accessor",
+          "type": "Autodesk.Navisworks.Api.Schema.EditAccessor",
+          "doc": "Accessor provided by parent object e.g. from SchemaData, or a containing VectorField\u0027s IndexAccessor.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.EditAccessor",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaStorageNotCompiledException\u0027 thrown"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidAccessorException\u0027 thrown"
+        },
+        {
+          "type": "System.IndexOutOfRangeException",
+          "when": "An invalid index was passed."
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027accessor\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027accessor\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.GetIndexAccessor%28Autodesk.Navisworks.Api.Schema.EditAccessor%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetIndexAccessor",
+      "signature": "Autodesk.Navisworks.Api.Schema.ReadAccessor GetIndexAccessor(Autodesk.Navisworks.Api.Schema.ReadAccessor accessor, int index)",
+      "summary": "Obtains the appropriate accessor for a given index into the vector.",
+      "params": [
+        {
+          "name": "accessor",
+          "type": "Autodesk.Navisworks.Api.Schema.ReadAccessor",
+          "doc": "Accessor provided by parent object e.g. from SchemaData, or a containing VectorField\u0027s IndexAccessor.",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.ReadAccessor",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaStorageNotCompiledException\u0027 thrown"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidAccessorException\u0027 thrown"
+        },
+        {
+          "type": "System.IndexOutOfRangeException",
+          "when": "An invalid index was passed."
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027accessor\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027accessor\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.GetIndexAccessor%28Autodesk.Navisworks.Api.Schema.ReadAccessor%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetCount",
+      "signature": "int GetCount(Autodesk.Navisworks.Api.Schema.ReadAccessor accessor)",
+      "summary": "Obtains the number of values held within a distinct SchemaData object.",
+      "params": [
+        {
+          "name": "accessor",
+          "type": "Autodesk.Navisworks.Api.Schema.ReadAccessor",
+          "doc": "Accessor provided by parent object e.g. from SchemaData, or a containing VectorField\u0027s IndexAccessor.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaStorageNotCompiledException\u0027 thrown"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidAccessorException\u0027 thrown"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027accessor\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027accessor\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.GetCount%28Autodesk.Navisworks.Api.Schema.ReadAccessor%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of VectorField.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.VectorField InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of VectorField.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.VectorField",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "SetCount",
+      "signature": "void SetCount(Autodesk.Navisworks.Api.Schema.EditAccessor accessor, int count)",
+      "summary": "Sets the number of values held within a distinct SchemaData object. Each index will be initialised to its default value.",
+      "params": [
+        {
+          "name": "accessor",
+          "type": "Autodesk.Navisworks.Api.Schema.EditAccessor",
+          "doc": "Accessor provided by parent object e.g. from SchemaData, or a containing VectorField\u0027s IndexAccessor.",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaStorageNotCompiledException\u0027 thrown"
+        },
+        {
+          "type": "System.InvalidOperationException",
+          "when": "C\u002B\u002B exception \u0027LcUSchemaInvalidAccessorException\u0027 thrown"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027accessor\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027accessor\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.VectorField.SetCount%28Autodesk.Navisworks.Api.Schema.EditAccessor%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CollectionType",
+      "type": "Autodesk.Navisworks.Api.Schema.VectorFieldCollectionType",
+      "getter": true,
+      "setter": true,
+      "summary": "Represents collection metadata, including whether the collection is ordered, and whether the elements are unique.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.VectorField.CollectionType"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.VectorField.IsReadOnly"
+    },
+    {
+      "name": "ValueField",
+      "type": "Autodesk.Navisworks.Api.Schema.Field",
+      "getter": true,
+      "setter": false,
+      "summary": "A field object that identifies the type used within the vector \u0026 provides access to each index.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.VectorField.ValueField"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

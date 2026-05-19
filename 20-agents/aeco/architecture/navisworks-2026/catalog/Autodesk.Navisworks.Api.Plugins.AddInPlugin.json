@@ -1,0 +1,60 @@
+{
+  "name": "AddInPlugin",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "A plugin that can be called either using the GUI, ApplicationAutomation or using the Automation .NET API",
+  "base": "Autodesk.Navisworks.Api.Plugins.Plugin",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.AddInPlugin",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CanExecute",
+      "signature": "Autodesk.Navisworks.Api.Plugins.CommandState CanExecute()",
+      "summary": "This is called to determine the state of plugin. Primarily if Execute can be called.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.CommandState",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPlugin.CanExecute"
+    },
+    {
+      "name": "TryShowHelp",
+      "signature": "bool TryShowHelp()",
+      "summary": "Called to tell the plugin to display help",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Return true if you have handled this call"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPlugin.TryShowHelp"
+    },
+    {
+      "name": "Execute",
+      "signature": "int Execute(string[] parameters)",
+      "summary": "This method is called when the plugin is executed",
+      "params": [
+        {
+          "name": "parameters",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.AddInPlugin.Execute%28System.String%5B%5D%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

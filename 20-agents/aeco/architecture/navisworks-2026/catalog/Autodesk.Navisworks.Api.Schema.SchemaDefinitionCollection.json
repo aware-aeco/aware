@@ -1,0 +1,249 @@
+{
+  "name": "SchemaDefinitionCollection",
+  "namespace": "Autodesk.Navisworks.Api.Schema",
+  "kind": "class",
+  "summary": "A collection of Definitions.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [
+    "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E",
+    "System.Collections.Generic.IEnumerable\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E",
+    "System.Collections.Generic.IList\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E",
+    "System.Collections.ICollection",
+    "System.Collections.IEnumerable",
+    "System.Collections.IList"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection",
+  "constructors": [
+    {
+      "name": "SchemaDefinitionCollection()",
+      "signature": "SchemaDefinitionCollection()",
+      "summary": "Create an empty collection.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.%23ctor"
+    },
+    {
+      "name": "SchemaDefinitionCollection(Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection)",
+      "signature": "SchemaDefinitionCollection(Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection from)",
+      "summary": "Create one collection from another.",
+      "params": [
+        {
+          "name": "from",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentNullException",
+          "when": "Argument \u0027from\u0027 is null"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027from\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.%23ctor%28Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E GetEnumerator()",
+      "summary": "Returns an enumerator that can iterate through the collection.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E",
+        "doc": "An IEnumerator that can be used to iterate through the collection."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.GetEnumerator"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Autodesk.Navisworks.Api.Schema.SchemaDefinition item)",
+      "summary": "Determines whether the SavedItemCollection contains a specific value.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.Contains%28Autodesk.Navisworks.Api.Schema.SchemaDefinition%29"
+    },
+    {
+      "name": "IndexOf",
+      "signature": "int IndexOf(Autodesk.Navisworks.Api.Schema.SchemaDefinition item)",
+      "summary": "Determines the index of a specific item in the Collection",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinition",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027item\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.IndexOf%28Autodesk.Navisworks.Api.Schema.SchemaDefinition%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of SchemaDefinitionCollection.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of SchemaDefinitionCollection.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(Autodesk.Navisworks.Api.Schema.SchemaDefinition[] array, int arrayIndex)",
+      "summary": "Copies the elements of the ICollection\u00601 to an Array, starting at a particular Array index.",
+      "params": [
+        {
+          "name": "array",
+          "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinition[]",
+          "doc": "The one-dimensional Array that is the destination of the elements copied from ICollection\u00601. The Array must have zero-based indexing.",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "int",
+          "doc": "The zero-based index in array at which copying begins.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "arrayIndex is less than 0."
+        },
+        {
+          "type": "System.ArgumentNullException",
+          "when": "array is null."
+        },
+        {
+          "type": "System.ArgumentException",
+          "when": "array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source ICollection\u00601 is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.CopyTo%28Autodesk.Navisworks.Api.Schema.SchemaDefinition%5B%5D%2CSystem.Int32%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E to)",
+      "summary": "Enumerates over the collection and copies the items into to",
+      "params": [
+        {
+          "name": "to",
+          "type": "System.Collections.Generic.ICollection\u003CAutodesk.Navisworks.Api.Schema.SchemaDefinition\u003E",
+          "doc": "Collection to copy into",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.CopyTo%28System.Collections.Generic.ICollection%7BAutodesk.Navisworks.Api.Schema.SchemaDefinition%7D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the number of elements contained in the collection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.Count"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.IsReadOnly"
+    },
+    {
+      "name": "Item",
+      "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinition",
+      "getter": true,
+      "setter": false,
+      "summary": "Item property of SchemaDefinitionCollection.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Schema.SchemaDefinitionCollection.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

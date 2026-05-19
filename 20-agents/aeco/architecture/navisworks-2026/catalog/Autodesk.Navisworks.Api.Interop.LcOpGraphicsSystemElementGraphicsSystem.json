@@ -1,0 +1,26 @@
+{
+  "name": "LcOpGraphicsSystemElementGraphicsSystem",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpGraphicsSystemElementGraphicsSystem enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpGraphicsSystemElementGraphicsSystem",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eANY_GRAPHICS",
+      "value": 0
+    },
+    {
+      "name": "eAUTODESK_GRAPHICS",
+      "value": 1
+    },
+    {
+      "name": "eBASIC_GRAPHICS",
+      "value": 2
+    }
+  ]
+}

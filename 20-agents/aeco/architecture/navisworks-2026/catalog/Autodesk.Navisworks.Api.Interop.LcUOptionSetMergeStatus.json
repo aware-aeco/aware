@@ -1,0 +1,42 @@
+{
+  "name": "LcUOptionSetMergeStatus",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetMergeStatus enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeStatus",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSTATUS_OK",
+      "value": 0
+    },
+    {
+      "name": "eSTATUS_FAIL_SET",
+      "value": 1
+    },
+    {
+      "name": "eSTATUS_FAIL_INSERT",
+      "value": 2
+    },
+    {
+      "name": "eSTATUS_FAIL_REPLACE",
+      "value": 4
+    },
+    {
+      "name": "eSTATUS_FAIL_ARRAY_INSERT",
+      "value": 8
+    },
+    {
+      "name": "eSTATUS_FAIL_ARRAY_REMOVE",
+      "value": 16
+    },
+    {
+      "name": "eSTATUS_FAIL_STRUCTURE",
+      "value": 32
+    }
+  ]
+}

@@ -1,0 +1,535 @@
+{
+  "name": "LcOpSwigFileProtocol",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigFileProtocol class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcUFileProtocol",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol",
+  "constructors": [
+    {
+      "name": "LcOpSwigFileProtocol()",
+      "signature": "LcOpSwigFileProtocol()",
+      "summary": "Constructs a new LcOpSwigFileProtocol.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CloseFile",
+      "signature": "bool CloseFile(nint handle)",
+      "summary": "CloseFile method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.CloseFile%28System.IntPtr%29"
+    },
+    {
+      "name": "GetFileInfo",
+      "signature": "bool GetFileInfo(string uri, Autodesk.Navisworks.Api.Plugins.FileMetadata info)",
+      "summary": "GetFileInfo method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "info",
+          "type": "Autodesk.Navisworks.Api.Plugins.FileMetadata",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.GetFileInfo%28System.String%2CAutodesk.Navisworks.Api.Plugins.FileMetadata%29"
+    },
+    {
+      "name": "IsRemote",
+      "signature": "bool IsRemote()",
+      "summary": "IsRemote method of LcOpSwigFileProtocol.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.IsRemote"
+    },
+    {
+      "name": "ReadFile",
+      "signature": "bool ReadFile(nint handle, nint thread_handle, nint request_handle, ulong offset, ulong num_bytes, nint bytes)",
+      "summary": "ReadFile method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "thread_handle",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "request_handle",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "num_bytes",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "bytes",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.ReadFile%28System.IntPtr%2CSystem.IntPtr%2CSystem.IntPtr%2CSystem.UInt64%2CSystem.UInt64%2CSystem.IntPtr%29"
+    },
+    {
+      "name": "ResolveAbsolute",
+      "signature": "bool ResolveAbsolute(string original_parent, string original_child, string resolved_parent, out string resolved_child)",
+      "summary": "ResolveAbsolute method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "original_parent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "original_child",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_parent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_child",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.ResolveAbsolute%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "ResolveRelative",
+      "signature": "bool ResolveRelative(string resolved_parent, string relative_child, out string resolved_child)",
+      "summary": "ResolveRelative method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "resolved_parent",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "relative_child",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "resolved_child",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.ResolveRelative%28System.String%2CSystem.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "SupportsDirectOpen",
+      "signature": "bool SupportsDirectOpen()",
+      "summary": "SupportsDirectOpen method of LcOpSwigFileProtocol.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.SupportsDirectOpen"
+    },
+    {
+      "name": "SupportsGetPut",
+      "signature": "bool SupportsGetPut()",
+      "summary": "SupportsGetPut method of LcOpSwigFileProtocol.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.SupportsGetPut"
+    },
+    {
+      "name": "SupportsOwnCache",
+      "signature": "bool SupportsOwnCache()",
+      "summary": "SupportsOwnCache method of LcOpSwigFileProtocol.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.SupportsOwnCache"
+    },
+    {
+      "name": "SwigGetFile",
+      "signature": "bool SwigGetFile(string remote_uri, string local_path, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SwigGetFile method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "remote_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "local_path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.SwigGetFile%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "SwigGetFileToCache",
+      "signature": "bool SwigGetFileToCache(string remote_uri, Autodesk.Navisworks.Api.Progress progress, out string cache_path)",
+      "summary": "SwigGetFileToCache method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "remote_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        },
+        {
+          "name": "cache_path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.SwigGetFileToCache%28System.String%2CAutodesk.Navisworks.Api.Progress%2CSystem.String%40%29"
+    },
+    {
+      "name": "SwigPutFile",
+      "signature": "bool SwigPutFile(string local_path, string remote_uri, Autodesk.Navisworks.Api.Progress progress)",
+      "summary": "SwigPutFile method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "local_path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "remote_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progress",
+          "type": "Autodesk.Navisworks.Api.Progress",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.SwigPutFile%28System.String%2CSystem.String%2CAutodesk.Navisworks.Api.Progress%29"
+    },
+    {
+      "name": "WriteFile",
+      "signature": "bool WriteFile(nint handle, ulong offset, ulong num_bytes, nint bytes)",
+      "summary": "WriteFile method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "handle",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "num_bytes",
+          "type": "ulong",
+          "optional": false
+        },
+        {
+          "name": "bytes",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.WriteFile%28System.IntPtr%2CSystem.UInt64%2CSystem.UInt64%2CSystem.IntPtr%29"
+    },
+    {
+      "name": "OpenFile",
+      "signature": "nint OpenFile(string remote_uri, Autodesk.Navisworks.Api.Plugins.FileProtocolOpenMode mode)",
+      "summary": "OpenFile method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "remote_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Plugins.FileProtocolOpenMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "nint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.OpenFile%28System.String%2CAutodesk.Navisworks.Api.Plugins.FileProtocolOpenMode%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetDefaultDisplayName",
+      "signature": "static void GetDefaultDisplayName(string uri, out string display_name)",
+      "summary": "GetDefaultDisplayName method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.GetDefaultDisplayName%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetDisplayName",
+      "signature": "void GetDisplayName(string uri, out string display_name)",
+      "summary": "GetDisplayName method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.GetDisplayName%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetMRUPath",
+      "signature": "void GetMRUPath(string logical_uri, out string mru_path)",
+      "summary": "GetMRUPath method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "logical_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "mru_path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.GetMRUPath%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetPhysicalPath",
+      "signature": "void GetPhysicalPath(string logical_uri, out string physical_path)",
+      "summary": "GetPhysicalPath method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "logical_uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "physical_path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.GetPhysicalPath%28System.String%2CSystem.String%40%29"
+    },
+    {
+      "name": "GetVerboseDisplayName",
+      "signature": "void GetVerboseDisplayName(string uri, out string display_name)",
+      "summary": "GetVerboseDisplayName method of LcOpSwigFileProtocol.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "display_name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.GetVerboseDisplayName%28System.String%2CSystem.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigFileProtocol.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigFileProtocol.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

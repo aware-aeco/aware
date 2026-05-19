@@ -1,0 +1,38 @@
+{
+  "name": "LcOpBoolLineItemSetVerificationResult",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpBoolLineItemSetVerificationResult enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpBoolLineItemSetVerificationResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eVERIFY_OK",
+      "value": 0
+    },
+    {
+      "name": "eVERIFY_EMPTY",
+      "value": 1
+    },
+    {
+      "name": "eVERIFY_TOO_MANY_OPEN",
+      "value": 2
+    },
+    {
+      "name": "eVERIFY_TOO_MANY_CLOSED",
+      "value": 3
+    },
+    {
+      "name": "eVERIFY_NO_CONDITION",
+      "value": 4
+    },
+    {
+      "name": "eVERIFY_INCORRECT_OP",
+      "value": 5
+    }
+  ]
+}

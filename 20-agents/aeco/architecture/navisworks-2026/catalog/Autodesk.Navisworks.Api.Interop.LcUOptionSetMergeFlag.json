@@ -1,0 +1,46 @@
+{
+  "name": "LcUOptionSetMergeFlag",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUOptionSetMergeFlag enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUOptionSetMergeFlag",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eMERGE_KEEP_DEFAULT",
+      "value": 0
+    },
+    {
+      "name": "eMERGE_KEEP_LOCK",
+      "value": 0
+    },
+    {
+      "name": "eMERGE_UPDATE_DEFAULT",
+      "value": 1
+    },
+    {
+      "name": "eMERGE_COPY_DEFAULT",
+      "value": 2
+    },
+    {
+      "name": "eMERGE_COPY_LOCK",
+      "value": 4
+    },
+    {
+      "name": "eMERGE_COPY",
+      "value": 6
+    },
+    {
+      "name": "eMERGE_APPLY_DEST_UNLOCKED",
+      "value": 8
+    },
+    {
+      "name": "eMERGE_APPLY_SRC_LOCKED",
+      "value": 16
+    }
+  ]
+}

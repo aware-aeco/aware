@@ -1,0 +1,34 @@
+{
+  "name": "LcUSQLiteDataType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcUSQLiteDataType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcUSQLiteDataType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eINTEGER",
+      "value": 1
+    },
+    {
+      "name": "eFLOAT",
+      "value": 2
+    },
+    {
+      "name": "eTEXT",
+      "value": 3
+    },
+    {
+      "name": "eBLOB",
+      "value": 4
+    },
+    {
+      "name": "eNULL",
+      "value": 5
+    }
+  ]
+}

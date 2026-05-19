@@ -1,0 +1,26 @@
+{
+  "name": "LcOpSavedItemMergeFlags",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpSavedItemMergeFlags enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemMergeFlags",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBY_NAME",
+      "value": 1
+    },
+    {
+      "name": "eBY_GUID",
+      "value": 2
+    },
+    {
+      "name": "eBY_CONTENTS",
+      "value": 4
+    }
+  ]
+}

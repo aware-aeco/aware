@@ -1,0 +1,22 @@
+{
+  "name": "LcOpUpdateFilesEventPhase",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpUpdateFilesEventPhase enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpUpdateFilesEventPhase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePRE_UPDATE",
+      "value": 0
+    },
+    {
+      "name": "ePOST_UPDATE",
+      "value": 1
+    }
+  ]
+}

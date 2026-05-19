@@ -1,0 +1,39 @@
+{
+  "name": "ViewpointImageFit",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Describes how to adapt the camera view so that its aspect ratio matches that of the display window.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewpointImageFit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Mask",
+      "value": 0,
+      "summary": "The frustum is used as is within the largest subset of the window that has the correct aspect ratio. The rest of the window is masked out (e.g. black bars)."
+    },
+    {
+      "name": "Fill",
+      "value": 1,
+      "summary": "The frustum extents are enlarged so that all of the original image is visible."
+    },
+    {
+      "name": "Vertical",
+      "value": 2,
+      "summary": "Only HorizontalExtent is modified so that vertical extent is preserved."
+    },
+    {
+      "name": "Horizontal",
+      "value": 3,
+      "summary": "Only VerticalExtent is modified so that horizontal extent is preserved."
+    },
+    {
+      "name": "Overscan",
+      "value": 4,
+      "summary": "The frustum extents are reduced so that a subset of the original image is visible."
+    }
+  ]
+}

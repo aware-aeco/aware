@@ -1,0 +1,279 @@
+{
+  "name": "LcOpMeasureTool",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpMeasureTool class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpInputHandler",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpMeasureTool",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetLockMode",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpMeasureToolMeasureAlong GetLockMode()",
+      "summary": "GetLockMode method of LcOpMeasureTool.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpMeasureToolMeasureAlong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetLockMode"
+    },
+    {
+      "name": "GetToolValueType",
+      "signature": "Autodesk.Navisworks.Api.MeasurementType GetToolValueType()",
+      "summary": "GetToolValueType method of LcOpMeasureTool.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.MeasurementType",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetToolValueType"
+    },
+    {
+      "name": "GetAnchorTool",
+      "signature": "Autodesk.Navisworks.Api.Tool GetAnchorTool()",
+      "summary": "GetAnchorTool method of LcOpMeasureTool.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetAnchorTool"
+    },
+    {
+      "name": "CanConvertToRedlines",
+      "signature": "bool CanConvertToRedlines()",
+      "summary": "CanConvertToRedlines method of LcOpMeasureTool.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.CanConvertToRedlines"
+    },
+    {
+      "name": "ConvertToRedlines",
+      "signature": "bool ConvertToRedlines(Autodesk.Navisworks.Api.Interop.LcOpKernelViewer viewer)",
+      "summary": "ConvertToRedlines method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "viewer",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernelViewer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.ConvertToRedlines%28Autodesk.Navisworks.Api.Interop.LcOpKernelViewer%29"
+    },
+    {
+      "name": "GetCalcDiff",
+      "signature": "bool GetCalcDiff(Autodesk.Navisworks.Api.Vector3D diff)",
+      "summary": "GetCalcDiff method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "diff",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetCalcDiff%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "GetCalcEndPos",
+      "signature": "bool GetCalcEndPos(Autodesk.Navisworks.Api.Point3D pos)",
+      "summary": "GetCalcEndPos method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "pos",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetCalcEndPos%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GetCalcFirstPos",
+      "signature": "bool GetCalcFirstPos(Autodesk.Navisworks.Api.Point3D pos)",
+      "summary": "GetCalcFirstPos method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "pos",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetCalcFirstPos%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "GetCalcValue",
+      "signature": "bool GetCalcValue(ref Autodesk.Navisworks.Api.MeasurementType type, ref double value)",
+      "summary": "GetCalcValue method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.MeasurementType",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.GetCalcValue%28Autodesk.Navisworks.Api.MeasurementType%40%2CSystem.Double%40%29"
+    },
+    {
+      "name": "IsActive",
+      "signature": "bool IsActive()",
+      "summary": "IsActive method of LcOpMeasureTool.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.IsActive"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpMeasureTool InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpMeasureTool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Reset",
+      "signature": "void Reset()",
+      "summary": "Reset method of LcOpMeasureTool.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.Reset"
+    },
+    {
+      "name": "Reset",
+      "signature": "void Reset(bool with_safe_redraw)",
+      "summary": "Reset method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "with_safe_redraw",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.Reset%28System.Boolean%29"
+    },
+    {
+      "name": "SetLockMode",
+      "signature": "void SetLockMode(Autodesk.Navisworks.Api.Interop.LcOpMeasureToolMeasureAlong lock)",
+      "summary": "SetLockMode method of LcOpMeasureTool.",
+      "params": [
+        {
+          "name": "lock",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpMeasureToolMeasureAlong",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.SetLockMode%28Autodesk.Navisworks.Api.Interop.LcOpMeasureToolMeasureAlong%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpMeasureTool.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpMeasureTool.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,285 @@
+{
+  "name": "LcOpTextureSpace",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpTextureSpace class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clone",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace Clone()",
+      "summary": "Clone method of LcOpTextureSpace.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.Clone"
+    },
+    {
+      "name": "GetTextureSpaceMapping",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping GetTextureSpaceMapping()",
+      "summary": "GetTextureSpaceMapping method of LcOpTextureSpace.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetTextureSpaceMapping"
+    },
+    {
+      "name": "GetRotation",
+      "signature": "Autodesk.Navisworks.Api.Rotation3D GetRotation()",
+      "summary": "GetRotation method of LcOpTextureSpace.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Rotation3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetRotation"
+    },
+    {
+      "name": "GetScale",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetScale()",
+      "summary": "GetScale method of LcOpTextureSpace.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetScale"
+    },
+    {
+      "name": "GetTranslation",
+      "signature": "Autodesk.Navisworks.Api.Vector3D GetTranslation()",
+      "summary": "GetTranslation method of LcOpTextureSpace.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Vector3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetTranslation"
+    },
+    {
+      "name": "CreateTextureSpace",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpace CreateTextureSpace(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping mapping)",
+      "summary": "CreateTextureSpace method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "mapping",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.CreateTextureSpace%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceTextureSpaceMapping%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpace InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpace",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "GetUDirection",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection GetUDirection(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace id)",
+      "summary": "GetUDirection method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "id",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetUDirection%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace%29"
+    },
+    {
+      "name": "GetVDirection",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection GetVDirection(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace id)",
+      "summary": "GetVDirection method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "id",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetVDirection%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace%29"
+    },
+    {
+      "name": "GetUVDirectionEachFace",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace GetUVDirectionEachFace(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection udir, Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection vdir)",
+      "summary": "GetUVDirectionEachFace method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "udir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        },
+        {
+          "name": "vdir",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetUVDirectionEachFace%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%2CAutodesk.Navisworks.Api.Interop.LcOpTextureSpaceAxisDirection%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetUVDirectionEachFaceString",
+      "signature": "static string GetUVDirectionEachFaceString(Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace id)",
+      "summary": "GetUVDirectionEachFaceString method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "id",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.GetUVDirectionEachFaceString%28Autodesk.Navisworks.Api.Interop.LcOpTextureSpaceUVDirectionEachFace%29"
+    },
+    {
+      "name": "SetRotation",
+      "signature": "void SetRotation(Autodesk.Navisworks.Api.Rotation3D rotation)",
+      "summary": "SetRotation method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "rotation",
+          "type": "Autodesk.Navisworks.Api.Rotation3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.SetRotation%28Autodesk.Navisworks.Api.Rotation3D%29"
+    },
+    {
+      "name": "SetScale",
+      "signature": "void SetScale(Autodesk.Navisworks.Api.Vector3D scale)",
+      "summary": "SetScale method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "scale",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.SetScale%28Autodesk.Navisworks.Api.Vector3D%29"
+    },
+    {
+      "name": "SetTranslation",
+      "signature": "void SetTranslation(Autodesk.Navisworks.Api.Vector3D tran)",
+      "summary": "SetTranslation method of LcOpTextureSpace.",
+      "params": [
+        {
+          "name": "tran",
+          "type": "Autodesk.Navisworks.Api.Vector3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.SetTranslation%28Autodesk.Navisworks.Api.Vector3D%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpTextureSpace.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpTextureSpace.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

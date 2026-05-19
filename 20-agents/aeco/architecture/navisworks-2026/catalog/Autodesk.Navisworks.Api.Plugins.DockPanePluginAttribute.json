@@ -1,0 +1,87 @@
+{
+  "name": "DockPanePluginAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Optional attribute for use with an DockPanePlugin derived class. If this attribute is not used, the default values are the same as using a DockPanePluginAttribute(100,100)",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.DockPanePluginAttribute",
+  "constructors": [
+    {
+      "name": "DockPanePluginAttribute(int, int)",
+      "signature": "DockPanePluginAttribute(int preferredWidth, int preferredHeight)",
+      "summary": "Constructor DockPanePluginAttribute, takes a pair of values that specify the prefered size for the pane. Default values are: MinimumWidth=0, MinimumHeight=0, AutoScroll=true, FixedSize=true.",
+      "params": [
+        {
+          "name": "preferredWidth",
+          "type": "int",
+          "doc": "The preferred width",
+          "optional": false
+        },
+        {
+          "name": "preferredHeight",
+          "type": "int",
+          "doc": "The preferred height",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.%23ctor%28System.Int32%2CSystem.Int32%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AutoScroll",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if scroll bars should appear when the pane gets bellow it\u0027s minimum size",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.AutoScroll"
+    },
+    {
+      "name": "FixedSize",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines if the pane should be resizable",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.FixedSize"
+    },
+    {
+      "name": "MinimumHeight",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Minimum height of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.MinimumHeight"
+    },
+    {
+      "name": "MinimumWidth",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Minimum width of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.MinimumWidth"
+    },
+    {
+      "name": "PreferredHeight",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred height of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.PreferredHeight"
+    },
+    {
+      "name": "PreferredWidth",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred width of pane, 0 means no preference",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.DockPanePluginAttribute.PreferredWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

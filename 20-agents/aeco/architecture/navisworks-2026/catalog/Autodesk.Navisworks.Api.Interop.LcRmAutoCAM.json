@@ -1,0 +1,1711 @@
+{
+  "name": "LcRmAutoCAM",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcRmAutoCAM class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcRmAutoCAM",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcRmAutoCAM InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAM",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "CurrentConstrainedOrbitModeTool",
+      "signature": "static Autodesk.Navisworks.Api.Tool CurrentConstrainedOrbitModeTool()",
+      "summary": "CurrentConstrainedOrbitModeTool method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentConstrainedOrbitModeTool"
+    },
+    {
+      "name": "CurrentFreeOrbitModeTool",
+      "signature": "static Autodesk.Navisworks.Api.Tool CurrentFreeOrbitModeTool()",
+      "summary": "CurrentFreeOrbitModeTool method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentFreeOrbitModeTool"
+    },
+    {
+      "name": "CurrentOrbitModeTool",
+      "signature": "static Autodesk.Navisworks.Api.Tool CurrentOrbitModeTool()",
+      "summary": "CurrentOrbitModeTool method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentOrbitModeTool"
+    },
+    {
+      "name": "CurrentWalkModeTool",
+      "signature": "static Autodesk.Navisworks.Api.Tool CurrentWalkModeTool()",
+      "summary": "CurrentWalkModeTool method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentWalkModeTool"
+    },
+    {
+      "name": "GetDefaultWheelType",
+      "signature": "static Autodesk.Navisworks.Api.Tool GetDefaultWheelType()",
+      "summary": "GetDefaultWheelType method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Tool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.GetDefaultWheelType"
+    },
+    {
+      "name": "HaveSpaceMouse",
+      "signature": "static bool HaveSpaceMouse()",
+      "summary": "HaveSpaceMouse method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.HaveSpaceMouse"
+    },
+    {
+      "name": "HaveSpaceMouse",
+      "signature": "static bool HaveSpaceMouse(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "HaveSpaceMouse method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.HaveSpaceMouse%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "IsClassicConstrainedOrbit",
+      "signature": "static bool IsClassicConstrainedOrbit()",
+      "summary": "IsClassicConstrainedOrbit method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsClassicConstrainedOrbit"
+    },
+    {
+      "name": "IsClassicFreeOrbit",
+      "signature": "static bool IsClassicFreeOrbit()",
+      "summary": "IsClassicFreeOrbit method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsClassicFreeOrbit"
+    },
+    {
+      "name": "IsClassicOrbit",
+      "signature": "static bool IsClassicOrbit()",
+      "summary": "IsClassicOrbit method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsClassicOrbit"
+    },
+    {
+      "name": "IsClassicWalk",
+      "signature": "static bool IsClassicWalk()",
+      "summary": "IsClassicWalk method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsClassicWalk"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsInitialised"
+    },
+    {
+      "name": "IsNavBarVisible",
+      "signature": "static bool IsNavBarVisible()",
+      "summary": "IsNavBarVisible method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsNavBarVisible"
+    },
+    {
+      "name": "IsPivotLocked",
+      "signature": "static bool IsPivotLocked()",
+      "summary": "IsPivotLocked method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsPivotLocked"
+    },
+    {
+      "name": "IsToolGroupHidden",
+      "signature": "static bool IsToolGroupHidden(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup group)",
+      "summary": "IsToolGroupHidden method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "group",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsToolGroupHidden%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%29"
+    },
+    {
+      "name": "IsToolGroupHidden",
+      "signature": "static bool IsToolGroupHidden(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup group, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "IsToolGroupHidden method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "group",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsToolGroupHidden%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "IsViewCubeVisible",
+      "signature": "static bool IsViewCubeVisible()",
+      "summary": "IsViewCubeVisible method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsViewCubeVisible"
+    },
+    {
+      "name": "IsViewCubeVisible",
+      "signature": "static bool IsViewCubeVisible(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "IsViewCubeVisible method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsViewCubeVisible%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "IsZoomReversed",
+      "signature": "static bool IsZoomReversed()",
+      "summary": "IsZoomReversed method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsZoomReversed"
+    },
+    {
+      "name": "OnSpaceMouseModeUI",
+      "signature": "static bool OnSpaceMouseModeUI(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode mode)",
+      "summary": "OnSpaceMouseModeUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSpaceMouseModeUI%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode%29"
+    },
+    {
+      "name": "OnSpaceMouseModeUI",
+      "signature": "static bool OnSpaceMouseModeUI(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode mode, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnSpaceMouseModeUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSpaceMouseModeUI%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnToolUI",
+      "signature": "static bool OnToolUI(Autodesk.Navisworks.Api.Tool type)",
+      "summary": "OnToolUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnToolUI%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "OnToolUI",
+      "signature": "static bool OnToolUI(Autodesk.Navisworks.Api.Tool type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnToolUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnToolUI%28Autodesk.Navisworks.Api.Tool%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "AlternativeTag",
+      "signature": "static int AlternativeTag(int tag)",
+      "summary": "AlternativeTag method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.AlternativeTag%28System.Int32%29"
+    },
+    {
+      "name": "CurrentConstrainedOrbitModeTag",
+      "signature": "static int CurrentConstrainedOrbitModeTag()",
+      "summary": "CurrentConstrainedOrbitModeTag method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentConstrainedOrbitModeTag"
+    },
+    {
+      "name": "CurrentFreeOrbitModeTag",
+      "signature": "static int CurrentFreeOrbitModeTag()",
+      "summary": "CurrentFreeOrbitModeTag method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentFreeOrbitModeTag"
+    },
+    {
+      "name": "CurrentOrbitModeTag",
+      "signature": "static int CurrentOrbitModeTag()",
+      "summary": "CurrentOrbitModeTag method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentOrbitModeTag"
+    },
+    {
+      "name": "CurrentWalkModeTag",
+      "signature": "static int CurrentWalkModeTag()",
+      "summary": "CurrentWalkModeTag method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.CurrentWalkModeTag"
+    },
+    {
+      "name": "GetPivotLabelIconId",
+      "signature": "static int GetPivotLabelIconId()",
+      "summary": "GetPivotLabelIconId method of LcRmAutoCAM.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.GetPivotLabelIconId"
+    },
+    {
+      "name": "NavBarForToolGroup",
+      "signature": "static int NavBarForToolGroup(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup group)",
+      "summary": "NavBarForToolGroup method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "group",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.NavBarForToolGroup%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%29"
+    },
+    {
+      "name": "NavBarTagFor3DControllerMode",
+      "signature": "static int NavBarTagFor3DControllerMode(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode mode)",
+      "summary": "NavBarTagFor3DControllerMode method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.NavBarTagFor3DControllerMode%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode%29"
+    },
+    {
+      "name": "NavModeFor3DControllerMode",
+      "signature": "static int NavModeFor3DControllerMode(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode mode)",
+      "summary": "NavModeFor3DControllerMode method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.NavModeFor3DControllerMode%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode%29"
+    },
+    {
+      "name": "ToolGroupForNavBarTag",
+      "signature": "static int ToolGroupForNavBarTag(int tag)",
+      "summary": "ToolGroupForNavBarTag method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.ToolGroupForNavBarTag%28System.Int32%29"
+    },
+    {
+      "name": "ToolGroupForNavBarTag",
+      "signature": "static int ToolGroupForNavBarTag(int tag, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "ToolGroupForNavBarTag method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "tag",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.ToolGroupForNavBarTag%28System.Int32%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "Attach",
+      "signature": "static void Attach(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "Attach method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.Attach%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "ChooseFlyoutItem",
+      "signature": "static void ChooseFlyoutItem(Autodesk.Navisworks.Api.Tool type)",
+      "summary": "ChooseFlyoutItem method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.ChooseFlyoutItem%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "ChooseFlyoutItem",
+      "signature": "static void ChooseFlyoutItem(Autodesk.Navisworks.Api.Tool type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "ChooseFlyoutItem method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.ChooseFlyoutItem%28Autodesk.Navisworks.Api.Tool%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "ClickViewCube",
+      "signature": "static void ClickViewCube()",
+      "summary": "ClickViewCube method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.ClickViewCube"
+    },
+    {
+      "name": "Detach",
+      "signature": "static void Detach(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "Detach method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.Detach%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.Initialise"
+    },
+    {
+      "name": "LockCurrentPivotPosition",
+      "signature": "static void LockCurrentPivotPosition()",
+      "summary": "LockCurrentPivotPosition method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.LockCurrentPivotPosition"
+    },
+    {
+      "name": "LockCurrentPivotPosition",
+      "signature": "static void LockCurrentPivotPosition(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "LockCurrentPivotPosition method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.LockCurrentPivotPosition%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnDecreaseWalkSpeed",
+      "signature": "static void OnDecreaseWalkSpeed()",
+      "summary": "OnDecreaseWalkSpeed method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnDecreaseWalkSpeed"
+    },
+    {
+      "name": "OnDecreaseWalkSpeed",
+      "signature": "static void OnDecreaseWalkSpeed(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnDecreaseWalkSpeed method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnDecreaseWalkSpeed%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnFocus",
+      "signature": "static void OnFocus()",
+      "summary": "OnFocus method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnFocus"
+    },
+    {
+      "name": "OnFocus",
+      "signature": "static void OnFocus(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnFocus method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnFocus%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnHome",
+      "signature": "static void OnHome()",
+      "summary": "OnHome method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnHome"
+    },
+    {
+      "name": "OnHome",
+      "signature": "static void OnHome(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnHome method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnHome%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnIncreaseWalkSpeed",
+      "signature": "static void OnIncreaseWalkSpeed()",
+      "summary": "OnIncreaseWalkSpeed method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnIncreaseWalkSpeed"
+    },
+    {
+      "name": "OnIncreaseWalkSpeed",
+      "signature": "static void OnIncreaseWalkSpeed(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnIncreaseWalkSpeed method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnIncreaseWalkSpeed%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnItemExcludedIf",
+      "signature": "static void OnItemExcludedIf(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup type)",
+      "summary": "OnItemExcludedIf method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnItemExcludedIf%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%29"
+    },
+    {
+      "name": "OnItemExcludedIf",
+      "signature": "static void OnItemExcludedIf(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnItemExcludedIf method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnItemExcludedIf%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnItemExcludedIfUI",
+      "signature": "static void OnItemExcludedIfUI(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup type, ref bool on)",
+      "summary": "OnItemExcludedIfUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnItemExcludedIfUI%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OnItemExcludedIfUI",
+      "signature": "static void OnItemExcludedIfUI(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup type, ref bool on, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnItemExcludedIfUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnItemExcludedIfUI%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%2CSystem.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnLevelCamera",
+      "signature": "static void OnLevelCamera()",
+      "summary": "OnLevelCamera method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLevelCamera"
+    },
+    {
+      "name": "OnLevelCamera",
+      "signature": "static void OnLevelCamera(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnLevelCamera method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLevelCamera%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnLinkToViewCube",
+      "signature": "static void OnLinkToViewCube()",
+      "summary": "OnLinkToViewCube method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLinkToViewCube"
+    },
+    {
+      "name": "OnLinkToViewCube",
+      "signature": "static void OnLinkToViewCube(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnLinkToViewCube method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLinkToViewCube%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnLinkToViewCubeUI",
+      "signature": "static void OnLinkToViewCubeUI(ref bool on)",
+      "summary": "OnLinkToViewCubeUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLinkToViewCubeUI%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnLinkToViewCubeUI",
+      "signature": "static void OnLinkToViewCubeUI(ref bool on, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnLinkToViewCubeUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLinkToViewCubeUI%28System.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnLockToSelection",
+      "signature": "static void OnLockToSelection()",
+      "summary": "OnLockToSelection method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLockToSelection"
+    },
+    {
+      "name": "OnLockToSelection",
+      "signature": "static void OnLockToSelection(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnLockToSelection method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLockToSelection%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnLockToSelectionUI",
+      "signature": "static void OnLockToSelectionUI(ref bool enabled, ref bool on)",
+      "summary": "OnLockToSelectionUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLockToSelectionUI%28System.Boolean%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OnLockToSelectionUI",
+      "signature": "static void OnLockToSelectionUI(ref bool enabled, ref bool on, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnLockToSelectionUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnLockToSelectionUI%28System.Boolean%40%2CSystem.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnNavBarPosition",
+      "signature": "static void OnNavBarPosition(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition type)",
+      "summary": "OnNavBarPosition method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnNavBarPosition%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition%29"
+    },
+    {
+      "name": "OnNavBarPosition",
+      "signature": "static void OnNavBarPosition(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnNavBarPosition method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnNavBarPosition%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnNavBarPositionUI",
+      "signature": "static void OnNavBarPositionUI(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition type, ref bool on, ref bool enable)",
+      "summary": "OnNavBarPositionUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnNavBarPositionUI%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition%2CSystem.Boolean%40%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OnNavBarPositionUI",
+      "signature": "static void OnNavBarPositionUI(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition type, ref bool on, ref bool enable, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnNavBarPositionUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnNavBarPositionUI%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarPosition%2CSystem.Boolean%40%2CSystem.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnResetFront",
+      "signature": "static void OnResetFront()",
+      "summary": "OnResetFront method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnResetFront"
+    },
+    {
+      "name": "OnResetFront",
+      "signature": "static void OnResetFront(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnResetFront method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnResetFront%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnResetFrontUI",
+      "signature": "static void OnResetFrontUI(ref bool enable)",
+      "summary": "OnResetFrontUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnResetFrontUI%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnResetFrontUI",
+      "signature": "static void OnResetFrontUI(ref bool enable, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnResetFrontUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnResetFrontUI%28System.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnRestoreCenter",
+      "signature": "static void OnRestoreCenter()",
+      "summary": "OnRestoreCenter method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnRestoreCenter"
+    },
+    {
+      "name": "OnRestoreCenter",
+      "signature": "static void OnRestoreCenter(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnRestoreCenter method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnRestoreCenter%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnSetFrontView",
+      "signature": "static void OnSetFrontView()",
+      "summary": "OnSetFrontView method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSetFrontView"
+    },
+    {
+      "name": "OnSetFrontView",
+      "signature": "static void OnSetFrontView(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnSetFrontView method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSetFrontView%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnSetHomeView",
+      "signature": "static void OnSetHomeView()",
+      "summary": "OnSetHomeView method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSetHomeView"
+    },
+    {
+      "name": "OnSetHomeView",
+      "signature": "static void OnSetHomeView(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnSetHomeView method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSetHomeView%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnSpaceMouseMode",
+      "signature": "static void OnSpaceMouseMode(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode mode)",
+      "summary": "OnSpaceMouseMode method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSpaceMouseMode%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode%29"
+    },
+    {
+      "name": "OnSpaceMouseMode",
+      "signature": "static void OnSpaceMouseMode(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode mode, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnSpaceMouseMode method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnSpaceMouseMode%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMCam3DControllerMode%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnTool",
+      "signature": "static void OnTool(Autodesk.Navisworks.Api.Tool type)",
+      "summary": "OnTool method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnTool%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "OnTool",
+      "signature": "static void OnTool(Autodesk.Navisworks.Api.Tool type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnTool method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnTool%28Autodesk.Navisworks.Api.Tool%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnWheel",
+      "signature": "static void OnWheel(Autodesk.Navisworks.Api.Tool type)",
+      "summary": "OnWheel method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheel%28Autodesk.Navisworks.Api.Tool%29"
+    },
+    {
+      "name": "OnWheel",
+      "signature": "static void OnWheel(Autodesk.Navisworks.Api.Tool type, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnWheel method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheel%28Autodesk.Navisworks.Api.Tool%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnWheelClose",
+      "signature": "static void OnWheelClose()",
+      "summary": "OnWheelClose method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheelClose"
+    },
+    {
+      "name": "OnWheelClose",
+      "signature": "static void OnWheelClose(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnWheelClose method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheelClose%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnWheelCloseUI",
+      "signature": "static void OnWheelCloseUI(ref bool enable)",
+      "summary": "OnWheelCloseUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheelCloseUI%28System.Boolean%40%29"
+    },
+    {
+      "name": "OnWheelCloseUI",
+      "signature": "static void OnWheelCloseUI(ref bool enable, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnWheelCloseUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheelCloseUI%28System.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnWheelUI",
+      "signature": "static void OnWheelUI(Autodesk.Navisworks.Api.Tool type, ref bool on)",
+      "summary": "OnWheelUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheelUI%28Autodesk.Navisworks.Api.Tool%2CSystem.Boolean%40%29"
+    },
+    {
+      "name": "OnWheelUI",
+      "signature": "static void OnWheelUI(Autodesk.Navisworks.Api.Tool type, ref bool on, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnWheelUI method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.Tool",
+          "optional": false
+        },
+        {
+          "name": "on",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnWheelUI%28Autodesk.Navisworks.Api.Tool%2CSystem.Boolean%40%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnZoomAll",
+      "signature": "static void OnZoomAll()",
+      "summary": "OnZoomAll method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnZoomAll"
+    },
+    {
+      "name": "OnZoomAll",
+      "signature": "static void OnZoomAll(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnZoomAll method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnZoomAll%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "OnZoomSelected",
+      "signature": "static void OnZoomSelected()",
+      "summary": "OnZoomSelected method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnZoomSelected"
+    },
+    {
+      "name": "OnZoomSelected",
+      "signature": "static void OnZoomSelected(Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "OnZoomSelected method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.OnZoomSelected%28Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "SetPivot",
+      "signature": "static void SetPivot(Autodesk.Navisworks.Api.Point3D pivot)",
+      "summary": "SetPivot method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "pivot",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.SetPivot%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "SetPivot",
+      "signature": "static void SetPivot(Autodesk.Navisworks.Api.Point3D pivot, Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel kernel)",
+      "summary": "SetPivot method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "pivot",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        },
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOmWin32Kernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.SetPivot%28Autodesk.Navisworks.Api.Point3D%2CAutodesk.Navisworks.Api.Interop.LcOmWin32Kernel%29"
+    },
+    {
+      "name": "SetPivotLabelIconId",
+      "signature": "static void SetPivotLabelIconId(int id)",
+      "summary": "SetPivotLabelIconId method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.SetPivotLabelIconId%28System.Int32%29"
+    },
+    {
+      "name": "SetPivotLocked",
+      "signature": "static void SetPivotLocked(bool locked)",
+      "summary": "SetPivotLocked method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "locked",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.SetPivotLocked%28System.Boolean%29"
+    },
+    {
+      "name": "SetToolGroupToOption",
+      "signature": "static void SetToolGroupToOption(Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup group, bool enable)",
+      "summary": "SetToolGroupToOption method of LcRmAutoCAM.",
+      "params": [
+        {
+          "name": "group",
+          "type": "Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup",
+          "optional": false
+        },
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.SetToolGroupToOption%28Autodesk.Navisworks.Api.Interop.LcRmAutoCAMNavBarToolGroup%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SwitchNavBarVisibility",
+      "signature": "static void SwitchNavBarVisibility()",
+      "summary": "SwitchNavBarVisibility method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.SwitchNavBarVisibility"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.Terminate"
+    },
+    {
+      "name": "TogglePivotLocked",
+      "signature": "static void TogglePivotLocked()",
+      "summary": "TogglePivotLocked method of LcRmAutoCAM.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.TogglePivotLocked"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcRmAutoCAM.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcRmAutoCAM.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

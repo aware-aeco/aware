@@ -1,0 +1,29 @@
+{
+  "name": "ViewpointDistanceType",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Describes the user\u0027s intentions if the product has to modify near and far distances (typically because of graphics system limitations).",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewpointDistanceType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Fixed",
+      "value": 0,
+      "summary": "User has specified exact distance."
+    },
+    {
+      "name": "Constrained",
+      "value": 1,
+      "summary": "For near distance, user has specified maximum distance and the product can use a smaller value to increase render quality. For far distance, user has specified minimum distance and the product can use a larger value to increase render quality."
+    },
+    {
+      "name": "Auto",
+      "value": 2,
+      "summary": "Distance was chosen automatically by the product."
+    }
+  ]
+}

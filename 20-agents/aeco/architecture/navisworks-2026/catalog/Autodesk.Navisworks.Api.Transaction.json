@@ -1,0 +1,102 @@
+{
+  "name": "Transaction",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "This is used to batch together edits. Currently it is a requirement that you must call Commit, after doing your edits. In the future rollback may be supported.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Transaction",
+  "constructors": [
+    {
+      "name": "Transaction(Autodesk.Navisworks.Api.Document, string)",
+      "signature": "Transaction(Autodesk.Navisworks.Api.Document document, string displayName)",
+      "summary": "This is used to batch together edits. In C# it would typically be used within a \u0027using\u0027 block.In the future it may support rollback.",
+      "params": [
+        {
+          "name": "document",
+          "type": "Autodesk.Navisworks.Api.Document",
+          "doc": "The Document that this transaction applies to.",
+          "optional": false
+        },
+        {
+          "name": "displayName",
+          "type": "string",
+          "doc": "String that may be displayed in the GUI for undoing this transaction.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transaction.%23ctor%28Autodesk.Navisworks.Api.Document%2CSystem.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Commit",
+      "signature": "void Commit()",
+      "summary": "Call to commit the transaction.",
+      "params": [],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Transaction has already been Commited"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transaction.Commit"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of Transaction.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Transaction.Dispose"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "String that may be displayed in the GUI for undoing this transaction.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transaction.DisplayName"
+    },
+    {
+      "name": "Document",
+      "type": "Autodesk.Navisworks.Api.Document",
+      "getter": true,
+      "setter": false,
+      "summary": "The Document that this transaction applies to.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transaction.Document"
+    },
+    {
+      "name": "IsCommitted",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Has this transaction been committed ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transaction.IsCommitted"
+    },
+    {
+      "name": "IsDisposed",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Has this transaction been disposed ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Transaction.IsDisposed"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

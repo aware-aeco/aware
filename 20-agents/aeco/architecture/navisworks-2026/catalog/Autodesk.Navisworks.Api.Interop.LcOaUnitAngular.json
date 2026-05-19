@@ -1,0 +1,26 @@
+{
+  "name": "LcOaUnitAngular",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaUnitAngular enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaUnitAngular",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDEGREES",
+      "value": 0
+    },
+    {
+      "name": "eRADIANS",
+      "value": 1
+    },
+    {
+      "name": "eNUM_ANGULAR_UNITS",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "LcOaUnitLinearDisplayFormat",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaUnitLinearDisplayFormat enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaUnitLinearDisplayFormat",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFORMAT_LINEAR_DECIMAL",
+      "value": 0
+    },
+    {
+      "name": "eFORMAT_FEET_INCHES",
+      "value": 1
+    },
+    {
+      "name": "eFORMAT_FEET_INCHES_FRACTIONS",
+      "value": 2
+    },
+    {
+      "name": "eFORMAT_INCHES_FRACTIONS",
+      "value": 3
+    },
+    {
+      "name": "eFORMAT_YARDS_FEET_INCHES_FRACTIONS",
+      "value": 4
+    },
+    {
+      "name": "eFORMAT_MILES_YARDS_FEET_INCHES_FRACTIONS",
+      "value": 5
+    },
+    {
+      "name": "eFORMAT_FEET_INCHES_DECIMAL",
+      "value": 6
+    }
+  ]
+}

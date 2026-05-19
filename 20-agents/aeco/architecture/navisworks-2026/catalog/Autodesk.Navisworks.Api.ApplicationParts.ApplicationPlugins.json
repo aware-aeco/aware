@@ -1,0 +1,137 @@
+{
+  "name": "ApplicationPlugins",
+  "namespace": "Autodesk.Navisworks.Api.ApplicationParts",
+  "kind": "class",
+  "summary": "Provides information about the Plugins available in the application runtime",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "FindPlugin",
+      "signature": "Autodesk.Navisworks.Api.Plugins.PluginRecord FindPlugin(string pluginId)",
+      "summary": "Searches for a PluginRecord by Id",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "string",
+          "doc": "The full identifier for the plugin.\nThis is formed as Name.DeveloperId",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Plugins.PluginRecord",
+        "doc": "Returns the PluginRecord or Null if it cannot be found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.FindPlugin%28System.String%29"
+    },
+    {
+      "name": "FindInterfaces",
+      "signature": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.PluginRecord\u003E FindInterfaces(string interfaceId)",
+      "summary": "Returns a collection of PluginRecords that implement a particular interface",
+      "params": [
+        {
+          "name": "interfaceId",
+          "type": "string",
+          "doc": "The Id of the InterfaceRecord",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.PluginRecord\u003E",
+        "doc": "Collection if empty if no mathcing PluginRecordsare found"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.FindInterfaces%28System.String%29"
+    },
+    {
+      "name": "ExecuteAddInPlugin",
+      "signature": "int ExecuteAddInPlugin(string pluginId, string[] parameters)",
+      "summary": "Executes an Addin Plugin whose full name is given by pluginId, passing in the paramaters given.",
+      "params": [
+        {
+          "name": "pluginId",
+          "type": "string",
+          "doc": "The full identifier for the plugin.\nThis is formed as Name.DeveloperId",
+          "optional": false
+        },
+        {
+          "name": "parameters",
+          "type": "string[]",
+          "doc": "Optional parameters to pass to the plugin",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.InvalidOperationException",
+          "when": "Plugin not found or is not an AddInPlugin"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.PluginLoadException",
+          "when": "Failed to load plugin"
+        },
+        {
+          "type": "Autodesk.Navisworks.Api.Plugins.ExecuteDisabledException",
+          "when": "Execute is Disabled via CanExecute"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.ExecuteAddInPlugin%28System.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "AddPluginAssembly",
+      "signature": "void AddPluginAssembly(string fileName)",
+      "summary": "Adds another assembly that plugins can be loaded from. Assembly is loaded using the LoadFrom context and can be used outside the Application root.",
+      "params": [
+        {
+          "name": "fileName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.AddPluginAssembly%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PluginRecords",
+      "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CAutodesk.Navisworks.Api.Plugins.PluginRecord\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets collection of PluginRecords that describe the available plugins",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.PluginRecords"
+    }
+  ],
+  "events": [
+    {
+      "name": "PluginRecordsChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E PluginRecordsChanged",
+      "summary": "Occurs when the collection of PluginRecords has changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.PluginRecordsChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PluginRecordsChanging",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E PluginRecordsChanging",
+      "summary": "Occurs when the collection of PluginRecords is about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.ApplicationParts.ApplicationPlugins.PluginRecordsChanging",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

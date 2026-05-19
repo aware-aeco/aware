@@ -1,0 +1,254 @@
+{
+  "name": "LcOpSwigKernelProgress",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSwigKernelProgress class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.Interop.LcOpKernelProgress",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress",
+  "constructors": [
+    {
+      "name": "LcOpSwigKernelProgress(Autodesk.Navisworks.Api.Interop.LcOpKernel)",
+      "signature": "LcOpSwigKernelProgress(Autodesk.Navisworks.Api.Interop.LcOpKernel kernel)",
+      "summary": "Constructs a new LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "kernel",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpKernel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpKernel%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "PromptUserForPassword",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse PromptUserForPassword(out System.Security.SecureString password, Autodesk.Navisworks.Api.PublishProperties attrib)",
+      "summary": "PromptUserForPassword method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "password",
+          "type": "System.Security.SecureString",
+          "optional": false
+        },
+        {
+          "name": "attrib",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.PromptUserForPassword%28System.Security.SecureString%40%2CAutodesk.Navisworks.Api.PublishProperties%29"
+    },
+    {
+      "name": "ShowPublishInformation",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse ShowPublishInformation(Autodesk.Navisworks.Api.PublishProperties attrib)",
+      "summary": "ShowPublishInformation method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "Autodesk.Navisworks.Api.PublishProperties",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpProgressUserDialogResponse",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.ShowPublishInformation%28Autodesk.Navisworks.Api.PublishProperties%29"
+    },
+    {
+      "name": "ReportErrorImpl",
+      "signature": "bool ReportErrorImpl(int error_code, string message, bool append_filename)",
+      "summary": "ReportErrorImpl method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "error_code",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "append_filename",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.ReportErrorImpl%28System.Int32%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ReportProgressImpl",
+      "signature": "bool ReportProgressImpl(double total_frac, double sub_frac)",
+      "summary": "ReportProgressImpl method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "total_frac",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sub_frac",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.ReportProgressImpl%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "MessageImpl",
+      "signature": "void MessageImpl(string message)",
+      "summary": "MessageImpl method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.MessageImpl%28System.String%29"
+    },
+    {
+      "name": "OnBeginSubOp",
+      "signature": "void OnBeginSubOp(double fraction, string message)",
+      "summary": "OnBeginSubOp method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "fraction",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.OnBeginSubOp%28System.Double%2CSystem.String%29"
+    },
+    {
+      "name": "OnEndSubOp",
+      "signature": "void OnEndSubOp(bool completed)",
+      "summary": "OnEndSubOp method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "completed",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.OnEndSubOp%28System.Boolean%29"
+    },
+    {
+      "name": "SetVisible",
+      "signature": "void SetVisible(bool v)",
+      "summary": "SetVisible method of LcOpSwigKernelProgress.",
+      "params": [
+        {
+          "name": "v",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.SetVisible%28System.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSwigKernelProgress.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSwigKernelProgress.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

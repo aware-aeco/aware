@@ -1,0 +1,38 @@
+{
+  "name": "LcOpDBExtensions",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpDBExtensions class in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDBExtensions",
+  "constructors": [
+    {
+      "name": "LcOpDBExtensions()",
+      "signature": "LcOpDBExtensions()",
+      "summary": "Constructs a new LcOpDBExtensions.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDBExtensions.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetFileVersions",
+      "signature": "static System.Collections.Generic.List\u003CSystem.Tuple\u003CAutodesk.Navisworks.Api.DocumentFileVersion, string\u003E\u003E GetFileVersions()",
+      "summary": "GetFileVersions method of LcOpDBExtensions.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CSystem.Tuple\u003CAutodesk.Navisworks.Api.DocumentFileVersion, string\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpDBExtensions.GetFileVersions"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

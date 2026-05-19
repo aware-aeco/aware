@@ -1,0 +1,74 @@
+{
+  "name": "LcNvViewPointParts",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcNvViewPointParts enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvViewPointParts",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNONE",
+      "value": 0
+    },
+    {
+      "name": "eCAMERA",
+      "value": 1
+    },
+    {
+      "name": "eVIEWER",
+      "value": 2
+    },
+    {
+      "name": "eWORLD_UP_VECTOR",
+      "value": 4
+    },
+    {
+      "name": "eFOCAL_DISTANCE",
+      "value": 8
+    },
+    {
+      "name": "eLINEAR_SPEED",
+      "value": 16
+    },
+    {
+      "name": "eANGULAR_SPEED",
+      "value": 32
+    },
+    {
+      "name": "eTOOL",
+      "value": 64
+    },
+    {
+      "name": "eTILT_LIMITS",
+      "value": 128
+    },
+    {
+      "name": "eLIGHTING",
+      "value": 256
+    },
+    {
+      "name": "eRENDER_STYLE",
+      "value": 512
+    },
+    {
+      "name": "eORIG_ALL",
+      "value": 1021
+    },
+    {
+      "name": "ePREFERRED_FOV",
+      "value": 1024
+    },
+    {
+      "name": "ePRIMITIVES",
+      "value": 2048
+    },
+    {
+      "name": "eALL",
+      "value": 4095
+    }
+  ]
+}

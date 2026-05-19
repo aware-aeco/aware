@@ -1,0 +1,103 @@
+{
+  "name": "DocumentCurrentViewpoint",
+  "namespace": "Autodesk.Navisworks.Api.DocumentParts",
+  "kind": "class",
+  "summary": "The Current Viewpoint in a Document",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateCopy",
+      "signature": "Autodesk.Navisworks.Api.Viewpoint CreateCopy()",
+      "summary": "Creates a copy of the Viewpoint associated with this object",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.CreateCopy"
+    },
+    {
+      "name": "ToViewpoint",
+      "signature": "Autodesk.Navisworks.Api.Viewpoint ToViewpoint()",
+      "summary": "Explicit form of conversion operator returning Value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.ToViewpoint"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Autodesk.Navisworks.Api.Viewpoint op_Implicit(Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint that)",
+      "summary": "Conversion operator returning Value",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Viewpoint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.op_Implicit%28Autodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint%29~Autodesk.Navisworks.Api.Viewpoint"
+    },
+    {
+      "name": "CopyFrom",
+      "signature": "void CopyFrom(Autodesk.Navisworks.Api.Viewpoint viewpoint)",
+      "summary": "Copies the Viewpoint from viewpoint int the one in the Document",
+      "params": [
+        {
+          "name": "viewpoint",
+          "type": "Autodesk.Navisworks.Api.Viewpoint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.CopyFrom%28Autodesk.Navisworks.Api.Viewpoint%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "Autodesk.Navisworks.Api.Viewpoint",
+      "getter": true,
+      "setter": false,
+      "summary": "The value of the current Viewpoint within the document",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "Changed",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changed",
+      "summary": "Occurs when the Viewpoint contained in this object has changed.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.Changed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "Changing",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E Changing",
+      "summary": "Occurs when the Viewpoint contained in this object is about to change.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#E%3AAutodesk.Navisworks.Api.DocumentParts.DocumentCurrentViewpoint.Changing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

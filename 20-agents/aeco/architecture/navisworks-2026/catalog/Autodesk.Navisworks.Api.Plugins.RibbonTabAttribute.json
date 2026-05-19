@@ -1,0 +1,65 @@
+{
+  "name": "RibbonTabAttribute",
+  "namespace": "Autodesk.Navisworks.Api.Plugins",
+  "kind": "class",
+  "summary": "Defines a ribbon tab in the GUI system.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Plugins.RibbonTabAttribute",
+  "constructors": [
+    {
+      "name": "RibbonTabAttribute(string)",
+      "signature": "RibbonTabAttribute(string name)",
+      "summary": "Constructor",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "doc": "The name of the Ribbon tab",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Plugins.RibbonTabAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CallCanExecute",
+      "type": "Autodesk.Navisworks.Api.Plugins.CallCanExecute",
+      "getter": true,
+      "setter": true,
+      "summary": "Determines the conditions in which CanExecuteRibbonTab should be called.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonTabAttribute.CallCanExecute"
+    },
+    {
+      "name": "DisplayName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "The text to display for this Ribbon tab",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonTabAttribute.DisplayName"
+    },
+    {
+      "name": "LoadForCanExecute",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Specifies if CanExecuteRibbonTab should cause the Plugin to load",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonTabAttribute.LoadForCanExecute"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "The name of the Ribbon tab",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Plugins.RibbonTabAttribute.Name"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

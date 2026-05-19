@@ -1,0 +1,523 @@
+{
+  "name": "LcNvViewer",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcNvViewer class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcNvViewer",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetCameraMode",
+      "signature": "Autodesk.Navisworks.Api.CameraMode GetCameraMode()",
+      "summary": "GetCameraMode method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.CameraMode",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetCameraMode"
+    },
+    {
+      "name": "IsAutoCrouch",
+      "signature": "bool IsAutoCrouch()",
+      "summary": "IsAutoCrouch method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.IsAutoCrouch"
+    },
+    {
+      "name": "IsCollisionDetection",
+      "signature": "bool IsCollisionDetection()",
+      "summary": "IsCollisionDetection method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.IsCollisionDetection"
+    },
+    {
+      "name": "IsFirstToThirdCorrection",
+      "signature": "bool IsFirstToThirdCorrection()",
+      "summary": "IsFirstToThirdCorrection method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.IsFirstToThirdCorrection"
+    },
+    {
+      "name": "IsGravity",
+      "signature": "bool IsGravity()",
+      "summary": "IsGravity method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.IsGravity"
+    },
+    {
+      "name": "GetActualHeight",
+      "signature": "double GetActualHeight()",
+      "summary": "GetActualHeight method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetActualHeight"
+    },
+    {
+      "name": "GetEyeHeightOffset",
+      "signature": "double GetEyeHeightOffset()",
+      "summary": "GetEyeHeightOffset method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetEyeHeightOffset"
+    },
+    {
+      "name": "GetFirstToThirdAngle",
+      "signature": "double GetFirstToThirdAngle()",
+      "summary": "GetFirstToThirdAngle method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetFirstToThirdAngle"
+    },
+    {
+      "name": "GetFirstToThirdDistance",
+      "signature": "double GetFirstToThirdDistance()",
+      "summary": "GetFirstToThirdDistance method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetFirstToThirdDistance"
+    },
+    {
+      "name": "GetFirstToThirdParam",
+      "signature": "double GetFirstToThirdParam()",
+      "summary": "GetFirstToThirdParam method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetFirstToThirdParam"
+    },
+    {
+      "name": "GetGravityValue",
+      "signature": "double GetGravityValue()",
+      "summary": "GetGravityValue method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetGravityValue"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "double GetHeight()",
+      "summary": "GetHeight method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetHeight"
+    },
+    {
+      "name": "GetRadius",
+      "signature": "double GetRadius()",
+      "summary": "GetRadius method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetRadius"
+    },
+    {
+      "name": "GetTerminalVelocity",
+      "signature": "double GetTerminalVelocity()",
+      "summary": "GetTerminalVelocity method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetTerminalVelocity"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcNvViewer InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcNvViewer.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcNvViewer",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcNvViewer.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "GetAvatar",
+      "signature": "string GetAvatar()",
+      "summary": "GetAvatar method of LcNvViewer.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetAvatar"
+    },
+    {
+      "name": "GetFirstToThirdTransform",
+      "signature": "void GetFirstToThirdTransform(Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "GetFirstToThirdTransform method of LcNvViewer.",
+      "params": [
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.GetFirstToThirdTransform%28Autodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "SetActualHeight",
+      "signature": "void SetActualHeight(double h)",
+      "summary": "SetActualHeight method of LcNvViewer.",
+      "params": [
+        {
+          "name": "h",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetActualHeight%28System.Double%29"
+    },
+    {
+      "name": "SetAutoCrouch",
+      "signature": "void SetAutoCrouch(bool b)",
+      "summary": "SetAutoCrouch method of LcNvViewer.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetAutoCrouch%28System.Boolean%29"
+    },
+    {
+      "name": "SetAvatar",
+      "signature": "void SetAvatar(string s)",
+      "summary": "SetAvatar method of LcNvViewer.",
+      "params": [
+        {
+          "name": "s",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetAvatar%28System.String%29"
+    },
+    {
+      "name": "SetCameraMode",
+      "signature": "void SetCameraMode(Autodesk.Navisworks.Api.CameraMode mode)",
+      "summary": "SetCameraMode method of LcNvViewer.",
+      "params": [
+        {
+          "name": "mode",
+          "type": "Autodesk.Navisworks.Api.CameraMode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetCameraMode%28Autodesk.Navisworks.Api.CameraMode%29"
+    },
+    {
+      "name": "SetCollisionDetection",
+      "signature": "void SetCollisionDetection(bool b)",
+      "summary": "SetCollisionDetection method of LcNvViewer.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetCollisionDetection%28System.Boolean%29"
+    },
+    {
+      "name": "SetEyeHeightOffset",
+      "signature": "void SetEyeHeightOffset(double h)",
+      "summary": "SetEyeHeightOffset method of LcNvViewer.",
+      "params": [
+        {
+          "name": "h",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetEyeHeightOffset%28System.Double%29"
+    },
+    {
+      "name": "SetFirstToThirdAngle",
+      "signature": "void SetFirstToThirdAngle(double radians)",
+      "summary": "SetFirstToThirdAngle method of LcNvViewer.",
+      "params": [
+        {
+          "name": "radians",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetFirstToThirdAngle%28System.Double%29"
+    },
+    {
+      "name": "SetFirstToThirdCorrection",
+      "signature": "void SetFirstToThirdCorrection(bool enable)",
+      "summary": "SetFirstToThirdCorrection method of LcNvViewer.",
+      "params": [
+        {
+          "name": "enable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetFirstToThirdCorrection%28System.Boolean%29"
+    },
+    {
+      "name": "SetFirstToThirdDistance",
+      "signature": "void SetFirstToThirdDistance(double model_units)",
+      "summary": "SetFirstToThirdDistance method of LcNvViewer.",
+      "params": [
+        {
+          "name": "model_units",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetFirstToThirdDistance%28System.Double%29"
+    },
+    {
+      "name": "SetFirstToThirdParam",
+      "signature": "void SetFirstToThirdParam(double param)",
+      "summary": "SetFirstToThirdParam method of LcNvViewer.",
+      "params": [
+        {
+          "name": "param",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetFirstToThirdParam%28System.Double%29"
+    },
+    {
+      "name": "SetGravity",
+      "signature": "void SetGravity(bool b)",
+      "summary": "SetGravity method of LcNvViewer.",
+      "params": [
+        {
+          "name": "b",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetGravity%28System.Boolean%29"
+    },
+    {
+      "name": "SetGravityValue",
+      "signature": "void SetGravityValue(double g)",
+      "summary": "SetGravityValue method of LcNvViewer.",
+      "params": [
+        {
+          "name": "g",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetGravityValue%28System.Double%29"
+    },
+    {
+      "name": "SetHeight",
+      "signature": "void SetHeight(double h)",
+      "summary": "SetHeight method of LcNvViewer.",
+      "params": [
+        {
+          "name": "h",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetHeight%28System.Double%29"
+    },
+    {
+      "name": "SetRadius",
+      "signature": "void SetRadius(double r)",
+      "summary": "SetRadius method of LcNvViewer.",
+      "params": [
+        {
+          "name": "r",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetRadius%28System.Double%29"
+    },
+    {
+      "name": "SetTerminalVelocity",
+      "signature": "void SetTerminalVelocity(double v)",
+      "summary": "SetTerminalVelocity method of LcNvViewer.",
+      "params": [
+        {
+          "name": "v",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.SetTerminalVelocity%28System.Double%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcNvViewer.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcNvViewer.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

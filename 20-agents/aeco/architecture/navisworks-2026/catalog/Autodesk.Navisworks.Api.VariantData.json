@@ -1,0 +1,1337 @@
+{
+  "name": "VariantData",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "A value type that can store data of one of several different types.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.VariantData",
+  "constructors": [
+    {
+      "name": "VariantData()",
+      "signature": "VariantData()",
+      "summary": "Creates Data with no value stored",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor"
+    },
+    {
+      "name": "VariantData(Autodesk.Navisworks.Api.NamedConstant)",
+      "signature": "VariantData(Autodesk.Navisworks.Api.NamedConstant value)",
+      "summary": "Creates a named constant value",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28Autodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "VariantData(bool)",
+      "signature": "VariantData(bool value)",
+      "summary": "Creates a boolean value",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.Boolean%29"
+    },
+    {
+      "name": "VariantData(double)",
+      "signature": "VariantData(double value)",
+      "summary": "Creates a unitless double value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.Double%29"
+    },
+    {
+      "name": "VariantData(double, Autodesk.Navisworks.Api.VariantDataType)",
+      "signature": "VariantData(double value, Autodesk.Navisworks.Api.VariantDataType type)",
+      "summary": "Creates a specific type of double based value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "doc": "Value to create",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "type": "Autodesk.Navisworks.Api.VariantDataType",
+          "doc": "Particular type of double value to create",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ArgumentOutOfRangeException",
+          "when": "type is not a floating point based type"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.Double%2CAutodesk.Navisworks.Api.VariantDataType%29"
+    },
+    {
+      "name": "VariantData(double, double)",
+      "signature": "VariantData(double x, double y)",
+      "summary": "Creates a 2D point value",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "VariantData(double, double, double)",
+      "signature": "VariantData(double x, double y, double z)",
+      "summary": "Creates a 3D point value",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "VariantData(int)",
+      "signature": "VariantData(int value)",
+      "summary": "Creates an integer value",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.Int32%29"
+    },
+    {
+      "name": "VariantData(string)",
+      "signature": "VariantData(string value)",
+      "summary": "Creates a display string value",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.String%29"
+    },
+    {
+      "name": "VariantData(uint)",
+      "signature": "VariantData(uint value)",
+      "summary": "Creates an LtNat32 value",
+      "params": [
+        {
+          "name": "value",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.UInt32%29"
+    },
+    {
+      "name": "VariantData(ulong)",
+      "signature": "VariantData(ulong value)",
+      "summary": "Creates an LtNat64 value",
+      "params": [
+        {
+          "name": "value",
+          "type": "ulong",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.%23ctor%28System.UInt64%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToNamedConstant",
+      "signature": "Autodesk.Navisworks.Api.NamedConstant ToNamedConstant()",
+      "summary": "Access named constant value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NamedConstant",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsNamedConstant\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToNamedConstant"
+    },
+    {
+      "name": "ToPoint2D",
+      "signature": "Autodesk.Navisworks.Api.Point2D ToPoint2D()",
+      "summary": "Access Point2D value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point2D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToPoint2D"
+    },
+    {
+      "name": "ToPoint3D",
+      "signature": "Autodesk.Navisworks.Api.Point3D ToPoint3D()",
+      "summary": "Access Point3D value",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Point3D",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToPoint3D"
+    },
+    {
+      "name": "ToDateTime",
+      "signature": "System.DateTime ToDateTime()",
+      "summary": "Access DateTime value",
+      "params": [],
+      "returns": {
+        "type": "System.DateTime",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDateTime\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDateTime"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.Equals%28System.Object%29"
+    },
+    {
+      "name": "ToBoolean",
+      "signature": "bool ToBoolean()",
+      "summary": "Access boolean value",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsBoolean\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToBoolean"
+    },
+    {
+      "name": "XmlAttribValue",
+      "signature": "bool XmlAttribValue(out string value)",
+      "summary": "The XML attribute value used for XML serialization",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.XmlAttribValue%28System.String%40%29"
+    },
+    {
+      "name": "XmlElementContent",
+      "signature": "bool XmlElementContent(out string content, bool include_names)",
+      "summary": "The XML element content used for XML serialization",
+      "params": [
+        {
+          "name": "content",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "include_names",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.XmlElementContent%28System.String%40%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ToAnyDouble",
+      "signature": "double ToAnyDouble()",
+      "summary": "Access any type of double value",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsAnyDouble\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToAnyDouble"
+    },
+    {
+      "name": "ToDouble",
+      "signature": "double ToDouble()",
+      "summary": "Access unitless double value",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDouble\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDouble"
+    },
+    {
+      "name": "ToDoubleAngle",
+      "signature": "double ToDoubleAngle()",
+      "summary": "Access double angle value",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDoubleAngle\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDoubleAngle"
+    },
+    {
+      "name": "ToDoubleArea",
+      "signature": "double ToDoubleArea()",
+      "summary": "Access double area value",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDoubleArea\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDoubleArea"
+    },
+    {
+      "name": "ToDoubleLength",
+      "signature": "double ToDoubleLength()",
+      "summary": "Access double length value",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDoubleLength\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDoubleLength"
+    },
+    {
+      "name": "ToDoubleVolume",
+      "signature": "double ToDoubleVolume()",
+      "summary": "Access double volume value",
+      "params": [],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDoubleVolume\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDoubleVolume"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.GetHashCode"
+    },
+    {
+      "name": "ToInt32",
+      "signature": "int ToInt32()",
+      "summary": "Access 32 bit integer value",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsInt32\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToInt32"
+    },
+    {
+      "name": "ToInt64",
+      "signature": "long ToInt64()",
+      "summary": "Access Int64 value",
+      "params": [],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsInt64\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToInt64"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of VariantData.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "FromBoolean",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromBoolean(bool value)",
+      "summary": "Creates a boolean value",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromBoolean%28System.Boolean%29"
+    },
+    {
+      "name": "FromDateTime",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDateTime(System.DateTime value)",
+      "summary": "Creates a DateTime value",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDateTime%28System.DateTime%29"
+    },
+    {
+      "name": "FromDisplayString",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDisplayString(string value)",
+      "summary": "Creates a display string value",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDisplayString%28System.String%29"
+    },
+    {
+      "name": "FromDouble",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDouble(double value)",
+      "summary": "Creates a unitless double value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDouble%28System.Double%29"
+    },
+    {
+      "name": "FromDoubleAngle",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDoubleAngle(double value)",
+      "summary": "Creates a double angle value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDoubleAngle%28System.Double%29"
+    },
+    {
+      "name": "FromDoubleArea",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDoubleArea(double value)",
+      "summary": "Creates a double area value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDoubleArea%28System.Double%29"
+    },
+    {
+      "name": "FromDoubleLength",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDoubleLength(double value)",
+      "summary": "Creates a double length value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDoubleLength%28System.Double%29"
+    },
+    {
+      "name": "FromDoubleVolume",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromDoubleVolume(double value)",
+      "summary": "Creates a double volume value",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromDoubleVolume%28System.Double%29"
+    },
+    {
+      "name": "FromIdentifierString",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromIdentifierString(string value)",
+      "summary": "Creates an identifier string value",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 is not convertable to a 7-bit ASCII string"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromIdentifierString%28System.String%29"
+    },
+    {
+      "name": "FromInt32",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromInt32(int value)",
+      "summary": "Creates a 32 bit integer value",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromInt32%28System.Int32%29"
+    },
+    {
+      "name": "FromInt64",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromInt64(long value)",
+      "summary": "Creates a 64 bit integer value",
+      "params": [
+        {
+          "name": "value",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromInt64%28System.Int64%29"
+    },
+    {
+      "name": "FromNamedConstant",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromNamedConstant(Autodesk.Navisworks.Api.NamedConstant value)",
+      "summary": "Creates a named constant value",
+      "params": [
+        {
+          "name": "value",
+          "type": "Autodesk.Navisworks.Api.NamedConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Argument \u0027value\u0027 has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromNamedConstant%28Autodesk.Navisworks.Api.NamedConstant%29"
+    },
+    {
+      "name": "FromNat32",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromNat32(uint value)",
+      "summary": "Creates a Nat32 value",
+      "params": [
+        {
+          "name": "value",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromNat32%28System.UInt32%29"
+    },
+    {
+      "name": "FromNat64",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromNat64(ulong value)",
+      "summary": "Creates a Nat64 value",
+      "params": [
+        {
+          "name": "value",
+          "type": "ulong",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromNat64%28System.UInt64%29"
+    },
+    {
+      "name": "FromNone",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromNone()",
+      "summary": "Creates Data with no value stored",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromNone"
+    },
+    {
+      "name": "FromPoint2D",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromPoint2D(Autodesk.Navisworks.Api.Point2D point)",
+      "summary": "Creates a Point2D value",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point2D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromPoint2D%28Autodesk.Navisworks.Api.Point2D%29"
+    },
+    {
+      "name": "FromPoint2D",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromPoint2D(double x, double y)",
+      "summary": "Creates a 2D point value",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromPoint2D%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "FromPoint3D",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromPoint3D(Autodesk.Navisworks.Api.Point3D point)",
+      "summary": "Creates a Point3D value",
+      "params": [
+        {
+          "name": "point",
+          "type": "Autodesk.Navisworks.Api.Point3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromPoint3D%28Autodesk.Navisworks.Api.Point3D%29"
+    },
+    {
+      "name": "FromPoint3D",
+      "signature": "static Autodesk.Navisworks.Api.VariantData FromPoint3D(double x, double y, double z)",
+      "summary": "Creates a 3D point value",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.FromPoint3D%28System.Double%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.VariantData InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of VariantData.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "ReadFromXml",
+      "signature": "static Autodesk.Navisworks.Api.VariantData ReadFromXml(string type_attrib_value, string element_content_value, bool include_names)",
+      "summary": "Create a VariantData object from serialised XML values",
+      "params": [
+        {
+          "name": "type_attrib_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "element_content_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "include_names",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.VariantData",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ReadFromXml%28System.String%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ElementName",
+      "signature": "static string ElementName()",
+      "summary": "The XML element name used for XML serialization",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ElementName"
+    },
+    {
+      "name": "XmlAttribName",
+      "signature": "static string XmlAttribName()",
+      "summary": "The XML attribute name used for XML serialization",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.XmlAttribName"
+    },
+    {
+      "name": "ToDisplayString",
+      "signature": "string ToDisplayString()",
+      "summary": "Access display string value",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsDisplayString\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToDisplayString"
+    },
+    {
+      "name": "ToIdentifierString",
+      "signature": "string ToIdentifierString()",
+      "summary": "Access identifier string value",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsIdentifierString\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToIdentifierString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "Returns a String that represents the current Object.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": "A String that represents the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToString"
+    },
+    {
+      "name": "ToNat32",
+      "signature": "uint ToNat32()",
+      "summary": "Access LtNat32 value",
+      "params": [],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsNat32\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToNat32"
+    },
+    {
+      "name": "ToNat64",
+      "signature": "ulong ToNat64()",
+      "summary": "Access LtNat64 value",
+      "params": [],
+      "returns": {
+        "type": "ulong",
+        "doc": ""
+      },
+      "throws": [
+        {
+          "type": "System.NotSupportedException",
+          "when": "Not supported if \u0027!IsNat64\u0027"
+        },
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToNat64"
+    },
+    {
+      "name": "ToSerializableString",
+      "signature": "void ToSerializableString(out string str)",
+      "summary": "Write serializable string representation",
+      "params": [
+        {
+          "name": "str",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [
+        {
+          "type": "System.ObjectDisposedException",
+          "when": "Object has been Disposed"
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.VariantData.ToSerializableString%28System.String%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DataType",
+      "type": "Autodesk.Navisworks.Api.VariantDataType",
+      "getter": true,
+      "setter": false,
+      "summary": "Type of value stored",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.DataType"
+    },
+    {
+      "name": "IsAnyDouble",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data any type of double based value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsAnyDouble"
+    },
+    {
+      "name": "IsBoolean",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a boolean value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsBoolean"
+    },
+    {
+      "name": "IsDateTime",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a DateTime value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDateTime"
+    },
+    {
+      "name": "IsDisplayString",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a display string value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDisplayString"
+    },
+    {
+      "name": "IsDouble",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a unitless double value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDouble"
+    },
+    {
+      "name": "IsDoubleAngle",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a double angle value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDoubleAngle"
+    },
+    {
+      "name": "IsDoubleArea",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a double area value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDoubleArea"
+    },
+    {
+      "name": "IsDoubleLength",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a double length value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDoubleLength"
+    },
+    {
+      "name": "IsDoubleVolume",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a double volume value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsDoubleVolume"
+    },
+    {
+      "name": "IsIdentifierString",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data an identifier string value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsIdentifierString"
+    },
+    {
+      "name": "IsInt32",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a unitless 32 bit integer value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsInt32"
+    },
+    {
+      "name": "IsInt64",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data an int64?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsInt64"
+    },
+    {
+      "name": "IsNamedConstant",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a named constant value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsNamedConstant"
+    },
+    {
+      "name": "IsNat32",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data an LtNat32?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsNat32"
+    },
+    {
+      "name": "IsNat64",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data an LtNat64?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsNat64"
+    },
+    {
+      "name": "IsNone",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Does data have no value ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsNone"
+    },
+    {
+      "name": "IsPoint2D",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a 2D point?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsPoint2D"
+    },
+    {
+      "name": "IsPoint3D",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is data a 3D point?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsPoint3D"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.VariantData.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

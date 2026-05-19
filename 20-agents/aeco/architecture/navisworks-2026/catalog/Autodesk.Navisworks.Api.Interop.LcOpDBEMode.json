@@ -1,0 +1,26 @@
+{
+  "name": "LcOpDBEMode",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpDBEMode enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpDBEMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNONE",
+      "value": 0
+    },
+    {
+      "name": "eDOTNET",
+      "value": 1
+    },
+    {
+      "name": "eACTIVEX",
+      "value": 2
+    }
+  ]
+}

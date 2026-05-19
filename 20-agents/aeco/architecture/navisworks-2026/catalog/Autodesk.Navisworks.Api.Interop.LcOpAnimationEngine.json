@@ -1,0 +1,270 @@
+{
+  "name": "LcOpAnimationEngine",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpAnimationEngine class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine",
+  "constructors": [
+    {
+      "name": "LcOpAnimationEngine()",
+      "signature": "LcOpAnimationEngine()",
+      "summary": "Constructs a new LcOpAnimationEngine.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FindAnimation",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimation FindAnimation(Autodesk.Navisworks.Api.Interop.LcUInt32Vector source)",
+      "summary": "FindAnimation method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Autodesk.Navisworks.Api.Interop.LcUInt32Vector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.FindAnimation%28Autodesk.Navisworks.Api.Interop.LcUInt32Vector%29"
+    },
+    {
+      "name": "FindAnimation",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpAnimation FindAnimation(Autodesk.Navisworks.Api.SavedItemReference source)",
+      "summary": "FindAnimation method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "source",
+          "type": "Autodesk.Navisworks.Api.SavedItemReference",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.FindAnimation%28Autodesk.Navisworks.Api.SavedItemReference%29"
+    },
+    {
+      "name": "CaptureKeyFrame",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame CaptureKeyFrame(Autodesk.Navisworks.Api.Interop.LcOpAnimation anim, Autodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext context)",
+      "summary": "CaptureKeyFrame method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+          "optional": false
+        },
+        {
+          "name": "context",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpKeyFrame",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.CaptureKeyFrame%28Autodesk.Navisworks.Api.Interop.LcOpAnimation%2CAutodesk.Navisworks.Api.Interop.LcOpAnimationKeyFrameContext%29"
+    },
+    {
+      "name": "GetInterface",
+      "signature": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface GetInterface()",
+      "summary": "GetInterface method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.GetInterface"
+    },
+    {
+      "name": "CalcInterpolatedToolTransform",
+      "signature": "bool CalcInterpolatedToolTransform(Autodesk.Navisworks.Api.Interop.LcOpAnimation anim, Autodesk.Navisworks.Api.Transform3D transform)",
+      "summary": "CalcInterpolatedToolTransform method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "anim",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimation",
+          "optional": false
+        },
+        {
+          "name": "transform",
+          "type": "Autodesk.Navisworks.Api.Transform3D",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.CalcInterpolatedToolTransform%28Autodesk.Navisworks.Api.Interop.LcOpAnimation%2CAutodesk.Navisworks.Api.Transform3D%29"
+    },
+    {
+      "name": "IsActive",
+      "signature": "bool IsActive()",
+      "summary": "IsActive method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.IsActive"
+    },
+    {
+      "name": "IsPlaying",
+      "signature": "bool IsPlaying()",
+      "summary": "IsPlaying method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.IsPlaying"
+    },
+    {
+      "name": "IsPlayingSelection",
+      "signature": "bool IsPlayingSelection()",
+      "summary": "IsPlayingSelection method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.IsPlayingSelection"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpAnimationEngine",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "IsInitialised",
+      "signature": "static bool IsInitialised()",
+      "summary": "IsInitialised method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.IsInitialised"
+    },
+    {
+      "name": "Initialise",
+      "signature": "static void Initialise()",
+      "summary": "Initialise method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.Initialise"
+    },
+    {
+      "name": "Terminate",
+      "signature": "static void Terminate()",
+      "summary": "Terminate method of LcOpAnimationEngine.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.Terminate"
+    },
+    {
+      "name": "SetInterface",
+      "signature": "void SetInterface(Autodesk.Navisworks.Api.Interop.LcOpModelInterface model)",
+      "summary": "SetInterface method of LcOpAnimationEngine.",
+      "params": [
+        {
+          "name": "model",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpModelInterface",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.SetInterface%28Autodesk.Navisworks.Api.Interop.LcOpModelInterface%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpAnimationEngine.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpAnimationEngine.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

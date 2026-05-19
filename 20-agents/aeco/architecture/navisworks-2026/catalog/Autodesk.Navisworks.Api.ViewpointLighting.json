@@ -1,0 +1,34 @@
+{
+  "name": "ViewpointLighting",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "The lighting of the viewpoint",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ViewpointLighting",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "Turns off lighting completely"
+    },
+    {
+      "name": "SceneLights",
+      "value": 1,
+      "summary": "Lights provided by user in model"
+    },
+    {
+      "name": "Headlight",
+      "value": 2,
+      "summary": "An automatic headlight provided by viewer"
+    },
+    {
+      "name": "FullLights",
+      "value": 3,
+      "summary": "Advanced level of lighting, implemented by application"
+    }
+  ]
+}

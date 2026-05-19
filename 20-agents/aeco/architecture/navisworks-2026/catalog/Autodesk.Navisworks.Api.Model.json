@@ -1,0 +1,256 @@
+{
+  "name": "Model",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Represents a loaded model within the model hierarchy",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Model",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Determines whether the specified object and the current object refer to the same underlying native object. Returns false if either object has been disposed.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Model.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "Serves as a hash function for a particular type. GetHashCode is suitable for use in hashing algorithms and data structures like a hash table.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "A hash code for the current Object."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Model.GetHashCode"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Model InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of Model.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Model",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Model.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of Model.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Model.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Creator",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of creating file loader or design application. Null if unknown.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.Creator"
+    },
+    {
+      "name": "FileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Filename this model was loaded from",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.FileName"
+    },
+    {
+      "name": "FrontVector",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred front vector for model. Will be zero if no front vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.FrontVector"
+    },
+    {
+      "name": "Guid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Globally unique identifier for this model",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.Guid"
+    },
+    {
+      "name": "HasFrontVector",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there a front vector defined for model ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.HasFrontVector"
+    },
+    {
+      "name": "HasNorthVector",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there a north vector defined for model ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.HasNorthVector"
+    },
+    {
+      "name": "HasRightVector",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there a right vector defined for model ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.HasRightVector"
+    },
+    {
+      "name": "HasUpVector",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is there an up vector defined for model ?",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.HasUpVector"
+    },
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the object is read-only.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.IsReadOnly"
+    },
+    {
+      "name": "IsTransformReflected",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Is the transform reflected.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.IsTransformReflected"
+    },
+    {
+      "name": "NorthVector",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred north vector for model. Will be zero if no north vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.NorthVector"
+    },
+    {
+      "name": "PublishProperties",
+      "type": "Autodesk.Navisworks.Api.PublishProperties",
+      "getter": true,
+      "setter": false,
+      "summary": "Properties specified when model was last published. Will be null if model has not been published.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.PublishProperties"
+    },
+    {
+      "name": "RightVector",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred right vector for model. Will be zero if no right vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.RightVector"
+    },
+    {
+      "name": "RootItem",
+      "type": "Autodesk.Navisworks.Api.ModelItem",
+      "getter": true,
+      "setter": false,
+      "summary": "Root item of the model hierarchy corresponding to this model",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.RootItem"
+    },
+    {
+      "name": "SchemaDefinitions",
+      "type": "Autodesk.Navisworks.Api.Schema.SchemaDefinitionCollection",
+      "getter": true,
+      "setter": false,
+      "summary": "Schema definitions in use by this model.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.SchemaDefinitions"
+    },
+    {
+      "name": "SourceFileName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Original source filename this model was first converted from. Null if unknown.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.SourceFileName"
+    },
+    {
+      "name": "SourceGuid",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Get original Guid that this model was created with. Guid may be modified to ensure all models within a sheet have unique Guids. If the same model is appended to a sheet twice, each model has the same SourceGuid but different Guids.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.SourceGuid"
+    },
+    {
+      "name": "Transform",
+      "type": "Autodesk.Navisworks.Api.Transform3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Transform applied to the model.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.Transform"
+    },
+    {
+      "name": "Units",
+      "type": "Autodesk.Navisworks.Api.Units",
+      "getter": true,
+      "setter": false,
+      "summary": "Units in which dimensions of this model are defined",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.Units"
+    },
+    {
+      "name": "UpVector",
+      "type": "Autodesk.Navisworks.Api.UnitVector3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Preferred up vector for model. Will be zero if no up vector defined.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Model.UpVector"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,203 @@
+{
+  "name": "LcOpSavedItemGuidSet",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "class",
+  "summary": "LcOpSavedItemGuidSet class in Autodesk.Navisworks.Api.Interop.",
+  "base": "Autodesk.Navisworks.Api.NativeHandle",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet",
+  "constructors": [
+    {
+      "name": "LcOpSavedItemGuidSet()",
+      "signature": "LcOpSavedItemGuidSet()",
+      "summary": "Constructs a new LcOpSavedItemGuidSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.%23ctor"
+    },
+    {
+      "name": "LcOpSavedItemGuidSet(Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet)",
+      "signature": "LcOpSavedItemGuidSet(Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet that)",
+      "summary": "Constructs a new LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "that",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.%23ctor%28Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Find",
+      "signature": "Autodesk.Navisworks.Api.SavedItem Find(System.Guid guid)",
+      "summary": "Find method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.SavedItem",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.Find%28System.Guid%29"
+    },
+    {
+      "name": "Enter",
+      "signature": "bool Enter(Autodesk.Navisworks.Api.SavedItem item, uint flags)",
+      "summary": "Enter method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        },
+        {
+          "name": "flags",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.Enter%28Autodesk.Navisworks.Api.SavedItem%2CSystem.UInt32%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "bool Remove(System.Guid guid)",
+      "summary": "Remove method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "guid",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.Remove%28System.Guid%29"
+    },
+    {
+      "name": "InternalCreator",
+      "signature": "static Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet InternalCreator(nint handleIn, Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership ownership, Autodesk.Navisworks.Api.NativeHandle parent)",
+      "summary": "InternalCreator method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "handleIn",
+          "type": "nint",
+          "optional": false
+        },
+        {
+          "name": "ownership",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership",
+          "optional": false
+        },
+        {
+          "name": "parent",
+          "type": "Autodesk.Navisworks.Api.NativeHandle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.InternalCreator%28System.IntPtr%2CAutodesk.Navisworks.Internal.ApiImplementation.NativeHandleOwnership%2CAutodesk.Navisworks.Api.NativeHandle%29"
+    },
+    {
+      "name": "InternalFactory",
+      "signature": "static Autodesk.Navisworks.Api.NativeHandle InternalFactory(ref Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit reserved)",
+      "summary": "InternalFactory method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "reserved",
+          "type": "Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Autodesk.Navisworks.Api.NativeHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.InternalFactory%28Autodesk.Navisworks.Internal.ApiImplementation.NativeHandleInit%40%29"
+    },
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of LcOpSavedItemGuidSet.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.Clear"
+    },
+    {
+      "name": "RemoveRecursive",
+      "signature": "void RemoveRecursive(Autodesk.Navisworks.Api.SavedItem item)",
+      "summary": "RemoveRecursive method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "item",
+          "type": "Autodesk.Navisworks.Api.SavedItem",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.RemoveRecursive%28Autodesk.Navisworks.Api.SavedItem%29"
+    },
+    {
+      "name": "Swap",
+      "signature": "void Swap(Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet guid_set)",
+      "summary": "Swap method of LcOpSavedItemGuidSet.",
+      "params": [
+        {
+          "name": "guid_set",
+          "type": "Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#M%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.Swap%28Autodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsReadOnly property of LcOpSavedItemGuidSet.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.Interop.LcOpSavedItemGuidSet.IsReadOnly"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

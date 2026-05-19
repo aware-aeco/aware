@@ -1,0 +1,22 @@
+{
+  "name": "LcOpRenderSettingNumericPrecision",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpRenderSettingNumericPrecision enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRenderSettingNumericPrecision",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ePRECISION_STANDARD",
+      "value": 0
+    },
+    {
+      "name": "ePRECISION_HIGH",
+      "value": 1
+    }
+  ]
+}

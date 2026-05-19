@@ -1,0 +1,44 @@
+{
+  "name": "PrimitiveTypes",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "enum",
+  "summary": "Different types of primitive used to define geometry",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.PrimitiveTypes",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0,
+      "summary": "No primitives"
+    },
+    {
+      "name": "Triangles",
+      "value": 1,
+      "summary": "Includes triangle primitives"
+    },
+    {
+      "name": "Lines",
+      "value": 2,
+      "summary": "Includes line primitives"
+    },
+    {
+      "name": "Points",
+      "value": 4,
+      "summary": "Includes point primitives"
+    },
+    {
+      "name": "SnapPoints",
+      "value": 8,
+      "summary": "Includes snap point primitives"
+    },
+    {
+      "name": "Text",
+      "value": 16,
+      "summary": "Includes text primitives"
+    }
+  ]
+}

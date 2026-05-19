@@ -1,0 +1,47 @@
+{
+  "name": "ProgressUpdatingEventArgs",
+  "namespace": "Autodesk.Navisworks.Api",
+  "kind": "class",
+  "summary": "Event arguments used for the Application::ProgressUpdating event",
+  "base": "Autodesk.Navisworks.Api.ProgressEventArgs",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.ProgressUpdatingEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Canceled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Sets a value indicating whether the operation should be canceled.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressUpdatingEventArgs.Canceled"
+    },
+    {
+      "name": "OverallFractionDone",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the fraction of the overall progress operation that has been done. Displayed in title bar of Navisworks progress dialog.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressUpdatingEventArgs.OverallFractionDone"
+    },
+    {
+      "name": "Progress",
+      "type": "Autodesk.Navisworks.Api.Progress",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a reference to the Progress class instance relating to this Event.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressUpdatingEventArgs.Progress"
+    },
+    {
+      "name": "SubOperationFractionDone",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the fraction of the current progress sub-operation that has been done. Displayed in the progress bar of the Navisworks progress dialog.",
+      "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#P%3AAutodesk.Navisworks.Api.ProgressUpdatingEventArgs.SubOperationFractionDone"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,22 @@
+{
+  "name": "LcOpRenderSettingRenderCondition",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOpRenderSettingRenderCondition enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOpRenderSettingRenderCondition",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eRENDERTOLEVEL",
+      "value": 0
+    },
+    {
+      "name": "eRENDERTOTIME",
+      "value": 1
+    }
+  ]
+}

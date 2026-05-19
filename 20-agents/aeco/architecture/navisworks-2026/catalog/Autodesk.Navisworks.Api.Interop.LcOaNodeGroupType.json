@@ -1,0 +1,34 @@
+{
+  "name": "LcOaNodeGroupType",
+  "namespace": "Autodesk.Navisworks.Api.Interop",
+  "kind": "enum",
+  "summary": "LcOaNodeGroupType enum in Autodesk.Navisworks.Api.Interop.",
+  "interfaces": [],
+  "doc_url": "https://aps.autodesk.com/developer/overview/navisworks-api#T:Autodesk.Navisworks.Api.Interop.LcOaNodeGroupType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eGROUP_ASSEMBLY",
+      "value": 0
+    },
+    {
+      "name": "eGROUP_INSERT",
+      "value": 1
+    },
+    {
+      "name": "eGROUP_LAYER",
+      "value": 2
+    },
+    {
+      "name": "eGROUP_COLLECTION",
+      "value": 3
+    },
+    {
+      "name": "eGROUP_COMPOSITE",
+      "value": 4
+    }
+  ]
+}
