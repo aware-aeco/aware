@@ -202,6 +202,30 @@ public class SchemaTests
     [InlineData("tekla-tedds-26", "Tekla.Structural.InteropAssemblies.Tedds.TdsCalcStatus.json")]
     public void Tedds_Catalog_Validates_Against_Type_Schema(string agentDir, string fileName)
     {
+        ValidateCatalogFile("engineering", agentDir, fileName);
+    }
+
+    /// <summary>
+    /// Spot-check the Bluebeam Studio API catalog files against the per-Type schema.
+    /// Covers an *Api class, a Request DTO with one+ properties, and a Misc/Jobs-class
+    /// reach so each top-level vertical of the IR is exercised.
+    /// </summary>
+    [Theory]
+    [InlineData("bluebeam-v1", "Bluebeam.StudioApi.Sessions.SessionsApi.json")]
+    [InlineData("bluebeam-v1", "Bluebeam.StudioApi.Sessions.Models.CreateSessionRequest.json")]
+    [InlineData("bluebeam-v1", "Bluebeam.StudioApi.Jobs.ProjectFileJobsApi.json")]
+    [InlineData("bluebeam-v1", "Bluebeam.StudioApi.Misc.MiscApi.json")]
+    public void Bluebeam_Catalog_Validates_Against_Type_Schema(string agentDir, string fileName)
+    {
+        ValidateCatalogFile("architecture", agentDir, fileName);
+    }
+
+    /// <summary>
+    /// Shared per-catalog-file schema validator. Resolves the file path by walking up
+    /// from the test binary, then evaluates against the standalone Type schema.
+    /// </summary>
+    static void ValidateCatalogFile(string vertical, string agentDir, string fileName)
+    {
         var schemaPath = Path.Combine(AppContext.BaseDirectory, "host-coverage-type.schema.json");
         if (!File.Exists(schemaPath))
         {
@@ -221,7 +245,7 @@ public class SchemaTests
             var cursor = AppContext.BaseDirectory;
             for (int i = 0; i < 8 && cursor is not null; i++)
             {
-                var probe = Path.Combine(cursor, "20-agents", "aeco", "engineering", agentDir, "catalog", fileName);
+                var probe = Path.Combine(cursor, "20-agents", "aeco", vertical, agentDir, "catalog", fileName);
                 if (File.Exists(probe)) return probe;
                 cursor = Path.GetDirectoryName(cursor);
             }
@@ -235,6 +259,53 @@ public class SchemaTests
         {
             var sb = new System.Text.StringBuilder();
             sb.AppendLine($"Catalog fragment violations in {agentDir}/catalog/{fileName}:");
+            void Walk(EvaluationResults r, int depth)
+            {
+                if (r.Errors is not null)
+                {
+                    foreach (var (k, v) in r.Errors)
+                        sb.AppendLine(new string(' ', depth * 2) + $"@{r.InstanceLocation}: {k} = {v}");
+                }
+                if (r.Details is not null)
+                {
+                    foreach (var d in r.Details)
+                        if (!d.IsValid) Walk(d, depth + 1);
+                }
+            }
+            Walk(result, 0);
+            Assert.Fail(sb.ToString());
+        }
+    }
+
+    /// <summary>
+    /// Validate the Bluebeam Studio API IR against the root schema. The IR is committed
+    /// to cli-sidecar/Ingest/Output/ — if the Postman-collection-derived shape ever
+    /// regresses against the schema, this test catches it before commit.
+    /// </summary>
+    [Theory]
+    [InlineData("bluebeam-v1.ir.json")]
+    public void Bluebeam_IR_Validates_Against_Schema(string fileName)
+    {
+        var schema = LoadSchema();
+        string? Find(string here)
+        {
+            string? cursor = here;
+            for (int i = 0; i < 8 && cursor is not null; i++)
+            {
+                var probe = Path.Combine(cursor, "cli-sidecar", "Ingest", "Output", fileName);
+                if (File.Exists(probe)) return probe;
+                cursor = Path.GetDirectoryName(cursor);
+            }
+            return null;
+        }
+        var path = Find(AppContext.BaseDirectory);
+        if (path is null) return;  // IR not generated yet — skip rather than fail.
+        var ir = JsonDocument.Parse(File.ReadAllText(path));
+        var result = schema.Evaluate(ir.RootElement, new EvaluationOptions { OutputFormat = OutputFormat.Hierarchical });
+        if (!result.IsValid)
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine($"Schema violations in {fileName}:");
             void Walk(EvaluationResults r, int depth)
             {
                 if (r.Errors is not null)

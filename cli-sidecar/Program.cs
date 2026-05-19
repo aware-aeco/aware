@@ -163,27 +163,19 @@ internal static class Program
                             "tedds" or "tekla-tedds" => Ingest.Extractors.Tedds.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
                             // Solibri extractor (Phase B B13) — OSO REST API OpenAPI YAML from
-                            // solibri.github.io/Developer-Platform. Single source (YAML only;
-                            // Solibri does not ship an openapi-generator markdown tree). Versions
-                            // 26.4.1 (served via /latest/ alias) and 25.12.0 carry the same YAML
-                            // surface today — both yield ~28 types (14 schemas + ~14 synthetic
-                            // *Api classes derived from path-prefix tags). Small surface; under
-                            // the 50-type strict-verify threshold so the protocol's sample-size
-                            // adaptation handles it.
+                            // solibri.github.io/Developer-Platform.
                             "solibri" => Ingest.Extractors.Solibri.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
                             // Dynamo extractor (Phase B B11) — hybrid NuGet (XML doc + DLL reflection)
-                            // + GitHub Trees API for source-file URLs. Versions 4.1.0.4845 + 4.1.1.4941
-                            // ship byte-identical XML docs (verified at build time), so both IRs are
-                            // produced from the same public API surface; the host_version field
-                            // distinguishes them along with the NuGet+GitHub source URLs. Dynamo has
-                            // no canonical hosted HTML reference site — the legacy dynamods.github.io
-                            // is 404 and Autodesk publishes no per-release docs site — so the NuGet
-                            // payload IS the canonical source (it's what any rendered docs site would
-                            // be built from). See cli-sidecar/Ingest/Extractors/Dynamo/Extractor.cs
-                            // for the source rationale + caveats. 4.1.1 has no GitHub tag yet so
-                            // doc_urls point at the master ref (documented in EXTRACTION-NOTES.md).
+                            // + GitHub Trees API for source-file URLs.
                             "dynamo" => Ingest.Extractors.Dynamo.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
+                            // Bluebeam extractor (Phase B B14) — Bluebeam Studio API from the
+                            // public Postman v2.1 collection at
+                            // https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json.
+                            // Auth-walled developer portal; the Postman JSON is the only public
+                            // machine-readable description.
+                            "bluebeam" => Ingest.Extractors.Bluebeam.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")

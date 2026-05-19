@@ -1,0 +1,46 @@
+{
+  "name": "CreateSessionRequest",
+  "namespace": "Bluebeam.StudioApi.Sessions.Models",
+  "kind": "class",
+  "summary": "Request body DTO for the corresponding \u0060CreateSession\u0060 operation. Synthesized from the Postman example schema.",
+  "interfaces": [],
+  "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Name\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Notification",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Notification\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "Restricted",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060Restricted\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    },
+    {
+      "name": "SessionEndDate",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Request-body field \u0060SessionEndDate\u0060 (type inferred from example).",
+      "doc_url": "https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
