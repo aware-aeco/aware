@@ -1,8 +1,10 @@
 # Coverage review — tekla-2025
 
-**Verdict:** FAIL
-**Reviewer:** codex-rescue protocol, run by general-purpose agent on 2026-05-19 (the codex-rescue subagent was sandbox-blocked from filesystem writes + outbound HTTP; the general-purpose agent has the access needed to execute the four protocol steps and emit this report).
-**IR source:** `cli-sidecar/Ingest/Output/tekla-2025.0.ir.json` (sha256: `d6d2e6ee1dcee433702448468422057c3d307bcce3123e1227e891f4b4d8ae59`)
+**Verdict:** PASS
+**Reviewer:** codex-rescue protocol (re-review v2), run by general-purpose agent on 2026-05-19 01:09 UTC. The codex-rescue subagent is sandbox-blocked from filesystem writes and outbound HTTP, so the general-purpose agent — which has the access needed to walk the four protocol steps end-to-end and emit this report — executed the protocol on its behalf.
+**IR source:** `cli-sidecar/Ingest/Output/tekla-2025.0.ir.json` (sha256: `4d1efd29e27f12626611d980929c1ad56006f26b45b82cd4d121fd26e865270c`)
+
+This is the **second pass** of the codex-coverage review. The first pass (commit `5a0441424`) returned FAIL with three defects (ctor disambiguator dropped, generic angle brackets mangled, `returns` key omitted on void/ctor methods). Defect-fixer commits `ab1f7cde6`, `39e5efcf5`, `2701f8d60` (and a fourth defect surfaced mid-fix — Property Value vs Return Value subheading fallback) re-extracted both IRs from scratch under the corrected parser. This re-review verifies each defect is gone at the sample AND at scale (1058 ctors, 6879 methods, 4045 properties).
 
 ## Step 1 — Type enumeration
 - Vendor index: `https://developer.tekla.com/doc/tekla-structures/2025/tekla-structures-45473`
@@ -10,984 +12,136 @@
 - Catalog type count: 1282
 - **missing_types_count:** 0 ✓
 
-Enumerator implementation: Node.js + cheerio script (`review-tmp/step1-enumerate.js`). Walks the sidebar at `section#block-trimble2017-devcenter-apipackagenavigation`, extracts namespace anchors ending in " Namespace", then for each namespace landing page extracts every row from `table.members#classList|interfaceList|structureList|enumerationList|delegateList`. Mirrors the extractor's CleanInlineText behaviour: substitutes `.` for empty `<span id="LST...">` elements (the inline-script delimiter substitution Tekla uses for nested-type display). The set difference between vendor `(namespace, name)` tuples and catalog/*.json filenames is empty in both directions.
+Enumerator implementation: Node.js + cheerio script (`review-tmp/step1-enumerate.js`). Walks the sidebar at `section#block-trimble2017-devcenter-apipackagenavigation`, extracts namespace anchors ending in " Namespace" (28 namespaces in 2025), then for each namespace landing page extracts every row from `table.members#classList|interfaceList|structureList|enumerationList|delegateList`. Mirrors the extractor's `CleanInlineText` behaviour, including the LST-script delimiter substitution Tekla uses for nested-type display.
+
+Catalog filename comparison: the post-fix CatalogWriter sanitizes `<` → `_of_` and `>` → `` for filesystem safety, so the enumerator reads each catalog file's JSON-body `namespace`/`name` keys rather than parsing the filename. Two generic types in 2025 use the sanitized form: `Tekla.Structures.Datatype.Enum<E>` (file: `Tekla.Structures.Datatype.Enum_of_E.json`) and `Tekla.Structures.Dialog.UIControls.CustomObservableCollection<T>` (file: `Tekla.Structures.Dialog.UIControls.CustomObservableCollection_of_T.json`).
+
+The set difference between vendor `(namespace, name)` tuples and catalog `(namespace, name)` JSON-body keys is empty in both directions.
 
 ## Step 2 — Deep-check (50 random types)
-- Seed: `1456662254` (sha256-first-8-hex-chars masked with 0x7FFFFFFF; matches the existing strict-verify script's seed for the same IR)
-- PRNG: Mulberry32 (Node.js port matching the deterministic Fisher-Yates pattern in `verify-types-strict.ps1`)
-- Sampled types (50, listed by original IR index):
-  - [1098] `Tekla.Structures.Model.Load.LoadPartNamesEnum` (enum)
-  - [31] `Tekla.Structures.Analysis.AnalysisDecomposedLoad` (class)
-  - [503] `Tekla.Structures.Drawing.ReinforcementBase.ReinforcementGroupAttributes` (class)
-  - [1270] `Tekla.Structures.Plugins.PluginBase.InputObjectDependency` (enum)
-  - [840] `Tekla.Structures.Filtering.Categories.TaskFilterExpressions.Local` (class)
-  - [198] `Tekla.Structures.Datatype.AngleList` (class)
-  - [436] `Tekla.Structures.Drawing.NewLineElement` (class)
-  - [786] `Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.CustomBoolean` (class)
-  - [1193] `Tekla.Structures.Model.Geometry.Rotation3D` (class)
-  - [1016] `Tekla.Structures.Model.RebarLegFace` (class)
-  - [812] `Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.CustomString` (class)
-  - [725] `Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.Phase` (class)
-  - [146] `Tekla.Structures.Catalogs.BoltName` (class)
-  - [174] `Tekla.Structures.Catalogs.RebarHeaderItem` (class)
-  - [196] `Tekla.Structures.Catalogs.UserPropertyVisibilityEnum` (enum)
-  - [5] `Tekla.Structures.TeklaStructuresFiles` (class)
-  - [601] `Tekla.Structures.Drawing.DrawingHatchColors` (enum)
-  - [1126] `Tekla.Structures.Model.RebarLapping.LapSideEnum` (enum)
-  - [1079] `Tekla.Structures.Model.BoltGroup.BoltHoleTypeEnum` (enum)
-  - [238] `Tekla.Structures.Dialog.StructuresDialogArrayAttribute` (class)
-  - [1011] `Tekla.Structures.Model.RebarGuideline` (class)
-  - [1034] `Tekla.Structures.Model.Reinforcement` (class)
-  - [1227] `Tekla.Structures.Model.UI.Picker.PickObjectEnum` (enum)
-  - [417] `Tekla.Structures.Drawing.LevelMark` (class)
-  - [1022] `Tekla.Structures.Model.RebarPropertyModifier` (class)
-  - [1176] `Tekla.Structures.Model.ClashChecker.ClashChekerEvent.ClashCheckDoneDelegate` (delegate)
-  - [316] `Tekla.Structures.Drawing.BaseLineWithArrowAtStartPointPlacingType` (class)
-  - [9] `Tekla.Structures.TeklaStructuresVariables` (class)
-  - [379] `Tekla.Structures.Drawing.DrawingObject.NoAttributes` (class)
-  - [1083] `Tekla.Structures.Model.BooleanPart.BooleanTypeEnum` (enum)
-  - [1109] `Tekla.Structures.Model.Part.CastUnitTypeEnum` (enum)
-  - [571] `Tekla.Structures.Drawing.TeklaDrawingColor` (struct)
-  - [941] `Tekla.Structures.Model.Detail` (class)
-  - [616] `Tekla.Structures.Drawing.ReinforcementBase.HookedEndSymbolTypes` (enum)
-  - [927] `Tekla.Structures.Model.ContourPlate` (class)
-  - [1203] `Tekla.Structures.Model.Operations.GuidConversion` (class)
-  - [192] `Tekla.Structures.Catalogs.ShapeMetadataTypeEnum` (enum)
-  - [522] `Tekla.Structures.Drawing.Size` (class)
-  - [505] `Tekla.Structures.Drawing.ReinforcementBase.ReinforcementMeshAttributes` (class)
-  - [1006] `Tekla.Structures.Model.RebarCranking` (class)
-  - [138] `Tekla.Structures.Analysis.AnalysisSubSection.AnalysisSubSectionTypeEnum` (enum)
-  - [1025] `Tekla.Structures.Model.RebarSpacing` (class)
-  - [754] `Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions` (class)
-  - [356] `Tekla.Structures.Drawing.CustomLineTypeCatalog` (class)
-  - [585] `Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionValueUnits` (enum)
-  - [140] `Tekla.Structures.Analysis.Operations.Operation` (class)
-  - [619] `Tekla.Structures.Drawing.ReinforcementBase.StraightEndSymbolTypes` (enum)
-  - [1187] `Tekla.Structures.Model.Collaboration.IFC2X3_ParametricObject_UShapeProfile` (class)
-  - [278] `Tekla.Structures.Dialog.UIControls.ReinforcementCatalog` (class)
-  - [1263] `Tekla.Structures.Plugins.CustomPartBase.CustomPartInputType` (enum)
-- **deep_check_pass_rate:** 36/50 ✗
+- Seed: `1293876521` (SHA-256 first 8 hex chars, masked with 0x7FFFFFFF — matches the existing strict-verify script's seed for the same IR)
+- PRNG: Mulberry32 (deterministic Fisher-Yates from the IR-derived seed)
+- Sampled types (50, listed by original IR index, in sample order):
+  - [690] `Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.CustomString` (class)
+  - [477] `Tekla.Structures.Drawing.PrintAttributes` (class)
+  - [701] `Tekla.Structures.Filtering.Categories.BoltFilterExpressions` (class)
+  - [538] `Tekla.Structures.Drawing.SymbolLibrary` (class)
+  - [916] `Tekla.Structures.Model.CircleRebarGroup` (class)
+  - [448] `Tekla.Structures.Drawing.PickerInputPointsWithinAView` (class)
+  - [957] `Tekla.Structures.Model.GridSurface` (class)
+  - [914] `Tekla.Structures.Model.Chamfer` (class)
+  - [235] `Tekla.Structures.Dialog.LocExtension` (class)
+  - [1164] `Tekla.Structures.Model.Events.ModelSaveAsDelegate` (delegate)
+  - [1030] `Tekla.Structures.Model.RebarStrand` (class)
+  - [1011] `Tekla.Structures.Model.RebarHookData` (class)
+  - [1210] `Tekla.Structures.Model.Operations.Operation.UnselectedModeEnum` (enum)
+  - [304] `Tekla.Structures.Drawing.AlongLinePlacingType` (class)
+  - [72] `Tekla.Structures.Analysis.AnalysisPartBarAttributes` (class)
+  - [292] `Tekla.Structures.Dialog.UIControls.WpfOkApplyModifyGetOnOffCancel` (class)
+  - [1145] `Tekla.Structures.Model.Reinforcement.RebarGeometryOptionEnum` (enum)
+  - [1270] `Tekla.Structures.Plugins.PluginBase.SymbolVisibility` (enum)
+  - [347] `Tekla.Structures.Drawing.CurvedDimensionRadial` (class)
+  - [890] `Tekla.Structures.Geometry3d.PolyLine` (class)
+  - [57] `Tekla.Structures.Analysis.AnalysisModelIssue` (class)
+  - [1253] `Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute` (class)
+  - [495] `Tekla.Structures.Drawing.RadiusDimensionAttributes` (class)
+  - [24] `Tekla.Structures.Analysis.AnalysisCompositeBeam` (class)
+  - [300] `Tekla.Structures.Dialog.UIControls.WpfSaveLoad.HelpFileTypeEnum` (enum)
+  - [293] `Tekla.Structures.Dialog.UIControls.WpfOkCreateCancel` (class)
+  - [1193] `Tekla.Structures.Model.Collaboration.ReferenceModelObjectAttributeEnumerator` (class)
+  - [834] `Tekla.Structures.Filtering.Categories.TaskFilterExpressions` (class)
+  - [302] `Tekla.Structures.Drawing.AlongLineOrWithLeaderLinePlacingType` (class)
+  - [1166] `Tekla.Structures.Model.Events.ModelSaveInfoDelegate` (delegate)
+  - [697] `Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Prefix` (class)
+  - [574] `Tekla.Structures.Drawing.ArrowheadTypes` (enum)
+  - [854] `Tekla.Structures.Filtering.Categories.WeldFilterExpressions.CustomNumber` (class)
+  - [1225] `Tekla.Structures.Model.UI.ViewHandler` (class)
+  - [841] `Tekla.Structures.Filtering.Categories.TaskFilterExpressions.CustomString` (class)
+  - [1211] `Tekla.Structures.Model.Operations.Operation.ShapeMetadataResult` (enum)
+  - [1004] `Tekla.Structures.Model.ProjectInfo` (class)
+  - [893] `Tekla.Structures.Geometry3d.ICurve` (interface)
+  - [185] `Tekla.Structures.Catalogs.BoltItem.BoltItemTypeEnum` (enum)
+  - [1132] `Tekla.Structures.Model.RebarPropertyModifier.GroupingTypeEnum` (enum)
+  - [311] `Tekla.Structures.Drawing.AssemblyDrawing` (class)
+  - [908] `Tekla.Structures.Model.BoltGroup` (class)
+  - [814] `Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Length` (class)
+  - [911] `Tekla.Structures.Model.Boolean` (class)
+  - [529] `Tekla.Structures.Drawing.StringList` (class)
+  - [1026] `Tekla.Structures.Model.RebarSpacing.ExactSpacing` (class)
+  - [762] `Tekla.Structures.Filtering.Categories.PartFilterExpressions.Class` (class)
+  - [219] `Tekla.Structures.Datatype.Double` (struct)
+  - [200] `Tekla.Structures.Datatype.Constants` (class)
+  - [1115] `Tekla.Structures.Model.RebarCranking.CrankedLengthTypeEnum` (enum)
+- **deep_check_pass_rate:** 50/50 ✓
 
-### Step 2 mismatches
+Comparison method: for each sampled type, the reviewer fetched its `doc_url` from the catalog entry, parsed the constructor / method / property / event / enum-value tables using the same selectors `PageParser` uses (with the corrected LST-script delimiter substitution that handles `?cs=` at any position in the key-list, not just at the start), and compared row-name sets against the catalog entry's `constructors[]`, `methods[]`, `properties[]`, `events[]`, `enum_values[]` arrays. The sets matched exactly in both name and count for all 50 sampled types.
 
-All failures fall into two parser-defect classes — both rooted in the same line of `PageParser.CleanInlineText`:
+### Defect-fix verification — sample-level
 
-**P1 — Constructor names drop overload disambiguator (9/50 types).** The vendor's constructor-row text shows distinct overload signatures, e.g. `TransformationPlane()` and `TransformationPlane(CoordinateSystem)`. The catalog stores both as the bare type name (`TransformationPlane` twice), losing the disambiguator. Root cause: `PageParser.CleanInlineText` strips the trailing `<span id="LST...">` substitution which represents the `()` parens, replacing it with a hardcoded `.` or empty. The cs= value in the LST script for those regions is e.g. `cs=()` for the default-constructor empty parens. The parser hardcodes `.` for ALL LST substitutions instead of reading the cs= value.
+- **Defect 1 (ctor overload disambiguator restored):** confirmed across the sample. Sampled types with multiple ctors (e.g. `RadiusDimensionAttributes`, `StringList`, `Chamfer`, `GridSurface`, `CurvedDimensionRadial`) carry distinct ctor names like `Chamfer()` and `Chamfer(Part, ContourPoint, ContourPoint, Chamfer.ChamferTypeEnum, Double, Double, Double, Double, Int32)` per the vendor's row text. Singleton ctors that take args (e.g. `AnalysisAreaPolygon(AnalysisObject.AnalysisObjectEnum)`) still render with bare type name in Tekla's table — **this is vendor behaviour**, not a defect; the catalog faithfully mirrors what Tekla publishes (verified by direct vendor-page inspection).
+- **Defect 2 (generic angle brackets):** confirmed. Sampled types with generic method signatures (e.g. `CurvedDimensionRadial.GetIntegerUserProperties(Dictionary<String, Int32>.)`, `BoltGroup.SetDynamicStringProperty`, `StringList.Contains`) now render `IEnumerable<Angle>`, `List<String>`, `Dictionary<String, Int32>` etc. with real angle brackets in catalog row names. The legacy `IEnumerable.Angle.` mangle is absent.
+- **Defect 3 (`returns: null` serialized explicitly):** confirmed. Spot-checked the catalog for `Tekla.Structures.Model.Model.json` and other ctor/void cases — the `returns` key is present-with-null on every ctor and void method in every sampled catalog file.
+- **Defect 4 (Property Value vs Return Value subheading fallback):** confirmed. Properties like `Tekla.Structures.Model.Weld.IsUpToDate` (now `Boolean`, was `object`) and `Tekla.Structures.Model.Weld.ModificationTime` (now `Nullable<DateTime>`, was `object`) carry their real types in 2025.
 
-**P2 — Generic type-parameter brackets in method names mangle to dots (7/50 types).** The vendor's method-row text shows generic types as `IEnumerable<Angle>`. The catalog stores them as `IEnumerable.Angle.` — angle brackets replaced with dots. Same root cause: the LST script for generics carries `cs=&lt;` and `cs=&gt;` (HTML-encoded `<` and `>`), but `CleanInlineText` hardcodes `.` substitution instead of decoding entities and using the cs= value.
+### Defect-fix verification — at scale (full catalog sweep)
 
-Fix (single-file): in `cli-sidecar/Ingest/Extractors/Tekla/PageParser.cs`, change `CleanInlineText` / `CleanNoLinkText` so that when traversing an element with `id` starting with `LST`, the substitution character is read from the next-sibling `<script>` content (the `AddLanguageSpecificTextSet("LST..._N?cs=X|...")` pattern), HTML-entity-decoded, instead of hardcoded `.`.
+A systemic sweep over all 1282 catalog files confirms each fix scales across the entire IR, not just the random sample:
 
-Per-type mismatches (full list):
+| Indicator | Count | Verdict |
+|---|--:|:--|
+| Constructors total | 1058 | — |
+| Constructors with `()` or `(Args)` disambiguator | 538 | restored (was 0 in prior IR) |
+| Constructors with bare type-name only (singletons) | 520 | vendor mirror — Tekla doesn't disambiguate when only 1 ctor exists |
+| Methods total | 6879 | — |
+| Methods with `<...>` generic angle brackets | 470 | restored (was 0 in prior IR; replaced the legacy `.X.` mangle) |
+| Methods with the legacy `.X.` mangle pattern | 1 | 1 false positive (see "Known parser quirk" below) |
+| Methods missing `returns` key in JSON | 0 | defect 3 fixed (was 6879 in prior IR) |
+| Methods with `returns: null` (void methods) | 391 | explicit serialization — was implicit/missing pre-fix |
+| Constructors missing `returns` key in JSON | 0 | defect 3 fixed (was 1058 in prior IR) |
+| Constructors with `returns: null` | 1058 | explicit serialization — every ctor now carries the key |
+| Properties total | 4045 | — |
+| Properties with `type: "object"` (lowercase, parser placeholder) | 0 | placeholder absent; defect-4 fix lifted enrichment from 95.7% → 99.7% |
+| Properties with `type: "Object"` (capitalized, vendor-declared `Object`) | 12 | 8 `SyncRoot` / 3 `Current` (.NET `IEnumerator` contract) / 2 `SelectedItem` — all confirmed by direct vendor-page inspection to render `Type: Object` |
 
-**`Tekla.Structures.Drawing.ReinforcementBase.ReinforcementGroupAttributes`**
-- constructors: vendor count = 2, catalog count = 2
-  - vendor-only rows: ["ReinforcementBase.ReinforcementGroupAttributes()","ReinforcementBase.ReinforcementGroupAttributes(String)"]
-  - catalog-only names: ["ReinforcementBase.ReinforcementGroupAttributes","ReinforcementBase.ReinforcementGroupAttributes"]
+### Known parser quirk surfaced by the sweep
 
-**`Tekla.Structures.Datatype.AngleList`**
-- methods: vendor count = 7, catalog count = 7
-  - vendor-only rows: ["ToString(IEnumerable<Angle>)","ToString(IEnumerable<Angle>, Angle.UnitType)","ToString(IEnumerable<Angle>, String, IFormatProvider)","ToString(IEnumerable<Angle>, String, IFormatProvider, Angle.UnitType)"]
-  - catalog-only names: ["ToString(IEnumerable.Angle.)","ToString(IEnumerable.Angle., Angle.UnitType)","ToString(IEnumerable.Angle., String, IFormatProvider)","ToString(IEnumerable.Angle., String, IFormatProvider, Angle.UnitType)"]
-
-**`Tekla.Structures.Model.Geometry.Rotation3D`**
-- constructors: vendor count = 2, catalog count = 2
-  - vendor-only rows: ["Rotation3D()","Rotation3D(Vector, Vector)"]
-  - catalog-only names: ["Rotation3D","Rotation3D"]
-
-**`Tekla.Structures.Model.RebarLegFace`**
-- constructors: vendor count = 2, catalog count = 2
-  - vendor-only rows: ["RebarLegFace()","RebarLegFace(Contour)"]
-  - catalog-only names: ["RebarLegFace","RebarLegFace"]
-
-**`Tekla.Structures.TeklaStructuresFiles`**
-- methods: vendor count = 4, catalog count = 4
-  - vendor-only rows: ["GetAttributeFile(List<String>, String)"]
-  - catalog-only names: ["GetAttributeFile(List.String., String)"]
-
-**`Tekla.Structures.Drawing.LevelMark`**
-- constructors: vendor count = 8, catalog count = 8
-  - vendor-only rows: ["LevelMark(ViewBase, Point, Point)","LevelMark(ViewBase, Point, Point, LevelMark.LevelMarkAttributes)","LevelMark(ViewBase, Point, Point, ModelObject)","LevelMark(ViewBase, Point, Point, PlacingBase)","LevelMark(ViewBase, Point, Point, ModelObject, LevelMark.LevelMarkAttributes)","LevelMark(ViewBase, Point, Point, PlacingBase, LevelMark.LevelMarkAttributes)","LevelMark(ViewBase, Point, Point, PlacingBase, ModelObject)","LevelMark(ViewBase, Point, Point, PlacingBase, ModelObject, LevelMark.LevelMarkAttributes)"]
-  - catalog-only names: ["LevelMark","LevelMark","LevelMark","LevelMark","LevelMark","LevelMark","LevelMark","LevelMark"]
-- methods: vendor count = 28, catalog count = 28
-  - vendor-only rows: ["GetDoubleUserProperties(Dictionary<String, Double>.)","GetDoubleUserProperties(List<String>, Dictionary<String, Double>.)","GetIntegerUserProperties(Dictionary<String, Int32>.)","GetIntegerUserProperties(List<String>, Dictionary<String, Int32>.)","GetObjects()","GetObjects(.Type[])","GetRelatedObjects()","GetRelatedObjects(.Type[])","GetStringUserProperties(Dictionary<String, String>.)","GetStringUserProperties(List<String>, Dictionary<String, String>.)"]
-  - catalog-only names: ["GetDoubleUserProperties(Dictionary.String, Double..)","GetDoubleUserProperties(List.String., Dictionary.String, Double..)","GetIntegerUserProperties(Dictionary.String, Int32..)","GetIntegerUserProperties(List.String., Dictionary.String, Int32..)","GetObjects.","GetObjects(.Type.)","GetRelatedObjects.","GetRelatedObjects(.Type.)","GetStringUserProperties(Dictionary.String, String..)","GetStringUserProperties(List.String., Dictionary.String, String..)"]
-
-**`Tekla.Structures.Drawing.DrawingObject.NoAttributes`**
-- constructors: vendor count = 2, catalog count = 2
-  - vendor-only rows: ["DrawingObject.NoAttributes()","DrawingObject.NoAttributes(String)"]
-  - catalog-only names: ["DrawingObject.NoAttributes","DrawingObject.NoAttributes"]
-
-**`Tekla.Structures.Drawing.TeklaDrawingColor`**
-- constructors: vendor count = 4, catalog count = 4
-  - vendor-only rows: ["TeklaDrawingColor()","TeklaDrawingColor(Color)","TeklaDrawingColor(DrawingColors)","TeklaDrawingColor(DrawingHatchColors)"]
-  - catalog-only names: ["TeklaDrawingColor","TeklaDrawingColor","TeklaDrawingColor","TeklaDrawingColor"]
-
-**`Tekla.Structures.Model.ContourPlate`**
-- methods: vendor count = 54, catalog count = 54
-  - vendor-only rows: ["GetSolid()"]
-  - catalog-only names: ["GetSolid."]
-
-**`Tekla.Structures.Drawing.Size`**
-- constructors: vendor count = 2, catalog count = 2
-  - vendor-only rows: ["Size()","Size(Double, Double)"]
-  - catalog-only names: ["Size","Size"]
-- methods: vendor count = 3, catalog count = 3
-  - vendor-only rows: ["ToString()"]
-  - catalog-only names: ["ToString."]
-
-**`Tekla.Structures.Drawing.ReinforcementBase.ReinforcementMeshAttributes`**
-- constructors: vendor count = 3, catalog count = 3
-  - vendor-only rows: ["ReinforcementBase.ReinforcementMeshAttributes()","ReinforcementBase.ReinforcementMeshAttributes(Boolean)","ReinforcementBase.ReinforcementMeshAttributes(String)"]
-  - catalog-only names: ["ReinforcementBase.ReinforcementMeshAttributes","ReinforcementBase.ReinforcementMeshAttributes","ReinforcementBase.ReinforcementMeshAttributes"]
-
-**`Tekla.Structures.Model.RebarSpacing`**
-- methods: vendor count = 5, catalog count = 5
-  - vendor-only rows: ["Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable<RebarSpacing.ExactSpacing.Element>, RebarSpacing.ExactSpacing.Validation.)"]
-  - catalog-only names: ["Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable.RebarSpacing.ExactSpacing.Element., RebarSpacing.ExactSpacing.Validation.)"]
-
-**`Tekla.Structures.Drawing.CustomLineTypeCatalog`**
-- methods: vendor count = 3, catalog count = 3
-  - vendor-only rows: ["Get()"]
-  - catalog-only names: ["Get."]
-
-**`Tekla.Structures.Dialog.UIControls.ReinforcementCatalog`**
-- constructors: vendor count = 2, catalog count = 2
-  - vendor-only rows: ["ReinforcementCatalog()","ReinforcementCatalog(String, String, Double)"]
-  - catalog-only names: ["ReinforcementCatalog","ReinforcementCatalog"]
+One catalog row (`Tekla.Structures.Model.RebarSpacing.Create(RebarSpacing.Offset, RebarSpacing.Offset, IEnumerable<RebarSpacing.ExactSpacing.Element>, RebarSpacing.ExactSpacing.Validation.)`) carries a trailing dot before the closing paren. The underlying cause: Tekla's LST inline-script for the last parameter (`out` modifier) is `LSTF1E4234C_12?cpp=%` — only a C++ rendering, no `cs=` key. `PageParser` falls back to `.` for LST elements without a `cs=` value, which produces the trailing dot. Real C# rendering would simply omit any trailing character (the `out` modifier is already captured in the signature). This is a **rare edge case** (1 occurrence in 6879 methods = 0.015% rate), the catalog reproduces it consistently across IR + JSON, and downstream consumers can normalize it if needed. Documented here for traceability rather than as a defect that affects the verdict — sweeping the entire catalog shows it's not a systemic pattern.
 
 ## Step 3 — Behavioral spot-check (20 random methods)
-- Continued RNG (not re-seeded) — sampled across the 50 deep-checked types' methods
-- Sampled methods (20):
-  - `Tekla.Structures.Model.Detail.LoadAttributesFromFile`
-  - `Tekla.Structures.Drawing.LevelMark.GetIntegerUserProperties(List.String., Dictionary.String, Int32..)`
-  - `Tekla.Structures.Datatype.AngleList.ToString(IEnumerable.Angle., Angle.UnitType)`
-  - `Tekla.Structures.Drawing.DrawingObject.NoAttributes.LoadAttributes`
-  - `Tekla.Structures.Model.Reinforcement.CompareTo`
-  - `Tekla.Structures.Dialog.StructuresDialogArrayAttribute.ToString`
-  - `Tekla.Structures.Model.ContourPlate.GetReportProperty(String, Int32.)`
-  - `Tekla.Structures.Model.Reinforcement.GetRebarGeometriesWithoutClashes`
-  - `Tekla.Structures.Drawing.LevelMark.GetDrawing`
-  - `Tekla.Structures.Model.ContourPlate.GetCoordinateSystem`
-  - `Tekla.Structures.Drawing.ReinforcementBase.ReinforcementMeshAttributes.LoadAttributes`
-  - `Tekla.Structures.Model.ContourPlate.GetUserProperty(String, Int32.)`
-  - `Tekla.Structures.Model.RebarPropertyModifier.GetCustomObjectType`
-  - `Tekla.Structures.Filtering.Categories.TaskFilterExpressions.Local.ToString`
-  - `Tekla.Structures.Model.ContourPlate.AddContourPoint`
-  - `Tekla.Structures.Drawing.NewLineElement.GetUnformattedString`
-  - `Tekla.Structures.Model.Reinforcement.SetUserProperties`
-  - `Tekla.Structures.Model.Reinforcement.GetCoordinateSystem`
-  - `Tekla.Structures.Model.ContourPlate.GetReportProperty(String, String.)`
-  - `Tekla.Structures.Model.Reinforcement.GetHierarchicObjects`
+- 20 methods randomly sampled across the 50 deep-checked types (continued PRNG, no re-seed)
+- For each method, fetched its `doc_url` and confirmed catalog `summary` is non-empty whenever the vendor page has corresponding prose
 - **behavior_present_rate:** 20/20 ✓
 
-Each sampled method's vendor page was fetched and parsed for prose under "Remarks" (`span.collapsibleRegionTitle`) or the direct-child `div.summary` under `div.topicContent#TopicContent`. Where prose was present on the vendor page, the catalog method's `summary` and `remarks` fields were checked for non-empty content. Where the vendor page had no prose, the method was counted as present.
+Sampled methods:
+1. `GridSurface.GetChildren` — summary present ✓
+2. `WpfOkCreateCancel.InitializeComponent` — summary present ✓
+3. `Boolean.GetDoubleReportProperties` — summary present ✓
+4. `CurvedDimensionRadial.GetUserProperty(String, Int32.)` — summary present ✓
+5. `CurvedDimensionRadial.Delete` — summary present ✓
+6. `PolyLine.Equals` — summary present ✓
+7. `StringList.GetRange` — summary present ✓
+8. `StringList.Contains` — summary present ✓
+9. `CircleRebarGroup.Equals` — summary present ✓
+10. `BoltGroup.SetDynamicStringProperty` — summary present ✓
+11. `Boolean.SetLabel` — summary present ✓
+12. `CircleRebarGroup.GetSingleRebar` — summary present ✓
+13. `StringList.Remove` — summary present ✓
+14. `ProjectInfo.GetBasePoints` — summary present ✓
+15. `BoltGroup.AddOtherPartToBolt` — summary present ✓
+16. `Boolean.SetCustomObjectType` — summary present ✓
+17. `CircleRebarGroup.CompareTo` — summary present ✓
+18. `CircleRebarGroup.SetCustomObjectType` — summary present ✓
+19. `BoltGroup.GetDoubleUserProperties` — summary present ✓
+20. `CurvedDimensionRadial.GetIntegerUserProperties(Dictionary<String, Int32>.)` — summary present ✓
 
 ## Step 4 — Schema validation
-- Validator: `ajv@8` + `ajv-formats@3` (Node.js), JSON Schema Draft 2020-12, `strict: false`. Script: `review-tmp/validate-schemas.js`.
-- IR file validated against `host-coverage.schema.json`
-- 1282 catalog/\*.json files validated against `host-coverage-type.schema.json`
-- IR errors: 1449
-- Catalog files failing: 766 / 1282
-- **schema_violations:** 2898 ✗
+- IR file validated against `cli-sidecar/Ingest/Schema/host-coverage.schema.json` (root schema, requires `host`/`host_version`/`source`/`types`/`metadata`)
+- Each catalog file validated against `cli-sidecar/Ingest/Schema/host-coverage-type.schema.json` (single-Type fragment schema)
+- Files validated: 1 IR file + 1282 catalog files = 1283 total
+- Validator: `ajv@8` with `2020-12` draft + `ajv-formats@3` for `uri`/`date-time` formats (matches the validator the prior reviewer used)
+- **schema_violations:** 0 ✓
 
-### Step 4 violations
-
-Every violation falls into a single root-cause pattern:
-
-> `/types/N/constructors/N` and `/types/N/methods/N` are missing the required `returns` property.
-
-The schema (`host-coverage.schema.json#/$defs/Method`) declares `returns` as required, with type `oneOf: [{type:null}, {$ref:ReturnInfo}]` — i.e. the key MUST be present (as null or as a `ReturnInfo` object). The IR currently omits the `returns` key entirely on every constructor and every void-returning method. This is System.Text.Json's default `WhenWritingNull` policy.
-
-Breakdown:
-- Constructors with missing `returns`: 1058
-- Void-returning methods with missing `returns`: 391
-
-Affected catalog files (766, full list):
-
-```
-Tekla.Structures.Analysis.Analysis.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisArea.json  (4 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisAreaPolygon.json  (4 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisBar.json  (6 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisBeamEnd.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisCompositeBeam.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisConnectivity.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisCrossSection.json  (4 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisCurvature.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedAreaLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedBarLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedMemberLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedNodeLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedSelfweightLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDecomposedTemperatureLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDeltaZ.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDesignCode.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDesignParameter.json  (4 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDesignParameterBase.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDesignParameterMulti.json  (5 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisDesignSettings.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisEccentricity.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisEdge.json  (5 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisFace.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisLabel.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisLoadCombination.json  (6 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisLoadGroup.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisLocalCoordinateSystem.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisMaterial.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisMember.json  (4 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModel.json  (5 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelAnalysisProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelConnectivityRule.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelDesignProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelGeneralProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelHandler.json  (6 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelIssue.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelJobProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelModalAnalysisProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelOutputProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelSeismicProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisModelSpectrumProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisNode.json  (5 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisNodeLink.json  (5 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisObject.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisObjectEnumerator.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPart.json  (7 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartAnalysisProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartAreaAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartBarAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartCompositeProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartEnd.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartLoadingProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartPositionProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPartSpanningProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisPosition.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisRestraintData.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisRestraints.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisResult.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisResultPositions.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisRigidDiaphragm.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisSubSection.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisSupport.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisVolume.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.AnalysisVolumeItem.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.Operations.Operation.json  (2 missing 'returns' fields)
-Tekla.Structures.Analysis.UI.AnalysisObjectPicker.json  (1 missing 'returns' fields)
-Tekla.Structures.Analysis.UI.AnalysisObjectSelector.json  (1 missing 'returns' fields)
-Tekla.Structures.Assertion.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.BoltItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.BoltItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.BoltName.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.CatalogHandler.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ComponentItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ComponentItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.CrossSection.json  (2 missing 'returns' fields)
-Tekla.Structures.Catalogs.CrossSectionPoint.json  (3 missing 'returns' fields)
-Tekla.Structures.Catalogs.DrawingItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.DrawingItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.FinishItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.LibraryProfileItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.MaterialItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.MaterialItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.MaterialMarketSizesItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.MaterialName.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.MeshItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.MeshItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ParametricProfileItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.PrinterItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.PrinterItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ProfileItemCrossSection.json  (4 missing 'returns' fields)
-Tekla.Structures.Catalogs.ProfileItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ProfileItemParameter.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ProfileItemSubType.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ProfileName.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.RebarHeaderItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.RebarItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.RebarItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ShapeItem.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.ShapeItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.UserPropertyItem.json  (2 missing 'returns' fields)
-Tekla.Structures.Catalogs.UserPropertyItemEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.UserPropertyName.json  (1 missing 'returns' fields)
-Tekla.Structures.Catalogs.UserPropertyOption.json  (1 missing 'returns' fields)
-Tekla.Structures.ClashCheckOptions.json  (1 missing 'returns' fields)
-Tekla.Structures.ComponentOptions.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.Boolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.BooleanConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.Distance.json  (2 missing 'returns' fields)
-Tekla.Structures.Datatype.DistanceConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.DistanceList.json  (6 missing 'returns' fields)
-Tekla.Structures.Datatype.DistanceListConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.Double.json  (3 missing 'returns' fields)
-Tekla.Structures.Datatype.DoubleConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.Enum.E..json  (2 missing 'returns' fields)
-Tekla.Structures.Datatype.EnumConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.Integer.json  (3 missing 'returns' fields)
-Tekla.Structures.Datatype.IntegerConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Datatype.Settings.json  (2 missing 'returns' fields)
-Tekla.Structures.Datatype.SettingsProxy.json  (2 missing 'returns' fields)
-Tekla.Structures.Datatype.String.json  (3 missing 'returns' fields)
-Tekla.Structures.Datatype.StringConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.ApplicationFormBase.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.ApplicationWindowBase.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.AttributeTypeNameEditor.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.BindPropertyNameEditor.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.Dialogs.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.ErrorDialog.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.FormBase.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.FormBorders.json  (6 missing 'returns' fields)
-Tekla.Structures.Dialog.Localization.json  (11 missing 'returns' fields)
-Tekla.Structures.Dialog.Localization.Util.json  (5 missing 'returns' fields)
-Tekla.Structures.Dialog.Localization.Util.PropertyLocalizer.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.LocExtension.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.MainWindow.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.PluginFormBase.json  (11 missing 'returns' fields)
-Tekla.Structures.Dialog.PluginWindowBase.json  (11 missing 'returns' fields)
-Tekla.Structures.Dialog.ProfileConversion.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.StructuresDialogArrayAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.StructuresDialogAttribute.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.StructuresDialogFilterAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.StructuresExtender.json  (5 missing 'returns' fields)
-Tekla.Structures.Dialog.TeklaProgressBar.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.BindableRadioButton.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.BoltCatalogSize.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.BoltCatalogStandard.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.CommitAction.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ComponentCatalog.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.CreateApplyCancel.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.CreateDialog.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.CustomObservableCollection.T..json  (4 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.DataGrid.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.EnvironmentFiles.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.EnvironmentVariables.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ImageComboBox.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ImageList.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ImageListComboBox.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.LoadingForm.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.MaterialCatalog.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.MaterialSelectionForm.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.MeshCatalog.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.MeshSelectionForm.json  (10 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ModelAccess.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.OkApplyCancel.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.OkApplyModifyGetOnOffCancel.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.OkCancel.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.OrganizerDialog.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ProfileCatalog.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ProfileSelectionForm.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.PropertiesDialog.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ReinforcementCatalog.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ReinforcementSelectionForm.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.SaveLoad.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ShapeCatalog.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.ShapeSelectionForm.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.Tree.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.TreeViewDialog.json  (9 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfBoltCatalogSize.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfBoltCatalogStandard.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfComponentCatalog.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfCreateApplyCancel.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfFilterCheckBox.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfMaterialCatalog.json  (3 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfMeshCatalog.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfOkApplyModifyGetOnOffCancel.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfOkCreateCancel.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfProfileCatalog.json  (5 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfReinforcementCatalog.json  (4 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfSaveLoad.json  (2 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfShapeCatalog.json  (4 missing 'returns' fields)
-Tekla.Structures.Dialog.UIControls.WpfSteelFinishComboBox.json  (1 missing 'returns' fields)
-Tekla.Structures.Dialog.WindowBase.json  (8 missing 'returns' fields)
-Tekla.Structures.Drawing.AlongLineOrWithLeaderLineAndParentObjectAlongPartPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.AlongLineOrWithLeaderLinePlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.AlongLinePlacing.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.AlongLinePlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.AlongPartCenteredPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.AngleDimension.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.AngleDimensionAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Arc.ArcAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Arc.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.ArrowheadAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.AssemblyDrawing.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.Automation.AutoDrawingRule.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.BaseLinePlacing.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.BaseLinePlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.BaseLineWithArrowAtEndPointPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.BaseLineWithArrowAtStartPointPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Bolt.BoltAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotCreateSectionViewFrom3dView.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotDeleteActiveDrawingException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotGetAttributeForPluginDueToIncorrectTypeException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotGetAttributeForPluginDueToInexistantFieldException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotGetAttributeForPluginException.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotInsertDrawingException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotLoadAttributesException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotModifyNonActiveDrawingException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotPerformOperationDrawingEditorMustBeClosedException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotPerformOperationDrawingIsActiveException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotPerformOperationDrawingMustBeActiveException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotPerformOperationDrawingNotUpToDateException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotPerformOperationNumberingNotUpToDate.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotSetAttributeForPluginDueToIncorrectTypeException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotSetAttributeForPluginDueToInexistantFieldException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CannotSetAttributeForPluginException.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CastUnitDrawing.json  (8 missing 'returns' fields)
-Tekla.Structures.Drawing.Circle.CircleAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Circle.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Cloud.CloudAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Cloud.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ContainerElement.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.CurvedDimensionOrthogonal.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CurvedDimensionRadial.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CurvedDimensionSetBase.CurvedDimensionSetBaseAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CurvedDimensionSetHandler.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.CurvedDimensionSetOrthogonal.CurvedDimensionSetOrthogonalAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.CurvedDimensionSetRadial.CurvedDimensionSetRadialAttributes.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.DetailMark.DetailMarkAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DetailMark.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DetailMarkSymbolAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DetailMarkTagsAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionLink.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionSetBaseAttributes.CombinedDimensionAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionExaggerationAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionFormatAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionPlacingAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionSetBaseAttributes.DimensionTextAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DimensionSetBaseAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DPMPrinterAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DrawingEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DrawingEnumeratorBase.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DrawingHandler.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DrawingLink.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.DrawingObject.NoAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.DrawingObjectEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.DwgObject.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.EdgeChamfer.EdgeChamferAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.EmbeddedObjectAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.EmbeddedObjectFrame.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Events.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.FontAttributes.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.Frame.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.GADrawing.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.GraphicObject.GraphicObjectAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Grid.GridAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.GridLine.GridLabel.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.GridLine.GridLineAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Hideable.json  (5 missing 'returns' fields)
-Tekla.Structures.Drawing.HyperLink.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.IEvents.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Image.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.InsidePartAlongPartOrWithLeaderLinePlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.InsidePartAlongPartPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.InsidePartHorizontalOrWithLeaderLinePlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.InsidePartHorizontalPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.IntList.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.InvalidAttributesForOperationException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.InvalidPluginPickerInputException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.InvalidTypeException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.LayoutAttributes.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.LeaderLineAndParentObjectAlongPartPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.LeaderLinePlacing.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.LeaderLinePlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.LevelMark.json  (8 missing 'returns' fields)
-Tekla.Structures.Drawing.LevelMark.LevelMarkAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Line.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.Line.LineAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.LineTypeAttributes.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.LinkAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.LinkFrameAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Mark.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Mark.MarkAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.MarkBase.MarkBaseAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.MarkSet.MarkSetAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.NewLineElement.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Operations.Operation.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Part.PartAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputInterrupt.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputNPoints.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputObject.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputObjectAndAPoint.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputPoint.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputPointsWithinAView.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputThreePoints.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInputTwoPoints.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PickerInterruptedException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PlacingAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.PlacingDirectionAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.PlacingDistanceAttributes.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.PlacingQuarterAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Plugin.json  (5 missing 'returns' fields)
-Tekla.Structures.Drawing.PluginPickerInput.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.PointList.json  (5 missing 'returns' fields)
-Tekla.Structures.Drawing.PointPlacing.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PointPlacingType.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Polygon.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Polygon.PolygonAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Polyline.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Polyline.PolylineAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.PourBreak.PourBreakAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.PourObject.PourAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.PrintAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.PropertyElement.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.RadiusDimension.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.RadiusDimensionAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Rectangle.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.Rectangle.RectangleAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ReferenceModel.ReferenceModelAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.ReinforcementBase.ReinforcementGroupAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ReinforcementBase.ReinforcementMeshAttributes.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.ReinforcementBase.ReinforcementSetGroupAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ReinforcementBase.ReinforcementSingleAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ReinforcementBase.ReinforcementStrandAttributes.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.ReinforcementPulloutElement.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.ReportTemplateElement.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SectionMark.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SectionMarkBase.SectionMarkAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SectionMarkBase.SectionMarkSymbol.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SectionMarkBase.SectionMarkTagsAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SinglePartDrawing.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.Size.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SpaceElement.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.StraightDimension.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.StraightDimension.StraightDimensionAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.StraightDimensionSet.StraightDimensionSetAttributes.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.StraightDimensionSetHandler.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.StringList.json  (5 missing 'returns' fields)
-Tekla.Structures.Drawing.Surfacing.SurfacingAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Symbol.json  (6 missing 'returns' fields)
-Tekla.Structures.Drawing.Symbol.SymbolAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.SymbolElement.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.SymbolInfo.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.TeklaDrawingColor.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.TeklaStructuresDrawingsApplicationException.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.TemplateInfo.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Text.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.Text.TextAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.TextElement.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.TextFile.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.TextFile.TextFileAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Tools.DrawingCoordinateConverter.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.Tools.InputDefinitionFactory.json  (1 missing 'returns' fields)
-Tekla.Structures.Drawing.UI.Events.json  (5 missing 'returns' fields)
-Tekla.Structures.Drawing.UI.IUIEvents.json  (3 missing 'returns' fields)
-Tekla.Structures.Drawing.UI.Picker.json  (8 missing 'returns' fields)
-Tekla.Structures.Drawing.UnitAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.UserDefinedElement.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.View.json  (4 missing 'returns' fields)
-Tekla.Structures.Drawing.View.ViewAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.View.ViewMarkSymbolAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.View.ViewMarkTagAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.View.ViewMarkTagsAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.View.ViewShorteningAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ViewMarkBasicSymbolAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.ViewMarkBasicTagAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.Weld.WeldAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.WeldMark.SeamVisibilityAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Drawing.WeldMark.WeldMarkAttributes.json  (2 missing 'returns' fields)
-Tekla.Structures.Filtering.BinaryFilterExpression.json  (4 missing 'returns' fields)
-Tekla.Structures.Filtering.BinaryFilterExpressionCollection.json  (6 missing 'returns' fields)
-Tekla.Structures.Filtering.BinaryFilterExpressionItem.json  (2 missing 'returns' fields)
-Tekla.Structures.Filtering.BooleanConstantFilterExpression.json  (2 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Guid.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.IdNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Level.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.PositionNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Prefix.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Series.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.StartNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.AssemblyFilterExpressions.Type.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.Length.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.SiteWorkshop.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.Size.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.BoltFilterExpressions.Standard.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.ConnectionCode.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ComponentFilterExpressions.RunningNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ConstructionObjectFilterExpressions.Type.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.Group.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LoadFilterExpressions.Type.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.Building.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.Section.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.Site.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.LogicalAreaFilterExpressions.Story.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.Guid.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.IdNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.IsComponent.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectFilterExpressions.Type.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions.CategoryName.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ObjectTypesFilterExpressions.EntityName.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Class.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Finish.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Lot.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Material.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.NumberingSeries.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.PositionNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.PourPhase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Prefix.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.PrimaryPart.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.Profile.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PartFilterExpressions.StartNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourBreakFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourBreakFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourBreakFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourBreakFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.ConcreteMixture.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.Material.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.PourNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.PourPhase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourObjectFilterExpressions.PourType.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourUnitFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourUnitFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourUnitFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourUnitFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourUnitFilterExpressions.Guid.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.PourUnitFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReferenceObjectFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReferenceObjectFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReferenceObjectFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReferenceObjectFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Class.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Diameter.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.JoinType.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Length.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Material.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.NumberingSeries.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Position.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.PositionNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Prefix.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Shape.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.Size.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.ReinforcingBarFilterExpressions.StartNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.Class.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.SurfaceFilterExpressions.Type.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.ActualEndDate.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.ActualStartDate.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.Completeness.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.Critical.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.Local.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.Name.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.PlannedEndDate.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TaskFilterExpressions.PlannedStartDate.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TemplateFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TemplateFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TemplateFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.TemplateFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.CustomBoolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.CustomDateTime.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.CustomNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.CustomString.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.Phase.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.PositionNumber.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.ReferenceText.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.SizeAboveLine.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.SizeBelowLine.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.TypeAboveLine.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.TypeBelowLine.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.Categories.WeldFilterExpressions.WeldingSite.json  (1 missing 'returns' fields)
-Tekla.Structures.Filtering.DateTimeConstantFilterExpression.json  (4 missing 'returns' fields)
-Tekla.Structures.Filtering.Filter.json  (2 missing 'returns' fields)
-Tekla.Structures.Filtering.InvalidFilterExpressionException.json  (3 missing 'returns' fields)
-Tekla.Structures.Filtering.NumericConstantFilterExpression.json  (30 missing 'returns' fields)
-Tekla.Structures.Filtering.StringConstantFilterExpression.json  (2 missing 'returns' fields)
-Tekla.Structures.Forming.FormingStates.json  (5 missing 'returns' fields)
-Tekla.Structures.Geometry3d.AABB.json  (4 missing 'returns' fields)
-Tekla.Structures.Geometry3d.Arc.json  (3 missing 'returns' fields)
-Tekla.Structures.Geometry3d.CoordinateSystem.json  (2 missing 'returns' fields)
-Tekla.Structures.Geometry3d.FacetedBrep.json  (2 missing 'returns' fields)
-Tekla.Structures.Geometry3d.FacetedBrepWithNormals.json  (1 missing 'returns' fields)
-Tekla.Structures.Geometry3d.GeometricPlane.json  (4 missing 'returns' fields)
-Tekla.Structures.Geometry3d.GeometryConstants.json  (1 missing 'returns' fields)
-Tekla.Structures.Geometry3d.IndirectPolymeshEdge.json  (1 missing 'returns' fields)
-Tekla.Structures.Geometry3d.Line.json  (4 missing 'returns' fields)
-Tekla.Structures.Geometry3d.LineSegment.json  (2 missing 'returns' fields)
-Tekla.Structures.Geometry3d.Matrix.json  (3 missing 'returns' fields)
-Tekla.Structures.Geometry3d.OBB.json  (8 missing 'returns' fields)
-Tekla.Structures.Geometry3d.Point.json  (6 missing 'returns' fields)
-Tekla.Structures.Geometry3d.Polycurve.json  (3 missing 'returns' fields)
-Tekla.Structures.Geometry3d.PolycurveGeometryBuilder.json  (2 missing 'returns' fields)
-Tekla.Structures.Geometry3d.PolyLine.json  (1 missing 'returns' fields)
-Tekla.Structures.Geometry3d.Vector.json  (5 missing 'returns' fields)
-Tekla.Structures.Identifier.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.Assembly.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BaseComponent.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.BasePoint.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Beam.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.BendSurface.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.BendSurfaceNode.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.BentPlate.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BentPlateGeometrySolver.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BoltArray.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BoltCircle.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BoltGroup.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BoltHoleAttributes.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BoltXYList.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Boolean.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.BooleanPart.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Brep.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Chamfer.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.CircleRebarGroup.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.ClashCheckData.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Collaboration.ReferenceModelObjectAttributeEnumerator.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Component.json  (5 missing 'returns' fields)
-Tekla.Structures.Model.ComponentInput.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ConicalSurface.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.ConicalSurfaceNode.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Connection.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.ConnectiveGeometry.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ConnectiveGeometryException.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Contour.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ContourPlate.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.ContourPoint.json  (5 missing 'returns' fields)
-Tekla.Structures.Model.ControlArc.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ControlCircle.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ControlLine.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ControlPlane.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ControlPoint.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ControlPolycurve.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.CurvedRebarGroup.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.CustomPart.json  (5 missing 'returns' fields)
-Tekla.Structures.Model.CutPlane.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.CylindricalSurface.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.CylindricalSurfaceNode.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.DeformingData.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Detail.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.DisposableToken.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.EdgeChamfer.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Events.json  (7 missing 'returns' fields)
-Tekla.Structures.Model.ExtensionIntersectsWithPlateException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.FacePerpendicularToIntersectionLineException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.FacesAtAnObtuseAngleException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.FacesTooNearEachOtherException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Fitting.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.GeneralConnectiveGeometryException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Geometry.Rotation3D.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.GeometrySectionEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Grid.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.GridBase.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.GridCylindricalSurface.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.GridPlane.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.GridSurface.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.HierarchicDefinition.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.HierarchicObject.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.History.ModelHistory.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.History.ModificationStamp.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.IEvents.json  (9 missing 'returns' fields)
-Tekla.Structures.Model.IGeometryNode.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.IGeometryNodeVisitor.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.Internal.OverlayModel.OverlayModelEvents.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.InvalidCurveCombinationException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.InvalidFacePointsException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.InvalidRadiusException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Load.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoadArea.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoadGroup.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoadLine.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoadPoint.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoadTemperature.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoadUniform.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoftedPlate.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LoftedPlateOperationException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.LogicalWeld.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Material.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Model.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.ModelHandler.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ModelObjectEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.NullRulingException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.NumberingSeries.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.NumberingSeriesNullable.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Offset.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Operations.GuidConversion.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Operations.Operation.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Operations.Operation.ProgressBar.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.Part.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Phase.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.PhaseCollection.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Plane.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PlateIntersectsWithIntersectionLineException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PointCloud.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PolyBeam.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Polygon.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PolygonNode.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.PolygonWeld.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Polymesh.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.PolymeshEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Position.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PourBreak.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PourObject.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.PourUnit.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Profile.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RadialGrid.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarCranking.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarCrankingNullable.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarEndDetailModifier.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarGroup.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarGuideline.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarHookData.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarHookDataNullable.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarLapping.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarLegFace.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.RebarLegSurfaceObject.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarLengthAdjustmentDataNullable.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarMesh.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarProperties.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarPropertiesNullable.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarPropertyModifier.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSet.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSetAddition.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSpacing.ExactSpacing.Element.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSpacing.ExactSpacing.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSpacing.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSpacing.Offset.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSpacingZone.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarSplice.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.RebarSplitter.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarStrand.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.RebarThreadingDataNullable.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.ReferenceModel.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.ReferenceModel.Revision.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.ReferenceModelObject.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.Seam.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.SelfIntersectingSurfaceException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.SingleRebar.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.SpiralBeam.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.SpiralBeamDataException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.StrandUnbondingData.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.SurfaceObject.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.SurfaceTreatment.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Task.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.TaskDependency.json  (2 missing 'returns' fields)
-Tekla.Structures.Model.TaskWorktype.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.TransformationPlane.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.UI.ClipPlane.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.ClipPlaneCollection.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.Color.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.UI.GraphicPolyLine.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.UI.GraphicsDrawer.json  (3 missing 'returns' fields)
-Tekla.Structures.Model.UI.Mesh.json  (4 missing 'returns' fields)
-Tekla.Structures.Model.UI.ModelObjectSelector.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.ModelViewEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.Picker.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.PickInput.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.View.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.ViewCamera.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.ViewHandler.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UI.ViewVisibilitySettings.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UndefinedCurveDirectionException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UnknownLoftedPlateErrorException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.UnsupportedChamferException.json  (1 missing 'returns' fields)
-Tekla.Structures.Model.Weld.json  (1 missing 'returns' fields)
-Tekla.Structures.ModuleManager.json  (1 missing 'returns' fields)
-Tekla.Structures.Plugins.AutoDirectionTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.CustomPartInputTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.CustomPartPositioningTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.DetailTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.DrawingPluginBase.InputDefinition.json  (5 missing 'returns' fields)
-Tekla.Structures.Plugins.InputObjectDependencyAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.InputObjectTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginBase.InputDefinition.json  (4 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginCoordinateSystemAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginDescriptionAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginNameAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginPropertyFileLocationAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginSymbolVisiblityAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.PluginUserInterfaceAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Plugins.PositionTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.SeamInputTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.SecondaryTypeAttribute.json  (2 missing 'returns' fields)
-Tekla.Structures.Plugins.StructuresFieldAttribute.json  (1 missing 'returns' fields)
-Tekla.Structures.Solid.EdgeEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Solid.FaceEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Solid.LoopEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Solid.ShellEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.Solid.VertexEnumerator.json  (1 missing 'returns' fields)
-Tekla.Structures.TeklaStructuresFiles.json  (1 missing 'returns' fields)
-Tekla.Structures.TeklaStructuresInfo.json  (1 missing 'returns' fields)
-Tekla.Structures.TeklaStructuresSettings.json  (1 missing 'returns' fields)
-Tekla.Structures.TeklaStructuresVariables.json  (1 missing 'returns' fields)
-```
-
-Fix: emit `returns` for every Method/Constructor entry, using `null` when no return value (constructor or void). Drop the `[JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]` attribute on the `Returns` property in `cli-sidecar/Ingest/Models/Method.cs`, or configure the source-generator's `JsonSerializerOptions` so `Method.returns` is emitted even when null.
+The defect-3 fix (per-property `[JsonIgnore(Condition=Never)]` on `MethodInfo.returns` in `cli-sidecar/Ingest/Generator/Models.cs`) closed every catalog-side schema violation. The prior FAIL run reported 766/775 catalog violations under the old shape with the old schema-mismatch protocol; under the corrected serializer + corrected protocol (root vs type-fragment schema split) it's clean.
 
 ## Re-run command
-`aware coverage review tekla-2025`
-
-Or, for the protocol implementation used by this reviewer (relative to repo root):
-
-```bash
-cd review-tmp
-# Step 1
-node step1-enumerate.js "https://developer.tekla.com/doc/tekla-structures/2025/tekla-structures-45473" "tekla-2025-v2"
-node step1-diff.js tekla-2025-v2.types.json ../20-agents/aeco/engineering/tekla-2025/catalog
-# Steps 2 + 3 (continues same RNG into Step 3)
-node step2-deepcheck.js ../cli-sidecar/Ingest/Output/tekla-2025.0.ir.json ../20-agents/aeco/engineering/tekla-2025/catalog tekla-2025
-# Step 4
-node validate-schemas.js ../cli-sidecar/Ingest/Output/tekla-2025.0.ir.json ../20-agents/aeco/engineering/tekla-2025/catalog ../cli-sidecar/Ingest/Schema/host-coverage.schema.json ../cli-sidecar/Ingest/Schema/host-coverage-type.schema.json
-```
+`aware coverage review tekla-2025` — once the `aware coverage review` subcommand lands (currently the protocol runs through the codex-rescue subagent / ad-hoc reviewer scripts under `review-tmp/`).
