@@ -102,6 +102,34 @@ In practice: a Step 2 FAIL with `pass_rate < 47/50` AND a clustered
 root cause is almost always one or the other. Spot-check before
 writing the final report.
 
+### Sandcastle-style vendor rules (Rhino, Grasshopper, AutoCAD, Navisworks)
+
+Sandcastle (the Microsoft documentation generator) is used by .NET-focused
+vendors. Its DOM has conventions that differ from Tekla's. Reviewers
+processing Sandcastle vendors must apply these rules:
+
+- **Enum rows have no anchor in td[1].** `enumMemberList` rows are plain
+  text (icon | name | value | summary), not `<a>` elements. A reviewer
+  requiring an anchor will misread enum types as having 0 enum_values
+  and produce false-positive Step 2 FAILs. Read enum row names from
+  `td:nth-child(2)` text content.
+- **Filter `[Missing <summary>…]` placeholders.** When the vendor's XML
+  doc comment is missing, Sandcastle renders a red-styled
+  `<p>[Missing &lt;summary&gt; documentation for "M:..."]</p>` inside
+  `div.summary`. The extractor correctly skips these; the reviewer's
+  Step 3 must mirror that filter (treat as "vendor has no prose").
+- **External / inherited member filter.** Sandcastle exposes inherited
+  members from `System.Object` (Equals, ToString, GetType) in the type
+  listing tables with `href` pointing to `docs.microsoft.com` /
+  `learn.microsoft.com`. The extractor SKIPS these. The reviewer's
+  Step 1 enumeration must apply the same filter, OR over-counts the
+  vendor surface by 1-6 rows per type.
+- **Multiple member tables fold into one catalog list.** Sandcastle has
+  `operatorList` (folds into `methods[]`), `fieldList` (folds into
+  `properties[]`), `conversionList` (folds into `methods[]`). Step 2's
+  deep-check must read all of these and merge per the IR convention
+  before comparing against the catalog.
+
 ### Known-legitimate exemptions (false-positive whitelist)
 
 Some property types are genuinely `object` per language contract —
