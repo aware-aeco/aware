@@ -1,0 +1,63 @@
+{
+  "name": "LengthUnits",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Length units",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/LengthUnits/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCentimeters",
+      "value": 1
+    },
+    {
+      "name": "eDecimeters",
+      "value": 2
+    },
+    {
+      "name": "eFeets",
+      "value": 8
+    },
+    {
+      "name": "eFeetsAndInchesDecimal",
+      "value": 9
+    },
+    {
+      "name": "eFeetsAndInchesExact",
+      "value": 11
+    },
+    {
+      "name": "eFeetsAndInchesFractional",
+      "value": 10
+    },
+    {
+      "name": "eInchesDecimal",
+      "value": 5
+    },
+    {
+      "name": "eInchesExact",
+      "value": 7
+    },
+    {
+      "name": "eInchesFractional",
+      "value": 6
+    },
+    {
+      "name": "eKilometers",
+      "value": 4
+    },
+    {
+      "name": "eMeters",
+      "value": 3
+    },
+    {
+      "name": "eMillimeters",
+      "value": 0
+    }
+  ]
+}

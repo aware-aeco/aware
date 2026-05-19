@@ -1,0 +1,27 @@
+{
+  "name": "TextType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Types of text element",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFormularText",
+      "value": 1
+    },
+    {
+      "name": "eNormalText",
+      "value": 0
+    },
+    {
+      "name": "eVariableText",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "name": "StructuralColumnElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the structural framing column",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/",
+  "constructors": [
+    {
+      "name": "StructuralColumnElement()",
+      "signature": "StructuralColumnElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
+    },
+    {
+      "name": "StructuralColumnElement(structuralColumnProp: StructuralColumnProperties)",
+      "signature": "StructuralColumnElement(structuralColumnProp: StructuralColumnProperties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "structuralColumnProp",
+          "type": "StructuralColumnProperties",
+          "doc": "StructuralColumn properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
+    },
+    {
+      "name": "StructuralColumnElement(element: StructuralColumnElement)",
+      "signature": "StructuralColumnElement(element: StructuralColumnElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "StructuralColumnElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetStructuralColumnProperties",
+      "signature": "GetStructuralColumnProperties() -\u003E StructuralColumnProperties",
+      "summary": "Get the Structural Column properties",
+      "remarks": "Get the Structural Column properties",
+      "params": [],
+      "returns": {
+        "type": "StructuralColumnProperties",
+        "doc": "Column properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.GetStructuralColumnProperties"
+    },
+    {
+      "name": "SetAxisVisibility",
+      "signature": "SetAxisVisibility(visibility: bool)",
+      "summary": "Set the Visibility of element axis",
+      "remarks": "Set the Visibility of element axis",
+      "params": [
+        {
+          "name": "visibility",
+          "type": "bool",
+          "doc": "Bool if axis of element should be visible",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.SetAxisVisibility"
+    },
+    {
+      "name": "SetStructuralColumnProperties",
+      "signature": "SetStructuralColumnProperties(structuralColumnProp: StructuralColumnProperties)",
+      "summary": "Set the Structural Column properties",
+      "remarks": "Set the Structural Column properties",
+      "params": [
+        {
+          "name": "structuralColumnProp",
+          "type": "StructuralColumnProperties",
+          "doc": "Column properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.SetStructuralColumnProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "StructuralColumnProperties",
+      "type": "StructuralColumnProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Structural Column properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralColumnElement/#NemAll_Python_ArchElements.StructuralColumnElement.StructuralColumnProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

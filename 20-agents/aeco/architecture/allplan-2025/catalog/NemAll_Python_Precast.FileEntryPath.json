@@ -1,0 +1,39 @@
+{
+  "name": "FileEntryPath",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "paths",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FileEntryPath/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFileEntryPathLibrary",
+      "value": 5
+    },
+    {
+      "name": "eFileEntryPathOffice",
+      "value": 1
+    },
+    {
+      "name": "eFileEntryPathPrivate",
+      "value": 2
+    },
+    {
+      "name": "eFileEntryPathProject",
+      "value": 3
+    },
+    {
+      "name": "eFileEntryPathProjectPlus",
+      "value": 4
+    },
+    {
+      "name": "eFileEntryPathStandard",
+      "value": 0
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "PathID",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Path IDs for the stamp",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PathID/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PathDefaultID",
+      "value": 20
+    },
+    {
+      "name": "PathOfficeID",
+      "value": 30
+    },
+    {
+      "name": "PathPrivateID",
+      "value": 8
+    },
+    {
+      "name": "PathProjectID",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "eComparisionResult",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "comparision result",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eComparisionResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAbove",
+      "value": 6
+    },
+    {
+      "name": "eAntiParallel",
+      "value": 1
+    },
+    {
+      "name": "eBelow",
+      "value": 7
+    },
+    {
+      "name": "eCrossing",
+      "value": 12
+    },
+    {
+      "name": "eEqualToEndPoint",
+      "value": 9
+    },
+    {
+      "name": "eEqualToStartPoint",
+      "value": 8
+    },
+    {
+      "name": "eInside",
+      "value": 10
+    },
+    {
+      "name": "eLeft",
+      "value": 4
+    },
+    {
+      "name": "eNotParallel",
+      "value": 2
+    },
+    {
+      "name": "eOnElement",
+      "value": 3
+    },
+    {
+      "name": "eOutside",
+      "value": 11
+    },
+    {
+      "name": "eParallel",
+      "value": 0
+    },
+    {
+      "name": "eRight",
+      "value": 5
+    },
+    {
+      "name": "eUnknown",
+      "value": 13
+    }
+  ]
+}

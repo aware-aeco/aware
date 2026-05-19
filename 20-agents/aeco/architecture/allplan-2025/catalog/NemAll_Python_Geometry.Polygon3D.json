@@ -1,0 +1,338 @@
+{
+  "name": "Polygon3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation of a plane polygon in a three dimensional space",
+  "base": "PolyPoints3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/",
+  "constructors": [
+    {
+      "name": "Polygon3D()",
+      "signature": "Polygon3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__init__"
+    },
+    {
+      "name": "Polygon3D(pntList: list[Point3D])",
+      "signature": "Polygon3D(pntList: list[Point3D])",
+      "summary": "Constructor with an initializer list",
+      "remarks": "Constructor with an initializer list",
+      "params": [
+        {
+          "name": "pntList",
+          "type": "list[Point3D]",
+          "doc": "Point list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__init__"
+    },
+    {
+      "name": "Polygon3D(polygon: Polygon3D)",
+      "signature": "Polygon3D(polygon: Polygon3D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "Polygon which will be copied",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetLines",
+      "signature": "GetLines() -\u003E Line3DList",
+      "summary": "Get edge lines of polygon",
+      "remarks": "Get edge lines of polygon",
+      "params": [],
+      "returns": {
+        "type": "Line3DList",
+        "doc": "Edge lines of polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.GetLines"
+    },
+    {
+      "name": "GetPlane",
+      "signature": "GetPlane() -\u003E tuple[eGeometryErrorCode, Plane3D]",
+      "summary": "Calculate plane",
+      "remarks": "Calculate plane",
+      "params": [],
+      "returns": {
+        "type": "tuple[eGeometryErrorCode, Plane3D]",
+        "doc": "Plane where polygon is"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.GetPlane"
+    },
+    {
+      "name": "GetVertices",
+      "signature": "GetVertices() -\u003E object",
+      "summary": "Get polygon vertices",
+      "remarks": "Get polygon vertices",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "polygon vertices"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.GetVertices"
+    },
+    {
+      "name": "InsertPolygon",
+      "signature": "InsertPolygon(polygon: Polygon3D, position: int = -1) -\u003E bool",
+      "summary": "Insert a polygon into current one",
+      "remarks": "Insert a polygon into current one",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "Polygon which will be inserted",
+          "optional": false
+        },
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "Position where the polygon will be inserted",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if insert was successful"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.InsertPolygon"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Check polygon validity",
+      "remarks": "Check polygon validity",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true = valid, false = not valid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.IsValid"
+    },
+    {
+      "name": "IsValidStatus",
+      "signature": "IsValidStatus() -\u003E tuple",
+      "summary": "Check polygon validity",
+      "remarks": "Check polygon validity",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "true = valid, false = not valid,"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.IsValidStatus"
+    },
+    {
+      "name": "Normalize",
+      "signature": "Normalize( normalizeType: ePolygonNormalizeType = DEFAULT_NORM_TYPE, extra_smooth: bool = False, )",
+      "summary": "Normalization of 3d polygon",
+      "remarks": "Normalization of 3d polygon",
+      "params": [
+        {
+          "name": "normalizeType",
+          "type": "ePolygonNormalizeType",
+          "doc": "Normalization type",
+          "optional": false
+        },
+        {
+          "name": "extra_smooth",
+          "type": "bool",
+          "doc": "Increase level of details",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.Normalize"
+    },
+    {
+      "name": "NormalizeNoThrow",
+      "signature": "NormalizeNoThrow( normalizeType: ePolygonNormalizeType = DEFAULT_NORM_TYPE, extra_smooth: bool = False, ) -\u003E eGeometryErrorCode",
+      "summary": "Normalize Polygon3D. Same as Normalize, but method doesn\u0027t throw exception, just return error code",
+      "remarks": "Normalize Polygon3D. Same as Normalize, but method doesn\u0027t throw exception, just return error code",
+      "params": [
+        {
+          "name": "normalizeType",
+          "type": "ePolygonNormalizeType",
+          "doc": "type of Polygon2D normalization",
+          "optional": false
+        },
+        {
+          "name": "extra_smooth",
+          "type": "bool",
+          "doc": "Including extra smooth: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "Error code (eOK, eAllocError, eStructuralError, eWrongShape)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.NormalizeNoThrow"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse the point order in polygon, separately for every sub-polygon",
+      "remarks": "Reverse the point order in polygon, separately for every sub-polygon",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.Reverse"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(polygon2: Polygon3D) -\u003E bool",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "polygon2",
+          "type": "Polygon3D",
+          "doc": "Second polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Polyline3D are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__eq__"
+    },
+    {
+      "name": "__iadd__(polygon: Polygon3D) -\u003E Polygon3D",
+      "signature": "__iadd__(polygon: Polygon3D) -\u003E Polygon3D",
+      "summary": "Addition assignment operator",
+      "remarks": "Addition assignment operator",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "Polygon which will be copied",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "Reference to polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__iadd__"
+    },
+    {
+      "name": "__iadd__(point: Point3D) -\u003E Polygon3D",
+      "signature": "__iadd__(point: Point3D) -\u003E Polygon3D",
+      "summary": "Addition assignment operator",
+      "remarks": "Addition assignment operator",
+      "params": [
+        {
+          "name": "point",
+          "type": "Point3D",
+          "doc": "New Point3D which will be added to the polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "Reference to polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__iadd__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix3D) -\u003E Polygon3D",
+      "summary": "Matrix transformation",
+      "remarks": "Matrix transformation",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "Reference to polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__mul__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(polygon2: Polygon3D) -\u003E bool",
+      "summary": "Not equal operator",
+      "remarks": "Not equal operator",
+      "params": [
+        {
+          "name": "polygon2",
+          "type": "Polygon3D",
+          "doc": "Second polygon",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Polyline3D are equal"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polygon3D/#NemAll_Python_Geometry.Polygon3D.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

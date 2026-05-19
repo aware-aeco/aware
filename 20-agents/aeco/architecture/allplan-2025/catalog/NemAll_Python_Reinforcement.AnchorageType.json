@@ -1,0 +1,35 @@
+{
+  "name": "AnchorageType",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the anchorage",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/AnchorageType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAnchorageHook",
+      "value": 2
+    },
+    {
+      "name": "eAnchorageHookOneCrossBar",
+      "value": 4
+    },
+    {
+      "name": "eAnchorageStraight",
+      "value": 1
+    },
+    {
+      "name": "eAnchorageStraightOneCrossBar",
+      "value": 3
+    },
+    {
+      "name": "eAnchorageStraightTwoCrossBars",
+      "value": 5
+    }
+  ]
+}

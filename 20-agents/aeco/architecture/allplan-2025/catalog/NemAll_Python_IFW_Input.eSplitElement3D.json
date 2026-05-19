@@ -1,0 +1,27 @@
+{
+  "name": "eSplitElement3D",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Split type for 3D elements",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eSplitElement3D/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "ELEMENT3D_EDGES",
+      "value": 2
+    },
+    {
+      "name": "ELEMENT3D_FACES",
+      "value": 1
+    },
+    {
+      "name": "ELEMENT3D_NO_SPLIT",
+      "value": 0
+    }
+  ]
+}

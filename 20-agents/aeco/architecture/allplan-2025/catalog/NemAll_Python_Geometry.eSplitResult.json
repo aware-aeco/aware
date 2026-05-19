@@ -1,0 +1,31 @@
+{
+  "name": "eSplitResult",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "result of split a geometry element",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eSplitResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSplitInvalidArgs",
+      "value": 3
+    },
+    {
+      "name": "eSplitInvalidGeometry",
+      "value": 2
+    },
+    {
+      "name": "eSplitNone",
+      "value": 0
+    },
+    {
+      "name": "eSplitOk",
+      "value": 1
+    }
+  ]
+}

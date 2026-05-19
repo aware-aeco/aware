@@ -1,0 +1,347 @@
+{
+  "name": "TextureMapping",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Texture mapping property class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/",
+  "constructors": [
+    {
+      "name": "TextureMapping()",
+      "signature": "TextureMapping()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__init__"
+    },
+    {
+      "name": "TextureMapping( mappingType: TextureMappingType, mappingAngle: float, scaleX: float, scaleY: float, offsetX: float, offsetY: float, phongAngle: float, refFace: int, refEdge: int, )",
+      "signature": "TextureMapping( mappingType: TextureMappingType, mappingAngle: float, scaleX: float, scaleY: float, offsetX: float, offsetY: float, phongAngle: float, refFace: int, refEdge: int, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "mappingType",
+          "type": "TextureMappingType",
+          "doc": "Mapping type",
+          "optional": false
+        },
+        {
+          "name": "mappingAngle",
+          "type": "float",
+          "doc": "Mapping angle",
+          "optional": false
+        },
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Mapping scale in X-axis",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Mapping scale in Y-axis",
+          "optional": false
+        },
+        {
+          "name": "offsetX",
+          "type": "float",
+          "doc": "X offset",
+          "optional": false
+        },
+        {
+          "name": "offsetY",
+          "type": "float",
+          "doc": "Y offset",
+          "optional": false
+        },
+        {
+          "name": "phongAngle",
+          "type": "float",
+          "doc": "Angle for Phong light model",
+          "optional": false
+        },
+        {
+          "name": "refFace",
+          "type": "int",
+          "doc": "Reference face",
+          "optional": false
+        },
+        {
+          "name": "refEdge",
+          "type": "int",
+          "doc": "Reference edge",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__init__"
+    },
+    {
+      "name": "TextureMapping( mappingType: TextureMappingType, mappingAngle: float, scaleX: float, scaleY: float, offsetX: float, offsetY: float, phongAngle: float, refFace: int, refEdge: int, uvCoords: VecDoubleList, )",
+      "signature": "TextureMapping( mappingType: TextureMappingType, mappingAngle: float, scaleX: float, scaleY: float, offsetX: float, offsetY: float, phongAngle: float, refFace: int, refEdge: int, uvCoords: VecDoubleList, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "mappingType",
+          "type": "TextureMappingType",
+          "doc": "Mapping type",
+          "optional": false
+        },
+        {
+          "name": "mappingAngle",
+          "type": "float",
+          "doc": "Mapping angle",
+          "optional": false
+        },
+        {
+          "name": "scaleX",
+          "type": "float",
+          "doc": "Mapping scale in X-axis",
+          "optional": false
+        },
+        {
+          "name": "scaleY",
+          "type": "float",
+          "doc": "Mapping scale in Y-axis",
+          "optional": false
+        },
+        {
+          "name": "offsetX",
+          "type": "float",
+          "doc": "X offset",
+          "optional": false
+        },
+        {
+          "name": "offsetY",
+          "type": "float",
+          "doc": "Y offset",
+          "optional": false
+        },
+        {
+          "name": "phongAngle",
+          "type": "float",
+          "doc": "Angle for Phong light model",
+          "optional": false
+        },
+        {
+          "name": "refFace",
+          "type": "int",
+          "doc": "Reference face",
+          "optional": false
+        },
+        {
+          "name": "refEdge",
+          "type": "int",
+          "doc": "Reference edge",
+          "optional": false
+        },
+        {
+          "name": "uvCoords",
+          "type": "VecDoubleList",
+          "doc": "UV coordinates",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__init__"
+    },
+    {
+      "name": "TextureMapping(uvCoords: VecDoubleList)",
+      "signature": "TextureMapping(uvCoords: VecDoubleList)",
+      "summary": "Constructor, set the type to eUV",
+      "remarks": "Constructor, set the type to eUV",
+      "params": [
+        {
+          "name": "uvCoords",
+          "type": "VecDoubleList",
+          "doc": "UV coordinates",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__init__"
+    },
+    {
+      "name": "TextureMapping(element: TextureMapping)",
+      "signature": "TextureMapping(element: TextureMapping)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "TextureMapping",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "FromSurfaceMapping",
+      "signature": "FromSurfaceMapping(mapping: object)",
+      "summary": "Get the properties from the surface mapping object",
+      "remarks": "Get the properties from the surface mapping object",
+      "params": [
+        {
+          "name": "mapping",
+          "type": "object",
+          "doc": "Surface mapping",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.FromSurfaceMapping"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(props: TextureMapping) -\u003E bool",
+      "summary": "Compare operator",
+      "remarks": "Compare operator",
+      "params": [
+        {
+          "name": "props",
+          "type": "TextureMapping",
+          "doc": "Properties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Properties a equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MappingAngle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get mapping angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.MappingAngle"
+    },
+    {
+      "name": "MappingType",
+      "type": "eMappingType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get mapping type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.MappingType"
+    },
+    {
+      "name": "PhongAngle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get angle for Phong light model",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.PhongAngle"
+    },
+    {
+      "name": "ReferenceEdge",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get reference edge",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.ReferenceEdge"
+    },
+    {
+      "name": "ReferenceFace",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get reference face",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.ReferenceFace"
+    },
+    {
+      "name": "UVCoordinates",
+      "type": "list[float]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get UV texture mapping coordinates",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.UVCoordinates"
+    },
+    {
+      "name": "UValueForIsoLines",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get U count of isolines",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.UValueForIsoLines"
+    },
+    {
+      "name": "VValueForIsoLines",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get V count of isolines",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.VValueForIsoLines"
+    },
+    {
+      "name": "XOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get X offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.XOffset"
+    },
+    {
+      "name": "XScale",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get mapping X scale",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.XScale"
+    },
+    {
+      "name": "YOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get Y offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.YOffset"
+    },
+    {
+      "name": "YScale",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get mapping Y scale",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TextureMapping/#NemAll_Python_BasisElements.TextureMapping.YScale"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

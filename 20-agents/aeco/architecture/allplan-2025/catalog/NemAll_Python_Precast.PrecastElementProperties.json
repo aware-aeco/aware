@@ -1,0 +1,275 @@
+{
+  "name": "PrecastElementProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "PrecastElementProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/",
+  "constructors": [
+    {
+      "name": "PrecastElementProperties()",
+      "signature": "PrecastElementProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetPrecastElementTypeFromIdx",
+      "signature": "GetPrecastElementTypeFromIdx(arg2: int) -\u003E str",
+      "summary": "Get the name of the PrecastElementType from Cat Idx",
+      "remarks": "Get the name of the PrecastElementType from Cat Idx",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "PrecastElementType Cat Name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.GetPrecastElementTypeFromIdx"
+    },
+    {
+      "name": "SetElementTypeCatalogGUID_from_Name",
+      "signature": "SetElementTypeCatalogGUID_from_Name(arg2: str) -\u003E GUID",
+      "summary": "Set the elementTypeCatGUID",
+      "remarks": "Set the elementTypeCatGUID",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "elementTypeCatGUID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.SetElementTypeCatalogGUID_from_Name"
+    },
+    {
+      "name": "SetFactoryCatalogAddressOffset",
+      "signature": "SetFactoryCatalogAddressOffset(arg2: str) -\u003E int",
+      "summary": "Set the factoryCatAddressOffset",
+      "remarks": "Set the factoryCatAddressOffset",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "factoryCatAddressOffset"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.SetFactoryCatalogAddressOffset"
+    },
+    {
+      "name": "SetNormCatalogAddressOffset",
+      "signature": "SetNormCatalogAddressOffset(arg2: str) -\u003E int",
+      "summary": "Set the normCatAddressOffset",
+      "remarks": "Set the normCatAddressOffset",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "normCatAddressOffset"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.SetNormCatalogAddressOffset"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: PrecastElementProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "PrecastElementProperties",
+          "doc": "PrecastElementProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CreateLabeling",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for CreateLabeling Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.CreateLabeling"
+    },
+    {
+      "name": "DimensionCross",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for DimensionCross Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.DimensionCross"
+    },
+    {
+      "name": "DimensionSpan",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for DimensionSpan Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.DimensionSpan"
+    },
+    {
+      "name": "DimensionViewing",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for DimensionViewing Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.DimensionViewing"
+    },
+    {
+      "name": "ElemTypeAttribut",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for ElemTypeAttribut Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.ElemTypeAttribut"
+    },
+    {
+      "name": "ElementType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for ElementType Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.ElementType"
+    },
+    {
+      "name": "ElementTypeCatGUID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for ElementTypeCatGUID Value type: GUID :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.ElementTypeCatGUID"
+    },
+    {
+      "name": "Factory",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Factory Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.Factory"
+    },
+    {
+      "name": "FactoryCatAddressOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for FactoryCatAddressOffset Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.FactoryCatAddressOffset"
+    },
+    {
+      "name": "LabelingTextRefPoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for LabelingTextRefPoint Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.LabelingTextRefPoint"
+    },
+    {
+      "name": "Layers",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Layers Value type: list :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.Layers"
+    },
+    {
+      "name": "ManualDimensions",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for ManualDimensions Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.ManualDimensions"
+    },
+    {
+      "name": "Norm",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for Norm Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.Norm"
+    },
+    {
+      "name": "NormCatAddressOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for NormCatAddressOffset Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.NormCatAddressOffset"
+    },
+    {
+      "name": "PieceFactor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for PieceFactor Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.PieceFactor"
+    },
+    {
+      "name": "PosNr",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for PosNr Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.PosNr"
+    },
+    {
+      "name": "PosNrText",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for PosNrText Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.PosNrText"
+    },
+    {
+      "name": "ReferencePoint",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for ReferencePoint Value type: Point3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.ReferencePoint"
+    },
+    {
+      "name": "SpanDirection",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for SpanDirection Value type: Point3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.SpanDirection"
+    },
+    {
+      "name": "ViewDirection",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for ViewDirection Value type: Point3D :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/PrecastElementProperties/#NemAll_Python_Precast.PrecastElementProperties.ViewDirection"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

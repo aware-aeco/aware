@@ -1,0 +1,294 @@
+{
+  "name": "GeometryElementCollection",
+  "namespace": "TestHelper.GeometryElementCollection",
+  "kind": "class",
+  "summary": "implementation of the geometry element collection",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_arc2d_0_270",
+      "signature": "create_arc2d_0_270() -\u003E Arc2D",
+      "summary": "create a 2D arc with 270 deg",
+      "remarks": "create a 2D arc with 270 deg",
+      "params": [],
+      "returns": {
+        "type": "Arc2D",
+        "doc": "2D arc"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_arc2d_0_270"
+    },
+    {
+      "name": "create_arc3d_0_270",
+      "signature": "create_arc3d_0_270(z_coord: float = 0) -\u003E Arc3D",
+      "summary": "create a 3D arc with 270 deg",
+      "remarks": "create a 3D arc with 270 deg",
+      "params": [
+        {
+          "name": "z_coord",
+          "type": "float",
+          "doc": "z coordinate of the arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc3D",
+        "doc": "3D arc"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_arc3d_0_270"
+    },
+    {
+      "name": "create_arc3d_ellipse_90_270",
+      "signature": "create_arc3d_ellipse_90_270()",
+      "summary": "create a 3D elliptic arc with 180 deg",
+      "remarks": "create a 3D elliptic arc with 180 deg",
+      "params": [
+        {
+          "name": "z_coord",
+          "type": "object",
+          "doc": "z coordinate of the arc",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "3D arc"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_arc3d_ellipse_90_270"
+    },
+    {
+      "name": "create_brep3d_as_cylinder",
+      "signature": "create_brep3d_as_cylinder()",
+      "summary": "create a cylinder as 3D bRep",
+      "remarks": "create a cylinder as 3D bRep",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "3D brep"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_brep3d_as_cylinder"
+    },
+    {
+      "name": "create_bspline2d",
+      "signature": "create_bspline2d() -\u003E BSpline2D",
+      "summary": "create a 2D bspline",
+      "remarks": "create a 2D bspline",
+      "params": [],
+      "returns": {
+        "type": "BSpline2D",
+        "doc": "3D bspline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_bspline2d"
+    },
+    {
+      "name": "create_bspline3d",
+      "signature": "create_bspline3d(z_coord: float = 0) -\u003E BSpline3D",
+      "summary": "create a 3D bspline",
+      "remarks": "create a 3D bspline",
+      "params": [
+        {
+          "name": "z_coord",
+          "type": "float",
+          "doc": "z coordinate",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BSpline3D",
+        "doc": "3D bspline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_bspline3d"
+    },
+    {
+      "name": "create_clothoid2d",
+      "signature": "create_clothoid2d() -\u003E Clothoid2D",
+      "summary": "create a 2D clothoid",
+      "remarks": "create a 2D clothoid",
+      "params": [],
+      "returns": {
+        "type": "Clothoid2D",
+        "doc": "2D clothoid"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_clothoid2d"
+    },
+    {
+      "name": "create_line2d_plus_to_minus",
+      "signature": "create_line2d_plus_to_minus() -\u003E Line2D",
+      "summary": "create a 2D line from plus to minus coordinates",
+      "remarks": "create a 2D line from plus to minus coordinates",
+      "params": [],
+      "returns": {
+        "type": "Line2D",
+        "doc": "2D line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_line2d_plus_to_minus"
+    },
+    {
+      "name": "create_line3d_plus_to_minus",
+      "signature": "create_line3d_plus_to_minus() -\u003E Line3D",
+      "summary": "create a 3D line from plus to minus coordinates",
+      "remarks": "create a 3D line from plus to minus coordinates",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "3D line"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_line3d_plus_to_minus"
+    },
+    {
+      "name": "create_path2d",
+      "signature": "create_path2d() -\u003E Path2D",
+      "summary": "create a 2D path",
+      "remarks": "create a 2D path",
+      "params": [],
+      "returns": {
+        "type": "Path2D",
+        "doc": "2D path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_path2d"
+    },
+    {
+      "name": "create_path3d",
+      "signature": "create_path3d(z_coord: float = 0) -\u003E Path3D",
+      "summary": "create a 3D path",
+      "remarks": "create a 3D path",
+      "params": [
+        {
+          "name": "z_coord",
+          "type": "float",
+          "doc": "z coordinate of the path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Path3D",
+        "doc": "3D path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_path3d"
+    },
+    {
+      "name": "create_polygon2d_as_box",
+      "signature": "create_polygon2d_as_box() -\u003E Polygon2D",
+      "summary": "create a 2D polygon as U",
+      "remarks": "create a 2D polygon as U",
+      "params": [],
+      "returns": {
+        "type": "Polygon2D",
+        "doc": "2D polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_polygon2d_as_box"
+    },
+    {
+      "name": "create_polygon3d_as_box",
+      "signature": "create_polygon3d_as_box() -\u003E Polygon3D",
+      "summary": "create a 3D polygon as U",
+      "remarks": "create a 3D polygon as U",
+      "params": [],
+      "returns": {
+        "type": "Polygon3D",
+        "doc": "3D polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_polygon3d_as_box"
+    },
+    {
+      "name": "create_polyhedron3d_as_box",
+      "signature": "create_polyhedron3d_as_box() -\u003E Polyhedron3D",
+      "summary": "create a box as 3D polyhedron",
+      "remarks": "create a box as 3D polyhedron",
+      "params": [],
+      "returns": {
+        "type": "Polyhedron3D",
+        "doc": "3D polyhedron"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_polyhedron3d_as_box"
+    },
+    {
+      "name": "create_polyline2d_as_u",
+      "signature": "create_polyline2d_as_u() -\u003E Polyline2D",
+      "summary": "create a 2D polyline as U",
+      "remarks": "create a 2D polyline as U",
+      "params": [],
+      "returns": {
+        "type": "Polyline2D",
+        "doc": "2D polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_polyline2d_as_u"
+    },
+    {
+      "name": "create_polyline3d_as_u",
+      "signature": "create_polyline3d_as_u() -\u003E Polyline3D",
+      "summary": "create a 3D polyline as U",
+      "remarks": "create a 3D polyline as U",
+      "params": [],
+      "returns": {
+        "type": "Polyline3D",
+        "doc": "3D polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_polyline3d_as_u"
+    },
+    {
+      "name": "create_spline2d",
+      "signature": "create_spline2d() -\u003E Spline2D",
+      "summary": "create a 2D spline",
+      "remarks": "create a 2D spline",
+      "params": [],
+      "returns": {
+        "type": "Spline2D",
+        "doc": "2D spline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_spline2d"
+    },
+    {
+      "name": "create_spline3d",
+      "signature": "create_spline3d() -\u003E Spline3D",
+      "summary": "create a 3D spline",
+      "remarks": "create a 3D spline",
+      "params": [],
+      "returns": {
+        "type": "Spline3D",
+        "doc": "3D spline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/GeometryElementCollection/#TestHelper.GeometryElementCollection.GeometryElementCollection.create_spline3d"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

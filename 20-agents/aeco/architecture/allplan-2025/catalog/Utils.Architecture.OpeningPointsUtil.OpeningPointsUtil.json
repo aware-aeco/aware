@@ -1,0 +1,407 @@
+{
+  "name": "OpeningPointsUtil",
+  "namespace": "Utils.Architecture.OpeningPointsUtil",
+  "kind": "class",
+  "summary": "implementation of the opening points utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "calc_point_at_placement_arc",
+      "signature": "calc_point_at_placement_arc( local_dist: float, placement_arc: Arc2D, placement_polyline: Polyline2D ) -\u003E tuple[bool, Point2D]",
+      "summary": "calculate the point at the placement arc",
+      "remarks": "calculate the point at the placement arc",
+      "params": [
+        {
+          "name": "local_dist",
+          "type": "float",
+          "doc": "local point distance at the placement arc",
+          "optional": false
+        },
+        {
+          "name": "placement_arc",
+          "type": "Arc2D",
+          "doc": "placement arc",
+          "optional": false
+        },
+        {
+          "name": "placement_polyline",
+          "type": "Polyline2D",
+          "doc": "placement polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Point2D]",
+        "doc": "found state, point at the polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.calc_point_at_placement_arc"
+    },
+    {
+      "name": "create_opening_end_point_for_axis_element",
+      "signature": "create_opening_end_point_for_axis_element( opening_start_pnt: Point2D, opening_width: float, element_axis: Line2D | Arc2D, element_polygon: Polygon2D | Polyline2D, placement_line: Line2D, ) -\u003E Point2D",
+      "summary": "create the opening points for an axis element",
+      "remarks": "create the opening points for an axis element",
+      "params": [
+        {
+          "name": "opening_start_pnt",
+          "type": "Point2D",
+          "doc": "opening start point",
+          "optional": false
+        },
+        {
+          "name": "opening_width",
+          "type": "float",
+          "doc": "opening width",
+          "optional": false
+        },
+        {
+          "name": "element_axis",
+          "type": "Line2D | Arc2D",
+          "doc": "element axis",
+          "optional": false
+        },
+        {
+          "name": "element_polygon",
+          "type": "Polygon2D | Polyline2D",
+          "doc": "element polygon / polyline",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "end point of the opening"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.create_opening_end_point_for_axis_element"
+    },
+    {
+      "name": "create_opening_end_point_for_shaped_element",
+      "signature": "create_opening_end_point_for_shaped_element( opening_start_pnt: Point2D, opening_width: float, placement_line: Line2D ) -\u003E Point2D",
+      "summary": "create the opening points for a shaped element",
+      "remarks": "create the opening points for a shaped element",
+      "params": [
+        {
+          "name": "opening_start_pnt",
+          "type": "Point2D",
+          "doc": "opening start point",
+          "optional": false
+        },
+        {
+          "name": "opening_width",
+          "type": "float",
+          "doc": "opening width",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "end point of the opening"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.create_opening_end_point_for_shaped_element"
+    },
+    {
+      "name": "create_opening_points_for_axis_element",
+      "signature": "create_opening_points_for_axis_element( opening_start_pnt: Point2D, opening_end_pnt: Point2D, opening_width: float, element_thickness: float, ) -\u003E list[Point2D]",
+      "summary": "create the opening points for an axis element",
+      "remarks": "create the opening points for an axis element",
+      "params": [
+        {
+          "name": "opening_start_pnt",
+          "type": "Point2D",
+          "doc": "opening start point",
+          "optional": false
+        },
+        {
+          "name": "opening_end_pnt",
+          "type": "Point2D",
+          "doc": "opening end point",
+          "optional": false
+        },
+        {
+          "name": "opening_width",
+          "type": "float",
+          "doc": "opening width",
+          "optional": false
+        },
+        {
+          "name": "element_thickness",
+          "type": "float",
+          "doc": "element thickness",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[Point2D]",
+        "doc": "opening points"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.create_opening_points_for_axis_element"
+    },
+    {
+      "name": "get_distance_from_offset_end_point",
+      "signature": "get_distance_from_offset_end_point( input_pnt: Point3D, element_axis: Line2D | Arc2D | None, offset_end_pnt: Point2D, placement_line: Line2D, placement_arc: Arc2D | None, element_polygon: Polygon2D | Polyline2D, ) -\u003E float",
+      "summary": "get the local distance between input and offset end point",
+      "remarks": "get the local distance between input and offset end point",
+      "params": [
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        },
+        {
+          "name": "element_axis",
+          "type": "Line2D | Arc2D | None",
+          "doc": "element axis",
+          "optional": false
+        },
+        {
+          "name": "offset_end_pnt",
+          "type": "Point2D",
+          "doc": "offset end point",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line",
+          "optional": false
+        },
+        {
+          "name": "placement_arc",
+          "type": "Arc2D | None",
+          "doc": "placement arc",
+          "optional": false
+        },
+        {
+          "name": "element_polygon",
+          "type": "Polygon2D | Polyline2D",
+          "doc": "element polygon / polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "distance between input and start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.get_distance_from_offset_end_point"
+    },
+    {
+      "name": "get_distance_from_offset_start_point",
+      "signature": "get_distance_from_offset_start_point( input_pnt: Point3D, element_axis: Line2D | Arc2D | None, offset_start_pnt: Point2D, placement_line: Line2D, placement_arc: Arc2D | None, element_polygon: Polygon2D | Polyline2D, ) -\u003E float",
+      "summary": "get the local distance between input and offset start point",
+      "remarks": "get the local distance between input and offset start point",
+      "params": [
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        },
+        {
+          "name": "element_axis",
+          "type": "Line2D | Arc2D | None",
+          "doc": "element axis",
+          "optional": false
+        },
+        {
+          "name": "offset_start_pnt",
+          "type": "Point2D",
+          "doc": "offset start point",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line",
+          "optional": false
+        },
+        {
+          "name": "placement_arc",
+          "type": "Arc2D | None",
+          "doc": "placement arc",
+          "optional": false
+        },
+        {
+          "name": "element_polygon",
+          "type": "Polygon2D | Polyline2D",
+          "doc": "element polygon / polyline",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "distance between input and start point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.get_distance_from_offset_start_point"
+    },
+    {
+      "name": "get_opening_offset_points",
+      "signature": "get_opening_offset_points( element: BaseElementAdapter, opening_start_pnt: Point2D, placement_line: Line2D, ) -\u003E tuple[bool, Point2D, Point2D]",
+      "summary": "get the left and right point for the opening offset",
+      "remarks": "get the left and right point for the opening offset",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element for the opening",
+          "optional": false
+        },
+        {
+          "name": "opening_start_pnt",
+          "type": "Point2D",
+          "doc": "opening start point",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line from the opening start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Point2D, Point2D]",
+        "doc": "points created, start offset point, end offset point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.get_opening_offset_points"
+    },
+    {
+      "name": "get_start_point_from_end_offset",
+      "signature": "get_start_point_from_end_offset( element_axis: Line2D | Arc2D | None, offset_end_pnt: Point2D, placement_line: Line2D, placement_arc: Arc2D | None, opening_width: float, element_polygon: Polygon2D | Polyline2D, offset: float, ) -\u003E tuple[bool, Point2D]",
+      "summary": "get the start point by an offset from an offset start point",
+      "remarks": "get the start point by an offset from an offset start point",
+      "params": [
+        {
+          "name": "element_axis",
+          "type": "Line2D | Arc2D | None",
+          "doc": "element axis",
+          "optional": false
+        },
+        {
+          "name": "offset_end_pnt",
+          "type": "Point2D",
+          "doc": "offset end point",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line",
+          "optional": false
+        },
+        {
+          "name": "placement_arc",
+          "type": "Arc2D | None",
+          "doc": "placement arc",
+          "optional": false
+        },
+        {
+          "name": "opening_width",
+          "type": "float",
+          "doc": "opening width",
+          "optional": false
+        },
+        {
+          "name": "element_polygon",
+          "type": "Polygon2D | Polyline2D",
+          "doc": "element polygon / polyline",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "float",
+          "doc": "offset from the offset start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Point2D]",
+        "doc": "start point of the opening"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.get_start_point_from_end_offset"
+    },
+    {
+      "name": "get_start_point_from_start_offset",
+      "signature": "get_start_point_from_start_offset( element_axis: Line2D | Arc2D | None, offset_start_pnt: Point2D, placement_line: Line2D, placement_arc: Arc2D | None, element_polygon: Polygon2D | Polyline2D, offset: float, ) -\u003E tuple[bool, Point2D]",
+      "summary": "get the start point by an offset from an offset start point",
+      "remarks": "get the start point by an offset from an offset start point",
+      "params": [
+        {
+          "name": "element_axis",
+          "type": "Line2D | Arc2D | None",
+          "doc": "element axis",
+          "optional": false
+        },
+        {
+          "name": "offset_start_pnt",
+          "type": "Point2D",
+          "doc": "offset start point",
+          "optional": false
+        },
+        {
+          "name": "placement_line",
+          "type": "Line2D",
+          "doc": "placement line",
+          "optional": false
+        },
+        {
+          "name": "placement_arc",
+          "type": "Arc2D | None",
+          "doc": "placement arc",
+          "optional": false
+        },
+        {
+          "name": "element_polygon",
+          "type": "Polygon2D | Polyline2D",
+          "doc": "element polygon / polyline",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "float",
+          "doc": "offset from the offset start point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Point2D]",
+        "doc": "start point of the opening"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/OpeningPointsUtil/#Utils.Architecture.OpeningPointsUtil.OpeningPointsUtil.get_start_point_from_start_offset"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,27 @@
+{
+  "name": "OutlineTypeInGroup",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "outline types in group",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/OutlineTypeInGroup/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_IN_GROUP_MINUS",
+      "value": 2
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_IN_GROUP_NOTHING",
+      "value": 0
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_IN_GROUP_PLUS",
+      "value": 1
+    }
+  ]
+}

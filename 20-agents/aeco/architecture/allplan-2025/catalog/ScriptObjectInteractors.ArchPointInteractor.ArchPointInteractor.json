@@ -1,0 +1,149 @@
+{
+  "name": "ArchPointInteractor",
+  "namespace": "ScriptObjectInteractors.ArchPointInteractor",
+  "kind": "class",
+  "summary": "Implementation of the interactor for point input on an architectural element",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/",
+  "constructors": [
+    {
+      "name": "ArchPointInteractor()",
+      "signature": "ArchPointInteractor( interactor_result: ArchPointInteractorResult, ele_filter: list[GUID] | BaseFilterObject | SelectionQuery | None = None, request_text: str = \u0022Select the element\u0022, preview_function: Callable[[], None] | None = None, )",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "interactor_result",
+          "type": "ArchPointInteractorResult",
+          "doc": "result of the interactor",
+          "optional": false
+        },
+        {
+          "name": "ele_filter",
+          "type": "list[GUID] | BaseFilterObject | SelectionQuery | None",
+          "doc": "element filter as a list of accepted element type GUIDs or a callable or a selection query returning True, when the element is valid for selection",
+          "optional": false
+        },
+        {
+          "name": "request_text",
+          "type": "str",
+          "doc": "request text",
+          "optional": false
+        },
+        {
+          "name": "preview_function",
+          "type": "Callable[[], None] | None",
+          "doc": "preview function",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_outline_segment_and_point",
+      "signature": "get_outline_segment_and_point(sel_ele: BaseElementAdapter, input_pnt: Point3D)",
+      "summary": "get the outline segment and point related to the input point (maybe an inner tier segment was selected)",
+      "remarks": "get the outline segment and point related to the input point (maybe an inner tier segment was selected)",
+      "params": [
+        {
+          "name": "sel_ele",
+          "type": "BaseElementAdapter",
+          "doc": "selected element",
+          "optional": false
+        },
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractor.get_outline_segment_and_point"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event",
+      "remarks": "Handles the mouse leave event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractor.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractor.on_preview_draw"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "AddMsgInfo",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "start the input",
+      "remarks": "start the input",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/ArchPointInteractor/ArchPointInteractor/#ScriptObjectInteractors.ArchPointInteractor.ArchPointInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

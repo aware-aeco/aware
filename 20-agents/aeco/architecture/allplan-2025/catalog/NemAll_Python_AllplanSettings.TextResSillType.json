@@ -1,0 +1,31 @@
+{
+  "name": "TextResSillType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Texture resources for sill types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/TextResSillType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBothsides",
+      "value": 36384
+    },
+    {
+      "name": "eInner",
+      "value": 36382
+    },
+    {
+      "name": "eNone",
+      "value": 36381
+    },
+    {
+      "name": "eOuter",
+      "value": 36383
+    }
+  ]
+}

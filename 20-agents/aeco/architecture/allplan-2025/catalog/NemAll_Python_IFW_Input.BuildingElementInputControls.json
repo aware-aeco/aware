@@ -1,0 +1,97 @@
+{
+  "name": "BuildingElementInputControls",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the building element input controls",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/",
+  "constructors": [
+    {
+      "name": "BuildingElementInputControls()",
+      "signature": "BuildingElementInputControls()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/#NemAll_Python_IFW_Input.BuildingElementInputControls.__init__"
+    },
+    {
+      "name": "BuildingElementInputControls(element: BuildingElementInputControls)",
+      "signature": "BuildingElementInputControls(element: BuildingElementInputControls)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "BuildingElementInputControls",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/#NemAll_Python_IFW_Input.BuildingElementInputControls.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CloseControls",
+      "signature": "CloseControls()",
+      "summary": "Close the input controls",
+      "remarks": "Close the input controls",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/#NemAll_Python_IFW_Input.BuildingElementInputControls.CloseControls"
+    },
+    {
+      "name": "CreateControls",
+      "signature": "CreateControls( handlePropList: object, insertionMat: Matrix3D, viewProj: ViewWorldProjection, bUpdateControls: bool, assoRefObj: object, )",
+      "summary": "Create the controls",
+      "remarks": "Create the controls",
+      "params": [
+        {
+          "name": "handlePropList",
+          "type": "object",
+          "doc": "List with the handle properties",
+          "optional": false
+        },
+        {
+          "name": "insertionMat",
+          "type": "Matrix3D",
+          "doc": "Transformation matrix",
+          "optional": false
+        },
+        {
+          "name": "viewProj",
+          "type": "ViewWorldProjection",
+          "doc": "View world projection",
+          "optional": false
+        },
+        {
+          "name": "bUpdateControls",
+          "type": "bool",
+          "doc": "Update the controls: true/false",
+          "optional": false
+        },
+        {
+          "name": "assoRefObj",
+          "type": "object",
+          "doc": "Reference element for the drawing inside the associative views",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/BuildingElementInputControls/#NemAll_Python_IFW_Input.BuildingElementInputControls.CreateControls"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

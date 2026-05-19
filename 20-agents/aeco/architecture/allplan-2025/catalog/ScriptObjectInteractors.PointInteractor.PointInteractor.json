@@ -1,0 +1,137 @@
+{
+  "name": "PointInteractor",
+  "namespace": "ScriptObjectInteractors.PointInteractor",
+  "kind": "class",
+  "summary": "implementation of the interactor for the point input",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/",
+  "constructors": [
+    {
+      "name": "PointInteractor()",
+      "signature": "PointInteractor( interactor_result: PointInteractorResult, is_first_input: bool, request_text: str, preview_function: Callable[[], None] | None = None, default_input_value: float | None = None, abscissa_element: CURVES = None, )",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "interactor_result",
+          "type": "PointInteractorResult",
+          "doc": "result of the interactor",
+          "optional": false
+        },
+        {
+          "name": "is_first_input",
+          "type": "bool",
+          "doc": "first input in a input sequence state",
+          "optional": false
+        },
+        {
+          "name": "request_text",
+          "type": "str",
+          "doc": "request text",
+          "optional": false
+        },
+        {
+          "name": "preview_function",
+          "type": "Callable[[], None] | None",
+          "doc": "preview function",
+          "optional": false
+        },
+        {
+          "name": "default_input_value",
+          "type": "float | None",
+          "doc": "default input value if value input is activated",
+          "optional": false
+        },
+        {
+          "name": "abscissa_element",
+          "type": "CURVES",
+          "doc": "abscissa element for the point projection",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/#ScriptObjectInteractors.PointInteractor.PointInteractor.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event",
+      "remarks": "Handles the mouse leave event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/#ScriptObjectInteractors.PointInteractor.PointInteractor.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event",
+      "remarks": "Handles the preview draw event",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/#ScriptObjectInteractors.PointInteractor.PointInteractor.on_preview_draw"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: AddMsgInfo) -\u003E bool",
+      "summary": "Handles the process mouse message event",
+      "remarks": "Handles the process mouse message event",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "mouse message ID",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "input point in Allplan view coordinates",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "AddMsgInfo",
+          "doc": "additional mouse message info",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/#ScriptObjectInteractors.PointInteractor.PointInteractor.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "start the input",
+      "remarks": "start the input",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PointInteractor/PointInteractor/#ScriptObjectInteractors.PointInteractor.PointInteractor.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

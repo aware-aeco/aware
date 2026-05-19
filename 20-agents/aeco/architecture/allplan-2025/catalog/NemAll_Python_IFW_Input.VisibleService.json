@@ -1,0 +1,79 @@
+{
+  "name": "VisibleService",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_IFW_Input.VisibleService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/VisibleService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ShowAllElements",
+      "signature": "ShowAllElements()",
+      "summary": "Show all elements",
+      "remarks": "Show all elements",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/VisibleService/#NemAll_Python_IFW_Input.VisibleService.ShowAllElements"
+    },
+    {
+      "name": "ShowElement",
+      "signature": "ShowElement(eleList: BaseElementAdapter, bShow: bool, bForceDraw: bool)",
+      "summary": "Show/hide the element",
+      "remarks": "Show/hide the element",
+      "params": [
+        {
+          "name": "eleList",
+          "type": "BaseElementAdapter",
+          "doc": "Element list as BaseElementAdapterList",
+          "optional": false
+        },
+        {
+          "name": "bShow",
+          "type": "bool",
+          "doc": "Show / Hide = true/false",
+          "optional": false
+        },
+        {
+          "name": "bForceDraw",
+          "type": "bool",
+          "doc": "Force the draw state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/VisibleService/#NemAll_Python_IFW_Input.VisibleService.ShowElement"
+    },
+    {
+      "name": "ShowElements",
+      "signature": "ShowElements(eleList: BaseElementAdapterList, bShow: bool)",
+      "summary": "Show/hide the elements",
+      "remarks": "Show/hide the elements",
+      "params": [
+        {
+          "name": "eleList",
+          "type": "BaseElementAdapterList",
+          "doc": "Element list as BaseElementAdapterList",
+          "optional": false
+        },
+        {
+          "name": "bShow",
+          "type": "bool",
+          "doc": "Show / Hide = true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/VisibleService/#NemAll_Python_IFW_Input.VisibleService.ShowElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

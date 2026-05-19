@@ -1,0 +1,27 @@
+{
+  "name": "AngleUnits",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Angle units",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/AngleUnits/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDeg",
+      "value": 1
+    },
+    {
+      "name": "eGon",
+      "value": 2
+    },
+    {
+      "name": "eRad",
+      "value": 0
+    }
+  ]
+}

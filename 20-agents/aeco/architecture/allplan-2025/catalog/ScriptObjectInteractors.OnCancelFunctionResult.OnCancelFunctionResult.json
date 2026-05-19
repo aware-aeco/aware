@@ -1,0 +1,14 @@
+{
+  "name": "OnCancelFunctionResult",
+  "namespace": "ScriptObjectInteractors.OnCancelFunctionResult",
+  "kind": "enum",
+  "summary": "enumeration for the on_cancel_function result",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/OnCancelFunctionResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

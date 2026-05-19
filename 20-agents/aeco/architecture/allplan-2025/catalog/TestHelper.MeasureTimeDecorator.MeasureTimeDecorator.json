@@ -1,0 +1,41 @@
+{
+  "name": "MeasureTimeDecorator",
+  "namespace": "TestHelper.MeasureTimeDecorator",
+  "kind": "class",
+  "summary": "implementation of the timeit decorator",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/MeasureTimeDecorator/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "print_time",
+      "signature": "print_time(message: str, repeat: int) -\u003E Callable",
+      "summary": "measure time decorator",
+      "remarks": "measure time decorator",
+      "params": [
+        {
+          "name": "message",
+          "type": "str",
+          "doc": "message to print for the time",
+          "optional": false
+        },
+        {
+          "name": "repeat",
+          "type": "int",
+          "doc": "repeat the test",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Callable",
+        "doc": "decorator function"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/MeasureTimeDecorator/#TestHelper.MeasureTimeDecorator.MeasureTimeDecorator.print_time"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

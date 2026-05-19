@@ -1,0 +1,51 @@
+{
+  "name": "ElementsPropertyService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for modifying various properties of existing model elements, such as surface.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsPropertyService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ModifyFormatProperties",
+      "signature": "ModifyFormatProperties(arg2: BaseElementAdapterList) -\u003E BaseElementAdapterList",
+      "summary": "",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsPropertyService/#NemAll_Python_BaseElements.ElementsPropertyService.ModifyFormatProperties"
+    },
+    {
+      "name": "ModifySurface",
+      "signature": "ModifySurface( surfacePathFile: str, elements: BaseElementAdapterList ) -\u003E BaseElementAdapterList",
+      "summary": "Change the surface",
+      "remarks": "Change the surface",
+      "params": [
+        {
+          "name": "surfacePathFile",
+          "type": "str",
+          "doc": "New surface path and file",
+          "optional": false
+        },
+        {
+          "name": "elements",
+          "type": "BaseElementAdapterList",
+          "doc": "Elements to modify",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Modified elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsPropertyService/#NemAll_Python_BaseElements.ElementsPropertyService.ModifySurface"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

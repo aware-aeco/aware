@@ -1,0 +1,113 @@
+{
+  "name": "VerticalOpeningFacingProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the vertical opening facing properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/",
+  "constructors": [
+    {
+      "name": "VerticalOpeningFacingProperties()",
+      "signature": "VerticalOpeningFacingProperties(element: VerticalOpeningFacingProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "VerticalOpeningFacingProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "LeftDepth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the left depth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.LeftDepth"
+    },
+    {
+      "name": "LeftFacing",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the left facing state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.LeftFacing"
+    },
+    {
+      "name": "LeftWidth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the left width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.LeftWidth"
+    },
+    {
+      "name": "OpeningSide",
+      "type": "OpeningSide",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the opening side",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.OpeningSide"
+    },
+    {
+      "name": "RightDepth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the right depth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.RightDepth"
+    },
+    {
+      "name": "RightFacing",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the right facing state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.RightFacing"
+    },
+    {
+      "name": "RightWidth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the right width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.RightWidth"
+    },
+    {
+      "name": "TopDepth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top depth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.TopDepth"
+    },
+    {
+      "name": "TopFacing",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top facing state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.TopFacing"
+    },
+    {
+      "name": "TopWidth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the top width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningFacingProperties/#NemAll_Python_ArchElements.VerticalOpeningFacingProperties.TopWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

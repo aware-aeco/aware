@@ -1,0 +1,414 @@
+{
+  "name": "AttributeService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Service for reading existing attributes definitions and creating new user-defined attributes",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddUserAttribute",
+      "signature": "AddUserAttribute( doc: DocumentAdapter, attributeType: AttributeType, attributeName: str, attributeDefaultValue: str, attributeMinValue: float, attributeMaxValue: float, attributeDimension: str, attributeCtrlType: AttributeControlType, attributeListValues: VecStringList, ) -\u003E int",
+      "summary": "Add a user attribute",
+      "remarks": "Add a user attribute",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeType",
+          "type": "AttributeType",
+          "doc": "Type",
+          "optional": false
+        },
+        {
+          "name": "attributeName",
+          "type": "str",
+          "doc": "Name",
+          "optional": false
+        },
+        {
+          "name": "attributeDefaultValue",
+          "type": "str",
+          "doc": "Default value",
+          "optional": false
+        },
+        {
+          "name": "attributeMinValue",
+          "type": "float",
+          "doc": "Minimal value",
+          "optional": false
+        },
+        {
+          "name": "attributeMaxValue",
+          "type": "float",
+          "doc": "Maximal value",
+          "optional": false
+        },
+        {
+          "name": "attributeDimension",
+          "type": "str",
+          "doc": "Dimension",
+          "optional": false
+        },
+        {
+          "name": "attributeCtrlType",
+          "type": "AttributeControlType",
+          "doc": "Control type",
+          "optional": false
+        },
+        {
+          "name": "attributeListValues",
+          "type": "VecStringList",
+          "doc": "List with the allowed attribute values",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "ID of the added user attribute, -1 = not possible to add"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.AddUserAttribute"
+    },
+    {
+      "name": "GetAttributeControlType",
+      "signature": "GetAttributeControlType( doc: DocumentAdapter, attributeID: int ) -\u003E AttributeControlType",
+      "summary": "Get the control type of the attribute",
+      "remarks": "Get the control type of the attribute",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AttributeControlType",
+        "doc": "Control type of the attribute"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetAttributeControlType"
+    },
+    {
+      "name": "GetAttributeID",
+      "signature": "GetAttributeID(doc: DocumentAdapter, attributeName: str) -\u003E int",
+      "summary": "Get the attribute ID",
+      "remarks": "Get the attribute ID",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeName",
+          "type": "str",
+          "doc": "Attribute name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Attribute ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetAttributeID"
+    },
+    {
+      "name": "GetAttributeName",
+      "signature": "GetAttributeName(doc: DocumentAdapter, attributeID: int) -\u003E str",
+      "summary": "Get the attribute name",
+      "remarks": "Get the attribute name",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Attribute name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetAttributeName"
+    },
+    {
+      "name": "GetAttributeType",
+      "signature": "GetAttributeType(doc: DocumentAdapter, attributeID: int) -\u003E AttributeType",
+      "summary": "Get the attribute type",
+      "remarks": "Get the attribute type",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "AttributeType",
+        "doc": "Attribute type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetAttributeType"
+    },
+    {
+      "name": "GetAttributeUnit",
+      "signature": "GetAttributeUnit(doc: DocumentAdapter, attributeID: int) -\u003E str",
+      "summary": "Get the attribute unit",
+      "remarks": "Get the attribute unit",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Attribute unit"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetAttributeUnit"
+    },
+    {
+      "name": "GetDefaultValue",
+      "signature": "GetDefaultValue(doc: DocumentAdapter, attributeID: int) -\u003E int | float | str",
+      "summary": "Get the default value of an attribute",
+      "remarks": "Get the default value of an attribute",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int | float | str",
+        "doc": "Default value of the attribute"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetDefaultValue"
+    },
+    {
+      "name": "GetEnumIDFromValueString",
+      "signature": "GetEnumIDFromValueString(attributeID: int, valueString: str) -\u003E int",
+      "summary": "Get the enumeration ID from the value string",
+      "remarks": "Get the enumeration ID from the value string",
+      "params": [
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        },
+        {
+          "name": "valueString",
+          "type": "str",
+          "doc": "Value string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Enumeration ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetEnumIDFromValueString"
+    },
+    {
+      "name": "GetEnumValueStringFromID",
+      "signature": "GetEnumValueStringFromID(attributeID: int, enumID: int) -\u003E str",
+      "summary": "Get the enumeration value string from the enumeration ID",
+      "remarks": "Get the enumeration value string from the enumeration ID",
+      "params": [
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        },
+        {
+          "name": "enumID",
+          "type": "int",
+          "doc": "Enumeration ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Enumeration value string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetEnumValueStringFromID"
+    },
+    {
+      "name": "GetEnumValues",
+      "signature": "GetEnumValues(doc: DocumentAdapter, attributeID: int) -\u003E VecStringList",
+      "summary": "Get the enum attribute values",
+      "remarks": "Get the enum attribute values",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VecStringList",
+        "doc": "Default attribute value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetEnumValues"
+    },
+    {
+      "name": "GetGroupAttributeIDs",
+      "signature": "GetGroupAttributeIDs( ele: BaseElementAdapter, attributes: list[tuple[int, int | float | str]], excludeHidden: bool, ) -\u003E list[tuple[str, list[int] | VecIntList]]",
+      "summary": "Get the attribute IDs and the name of the attribute groups",
+      "remarks": "Get the attribute IDs and the name of the attribute groups",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element for the attributes",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "list[tuple[int, int | float | str]]",
+          "doc": "Attributes of the element",
+          "optional": false
+        },
+        {
+          "name": "excludeHidden",
+          "type": "bool",
+          "doc": "Exclude the hidden attributes",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[tuple[str, list[int] | VecIntList]]",
+        "doc": "Group name, group IDs"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetGroupAttributeIDs"
+    },
+    {
+      "name": "GetInputListValues",
+      "signature": "GetInputListValues(doc: DocumentAdapter, attributeID: int) -\u003E VecStringList",
+      "summary": "Get the input list values",
+      "remarks": "Get the input list values",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "VecStringList",
+        "doc": "Attribute input list values"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.GetInputListValues"
+    },
+    {
+      "name": "OpenAttributeSelectionDialog",
+      "signature": "OpenAttributeSelectionDialog( doc: DocumentAdapter, dialogType: AttributeSelectionDialogType ) -\u003E int",
+      "summary": "Open the attribute selection dialog",
+      "remarks": "Open the attribute selection dialog",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "dialogType",
+          "type": "AttributeSelectionDialogType",
+          "doc": "Dialog type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Attribute ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeService/#NemAll_Python_BaseElements.AttributeService.OpenAttributeSelectionDialog"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

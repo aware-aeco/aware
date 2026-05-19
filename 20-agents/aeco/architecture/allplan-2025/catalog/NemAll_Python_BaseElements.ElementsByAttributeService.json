@@ -1,0 +1,115 @@
+{
+  "name": "ElementsByAttributeService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for selecting elements in the current document based on the value of a specific attribute. The ID of this attribute must be given during the service initialization. The service is a singleton, meaning that there can only exist one instance of it.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetElements(attributeValue: float) -\u003E BaseElementAdapterList",
+      "signature": "GetElements(attributeValue: float) -\u003E BaseElementAdapterList",
+      "summary": "Get the elements for the double attribute value",
+      "remarks": "Get the elements for the double attribute value",
+      "params": [
+        {
+          "name": "attributeValue",
+          "type": "float",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
+    },
+    {
+      "name": "GetElements(attributeValue: int) -\u003E BaseElementAdapterList",
+      "signature": "GetElements(attributeValue: int) -\u003E BaseElementAdapterList",
+      "summary": "Get the elements for the integer attribute value",
+      "remarks": "Get the elements for the integer attribute value",
+      "params": [
+        {
+          "name": "attributeValue",
+          "type": "int",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
+    },
+    {
+      "name": "GetElements(attributeValue: str) -\u003E BaseElementAdapterList",
+      "signature": "GetElements(attributeValue: str) -\u003E BaseElementAdapterList",
+      "summary": "Get the elements for the string attribute value",
+      "remarks": "Get the elements for the string attribute value",
+      "params": [
+        {
+          "name": "attributeValue",
+          "type": "str",
+          "doc": "Attribute value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetElements"
+    },
+    {
+      "name": "GetInstance",
+      "signature": "GetInstance() -\u003E ElementsByAttributeService",
+      "summary": "Get the instance",
+      "remarks": "Get the instance",
+      "params": [],
+      "returns": {
+        "type": "ElementsByAttributeService",
+        "doc": "Instance of the singleton"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.GetInstance"
+    },
+    {
+      "name": "Init",
+      "signature": "Init(attributeID: int, doc: DocumentAdapter)",
+      "summary": "Initialize the service.",
+      "remarks": "Initialize the service.",
+      "params": [
+        {
+          "name": "attributeID",
+          "type": "int",
+          "doc": "Attribute ID. Used for creating fast element access by an attribute value of this ID",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ElementsByAttributeService/#NemAll_Python_BaseElements.ElementsByAttributeService.Init"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

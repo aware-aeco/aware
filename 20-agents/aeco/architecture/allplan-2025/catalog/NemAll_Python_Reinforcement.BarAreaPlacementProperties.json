@@ -1,0 +1,110 @@
+{
+  "name": "BarAreaPlacementProperties",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.BarAreaPlacementProperties.)",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/",
+  "constructors": [
+    {
+      "name": "BarAreaPlacementProperties()",
+      "signature": "BarAreaPlacementProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/#NemAll_Python_Reinforcement.BarAreaPlacementProperties.__init__"
+    },
+    {
+      "name": "BarAreaPlacementProperties( diameter: float, distance: float, overlapping: float, isMoveOverlapping: bool, maxBarLength: float, startBarLength: float, maxPlacementLength: float, firstBarEdgeDistance: float, placementStrategy: PlacementStrategy, benching: Benching, benchingLength: float, isPolygonalPlacement: bool, )",
+      "signature": "BarAreaPlacementProperties( diameter: float, distance: float, overlapping: float, isMoveOverlapping: bool, maxBarLength: float, startBarLength: float, maxPlacementLength: float, firstBarEdgeDistance: float, placementStrategy: PlacementStrategy, benching: Benching, benchingLength: float, isPolygonalPlacement: bool, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Diameter",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "float",
+          "doc": "Distance",
+          "optional": false
+        },
+        {
+          "name": "overlapping",
+          "type": "float",
+          "doc": "Overlapping",
+          "optional": false
+        },
+        {
+          "name": "isMoveOverlapping",
+          "type": "bool",
+          "doc": "Is overlapping moved: true/false",
+          "optional": false
+        },
+        {
+          "name": "maxBarLength",
+          "type": "float",
+          "doc": "Maximal bar length",
+          "optional": false
+        },
+        {
+          "name": "startBarLength",
+          "type": "float",
+          "doc": "Start bar length",
+          "optional": false
+        },
+        {
+          "name": "maxPlacementLength",
+          "type": "float",
+          "doc": "Maximal placement length, 0 = will be calculated",
+          "optional": false
+        },
+        {
+          "name": "firstBarEdgeDistance",
+          "type": "float",
+          "doc": "First bar edge distance, \u003C0 = will be calculated",
+          "optional": false
+        },
+        {
+          "name": "placementStrategy",
+          "type": "PlacementStrategy",
+          "doc": "Placement strategy",
+          "optional": false
+        },
+        {
+          "name": "benching",
+          "type": "Benching",
+          "doc": "Benching",
+          "optional": false
+        },
+        {
+          "name": "benchingLength",
+          "type": "float",
+          "doc": "Benching length",
+          "optional": false
+        },
+        {
+          "name": "isPolygonalPlacement",
+          "type": "bool",
+          "doc": "Place in polygon: true / place per meter: false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarAreaPlacementProperties/#NemAll_Python_Reinforcement.BarAreaPlacementProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

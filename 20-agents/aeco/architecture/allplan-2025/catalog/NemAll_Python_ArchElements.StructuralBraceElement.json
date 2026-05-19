@@ -1,0 +1,135 @@
+{
+  "name": "StructuralBraceElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the structural framing bracing",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/",
+  "constructors": [
+    {
+      "name": "StructuralBraceElement()",
+      "signature": "StructuralBraceElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
+    },
+    {
+      "name": "StructuralBraceElement(properties: StructuralBraceProperties)",
+      "signature": "StructuralBraceElement(properties: StructuralBraceProperties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "properties",
+          "type": "StructuralBraceProperties",
+          "doc": "StructuralBrace properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
+    },
+    {
+      "name": "StructuralBraceElement(element: StructuralBraceElement)",
+      "signature": "StructuralBraceElement(element: StructuralBraceElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "StructuralBraceElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetStructuralBraceProperties",
+      "signature": "GetStructuralBraceProperties() -\u003E StructuralBraceProperties",
+      "summary": "Get the Structural Brace properties",
+      "remarks": "Get the Structural Brace properties",
+      "params": [],
+      "returns": {
+        "type": "StructuralBraceProperties",
+        "doc": "Brace properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.GetStructuralBraceProperties"
+    },
+    {
+      "name": "SetAxisVisibility",
+      "signature": "SetAxisVisibility(visibility: bool)",
+      "summary": "Set the Visibility of element axis",
+      "remarks": "Set the Visibility of element axis",
+      "params": [
+        {
+          "name": "visibility",
+          "type": "bool",
+          "doc": "Bool if axis of element should be visible",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.SetAxisVisibility"
+    },
+    {
+      "name": "SetStructuralBraceProperties",
+      "signature": "SetStructuralBraceProperties(properties: StructuralBraceProperties)",
+      "summary": "Set the Structural Brace properties",
+      "remarks": "Set the Structural Brace properties",
+      "params": [
+        {
+          "name": "properties",
+          "type": "StructuralBraceProperties",
+          "doc": "Brace properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.SetStructuralBraceProperties"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "StructuralBraceProperties",
+      "type": "StructuralBraceProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Structural Brace properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralBraceElement/#NemAll_Python_ArchElements.StructuralBraceElement.StructuralBraceProperties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

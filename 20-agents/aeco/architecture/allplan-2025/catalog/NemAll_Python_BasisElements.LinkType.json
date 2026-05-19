@@ -1,0 +1,35 @@
+{
+  "name": "LinkType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Definition of link type",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/LinkType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eLinkNothing",
+      "value": 0
+    },
+    {
+      "name": "eLinkToCeilingSurface",
+      "value": 3
+    },
+    {
+      "name": "eLinkToFloorSurface",
+      "value": 4
+    },
+    {
+      "name": "eLinkToRoofSlab",
+      "value": 2
+    },
+    {
+      "name": "eLinkToRoom",
+      "value": 1
+    }
+  ]
+}

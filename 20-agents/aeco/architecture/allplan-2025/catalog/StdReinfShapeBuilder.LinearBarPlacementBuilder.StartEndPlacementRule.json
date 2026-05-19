@@ -1,0 +1,35 @@
+{
+  "name": "StartEndPlacementRule",
+  "namespace": "StdReinfShapeBuilder.LinearBarPlacementBuilder",
+  "kind": "enum",
+  "summary": "Rules for linear rebar placements, determining how rebars are distributed when the placement length is not an exact multiple of the spacing",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/LinearBarPlacementBuilder/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AdaptDistance",
+      "value": 4,
+      "summary": "Spacing is adapted to match the placement length"
+    },
+    {
+      "name": "AdditionalCover",
+      "value": 1,
+      "summary": "Spacing is preserved, concrete cover is increased at both ends"
+    },
+    {
+      "name": "AdditionalCoverLeft",
+      "value": 2,
+      "summary": "Spacing is preserved, concrete cover at start is increased"
+    },
+    {
+      "name": "AdditionalCoverRight",
+      "value": 3,
+      "summary": "Spacing is preserved, concrete cover at end is increased"
+    }
+  ]
+}

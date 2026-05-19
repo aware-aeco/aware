@@ -1,0 +1,50 @@
+{
+  "name": "VerticalOpeningTierOffsetType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Type of offset settings",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningTierOffsetType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAdvanced",
+      "value": 3,
+      "summary": "Advanced offset"
+    },
+    {
+      "name": "eInnerSide",
+      "value": 2,
+      "summary": "Offset at inner side"
+    },
+    {
+      "name": "eNone",
+      "value": 0,
+      "summary": "No offset"
+    },
+    {
+      "name": "eOuterSide",
+      "value": 1,
+      "summary": "Offset at outer side"
+    },
+    {
+      "name": "eUnsupported",
+      "value": 6,
+      "summary": "Unsupported"
+    },
+    {
+      "name": "eWithInnerFacing",
+      "value": 5,
+      "summary": "With inner facing"
+    },
+    {
+      "name": "eWithOuterFacing",
+      "value": 4,
+      "summary": "With outer facing"
+    }
+  ]
+}

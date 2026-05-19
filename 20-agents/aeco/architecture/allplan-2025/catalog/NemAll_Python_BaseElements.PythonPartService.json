@@ -1,0 +1,125 @@
+{
+  "name": "PythonPartService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Utility for processing PythonParts existing in the drawing file",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PythonPartService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetParameter",
+      "signature": "GetParameter(ele: BaseElementAdapter) -\u003E tuple",
+      "summary": "Get the parameter of the PythonPart",
+      "remarks": "Get the parameter of the PythonPart",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True, when reading was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PythonPartService/#NemAll_Python_BaseElements.PythonPartService.GetParameter"
+    },
+    {
+      "name": "GetPlacementMatrix",
+      "signature": "GetPlacementMatrix(ele: BaseElementAdapter) -\u003E tuple",
+      "summary": "Get the placement matrix of the PythonPart",
+      "remarks": "Get the placement matrix of the PythonPart",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True, when reading was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PythonPartService/#NemAll_Python_BaseElements.PythonPartService.GetPlacementMatrix"
+    },
+    {
+      "name": "IsPythonPartElement",
+      "signature": "IsPythonPartElement(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Check for a PythonPart element",
+      "remarks": "Check for a PythonPart element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "PythonPart element state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PythonPartService/#NemAll_Python_BaseElements.PythonPartService.IsPythonPartElement"
+    },
+    {
+      "name": "IsPythonPartGroupElement",
+      "signature": "IsPythonPartGroupElement(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Check for a PythonPart group element",
+      "remarks": "Check for a PythonPart group element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "PythonPart groupd element state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PythonPartService/#NemAll_Python_BaseElements.PythonPartService.IsPythonPartGroupElement"
+    },
+    {
+      "name": "SetParameter",
+      "signature": "SetParameter( ele: BaseElementAdapter, name: str, paramList: list ) -\u003E BaseElementAdapter",
+      "summary": "Set the parameter of the PythonPart",
+      "remarks": "Set the parameter of the PythonPart",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "paramList",
+          "type": "list",
+          "doc": "Parameter list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Modified element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/PythonPartService/#NemAll_Python_BaseElements.PythonPartService.SetParameter"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,51 @@
+{
+  "name": "eBoxPoint",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Get world point of a dedicated location of the box",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eBoxPoint/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCenter",
+      "value": 5
+    },
+    {
+      "name": "eLeftBottom",
+      "value": 1
+    },
+    {
+      "name": "eLeftTop",
+      "value": 4
+    },
+    {
+      "name": "eMiddleBottom",
+      "value": 6
+    },
+    {
+      "name": "eMiddleLeft",
+      "value": 9
+    },
+    {
+      "name": "eMiddleRight",
+      "value": 7
+    },
+    {
+      "name": "eMiddleTop",
+      "value": 8
+    },
+    {
+      "name": "eRightBottom",
+      "value": 2
+    },
+    {
+      "name": "eRightTop",
+      "value": 3
+    }
+  ]
+}

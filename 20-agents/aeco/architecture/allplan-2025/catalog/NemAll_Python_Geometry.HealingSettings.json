@@ -1,0 +1,243 @@
+{
+  "name": "HealingSettings",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class holding Healing settings for elements.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/",
+  "constructors": [
+    {
+      "name": "HealingSettings( oPhedType: ePolyhedronHealingSettings = HSET_TRIANGULATE, oPgonType: ePolygonHealingSettings = PHSET_NOMODIFY, weldVertices: bool = False, )",
+      "signature": "HealingSettings( oPhedType: ePolyhedronHealingSettings = HSET_TRIANGULATE, oPgonType: ePolygonHealingSettings = PHSET_NOMODIFY, weldVertices: bool = False, )",
+      "summary": "Default constructor. Types can be found in GeometryEnums.h",
+      "remarks": "Default constructor. Types can be found in GeometryEnums.h",
+      "params": [
+        {
+          "name": "oPhedType",
+          "type": "ePolyhedronHealingSettings",
+          "doc": "Settings for the polyhedron",
+          "optional": false
+        },
+        {
+          "name": "oPgonType",
+          "type": "ePolygonHealingSettings",
+          "doc": "Settings for the polygon",
+          "optional": false
+        },
+        {
+          "name": "weldVertices",
+          "type": "bool",
+          "doc": "Vertices welding option, if true weld vertices",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.__init__"
+    },
+    {
+      "name": "HealingSettings(hSet: HealingSettings)",
+      "signature": "HealingSettings(hSet: HealingSettings)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "hSet",
+          "type": "HealingSettings",
+          "doc": "ApproximationSettings which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetPolygonHealingSettings",
+      "signature": "GetPolygonHealingSettings() -\u003E ePolygonHealingSettings",
+      "summary": "Get Healing settings for polygon",
+      "remarks": "Get Healing settings for polygon",
+      "params": [],
+      "returns": {
+        "type": "ePolygonHealingSettings",
+        "doc": "const Reference to Polygon healing settings"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.GetPolygonHealingSettings"
+    },
+    {
+      "name": "GetPolyhedronHealingSettings",
+      "signature": "GetPolyhedronHealingSettings() -\u003E ePolyhedronHealingSettings",
+      "summary": "Get Healing settings for polyhedron",
+      "remarks": "Get Healing settings for polyhedron",
+      "params": [],
+      "returns": {
+        "type": "ePolyhedronHealingSettings",
+        "doc": "const Reference to Polyhedron healing settings"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.GetPolyhedronHealingSettings"
+    },
+    {
+      "name": "IsPolygonNoModify",
+      "signature": "IsPolygonNoModify() -\u003E bool",
+      "summary": "Check whether the type of the settings for polygon is PHSET_NOMODIFY",
+      "remarks": "Check whether the type of the settings for polygon is PHSET_NOMODIFY",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsPolygonNoModify"
+    },
+    {
+      "name": "IsPolygonNormalize",
+      "signature": "IsPolygonNormalize() -\u003E bool",
+      "summary": "Check whether the type of the settings for polygon is PHSET_NOMODIFY",
+      "remarks": "Check whether the type of the settings for polygon is PHSET_NOMODIFY",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsPolygonNormalize"
+    },
+    {
+      "name": "IsPolyhedronNoModify",
+      "signature": "IsPolyhedronNoModify() -\u003E bool",
+      "summary": "Check whether the type of the settings for polyhedron is HSET_NOMODIFY",
+      "remarks": "Check whether the type of the settings for polyhedron is HSET_NOMODIFY",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsPolyhedronNoModify"
+    },
+    {
+      "name": "IsPolyhedronTilt",
+      "signature": "IsPolyhedronTilt() -\u003E bool",
+      "summary": "Check whether the type of the settings for polyhedron is HSET_TILT",
+      "remarks": "Check whether the type of the settings for polyhedron is HSET_TILT",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsPolyhedronTilt"
+    },
+    {
+      "name": "IsPolyhedronTriangulate",
+      "signature": "IsPolyhedronTriangulate() -\u003E bool",
+      "summary": "Check whether the type of the settings for polyhedron is HSET_TRIANGULATE",
+      "remarks": "Check whether the type of the settings for polyhedron is HSET_TRIANGULATE",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsPolyhedronTriangulate"
+    },
+    {
+      "name": "IsPolyhedronUnknown",
+      "signature": "IsPolyhedronUnknown() -\u003E bool",
+      "summary": "Check whether the type of the settings for polyhedron is HSET_TRIANGULATE",
+      "remarks": "Check whether the type of the settings for polyhedron is HSET_TRIANGULATE",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsPolyhedronUnknown"
+    },
+    {
+      "name": "IsWeldVerticesEnabled",
+      "signature": "IsWeldVerticesEnabled() -\u003E bool",
+      "summary": "Check if vertices welding is enabled",
+      "remarks": "Check if vertices welding is enabled",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.IsWeldVerticesEnabled"
+    },
+    {
+      "name": "SetPolygonHealingSettings",
+      "signature": "SetPolygonHealingSettings(pgonSet: ePolygonHealingSettings)",
+      "summary": "Set healing settings for polygon.",
+      "remarks": "Set healing settings for polygon.",
+      "params": [
+        {
+          "name": "pgonSet",
+          "type": "ePolygonHealingSettings",
+          "doc": "new value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.SetPolygonHealingSettings"
+    },
+    {
+      "name": "SetPolyhedronHealingSettings",
+      "signature": "SetPolyhedronHealingSettings(phedSet: ePolyhedronHealingSettings)",
+      "summary": "Set healing settings for polyhedron.",
+      "remarks": "Set healing settings for polyhedron.",
+      "params": [
+        {
+          "name": "phedSet",
+          "type": "ePolyhedronHealingSettings",
+          "doc": "new value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.SetPolyhedronHealingSettings"
+    },
+    {
+      "name": "SetWeldVertices",
+      "signature": "SetWeldVertices(enableWeld: bool)",
+      "summary": "Set vertices welding",
+      "remarks": "Set vertices welding",
+      "params": [
+        {
+          "name": "enableWeld",
+          "type": "bool",
+          "doc": "Enable vertices welding",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HealingSettings/#NemAll_Python_Geometry.HealingSettings.SetWeldVertices"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

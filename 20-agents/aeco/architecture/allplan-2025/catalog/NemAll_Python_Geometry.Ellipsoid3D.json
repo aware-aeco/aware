@@ -1,0 +1,495 @@
+{
+  "name": "Ellipsoid3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D ellipsoid",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/",
+  "constructors": [
+    {
+      "name": "Ellipsoid3D()",
+      "signature": "Ellipsoid3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
+    },
+    {
+      "name": "Ellipsoid3D(ellipsoid: Ellipsoid3D)",
+      "signature": "Ellipsoid3D(ellipsoid: Ellipsoid3D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "ellipsoid",
+          "type": "Ellipsoid3D",
+          "doc": "Ellipsoid which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
+    },
+    {
+      "name": "Ellipsoid3D( refPlacement: AxisPlacement3D, radiusX: float, radiusY: float, radiusZ: float, )",
+      "signature": "Ellipsoid3D( refPlacement: AxisPlacement3D, radiusX: float, radiusY: float, radiusZ: float, )",
+      "summary": "Constructor.",
+      "remarks": "Constructor.",
+      "params": [
+        {
+          "name": "refPlacement",
+          "type": "AxisPlacement3D",
+          "doc": "Local Placement of the ellipsoid.",
+          "optional": false
+        },
+        {
+          "name": "radiusX",
+          "type": "float",
+          "doc": "X radius of the Ellipsoid.",
+          "optional": false
+        },
+        {
+          "name": "radiusY",
+          "type": "float",
+          "doc": "Y radius of the Ellipsoid.",
+          "optional": false
+        },
+        {
+          "name": "radiusZ",
+          "type": "float",
+          "doc": "Z radius of the Ellipsoid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
+    },
+    {
+      "name": "Ellipsoid3D(radiusX: float, radiusY: float, radiusZ: float)",
+      "signature": "Ellipsoid3D(radiusX: float, radiusY: float, radiusZ: float)",
+      "summary": "Constructor.",
+      "remarks": "Constructor.",
+      "params": [
+        {
+          "name": "radiusX",
+          "type": "float",
+          "doc": "X radius of the Ellipsoid.",
+          "optional": false
+        },
+        {
+          "name": "radiusY",
+          "type": "float",
+          "doc": "Y radius of the Ellipsoid.",
+          "optional": false
+        },
+        {
+          "name": "radiusZ",
+          "type": "float",
+          "doc": "Z radius of the Ellipsoid.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter() -\u003E Point3D",
+      "summary": "Get Center of the Ellipsoid",
+      "remarks": "Get Center of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference to Center."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetCenter"
+    },
+    {
+      "name": "GetIsoLines",
+      "signature": "GetIsoLines(USegmentsCount: int, VSegmentsCount: int) -\u003E Arc3DList",
+      "summary": "Test whether the Ellipsoid is Sphere",
+      "remarks": "Test whether the Ellipsoid is Sphere",
+      "params": [
+        {
+          "name": "USegmentsCount",
+          "type": "int",
+          "doc": "count of circles",
+          "optional": false
+        },
+        {
+          "name": "VSegmentsCount",
+          "type": "int",
+          "doc": "count of circles",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc3DList",
+        "doc": "vector of circles"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetIsoLines"
+    },
+    {
+      "name": "GetLocalPlacement",
+      "signature": "GetLocalPlacement() -\u003E AxisPlacement3D",
+      "summary": "Get Local Placement",
+      "remarks": "Get Local Placement",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "Reference to Local Placement."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetLocalPlacement"
+    },
+    {
+      "name": "GetSilhouetteContour",
+      "signature": "GetSilhouetteContour(viewMatrix: Matrix3D, bPerspective: bool) -\u003E Arc3D",
+      "summary": "Get silhouette circle",
+      "remarks": "Get silhouette circle",
+      "params": [
+        {
+          "name": "viewMatrix",
+          "type": "Matrix3D",
+          "doc": "view matrix",
+          "optional": false
+        },
+        {
+          "name": "bPerspective",
+          "type": "bool",
+          "doc": "central perspective true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc3D",
+        "doc": "silhouette"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetSilhouetteContour"
+    },
+    {
+      "name": "GetXAxis",
+      "signature": "GetXAxis() -\u003E Vector3D",
+      "summary": "Get X-Axis of the placement of the Ellipsoid",
+      "remarks": "Get X-Axis of the placement of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Reference to X-Axis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetXAxis"
+    },
+    {
+      "name": "GetXRadius",
+      "signature": "GetXRadius() -\u003E float",
+      "summary": "Get X Radius of the Ellipsoid",
+      "remarks": "Get X Radius of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Reference to X Radius."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetXRadius"
+    },
+    {
+      "name": "GetYAxis",
+      "signature": "GetYAxis() -\u003E Vector3D",
+      "summary": "Get Y-Axis of the placement of the Ellipsoid",
+      "remarks": "Get Y-Axis of the placement of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Reference to X-Axis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetYAxis"
+    },
+    {
+      "name": "GetYRadius",
+      "signature": "GetYRadius() -\u003E float",
+      "summary": "Get Y Radius of the Ellipsoid",
+      "remarks": "Get Y Radius of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Reference to Y Radius."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetYRadius"
+    },
+    {
+      "name": "GetZAxis",
+      "signature": "GetZAxis() -\u003E Vector3D",
+      "summary": "Get Z - axis of the placement of the Ellipsoid",
+      "remarks": "Get Z - axis of the placement of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Reference to Z-axis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetZAxis"
+    },
+    {
+      "name": "GetZRadius",
+      "signature": "GetZRadius() -\u003E float",
+      "summary": "Get Z Radius of the Ellipsoid",
+      "remarks": "Get Z Radius of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Reference to Z Radius."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.GetZRadius"
+    },
+    {
+      "name": "IsSphere",
+      "signature": "IsSphere() -\u003E bool",
+      "summary": "Test whether the Ellipsoid is Sphere",
+      "remarks": "Test whether the Ellipsoid is Sphere",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.IsSphere"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Validity check of the Ellipsoid",
+      "remarks": "Validity check of the Ellipsoid",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.IsValid"
+    },
+    {
+      "name": "SetCenter",
+      "signature": "SetCenter(center: Point3D)",
+      "summary": "Set center",
+      "remarks": "Set center",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "New center.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetCenter"
+    },
+    {
+      "name": "SetLocalPlacement(placement: AxisPlacement3D)",
+      "signature": "SetLocalPlacement(placement: AxisPlacement3D)",
+      "summary": "Set Local Placement.",
+      "remarks": "Set Local Placement.",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "Local Placement.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetLocalPlacement"
+    },
+    {
+      "name": "SetLocalPlacement(center: Point3D, xAxis: Vector3D, zAxis: Vector3D)",
+      "signature": "SetLocalPlacement(center: Point3D, xAxis: Vector3D, zAxis: Vector3D)",
+      "summary": "Set Local Placement.",
+      "remarks": "Set Local Placement.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Center point of the placement",
+          "optional": false
+        },
+        {
+          "name": "xAxis",
+          "type": "Vector3D",
+          "doc": "X-axis of the placement",
+          "optional": false
+        },
+        {
+          "name": "zAxis",
+          "type": "Vector3D",
+          "doc": "Z-axis of the placement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetLocalPlacement"
+    },
+    {
+      "name": "SetXRadius",
+      "signature": "SetXRadius(rad: float)",
+      "summary": "Set X Radius of the Ellipsoid",
+      "remarks": "Set X Radius of the Ellipsoid",
+      "params": [
+        {
+          "name": "rad",
+          "type": "float",
+          "doc": "New radius.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Reference to X Radius."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetXRadius"
+    },
+    {
+      "name": "SetYRadius",
+      "signature": "SetYRadius(rad: float)",
+      "summary": "Set Y Radius of the Ellipsoid",
+      "remarks": "Set Y Radius of the Ellipsoid",
+      "params": [
+        {
+          "name": "rad",
+          "type": "float",
+          "doc": "New radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetYRadius"
+    },
+    {
+      "name": "SetZRadius",
+      "signature": "SetZRadius(rad: float)",
+      "summary": "Set Z Radius of the Ellipsoid",
+      "remarks": "Set Z Radius of the Ellipsoid",
+      "params": [
+        {
+          "name": "rad",
+          "type": "float",
+          "doc": "New radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.SetZRadius"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(ellipsoid: Ellipsoid3D) -\u003E object",
+      "summary": "Comparison of ellipsoids without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of ellipsoids without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "ellipsoid",
+          "type": "Ellipsoid3D",
+          "doc": "Compared ellipsoid.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when ellipsoids are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "LocalPlacement",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the local placement property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.LocalPlacement"
+    },
+    {
+      "name": "XRadius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the x radius property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.XRadius"
+    },
+    {
+      "name": "YRadius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the y radius property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.YRadius"
+    },
+    {
+      "name": "ZRadius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the z radius property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Ellipsoid3D/#NemAll_Python_Geometry.Ellipsoid3D.ZRadius"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

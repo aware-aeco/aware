@@ -1,0 +1,31 @@
+{
+  "name": "HeightDefinitionType",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "Height definition types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/HeightDefinitionType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAverage",
+      "value": 3
+    },
+    {
+      "name": "eComponent",
+      "value": 2
+    },
+    {
+      "name": "eMacro",
+      "value": 1
+    },
+    {
+      "name": "eNone",
+      "value": 0
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "TextResTierOffsetType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Text resources for tier offset types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/TextResTierOffsetType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAdvanced",
+      "value": 36395
+    },
+    {
+      "name": "eInnerSide",
+      "value": 36394
+    },
+    {
+      "name": "eNone",
+      "value": 36392
+    },
+    {
+      "name": "eOuterSide",
+      "value": 36393
+    },
+    {
+      "name": "eWithInnerFacing",
+      "value": 36396
+    },
+    {
+      "name": "eWithOuterFacing",
+      "value": 36397
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "SelectionMode",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Possible selection modes for multiple selection using InputFunctionStarter",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/SelectionMode/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSelectGeometry",
+      "value": 0,
+      "summary": "Result of the selection is only the selected element"
+    },
+    {
+      "name": "eSelectObject",
+      "value": 1,
+      "summary": "Result of the selection is the selected element with all its related elements (e.g. wall tier together with axis, labels, attribute container, etc...) and all child elements (if existing)"
+    },
+    {
+      "name": "eSelectSubObject",
+      "value": 3,
+      "summary": "Result of the selection is the selected element with some related elements (e.g. wall tier with labels and attribute container)"
+    }
+  ]
+}

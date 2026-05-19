@@ -1,0 +1,221 @@
+{
+  "name": "AllplanElement",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Implementation of the Allplan element",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAttributes",
+      "signature": "GetAttributes() -\u003E object",
+      "summary": "Get the attributes object",
+      "remarks": "Get the attributes object",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Attributes object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GetAttributes"
+    },
+    {
+      "name": "GetBaseElementAdapter",
+      "signature": "GetBaseElementAdapter() -\u003E BaseElementAdapter",
+      "summary": "Get the model element",
+      "remarks": "Get the model element",
+      "params": [],
+      "returns": {
+        "type": "BaseElementAdapter",
+        "doc": "Model element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GetBaseElementAdapter"
+    },
+    {
+      "name": "GetCommonProperties",
+      "signature": "GetCommonProperties() -\u003E CommonProperties",
+      "summary": "Get the common properties",
+      "remarks": "Get the common properties",
+      "params": [],
+      "returns": {
+        "type": "CommonProperties",
+        "doc": "Common properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GetCommonProperties"
+    },
+    {
+      "name": "GetGeometryObject",
+      "signature": "GetGeometryObject() -\u003E object",
+      "summary": "Get the geometry object",
+      "remarks": "Get the geometry object",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Geometry object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GetGeometryObject"
+    },
+    {
+      "name": "GetLabelElements",
+      "signature": "GetLabelElements() -\u003E list",
+      "summary": "Get the label elements",
+      "remarks": "Get the label elements",
+      "params": [],
+      "returns": {
+        "type": "list",
+        "doc": "LabelElements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GetLabelElements"
+    },
+    {
+      "name": "GetSubElementID",
+      "signature": "GetSubElementID() -\u003E type",
+      "summary": "Get the SubElementID",
+      "remarks": "Get the SubElementID",
+      "params": [],
+      "returns": {
+        "type": "type",
+        "doc": "SubElementID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GetSubElementID"
+    },
+    {
+      "name": "SetAttributes",
+      "signature": "SetAttributes(attributeContainer: object)",
+      "summary": "Set the attributes object",
+      "remarks": "Set the attributes object",
+      "params": [
+        {
+          "name": "attributeContainer",
+          "type": "object",
+          "doc": "Attributes object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.SetAttributes"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(commonProp: CommonProperties)",
+      "summary": "Set the common properties",
+      "remarks": "Set the common properties",
+      "params": [
+        {
+          "name": "commonProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.SetCommonProperties"
+    },
+    {
+      "name": "SetDockingPointsKey",
+      "signature": "SetDockingPointsKey(dockingPointsKey: str)",
+      "summary": "Set the docking points key",
+      "remarks": "Set the docking points key",
+      "params": [
+        {
+          "name": "dockingPointsKey",
+          "type": "str",
+          "doc": "Docking points key",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.SetDockingPointsKey"
+    },
+    {
+      "name": "SetGeometryObject",
+      "signature": "SetGeometryObject(geoObject: object)",
+      "summary": "Set the geometry object",
+      "remarks": "Set the geometry object",
+      "params": [
+        {
+          "name": "geoObject",
+          "type": "object",
+          "doc": "Geometry object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.SetGeometryObject"
+    },
+    {
+      "name": "SetLabelElements",
+      "signature": "SetLabelElements(labelElements: list)",
+      "summary": "Set the label elements",
+      "remarks": "Set the label elements",
+      "params": [
+        {
+          "name": "labelElements",
+          "type": "list",
+          "doc": "Label elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.SetLabelElements"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Attributes",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the attributes object",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.Attributes"
+    },
+    {
+      "name": "CommonProperties",
+      "type": "CommonProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the common properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.CommonProperties"
+    },
+    {
+      "name": "GeometryObject",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the geometry object",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.GeometryObject"
+    },
+    {
+      "name": "LabelElements",
+      "type": "list",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the label elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/AllplanElement/#NemAll_Python_BasisElements.AllplanElement.LabelElements"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

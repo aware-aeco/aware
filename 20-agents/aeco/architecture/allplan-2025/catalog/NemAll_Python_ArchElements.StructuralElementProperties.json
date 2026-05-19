@@ -1,0 +1,666 @@
+{
+  "name": "StructuralElementProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of the properties of structural framing element",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/",
+  "constructors": [
+    {
+      "name": "StructuralElementProperties()",
+      "signature": "StructuralElementProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.__init__"
+    },
+    {
+      "name": "StructuralElementProperties(value: StructuralElementProperties)",
+      "signature": "StructuralElementProperties(value: StructuralElementProperties)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "value",
+          "type": "StructuralElementProperties",
+          "doc": "Structural Element properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AddHole",
+      "signature": "AddHole(holeGeometry: BRep3D) -\u003E int",
+      "summary": "Adds a hole to the list of holes for the Structural Element",
+      "remarks": "Adds a hole to the list of holes for the Structural Element",
+      "params": [
+        {
+          "name": "holeGeometry",
+          "type": "BRep3D",
+          "doc": "3D BRep Geometry of the hole",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Unique ID for the created hole"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.AddHole"
+    },
+    {
+      "name": "GetAnglesAtEnd",
+      "signature": "GetAnglesAtEnd() -\u003E tuple",
+      "summary": "Get angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its end",
+      "remarks": "Get angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its end",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "angle in local X direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetAnglesAtEnd"
+    },
+    {
+      "name": "GetAnglesAtStart",
+      "signature": "GetAnglesAtStart() -\u003E tuple",
+      "summary": "Get angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its start",
+      "remarks": "Get angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its start",
+      "params": [],
+      "returns": {
+        "type": "tuple",
+        "doc": "angle in local X direction"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetAnglesAtStart"
+    },
+    {
+      "name": "GetBodyAxis",
+      "signature": "GetBodyAxis() -\u003E Line3D",
+      "summary": "Get the Axis of the structural framing element calculated in the cross section\u0027s center of gravity",
+      "remarks": "Get the Axis of the structural framing element calculated in the cross section\u0027s center of gravity",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "Axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetBodyAxis"
+    },
+    {
+      "name": "GetCenterAxis",
+      "signature": "GetCenterAxis() -\u003E Line3D",
+      "summary": "Get the axis of the structural framing element calculated in the center of the cross section outline",
+      "remarks": "Get the axis of the structural framing element calculated in the center of the cross section outline",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "Axis"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetCenterAxis"
+    },
+    {
+      "name": "GetConnectionAxis",
+      "signature": "GetConnectionAxis() -\u003E Line3D",
+      "summary": "Get Connection Axis as a Line3D",
+      "remarks": "Get Connection Axis as a Line3D",
+      "params": [],
+      "returns": {
+        "type": "Line3D",
+        "doc": "Line3D which contains information about start and end point coordinates"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetConnectionAxis"
+    },
+    {
+      "name": "GetDoubleProfileGap",
+      "signature": "GetDoubleProfileGap() -\u003E float",
+      "summary": "Gets double profile gap",
+      "remarks": "Gets double profile gap",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Double profile gap"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetDoubleProfileGap"
+    },
+    {
+      "name": "GetEndPointAdditionalOffset",
+      "signature": "GetEndPointAdditionalOffset() -\u003E Vector3D",
+      "summary": "Get the end point distance dx/dy",
+      "remarks": "Get the end point distance dx/dy",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D with offsets in x and y like Vector3D(distance_dx, distance dy, 0)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetEndPointAdditionalOffset"
+    },
+    {
+      "name": "GetEndPointZOffset",
+      "signature": "GetEndPointZOffset() -\u003E float",
+      "summary": "Get the the offset between the anchor end point and the element end point of a structural framing element",
+      "remarks": "Get the the offset between the anchor end point and the element end point of a structural framing element",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Offset value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetEndPointZOffset"
+    },
+    {
+      "name": "GetEndReferencePointType",
+      "signature": "GetEndReferencePointType() -\u003E CustomBoxPoint",
+      "summary": "Get type the reference point at end",
+      "remarks": "Get type the reference point at end",
+      "params": [],
+      "returns": {
+        "type": "CustomBoxPoint",
+        "doc": "Type the reference point at end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetEndReferencePointType"
+    },
+    {
+      "name": "GetHeightProperties",
+      "signature": "GetHeightProperties() -\u003E PlaneReferences",
+      "summary": "Get HeightProperties",
+      "remarks": "Get HeightProperties",
+      "params": [],
+      "returns": {
+        "type": "PlaneReferences",
+        "doc": "HeightProperties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetHeightProperties"
+    },
+    {
+      "name": "GetHoles",
+      "signature": "GetHoles() -\u003E dict",
+      "summary": "Returns existing holes as python dictionary, where key is hole ID, value is its geometry",
+      "remarks": "Returns existing holes as python dictionary, where key is hole ID, value is its geometry",
+      "params": [],
+      "returns": {
+        "type": "dict",
+        "doc": "Existing holes as python dictionary, where key is hole ID, value is its geometry"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetHoles"
+    },
+    {
+      "name": "GetProfileAngle",
+      "signature": "GetProfileAngle() -\u003E Angle",
+      "summary": "Get rotation angle of cross section profile around the axis of a structural framing element",
+      "remarks": "Get rotation angle of cross section profile around the axis of a structural framing element",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Rotation angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetProfileAngle"
+    },
+    {
+      "name": "GetProfileShapeProperties",
+      "signature": "GetProfileShapeProperties() -\u003E object",
+      "summary": "Get the shape properties of the cross section",
+      "remarks": "Get the shape properties of the cross section",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "Cross section properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetProfileShapeProperties"
+    },
+    {
+      "name": "GetShapeTypeAtEnd",
+      "signature": "GetShapeTypeAtEnd() -\u003E SolidElementTruncationType",
+      "summary": "Get truncation type at the element\u0027s end point",
+      "remarks": "Get truncation type at the element\u0027s end point",
+      "params": [],
+      "returns": {
+        "type": "SolidElementTruncationType",
+        "doc": "truncation type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetShapeTypeAtEnd"
+    },
+    {
+      "name": "GetShapeTypeAtStart",
+      "signature": "GetShapeTypeAtStart() -\u003E SolidElementTruncationType",
+      "summary": "Get truncation type at the element\u0027s start point",
+      "remarks": "Get truncation type at the element\u0027s start point",
+      "params": [],
+      "returns": {
+        "type": "SolidElementTruncationType",
+        "doc": "truncation type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetShapeTypeAtStart"
+    },
+    {
+      "name": "GetSkeletonSolidElementProperties",
+      "signature": "GetSkeletonSolidElementProperties() -\u003E object",
+      "summary": "Get SkeletonSolidElementProperties",
+      "remarks": "Get SkeletonSolidElementProperties",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": "SkeletonSolidElementProperties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetSkeletonSolidElementProperties"
+    },
+    {
+      "name": "GetStartPointAdditionalOffset",
+      "signature": "GetStartPointAdditionalOffset() -\u003E Vector3D",
+      "summary": "Get the start point distance dx/dy",
+      "remarks": "Get the start point distance dx/dy",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Vector3D with offsets in x and y like Vector3D(distance_dx, distance dy, 0)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetStartPointAdditionalOffset"
+    },
+    {
+      "name": "GetStartPointZOffset",
+      "signature": "GetStartPointZOffset() -\u003E float",
+      "summary": "Get the the offset between the anchor start point and the element start point of a structural framing element",
+      "remarks": "Get the the offset between the anchor start point and the element start point of a structural framing element",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Offset value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetStartPointZOffset"
+    },
+    {
+      "name": "GetStartReferencePointType",
+      "signature": "GetStartReferencePointType() -\u003E CustomBoxPoint",
+      "summary": "Get type of the reference point at start",
+      "remarks": "Get type of the reference point at start",
+      "params": [],
+      "returns": {
+        "type": "CustomBoxPoint",
+        "doc": "Type of the reference point at start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetStartReferencePointType"
+    },
+    {
+      "name": "GetZCoordsVisibility",
+      "signature": "GetZCoordsVisibility() -\u003E bool",
+      "summary": "Get visibility of Z coordinates of insertion point",
+      "remarks": "Get visibility of Z coordinates of insertion point",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True if Z coordinates visible, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.GetZCoordsVisibility"
+    },
+    {
+      "name": "HasTwoAnchorPoints",
+      "signature": "HasTwoAnchorPoints() -\u003E bool",
+      "summary": "Get the two anchor point state",
+      "remarks": "Get the two anchor point state",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Two anchor point state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.HasTwoAnchorPoints"
+    },
+    {
+      "name": "RemoveHole",
+      "signature": "RemoveHole(holeID: int)",
+      "summary": "Removes a hole to the list of holes for the Structural Element",
+      "remarks": "Removes a hole to the list of holes for the Structural Element",
+      "params": [
+        {
+          "name": "holeID",
+          "type": "int",
+          "doc": "ID of the hole to remove. This ID is obtained by AddHole operation",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.RemoveHole"
+    },
+    {
+      "name": "SetAnglesAtEnd",
+      "signature": "SetAnglesAtEnd(angleX: Angle, angleY: Angle)",
+      "summary": "Set angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its end",
+      "remarks": "Set angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its end",
+      "params": [
+        {
+          "name": "angleX",
+          "type": "Angle",
+          "doc": "angle in local X direction",
+          "optional": false
+        },
+        {
+          "name": "angleY",
+          "type": "Angle",
+          "doc": "angle in local Y direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetAnglesAtEnd"
+    },
+    {
+      "name": "SetAnglesAtStart",
+      "signature": "SetAnglesAtStart(angleX: Angle, angleY: Angle)",
+      "summary": "Set angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its start",
+      "remarks": "Set angles between the cross-sectional area and the plane perpendicular to the axis of the structural framing element at its start",
+      "params": [
+        {
+          "name": "angleX",
+          "type": "Angle",
+          "doc": "angle in local X direction",
+          "optional": false
+        },
+        {
+          "name": "angleY",
+          "type": "Angle",
+          "doc": "angle in local Y direction",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetAnglesAtStart"
+    },
+    {
+      "name": "SetAttribute",
+      "signature": "SetAttribute(attrib: object)",
+      "summary": "Set the attribute",
+      "remarks": "Set the attribute",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "object",
+          "doc": "Attribute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetAttribute"
+    },
+    {
+      "name": "SetCommonProperties",
+      "signature": "SetCommonProperties(comProp: CommonProperties)",
+      "summary": "Set the Common properties",
+      "remarks": "Set the Common properties",
+      "params": [
+        {
+          "name": "comProp",
+          "type": "CommonProperties",
+          "doc": "Common properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetCommonProperties"
+    },
+    {
+      "name": "SetDoubleProfileGap",
+      "signature": "SetDoubleProfileGap(desiredGap: float) -\u003E bool",
+      "summary": "Set the gap of double profile",
+      "remarks": "Set the gap of double profile",
+      "params": [
+        {
+          "name": "desiredGap",
+          "type": "float",
+          "doc": "Desired gap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if attribute Gap was correctly set and exists / false if given profile doesn\u0027t have attribute Gap"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetDoubleProfileGap"
+    },
+    {
+      "name": "SetEndPointZOffset",
+      "signature": "SetEndPointZOffset(desiredOffset: float)",
+      "summary": "Set the offset between the anchor end point and the element end point of a structural framing element",
+      "remarks": "Set the offset between the anchor end point and the element end point of a structural framing element",
+      "params": [
+        {
+          "name": "desiredOffset",
+          "type": "float",
+          "doc": "offset value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetEndPointZOffset"
+    },
+    {
+      "name": "SetProfileAngle",
+      "signature": "SetProfileAngle(value: Angle)",
+      "summary": "Set rotation angle of cross section profile around the axis of a structural framing element",
+      "remarks": "Set rotation angle of cross section profile around the axis of a structural framing element",
+      "params": [
+        {
+          "name": "value",
+          "type": "Angle",
+          "doc": "Rotation angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetProfileAngle"
+    },
+    {
+      "name": "SetProfileShapeProperties",
+      "signature": "SetProfileShapeProperties(value: object)",
+      "summary": "Set cross-section shape properties",
+      "remarks": "Set cross-section shape properties",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "doc": "Profile Shape Properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetProfileShapeProperties"
+    },
+    {
+      "name": "SetShapeTypeAtEnd",
+      "signature": "SetShapeTypeAtEnd(endTruncationType: SolidElementTruncationType)",
+      "summary": "Set truncation type at the element\u0027s end point",
+      "remarks": "Set truncation type at the element\u0027s end point",
+      "params": [
+        {
+          "name": "endTruncationType",
+          "type": "SolidElementTruncationType",
+          "doc": "truncation type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetShapeTypeAtEnd"
+    },
+    {
+      "name": "SetShapeTypeAtStart",
+      "signature": "SetShapeTypeAtStart(startTruncationType: SolidElementTruncationType)",
+      "summary": "Set truncation type at the element\u0027s start point",
+      "remarks": "Set truncation type at the element\u0027s start point",
+      "params": [
+        {
+          "name": "startTruncationType",
+          "type": "SolidElementTruncationType",
+          "doc": "truncation type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetShapeTypeAtStart"
+    },
+    {
+      "name": "SetStartPointZOffset",
+      "signature": "SetStartPointZOffset(desiredOffset: float)",
+      "summary": "Set the offset between the anchor start point and the element start point of a structural framing element",
+      "remarks": "Set the offset between the anchor start point and the element start point of a structural framing element",
+      "params": [
+        {
+          "name": "desiredOffset",
+          "type": "float",
+          "doc": "offset value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetStartPointZOffset"
+    },
+    {
+      "name": "SetTwoAnchorPoints",
+      "signature": "SetTwoAnchorPoints(areTwoAnchorPoint: bool)",
+      "summary": "Whether the structural framing element should have two different anchor points at beginning and at end",
+      "remarks": "Whether the structural framing element should have two different anchor points at beginning and at end",
+      "params": [
+        {
+          "name": "areTwoAnchorPoint",
+          "type": "bool",
+          "doc": "True to make the element have two different anchor points, False otherwise",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.SetTwoAnchorPoints"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DoubleProfileGap",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets double profile gap",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.DoubleProfileGap"
+    },
+    {
+      "name": "EndPointZOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the value of Z offset of the anchor point at end the point of SF element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.EndPointZOffset"
+    },
+    {
+      "name": "ProfileAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the rotation angle of element profile",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.ProfileAngle"
+    },
+    {
+      "name": "ProfileShapeProperties",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Get ProfileShapeProperties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.ProfileShapeProperties"
+    },
+    {
+      "name": "ShapeTypeAtEnd",
+      "type": "SolidElementTruncationType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get truncation type at the start of the Structural Element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.ShapeTypeAtEnd"
+    },
+    {
+      "name": "ShapeTypeAtStart",
+      "type": "SolidElementTruncationType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get truncation type at the end of the Structural Element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.ShapeTypeAtStart"
+    },
+    {
+      "name": "StartPointZOffset",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the value of Z offset of the anchor point at start the point of SF element",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/StructuralElementProperties/#NemAll_Python_ArchElements.StructuralElementProperties.StartPointZOffset"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

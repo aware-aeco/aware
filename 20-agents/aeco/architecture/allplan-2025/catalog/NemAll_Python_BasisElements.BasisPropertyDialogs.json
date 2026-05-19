@@ -1,0 +1,52 @@
+{
+  "name": "BasisPropertyDialogs",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BasisElements.BasisPropertyDialogs.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BasisPropertyDialogs/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "OpenBitmapResourceDialog",
+      "signature": "OpenBitmapResourceDialog(doc: DocumentAdapter, bitmapPath: str) -\u003E str",
+      "summary": "Open the bitmap resource dialog",
+      "remarks": "Open the bitmap resource dialog",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "bitmapPath",
+          "type": "str",
+          "doc": "Initial path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "Selected bitmap path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BasisPropertyDialogs/#NemAll_Python_BasisElements.BasisPropertyDialogs.OpenBitmapResourceDialog"
+    },
+    {
+      "name": "OpenRGBColorDialog",
+      "signature": "OpenRGBColorDialog(doc, color: int) -\u003E int",
+      "summary": "Open the RGB color dialog",
+      "remarks": "Open the RGB color dialog",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/BasisPropertyDialogs/#NemAll_Python_BasisElements.BasisPropertyDialogs.OpenRGBColorDialog"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

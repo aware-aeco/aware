@@ -1,0 +1,65 @@
+{
+  "name": "ConsiderType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Possible options for how a smart symbol (macro) placed in a room with finishing surfaces is displayed in animation and in sections",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/ConsiderType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eConsiderAutomatic",
+      "value": 3,
+      "summary": "Automatic to nearest (floor or ceiling) surface - !!! don\u0027t use this value at the moment, it\u0027s only for internal usage"
+    },
+    {
+      "name": "eConsiderCeilingOpening",
+      "value": 8,
+      "summary": "Adapts to ceiling opening"
+    },
+    {
+      "name": "eConsiderCeilingRecess",
+      "value": 9,
+      "summary": "Adapts to ceiling recess"
+    },
+    {
+      "name": "eConsiderCeilingSurface",
+      "value": 2,
+      "summary": "Adapts to the height of the ceiling in animation and sections."
+    },
+    {
+      "name": "eConsiderDoorOpening",
+      "value": 5,
+      "summary": "Adapts to door opening"
+    },
+    {
+      "name": "eConsiderFloorSurface",
+      "value": 1,
+      "summary": "Adapts to the height of the floor"
+    },
+    {
+      "name": "eConsiderNiche",
+      "value": 6,
+      "summary": "Adapts to niche opening"
+    },
+    {
+      "name": "eConsiderNothing",
+      "value": 0,
+      "summary": "No adaptation"
+    },
+    {
+      "name": "eConsiderRecess",
+      "value": 7,
+      "summary": "Adapts to recess opening"
+    },
+    {
+      "name": "eConsiderWindowOpening",
+      "value": 4,
+      "summary": "Adapts to window opening"
+    }
+  ]
+}

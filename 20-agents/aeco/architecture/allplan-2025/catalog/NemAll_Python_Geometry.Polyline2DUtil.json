@@ -1,0 +1,236 @@
+{
+  "name": "Polyline2DUtil",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Implemtation of the utilities for Polyline2D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AlignSegmentsToBaseSegment",
+      "signature": "AlignSegmentsToBaseSegment( dimensionLine: Polyline2D, indexBaseSegment: int = 1 ) -\u003E bool",
+      "summary": "Align the points of the dimension line",
+      "remarks": "Align the points of the dimension line",
+      "params": [
+        {
+          "name": "dimensionLine",
+          "type": "Polyline2D",
+          "doc": "Dimension line",
+          "optional": false
+        },
+        {
+          "name": "indexBaseSegment",
+          "type": "int",
+          "doc": "Index of the base segment (default = 1)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true, if all points are aligned"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.AlignSegmentsToBaseSegment"
+    },
+    {
+      "name": "AppendToPolyline2D( polyline: Polyline2D, append: Line2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
+      "signature": "AppendToPolyline2D( polyline: Polyline2D, append: Line2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
+      "summary": "Appends a line to a polyline the way that the line is always appended at the end",
+      "remarks": "Appends a line to a polyline the way that the line is always appended at the end",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline to be appended to",
+          "optional": false
+        },
+        {
+          "name": "append",
+          "type": "Line2D",
+          "doc": "Line to be appended",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polyline2D, bool, bool]",
+        "doc": "tuple(True if successful, false if line is not valid or is not connected to polyline, Resulting polyline, Returns if function has to swap the polyline point order, Returns is function has to swap the appended line/polyline point order)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.AppendToPolyline2D"
+    },
+    {
+      "name": "AppendToPolyline2D( polyline: Polyline2D, append: Polyline2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
+      "signature": "AppendToPolyline2D( polyline: Polyline2D, append: Polyline2D ) -\u003E tuple[bool, Polyline2D, bool, bool]",
+      "summary": "Appends a line to a polyline the way that the line is always appended at the end",
+      "remarks": "Appends a line to a polyline the way that the line is always appended at the end",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline to be appended to",
+          "optional": false
+        },
+        {
+          "name": "append",
+          "type": "Polyline2D",
+          "doc": "Polyline to be appended",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polyline2D, bool, bool]",
+        "doc": "tuple(True if successful, false if line is not valid or is not connected to polyline, Resulting polyline, Returns if function has to swap the polyline point order, Returns is function has to swap the appended line/polyline point order)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.AppendToPolyline2D"
+    },
+    {
+      "name": "CreatePolyline2D",
+      "signature": "CreatePolyline2D( startPnt: Point2D, endPnt: Point2D, corners: int, diameter: float, systemAngle: float, bCenterPnt: bool, bClockwise: bool, ) -\u003E tuple[Polyline2D, Point2D]",
+      "summary": "Create a Polyline2D",
+      "remarks": "Create a Polyline2D",
+      "params": [
+        {
+          "name": "startPnt",
+          "type": "Point2D",
+          "doc": "Start point",
+          "optional": false
+        },
+        {
+          "name": "endPnt",
+          "type": "Point2D",
+          "doc": "End point",
+          "optional": false
+        },
+        {
+          "name": "corners",
+          "type": "int",
+          "doc": "Count of the corners",
+          "optional": false
+        },
+        {
+          "name": "diameter",
+          "type": "float",
+          "doc": "Contains the diameter of the rectangle",
+          "optional": false
+        },
+        {
+          "name": "systemAngle",
+          "type": "float",
+          "doc": "Angle of the window where the rectangle will be drawn",
+          "optional": false
+        },
+        {
+          "name": "bCenterPnt",
+          "type": "bool",
+          "doc": "point is center point: true/false",
+          "optional": false
+        },
+        {
+          "name": "bClockwise",
+          "type": "bool",
+          "doc": "Determines the direction of rotation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[Polyline2D, Point2D]",
+        "doc": "tuple(2D polyline, Center point)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.CreatePolyline2D"
+    },
+    {
+      "name": "GetOutlinePolylineSideFromPoint",
+      "signature": "GetOutlinePolylineSideFromPoint( polygon: Polygon2D, fromPoint: Point2D, directionPoint: Point2D, axis_object: object, ) -\u003E tuple[int, Polyline2D]",
+      "summary": "Get the outline polygon side by a point",
+      "remarks": "Get the outline polygon side by a point",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon",
+          "optional": false
+        },
+        {
+          "name": "fromPoint",
+          "type": "Point2D",
+          "doc": "From point",
+          "optional": false
+        },
+        {
+          "name": "directionPoint",
+          "type": "Point2D",
+          "doc": "Direction point",
+          "optional": false
+        },
+        {
+          "name": "axis_object",
+          "type": "object",
+          "doc": "Axis",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[int, Polyline2D]",
+        "doc": "Error code, outline Polyline"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.GetOutlinePolylineSideFromPoint"
+    },
+    {
+      "name": "GetPolyline2DSegment",
+      "signature": "GetPolyline2DSegment( polyline: Polyline2D, clickPoint: Point2D ) -\u003E tuple[int, Line2D]",
+      "summary": "Get the closest segment for the given click point",
+      "remarks": "Get the closest segment for the given click point",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline to analyze",
+          "optional": false
+        },
+        {
+          "name": "clickPoint",
+          "type": "Point2D",
+          "doc": "Click point to analyze",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[int, Line2D]",
+        "doc": "tuple(Index of the end point of the clicked line, Segment of the polyline, where the click point is on)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.GetPolyline2DSegment"
+    },
+    {
+      "name": "RemoveNonCorners",
+      "signature": "RemoveNonCorners(outline: Polyline2D)",
+      "summary": "Normalize the polygon by removing points, which are no corners",
+      "remarks": "Normalize the polygon by removing points, which are no corners",
+      "params": [
+        {
+          "name": "outline",
+          "type": "Polyline2D",
+          "doc": "Closed polygon outline of a wall",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Polyline2DUtil/#NemAll_Python_Geometry.Polyline2DUtil.RemoveNonCorners"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

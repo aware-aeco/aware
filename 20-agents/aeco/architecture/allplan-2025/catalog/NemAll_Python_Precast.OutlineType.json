@@ -1,0 +1,31 @@
+{
+  "name": "OutlineType",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "outline types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/OutlineType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_MINUS",
+      "value": 2
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_NOTHING",
+      "value": 0
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_NO_AFFECT",
+      "value": 3
+    },
+    {
+      "name": "eBUILTIN_OUTLINE_TYPE_PLUS",
+      "value": 1
+    }
+  ]
+}

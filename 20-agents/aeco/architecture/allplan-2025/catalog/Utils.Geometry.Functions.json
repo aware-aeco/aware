@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "Utils.Geometry",
+  "kind": "static-class",
+  "summary": "Module-level functions of Utils.Geometry",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Geometry/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

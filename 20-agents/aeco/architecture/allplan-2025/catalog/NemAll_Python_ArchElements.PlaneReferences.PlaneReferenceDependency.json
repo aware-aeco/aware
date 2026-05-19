@@ -1,0 +1,36 @@
+{
+  "name": "PlaneReferenceDependency",
+  "namespace": "NemAll_Python_ArchElements.PlaneReferences",
+  "kind": "enum",
+  "summary": "Definition of the plane dependencies",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.PlaneReferenceDependency",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: str | int | float) -\u003E PlaneReferenceDependency",
+      "summary": "get the item for a key",
+      "remarks": "get the item for a key",
+      "params": [
+        {
+          "name": "key",
+          "type": "str | int | float",
+          "doc": "value key",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PlaneReferenceDependency",
+        "doc": "value for the key"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/PlaneReferences/#NemAll_Python_ArchElements.PlaneReferences.PlaneReferenceDependency.__getitem__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "TransitionType",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "enum",
+  "summary": "Transition types of the color gradients of filling",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/TransitionType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eNoTransition",
+      "value": 0,
+      "summary": "Without gradients"
+    },
+    {
+      "name": "eOneColorTransition",
+      "value": 1,
+      "summary": "Single-colored gradients"
+    },
+    {
+      "name": "eTwoColorTransition",
+      "value": 2,
+      "summary": "Two-colored gradients"
+    }
+  ]
+}

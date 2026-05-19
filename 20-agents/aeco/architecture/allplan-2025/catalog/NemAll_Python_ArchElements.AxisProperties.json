@@ -1,0 +1,81 @@
+{
+  "name": "AxisProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Properties of the axis of a linear architectural component (beam, wall, etc.).",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/",
+  "constructors": [
+    {
+      "name": "AxisProperties()",
+      "signature": "AxisProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Distance",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Offset distance between the axis and the outer side of the architectural component. IMPORTANT: The value must be set in the range between \u003C0.0 , component_width\u003E",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Distance"
+    },
+    {
+      "name": "Extension",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Defines, on which side of the axis to generate the architectural component (or its tiers). Assuming the axis origins in (0,0) and points in X\u002B direction, setting the value to: IMPORTANT: Default value is 0 and must be changed to either 1 or -1!",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Extension"
+    },
+    {
+      "name": "Modus",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the modus",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Modus"
+    },
+    {
+      "name": "OnTier",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the axis tier",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.OnTier"
+    },
+    {
+      "name": "Position",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Position of the axis relative to the architectural component. IMPORTANT: When setting this property, remember to set the Distance accordingly! Otherwise, the architectural component may behave unexpectedly when being modified.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/AxisProperties/#NemAll_Python_ArchElements.AxisProperties.Position"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

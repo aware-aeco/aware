@@ -1,0 +1,23 @@
+{
+  "name": "MeshBendingDirection",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "enum",
+  "summary": "Types of the mesh bending direction",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/MeshBendingDirection/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CrossBars",
+      "value": 0
+    },
+    {
+      "name": "LongitudinalBars",
+      "value": 1
+    }
+  ]
+}

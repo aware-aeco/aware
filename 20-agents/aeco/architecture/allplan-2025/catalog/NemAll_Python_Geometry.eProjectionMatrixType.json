@@ -1,0 +1,43 @@
+{
+  "name": "eProjectionMatrixType",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Type of projection in Matrix3D",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eProjectionMatrixType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "BOTTOM_2D",
+      "value": 5
+    },
+    {
+      "name": "FREE_3D",
+      "value": 6
+    },
+    {
+      "name": "FRONT_2D",
+      "value": 2
+    },
+    {
+      "name": "LEFT_2D",
+      "value": 0
+    },
+    {
+      "name": "REAR_2D",
+      "value": 3
+    },
+    {
+      "name": "RIGHT_2D",
+      "value": 1
+    },
+    {
+      "name": "TOP_2D",
+      "value": 4
+    }
+  ]
+}

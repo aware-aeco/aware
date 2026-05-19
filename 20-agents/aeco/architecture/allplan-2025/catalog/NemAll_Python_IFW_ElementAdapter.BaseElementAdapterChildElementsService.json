@@ -1,0 +1,185 @@
+{
+  "name": "BaseElementAdapterChildElementsService",
+  "namespace": "NemAll_Python_IFW_ElementAdapter",
+  "kind": "class",
+  "summary": "Implementation of the service functions for the child elements determination of a base element adapter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetChildElements",
+      "signature": "GetChildElements( ele: BaseElementAdapter, hiddenElements: bool ) -\u003E BaseElementAdapterVector",
+      "summary": "Get the child elements of the element (includes the childs which have the same model element)",
+      "remarks": "Get the child elements of the element (includes the childs which have the same model element)",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "hiddenElements",
+          "type": "bool",
+          "doc": "Include hidden elements: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterVector",
+        "doc": "Child elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildElements"
+    },
+    {
+      "name": "GetChildModelElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterList",
+      "signature": "GetChildModelElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterList",
+      "summary": "Get the child model elements of the element",
+      "remarks": "Get the child model elements of the element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "BaseElementAdapter Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "True, if element pass and can be selected"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildModelElements"
+    },
+    {
+      "name": "GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -\u003E BaseElementAdapterList",
+      "signature": "GetChildModelElements( ele: BaseElementAdapter, hiddenElements: bool ) -\u003E BaseElementAdapterList",
+      "summary": "Get the child model elements of the element",
+      "remarks": "Get the child model elements of the element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "hiddenElements",
+          "type": "bool",
+          "doc": "Include hidden elements: true/false",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Child elements including hidden elements of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildModelElements"
+    },
+    {
+      "name": "GetChildModelElementsFromTree",
+      "signature": "GetChildModelElementsFromTree( ele: BaseElementAdapter, ) -\u003E BaseElementAdapterList",
+      "summary": "Get the child model elements from the complete child tree of the element",
+      "remarks": "Get the child model elements from the complete child tree of the element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Child model elements from the complete child tree of the element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildModelElementsFromTree"
+    },
+    {
+      "name": "GetChildPropertyElements",
+      "signature": "GetChildPropertyElements( ele: BaseElementAdapter, modifyState: object, propGroup: object ) -\u003E BaseElementAdapterVector",
+      "summary": "Get the child property elements",
+      "remarks": "Get the child property elements",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        },
+        {
+          "name": "modifyState",
+          "type": "object",
+          "doc": "Modify state",
+          "optional": false
+        },
+        {
+          "name": "propGroup",
+          "type": "object",
+          "doc": "Property group",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterVector",
+        "doc": "Child property elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetChildPropertyElements"
+    },
+    {
+      "name": "GetTierElements",
+      "signature": "GetTierElements(ele: BaseElementAdapter) -\u003E BaseElementAdapterVector",
+      "summary": "Get the tier elements from an element",
+      "remarks": "Get the tier elements from an element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterVector",
+        "doc": "Tier elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetTierElements"
+    },
+    {
+      "name": "GetTierNumber",
+      "signature": "GetTierNumber(ele: BaseElementAdapter) -\u003E int",
+      "summary": "Get the tier number from an element",
+      "remarks": "Get the tier number from an element",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "Tier number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_ElementAdapter/BaseElementAdapterChildElementsService/#NemAll_Python_IFW_ElementAdapter.BaseElementAdapterChildElementsService.GetTierNumber"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

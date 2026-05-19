@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "Utils.PythonPart.ModifyPythonPartParameterUtil",
+  "kind": "static-class",
+  "summary": "Module-level functions of Utils.PythonPart.ModifyPythonPartParameterUtil",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartParameterUtil/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

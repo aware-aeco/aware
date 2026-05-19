@@ -1,0 +1,138 @@
+{
+  "name": "ReinforcementUtil",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Reinforcement.ReinforcementUtil.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementUtil/",
+  "constructors": [
+    {
+      "name": "ReinforcementUtil()",
+      "signature": "ReinforcementUtil()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementUtil/#NemAll_Python_Reinforcement.ReinforcementUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetNextBarPositionNumber",
+      "signature": "GetNextBarPositionNumber(doc: DocumentAdapter) -\u003E int",
+      "summary": "Get the the next bar position number",
+      "remarks": "Get the the next bar position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Next bar position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementUtil/#NemAll_Python_Reinforcement.ReinforcementUtil.GetNextBarPositionNumber"
+    },
+    {
+      "name": "GetNextMeshPositionNumber",
+      "signature": "GetNextMeshPositionNumber(doc: DocumentAdapter) -\u003E int",
+      "summary": "Get the the next mesh position number",
+      "remarks": "Get the the next mesh position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Next mesh position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementUtil/#NemAll_Python_Reinforcement.ReinforcementUtil.GetNextMeshPositionNumber"
+    },
+    {
+      "name": "Rearrange",
+      "signature": "Rearrange( doc: DocumentAdapter, fromBarPosition: int = 1, fromMeshPosition: int = 1, toBarPosition: int = 99999, toMeshPosition: int = 99999, afterBarPosition: int = 1, aftgerMeshPosition: int = 1, tolerance: float = 1.0, rearrangedLock: bool = False, identicalShapes: bool = False, identicalPrefix: bool = False, createUndoStep: bool = True, )",
+      "summary": "Rearrange the reinforcement",
+      "remarks": "Rearrange the reinforcement",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fromBarPosition",
+          "type": "int",
+          "doc": "Rearrange from bar position",
+          "optional": false
+        },
+        {
+          "name": "fromMeshPosition",
+          "type": "int",
+          "doc": "Rearrange from mesh position",
+          "optional": false
+        },
+        {
+          "name": "toBarPosition",
+          "type": "int",
+          "doc": "Rearrange to bar position",
+          "optional": false
+        },
+        {
+          "name": "toMeshPosition",
+          "type": "int",
+          "doc": "Rearrange to mesh position",
+          "optional": false
+        },
+        {
+          "name": "afterBarPosition",
+          "type": "int",
+          "doc": "Rearrange after bar position",
+          "optional": false
+        },
+        {
+          "name": "afterMeshPosition",
+          "type": "object",
+          "doc": "Rearrange after mesh position",
+          "optional": false
+        },
+        {
+          "name": "tolerance",
+          "type": "float",
+          "doc": "Tolerance",
+          "optional": false
+        },
+        {
+          "name": "rearrangedLock",
+          "type": "bool",
+          "doc": "Rearranged positions are locked state",
+          "optional": false
+        },
+        {
+          "name": "identicalShapes",
+          "type": "bool",
+          "doc": "Rearrange identical shapes state",
+          "optional": false
+        },
+        {
+          "name": "identicalPrefix",
+          "type": "bool",
+          "doc": "Rearrange identical prefix state",
+          "optional": false
+        },
+        {
+          "name": "createUndoStep",
+          "type": "bool",
+          "doc": "Create the undo step state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/ReinforcementUtil/#NemAll_Python_Reinforcement.ReinforcementUtil.Rearrange"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

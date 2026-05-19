@@ -1,0 +1,861 @@
+{
+  "name": "Arc2D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Representation class for 2D arc.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/",
+  "constructors": [
+    {
+      "name": "Arc2D()",
+      "signature": "Arc2D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
+    },
+    {
+      "name": "Arc2D(arc: Arc2D)",
+      "signature": "Arc2D(arc: Arc2D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Arc2D to be copied",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
+    },
+    {
+      "name": "Arc2D( center: Point2D, minor: float, major: float, axisangle: float, startangle: float, endangle: float, counterClockwise: bool = True, )",
+      "signature": "Arc2D( center: Point2D, minor: float, major: float, axisangle: float, startangle: float, endangle: float, counterClockwise: bool = True, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point2D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "minor",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "major",
+          "type": "float",
+          "doc": "Major radius",
+          "optional": false
+        },
+        {
+          "name": "axisangle",
+          "type": "float",
+          "doc": "Axis angle",
+          "optional": false
+        },
+        {
+          "name": "startangle",
+          "type": "float",
+          "doc": "Start angle",
+          "optional": false
+        },
+        {
+          "name": "endangle",
+          "type": "float",
+          "doc": "End angle",
+          "optional": false
+        },
+        {
+          "name": "counterClockwise",
+          "type": "bool",
+          "doc": "Direction is counter clockwise: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
+    },
+    {
+      "name": "Arc2D(center: Point2D, radius: float, counterClockwise: bool = True)",
+      "signature": "Arc2D(center: Point2D, radius: float, counterClockwise: bool = True)",
+      "summary": "Constructor for creating circle Create circle as arc with start angle 0 [rad] and end angle 2pi [rad]. Minor and major radii are equal.",
+      "remarks": "Constructor for creating circle Create circle as arc with start angle 0 [rad] and end angle 2pi [rad]. Minor and major radii are equal.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point2D",
+          "doc": "Center point",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "Minor radius",
+          "optional": false
+        },
+        {
+          "name": "counterClockwise",
+          "type": "bool",
+          "doc": "Direction is counter clockwise: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "Close()",
+      "summary": "Close arc End angle will be adjusted to close arc.",
+      "remarks": "Close arc End angle will be adjusted to close arc.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.Close"
+    },
+    {
+      "name": "EqualRef",
+      "signature": "EqualRef(arc: Arc2D) -\u003E bool",
+      "summary": "Test for equal reference points",
+      "remarks": "Test for equal reference points",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "Arc which will be compared",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "result as bool"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.EqualRef"
+    },
+    {
+      "name": "GetAxisAngle",
+      "signature": "GetAxisAngle() -\u003E Angle",
+      "summary": "Get the axis angle Returns the the angle of the major axis",
+      "remarks": "Get the axis angle Returns the the angle of the major axis",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "axis angle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetAxisAngle"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter() -\u003E Point2D",
+      "summary": "Get center point",
+      "remarks": "Get center point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetCenter"
+    },
+    {
+      "name": "GetCenterRel",
+      "signature": "GetCenterRel() -\u003E Point2D",
+      "summary": "Get center point in relative coordinate system.",
+      "remarks": "Get center point in relative coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "center point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetCenterRel"
+    },
+    {
+      "name": "GetDeltaAngle",
+      "signature": "GetDeltaAngle() -\u003E Angle",
+      "summary": "Get difference between EndAngle and StartAngle",
+      "remarks": "Get difference between EndAngle and StartAngle",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "delta angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetDeltaAngle"
+    },
+    {
+      "name": "GetEndAngle",
+      "signature": "GetEndAngle() -\u003E Angle",
+      "summary": "Get end angle",
+      "remarks": "Get end angle",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "end angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetEndAngle"
+    },
+    {
+      "name": "GetEndPoint",
+      "signature": "GetEndPoint() -\u003E Point2D",
+      "summary": "Get the end point in world coordinate system.",
+      "remarks": "Get the end point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetEndPoint"
+    },
+    {
+      "name": "GetEndRelPoint",
+      "signature": "GetEndRelPoint() -\u003E Point2D",
+      "summary": "Get the end point in relative coordinate system",
+      "remarks": "Get the end point in relative coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "constant point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetEndRelPoint"
+    },
+    {
+      "name": "GetEndTangent",
+      "signature": "GetEndTangent() -\u003E Vector2D",
+      "summary": "Get tangent vector at the end point of Arc",
+      "remarks": "Get tangent vector at the end point of Arc",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Tangent vector (unit vector)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetEndTangent"
+    },
+    {
+      "name": "GetMajorRadius",
+      "signature": "GetMajorRadius() -\u003E float",
+      "summary": "Get major radius",
+      "remarks": "Get major radius",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "major radius"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetMajorRadius"
+    },
+    {
+      "name": "GetMinorRadius",
+      "signature": "GetMinorRadius() -\u003E float",
+      "summary": "Get minor radius",
+      "remarks": "Get minor radius",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "minor radius"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetMinorRadius"
+    },
+    {
+      "name": "GetPoint",
+      "signature": "GetPoint(angle: Angle) -\u003E Point2D",
+      "summary": "Get point on Arc in world coordinate system Calculates the point at central angle in parameter angle on the Arc",
+      "remarks": "Get point on Arc in world coordinate system Calculates the point at central angle in parameter angle on the Arc",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "central angle of the point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point on Arc"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetPoint"
+    },
+    {
+      "name": "GetPointLocalAngle",
+      "signature": "GetPointLocalAngle(pnt: Point2D) -\u003E Angle",
+      "summary": "Get local angle on arc for point in world coordinate system Calculates the angle of the point projected on the arc count from 0 (axis) with respect to the clockwise/counterclockwise orientation",
+      "remarks": "Get local angle on arc for point in world coordinate system Calculates the angle of the point projected on the arc count from 0 (axis) with respect to the clockwise/counterclockwise orientation",
+      "params": [
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "point in space",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Angle",
+        "doc": "angle local angle of the point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetPointLocalAngle"
+    },
+    {
+      "name": "GetRefPoint",
+      "signature": "GetRefPoint() -\u003E Point2D",
+      "summary": "Get reference point",
+      "remarks": "Get reference point",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "reference point"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetRefPoint"
+    },
+    {
+      "name": "GetStartAngle",
+      "signature": "GetStartAngle() -\u003E Angle",
+      "summary": "Get start angle",
+      "remarks": "Get start angle",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "start angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetStartAngle"
+    },
+    {
+      "name": "GetStartPoint",
+      "signature": "GetStartPoint() -\u003E Point2D",
+      "summary": "Get the start point in world coordinate system.",
+      "remarks": "Get the start point in world coordinate system.",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetStartPoint"
+    },
+    {
+      "name": "GetStartRelPoint",
+      "signature": "GetStartRelPoint() -\u003E Point2D",
+      "summary": "Get the start point in relative coordinate system",
+      "remarks": "Get the start point in relative coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point2D",
+        "doc": "constant point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetStartRelPoint"
+    },
+    {
+      "name": "GetStartTangent",
+      "signature": "GetStartTangent() -\u003E Vector2D",
+      "summary": "Get tangent vector at the start point of Arc",
+      "remarks": "Get tangent vector at the start point of Arc",
+      "params": [],
+      "returns": {
+        "type": "Vector2D",
+        "doc": "Tangent vector (unit vector)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.GetStartTangent"
+    },
+    {
+      "name": "IsAngleOnArc",
+      "signature": "IsAngleOnArc(angle: Angle) -\u003E bool",
+      "summary": "Checks if the given angle lies on the arc",
+      "remarks": "Checks if the given angle lies on the arc",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "angle to test",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Angle on arc true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.IsAngleOnArc"
+    },
+    {
+      "name": "IsCircle",
+      "signature": "IsCircle() -\u003E bool",
+      "summary": "Test if ellipse is circle Tests if major radius equals minor radius",
+      "remarks": "Test if ellipse is circle Tests if major radius equals minor radius",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "if ellipse is circle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.IsCircle"
+    },
+    {
+      "name": "IsClosed",
+      "signature": "IsClosed() -\u003E bool",
+      "summary": "Check if arc is closed ( Full circle/ellipse )",
+      "remarks": "Check if arc is closed ( Full circle/ellipse )",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "closed curve true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.IsClosed"
+    },
+    {
+      "name": "IsCounterClockwise",
+      "signature": "IsCounterClockwise() -\u003E bool",
+      "summary": "Returns winding direction counterclockwise true/false",
+      "remarks": "Returns winding direction counterclockwise true/false",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "Is counterclockwise true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.IsCounterClockwise"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse of current arc Method reverse Arc, start with end angle and orientation.",
+      "remarks": "Reverse of current arc Method reverse Arc, start with end angle and orientation.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.Reverse"
+    },
+    {
+      "name": "SetAxisAngle",
+      "signature": "SetAxisAngle(angle: Angle)",
+      "summary": "Set the axis angle Set the angle of the major axis",
+      "remarks": "Set the axis angle Set the angle of the major axis",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "axis angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetAxisAngle"
+    },
+    {
+      "name": "SetCenter",
+      "signature": "SetCenter(center: Point2D)",
+      "summary": "Set center point",
+      "remarks": "Set center point",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point2D",
+          "doc": "center point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetCenter"
+    },
+    {
+      "name": "SetCenterRel",
+      "signature": "SetCenterRel(center: Point2D)",
+      "summary": "Set center point in local coordinate system",
+      "remarks": "Set center point in local coordinate system",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point2D",
+          "doc": "center point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetCenterRel"
+    },
+    {
+      "name": "SetCounterClockwise",
+      "signature": "SetCounterClockwise(ccw: bool)",
+      "summary": "Set the winding direction of the arc",
+      "remarks": "Set the winding direction of the arc",
+      "params": [
+        {
+          "name": "ccw",
+          "type": "bool",
+          "doc": "winding counterclockwise true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetCounterClockwise"
+    },
+    {
+      "name": "SetEndAngle",
+      "signature": "SetEndAngle(angle: Angle)",
+      "summary": "Set end angle Set the end angle",
+      "remarks": "Set end angle Set the end angle",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "end angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetEndAngle"
+    },
+    {
+      "name": "SetEndPoint",
+      "signature": "SetEndPoint(endpoint: Point2D)",
+      "summary": "Set the end point in world coordinate system",
+      "remarks": "Set the end point in world coordinate system",
+      "params": [
+        {
+          "name": "endpoint",
+          "type": "Point2D",
+          "doc": "constant 2D point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetEndPoint"
+    },
+    {
+      "name": "SetMajorRadius",
+      "signature": "SetMajorRadius(radius: float)",
+      "summary": "Set major radius",
+      "remarks": "Set major radius",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "major radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetMajorRadius"
+    },
+    {
+      "name": "SetMinorRadius",
+      "signature": "SetMinorRadius(radius: float)",
+      "summary": "Set minor radius",
+      "remarks": "Set minor radius",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "minor radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetMinorRadius"
+    },
+    {
+      "name": "SetRefPoint",
+      "signature": "SetRefPoint(refPoint: Point2D)",
+      "summary": "Set reference point",
+      "remarks": "Set reference point",
+      "params": [
+        {
+          "name": "refPoint",
+          "type": "Point2D",
+          "doc": "reference point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetRefPoint"
+    },
+    {
+      "name": "SetStartAngle",
+      "signature": "SetStartAngle(angle: Angle)",
+      "summary": "Set start angle Set the start angle",
+      "remarks": "Set start angle Set the start angle",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "start angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetStartAngle"
+    },
+    {
+      "name": "SetStartPoint",
+      "signature": "SetStartPoint(startpoint: Point2D)",
+      "summary": "Set the start point in world coordinate system",
+      "remarks": "Set the start point in world coordinate system",
+      "params": [
+        {
+          "name": "startpoint",
+          "type": "Point2D",
+          "doc": "constant 2D point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.SetStartPoint"
+    },
+    {
+      "name": "Supplement",
+      "signature": "Supplement()",
+      "summary": "Convert to supplementary arc Orientation of arc will not be changed.",
+      "remarks": "Convert to supplementary arc Orientation of arc will not be changed.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.Supplement"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(arc: Arc2D) -\u003E bool",
+      "summary": "Comparison of arcs. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of arcs. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "arc to be compared.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when arcs are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__eq__"
+    },
+    {
+      "name": "__mul__",
+      "signature": "__mul__(matrix: Matrix2D) -\u003E Arc2D",
+      "summary": "Matrix transformation.",
+      "remarks": "Matrix transformation.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Matrix2D",
+          "doc": "transformation matrix.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Arc2D",
+        "doc": "transformed Arc2D."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__mul__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "AxisAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the axis angle Returns the the angle of the major axis",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.AxisAngle"
+    },
+    {
+      "name": "Center",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get center point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.Center"
+    },
+    {
+      "name": "CenterRel",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get center point in relative coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.CenterRel"
+    },
+    {
+      "name": "CounterClockwise",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Returns winding direction counterclockwise true/false",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.CounterClockwise"
+    },
+    {
+      "name": "DeltaAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": false,
+      "summary": "Get difference between EndAngle and StartAngle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.DeltaAngle"
+    },
+    {
+      "name": "EndAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get end angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.EndAngle"
+    },
+    {
+      "name": "EndPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the end point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.EndPoint"
+    },
+    {
+      "name": "EndRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the end point in relative coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.EndRelPoint"
+    },
+    {
+      "name": "MajorRadius",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get major radius",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.MajorRadius"
+    },
+    {
+      "name": "MinorRadius",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get minor radius",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.MinorRadius"
+    },
+    {
+      "name": "RefPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get reference point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.RefPoint"
+    },
+    {
+      "name": "StartAngle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get start angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.StartAngle"
+    },
+    {
+      "name": "StartPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the start point in world coordinate system.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.StartPoint"
+    },
+    {
+      "name": "StartRelPoint",
+      "type": "Point2D",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the start point in relative coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Arc2D/#NemAll_Python_Geometry.Arc2D.StartRelPoint"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

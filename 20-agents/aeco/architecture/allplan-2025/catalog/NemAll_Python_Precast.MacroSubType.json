@@ -1,0 +1,395 @@
+{
+  "name": "MacroSubType",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "Sub types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/MacroSubType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAnchorPlate",
+      "value": 13
+    },
+    {
+      "name": "eAnchorage",
+      "value": 12
+    },
+    {
+      "name": "eBarAccessory",
+      "value": 50
+    },
+    {
+      "name": "eBarCoupler",
+      "value": 47
+    },
+    {
+      "name": "eBarNut",
+      "value": 48
+    },
+    {
+      "name": "eBarThread",
+      "value": 49
+    },
+    {
+      "name": "eBracingElement",
+      "value": 44
+    },
+    {
+      "name": "eCatchmentArea",
+      "value": 41
+    },
+    {
+      "name": "eChannel",
+      "value": 54
+    },
+    {
+      "name": "eCirculationLoadPoint",
+      "value": 80
+    },
+    {
+      "name": "eCirculationPipeAdapter",
+      "value": 81
+    },
+    {
+      "name": "eCirculationStartPoint",
+      "value": 79
+    },
+    {
+      "name": "eConcreteArea",
+      "value": 83
+    },
+    {
+      "name": "eConcreteBeam",
+      "value": 46
+    },
+    {
+      "name": "eConcreteBlock",
+      "value": 45
+    },
+    {
+      "name": "eConnectionModeller",
+      "value": 24
+    },
+    {
+      "name": "eConnectionWallColumn",
+      "value": 93
+    },
+    {
+      "name": "eConnectorEBT",
+      "value": 88
+    },
+    {
+      "name": "eConstPrefabConnection",
+      "value": 60
+    },
+    {
+      "name": "eCorbel",
+      "value": 10
+    },
+    {
+      "name": "eCoverMountingAngle",
+      "value": 53
+    },
+    {
+      "name": "eCrossRib",
+      "value": 82
+    },
+    {
+      "name": "eElectricalBIE",
+      "value": 67
+    },
+    {
+      "name": "eElectricalLamp",
+      "value": 68
+    },
+    {
+      "name": "eElectricalRoute",
+      "value": 69
+    },
+    {
+      "name": "eFacility",
+      "value": 32
+    },
+    {
+      "name": "eFalseJoint",
+      "value": 55
+    },
+    {
+      "name": "eFill",
+      "value": 29
+    },
+    {
+      "name": "eFrame",
+      "value": 9
+    },
+    {
+      "name": "eHeatingLoadPoint",
+      "value": 71
+    },
+    {
+      "name": "eHeatingPipeAdapter",
+      "value": 72
+    },
+    {
+      "name": "eHeatingStartPoint",
+      "value": 70
+    },
+    {
+      "name": "eHollowBody",
+      "value": 25
+    },
+    {
+      "name": "eInsertion",
+      "value": 35
+    },
+    {
+      "name": "eInsulationArea",
+      "value": 85
+    },
+    {
+      "name": "eInsulationElement",
+      "value": 90
+    },
+    {
+      "name": "eInsulationStripe",
+      "value": 89
+    },
+    {
+      "name": "eJointLength",
+      "value": 22
+    },
+    {
+      "name": "eJointReinforcement",
+      "value": 28
+    },
+    {
+      "name": "eLinePointPlacement",
+      "value": 58
+    },
+    {
+      "name": "eLoadCut",
+      "value": 19
+    },
+    {
+      "name": "eMultiLine3D",
+      "value": 42
+    },
+    {
+      "name": "eNailer",
+      "value": 92
+    },
+    {
+      "name": "eNode",
+      "value": 39
+    },
+    {
+      "name": "eOverrule",
+      "value": 86
+    },
+    {
+      "name": "ePipe",
+      "value": 30
+    },
+    {
+      "name": "ePipePoint",
+      "value": 31
+    },
+    {
+      "name": "ePlacingLoop",
+      "value": 26
+    },
+    {
+      "name": "ePolyline",
+      "value": 1
+    },
+    {
+      "name": "ePrefabConnection",
+      "value": 37
+    },
+    {
+      "name": "ePrefabConnectionCorner",
+      "value": 38
+    },
+    {
+      "name": "ePrefabModeller",
+      "value": 23
+    },
+    {
+      "name": "eProfileEdge",
+      "value": 21
+    },
+    {
+      "name": "eReinforcement_Cage",
+      "value": 87
+    },
+    {
+      "name": "eRevealAnchor",
+      "value": 8
+    },
+    {
+      "name": "eRevealAnchorVirtual",
+      "value": 20
+    },
+    {
+      "name": "eRibBody",
+      "value": 59
+    },
+    {
+      "name": "eRingBeam",
+      "value": 6
+    },
+    {
+      "name": "eRoofLine",
+      "value": 3
+    },
+    {
+      "name": "eRoofParapetLine",
+      "value": 4
+    },
+    {
+      "name": "eRoofParapetSupport",
+      "value": 5
+    },
+    {
+      "name": "eRope",
+      "value": 40
+    },
+    {
+      "name": "eSTD_Formwork",
+      "value": 94
+    },
+    {
+      "name": "eSanitationLoadPoint",
+      "value": 77
+    },
+    {
+      "name": "eSanitationPipeAdapter",
+      "value": 78
+    },
+    {
+      "name": "eSanitationStartPoint",
+      "value": 76
+    },
+    {
+      "name": "eSecondaryReinf",
+      "value": 27
+    },
+    {
+      "name": "eSewageLoadPoint",
+      "value": 65
+    },
+    {
+      "name": "eSewageNetElement",
+      "value": 52
+    },
+    {
+      "name": "eSewagePipeAdapter",
+      "value": 66
+    },
+    {
+      "name": "eSewageStartPoint",
+      "value": 64
+    },
+    {
+      "name": "eShaft",
+      "value": 33
+    },
+    {
+      "name": "eSlidingRestraint",
+      "value": 7
+    },
+    {
+      "name": "eSolidStrip",
+      "value": 56
+    },
+    {
+      "name": "eSpecialBuilding",
+      "value": 34
+    },
+    {
+      "name": "eSpecialLoad_Undefined",
+      "value": 17
+    },
+    {
+      "name": "eSpecialLoad_X",
+      "value": 14
+    },
+    {
+      "name": "eSpecialLoad_Y",
+      "value": 15
+    },
+    {
+      "name": "eSpecialLoad_Z",
+      "value": 16
+    },
+    {
+      "name": "eSphere",
+      "value": 63
+    },
+    {
+      "name": "eSteelProfile",
+      "value": 43
+    },
+    {
+      "name": "eStripCorbel",
+      "value": 57
+    },
+    {
+      "name": "eStructuralRecessFaceSupport",
+      "value": 62
+    },
+    {
+      "name": "eStructuralRecessLongitudinalSupport",
+      "value": 61
+    },
+    {
+      "name": "eSurface",
+      "value": 51
+    },
+    {
+      "name": "eTieBar",
+      "value": 11
+    },
+    {
+      "name": "eTileArea",
+      "value": 91
+    },
+    {
+      "name": "eTileElement",
+      "value": 84
+    },
+    {
+      "name": "eTrimmer",
+      "value": 18
+    },
+    {
+      "name": "eUseNoSpecialSubType",
+      "value": 0
+    },
+    {
+      "name": "eUseSameSubType",
+      "value": -1
+    },
+    {
+      "name": "eVentilationDuctAdapter",
+      "value": 75
+    },
+    {
+      "name": "eVentilationLoadPoint",
+      "value": 74
+    },
+    {
+      "name": "eVentilationStartPoint",
+      "value": 73
+    },
+    {
+      "name": "eZone",
+      "value": 36
+    }
+  ]
+}

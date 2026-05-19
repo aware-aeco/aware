@@ -1,0 +1,27 @@
+{
+  "name": "Orientation",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "enum",
+  "summary": "Definition of the orientations",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/Orientation/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCenter",
+      "value": 2
+    },
+    {
+      "name": "eLeft",
+      "value": 0
+    },
+    {
+      "name": "eRight",
+      "value": 1
+    }
+  ]
+}

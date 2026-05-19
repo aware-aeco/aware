@@ -1,0 +1,110 @@
+{
+  "name": "StringTableService",
+  "namespace": "StringTableService",
+  "kind": "class",
+  "summary": "Definition of class StringTableService",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/StringTableService/",
+  "constructors": [
+    {
+      "name": "StringTableService()",
+      "signature": "StringTableService(path: str)",
+      "summary": "Initialize the data",
+      "remarks": "Initialize the data",
+      "params": [
+        {
+          "name": "path",
+          "type": "str",
+          "doc": "Path to string table folder.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/StringTableService/#StringTableService.StringTableService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_string",
+      "signature": "get_string(string_id: str, string: str) -\u003E str",
+      "summary": "Get a string from the table",
+      "remarks": "Get a string from the table",
+      "params": [
+        {
+          "name": "string_id",
+          "type": "str",
+          "doc": "String ID (if empty, take it for {...} part of the string",
+          "optional": false
+        },
+        {
+          "name": "string",
+          "type": "str",
+          "doc": "Default string in case of no existing ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "String from the ID if exist, default string otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/StringTableService/#StringTableService.StringTableService.get_string"
+    },
+    {
+      "name": "get_string_table_entry",
+      "signature": "get_string_table_entry( string_table: BuildingElementStringTable, string_id: str, string: str ) -\u003E str",
+      "summary": "Get a string from the table",
+      "remarks": "Get a string from the table",
+      "params": [
+        {
+          "name": "string_table",
+          "type": "BuildingElementStringTable",
+          "doc": "string table",
+          "optional": false
+        },
+        {
+          "name": "string_id",
+          "type": "str",
+          "doc": "String ID (if empty, take it for {...} part of the string",
+          "optional": false
+        },
+        {
+          "name": "string",
+          "type": "str",
+          "doc": "Default string in case of no existing ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "String from the ID if exist, default string otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/StringTableService/#StringTableService.StringTableService.get_string_table_entry"
+    }
+  ],
+  "properties": [
+    {
+      "name": "material_str_table",
+      "type": "BuildingElementMaterialStringTable",
+      "getter": true,
+      "setter": false,
+      "summary": "get the material string table",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/StringTableService/#StringTableService.StringTableService.material_str_table"
+    },
+    {
+      "name": "str_table",
+      "type": "BuildingElementStringTable",
+      "getter": true,
+      "setter": false,
+      "summary": "get the string table",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/StringTableService/#StringTableService.StringTableService.str_table"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

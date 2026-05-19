@@ -1,0 +1,117 @@
+{
+  "name": "Path",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Geometry.Path.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "Clear()",
+      "summary": "Clear all geometries from path",
+      "remarks": "Clear all geometries from path",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.Clear"
+    },
+    {
+      "name": "Count",
+      "signature": "Count() -\u003E int",
+      "summary": "Count of geometries stored in path",
+      "remarks": "Count of geometries stored in path",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count of geometries."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.Count"
+    },
+    {
+      "name": "GetElement",
+      "signature": "GetElement(arg2: int) -\u003E object",
+      "summary": "Get the element by index",
+      "remarks": "Get the element by index",
+      "params": [
+        {
+          "name": "index",
+          "type": "object",
+          "doc": "Element index.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Element"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.GetElement"
+    },
+    {
+      "name": "IsEmpty",
+      "signature": "IsEmpty() -\u003E bool",
+      "summary": "Tests whether no elements are present",
+      "remarks": "Tests whether no elements are present",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True for an empty, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.IsEmpty"
+    },
+    {
+      "name": "Remove",
+      "signature": "Remove(position: int) -\u003E eGeometryErrorCode",
+      "summary": "Remove geometry at the specified position",
+      "remarks": "Remove geometry at the specified position",
+      "params": [
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "Specified position of removed geometry.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "eGeometryErrorCode",
+        "doc": "Error code."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.Remove"
+    },
+    {
+      "name": "Reverse",
+      "signature": "Reverse()",
+      "summary": "Reverse orientation of the PathElement",
+      "remarks": "Reverse orientation of the PathElement",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.Reverse"
+    },
+    {
+      "name": "__iter__",
+      "signature": "__iter__() -\u003E PathIterator",
+      "summary": "Get the iterator",
+      "remarks": "Get the iterator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Path/#NemAll_Python_Geometry.Path.__iter__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,61 @@
+{
+  "name": "CurvedGeometryElementFilter",
+  "namespace": "Utils.ElementFilter.CurvedGeometryElementFilter",
+  "kind": "class",
+  "summary": "implementation of the curved geometry element filter",
+  "base": "BaseFilterObject",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/CurvedGeometryElementFilter/",
+  "constructors": [
+    {
+      "name": "CurvedGeometryElementFilter()",
+      "signature": "CurvedGeometryElementFilter(filter_curve_2d: bool, filter_curve_3d: bool)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "filter_curve_2d",
+          "type": "bool",
+          "doc": "filter 2D curves",
+          "optional": false
+        },
+        {
+          "name": "filter_curve_3d",
+          "type": "bool",
+          "doc": "filter 3D curves",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/CurvedGeometryElementFilter/#Utils.ElementFilter.CurvedGeometryElementFilter.CurvedGeometryElementFilter.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__call__",
+      "signature": "__call__(element: BaseElementAdapter) -\u003E bool",
+      "summary": "execute the filtering",
+      "remarks": "execute the filtering",
+      "params": [
+        {
+          "name": "element",
+          "type": "BaseElementAdapter",
+          "doc": "element to filter",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "element fulfills the filter: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/CurvedGeometryElementFilter/#Utils.ElementFilter.CurvedGeometryElementFilter.CurvedGeometryElementFilter.__call__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

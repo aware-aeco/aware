@@ -1,0 +1,49 @@
+{
+  "name": "UvsTransformation",
+  "namespace": "ScriptObjectInteractors.LineInteractor.LineInteractor",
+  "kind": "class",
+  "summary": "Class representing transformation between UVS coordinate system and world coordinate system",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.UvsTransformation",
+  "constructors": [
+    {
+      "name": "UvsTransformation()",
+      "signature": "UvsTransformation(uvs_adapter: AssocViewElementAdapter)",
+      "summary": "Initialize from UVS",
+      "remarks": "Initialize from UVS",
+      "params": [
+        {
+          "name": "uvs_adapter",
+          "type": "AssocViewElementAdapter",
+          "doc": "element adapter pointing to the UVS",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.UvsTransformation.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "uvs_to_world",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Transformation from UVS to world coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.UvsTransformation.uvs_to_world"
+    },
+    {
+      "name": "world_to_uvs",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Transformation from world to UVS coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractor/#ScriptObjectInteractors.LineInteractor.LineInteractor.UvsTransformation.world_to_uvs"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

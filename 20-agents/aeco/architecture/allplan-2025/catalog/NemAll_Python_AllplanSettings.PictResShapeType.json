@@ -1,0 +1,55 @@
+{
+  "name": "PictResShapeType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for shape types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResShapeType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eArbitrary",
+      "value": 14601
+    },
+    {
+      "name": "eCircle",
+      "value": 14587
+    },
+    {
+      "name": "eDiamond",
+      "value": 14585
+    },
+    {
+      "name": "ePolygon",
+      "value": 14599
+    },
+    {
+      "name": "eRectangle",
+      "value": 14583
+    },
+    {
+      "name": "eRegularPolygonCircumscribed",
+      "value": 14589
+    },
+    {
+      "name": "eRegularPolygonInscribed",
+      "value": 14591
+    },
+    {
+      "name": "eRiseBottomTop",
+      "value": 14597
+    },
+    {
+      "name": "eSemiCircle",
+      "value": 14595
+    },
+    {
+      "name": "eSemiDiamond",
+      "value": 14593
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "name": "eDocumentSnoopType",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Definition of the document snoop types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eDocumentSnoopType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eSnoopActiveDocuments",
+      "value": 0
+    },
+    {
+      "name": "eSnoopAllDocuments",
+      "value": 2
+    },
+    {
+      "name": "eSnoopPassiveDocsOrLayers",
+      "value": 3
+    },
+    {
+      "name": "eSnoopPassiveDocuments",
+      "value": 1
+    }
+  ]
+}

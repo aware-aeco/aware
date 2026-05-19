@@ -1,0 +1,65 @@
+{
+  "name": "DoorSwingProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Implementation of the door swing properties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingProperties/",
+  "constructors": [
+    {
+      "name": "DoorSwingProperties()",
+      "signature": "DoorSwingProperties(element: DoorSwingProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "DoorSwingProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingProperties/#NemAll_Python_ArchElements.DoorSwingProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingProperties/#NemAll_Python_ArchElements.DoorSwingProperties.Angle"
+    },
+    {
+      "name": "BasePointIndex",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the base point index",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingProperties/#NemAll_Python_ArchElements.DoorSwingProperties.BasePointIndex"
+    },
+    {
+      "name": "LeafThickness",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the leaf thickness",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingProperties/#NemAll_Python_ArchElements.DoorSwingProperties.LeafThickness"
+    },
+    {
+      "name": "Type",
+      "type": "DoorSwingType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the swing type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingProperties/#NemAll_Python_ArchElements.DoorSwingProperties.Type"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

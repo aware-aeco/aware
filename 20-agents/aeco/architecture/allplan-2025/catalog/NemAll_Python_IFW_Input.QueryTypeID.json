@@ -1,0 +1,122 @@
+{
+  "name": "QueryTypeID",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Implementation of the element type ID query",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/",
+  "constructors": [
+    {
+      "name": "QueryTypeID()",
+      "signature": "QueryTypeID()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__init__"
+    },
+    {
+      "name": "QueryTypeID(typeID: GUID)",
+      "signature": "QueryTypeID(typeID: GUID)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "typeID",
+          "type": "GUID",
+          "doc": "Element type ID of the filter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__init__"
+    },
+    {
+      "name": "QueryTypeID(element: QueryTypeID)",
+      "signature": "QueryTypeID(element: QueryTypeID)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "QueryTypeID",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetQueryText",
+      "signature": "GetQueryText() -\u003E str",
+      "summary": "Get the query text",
+      "remarks": "Get the query text",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Query text"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.GetQueryText"
+    },
+    {
+      "name": "GetQueryTypeID",
+      "signature": "GetQueryTypeID() -\u003E GUID",
+      "summary": "Get the ID of the type query",
+      "remarks": "Get the ID of the type query",
+      "params": [],
+      "returns": {
+        "type": "GUID",
+        "doc": "ID of the type query"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.GetQueryTypeID"
+    },
+    {
+      "name": "__call__",
+      "signature": "__call__(ele: BaseElementAdapter) -\u003E bool",
+      "summary": "Overloaded operator ()",
+      "remarks": "Overloaded operator ()",
+      "params": [
+        {
+          "name": "ele",
+          "type": "BaseElementAdapter",
+          "doc": "Element to check",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Type of the element is same as the filter type: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__call__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/QueryTypeID/#NemAll_Python_IFW_Input.QueryTypeID.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

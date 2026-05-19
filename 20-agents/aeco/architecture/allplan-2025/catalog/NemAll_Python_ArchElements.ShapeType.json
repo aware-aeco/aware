@@ -1,0 +1,61 @@
+{
+  "name": "ShapeType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Types of cross sections of linear architectural objects, like beams or columns.",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/ShapeType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eArbitrary",
+      "value": 6
+    },
+    {
+      "name": "eCircular",
+      "value": 1,
+      "summary": "Round cross section"
+    },
+    {
+      "name": "eConical",
+      "value": 4
+    },
+    {
+      "name": "ePolygonal",
+      "value": 5,
+      "summary": "Cross section bounded with a free, closed polygon"
+    },
+    {
+      "name": "eProfile",
+      "value": 6,
+      "summary": "Cross section defined with a symbol from the library containing a closed profile"
+    },
+    {
+      "name": "eRectangular",
+      "value": 0,
+      "summary": "Rectangular cross section"
+    },
+    {
+      "name": "eRegularPolygonCircumscribed",
+      "value": 3,
+      "summary": "Cross section in a shape of a regular polygon circumscribed on a circle"
+    },
+    {
+      "name": "eRegularPolygonInscribed",
+      "value": 2,
+      "summary": "Cross section in a shape of a regular polygon inscribed in a circle"
+    },
+    {
+      "name": "eRiseBottomTop",
+      "value": 7
+    },
+    {
+      "name": "eUnknown",
+      "value": 8
+    }
+  ]
+}

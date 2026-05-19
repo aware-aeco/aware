@@ -1,0 +1,150 @@
+{
+  "name": "Symbol3DProperties",
+  "namespace": "NemAll_Python_BasisElements",
+  "kind": "class",
+  "summary": "Properties of the terrain point",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/",
+  "constructors": [
+    {
+      "name": "Symbol3DProperties()",
+      "signature": "Symbol3DProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: Symbol3DProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "Symbol3DProperties",
+          "doc": "Symbol3DProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ControlPointOffset",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Control point offset",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.ControlPointOffset"
+    },
+    {
+      "name": "DescriptionText",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Description text (label)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.DescriptionText"
+    },
+    {
+      "name": "Height",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Symbol height",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.Height"
+    },
+    {
+      "name": "IsScaleDependent",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the point is to be scale dependent",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.IsScaleDependent"
+    },
+    {
+      "name": "IsStation",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the point is a station",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.IsStation"
+    },
+    {
+      "name": "PrimaryPointNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Primary point number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.PrimaryPointNumber"
+    },
+    {
+      "name": "RotationAngle",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Rotation angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.RotationAngle"
+    },
+    {
+      "name": "SecondaryPointNumber",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Secondary point number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.SecondaryPointNumber"
+    },
+    {
+      "name": "StationCode",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Point code or station depending on the value of IsStation property.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.StationCode"
+    },
+    {
+      "name": "SymbolID",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Symbol ID",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.SymbolID"
+    },
+    {
+      "name": "Width",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Symbol width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BasisElements/Symbol3DProperties/#NemAll_Python_BasisElements.Symbol3DProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

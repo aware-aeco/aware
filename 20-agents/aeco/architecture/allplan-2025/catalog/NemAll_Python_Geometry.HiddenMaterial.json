@@ -1,0 +1,60 @@
+{
+  "name": "HiddenMaterial",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Input element settings used by hidden calculation.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/",
+  "constructors": [
+    {
+      "name": "HiddenMaterial()",
+      "signature": "HiddenMaterial()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/#NemAll_Python_Geometry.HiddenMaterial.__init__"
+    },
+    {
+      "name": "HiddenMaterial(source: HiddenMaterial)",
+      "signature": "HiddenMaterial(source: HiddenMaterial)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "source",
+          "type": "HiddenMaterial",
+          "doc": "Source.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/#NemAll_Python_Geometry.HiddenMaterial.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ExtraSmooth",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Extra smooth flag for entry. Flag is usual for elements like round column. Adjacent edges of such element are optimized with constant angle (20 deg) ignoring angle set in hidden options (usual about 1deg).",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/#NemAll_Python_Geometry.HiddenMaterial.ExtraSmooth"
+    },
+    {
+      "name": "MaterialNumber",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "So called material number of entry. Elements with same material numbers are threaded specially depending on settings of hidden calculation e.g suspended lines between them etc. Value 0 means no material set.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/HiddenMaterial/#NemAll_Python_Geometry.HiddenMaterial.MaterialNumber"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

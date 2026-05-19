@@ -1,0 +1,68 @@
+{
+  "name": "ViewSectionPreview",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.ViewSectionPreview.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ViewSectionPreview/",
+  "constructors": [
+    {
+      "name": "ViewSectionPreview()",
+      "signature": "ViewSectionPreview()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ViewSectionPreview/#NemAll_Python_BaseElements.ViewSectionPreview.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CollectPreviewElements",
+      "signature": "CollectPreviewElements( doc: DocumentAdapter, generalsectionProperties: SectionGeneralProperties )",
+      "summary": "Rotate the elements",
+      "remarks": "Rotate the elements",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "generalsectionProperties",
+          "type": "SectionGeneralProperties",
+          "doc": "General section properties",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ViewSectionPreview/#NemAll_Python_BaseElements.ViewSectionPreview.CollectPreviewElements"
+    },
+    {
+      "name": "DrawPreview",
+      "signature": "DrawPreview( arg2: Point2D, placementPoint: DocumentAdapter, doc: SectionGeneralProperties, generalsectionProperties: bool, ) -\u003E Point3D",
+      "summary": "Rotate the elements",
+      "remarks": "Rotate the elements",
+      "params": [
+        {
+          "name": "placementPoint",
+          "type": "DocumentAdapter",
+          "doc": "Placement point",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ViewSectionPreview/#NemAll_Python_BaseElements.ViewSectionPreview.DrawPreview"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

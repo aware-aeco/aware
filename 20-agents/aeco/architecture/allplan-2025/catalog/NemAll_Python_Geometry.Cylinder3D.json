@@ -1,0 +1,585 @@
+{
+  "name": "Cylinder3D",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "3D cylinder",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/",
+  "constructors": [
+    {
+      "name": "Cylinder3D()",
+      "signature": "Cylinder3D()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.__init__"
+    },
+    {
+      "name": "Cylinder3D(cylinder: Cylinder3D)",
+      "signature": "Cylinder3D(cylinder: Cylinder3D)",
+      "summary": "Copy constructor.",
+      "remarks": "Copy constructor.",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Cylinder3D",
+          "doc": "Cylinder which will be copied.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.__init__"
+    },
+    {
+      "name": "Cylinder3D( refPlacement: AxisPlacement3D, radiusMajor: float, radiusMinor: float, apex: Point3D, )",
+      "signature": "Cylinder3D( refPlacement: AxisPlacement3D, radiusMajor: float, radiusMinor: float, apex: Point3D, )",
+      "summary": "Constructor. Height of the cylinder is z-coordinate of the Apex.",
+      "remarks": "Constructor. Height of the cylinder is z-coordinate of the Apex.",
+      "params": [
+        {
+          "name": "refPlacement",
+          "type": "AxisPlacement3D",
+          "doc": "Local Placement of the cylinder.",
+          "optional": false
+        },
+        {
+          "name": "radiusMajor",
+          "type": "float",
+          "doc": "Major radius of the cylinder.",
+          "optional": false
+        },
+        {
+          "name": "radiusMinor",
+          "type": "float",
+          "doc": "Minor radius of the cylinder.",
+          "optional": false
+        },
+        {
+          "name": "apex",
+          "type": "Point3D",
+          "doc": "Center of the Top Ellipse",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.__init__"
+    },
+    {
+      "name": "Cylinder3D(radiusMajor: float, radiusMinor: float, apex: Point3D)",
+      "signature": "Cylinder3D(radiusMajor: float, radiusMinor: float, apex: Point3D)",
+      "summary": "Constructor. Height of the cylinder is z-coordinate of the Apex.",
+      "remarks": "Constructor. Height of the cylinder is z-coordinate of the Apex.",
+      "params": [
+        {
+          "name": "radiusMajor",
+          "type": "float",
+          "doc": "Major radius of the cylinder.",
+          "optional": false
+        },
+        {
+          "name": "radiusMinor",
+          "type": "float",
+          "doc": "Minor radius of the cylinder.",
+          "optional": false
+        },
+        {
+          "name": "apex",
+          "type": "Point3D",
+          "doc": "Center of the Top Ellipse",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetApex",
+      "signature": "GetApex() -\u003E Point3D",
+      "summary": "Get Apex of the Cylinder in the local coordinate system",
+      "remarks": "Get Apex of the Cylinder in the local coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference to Apex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetApex"
+    },
+    {
+      "name": "GetApexParent",
+      "signature": "GetApexParent() -\u003E Point3D",
+      "summary": "Get Apex of the Cylinder in the parent coordinate system",
+      "remarks": "Get Apex of the Cylinder in the parent coordinate system",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference to Apex."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetApexParent"
+    },
+    {
+      "name": "GetBottomCenter",
+      "signature": "GetBottomCenter() -\u003E Point3D",
+      "summary": "Get bottom center",
+      "remarks": "Get bottom center",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "center of bottom base"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetBottomCenter"
+    },
+    {
+      "name": "GetCenter",
+      "signature": "GetCenter() -\u003E Point3D",
+      "summary": "Get Center of the Cylinder",
+      "remarks": "Get Center of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Reference to Center."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetCenter"
+    },
+    {
+      "name": "GetHeight",
+      "signature": "GetHeight() -\u003E float",
+      "summary": "Get Height of the Cylinder",
+      "remarks": "Get Height of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Reference to Height of the Cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetHeight"
+    },
+    {
+      "name": "GetLocalPlacement",
+      "signature": "GetLocalPlacement() -\u003E AxisPlacement3D",
+      "summary": "Get Local Placement",
+      "remarks": "Get Local Placement",
+      "params": [],
+      "returns": {
+        "type": "AxisPlacement3D",
+        "doc": "Reference to Local Placement."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetLocalPlacement"
+    },
+    {
+      "name": "GetMajorRadius",
+      "signature": "GetMajorRadius() -\u003E float",
+      "summary": "Get Major Radius of the Cylinder",
+      "remarks": "Get Major Radius of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Reference to Major Radius."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetMajorRadius"
+    },
+    {
+      "name": "GetMinMax",
+      "signature": "GetMinMax() -\u003E MinMax3D",
+      "summary": "Get MinMax of the Cylinder",
+      "remarks": "Get MinMax of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "MinMax3D",
+        "doc": "Reference to MinMax of the Cylinder."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetMinMax"
+    },
+    {
+      "name": "GetMinorRadius",
+      "signature": "GetMinorRadius() -\u003E float",
+      "summary": "Get Minor Radius of the Cylinder",
+      "remarks": "Get Minor Radius of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Reference to Minor Radius."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetMinorRadius"
+    },
+    {
+      "name": "GetSilhouetteLines",
+      "signature": "GetSilhouetteLines(viewMatrix: Matrix3D, bPerspective: bool) -\u003E Line3DList",
+      "summary": "Get silhouette lines of cylinder",
+      "remarks": "Get silhouette lines of cylinder",
+      "params": [
+        {
+          "name": "viewMatrix",
+          "type": "Matrix3D",
+          "doc": "View matrix",
+          "optional": false
+        },
+        {
+          "name": "bPerspective",
+          "type": "bool",
+          "doc": "Flag if it is central projection or not (true / false)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Line3DList",
+        "doc": "silhouette lines"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetSilhouetteLines"
+    },
+    {
+      "name": "GetTopCenter",
+      "signature": "GetTopCenter() -\u003E Point3D",
+      "summary": "Get top center",
+      "remarks": "Get top center",
+      "params": [],
+      "returns": {
+        "type": "Point3D",
+        "doc": "center of top plane"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetTopCenter"
+    },
+    {
+      "name": "GetXAxis",
+      "signature": "GetXAxis() -\u003E Vector3D",
+      "summary": "Get X-Axis of the placement of the Cylinder",
+      "remarks": "Get X-Axis of the placement of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Reference to X-Axis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetXAxis"
+    },
+    {
+      "name": "GetYAxis",
+      "signature": "GetYAxis() -\u003E Vector3D",
+      "summary": "Get Y-Axis of the placement of the Cylinder",
+      "remarks": "Get Y-Axis of the placement of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Reference to X-Axis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetYAxis"
+    },
+    {
+      "name": "GetZAxis",
+      "signature": "GetZAxis() -\u003E Vector3D",
+      "summary": "Get Z - axis of the placement of the Cylinder",
+      "remarks": "Get Z - axis of the placement of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "Vector3D",
+        "doc": "Reference to Z-axis."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.GetZAxis"
+    },
+    {
+      "name": "IsCircular",
+      "signature": "IsCircular() -\u003E bool",
+      "summary": "Circularity check of the Cylinder",
+      "remarks": "Circularity check of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.IsCircular"
+    },
+    {
+      "name": "IsOblique",
+      "signature": "IsOblique() -\u003E bool",
+      "summary": "Perpendicularity check of the Cylinder",
+      "remarks": "Perpendicularity check of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.IsOblique"
+    },
+    {
+      "name": "IsValid",
+      "signature": "IsValid() -\u003E bool",
+      "summary": "Validity check of the Cylinder",
+      "remarks": "Validity check of the Cylinder",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.IsValid"
+    },
+    {
+      "name": "SetApex",
+      "signature": "SetApex(apex: Point3D)",
+      "summary": "Set Apex in the local coordinate system",
+      "remarks": "Set Apex in the local coordinate system",
+      "params": [
+        {
+          "name": "apex",
+          "type": "Point3D",
+          "doc": "New Apex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetApex"
+    },
+    {
+      "name": "SetApexParent",
+      "signature": "SetApexParent(apex: Point3D)",
+      "summary": "Set Apex in the parent coordinate system",
+      "remarks": "Set Apex in the parent coordinate system",
+      "params": [
+        {
+          "name": "apex",
+          "type": "Point3D",
+          "doc": "New Apex.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetApexParent"
+    },
+    {
+      "name": "SetCenter",
+      "signature": "SetCenter(center: Point3D)",
+      "summary": "Set center",
+      "remarks": "Set center",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "New center.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetCenter"
+    },
+    {
+      "name": "SetHeight",
+      "signature": "SetHeight(arg2: float)",
+      "summary": "Set Height of the Cylinder",
+      "remarks": "Set Height of the Cylinder",
+      "params": [
+        {
+          "name": "height",
+          "type": "object",
+          "doc": "New height.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetHeight"
+    },
+    {
+      "name": "SetLocalPlacement(placement: AxisPlacement3D)",
+      "signature": "SetLocalPlacement(placement: AxisPlacement3D)",
+      "summary": "Set Local Placement.",
+      "remarks": "Set Local Placement.",
+      "params": [
+        {
+          "name": "placement",
+          "type": "AxisPlacement3D",
+          "doc": "Local Placement.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetLocalPlacement"
+    },
+    {
+      "name": "SetLocalPlacement(center: Point3D, xAxis: Vector3D, zAxis: Vector3D)",
+      "signature": "SetLocalPlacement(center: Point3D, xAxis: Vector3D, zAxis: Vector3D)",
+      "summary": "Set Local Placement.",
+      "remarks": "Set Local Placement.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Point3D",
+          "doc": "Center point of the placement",
+          "optional": false
+        },
+        {
+          "name": "xAxis",
+          "type": "Vector3D",
+          "doc": "X-axis of the placement",
+          "optional": false
+        },
+        {
+          "name": "zAxis",
+          "type": "Vector3D",
+          "doc": "Z-axis of the placement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetLocalPlacement"
+    },
+    {
+      "name": "SetMajorRadius",
+      "signature": "SetMajorRadius(arg2: float)",
+      "summary": "Set Major Radius of the Cylinder",
+      "remarks": "Set Major Radius of the Cylinder",
+      "params": [
+        {
+          "name": "radius",
+          "type": "object",
+          "doc": "New major radius.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetMajorRadius"
+    },
+    {
+      "name": "SetMinorRadius",
+      "signature": "SetMinorRadius(arg2: float)",
+      "summary": "Set Minor Radius of the Cylinder",
+      "remarks": "Set Minor Radius of the Cylinder",
+      "params": [
+        {
+          "name": "radius",
+          "type": "object",
+          "doc": "New minor radius.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.SetMinorRadius"
+    },
+    {
+      "name": "__eq__",
+      "signature": "__eq__(cylinder: Cylinder3D) -\u003E object",
+      "summary": "Comparison of cylinders without tolerance. Be careful, this method work without tolerance!",
+      "remarks": "Comparison of cylinders without tolerance. Be careful, this method work without tolerance!",
+      "params": [
+        {
+          "name": "cylinder",
+          "type": "Cylinder3D",
+          "doc": "Compared cylinder.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "True when cylinders are equal, otherwise false."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Apex",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the apex property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.Apex"
+    },
+    {
+      "name": "LocalPlacement",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the local placement property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.LocalPlacement"
+    },
+    {
+      "name": "MajorRadius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the major radius property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.MajorRadius"
+    },
+    {
+      "name": "MinorRadius",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get and set the minor radius property :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/Cylinder3D/#NemAll_Python_Geometry.Cylinder3D.MinorRadius"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

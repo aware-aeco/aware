@@ -1,0 +1,109 @@
+{
+  "name": "DoorOpeningElement",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Representation of door opening",
+  "base": "ArchElement",
+  "interfaces": [
+    "AllplanElement"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningElement/",
+  "constructors": [
+    {
+      "name": "DoorOpeningElement()",
+      "signature": "DoorOpeningElement()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningElement/#NemAll_Python_ArchElements.DoorOpeningElement.__init__"
+    },
+    {
+      "name": "DoorOpeningElement( openingProp: DoorOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
+      "signature": "DoorOpeningElement( openingProp: DoorOpeningProperties, generalEle: BaseElementAdapter, startPnt: Point2D, endPnt: Point2D, drawPlacementPreview: bool, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "openingProp",
+          "type": "DoorOpeningProperties",
+          "doc": "Opening properties",
+          "optional": false
+        },
+        {
+          "name": "generalEle",
+          "type": "BaseElementAdapter",
+          "doc": "General element which includes the opening",
+          "optional": false
+        },
+        {
+          "name": "startPnt",
+          "type": "Point2D",
+          "doc": "Start point of the opening",
+          "optional": false
+        },
+        {
+          "name": "endPnt",
+          "type": "Point2D",
+          "doc": "End point",
+          "optional": false
+        },
+        {
+          "name": "drawPlacementPreview",
+          "type": "bool",
+          "doc": "Draw as placement preview (no wall adaptions) state",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningElement/#NemAll_Python_ArchElements.DoorOpeningElement.__init__"
+    },
+    {
+      "name": "DoorOpeningElement(element: DoorOpeningElement)",
+      "signature": "DoorOpeningElement(element: DoorOpeningElement)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "DoorOpeningElement",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningElement/#NemAll_Python_ArchElements.DoorOpeningElement.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningElement/#NemAll_Python_ArchElements.DoorOpeningElement.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Properties",
+      "type": "DoorOpeningProperties",
+      "getter": true,
+      "setter": true,
+      "summary": "Door opening properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorOpeningElement/#NemAll_Python_ArchElements.DoorOpeningElement.Properties"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

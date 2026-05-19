@@ -1,0 +1,38 @@
+{
+  "name": "LineInteractorResult",
+  "namespace": "ScriptObjectInteractors.LineInteractor",
+  "kind": "class",
+  "summary": "implementation of the line interactor result",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractorResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "element",
+      "type": "BaseElementAdapter",
+      "getter": true,
+      "setter": false,
+      "summary": "If line was picked from an existing element, this is its element adapter",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractorResult/#ScriptObjectInteractors.LineInteractor.LineInteractorResult.element"
+    },
+    {
+      "name": "input_line",
+      "type": "Line3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Input line",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractorResult/#ScriptObjectInteractors.LineInteractor.LineInteractorResult.input_line"
+    },
+    {
+      "name": "input_value",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Value from the input value control in the dialog line",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/LineInteractor/LineInteractorResult/#ScriptObjectInteractors.LineInteractor.LineInteractorResult.input_value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

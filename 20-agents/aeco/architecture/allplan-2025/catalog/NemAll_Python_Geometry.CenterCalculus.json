@@ -1,0 +1,476 @@
+{
+  "name": "CenterCalculus",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "class",
+  "summary": "Class to calculate the center of an object",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Calculate(line: Line2D) -\u003E tuple",
+      "signature": "Calculate(line: Line2D) -\u003E tuple",
+      "summary": "Calculates the center of a 2D line",
+      "remarks": "Calculates the center of a 2D line",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line2D",
+          "doc": "Line2D on which to calculate the center",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(line: Line3D) -\u003E tuple",
+      "signature": "Calculate(line: Line3D) -\u003E tuple",
+      "summary": "Calculates the center of a 3D line",
+      "remarks": "Calculates the center of a 3D line",
+      "params": [
+        {
+          "name": "line",
+          "type": "Line3D",
+          "doc": "Line3D on which to calculate the center",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polyline: Polyline2D, edge: int) -\u003E tuple",
+      "signature": "Calculate(polyline: Polyline2D, edge: int) -\u003E tuple",
+      "summary": "Calculates the center of a 2D polyline",
+      "remarks": "Calculates the center of a 2D polyline",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline2D",
+          "doc": "Polyline on which to calculate the center.",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "Index of the segment to calculate the center on. Set to 0 to calculate the center of the entire polyline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polyline: Polyline3D, edge: int) -\u003E tuple",
+      "signature": "Calculate(polyline: Polyline3D, edge: int) -\u003E tuple",
+      "summary": "Calculates the center of a 3D polyline",
+      "remarks": "Calculates the center of a 3D polyline",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "Polyline3D",
+          "doc": "Polyline on which to calculate the center.",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "Index of the segment to calculate the center on. Set to 0 to calculate the center of the entire polyline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polygon: Polygon2D, bPlaneCenter: bool, edge: int) -\u003E tuple",
+      "signature": "Calculate(polygon: Polygon2D, bPlaneCenter: bool, edge: int) -\u003E tuple",
+      "summary": "Calculates the center of a 2D polygon.",
+      "remarks": "Calculates the center of a 2D polygon.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon2D",
+          "doc": "Polygon on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "bPlaneCenter",
+          "type": "bool",
+          "doc": "Whether to calculate the center of the area bounded by the polygon (True) or the center of the outline polyline (False)",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "When bPlaneCenter is set to False, this is the index of the segment of the outline polyline to calculate the center on. Set to 0 to calculate the center of the entire outline polyline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(polygon: Polygon3D, bPlaneCenter: bool, edge: int) -\u003E tuple",
+      "signature": "Calculate(polygon: Polygon3D, bPlaneCenter: bool, edge: int) -\u003E tuple",
+      "summary": "Calculates the center of a 3D polygon.",
+      "remarks": "Calculates the center of a 3D polygon.",
+      "params": [
+        {
+          "name": "polygon",
+          "type": "Polygon3D",
+          "doc": "Polygon on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "bPlaneCenter",
+          "type": "bool",
+          "doc": "Whether to calculate the center of the area bounded by the polygon (True) or the center of the outline polyline (False)",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "When bPlaneCenter is set to False, this is the index of the segment of the outline polyline to calculate the center on. Set to 0 to calculate the center of the entire outline polyline.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(arc: Arc2D, center: bool) -\u003E tuple",
+      "signature": "Calculate(arc: Arc2D, center: bool) -\u003E tuple",
+      "summary": "Calculates the center of a 2D arc.",
+      "remarks": "Calculates the center of a 2D arc.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc2D",
+          "doc": "arc on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "bool",
+          "doc": "Whether to calculate the arc\u0027s midpoint, that divides the arc into two halves (True) or the arc\u0027s center (False)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(arc: Arc3D, center: bool) -\u003E tuple",
+      "signature": "Calculate(arc: Arc3D, center: bool) -\u003E tuple",
+      "summary": "Calculates the center of a 3D arc.",
+      "remarks": "Calculates the center of a 3D arc.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Arc3D",
+          "doc": "arc on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "center",
+          "type": "bool",
+          "doc": "Whether to calculate the arc\u0027s midpoint, that divides the arc into two halves (True) or the arc\u0027s center (False)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(spline: Spline2D, eps: float) -\u003E tuple",
+      "signature": "Calculate(spline: Spline2D, eps: float) -\u003E tuple",
+      "summary": "Calculates the center of a 2D spline.",
+      "remarks": "Calculates the center of a 2D spline.",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline2D",
+          "doc": "Spline on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(spline: Spline3D, eps: float) -\u003E tuple",
+      "signature": "Calculate(spline: Spline3D, eps: float) -\u003E tuple",
+      "summary": "Calculates the center of a 3D spline.",
+      "remarks": "Calculates the center of a 3D spline.",
+      "params": [
+        {
+          "name": "spline",
+          "type": "Spline3D",
+          "doc": "Spline on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(spline: BSpline3D, eps: float, bAreaCenter: bool) -\u003E tuple",
+      "signature": "Calculate(spline: BSpline3D, eps: float, bAreaCenter: bool) -\u003E tuple",
+      "summary": "Calculates the center of a 3D base spline.",
+      "remarks": "Calculates the center of a 3D base spline.",
+      "params": [
+        {
+          "name": "spline",
+          "type": "BSpline3D",
+          "doc": "B-spline on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        },
+        {
+          "name": "bAreaCenter",
+          "type": "bool",
+          "doc": "In case of a closed b-spline: whether to calculate the center of the area bounded by the B-spline (True) or the center of the b-spline curve (False)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(spline: BSpline2D, eps: float) -\u003E tuple",
+      "signature": "Calculate(spline: BSpline2D, eps: float) -\u003E tuple",
+      "summary": "Calculates the center of a 2D base spline.",
+      "remarks": "Calculates the center of a 2D base spline.",
+      "params": [
+        {
+          "name": "spline",
+          "type": "BSpline2D",
+          "doc": "B-spline on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(clothoid: Clothoid2D, eps: float) -\u003E tuple",
+      "signature": "Calculate(clothoid: Clothoid2D, eps: float) -\u003E tuple",
+      "summary": "Calculates the center of a 2D clothoid.",
+      "remarks": "Calculates the center of a 2D clothoid.",
+      "params": [
+        {
+          "name": "clothoid",
+          "type": "Clothoid2D",
+          "doc": "clothoid on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(path: Path2D, eps: float, bAreaCenter: bool) -\u003E tuple",
+      "signature": "Calculate(path: Path2D, eps: float, bAreaCenter: bool) -\u003E tuple",
+      "summary": "Calculates the center of a 2D path.",
+      "remarks": "Calculates the center of a 2D path.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path2D",
+          "doc": "Path on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        },
+        {
+          "name": "bAreaCenter",
+          "type": "bool",
+          "doc": "In case of a closed path: whether to calculate the center of the area bounded by the path (True) or the center of the path itself (False)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(path: Path3D, eps: float, bAreaCenter: bool) -\u003E tuple",
+      "signature": "Calculate(path: Path3D, eps: float, bAreaCenter: bool) -\u003E tuple",
+      "summary": "Calculates the center of a 3D path.",
+      "remarks": "Calculates the center of a 3D path.",
+      "params": [
+        {
+          "name": "path",
+          "type": "Path3D",
+          "doc": "Path on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        },
+        {
+          "name": "bAreaCenter",
+          "type": "bool",
+          "doc": "In case of a closed path: whether to calculate the center of the area bounded by the path (True) or the center of the path itself (False)",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    },
+    {
+      "name": "Calculate(geoObject: object, eps: float, bArcCenter: bool, edge: int) -\u003E tuple",
+      "signature": "Calculate(geoObject: object, eps: float, bArcCenter: bool, edge: int) -\u003E tuple",
+      "summary": "Calculates the center of a curve.",
+      "remarks": "Calculates the center of a curve.",
+      "params": [
+        {
+          "name": "geoObject",
+          "type": "object",
+          "doc": "object on which to calculate the center",
+          "optional": false
+        },
+        {
+          "name": "eps",
+          "type": "float",
+          "doc": "Precision for calculation",
+          "optional": false
+        },
+        {
+          "name": "bArcCenter",
+          "type": "bool",
+          "doc": "Whether to calculate the arc\u0027s midpoint, that divides the arc into two halves (True) or the arc\u0027s center (False)",
+          "optional": false
+        },
+        {
+          "name": "edge",
+          "type": "int",
+          "doc": "For polyline and polygon: index of the segment to calculate the center on. Set to 0 to calculate the center of the entire polyline/polygon.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple",
+        "doc": "True when calculation was successful. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/CenterCalculus/#NemAll_Python_Geometry.CenterCalculus.Calculate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

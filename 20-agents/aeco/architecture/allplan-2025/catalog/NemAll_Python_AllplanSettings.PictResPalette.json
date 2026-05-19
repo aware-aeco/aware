@@ -1,0 +1,39 @@
+{
+  "name": "PictResPalette",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for the palette",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResPalette/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eCenterOfGravity",
+      "value": 19407
+    },
+    {
+      "name": "eCenterOfGravitySelected",
+      "value": 19405
+    },
+    {
+      "name": "eClear",
+      "value": 17025
+    },
+    {
+      "name": "eHotinfo",
+      "value": 16205
+    },
+    {
+      "name": "eRollLeft",
+      "value": 8543
+    },
+    {
+      "name": "eRollRight",
+      "value": 8542
+    }
+  ]
+}

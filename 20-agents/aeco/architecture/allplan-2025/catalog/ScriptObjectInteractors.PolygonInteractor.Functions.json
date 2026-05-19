@@ -1,0 +1,13 @@
+{
+  "name": "Functions",
+  "namespace": "ScriptObjectInteractors.PolygonInteractor",
+  "kind": "static-class",
+  "summary": "Module-level functions of ScriptObjectInteractors.PolygonInteractor",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

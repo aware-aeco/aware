@@ -1,0 +1,104 @@
+{
+  "name": "eValueInputControlType",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "enum",
+  "summary": "Types of the input controls, that can be displayed in the dialog line in Allplan",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/eValueInputControlType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eANGLE_COMBOBOX",
+      "value": 6,
+      "summary": "Angle input as a combo box with suggested angle values. Free input is possible."
+    },
+    {
+      "name": "eANGLE_EDIT",
+      "value": 11,
+      "summary": "Angle input as a regular edit field. Value is entered in the current Allplan angle units, but returned in radians."
+    },
+    {
+      "name": "eCONTROL_EXTERNAL",
+      "value": 1
+    },
+    {
+      "name": "eCONTROL_NONE",
+      "value": 0,
+      "summary": "No input control"
+    },
+    {
+      "name": "eCOORDINATE_EDIT",
+      "value": 101,
+      "summary": "Input control for a single coordinate. Value is entered in the current Allplan length units, but returned in millimeters. Allowed values between -1e10 and 1-e10"
+    },
+    {
+      "name": "eCOORDINATE_EDIT_FIX",
+      "value": 102,
+      "summary": "Similar to eCOORDINATE_EDIT"
+    },
+    {
+      "name": "eCOORDINATE_EDIT_GE0",
+      "value": 103,
+      "summary": "Similar to eCOORDINATE_EDIT, but only values \u003E= 0 allowed"
+    },
+    {
+      "name": "eCOORDINATE_EDIT_GT0",
+      "value": 104,
+      "summary": "Similar to eCOORDINATE_EDIT, but only values \u003E 0 allowed"
+    },
+    {
+      "name": "eDIMENSION_EDIT",
+      "value": 5,
+      "summary": "Length input with current length units. Returned value is in millimeters. Values between 0.0 and 1e10 allowed"
+    },
+    {
+      "name": "eDIMENSION_EDIT_MM",
+      "value": 10,
+      "summary": "Length input in millimeters. Values between 0.0 and 1e10 allowed"
+    },
+    {
+      "name": "eDOUBLE_EDIT",
+      "value": 2,
+      "summary": "Input control for a double value. Values between 0.0 and 1e10 allowed"
+    },
+    {
+      "name": "eINT_COMBOBOX",
+      "value": 4,
+      "summary": "Similar to eINT_EDIT, but with a combo box with suggested values."
+    },
+    {
+      "name": "eINT_EDIT",
+      "value": 3,
+      "summary": "Input control for a 32-bit signed integer, with allowed value between 0 and -2147483684"
+    },
+    {
+      "name": "eNUMBER_EDIT_1",
+      "value": 201,
+      "summary": "Edit control for an integer value between 1 and 1e6"
+    },
+    {
+      "name": "eNUMBER_EDIT_1_GE0",
+      "value": 202,
+      "summary": "Edit control for an integer value between 0 and 1e6"
+    },
+    {
+      "name": "eROTATION_ANGLE_STEP",
+      "value": 8,
+      "summary": "Input control for a shortcut input (\u002B or -). Input triggers the on_shortcut_control_input event."
+    },
+    {
+      "name": "eTEXT_EDIT",
+      "value": 9,
+      "summary": "String input control"
+    },
+    {
+      "name": "eWALL_PLACEMENT",
+      "value": 7,
+      "summary": "Input control for a shortcut input (\u002B or -). Input triggers the on_shortcut_control_input event."
+    }
+  ]
+}

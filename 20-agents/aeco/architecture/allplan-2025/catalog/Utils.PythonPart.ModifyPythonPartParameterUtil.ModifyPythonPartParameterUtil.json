@@ -1,0 +1,116 @@
+{
+  "name": "ModifyPythonPartParameterUtil",
+  "namespace": "Utils.PythonPart.ModifyPythonPartParameterUtil",
+  "kind": "class",
+  "summary": "implementation of the utility class for the PythonPart parameter modification",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartParameterUtil/ModifyPythonPartParameterUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "execute",
+      "signature": "execute( python_part: BaseElementAdapter, coord_input: CoordinateInput, mod_param_data: list[ModifiedParameterData], )",
+      "summary": "execute the parameter modification",
+      "remarks": "execute the parameter modification",
+      "params": [
+        {
+          "name": "python_part",
+          "type": "BaseElementAdapter",
+          "doc": "PythonPart to modify",
+          "optional": false
+        },
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        },
+        {
+          "name": "mod_param_data",
+          "type": "list[ModifiedParameterData]",
+          "doc": "data of the modified parameter",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartParameterUtil/ModifyPythonPartParameterUtil/#Utils.PythonPart.ModifyPythonPartParameterUtil.ModifyPythonPartParameterUtil.execute"
+    },
+    {
+      "name": "get_modified_parameters",
+      "signature": "get_modified_parameters( old_parameter: list[str], python_part_ele: BaseElementAdapter, str_table: BuildingElementStringTable, material_str_table: BuildingElementMaterialStringTable, ) -\u003E list[ModifiedParameterData]",
+      "summary": "get the modified parameters",
+      "remarks": "get the modified parameters",
+      "params": [
+        {
+          "name": "old_parameter",
+          "type": "list[str]",
+          "doc": "old parameter",
+          "optional": false
+        },
+        {
+          "name": "python_part_ele",
+          "type": "BaseElementAdapter",
+          "doc": "PythonPart element",
+          "optional": false
+        },
+        {
+          "name": "str_table",
+          "type": "BuildingElementStringTable",
+          "doc": "global string table",
+          "optional": false
+        },
+        {
+          "name": "material_str_table",
+          "type": "BuildingElementMaterialStringTable",
+          "doc": "global material string table",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[ModifiedParameterData]",
+        "doc": "returns"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartParameterUtil/ModifyPythonPartParameterUtil/#Utils.PythonPart.ModifyPythonPartParameterUtil.ModifyPythonPartParameterUtil.get_modified_parameters"
+    },
+    {
+      "name": "get_overtake_parameters",
+      "signature": "get_overtake_parameters( python_part_ele: BaseElementAdapter, str_table: BuildingElementStringTable, material_str_table: BuildingElementMaterialStringTable, ) -\u003E list[ModifiedParameterData]",
+      "summary": "get the overtake parameters",
+      "remarks": "get the overtake parameters",
+      "params": [
+        {
+          "name": "python_part_ele",
+          "type": "BaseElementAdapter",
+          "doc": "PythonPart element",
+          "optional": false
+        },
+        {
+          "name": "str_table",
+          "type": "BuildingElementStringTable",
+          "doc": "global string table",
+          "optional": false
+        },
+        {
+          "name": "material_str_table",
+          "type": "BuildingElementMaterialStringTable",
+          "doc": "global material string table",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[ModifiedParameterData]",
+        "doc": "overtake parameter"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartParameterUtil/ModifyPythonPartParameterUtil/#Utils.PythonPart.ModifyPythonPartParameterUtil.ModifyPythonPartParameterUtil.get_overtake_parameters"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

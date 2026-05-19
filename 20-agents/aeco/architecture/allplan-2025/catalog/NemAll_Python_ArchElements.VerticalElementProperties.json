@@ -1,0 +1,375 @@
+{
+  "name": "VerticalElementProperties",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "class",
+  "summary": "Base class representing properties of vertical architectural components, such as columns.",
+  "base": "ArchBaseProperties",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/",
+  "constructors": [
+    {
+      "name": "VerticalElementProperties()",
+      "signature": "VerticalElementProperties(element: VerticalElementProperties)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "VerticalElementProperties",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetAngle",
+      "signature": "GetAngle() -\u003E Angle",
+      "summary": "Get the angle",
+      "remarks": "Get the angle",
+      "params": [],
+      "returns": {
+        "type": "Angle",
+        "doc": "Get angle"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetAngle"
+    },
+    {
+      "name": "GetDepth",
+      "signature": "GetDepth() -\u003E float",
+      "summary": "Get the depth",
+      "remarks": "Get the depth",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Depth"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetDepth"
+    },
+    {
+      "name": "GetProfileFullName",
+      "signature": "GetProfileFullName() -\u003E str",
+      "summary": "Get the full name of the profile",
+      "remarks": "Get the full name of the profile",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Path and name of the profile"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetProfileFullName"
+    },
+    {
+      "name": "GetRadius",
+      "signature": "GetRadius() -\u003E float",
+      "summary": "Get the radius",
+      "remarks": "Get the radius",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Radius"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetRadius"
+    },
+    {
+      "name": "GetShapePolygon",
+      "signature": "GetShapePolygon() -\u003E Polygon2D",
+      "summary": "Get the shape polygon",
+      "remarks": "Get the shape polygon",
+      "params": [],
+      "returns": {
+        "type": "Polygon2D",
+        "doc": "Shape polygon"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetShapePolygon"
+    },
+    {
+      "name": "GetShapeType",
+      "signature": "GetShapeType() -\u003E ShapeType",
+      "summary": "Get the shape type",
+      "remarks": "Get the shape type",
+      "params": [],
+      "returns": {
+        "type": "ShapeType",
+        "doc": "Shape type"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetShapeType"
+    },
+    {
+      "name": "GetWidth",
+      "signature": "GetWidth() -\u003E float",
+      "summary": "Get the width",
+      "remarks": "Get the width",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "Width"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.GetWidth"
+    },
+    {
+      "name": "SetAngle",
+      "signature": "SetAngle(angle: Angle)",
+      "summary": "Set the angle",
+      "remarks": "Set the angle",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Angle",
+          "doc": "Angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetAngle"
+    },
+    {
+      "name": "SetAttribute",
+      "signature": "SetAttribute(attrib: object)",
+      "summary": "Set the attribute",
+      "remarks": "Set the attribute",
+      "params": [
+        {
+          "name": "attrib",
+          "type": "object",
+          "doc": "Attribute",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetAttribute"
+    },
+    {
+      "name": "SetCornerRadius",
+      "signature": "SetCornerRadius(radius: float)",
+      "summary": "Set the corner radius",
+      "remarks": "Set the corner radius",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "Corner radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetCornerRadius"
+    },
+    {
+      "name": "SetDepth",
+      "signature": "SetDepth(depth: float)",
+      "summary": "Set the depth",
+      "remarks": "Set the depth",
+      "params": [
+        {
+          "name": "depth",
+          "type": "float",
+          "doc": "Depth",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetDepth"
+    },
+    {
+      "name": "SetProfileFullName",
+      "signature": "SetProfileFullName(fullName: str)",
+      "summary": "Set the full name of the profile",
+      "remarks": "Set the full name of the profile",
+      "params": [
+        {
+          "name": "fullName",
+          "type": "str",
+          "doc": "Path and name of the profile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetProfileFullName"
+    },
+    {
+      "name": "SetRadius",
+      "signature": "SetRadius(radius: float)",
+      "summary": "Set the radius",
+      "remarks": "Set the radius",
+      "params": [
+        {
+          "name": "radius",
+          "type": "float",
+          "doc": "Radius",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetRadius"
+    },
+    {
+      "name": "SetShapePolygon",
+      "signature": "SetShapePolygon(shapePol: Polygon2D)",
+      "summary": "Set the shape polygon",
+      "remarks": "Set the shape polygon",
+      "params": [
+        {
+          "name": "shapePol",
+          "type": "Polygon2D",
+          "doc": "Shape polygon",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetShapePolygon"
+    },
+    {
+      "name": "SetShapeType",
+      "signature": "SetShapeType(shapeType: ShapeType)",
+      "summary": "Set the type of the shape",
+      "remarks": "Set the type of the shape",
+      "params": [
+        {
+          "name": "shapeType",
+          "type": "ShapeType",
+          "doc": "Shape type",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetShapeType"
+    },
+    {
+      "name": "SetSize",
+      "signature": "SetSize(width: float, depth: float)",
+      "summary": "Set the size of the element",
+      "remarks": "Set the size of the element",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width",
+          "optional": false
+        },
+        {
+          "name": "depth",
+          "type": "float",
+          "doc": "Depth",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetSize"
+    },
+    {
+      "name": "SetWidth",
+      "signature": "SetWidth(width: float)",
+      "summary": "Set the width",
+      "remarks": "Set the width",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "doc": "Width",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.SetWidth"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Angle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.Angle"
+    },
+    {
+      "name": "Depth",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the depth",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.Depth"
+    },
+    {
+      "name": "ProfileFullName",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the full name of the profile",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.ProfileFullName"
+    },
+    {
+      "name": "Radius",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the radius",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.Radius"
+    },
+    {
+      "name": "ShapePolygon",
+      "type": "Polygon2D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape polygon",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.ShapePolygon"
+    },
+    {
+      "name": "ShapeType",
+      "type": "ShapeType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the shape type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.ShapeType"
+    },
+    {
+      "name": "Width",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the width",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalElementProperties/#NemAll_Python_ArchElements.VerticalElementProperties.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

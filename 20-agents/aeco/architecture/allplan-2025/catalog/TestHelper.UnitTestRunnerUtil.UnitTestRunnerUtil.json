@@ -1,0 +1,113 @@
+{
+  "name": "UnitTestRunnerUtil",
+  "namespace": "TestHelper.UnitTestRunnerUtil",
+  "kind": "class",
+  "summary": "implementation of the unit test runner utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunnerUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "init_sys_path",
+      "signature": "init_sys_path(test_project_path: str) -\u003E object \u003E None",
+      "summary": "initialize the sys path",
+      "remarks": "initialize the sys path",
+      "params": [
+        {
+          "name": "test_project_path",
+          "type": "str",
+          "doc": "path of the test project",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object \u003E None",
+        "doc": "code coverage object"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunnerUtil/#TestHelper.UnitTestRunnerUtil.UnitTestRunnerUtil.init_sys_path"
+    },
+    {
+      "name": "init_unit_test",
+      "signature": "init_unit_test(load_resources: bool) -\u003E object",
+      "summary": "initialize the unit test",
+      "remarks": "initialize the unit test",
+      "params": [
+        {
+          "name": "load_resources",
+          "type": "bool",
+          "doc": "load the resources",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "Allplan document"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunnerUtil/#TestHelper.UnitTestRunnerUtil.UnitTestRunnerUtil.init_unit_test"
+    },
+    {
+      "name": "run_unit_tests",
+      "signature": "run_unit_tests( tests: List[TestSuite], code_coverage: object, doc: object, single_test: object = None, ) -\u003E TestResult",
+      "summary": "run the unit tests",
+      "remarks": "run the unit tests",
+      "params": [
+        {
+          "name": "tests",
+          "type": "List[TestSuite]",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "code_coverage",
+          "type": "object",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "object",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        },
+        {
+          "name": "single_test",
+          "type": "object",
+          "doc": "description",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TestResult",
+        "doc": "test result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunnerUtil/#TestHelper.UnitTestRunnerUtil.UnitTestRunnerUtil.run_unit_tests"
+    },
+    {
+      "name": "unload_modules",
+      "signature": "unload_modules(test_project_path: str)",
+      "summary": "remove the test project path",
+      "remarks": "remove the test project path",
+      "params": [
+        {
+          "name": "test_project_path",
+          "type": "str",
+          "doc": "path of the test project",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TestHelper/UnitTestRunnerUtil/#TestHelper.UnitTestRunnerUtil.UnitTestRunnerUtil.unload_modules"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

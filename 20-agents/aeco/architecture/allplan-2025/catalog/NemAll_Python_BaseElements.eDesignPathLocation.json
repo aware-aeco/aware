@@ -1,0 +1,27 @@
+{
+  "name": "eDesignPathLocation",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Location of the design path",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/eDesignPathLocation/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AskForLocation",
+      "value": 0
+    },
+    {
+      "name": "CreateSubPath",
+      "value": 2
+    },
+    {
+      "name": "OverrideFiles",
+      "value": 1
+    }
+  ]
+}

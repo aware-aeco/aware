@@ -1,0 +1,93 @@
+{
+  "name": "DrawingService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_BaseElements.DrawingService.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "LockGraphicsEngineUpdate",
+      "signature": "LockGraphicsEngineUpdate(doc: DocumentAdapter, lockUpdate: bool)",
+      "summary": "Lock the update of the graphics engine",
+      "remarks": "Lock the update of the graphics engine",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "lockUpdate",
+          "type": "bool",
+          "doc": "Set to True to lock the update of the graphics engine. Set to False to unlock and update it.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.LockGraphicsEngineUpdate"
+    },
+    {
+      "name": "RedrawAll",
+      "signature": "RedrawAll(doc: DocumentAdapter)",
+      "summary": "Redraw all Args: doc Document",
+      "remarks": "Redraw all Args: doc Document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.RedrawAll"
+    },
+    {
+      "name": "ResetAndDrawHiddenElement",
+      "signature": "ResetAndDrawHiddenElement( doc: DocumentAdapter, hiddenElement: BaseElementAdapter )",
+      "summary": "Reset and draw the hidden elements Args: doc Document hiddenElement Hidden element",
+      "remarks": "Reset and draw the hidden elements Args: doc Document hiddenElement Hidden element",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.ResetAndDrawHiddenElement"
+    },
+    {
+      "name": "SaveWindowToImageFile",
+      "signature": "SaveWindowToImageFile( fileName: str, pixelWidth: int = 0, pixelHeight: int = 0 ) -\u003E bool",
+      "summary": "Save the window to an image file",
+      "remarks": "Save the window to an image file",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.SaveWindowToImageFile"
+    },
+    {
+      "name": "UpdateAllWindows",
+      "signature": "UpdateAllWindows()",
+      "summary": "Update the drawing in all windows",
+      "remarks": "Update the drawing in all windows",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.UpdateAllWindows"
+    },
+    {
+      "name": "UpdateGraphicsEngine",
+      "signature": "UpdateGraphicsEngine(doc: DocumentAdapter)",
+      "summary": "Update the graphics engine Args: doc Document",
+      "remarks": "Update the graphics engine Args: doc Document",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/DrawingService/#NemAll_Python_BaseElements.DrawingService.UpdateGraphicsEngine"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

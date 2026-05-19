@@ -1,0 +1,60 @@
+{
+  "name": "SlabOpeningSlopedPolyhedronUtil",
+  "namespace": "Utils.Architecture.SlabOpeningSlopedPolyhedronUtil",
+  "kind": "class",
+  "summary": "\u0022 implementation of the utility for a slab opening created by a sloped Polyhedron3D",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/SlabOpeningSlopedPolyhedronUtil/",
+  "constructors": [
+    {
+      "name": "SlabOpeningSlopedPolyhedronUtil()",
+      "signature": "SlabOpeningSlopedPolyhedronUtil(document: DocumentAdapter)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "document",
+          "type": "DocumentAdapter",
+          "doc": "document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/SlabOpeningSlopedPolyhedronUtil/#Utils.Architecture.SlabOpeningSlopedPolyhedronUtil.SlabOpeningSlopedPolyhedronUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "create_opening_polygons_and_plane_surfaces",
+      "signature": "create_opening_polygons_and_plane_surfaces( slab: BaseElementAdapter, opening_cut_geo: Polyhedron3D ) -\u003E tuple[bool, Polygon2D, Polyhedron3D | None, Polyhedron3D | None]",
+      "summary": "create the opening polygons and planes for a Polyhedron opening",
+      "remarks": "create the opening polygons and planes for a Polyhedron opening",
+      "params": [
+        {
+          "name": "slab",
+          "type": "BaseElementAdapter",
+          "doc": "slab",
+          "optional": false
+        },
+        {
+          "name": "opening_cut_geo",
+          "type": "Polyhedron3D",
+          "doc": "geometry for the opening creation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[bool, Polygon2D, Polyhedron3D | None, Polyhedron3D | None]",
+        "doc": "opening created state, opening polygon, bottom plane surface, top plane surface"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/Architecture/SlabOpeningSlopedPolyhedronUtil/#Utils.Architecture.SlabOpeningSlopedPolyhedronUtil.SlabOpeningSlopedPolyhedronUtil.create_opening_polygons_and_plane_surfaces"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

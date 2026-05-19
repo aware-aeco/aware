@@ -1,0 +1,221 @@
+{
+  "name": "ConcreteCoverProperties",
+  "namespace": "StdReinfShapeBuilder.ConcreteCoverProperties",
+  "kind": "class",
+  "summary": "Implementation of the concrete cover properties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/",
+  "constructors": [
+    {
+      "name": "ConcreteCoverProperties()",
+      "signature": "ConcreteCoverProperties(left: float = 0, right: float = 0, top: float = 0, bottom: float = 0)",
+      "summary": "Set the properties of the concrete cover",
+      "remarks": "Set the properties of the concrete cover",
+      "params": [
+        {
+          "name": "left",
+          "type": "float",
+          "doc": "Concrete cover at the left border",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "float",
+          "doc": "Concrete cover at the right border",
+          "optional": false
+        },
+        {
+          "name": "top",
+          "type": "float",
+          "doc": "Concrete cover at the top border",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "float",
+          "doc": "Concrete cover at the bottom border",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__()",
+      "summary": "convert to string",
+      "remarks": "convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.__repr__"
+    },
+    {
+      "name": "all",
+      "signature": "all(concrete_cover: float) -\u003E ConcreteCoverProperties",
+      "summary": "Set the properties of the concrete cover for all borders",
+      "remarks": "Set the properties of the concrete cover for all borders",
+      "params": [
+        {
+          "name": "concrete_cover",
+          "type": "float",
+          "doc": "concrete cover for all sides",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConcreteCoverProperties",
+        "doc": "concrete cover properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.all"
+    },
+    {
+      "name": "from_reinforcement_definition",
+      "signature": "from_reinforcement_definition(reinf_def: ReinforcementDefinition)",
+      "summary": "Get the cover from the reinforcement definition",
+      "remarks": "Get the cover from the reinforcement definition",
+      "params": [
+        {
+          "name": "reinf_def",
+          "type": "ReinforcementDefinition",
+          "doc": "reinforcement definition",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.from_reinforcement_definition"
+    },
+    {
+      "name": "left_right",
+      "signature": "left_right(left: float, right: float) -\u003E ConcreteCoverProperties",
+      "summary": "Set the properties of the concrete cover",
+      "remarks": "Set the properties of the concrete cover",
+      "params": [
+        {
+          "name": "left",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConcreteCoverProperties",
+        "doc": "concrete cover properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.left_right"
+    },
+    {
+      "name": "left_right_bottom",
+      "signature": "left_right_bottom( left: float, right: float, bottom: float ) -\u003E ConcreteCoverProperties",
+      "summary": "Set the properties of the concrete cover",
+      "remarks": "Set the properties of the concrete cover",
+      "params": [
+        {
+          "name": "left",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "right",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConcreteCoverProperties",
+        "doc": "concrete cover properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.left_right_bottom"
+    },
+    {
+      "name": "top_bottom",
+      "signature": "top_bottom(top: float, bottom: float) -\u003E ConcreteCoverProperties",
+      "summary": "Set the properties of the concrete cover",
+      "remarks": "Set the properties of the concrete cover",
+      "params": [
+        {
+          "name": "top",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        },
+        {
+          "name": "bottom",
+          "type": "float",
+          "doc": "description",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ConcreteCoverProperties",
+        "doc": "concrete cover properties"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.top_bottom"
+    }
+  ],
+  "properties": [
+    {
+      "name": "bottom",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the cover at the bottom border",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.bottom"
+    },
+    {
+      "name": "left",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the cover at the left border",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.left"
+    },
+    {
+      "name": "right",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the cover at the right border",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.right"
+    },
+    {
+      "name": "top",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the cover at the top border",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/ConcreteCoverProperties/#StdReinfShapeBuilder.ConcreteCoverProperties.ConcreteCoverProperties.top"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

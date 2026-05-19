@@ -1,0 +1,22 @@
+{
+  "name": "PolygonInteractorResult",
+  "namespace": "ScriptObjectInteractors.PolygonInteractor",
+  "kind": "class",
+  "summary": "implementation of the polygon input result",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractorResult/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "input_polygon",
+      "type": "Polygon3D",
+      "getter": true,
+      "setter": false,
+      "summary": "Input polygon",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/ScriptObjectInteractors/PolygonInteractor/PolygonInteractorResult/#ScriptObjectInteractors.PolygonInteractor.PolygonInteractorResult.input_polygon"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

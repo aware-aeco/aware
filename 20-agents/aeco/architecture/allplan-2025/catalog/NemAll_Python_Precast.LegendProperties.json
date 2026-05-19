@@ -1,0 +1,77 @@
+{
+  "name": "LegendProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Precast.LegendProperties.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/",
+  "constructors": [
+    {
+      "name": "LegendProperties()",
+      "signature": "LegendProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.__init__"
+    },
+    {
+      "name": "LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )",
+      "signature": "LegendProperties( fileEntryPath: FileEntryPath, fileNr: int, entryNr: int, maxHeight: float, maxWidth: float, )",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.__init__"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EntryNr",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Entry number of legend props Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.EntryNr"
+    },
+    {
+      "name": "FileEntrPath",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "File entry path of legend props Value type: EFileEntryPath enum :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.FileEntrPath"
+    },
+    {
+      "name": "FileNr",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "File number of legend props Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.FileNr"
+    },
+    {
+      "name": "MaxHeight",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Max height of legend props Value type: double :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.MaxHeight"
+    },
+    {
+      "name": "MaxWidth",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Max width of legend props Value type: double :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/LegendProperties/#NemAll_Python_Precast.LegendProperties.MaxWidth"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,28 @@
+{
+  "name": "GeometryElementsQueryUtil",
+  "namespace": "Utils.ElementFilter.GeometryElementsQueryUtil",
+  "kind": "class",
+  "summary": "implementation of the selection query utilities for geometry elements",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/GeometryElementsQueryUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "create_surface_elements_query",
+      "signature": "create_surface_elements_query() -\u003E SelectionQuery",
+      "summary": "create a query for the geometry elements with a surface",
+      "remarks": "create a query for the geometry elements with a surface",
+      "params": [],
+      "returns": {
+        "type": "SelectionQuery",
+        "doc": "selection query"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/ElementFilter/GeometryElementsQueryUtil/#Utils.ElementFilter.GeometryElementsQueryUtil.GeometryElementsQueryUtil.create_surface_elements_query"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

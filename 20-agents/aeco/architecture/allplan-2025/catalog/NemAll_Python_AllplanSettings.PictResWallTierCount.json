@@ -1,0 +1,35 @@
+{
+  "name": "PictResWallTierCount",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Picture resources for edge offset types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PictResWallTierCount/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eFiveTiers",
+      "value": 14581
+    },
+    {
+      "name": "eFourTiers",
+      "value": 14579
+    },
+    {
+      "name": "eOneTier",
+      "value": 14573
+    },
+    {
+      "name": "eThreeTiers",
+      "value": 14577
+    },
+    {
+      "name": "eTwoTiers",
+      "value": 14575
+    }
+  ]
+}

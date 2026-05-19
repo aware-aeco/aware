@@ -1,0 +1,168 @@
+{
+  "name": "DataFrame",
+  "namespace": "Utils.TabularDataUtil",
+  "kind": "class",
+  "summary": "Two-dimensional tabular data structure with labeled axes (rows and columns)",
+  "base": "dict",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/",
+  "constructors": [
+    {
+      "name": "DataFrame()",
+      "signature": "DataFrame( data: Optional[Dict[Union[int, str], List[str]]] = None, columns: Optional[Union[List[int], List[str]]] = None, index: Optional[List[int]] = None, )",
+      "summary": "Initialization of class DataFrame",
+      "remarks": "Initialization of class DataFrame",
+      "params": [
+        {
+          "name": "data",
+          "type": "Optional[Dict[Union[int, str], List[str]]]",
+          "doc": "tabular data which is a dictionary of lists",
+          "optional": false
+        },
+        {
+          "name": "columns",
+          "type": "Optional[Union[List[int], List[str]]]",
+          "doc": "column labels",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "Optional[List[int]]",
+          "doc": "row index",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__getitem__",
+      "signature": "__getitem__(key: Union[int, str, slice, Series]) -\u003E Union[DataFrame, Series]",
+      "summary": "Get items",
+      "remarks": "Get items",
+      "params": [
+        {
+          "name": "key",
+          "type": "Union[int, str, slice, Series]",
+          "doc": "it can be",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Union[DataFrame, Series]",
+        "doc": "item for the index"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.__getitem__"
+    },
+    {
+      "name": "__iter__",
+      "signature": "__iter__() -\u003E Iterator",
+      "summary": "get the data frame iterator",
+      "remarks": "get the data frame iterator",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.__iter__"
+    },
+    {
+      "name": "__len__",
+      "signature": "__len__() -\u003E int",
+      "summary": "get the length of the data frame",
+      "remarks": "get the length of the data frame",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "length of the data frame"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.__len__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "create a string from the data frame",
+      "remarks": "create a string from the data frame",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "data frame string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.__repr__"
+    },
+    {
+      "name": "get_row",
+      "signature": "get_row(key: str, value: str) -\u003E Optional[Series]",
+      "summary": "Get a row from data frame by a condition: column_label == value",
+      "remarks": "Get a row from data frame by a condition: column_label == value",
+      "params": [
+        {
+          "name": "key",
+          "type": "str",
+          "doc": "column label",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "new value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Optional[Series]",
+        "doc": "row value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.get_row"
+    },
+    {
+      "name": "loc",
+      "signature": "loc(location: int) -\u003E Series",
+      "summary": "Get a row from data frame",
+      "remarks": "Get a row from data frame",
+      "params": [
+        {
+          "name": "location",
+          "type": "int",
+          "doc": "int value of row index, natural row index",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Series",
+        "doc": "Series"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.loc"
+    },
+    {
+      "name": "short_repr",
+      "signature": "short_repr() -\u003E str",
+      "summary": "Represent the DataFrame by its row size x column size",
+      "remarks": "Represent the DataFrame by its row size x column size",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "short data string frame"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/TabularDataUtil/DataFrame/#Utils.TabularDataUtil.DataFrame.short_repr"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,159 @@
+{
+  "name": "AttributeDate",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Date attribute",
+  "base": "Attribute",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/",
+  "constructors": [
+    {
+      "name": "AttributeDate()",
+      "signature": "AttributeDate()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__init__"
+    },
+    {
+      "name": "AttributeDate(id: int, day: int, month: int, year: int)",
+      "signature": "AttributeDate(id: int, day: int, month: int, year: int)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "id",
+          "type": "int",
+          "doc": "Attribute id",
+          "optional": false
+        },
+        {
+          "name": "day",
+          "type": "int",
+          "doc": "Day",
+          "optional": false
+        },
+        {
+          "name": "month",
+          "type": "int",
+          "doc": "Month",
+          "optional": false
+        },
+        {
+          "name": "year",
+          "type": "int",
+          "doc": "Year",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__init__"
+    },
+    {
+      "name": "AttributeDate(element: AttributeDate)",
+      "signature": "AttributeDate(element: AttributeDate)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeDate",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(element: AttributeDate) -\u003E bool",
+      "summary": "Equal operator",
+      "remarks": "Equal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeDate",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are equal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__eq__"
+    },
+    {
+      "name": "__ne__",
+      "signature": "__ne__(element: AttributeDate) -\u003E bool",
+      "summary": "Unequal operator",
+      "remarks": "Unequal operator",
+      "params": [
+        {
+          "name": "element",
+          "type": "AttributeDate",
+          "doc": "Element to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "Elements are unequal: true/false"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__ne__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Day",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the day value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.Day"
+    },
+    {
+      "name": "Month",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the month value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.Month"
+    },
+    {
+      "name": "Year",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the year value",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/AttributeDate/#NemAll_Python_BaseElements.AttributeDate.Year"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

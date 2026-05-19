@@ -1,0 +1,131 @@
+{
+  "name": "TextResDoorSwingType",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "enum",
+  "summary": "Text resources for the door swing type",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/TextResDoorSwingType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBiFold",
+      "value": -1
+    },
+    {
+      "name": "eDoubleOppositeSwingCircular",
+      "value": 36404
+    },
+    {
+      "name": "eDoubleOppositeSwingLinear",
+      "value": 36405
+    },
+    {
+      "name": "eDoubleSwingCircular",
+      "value": 36402
+    },
+    {
+      "name": "eDoubleSwingLinear",
+      "value": 36403
+    },
+    {
+      "name": "eFolding",
+      "value": 36417
+    },
+    {
+      "name": "eLifting",
+      "value": 36426
+    },
+    {
+      "name": "eLiftingSingleSwingCircular",
+      "value": 36410
+    },
+    {
+      "name": "eLiftingSingleSwingLinear",
+      "value": 36411
+    },
+    {
+      "name": "eLiftingSliding",
+      "value": 36415
+    },
+    {
+      "name": "eNone",
+      "value": 36399
+    },
+    {
+      "name": "eOneSidedDoubleRevolving",
+      "value": 36422
+    },
+    {
+      "name": "eOneSidedRevolving",
+      "value": 36420
+    },
+    {
+      "name": "eOneSidedSwingOptional",
+      "value": 36424
+    },
+    {
+      "name": "ePendulumDoubleSwingCircular",
+      "value": 36408
+    },
+    {
+      "name": "ePendulumDoubleSwingLinear",
+      "value": 36409
+    },
+    {
+      "name": "ePendulumSingleSwingCircular",
+      "value": 36406
+    },
+    {
+      "name": "ePendulumSingleSwingLinear",
+      "value": 36407
+    },
+    {
+      "name": "eRevolving",
+      "value": 36416
+    },
+    {
+      "name": "eSingleSwingCircular",
+      "value": 36400
+    },
+    {
+      "name": "eSingleSwingLinear",
+      "value": 36401
+    },
+    {
+      "name": "eSliding",
+      "value": -1
+    },
+    {
+      "name": "eSlidingDoubleSwing",
+      "value": 36413
+    },
+    {
+      "name": "eSlidingSingleSwing",
+      "value": 36412
+    },
+    {
+      "name": "eSwing",
+      "value": 36419
+    },
+    {
+      "name": "eTwoSidedDoubleRevolving",
+      "value": 36423
+    },
+    {
+      "name": "eTwoSidedFolding",
+      "value": 36427
+    },
+    {
+      "name": "eTwoSidedRevolving",
+      "value": 36421
+    },
+    {
+      "name": "eTwoSidedSwingOptional",
+      "value": 36425
+    }
+  ]
+}

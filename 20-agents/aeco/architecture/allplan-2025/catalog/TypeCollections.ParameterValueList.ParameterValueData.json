@@ -1,0 +1,13 @@
+{
+  "name": "ParameterValueData",
+  "namespace": "TypeCollections.ParameterValueList",
+  "kind": "class",
+  "summary": "implementation of the parameter value data",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/ParameterValueList/ParameterValueData/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

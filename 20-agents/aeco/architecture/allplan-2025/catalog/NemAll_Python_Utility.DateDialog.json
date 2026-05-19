@@ -1,0 +1,38 @@
+{
+  "name": "DateDialog",
+  "namespace": "NemAll_Python_Utility",
+  "kind": "class",
+  "summary": "(No description provided in vendor docs for NemAll_Python_Utility.DateDialog.)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/DateDialog/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetDate",
+      "signature": "GetDate(dateText: str, headerText: str) -\u003E str",
+      "summary": "Implementation of the file dialog expose",
+      "remarks": "Implementation of the file dialog expose",
+      "params": [
+        {
+          "name": "dateText",
+          "type": "str",
+          "doc": "default date",
+          "optional": false
+        },
+        {
+          "name": "headerText",
+          "type": "str",
+          "doc": "header text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Utility/DateDialog/#NemAll_Python_Utility.DateDialog.GetDate"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

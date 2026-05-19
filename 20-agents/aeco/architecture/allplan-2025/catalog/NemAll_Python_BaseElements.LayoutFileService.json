@@ -1,0 +1,302 @@
+{
+  "name": "LayoutFileService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for processing the print layout files",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/",
+  "constructors": [
+    {
+      "name": "LayoutFileService()",
+      "signature": "LayoutFileService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "AssignPrintProfile",
+      "signature": "AssignPrintProfile(doc: DocumentAdapter, printProfile: str)",
+      "summary": "Set the print profile of the active document",
+      "remarks": "Set the print profile of the active document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "printProfile",
+          "type": "str",
+          "doc": "Full name of the print profile",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.AssignPrintProfile"
+    },
+    {
+      "name": "CreateMasterLayoutElement",
+      "signature": "CreateMasterLayoutElement( doc: DocumentAdapter, layoutMasterData: LayoutMasterData )",
+      "summary": "Create the master layout element",
+      "remarks": "Create the master layout element",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "layoutMasterData",
+          "type": "LayoutMasterData",
+          "doc": "Layout master data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.CreateMasterLayoutElement"
+    },
+    {
+      "name": "DeleteDocument",
+      "signature": "DeleteDocument(doc: DocumentAdapter)",
+      "summary": "Delete the content of the active document",
+      "remarks": "Delete the content of the active document",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.DeleteDocument"
+    },
+    {
+      "name": "ExportDWG",
+      "signature": "ExportDWG( doc: DocumentAdapter, layoutFileIndex: int, fileName: str, configFileName: str, )",
+      "summary": "Export the data to a DWG file",
+      "remarks": "Export the data to a DWG file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "layoutFileIndex",
+          "type": "int",
+          "doc": "Index of the layout file",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the DWG file",
+          "optional": false
+        },
+        {
+          "name": "configFileName",
+          "type": "str",
+          "doc": "Name of the DWG configuration file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.ExportDWG"
+    },
+    {
+      "name": "ExportPDF",
+      "signature": "ExportPDF( doc: DocumentAdapter, layoutFileIndex: int, fileName: str, configFileName: str, )",
+      "summary": "Export the data to a PDF file",
+      "remarks": "Export the data to a PDF file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "layoutFileIndex",
+          "type": "int",
+          "doc": "Index of the layout file",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the PDF file",
+          "optional": false
+        },
+        {
+          "name": "configFileName",
+          "type": "str",
+          "doc": "Name of the PDF configuration file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.ExportPDF"
+    },
+    {
+      "name": "ImportDWG",
+      "signature": "ImportDWG( doc: DocumentAdapter, fileName: str, configFileName: str, placePnt: Point2D ) -\u003E BaseElementAdapterList",
+      "summary": "Import the data from an DWG file",
+      "remarks": "Import the data from an DWG file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the DWG file",
+          "optional": false
+        },
+        {
+          "name": "configFileName",
+          "type": "str",
+          "doc": "Name of the DWG configuration file",
+          "optional": false
+        },
+        {
+          "name": "placePnt",
+          "type": "Point2D",
+          "doc": "Placement point of the data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.ImportDWG"
+    },
+    {
+      "name": "InsertDrawingFile",
+      "signature": "InsertDrawingFile( arg2: DocumentAdapter, doc: list, fileIndexList: Point2D, placePnt: float, rotationAngle: float, scale: Point2D, clipBoxLeftBottom: Point2D, clipBoxRightTop: list[int] | VecIntList, layerList: float, textFactor: bool, bUseRefPnt: Point2D, refPnt: MinMax3D, )",
+      "summary": "Insert drawing files in the layout file",
+      "remarks": "Insert drawing files in the layout file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "list",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileIndexList",
+          "type": "Point2D",
+          "doc": "List with the drawing file indices placePnt Placement point",
+          "optional": false
+        },
+        {
+          "name": "rotationAngle",
+          "type": "float",
+          "doc": "Rotation angle",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "Point2D",
+          "doc": "Scale",
+          "optional": false
+        },
+        {
+          "name": "clipBoxLeftBottom",
+          "type": "Point2D",
+          "doc": "Left bottom point of the clipping box",
+          "optional": false
+        },
+        {
+          "name": "clipBoxRightTop",
+          "type": "list[int] | VecIntList",
+          "doc": "Top right point of the clipping box",
+          "optional": false
+        },
+        {
+          "name": "layerList",
+          "type": "float",
+          "doc": "List with the insertion layers",
+          "optional": false
+        },
+        {
+          "name": "textFactor",
+          "type": "bool",
+          "doc": "Text factor",
+          "optional": false
+        },
+        {
+          "name": "bUseRefPnt",
+          "type": "Point2D",
+          "doc": "Use the reference point for the placement",
+          "optional": false
+        },
+        {
+          "name": "refPnt",
+          "type": "MinMax3D",
+          "doc": "Reference point of the drawing file",
+          "optional": false
+        },
+        {
+          "name": "drawingMinMaxClipping",
+          "type": "object",
+          "doc": "Min/max coordinates of the clipping area from the drawing file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.InsertDrawingFile"
+    },
+    {
+      "name": "LoadFile",
+      "signature": "LoadFile(doc: LayoutFileService, fileIndex: DocumentAdapter, loadState: int)",
+      "summary": "Load a layout file",
+      "remarks": "Load a layout file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "LayoutFileService",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileIndex",
+          "type": "DocumentAdapter",
+          "doc": "Index of the layout file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/LayoutFileService/#NemAll_Python_BaseElements.LayoutFileService.LoadFile"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

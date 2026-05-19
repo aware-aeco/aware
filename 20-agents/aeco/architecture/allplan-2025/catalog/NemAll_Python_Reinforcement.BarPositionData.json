@@ -1,0 +1,206 @@
+{
+  "name": "BarPositionData",
+  "namespace": "NemAll_Python_Reinforcement",
+  "kind": "class",
+  "summary": "Implementation of the bar position data",
+  "base": "BendingShape",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/",
+  "constructors": [
+    {
+      "name": "BarPositionData()",
+      "signature": "BarPositionData()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
+    },
+    {
+      "name": "BarPositionData(barElement: BaseElementAdapter)",
+      "signature": "BarPositionData(barElement: BaseElementAdapter)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "barElement",
+          "type": "BaseElementAdapter",
+          "doc": "Bar element",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
+    },
+    {
+      "name": "BarPositionData(param: BarPositionData)",
+      "signature": "BarPositionData(param: BarPositionData)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
+    },
+    {
+      "name": "BarPositionData(bendingShape: BendingShape)",
+      "signature": "BarPositionData(bendingShape: BendingShape)",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [
+        {
+          "name": "bendingShape",
+          "type": "BendingShape",
+          "doc": "Bending shape",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCount",
+      "signature": "GetCount() -\u003E int",
+      "summary": "Get the count",
+      "remarks": "Get the count",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Count"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetCount"
+    },
+    {
+      "name": "GetLength",
+      "signature": "GetLength() -\u003E float",
+      "summary": "Get the length",
+      "remarks": "Get the length",
+      "params": [],
+      "returns": {
+        "type": "float",
+        "doc": "length"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetLength"
+    },
+    {
+      "name": "GetPosition",
+      "signature": "GetPosition() -\u003E int",
+      "summary": "Get the position number",
+      "remarks": "Get the position number",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": "Position number"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.GetPosition"
+    },
+    {
+      "name": "SetCount",
+      "signature": "SetCount(count: int)",
+      "summary": "Set the count",
+      "remarks": "Set the count",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "doc": "Count",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetCount"
+    },
+    {
+      "name": "SetLength",
+      "signature": "SetLength(length: float)",
+      "summary": "Set the length",
+      "remarks": "Set the length",
+      "params": [
+        {
+          "name": "length",
+          "type": "float",
+          "doc": "length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetLength"
+    },
+    {
+      "name": "SetPosition",
+      "signature": "SetPosition(position: int)",
+      "summary": "Set the position number",
+      "remarks": "Set the position number",
+      "params": [
+        {
+          "name": "position",
+          "type": "int",
+          "doc": "Position",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.SetPosition"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the count",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Count"
+    },
+    {
+      "name": "Length",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the length",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Length"
+    },
+    {
+      "name": "Position",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the position number",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Reinforcement/BarPositionData/#NemAll_Python_Reinforcement.BarPositionData.Position"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,255 @@
+{
+  "name": "BuildingElementComposite",
+  "namespace": "BuildingElementComposite",
+  "kind": "class",
+  "summary": "Implementation of class BuildingElementComposite",
+  "base": "BuildingElementCompositeData",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "connect_building_element_values",
+      "signature": "connect_building_element_values( build_ele_list: list[BuildingElement], end_index: int = -1, check_modified: bool = True, ) -\u003E bool",
+      "summary": "Connect the values of the building element from the element data Return: the connection is modified: True/False",
+      "remarks": "Connect the values of the building element from the element data Return: the connection is modified: True/False",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "Building element list",
+          "optional": false
+        },
+        {
+          "name": "end_index",
+          "type": "int",
+          "doc": "end index",
+          "optional": false
+        },
+        {
+          "name": "check_modified",
+          "type": "bool",
+          "doc": "check modified state",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "modified state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.connect_building_element_values"
+    },
+    {
+      "name": "get_build_ele_index",
+      "signature": "get_build_ele_index(build_ele_id: str) -\u003E int",
+      "summary": "get the index of the building element by the ID",
+      "remarks": "get the index of the building element by the ID",
+      "params": [
+        {
+          "name": "build_ele_id",
+          "type": "str",
+          "doc": "id fo find",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": "index of the ID"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.get_build_ele_index"
+    },
+    {
+      "name": "get_composite_build_ele_list",
+      "signature": "get_composite_build_ele_list( sub_ele_index: int, build_ele_list: list[BuildingElement] ) -\u003E tuple[list[BuildingElement], list[int]]",
+      "summary": "Get a tuple with the - list with the sub building elements - list with the indices of the sub building elements",
+      "remarks": "Get a tuple with the - list with the sub building elements - list with the indices of the sub building elements",
+      "params": [
+        {
+          "name": "sub_ele_index",
+          "type": "int",
+          "doc": "Index of the sub element",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[list[BuildingElement], list[int]]",
+        "doc": "tuple with the lists"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.get_composite_build_ele_list"
+    },
+    {
+      "name": "get_element_palette_data",
+      "signature": "get_element_palette_data(element_id: str) -\u003E PaletteData",
+      "summary": "Set the palette data for the element (control index, page text, expander text)",
+      "remarks": "Set the palette data for the element (control index, page text, expander text)",
+      "params": [
+        {
+          "name": "element_id",
+          "type": "str",
+          "doc": "element ID",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "PaletteData",
+        "doc": "palette data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.get_element_palette_data"
+    },
+    {
+      "name": "get_script",
+      "signature": "get_script(sub_ele_index: int) -\u003E object",
+      "summary": "Get the script of the sub element Return: script",
+      "remarks": "Get the script of the sub element Return: script",
+      "params": [
+        {
+          "name": "sub_ele_index",
+          "type": "int",
+          "doc": "Index of the sub element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": "script name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.get_script"
+    },
+    {
+      "name": "get_sub_element_name",
+      "signature": "get_sub_element_name(sub_ele_index: int) -\u003E str",
+      "summary": "Get the name of the sub element Return: name",
+      "remarks": "Get the name of the sub element Return: name",
+      "params": [
+        {
+          "name": "sub_ele_index",
+          "type": "int",
+          "doc": "Index of the sub element",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "sub element name"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.get_sub_element_name"
+    },
+    {
+      "name": "get_values_from_list",
+      "signature": "get_values_from_list(value_list: list[Any], sub_name: str) -\u003E list[Any]",
+      "summary": "get the values from a list",
+      "remarks": "get the values from a list",
+      "params": [
+        {
+          "name": "value_list",
+          "type": "list[Any]",
+          "doc": "value list",
+          "optional": false
+        },
+        {
+          "name": "sub_name",
+          "type": "str",
+          "doc": "sub value name",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "list[Any]",
+        "doc": "value"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.get_values_from_list"
+    },
+    {
+      "name": "is_element_visible",
+      "signature": "is_element_visible( ele_index: int, build_ele_list: list[BuildingElement] ) -\u003E bool",
+      "summary": "Check for a visible element Return: the element is visible: True/False",
+      "remarks": "Check for a visible element Return: the element is visible: True/False",
+      "params": [
+        {
+          "name": "ele_index",
+          "type": "int",
+          "doc": "element index",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "Building element list",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "element visible state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.is_element_visible"
+    },
+    {
+      "name": "set_connection_persistence",
+      "signature": "set_connection_persistence(build_ele_list: list[BuildingElement])",
+      "summary": "Set the persistence for the connected parameter",
+      "remarks": "Set the persistence for the connected parameter",
+      "params": [
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement]",
+          "doc": "building element list",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.set_connection_persistence"
+    },
+    {
+      "name": "set_element_visible",
+      "signature": "set_element_visible(ele_index: int, value: str)",
+      "summary": "Set the visible state for the element",
+      "remarks": "Set the visible state for the element",
+      "params": [
+        {
+          "name": "ele_index",
+          "type": "int",
+          "doc": "element index",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "str",
+          "doc": "value",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BuildingElementComposite/#BuildingElementComposite.BuildingElementComposite.set_element_visible"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

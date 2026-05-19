@@ -1,0 +1,66 @@
+{
+  "name": "PythonPartParameterUtil",
+  "namespace": "Utils.PythonPart.PythonPartParameterUtil",
+  "kind": "class",
+  "summary": "implementation of the PythonPart parameter utilities",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/PythonPartParameterUtil/",
+  "constructors": [
+    {
+      "name": "PythonPartParameterUtil()",
+      "signature": "PythonPartParameterUtil( python_part_ele: BaseElementAdapter, str_table: BuildingElementStringTable, material_str_table: BuildingElementMaterialStringTable, )",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "python_part_ele",
+          "type": "BaseElementAdapter",
+          "doc": "PythonPart element",
+          "optional": false
+        },
+        {
+          "name": "str_table",
+          "type": "BuildingElementStringTable",
+          "doc": "string table",
+          "optional": false
+        },
+        {
+          "name": "material_str_table",
+          "type": "BuildingElementMaterialStringTable",
+          "doc": "material string table",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/PythonPartParameterUtil/#Utils.PythonPart.PythonPartParameterUtil.PythonPartParameterUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "get_label_data",
+      "signature": "get_label_data( doc: DocumentAdapter, ) -\u003E tuple[ParameterValueList, list[BuildingElement]]",
+      "summary": "get the data for a label from the parameters",
+      "remarks": "get the data for a label from the parameters",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "document of the Allplan drawing files",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[ParameterValueList, list[BuildingElement]]",
+        "doc": "parameter value data, building element list"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/PythonPartParameterUtil/#Utils.PythonPart.PythonPartParameterUtil.PythonPartParameterUtil.get_label_data"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

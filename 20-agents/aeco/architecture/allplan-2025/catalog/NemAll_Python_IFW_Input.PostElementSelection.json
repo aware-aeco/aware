@@ -1,0 +1,47 @@
+{
+  "name": "PostElementSelection",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Data class containing the result of an element selection started with the InputFunctionStarter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PostElementSelection/",
+  "constructors": [
+    {
+      "name": "PostElementSelection()",
+      "signature": "PostElementSelection()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PostElementSelection/#NemAll_Python_IFW_Input.PostElementSelection.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetSelectedElements",
+      "signature": "GetSelectedElements(doc: DocumentAdapter) -\u003E BaseElementAdapterList",
+      "summary": "Pop the elements out of the object and return them as a list with element adapters",
+      "remarks": "Pop the elements out of the object and return them as a list with element adapters",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "Selected elements as element adapters"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/PostElementSelection/#NemAll_Python_IFW_Input.PostElementSelection.GetSelectedElements"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

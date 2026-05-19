@@ -1,0 +1,35 @@
+{
+  "name": "VerticalOpeningRevealType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Type of the reveal",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningRevealType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eEmbedded",
+      "value": 1,
+      "summary": "Inner reveal object"
+    },
+    {
+      "name": "eExterior",
+      "value": 3,
+      "summary": "Outer reveal object - exterior reveal^"
+    },
+    {
+      "name": "eInterior",
+      "value": 2,
+      "summary": "Outer reveal object - interior reveal"
+    },
+    {
+      "name": "eNone",
+      "value": 0,
+      "summary": "no reveal"
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "name": "BaseScriptObject",
+  "namespace": "BaseScriptObject",
+  "kind": "interface",
+  "summary": "implementation of the script object base class",
+  "base": "ABC",
+  "interfaces": [
+    "BaseScriptObjectData"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/",
+  "constructors": [
+    {
+      "name": "BaseScriptObject()",
+      "signature": "BaseScriptObject(script_object_data: BaseScriptObjectData)",
+      "summary": "Initialization of class TextExample",
+      "remarks": "Initialization of class TextExample",
+      "params": [
+        {
+          "name": "script_object_data",
+          "type": "BaseScriptObjectData",
+          "doc": "script object data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "execute",
+      "signature": "execute() -\u003E CreateElementResult",
+      "summary": "execute the script",
+      "remarks": "execute the script",
+      "params": [],
+      "returns": {
+        "type": "CreateElementResult",
+        "doc": "created result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.execute"
+    },
+    {
+      "name": "modify_element_property",
+      "signature": "modify_element_property(_name: str, _value: Any) -\u003E bool",
+      "summary": "Modify property of element",
+      "remarks": "Modify property of element",
+      "params": [
+        {
+          "name": "_name",
+          "type": "str",
+          "doc": "the name of the property.",
+          "optional": false
+        },
+        {
+          "name": "_value",
+          "type": "Any",
+          "doc": "new value for property.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "palette update state"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.modify_element_property"
+    },
+    {
+      "name": "move_handle",
+      "signature": "move_handle( handle_prop: HandleProperties, input_pnt: Point3D ) -\u003E CreateElementResult",
+      "summary": "Modify the element geometry by handles",
+      "remarks": "Modify the element geometry by handles",
+      "params": [
+        {
+          "name": "handle_prop",
+          "type": "HandleProperties",
+          "doc": "handle properties",
+          "optional": false
+        },
+        {
+          "name": "input_pnt",
+          "type": "Point3D",
+          "doc": "input point",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "CreateElementResult",
+        "doc": "created element result"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.move_handle"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E OnCancelFunctionResult",
+      "summary": "Handles the cancel function event (e.g. by ESC, ...)",
+      "remarks": "Handles the cancel function event (e.g. by ESC, ...)",
+      "params": [],
+      "returns": {
+        "type": "True",
+        "doc": "cancel the input"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.on_cancel_function"
+    },
+    {
+      "name": "on_control_event",
+      "signature": "on_control_event(event_id: int) -\u003E bool",
+      "summary": "Handles the on control event Called when an event is triggered by a palette control (ex. button).",
+      "remarks": "Handles the on control event Called when an event is triggered by a palette control (ex. button).",
+      "params": [
+        {
+          "name": "event_id",
+          "type": "int",
+          "doc": "event id of the clicked button control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True, when palette should be updated. False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.on_control_event"
+    },
+    {
+      "name": "on_input_undo",
+      "signature": "on_input_undo() -\u003E bool",
+      "summary": "Process the input undo event",
+      "remarks": "Process the input undo event",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "message was processed: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.on_input_undo"
+    },
+    {
+      "name": "on_shortcut_control_input",
+      "signature": "on_shortcut_control_input(_value: int) -\u003E bool",
+      "summary": "Handles the input inside the shortcut control",
+      "remarks": "Handles the input inside the shortcut control",
+      "params": [
+        {
+          "name": "_value",
+          "type": "int",
+          "doc": "shortcut value",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.on_shortcut_control_input"
+    },
+    {
+      "name": "on_value_input_control_enter",
+      "signature": "on_value_input_control_enter() -\u003E bool",
+      "summary": "Process the enter inside the value input control",
+      "remarks": "Process the enter inside the value input control",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "message was processed: True/False"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.on_value_input_control_enter"
+    },
+    {
+      "name": "set_text_for_palette_modification",
+      "signature": "set_text_for_palette_modification(text: str)",
+      "summary": "set an input text for a modification by palette",
+      "remarks": "set an input text for a modification by palette",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "input text",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.set_text_for_palette_modification"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input()",
+      "summary": "start the input Overload this member function in the case where a script object interactor (e. g. for an element selection) needs to be started before the script execution",
+      "remarks": "start the input Overload this member function in the case where a script object interactor (e. g. for an element selection) needs to be started before the script execution",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.start_input"
+    },
+    {
+      "name": "start_next_input",
+      "signature": "start_next_input()",
+      "summary": "start the next input Overload this member function to execute the needed steps after the execution of a script object interactor (e. g. after an element selection)",
+      "remarks": "start the next input Overload this member function to execute the needed steps after the execution of a script object interactor (e. g. after an element selection)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.start_next_input"
+    }
+  ],
+  "properties": [
+    {
+      "name": "document",
+      "type": "DocumentAdapter",
+      "getter": true,
+      "setter": false,
+      "summary": "get the document",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.document"
+    },
+    {
+      "name": "script_object_interactor",
+      "type": "BaseScriptObjectInteractor | None",
+      "getter": true,
+      "setter": true,
+      "summary": "get the script object interactor",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/BaseScriptObject/BaseScriptObject/#BaseScriptObject.BaseScriptObject.script_object_interactor"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

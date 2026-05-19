@@ -1,0 +1,55 @@
+{
+  "name": "RefPointPosition",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "enum",
+  "summary": "Definition of the reference point positions get from the RefPointButton",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/RefPointPosition/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBottomCenter",
+      "value": 8
+    },
+    {
+      "name": "eBottomLeft",
+      "value": 7
+    },
+    {
+      "name": "eBottomRight",
+      "value": 9
+    },
+    {
+      "name": "eCenterCenter",
+      "value": 5
+    },
+    {
+      "name": "eCenterLeft",
+      "value": 4
+    },
+    {
+      "name": "eCenterRight",
+      "value": 6
+    },
+    {
+      "name": "eNone",
+      "value": 0
+    },
+    {
+      "name": "eTopCenter",
+      "value": 2
+    },
+    {
+      "name": "eTopLeft",
+      "value": 1
+    },
+    {
+      "name": "eTopRight",
+      "value": 3
+    }
+  ]
+}

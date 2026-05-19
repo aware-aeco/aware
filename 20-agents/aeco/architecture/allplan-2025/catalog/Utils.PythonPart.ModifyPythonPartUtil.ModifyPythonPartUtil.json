@@ -1,0 +1,185 @@
+{
+  "name": "ModifyPythonPartUtil",
+  "namespace": "Utils.PythonPart.ModifyPythonPartUtil",
+  "kind": "class",
+  "summary": "implementation of the utility class for the PythonPart modification",
+  "base": "BaseScriptObjectInteractor",
+  "interfaces": [
+    "BaseInteractor"
+  ],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/",
+  "constructors": [
+    {
+      "name": "ModifyPythonPartUtil()",
+      "signature": "ModifyPythonPartUtil(python_part: BaseElementAdapter)",
+      "summary": "initialize",
+      "remarks": "initialize",
+      "params": [
+        {
+          "name": "python_part",
+          "type": "BaseElementAdapter",
+          "doc": "PythonPart to modify",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "modify_element_property",
+      "signature": "modify_element_property(page: int, name: str, value: Any)",
+      "summary": "Handles the modify element property event. This event is triggered with each modification of the element property done in the property palette or by using a handle.",
+      "remarks": "Handles the modify element property event. This event is triggered with each modification of the element property done in the property palette or by using a handle.",
+      "params": [
+        {
+          "name": "page",
+          "type": "int",
+          "doc": "Page of the modified property",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Name of the modified property.",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Any",
+          "doc": "New value of the modified property.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.modify_element_property"
+    },
+    {
+      "name": "on_cancel_function",
+      "signature": "on_cancel_function() -\u003E bool",
+      "summary": "Handles the cancel function event This event is triggered when the ESC button is hit during the runtime of the PythonPart.",
+      "remarks": "Handles the cancel function event This event is triggered when the ESC button is hit during the runtime of the PythonPart.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True when the PythonPart framework should terminate the PythonPart, False otherwise."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.on_cancel_function"
+    },
+    {
+      "name": "on_control_event",
+      "signature": "on_control_event(event_id: int)",
+      "summary": "Handles the on control event. Called when an event is triggered by a palette control (ex. button).",
+      "remarks": "Handles the on control event. Called when an event is triggered by a palette control (ex. button).",
+      "params": [
+        {
+          "name": "event_id",
+          "type": "int",
+          "doc": "event id of the clicked button control",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.on_control_event"
+    },
+    {
+      "name": "on_mouse_leave",
+      "signature": "on_mouse_leave()",
+      "summary": "Handles the mouse leave event. This event is triggered, when the mouse leaves the viewport.",
+      "remarks": "Handles the mouse leave event. This event is triggered, when the mouse leaves the viewport.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.on_mouse_leave"
+    },
+    {
+      "name": "on_preview_draw",
+      "signature": "on_preview_draw()",
+      "summary": "Handles the preview draw event. This event is triggered, when an input in the dialog line is done (e.g. input of a coordinate).",
+      "remarks": "Handles the preview draw event. This event is triggered, when an input in the dialog line is done (e.g. input of a coordinate).",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.on_preview_draw"
+    },
+    {
+      "name": "on_value_input_control_enter",
+      "signature": "on_value_input_control_enter() -\u003E bool",
+      "summary": "Handles the value input control enter event. This event is triggered, when enter key is hit during the input inside the input control located in the dialog line.",
+      "remarks": "Handles the value input control enter event. This event is triggered, when enter key is hit during the input inside the input control located in the dialog line.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.on_value_input_control_enter"
+    },
+    {
+      "name": "process_mouse_msg",
+      "signature": "process_mouse_msg(mouse_msg: int, pnt: Point2D, msg_info: Any) -\u003E bool",
+      "summary": "Handles the process mouse message event. This event is triggered with each message sent by the mouse, which can be a mouse move, mouse click, zoom out, etc. The message is sent only during mouse actions inside a viewport.",
+      "remarks": "Handles the process mouse message event. This event is triggered with each message sent by the mouse, which can be a mouse move, mouse click, zoom out, etc. The message is sent only during mouse actions inside a viewport.",
+      "params": [
+        {
+          "name": "mouse_msg",
+          "type": "int",
+          "doc": "The mouse message.",
+          "optional": false
+        },
+        {
+          "name": "pnt",
+          "type": "Point2D",
+          "doc": "The input point in view coordinates. The origin is the mid point of the viewport",
+          "optional": false
+        },
+        {
+          "name": "msg_info",
+          "type": "Any",
+          "doc": "additional message info.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True/False for success."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.process_mouse_msg"
+    },
+    {
+      "name": "start_input",
+      "signature": "start_input(coord_input: CoordinateInput)",
+      "summary": "start the modification",
+      "remarks": "start the modification",
+      "params": [
+        {
+          "name": "coord_input",
+          "type": "CoordinateInput",
+          "doc": "API object for the coordinate input, element selection, ... in the Allplan view",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartUtil/#Utils.PythonPart.ModifyPythonPartUtil.ModifyPythonPartUtil.start_input"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,95 @@
+{
+  "name": "AnchorBorderPosition",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "anchor border positions",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/AnchorBorderPosition/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBorderBottom",
+      "value": 2
+    },
+    {
+      "name": "eBorderHorizontal",
+      "value": 3
+    },
+    {
+      "name": "eBorderInnerBottom",
+      "value": 4098
+    },
+    {
+      "name": "eBorderInnerHorizontal",
+      "value": 4099
+    },
+    {
+      "name": "eBorderInnerLeft",
+      "value": 4100
+    },
+    {
+      "name": "eBorderInnerRight",
+      "value": 4104
+    },
+    {
+      "name": "eBorderInnerTop",
+      "value": 4097
+    },
+    {
+      "name": "eBorderInnerVertical",
+      "value": 4108
+    },
+    {
+      "name": "eBorderLeft",
+      "value": 4
+    },
+    {
+      "name": "eBorderRight",
+      "value": 8
+    },
+    {
+      "name": "eBorderTop",
+      "value": 1
+    },
+    {
+      "name": "eBorderVertical",
+      "value": 12
+    },
+    {
+      "name": "eCornerInnerLeftBottom",
+      "value": 4102
+    },
+    {
+      "name": "eCornerInnerLeftTop",
+      "value": 4101
+    },
+    {
+      "name": "eCornerInnerRightBottom",
+      "value": 4106
+    },
+    {
+      "name": "eCornerInnerRightTop",
+      "value": 4105
+    },
+    {
+      "name": "eCornerLeftBottom",
+      "value": 6
+    },
+    {
+      "name": "eCornerLeftTop",
+      "value": 5
+    },
+    {
+      "name": "eCornerRightBottom",
+      "value": 10
+    },
+    {
+      "name": "eCornerRightTop",
+      "value": 9
+    }
+  ]
+}

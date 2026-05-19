@@ -1,0 +1,47 @@
+{
+  "name": "eGeometryErrorCode",
+  "namespace": "NemAll_Python_Geometry",
+  "kind": "enum",
+  "summary": "Geometry error codes",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Geometry/eGeometryErrorCode/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eAllocError",
+      "value": 1234
+    },
+    {
+      "name": "eError",
+      "value": 1
+    },
+    {
+      "name": "eInvalid3DLine",
+      "value": 512
+    },
+    {
+      "name": "eOK",
+      "value": 0
+    },
+    {
+      "name": "eOutOfRange",
+      "value": 256
+    },
+    {
+      "name": "eStructuralError",
+      "value": 4
+    },
+    {
+      "name": "eWarpedPolygonalFace",
+      "value": 8
+    },
+    {
+      "name": "eWrongShape",
+      "value": 2
+    }
+  ]
+}

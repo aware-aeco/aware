@@ -1,0 +1,31 @@
+{
+  "name": "Rotation",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "rotations for views",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Rotation/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eRotation0",
+      "value": 0
+    },
+    {
+      "name": "eRotation180",
+      "value": 2
+    },
+    {
+      "name": "eRotation270",
+      "value": 3
+    },
+    {
+      "name": "eRotation90",
+      "value": 1
+    }
+  ]
+}

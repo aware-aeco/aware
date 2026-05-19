@@ -1,0 +1,67 @@
+{
+  "name": "InputFunctionStarter",
+  "namespace": "NemAll_Python_IFW_Input",
+  "kind": "class",
+  "summary": "Utility with methods to start and terminate multiple element selection (selection with a rectangle)",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputFunctionStarter/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RemoveFunction",
+      "signature": "RemoveFunction()",
+      "summary": "Remove the current input function from the input function stack. This method can be called only, if there is a selection function in the input function stack (started by calling e.g. StartElementSelect)",
+      "remarks": "Remove the current input function from the input function stack. This method can be called only, if there is a selection function in the input function stack (started by calling e.g. StartElementSelect)",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputFunctionStarter/#NemAll_Python_IFW_Input.InputFunctionStarter.RemoveFunction"
+    },
+    {
+      "name": "StartElementSelect",
+      "signature": "StartElementSelect( text: str, selectSetting: ElementSelectFilterSetting, postSel: PostElementSelection, markSelectedElements: bool, selectionMode: SelectionMode = eSelectGeometry, )",
+      "summary": "Start the multiple element selection. In this mode elements can be selected in the viewport by a selection rectangle or polygonal fence. The user can also point out individual elements by activating a bracket (right-click before and after selection) The element selection overloads the process_mouse_msg, which means that this event is not called until the selection is completed. This is the case, when at least one of the following applies: After that, the result is saved in the PostElementSelection object and the function is removed from the function stack. IMPORTANT: There can only be one selection function in the input function stack! If the running element selection must be restarted, call RemoveFunction first!",
+      "remarks": "Start the multiple element selection. In this mode elements can be selected in the viewport by a selection rectangle or polygonal fence. The user can also point out individual elements by activating a bracket (right-click before and after selection) The element selection overloads the process_mouse_msg, which means that this event is not called until the selection is completed. This is the case, when at least one of the following applies: After that, the result is saved in the PostElementSelection object and the function is removed from the function stack. IMPORTANT: There can only be one selection function in the input function stack! If the running element selection must be restarted, call RemoveFunction first!",
+      "params": [
+        {
+          "name": "text",
+          "type": "str",
+          "doc": "Prompt message shown to the user in the Allplan dialog line",
+          "optional": false
+        },
+        {
+          "name": "selectSetting",
+          "type": "ElementSelectFilterSetting",
+          "doc": "Filter setting",
+          "optional": false
+        },
+        {
+          "name": "postSel",
+          "type": "PostElementSelection",
+          "doc": "Object to store the result of the selection. The result will be saved after a successful selection (see cases above)",
+          "optional": false
+        },
+        {
+          "name": "markSelectedElements",
+          "type": "bool",
+          "doc": "Whether to mark the selected elements",
+          "optional": false
+        },
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode",
+          "doc": "Selection mode",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_IFW_Input/InputFunctionStarter/#NemAll_Python_IFW_Input.InputFunctionStarter.StartElementSelect"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

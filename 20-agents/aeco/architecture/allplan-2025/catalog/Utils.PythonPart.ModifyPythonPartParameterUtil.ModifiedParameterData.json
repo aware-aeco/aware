@@ -1,0 +1,13 @@
+{
+  "name": "ModifiedParameterData",
+  "namespace": "Utils.PythonPart.ModifyPythonPartParameterUtil",
+  "kind": "class",
+  "summary": "data for a modified parameter",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/PythonPart/ModifyPythonPartParameterUtil/ModifiedParameterData/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

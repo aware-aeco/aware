@@ -1,0 +1,236 @@
+{
+  "name": "Functions",
+  "namespace": "StdReinfShapeBuilder.BarPlacementUtil",
+  "kind": "static-class",
+  "summary": "Module-level functions of StdReinfShapeBuilder.BarPlacementUtil",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarPlacementUtil/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_placement_start_from_bending_roller",
+      "signature": "get_placement_start_from_bending_roller( shape: BendingShape, side_number: int, bending_roller: float, base_line: Line2D | Line3D, placement_diameter: float, local_angles: RotationAngles, ) -\u003E float",
+      "summary": "For the placement of longitudinal bars, located on one of the legs of a transverse bar (e.g. a stirrup), this function calculates the X-component between the edge of the concrete cross-section and the start point of the placement of the longitudinal bars",
+      "remarks": "For the placement of longitudinal bars, located on one of the legs of a transverse bar (e.g. a stirrup), this function calculates the X-component between the edge of the concrete cross-section and the start point of the placement of the longitudinal bars",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Bending shape of the transverse bar",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the leg, on which the longitudinal bars are located (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "bending_roller",
+          "type": "float",
+          "doc": "Bending roller if the transverse bar",
+          "optional": false
+        },
+        {
+          "name": "base_line",
+          "type": "Line2D | Line3D",
+          "doc": "The outline of the concrete cross section",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Bar diameter of the longitudinal bars",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Model angles to get the local x/y coordinate system for the calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Calculated distance to the placement start"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarPlacementUtil/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_start_from_bending_roller"
+    },
+    {
+      "name": "get_placement_end_from_bending_roller",
+      "signature": "get_placement_end_from_bending_roller( shape: BendingShape, side_number: int, bending_roller: float, base_line: Line2D | Line3D, placement_diameter: float, local_angles: RotationAngles, ) -\u003E float",
+      "summary": "For the placement of longitudinal bars, located on one of the legs of a transverse bar (e.g. a stirrup), this function calculates the X-component between the edge of the concrete cross-section and the end point of the placement of the longitudinal bars",
+      "remarks": "For the placement of longitudinal bars, located on one of the legs of a transverse bar (e.g. a stirrup), this function calculates the X-component between the edge of the concrete cross-section and the end point of the placement of the longitudinal bars",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Bending shape of the transverse bar",
+          "optional": false
+        },
+        {
+          "name": "side_number",
+          "type": "int",
+          "doc": "Number of the leg, on which the longitudinal bars are located (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "bending_roller",
+          "type": "float",
+          "doc": "Bending roller if the transverse bar",
+          "optional": false
+        },
+        {
+          "name": "base_line",
+          "type": "Line2D | Line3D",
+          "doc": "The outline of the concrete cross section",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Bar diameter of the longitudinal bars",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Model angles to get the local x/y coordinate system for the calculation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": "Calculated distance to the placement end"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarPlacementUtil/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_end_from_bending_roller"
+    },
+    {
+      "name": "get_placement_inside_bending_roller",
+      "signature": "get_placement_inside_bending_roller( shape: BendingShape, corner_number: int, bending_roller: float, placement_diameter: float, local_angles: RotationAngles, global_point: bool = False, ) -\u003E Point3D",
+      "summary": "Calculate the position of a placement inside the bending roller",
+      "remarks": "Calculate the position of a placement inside the bending roller",
+      "params": [
+        {
+          "name": "shape",
+          "type": "BendingShape",
+          "doc": "Bending shape of the transverse bar",
+          "optional": false
+        },
+        {
+          "name": "corner_number",
+          "type": "int",
+          "doc": "Number of the transverse bar\u0027s corner, in which the placement point should be calculated (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "bending_roller",
+          "type": "float",
+          "doc": "Bending roller of the transverse bar",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Bar diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Model angles to get the local x/y coordinate system for the calculation",
+          "optional": false
+        },
+        {
+          "name": "global_point",
+          "type": "bool",
+          "doc": "If set to True, the result will be a point in global coordinates. Otherwise, the point in local coordinate system will be returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point3D",
+        "doc": "Local point of the longitudinal bar placement"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarPlacementUtil/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_inside_bending_roller"
+    },
+    {
+      "name": "get_placement_inside_side_intersection",
+      "signature": "get_placement_inside_side_intersection( shape1: BendingShape, side_number1: int, above_side1: bool, shape2: BendingShape, side_number2: int, above_side2: bool, placement_diameter: float, local_angles: RotationAngles, global_point: bool = False, ) -\u003E Point2D | Point3D",
+      "summary": "Calculate the position of a longitudinal bar placed at an intersection of two legs of transverse bars (e.g. two stirrups)",
+      "remarks": "Calculate the position of a longitudinal bar placed at an intersection of two legs of transverse bars (e.g. two stirrups)",
+      "params": [
+        {
+          "name": "shape1",
+          "type": "BendingShape",
+          "doc": "Shape of the first transverse rebar",
+          "optional": false
+        },
+        {
+          "name": "side_number1",
+          "type": "int",
+          "doc": "Number of the leg in the first shape to consider in the calculation (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "above_side1",
+          "type": "bool",
+          "doc": "When set to True, the point will be calculated above the leg of the first shape. Otherwise below.",
+          "optional": false
+        },
+        {
+          "name": "shape2",
+          "type": "BendingShape",
+          "doc": "Shape of the second transverse rebar",
+          "optional": false
+        },
+        {
+          "name": "side_number2",
+          "type": "int",
+          "doc": "Number of the leg in the second shape to consider in the calculation (starting from 1)",
+          "optional": false
+        },
+        {
+          "name": "above_side2",
+          "type": "bool",
+          "doc": "When set to True, the point will be calculated above the leg of the second shape. Otherwise below.",
+          "optional": false
+        },
+        {
+          "name": "placement_diameter",
+          "type": "float",
+          "doc": "Bar diameter of the longitudinal bar",
+          "optional": false
+        },
+        {
+          "name": "local_angles",
+          "type": "RotationAngles",
+          "doc": "Model angles to get the local x/y coordinate system for the calculation",
+          "optional": false
+        },
+        {
+          "name": "global_point",
+          "type": "bool",
+          "doc": "If set to True, the result will be a 3D point in global coordinates. Otherwise, a 2D point in local coordinate system will be returned.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Point2D | Point3D",
+        "doc": "local placement point as Point2D"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/StdReinfShapeBuilder/BarPlacementUtil/#StdReinfShapeBuilder.BarPlacementUtil.get_placement_inside_side_intersection"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,164 @@
+{
+  "name": "FileNameService",
+  "namespace": "FileNameService",
+  "kind": "class",
+  "summary": "Definition of service class FileNameService",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "get_filename_without_root_path",
+      "signature": "get_filename_without_root_path(str_file_name: str, str_path: str) -\u003E str",
+      "summary": "Cuts the root_path of the filename",
+      "remarks": "Cuts the root_path of the filename",
+      "params": [
+        {
+          "name": "str_file_name",
+          "type": "str",
+          "doc": "Full file path",
+          "optional": false
+        },
+        {
+          "name": "str_path",
+          "type": "str",
+          "doc": "Root directory path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "File path relative to the root directory"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.get_filename_without_root_path"
+    },
+    {
+      "name": "get_global_standard_path",
+      "signature": "get_global_standard_path(local_path: str) -\u003E str",
+      "summary": "Get the absolute path from a path relative to etc/std/prj directory",
+      "remarks": "Get the absolute path from a path relative to etc/std/prj directory",
+      "params": [
+        {
+          "name": "local_path",
+          "type": "str",
+          "doc": "local path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "global path (empty if not exist)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.get_global_standard_path"
+    },
+    {
+      "name": "get_lib_pyp_sricpt_path",
+      "signature": "get_lib_pyp_sricpt_path(file_name: str) -\u003E str",
+      "summary": "Searches the file_name in the parts (Cur_proj, Std, Etc )of the library Cuts the library_path of the filename",
+      "remarks": "Searches the file_name in the parts (Cur_proj, Std, Etc )of the library Cuts the library_path of the filename",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "name of file.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "str_file_name without lib_path"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.get_lib_pyp_sricpt_path"
+    },
+    {
+      "name": "get_pyp_path_from_lib_struct",
+      "signature": "get_pyp_path_from_lib_struct(file_name: str) -\u003E tuple[bool, str]",
+      "summary": "Searches the file_name in the parts (Cur_proj, Std, Etc ) of the library.",
+      "remarks": "Searches the file_name in the parts (Cur_proj, Std, Etc ) of the library.",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "name of file without lib_path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when file exist state, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.get_pyp_path_from_lib_struct"
+    },
+    {
+      "name": "search_pyp_file",
+      "signature": "search_pyp_file(file_name: str) -\u003E tuple[bool, str]",
+      "summary": "Searches the pyp file_name in all library folders in the parts (Cur_proj, Std, Etc )",
+      "remarks": "Searches the pyp file_name in all library folders in the parts (Cur_proj, Std, Etc )",
+      "params": [
+        {
+          "name": "file_name",
+          "type": "str",
+          "doc": "name of file without lib_path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "True when file exist state, False otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.search_pyp_file"
+    },
+    {
+      "name": "set_node_script_default_path",
+      "signature": "set_node_script_default_path(node_script_default_path: str)",
+      "summary": "Set the default path of the node scripts",
+      "remarks": "Set the default path of the node scripts",
+      "params": [
+        {
+          "name": "node_script_default_path",
+          "type": "str",
+          "doc": "description",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.set_node_script_default_path"
+    },
+    {
+      "name": "update_global_standard_path",
+      "signature": "update_global_standard_path(global_path: str) -\u003E str",
+      "summary": "update the global standard path for a new location",
+      "remarks": "update the global standard path for a new location",
+      "params": [
+        {
+          "name": "global_path",
+          "type": "str",
+          "doc": "global path",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "str",
+        "doc": "updated global path (empty if not exists)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/FileNameService/#FileNameService.FileNameService.update_global_standard_path"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

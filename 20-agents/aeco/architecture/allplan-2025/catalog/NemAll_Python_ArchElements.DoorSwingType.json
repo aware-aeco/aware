@@ -1,0 +1,158 @@
+{
+  "name": "DoorSwingType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Type of the door swing",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/DoorSwingType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBiFold",
+      "value": 19
+    },
+    {
+      "name": "eDoubleOppositeSwingCircular",
+      "value": 5,
+      "summary": "Revolving door, two leaves, opposite (arc)"
+    },
+    {
+      "name": "eDoubleOppositeSwingLinear",
+      "value": 6,
+      "summary": "Revolving door, two leaves, opposite (diagonal)"
+    },
+    {
+      "name": "eDoubleSwingCircular",
+      "value": 3,
+      "summary": "Revolving door, two leaves (arc)"
+    },
+    {
+      "name": "eDoubleSwingLinear",
+      "value": 4,
+      "summary": "Revolving door, two leaves (diagonal)"
+    },
+    {
+      "name": "eFolding",
+      "value": 18,
+      "summary": "Folding door"
+    },
+    {
+      "name": "eLifting",
+      "value": 27,
+      "summary": "Lifting door"
+    },
+    {
+      "name": "eLiftingSingleSwingCircular",
+      "value": 11,
+      "summary": "Lifting revolving door (arc)"
+    },
+    {
+      "name": "eLiftingSingleSwingLinear",
+      "value": 12,
+      "summary": "Lifting revolving door (diagonal)"
+    },
+    {
+      "name": "eLiftingSliding",
+      "value": 16,
+      "summary": "Lift and slide door"
+    },
+    {
+      "name": "eNone",
+      "value": 0,
+      "summary": "None"
+    },
+    {
+      "name": "eOneSidedDoubleRevolving",
+      "value": 23,
+      "summary": "Double revolving door, single-sided"
+    },
+    {
+      "name": "eOneSidedRevolving",
+      "value": 21,
+      "summary": "Revolving door, single-sided"
+    },
+    {
+      "name": "eOneSidedSwingOptional",
+      "value": 25,
+      "summary": "Up and over door, single-sided (optional)"
+    },
+    {
+      "name": "ePendulumDoubleSwingCircular",
+      "value": 9,
+      "summary": "Swing door, two leaves (arc)"
+    },
+    {
+      "name": "ePendulumDoubleSwingLinear",
+      "value": 10,
+      "summary": "Swing door, two leaves (diagonal)"
+    },
+    {
+      "name": "ePendulumSingleSwingCircular",
+      "value": 7,
+      "summary": "Swing door, one leaf (arc)"
+    },
+    {
+      "name": "ePendulumSingleSwingLinear",
+      "value": 8,
+      "summary": "Swing door, one leaf (diagonal)"
+    },
+    {
+      "name": "eRevolving",
+      "value": 17,
+      "summary": "Turnstile door"
+    },
+    {
+      "name": "eSingleSwingCircular",
+      "value": 1,
+      "summary": "Revolving door, one leaf (arc)"
+    },
+    {
+      "name": "eSingleSwingLinear",
+      "value": 2,
+      "summary": "Revolving door, one leaf (diagonal)"
+    },
+    {
+      "name": "eSliding",
+      "value": 15
+    },
+    {
+      "name": "eSlidingDoubleSwing",
+      "value": 14,
+      "summary": "Sliding door, two leaves"
+    },
+    {
+      "name": "eSlidingSingleSwing",
+      "value": 13,
+      "summary": "Sliding door, one leaf"
+    },
+    {
+      "name": "eSwing",
+      "value": 20,
+      "summary": "Up and over door"
+    },
+    {
+      "name": "eTwoSidedDoubleRevolving",
+      "value": 24,
+      "summary": "Double revolving door, double-sided"
+    },
+    {
+      "name": "eTwoSidedFolding",
+      "value": 28,
+      "summary": "Folding door double-sided"
+    },
+    {
+      "name": "eTwoSidedRevolving",
+      "value": 22,
+      "summary": "Revolving door, double-sided"
+    },
+    {
+      "name": "eTwoSidedSwingOptional",
+      "value": 26,
+      "summary": "Up and over door, double-sided (optional)"
+    }
+  ]
+}

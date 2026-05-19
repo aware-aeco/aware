@@ -1,0 +1,31 @@
+{
+  "name": "VerticalOpeningSillType",
+  "namespace": "NemAll_Python_ArchElements",
+  "kind": "enum",
+  "summary": "Type of the sill",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_ArchElements/VerticalOpeningSillType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eBothsides",
+      "value": 3
+    },
+    {
+      "name": "eInner",
+      "value": 2
+    },
+    {
+      "name": "eNone",
+      "value": 0
+    },
+    {
+      "name": "eOuter",
+      "value": 1
+    }
+  ]
+}

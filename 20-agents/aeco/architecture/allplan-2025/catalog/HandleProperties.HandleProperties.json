@@ -1,0 +1,341 @@
+{
+  "name": "HandleProperties",
+  "namespace": "HandleProperties",
+  "kind": "class",
+  "summary": "Implementation of the handle properties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/",
+  "constructors": [
+    {
+      "name": "HandleProperties()",
+      "signature": "HandleProperties( handle_id: str | tuple[int, str], handle_point: Point3D, ref_point: Point3D, handle_param_data: list[HandleParameterData], handle_move_dir: HandleDirection, abs_value: bool = True, distance_factor: float = 1.0, plane: Plane3D | None = None, dir_vector: Vector3D | None = None, info_text: str = \u0022\u0022, angle_placement: AxisPlacement3D | None = None, show_handles: bool = True, center_point: Point3D | None = None, )",
+      "summary": "Set the properties of a handle",
+      "remarks": "Set the properties of a handle",
+      "params": [
+        {
+          "name": "handle_id",
+          "type": "str | tuple[int, str]",
+          "doc": "Unique handle ID, e.g. the name of the handle",
+          "optional": false
+        },
+        {
+          "name": "handle_point",
+          "type": "Point3D",
+          "doc": "Handle point which will be moved",
+          "optional": false
+        },
+        {
+          "name": "ref_point",
+          "type": "Point3D",
+          "doc": "Reference point for the distance calculation",
+          "optional": false
+        },
+        {
+          "name": "handle_param_data",
+          "type": "list[HandleParameterData]",
+          "doc": "List with the parameter data. The parameter data are used for recalculation",
+          "optional": false
+        },
+        {
+          "name": "handle_move_dir",
+          "type": "HandleDirection",
+          "doc": "Allowed move direction for the handle",
+          "optional": false
+        },
+        {
+          "name": "abs_value",
+          "type": "bool",
+          "doc": "Use the absolute value from the calculation: True/False",
+          "optional": false
+        },
+        {
+          "name": "distance_factor",
+          "type": "float",
+          "doc": "Factor for property calculation. -1=show negative value in the input control.",
+          "optional": false
+        },
+        {
+          "name": "plane",
+          "type": "Plane3D | None",
+          "doc": "Input plane for the handle_point movement",
+          "optional": false
+        },
+        {
+          "name": "dir_vector",
+          "type": "Vector3D | None",
+          "doc": "Direction vector for the handle point movement",
+          "optional": false
+        },
+        {
+          "name": "info_text",
+          "type": "str",
+          "doc": "Information text of the tooltip",
+          "optional": false
+        },
+        {
+          "name": "angle_placement",
+          "type": "AxisPlacement3D | None",
+          "doc": "Placement for the 3D angle input",
+          "optional": false
+        },
+        {
+          "name": "show_handles",
+          "type": "bool",
+          "doc": "Show handles state. This offers the possibility to use only the input by the edit fields",
+          "optional": false
+        },
+        {
+          "name": "center_point",
+          "type": "Point3D | None",
+          "doc": "Center point for arc handles",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Create class information as string",
+      "remarks": "Create class information as string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "created data string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.__repr__"
+    },
+    {
+      "name": "get_min_max_values",
+      "signature": "get_min_max_values(name: str) -\u003E tuple[int | float, int | float, str, str]",
+      "summary": "Get the min/max values of the handle property",
+      "remarks": "Get the min/max values of the handle property",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "name of the property",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "tuple[int | float, int | float, str, str]",
+        "doc": "tuple(min value, max value, value list, interval value)"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.get_min_max_values"
+    },
+    {
+      "name": "get_parameter_names",
+      "signature": "get_parameter_names() -\u003E list[str]",
+      "summary": "get the names of the parameters",
+      "remarks": "get the names of the parameters",
+      "params": [],
+      "returns": {
+        "type": "list[str]",
+        "doc": "names of the parameters"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.get_parameter_names"
+    },
+    {
+      "name": "set_min_max_values",
+      "signature": "set_min_max_values( control_props: list[BuildingElementControlProperties], build_ele_list: list[BuildingElement] | None = None, )",
+      "summary": "Set the min/max values of the handle property",
+      "remarks": "Set the min/max values of the handle property",
+      "params": [
+        {
+          "name": "control_props",
+          "type": "list[BuildingElementControlProperties]",
+          "doc": "control properties",
+          "optional": false
+        },
+        {
+          "name": "build_ele_list",
+          "type": "list[BuildingElement] | None",
+          "doc": "list with the building elements",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.set_min_max_values"
+    },
+    {
+      "name": "transform",
+      "signature": "transform(transformation_matrix: Matrix3D)",
+      "summary": "Transform the handle",
+      "remarks": "Transform the handle",
+      "params": [
+        {
+          "name": "transformation_matrix",
+          "type": "Matrix3D",
+          "doc": "transformation matrix",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.transform"
+    }
+  ],
+  "properties": [
+    {
+      "name": "abs_value",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the absolute value state of the properties",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.abs_value"
+    },
+    {
+      "name": "angle_placement",
+      "type": "AxisPlacement3D | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the placement for the 3D angle input",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.angle_placement"
+    },
+    {
+      "name": "build_ele_index_list",
+      "type": "list[int]",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the index list of the building elements",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.build_ele_index_list"
+    },
+    {
+      "name": "center_point",
+      "type": "Point3D | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the center point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.center_point"
+    },
+    {
+      "name": "click_state",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the click state:",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.click_state"
+    },
+    {
+      "name": "dir_vector",
+      "type": "Vector3D | None",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the direction vector of the handle point movement",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.dir_vector"
+    },
+    {
+      "name": "distance_factor",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the factor for property calculation: -1=show negative value in the input control. Multiply the distance between reference and handle point with the factor to get the property value, e.g. 2.0 if the ref_point is a center point.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.distance_factor"
+    },
+    {
+      "name": "ele_prop_list",
+      "type": "list[ tuple[ str, HandleParameterType, bool, bool, bool, Any, int | list[int] | None, bool, bool, ] ]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the parameter data as list of tuples (called from C\u002B\u002B)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.ele_prop_list"
+    },
+    {
+      "name": "handle_angle",
+      "type": "Angle",
+      "getter": true,
+      "setter": true,
+      "summary": "Handle angle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.handle_angle"
+    },
+    {
+      "name": "handle_id",
+      "type": "str | tuple[int, str]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the handle id",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.handle_id"
+    },
+    {
+      "name": "handle_move_dir",
+      "type": "HandleDirection",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the allowed move direction for the handle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.handle_move_dir"
+    },
+    {
+      "name": "handle_point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the handle point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.handle_point"
+    },
+    {
+      "name": "handle_type",
+      "type": "ElementHandleType",
+      "getter": true,
+      "setter": true,
+      "summary": "Handle type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.handle_type"
+    },
+    {
+      "name": "info_text",
+      "type": "str",
+      "getter": true,
+      "setter": true,
+      "summary": "Info text of the tooltip",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.info_text"
+    },
+    {
+      "name": "parameter_data",
+      "type": "list[HandleParameterData]",
+      "getter": true,
+      "setter": false,
+      "summary": "Get tbe list with the parameter data of the handle",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.parameter_data"
+    },
+    {
+      "name": "plane",
+      "type": "Plane3D | None",
+      "getter": true,
+      "setter": false,
+      "summary": "Get the input plane for the handle_point movement",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.plane"
+    },
+    {
+      "name": "ref_point",
+      "type": "Point3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the reference point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.ref_point"
+    },
+    {
+      "name": "show_handles",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the show handles state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/HandleProperties/#HandleProperties.HandleProperties.show_handles"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

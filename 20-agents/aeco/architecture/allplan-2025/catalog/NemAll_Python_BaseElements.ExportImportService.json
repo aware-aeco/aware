@@ -1,0 +1,287 @@
+{
+  "name": "ExportImportService",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "class",
+  "summary": "Service for exporting/importing CAD data in common formats, like IFC or DWG.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/",
+  "constructors": [
+    {
+      "name": "ExportImportService()",
+      "signature": "ExportImportService()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.__init__"
+    },
+    {
+      "name": "ExportImportService(element: ExportImportService)",
+      "signature": "ExportImportService(element: ExportImportService)",
+      "summary": "Copy constructor",
+      "remarks": "Copy constructor",
+      "params": [
+        {
+          "name": "element",
+          "type": "ExportImportService",
+          "doc": "Element to copy",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ExportDWG",
+      "signature": "ExportDWG( doc: DocumentAdapter, fileName: str, configFileName: str, version: int )",
+      "summary": "Export the data to a DWG file by a configuration file",
+      "remarks": "Export the data to a DWG file by a configuration file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the DWG file",
+          "optional": false
+        },
+        {
+          "name": "configFileName",
+          "type": "str",
+          "doc": "Name of the DWG configuration file",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "doc": "Version numer",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ExportDWG"
+    },
+    {
+      "name": "ExportDWGByTheme",
+      "signature": "ExportDWGByTheme( doc: DocumentAdapter, fileName: str, themeFileName: str, version: int = 2018 )",
+      "summary": "Export the data to a DWG file by a theme file",
+      "remarks": "Export the data to a DWG file by a theme file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the DWG file",
+          "optional": false
+        },
+        {
+          "name": "themeFileName",
+          "type": "str",
+          "doc": "Name of the DWG theme file",
+          "optional": false
+        },
+        {
+          "name": "version",
+          "type": "int",
+          "doc": "DWG version",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ExportDWGByTheme"
+    },
+    {
+      "name": "ExportIFC",
+      "signature": "ExportIFC( doc: DocumentAdapter, fileNumbers: list[int] | VecIntList, ifcVersion: IFC_Version, fileName: str, ifcThemeFileName: str = \u0022\u0022, )",
+      "summary": "Export the data to an IFC file",
+      "remarks": "Export the data to an IFC file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileNumbers",
+          "type": "list[int] | VecIntList",
+          "doc": "Numbers of the drawing files to export",
+          "optional": false
+        },
+        {
+          "name": "ifcVersion",
+          "type": "IFC_Version",
+          "doc": "IFC version",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the IFC file",
+          "optional": false
+        },
+        {
+          "name": "ifcThemeFileName",
+          "type": "str",
+          "doc": "Name of the theme file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ExportIFC"
+    },
+    {
+      "name": "ExportXPlan",
+      "signature": "ExportXPlan( doc: DocumentAdapter, fileNumbers: list[int] | VecIntList, xplanFilePath: str, )",
+      "summary": "Export the data to a XPlan file",
+      "remarks": "Export the data to a XPlan file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileNumbers",
+          "type": "list[int] | VecIntList",
+          "doc": "Numbers of the drawing files to export",
+          "optional": false
+        },
+        {
+          "name": "xplanFilePath",
+          "type": "str",
+          "doc": "Path and name of the XPlan file",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ExportXPlan"
+    },
+    {
+      "name": "ImportDWG",
+      "signature": "ImportDWG( doc: DocumentAdapter, fileName: str, configFileName: str, placePnt: Point3D ) -\u003E BaseElementAdapterList",
+      "summary": "Import the data from a DWG file",
+      "remarks": "Import the data from a DWG file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the DWG file",
+          "optional": false
+        },
+        {
+          "name": "configFileName",
+          "type": "str",
+          "doc": "Name of the DWG configuration file",
+          "optional": false
+        },
+        {
+          "name": "placePnt",
+          "type": "Point3D",
+          "doc": "Placement point of the data",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ImportDWG"
+    },
+    {
+      "name": "ImportIFC",
+      "signature": "ImportIFC( doc: DocumentAdapter, fileNumber: int, fileName: str ) -\u003E BaseElementAdapterList",
+      "summary": "Import the data from an IFC file",
+      "remarks": "Import the data from an IFC file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "fileNumber",
+          "type": "int",
+          "doc": "Number of the drawing file for the data import",
+          "optional": false
+        },
+        {
+          "name": "fileName",
+          "type": "str",
+          "doc": "Name of the IFC file",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "BaseElementAdapterList",
+        "doc": "List with the imported elements"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ImportIFC"
+    },
+    {
+      "name": "ImportXPlan",
+      "signature": "ImportXPlan(doc: DocumentAdapter, xplanFilePath: str, drawingFileNumber: int)",
+      "summary": "Import the data from a XPlan file",
+      "remarks": "Import the data from a XPlan file",
+      "params": [
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "xplanFilePath",
+          "type": "str",
+          "doc": "Path and name of the XPlan file to import",
+          "optional": false
+        },
+        {
+          "name": "drawingFileNumber",
+          "type": "int",
+          "doc": "Starting number of destination drawing file(s)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/ExportImportService/#NemAll_Python_BaseElements.ExportImportService.ImportXPlan"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

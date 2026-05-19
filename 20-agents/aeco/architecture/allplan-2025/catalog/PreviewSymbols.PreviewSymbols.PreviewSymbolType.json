@@ -1,0 +1,14 @@
+{
+  "name": "PreviewSymbolType",
+  "namespace": "PreviewSymbols.PreviewSymbols",
+  "kind": "enum",
+  "summary": "definition of the preview symbol types",
+  "base": "IntEnum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PreviewSymbols/#PreviewSymbols.PreviewSymbols.PreviewSymbolType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

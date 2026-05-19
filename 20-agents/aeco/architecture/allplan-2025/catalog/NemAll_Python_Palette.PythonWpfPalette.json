@@ -1,0 +1,185 @@
+{
+  "name": "PythonWpfPalette",
+  "namespace": "NemAll_Python_Palette",
+  "kind": "class",
+  "summary": "Implementation of the WPF palette for python",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/",
+  "constructors": [
+    {
+      "name": "PythonWpfPalette()",
+      "signature": "PythonWpfPalette()",
+      "summary": "Constructor",
+      "remarks": "Constructor",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "Close() -\u003E str",
+      "summary": "Close the palette",
+      "remarks": "Close the palette",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "Name of the active page"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.Close"
+    },
+    {
+      "name": "EnableControl",
+      "signature": "EnableControl(name: str, iPage: int, bEnabled: bool)",
+      "summary": "Enable/disable a control",
+      "remarks": "Enable/disable a control",
+      "params": [
+        {
+          "name": "name",
+          "type": "str",
+          "doc": "Name of the control",
+          "optional": false
+        },
+        {
+          "name": "iPage",
+          "type": "int",
+          "doc": "Page index",
+          "optional": false
+        },
+        {
+          "name": "bEnabled",
+          "type": "bool",
+          "doc": "Enabled: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.EnableControl"
+    },
+    {
+      "name": "GetPythonWpfPaletteBuilder",
+      "signature": "GetPythonWpfPaletteBuilder() -\u003E PythonWpfPaletteBuilder",
+      "summary": "Get the palette builder",
+      "remarks": "Get the palette builder",
+      "params": [],
+      "returns": {
+        "type": "PythonWpfPaletteBuilder",
+        "doc": "Palette builder"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.GetPythonWpfPaletteBuilder"
+    },
+    {
+      "name": "Open",
+      "signature": "Open( title: str, partName: str, dataColumnWidth: int, showCloseButton: bool, showFavoriteButtons: bool, doc: DocumentAdapter, activePageText: str, )",
+      "summary": "Open the palette",
+      "remarks": "Open the palette",
+      "params": [
+        {
+          "name": "title",
+          "type": "str",
+          "doc": "Title",
+          "optional": false
+        },
+        {
+          "name": "partName",
+          "type": "str",
+          "doc": "Name of the PythonPart",
+          "optional": false
+        },
+        {
+          "name": "dataColumnWidth",
+          "type": "int",
+          "doc": "Width of the data column",
+          "optional": false
+        },
+        {
+          "name": "showCloseButton",
+          "type": "bool",
+          "doc": "Show the close button state",
+          "optional": false
+        },
+        {
+          "name": "showFavoriteButtons",
+          "type": "bool",
+          "doc": "Show the favorites button state",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "type": "DocumentAdapter",
+          "doc": "Document",
+          "optional": false
+        },
+        {
+          "name": "activePageText",
+          "type": "str",
+          "doc": "Page text of the active page",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.Open"
+    },
+    {
+      "name": "Reset",
+      "signature": "Reset(clearOnlyPages: bool = False)",
+      "summary": "Reset the palette for a full refresh",
+      "remarks": "Reset the palette for a full refresh",
+      "params": [
+        {
+          "name": "clearOnlyPages",
+          "type": "bool",
+          "doc": "Reset only pages, keep other dialog data settings",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.Reset"
+    },
+    {
+      "name": "UpdateDialogData",
+      "signature": "UpdateDialogData(activePage: int)",
+      "summary": "Refresh palette with current dialog data",
+      "remarks": "Refresh palette with current dialog data",
+      "params": [
+        {
+          "name": "activePage",
+          "type": "int",
+          "doc": "Index of the active page: (-1 = use current)",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.UpdateDialogData"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert to string",
+      "remarks": "Convert to string",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Palette/PythonWpfPalette/#NemAll_Python_Palette.PythonWpfPalette.__repr__"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

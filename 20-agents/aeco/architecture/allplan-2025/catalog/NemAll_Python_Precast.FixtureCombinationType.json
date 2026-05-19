@@ -1,0 +1,27 @@
+{
+  "name": "FixtureCombinationType",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "Fixture combination types",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixtureCombinationType/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eVx",
+      "value": 1
+    },
+    {
+      "name": "eVy",
+      "value": 2
+    },
+    {
+      "name": "eVz",
+      "value": 3
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "name": "PythonPartViewData",
+  "namespace": "PythonPartViewData",
+  "kind": "class",
+  "summary": "Data class with the properties of a PythonPart view",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "end_scale",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "The scale, to which the view is displayed (scale range\u0027s upper limit)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.end_scale"
+    },
+    {
+      "name": "ref_pnt1_x",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "X coordinate of the first resizing point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.ref_pnt1_x"
+    },
+    {
+      "name": "ref_pnt1_y",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Y coordinate of the first resizing point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.ref_pnt1_y"
+    },
+    {
+      "name": "ref_pnt1_z",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Z coordinate of the first resizing point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.ref_pnt1_z"
+    },
+    {
+      "name": "ref_pnt2_x",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "X coordinate of the second resizing point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.ref_pnt2_x"
+    },
+    {
+      "name": "ref_pnt2_y",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Y coordinate of the second resizing point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.ref_pnt2_y"
+    },
+    {
+      "name": "ref_pnt2_z",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Z coordinate of the second resizing point",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.ref_pnt2_z"
+    },
+    {
+      "name": "scale_x",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Direction, in which the view should be resized, when the whole PythonPart is resized in the X direction.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.scale_x"
+    },
+    {
+      "name": "scale_y",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Direction, in which the view should be resized, when the whole PythonPart is resized in the Y direction.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.scale_y"
+    },
+    {
+      "name": "scale_z",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Direction, in which the view should be resized, when the whole PythonPart is resized in the Y direction.",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.scale_z"
+    },
+    {
+      "name": "start_scale",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "The scale, from which the view is displayed (scale range\u0027s lower limit)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.start_scale"
+    },
+    {
+      "name": "visibility_layer_a",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the view should be visible on layer A",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.visibility_layer_a"
+    },
+    {
+      "name": "visibility_layer_b",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the view should be visible on layer B",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.visibility_layer_b"
+    },
+    {
+      "name": "visibility_layer_c",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the view should be visible on layer C",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.visibility_layer_c"
+    },
+    {
+      "name": "visible_in_2d",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the view should be visible in the ground view",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.visible_in_2d"
+    },
+    {
+      "name": "visible_in_3d",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Whether the view should be visible in the isometric view",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/GeneralScripts/PythonPartViewData/#PythonPartViewData.PythonPartViewData.visible_in_3d"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,294 @@
+{
+  "name": "FixturePlacementProperties",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "class",
+  "summary": "FixturePlacementProperties class",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/",
+  "constructors": [
+    {
+      "name": "FixturePlacementProperties()",
+      "signature": "FixturePlacementProperties()",
+      "summary": "Initialize",
+      "remarks": "Initialize",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__eq__",
+      "signature": "__eq__(prop: FixturePlacementProperties) -\u003E bool",
+      "summary": "equal operator",
+      "remarks": "equal operator",
+      "params": [
+        {
+          "name": "prop",
+          "type": "FixturePlacementProperties",
+          "doc": "FixturePlacementProperties to compare",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "true if they are equal, false otherwise"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.__eq__"
+    },
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "Convert the list to a string",
+      "remarks": "Convert the list to a string",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "List values as string"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.__repr__"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Automation",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Automation"
+    },
+    {
+      "name": "ConnectionToAIACatalog",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Enable connection to the Precast Fixture catalog of the Fixture placement element Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.ConnectionToAIACatalog"
+    },
+    {
+      "name": "ConnectionToAllplanCatalog",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Enable connection to the Allplan Catalog of the Fixture placement element Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.ConnectionToAllplanCatalog"
+    },
+    {
+      "name": "CountOfQuestions",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Number of active question attributes of the Fixture placement element Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.CountOfQuestions"
+    },
+    {
+      "name": "DistortionState",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.DistortionState"
+    },
+    {
+      "name": "DomainType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Domaintype of the Fixture placement element Value type: None :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.DomainType"
+    },
+    {
+      "name": "EnableQuestions",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Enables the question attributes of the Fixture placement element Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.EnableQuestions"
+    },
+    {
+      "name": "HasParentModificationBehaviour",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for specific behavior for modification state Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.HasParentModificationBehaviour"
+    },
+    {
+      "name": "HeightDefinitionType",
+      "type": "HeightDefinitionType",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Height definition type",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.HeightDefinitionType"
+    },
+    {
+      "name": "HollowShaft",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.HollowShaft"
+    },
+    {
+      "name": "Mass_V6",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Mass_V6"
+    },
+    {
+      "name": "Mass_V7",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Mass_V7"
+    },
+    {
+      "name": "Mass_V8",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Mass_V8"
+    },
+    {
+      "name": "Mass_V9",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: float :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Mass_V9"
+    },
+    {
+      "name": "Matrix",
+      "type": "Matrix3D",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Matrix for location in world coordinate system",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Matrix"
+    },
+    {
+      "name": "MirrorState",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Property for the fixture placement mirrored state Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.MirrorState"
+    },
+    {
+      "name": "Name",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Name of the Fixture placement element Value type: str :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Name"
+    },
+    {
+      "name": "OutlineShape",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: OutlineShape :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.OutlineShape"
+    },
+    {
+      "name": "OutlineType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: OutlineType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.OutlineType"
+    },
+    {
+      "name": "OutlineTypeInGroup",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: OutlineTypeInGroup :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.OutlineTypeInGroup"
+    },
+    {
+      "name": "PositionNr",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.PositionNr"
+    },
+    {
+      "name": "ProfilType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: ProfilType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.ProfilType"
+    },
+    {
+      "name": "SubType",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "SubType of the Fixture placement element Value type: MacroSubType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.SubType"
+    },
+    {
+      "name": "Type",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Type of the Fixture placement element Value type: MacroType :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Type"
+    },
+    {
+      "name": "UnitFactor",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: int :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.UnitFactor"
+    },
+    {
+      "name": "UseAlways2DRepInGroundView",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.UseAlways2DRepInGroundView"
+    },
+    {
+      "name": "UseDrawOrder",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Uses the draw order setting of the placement or the elements of the Fixture ?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.UseDrawOrder"
+    },
+    {
+      "name": "UseFormat",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the Uses the format setting (pen, stroke, color) of the placement or the elements of the Fixture ?",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.UseFormat"
+    },
+    {
+      "name": "Visibility",
+      "type": "None",
+      "getter": true,
+      "setter": false,
+      "summary": "Value type: bool :type: None",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/FixturePlacementProperties/#NemAll_Python_Precast.FixturePlacementProperties.Visibility"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

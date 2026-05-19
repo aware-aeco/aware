@@ -1,0 +1,105 @@
+{
+  "name": "RotationUtil",
+  "namespace": "Utils.RotationUtil",
+  "kind": "class",
+  "summary": "Class used to describe the rotation around the three axes (X,Y,Z) in order to transform a geometry from local to global coordinate system or the other way around.",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/",
+  "constructors": [
+    {
+      "name": "RotationUtil()",
+      "signature": "RotationUtil(angle_x: float, angle_y: float, angle_z: float)",
+      "summary": "Construct the object by setting all three angles. The angles are given in degrees.",
+      "remarks": "Construct the object by setting all three angles. The angles are given in degrees.",
+      "params": [
+        {
+          "name": "angle_x",
+          "type": "float",
+          "doc": "Rotation angle (degree) around the local x axis",
+          "optional": false
+        },
+        {
+          "name": "angle_y",
+          "type": "float",
+          "doc": "Rotation angle (degree) around the local y axis",
+          "optional": false
+        },
+        {
+          "name": "angle_z",
+          "type": "float",
+          "doc": "Rotation angle (degree) around the local z axis",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/#Utils.RotationUtil.RotationUtil.__init__"
+    }
+  ],
+  "methods": [
+    {
+      "name": "__repr__",
+      "signature": "__repr__() -\u003E str",
+      "summary": "create a string from the object data",
+      "remarks": "create a string from the object data",
+      "params": [],
+      "returns": {
+        "type": "str",
+        "doc": "string with the object data"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/#Utils.RotationUtil.RotationUtil.__repr__"
+    },
+    {
+      "name": "get_rotation_matrix",
+      "signature": "get_rotation_matrix(axis_point: Point3D = Point3D()) -\u003E Matrix3D",
+      "summary": "Get a 3D transformation matrix (4x4) describing the rotation around the given point by all three angles: x, y and z.",
+      "remarks": "Get a 3D transformation matrix (4x4) describing the rotation around the given point by all three angles: x, y and z.",
+      "params": [
+        {
+          "name": "axis_point",
+          "type": "Point3D",
+          "doc": "Rotation point. Defaults to the origin (0,0,0).",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Matrix3D",
+        "doc": "Transformation matrix describing the rotation"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/#Utils.RotationUtil.RotationUtil.get_rotation_matrix"
+    }
+  ],
+  "properties": [
+    {
+      "name": "angle_x",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Rotation angle around the X axis (in degrees)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/#Utils.RotationUtil.RotationUtil.angle_x"
+    },
+    {
+      "name": "angle_y",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Rotation angle around the Y axis (in degrees)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/#Utils.RotationUtil.RotationUtil.angle_y"
+    },
+    {
+      "name": "angle_z",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Rotation angle around the Z axis (in degrees)",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/Utils/RotationUtil/#Utils.RotationUtil.RotationUtil.angle_z"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,81 @@
+{
+  "name": "PythonPartsSettings",
+  "namespace": "NemAll_Python_AllplanSettings",
+  "kind": "class",
+  "summary": "Implementation of the PythonParts settings",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PythonPartsSettings/",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetInstance",
+      "signature": "GetInstance() -\u003E PythonPartsSettings",
+      "summary": "Get the instance",
+      "remarks": "Get the instance",
+      "params": [],
+      "returns": {
+        "type": "PythonPartsSettings",
+        "doc": "Instance of the singleton"
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PythonPartsSettings/#NemAll_Python_AllplanSettings.PythonPartsSettings.GetInstance"
+    },
+    {
+      "name": "SetLengthUnit",
+      "signature": "SetLengthUnit(lengthUnit: int)",
+      "summary": "Set the length unit",
+      "remarks": "Set the length unit",
+      "params": [
+        {
+          "name": "lengthUnit",
+          "type": "int",
+          "doc": "Length unit: 3 = m",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PythonPartsSettings/#NemAll_Python_AllplanSettings.PythonPartsSettings.SetLengthUnit"
+    },
+    {
+      "name": "SetShowFullPreview",
+      "signature": "SetShowFullPreview(showFullPreview: bool)",
+      "summary": "Show the full preview",
+      "remarks": "Show the full preview",
+      "params": [
+        {
+          "name": "showFullPreview",
+          "type": "bool",
+          "doc": "Show full preview: true/false",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PythonPartsSettings/#NemAll_Python_AllplanSettings.PythonPartsSettings.SetShowFullPreview"
+    }
+  ],
+  "properties": [
+    {
+      "name": "ShowFullPreview",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the full preview state Show the full preview",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PythonPartsSettings/#NemAll_Python_AllplanSettings.PythonPartsSettings.ShowFullPreview"
+    },
+    {
+      "name": "UpdateIdenticalPythonParts",
+      "type": "UpdateIdenticalPythonPartsState",
+      "getter": true,
+      "setter": true,
+      "summary": "Get the update identical PythonParts state",
+      "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_AllplanSettings/PythonPartsSettings/#NemAll_Python_AllplanSettings.PythonPartsSettings.UpdateIdenticalPythonParts"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

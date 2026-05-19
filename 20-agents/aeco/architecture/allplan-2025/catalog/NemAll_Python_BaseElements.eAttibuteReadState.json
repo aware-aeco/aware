@@ -1,0 +1,35 @@
+{
+  "name": "eAttibuteReadState",
+  "namespace": "NemAll_Python_BaseElements",
+  "kind": "enum",
+  "summary": "Enumeration of possible attribute reading modes of the ElementAttributeService",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_BaseElements/eAttibuteReadState/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "DoNotRead",
+      "value": 2,
+      "summary": "Do not read any attributes"
+    },
+    {
+      "name": "ReadAll",
+      "value": 1,
+      "summary": "Read all attributes, without computed ones"
+    },
+    {
+      "name": "ReadAllAndComputable",
+      "value": 3,
+      "summary": "Read all the attributes, also the computed ones"
+    },
+    {
+      "name": "ReadWithoutGeometry",
+      "value": 0,
+      "summary": "Read all non-geometrical attributes"
+    }
+  ]
+}

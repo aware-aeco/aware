@@ -1,0 +1,39 @@
+{
+  "name": "Direction",
+  "namespace": "NemAll_Python_Precast",
+  "kind": "enum",
+  "summary": "directions for views",
+  "base": "Enum",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/InterfaceStubs/NemAll_Python_Precast/Direction/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "eDirectionI",
+      "value": 1
+    },
+    {
+      "name": "eDirectionII",
+      "value": 2
+    },
+    {
+      "name": "eDirectionIII",
+      "value": 3
+    },
+    {
+      "name": "eDirectionIV",
+      "value": 4
+    },
+    {
+      "name": "eDirectionV",
+      "value": 5
+    },
+    {
+      "name": "eDirectionVI",
+      "value": 6
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Curve3DList",
+  "namespace": "TypeCollections.Curve3DList",
+  "kind": "class",
+  "summary": "implementation of the list for the 3D curve elements",
+  "base": "list[Arc3D | BSpline3D | Line3D | Path3D | Polyline3D | Polygon3D | Spline3D]",
+  "interfaces": [],
+  "doc_url": "https://pythonparts.allplan.com/2025/api_reference/TypeCollections/Curve3DList/",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
