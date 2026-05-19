@@ -2,6 +2,8 @@
 // in-Revit AwareRevit.dll add-in over a named pipe. Speaks the {verb, code,
 // args} stdin-JSON contract shared with cli-tekla / cli-rhino.
 
+using System.Text.Json.Nodes;
+
 namespace AwareRevit.Sidecar;
 
 internal static class Program
@@ -17,7 +19,69 @@ internal static class Program
             return 0;
         }
 
-        Console.Error.WriteLine($"aware-revit: unknown verb '{args[0]}'. Try --help.");
+        // Two invocation styles (same as cli-tekla / cli-rhino):
+        //   aware-revit.exe <verb> [--json-stdin]   (canonical)
+        //   aware-revit.exe --json-stdin            (verb embedded in JSON body)
+        string verb;
+        JsonNode? stdinJson = null;
+
+        if (args[0].StartsWith("--", StringComparison.Ordinal))
+        {
+            string buf;
+            try { buf = Console.In.ReadToEnd(); }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"aware-revit: stdin not readable: {e.Message}");
+                return 2;
+            }
+            try { stdinJson = JsonNode.Parse(buf); }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"aware-revit: stdin not JSON: {e.Message}");
+                return 2;
+            }
+            verb = stdinJson?["verb"]?.GetValue<string>() ?? "";
+            if (string.IsNullOrEmpty(verb))
+            {
+                Console.Error.WriteLine("aware-revit: stdin JSON has no `verb` field and no verb on CLI");
+                return 2;
+            }
+        }
+        else
+        {
+            verb = args[0];
+            var wantsStdin = args.Skip(1).Any(a => a == "--json-stdin");
+            if (wantsStdin || verb is "exec" or "send-status" or "launch" or "close")
+            {
+                string buf;
+                try { buf = Console.In.ReadToEnd(); }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"aware-revit: stdin not readable: {e.Message}");
+                    return 2;
+                }
+                if (!string.IsNullOrWhiteSpace(buf))
+                {
+                    try { stdinJson = JsonNode.Parse(buf); }
+                    catch (Exception e)
+                    {
+                        Console.Error.WriteLine($"aware-revit: stdin not JSON: {e.Message}");
+                        return 2;
+                    }
+                }
+            }
+        }
+
+        return verb switch
+        {
+            "list-instances" => Verbs.ListInstances.RunAsync().GetAwaiter().GetResult(),
+            _ => Unknown(verb),
+        };
+    }
+
+    static int Unknown(string verb)
+    {
+        Console.Error.WriteLine($"aware-revit: unknown verb '{verb}'. Try --help.");
         return 2;
     }
 
