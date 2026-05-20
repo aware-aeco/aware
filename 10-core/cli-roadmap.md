@@ -27,7 +27,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 | v0.17 visualization | ✅ shipped | rhino-8/grasshopper-8 curated; enscape-prep, twinmotion-prep |
 | v0.18 spec authoring | ✅ agents present | nbs-chorus, avitru-speclink, csi-masterformat |
 | v0.19 substrate primitives | 🟡 partial | parsed + validated, but only `assert:` executes at runtime — for-each/compare/sweep/approve/snapshot/model-lock (+ schedule) return `NotYetImplemented` pending v0.19.x |
-| v0.20 named atoms | 🟡 partial | 8 atoms (tekla 5, revit 3); no cross-cutting atoms yet (target ~40) |
+| v0.20 named atoms | ✅ shipped | 33 atoms — 20 cross-cutting (`atoms/`) + 5 tekla + 8 revit (matches app-spec) |
 | v0.21 engineering envelope | ✅ shipped | agent-spec `engineering:`, `signed-output`, units (CLI `app reproduce` not yet wired) |
 | v0.22 persona apps | ✅ shipped | all 5 reference `.flo` present |
 | v0.23 decalog #9 | ✅ shipped | "AI composes the plan; deterministic code is the plan" |
@@ -38,11 +38,11 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 
 ### Actually remaining (the real backlog)
 
-1. **Catalogue curation tail** — the persona-audit #1 gap, still open for high-traffic reflected agents with no craft skills: `slack` (172 cmds / 0 skills), `acc-issues` (14/0), `acc-account-admin` (30/0), `aps-data-management` (41/0), `csi-api` (4282/2), `autocad-2026` (~4.4k/~77), `revit-2026` (~7.6k/~53).
-2. **v0.20 atoms** — add the ~20 cross-cutting atoms + finish the revit/tekla sets.
-3. **v0.12 comms depth** — microsoft-365 + google-workspace to ~30 verbs each.
-4. **Vendor `*.exec` fan-out** — Allplan, Archicad, Navisworks (blocked on host install/license).
-5. **`aware agent publish`** — the one remaining CLI stub.
+1. **Catalogue curation tail** — the persona-audit #1 gap. Cleared so far: `slack`, `acc-issues`, `acc-account-admin`, `aps-data-management` (now have craft skills). Still open for the largest reflected agents: `csi-api` (4282 cmds / 2 skills), `autocad-2026` (~4.4k / ~77), `revit-2026` (~7.6k / ~53).
+2. **v0.12 comms depth** — microsoft-365 + google-workspace to ~30 verbs each.
+3. **Vendor `*.exec` fan-out** — Allplan, Archicad, Navisworks (blocked on host install/license).
+4. **`aware agent publish`** — the one remaining CLI stub.
+5. **`aware connect` providers** — Autodesk/APS + Slack aren't wired into `aware connect` (only trimble-connect/microsoft-365/google-workspace); their agents' auth is token-out-of-band until added.
 6. **Agent dedup** — sketchup + navisworks each appear under both `architecture/` and `construction/`; many version-pairs. Needs a consolidation decision.
 7. **Runtime execution gaps** — `CliInvoker::invoke_stream` (streaming/stateful-agent transport) and the v0.19 primitives beyond `assert:` (for-each/compare/sweep/approve/snapshot/model-lock) return `NotYetImplemented`. Single-shot apps run fully; these complete the runtime.
 8. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
