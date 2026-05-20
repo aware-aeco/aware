@@ -14,7 +14,7 @@ Every slack endpoint runs against a workspace token whose **OAuth scopes** decid
 | **Bot token** | `xoxb-` | the app's bot user | **Default for automation.** Posts as the AWARE app, survives the installing user leaving. |
 | **User token** | `xoxp-` | the authorising human | Only when you must act *as a person* (e.g. read a private channel that human is in, post on their behalf). |
 
-Provision both via `aware connect slack` (browser-paste OAuth). Prefer the **bot token** for AECO notification workflows — it doesn't break when an employee offboards.
+**Provisioning today:** `aware connect` does **not** yet wire Slack — its OAuth config covers only `trimble-connect`, `microsoft-365`, and `google-workspace`, so `aware connect slack` returns *not supported*. (Slack's OAuth v2 needs a client secret, isn't the PKCE-loopback shape the other three use, and returns a nested `authed_user` token — first-class support is its own task.) Until then, supply a bot (`xoxb-`) or user (`xoxp-`) token out-of-band via your AWARE credential store. Prefer the **bot token** for AECO notification workflows — it doesn't break when an employee offboards.
 
 ## Scopes are per-method and granular
 
@@ -44,7 +44,7 @@ On a normal workspace these return `not_allowed_token_type` / `team_not_on_enter
 
 ## Token hygiene
 
-Tokens are stored encrypted by `aware connect`; never appear in app files or logs. `auth.test` is the cheap "is this token alive and which workspace/user/bot is it?" probe — call it first when debugging auth. `auth.revoke` kills a token.
+Keep tokens in the AWARE credential store, never in app files or logs. `auth.test` is the cheap "is this token alive and which workspace/user/bot is it?" probe — call it first when debugging auth. `auth.revoke` kills a token.
 
 ## See also
 

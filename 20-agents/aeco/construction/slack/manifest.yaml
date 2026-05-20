@@ -14,10 +14,12 @@ description: |
   issues from Trimble Connect, alert site PMs on Procore RFI updates,
   daily build summaries from Revit Coordinator workflows.
 
-  Auth via `aware connect slack` (browser-paste OAuth user token or
-  bot token). Slack workspace tokens carry the OAuth scopes that
-  decide which endpoints the agent can call — match scopes to the
-  workflow rather than over-requesting.
+  Auth: supply a Slack bot (`xoxb-`) or user (`xoxp-`) token via the
+  AWARE credential store. NOTE: `aware connect` does not yet wire Slack
+  (only trimble-connect / microsoft-365 / google-workspace) — first-class
+  `aware connect slack` is a separate task. Slack tokens carry the OAuth
+  scopes that decide which endpoints the agent can call — match scopes to
+  the workflow rather than over-requesting.
 
   Marked `stateful: false` — every endpoint is request/response.
 
