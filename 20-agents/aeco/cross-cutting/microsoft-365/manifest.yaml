@@ -576,6 +576,33 @@ commands:
             name: string
             id:   string
 
+  excel.worksheet.create:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Add a new worksheet to a workbook, optionally named. The "fresh
+      `Phase N` sheet per run" primitive — create the tab, then
+      `excel.range.write` into it. If a sheet with the name already exists
+      Graph returns 409; catch it with `excel.worksheet.list` first.
+    inputs:
+      drive-id:
+        type: string
+      item-id:
+        type: string
+        description: Workbook file id.
+      name:
+        type: string
+        description: |
+          New worksheet name. Optional — Graph auto-names (`Sheet1`, …)
+          when omitted. Max 31 chars; `\ / ? * [ ]` are rejected.
+    outputs:
+      type: single
+      schema:
+        id:       string
+        name:     string
+        position: number
+
   excel.table.append-row:
     lifecycle: single
     category: curated
