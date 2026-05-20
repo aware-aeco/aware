@@ -1,3 +1,8 @@
+---
+name: what-this-agent-does
+description: This skill should be used when deciding whether ifc-inspector is the right tool for an IFC task — its data-only scope vs the web-ifc renderer and the solibri rule engine, when to reach for each, how the WASM is bundled, what "validation" means here, and the performance envelope on large files. Encodes the agent's boundaries.
+---
+
 # What this agent does (and doesn't)
 
 The `ifc-inspector` agent is the **data-side** companion to the
@@ -65,3 +70,10 @@ It does **not** catch:
 
 For routine work on large federations, prefer running this overnight
 via v0.19's `schedule:` primitive.
+
+## See also
+
+- [ifc-guid-and-class-model](./ifc-guid-and-class-model.md) — GlobalId encoding + the class/subtype model the query verbs rely on
+- [ifc-psets-and-cobie](./ifc-psets-and-cobie.md) — property sets, instance vs type, COBie naming
+- [ifc-georeferencing](./ifc-georeferencing.md) — the LoGeoRef levels behind `georef.check`
+- [ifc-schemas-and-validation](./ifc-schemas-and-validation.md) — what schema validation does and doesn't prove
