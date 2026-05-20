@@ -50,6 +50,13 @@ pub struct Orchestrator {
     /// nodes execute normally. See `10-core/app-spec.md § Safety contract`
     /// for the full semantics.
     pub dry_run: bool,
+    /// When `true`, *every* node is stubbed — read-mode nodes too. Instead of
+    /// contacting any host sidecar, each node yields a schema-shaped placeholder
+    /// synthesized from its command's declared `output-schema`, so a whole
+    /// composition can be validated end-to-end on a machine with no host app
+    /// installed. Implies `dry_run` semantics for write nodes (they still emit
+    /// `would-write:`). See issue #103 finding #1.
+    pub simulate: bool,
 }
 
 impl Orchestrator {
@@ -489,6 +496,41 @@ impl Orchestrator {
         }
     }
 
+    /// Build a schema-shaped placeholder output for a command, used by
+    /// `--simulate` to stand in for a node that would otherwise call the host.
+    /// Reads the command's declared `outputs` block (`{ type, schema: {...} }`)
+    /// and maps each top-level field to a typed zero value. When the schema
+    /// can't be resolved (uninstalled agent, untyped command), falls back to a
+    /// `{ "simulated": true }` marker so the DAG still flows.
+    fn synthesize_output(&self, agent_id: &str, command: &str) -> Value {
+        let fallback = || serde_json::json!({ "simulated": true });
+        let mp = self.agents_dir.join(agent_id).join("manifest.yaml");
+        let Ok(agent) = crate::manifest::loader::load_agent(&mp) else {
+            return fallback();
+        };
+        let Some(cmd) = agent.commands.get(command) else {
+            return fallback();
+        };
+        let Some(schema) = cmd
+            .outputs
+            .as_ref()
+            .and_then(|o| o.get("schema"))
+            .and_then(|s| s.as_mapping())
+        else {
+            return fallback();
+        };
+        let mut obj = serde_json::Map::new();
+        for (k, v) in schema {
+            let Some(field) = k.as_str() else { continue };
+            obj.insert(field.to_string(), placeholder_for_type(v));
+        }
+        if obj.is_empty() {
+            fallback()
+        } else {
+            Value::Object(obj)
+        }
+    }
+
     async fn execute_node(&mut self, node: &Node) -> Result<NodeResult, AwareError> {
         self.emit(RunEvent::NodeStart {
             ts: now_iso(),
@@ -505,11 +547,12 @@ impl Orchestrator {
             let config_json = yaml_to_json(node.config.clone())?;
             let args = render_config(&config_json, &self.ctx)?;
 
-            // Dry-run safety short-circuit: if the command resolves to
-            // Mode::Write, emit a `would-write:` event and return a
-            // placeholder NodeOutput-shaped value. Read-mode commands still
-            // execute (they don't mutate external state).
-            if self.dry_run {
+            // Dry-run / simulate short-circuit. Write-mode nodes never touch
+            // the transport in either mode: they emit a `would-write:` event
+            // and return a placeholder. In `--simulate`, read-mode nodes are
+            // ALSO stubbed (schema-shaped placeholder, no host sidecar) so the
+            // whole composition can be validated without a live app.
+            if self.dry_run || self.simulate {
                 let mode = self.lookup_command_mode(agent_id, command);
                 if mode == crate::manifest::agent::Mode::Write {
                     let safety_block = node
@@ -527,11 +570,30 @@ impl Orchestrator {
                         safety: safety_block,
                     })
                     .await?;
-                    // Downstream nodes get a `{ "dry-run": true }` placeholder so the
-                    // DAG can keep flowing — they typically only act on real data,
-                    // so this should be a no-op for honest dry-runs.
-                    let placeholder = serde_json::json!({ "dry-run": true });
+                    // In simulate, downstream nodes may reference this write
+                    // node's output, so hand them a schema-shaped value; plain
+                    // dry-run keeps the lighter `{ "dry-run": true }` marker.
+                    let placeholder = if self.simulate {
+                        self.synthesize_output(agent_id, command)
+                    } else {
+                        serde_json::json!({ "dry-run": true })
+                    };
                     return Ok(NodeResult::Output(placeholder));
+                }
+
+                // Read-mode node under `--simulate`: stub it rather than calling
+                // the host. Emit a NodeOutput carrying the synthesized shape so
+                // `aware app logs --replay` shows what each node produces.
+                if self.simulate {
+                    let synth = self.synthesize_output(agent_id, command);
+                    self.emit(RunEvent::NodeOutput {
+                        ts: now_iso(),
+                        run_id: self.run_id.clone(),
+                        node: node.id.clone(),
+                        data: synth.clone(),
+                    })
+                    .await?;
+                    return Ok(NodeResult::Output(synth));
                 }
             }
 
@@ -706,6 +768,25 @@ fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareErr
     walk(config, ctx)
 }
 
+/// Map an `output-schema` field's declared type to a typed zero placeholder
+/// for `--simulate`. The type can be a bare string (`field: string`) or a
+/// mapping carrying a `type:` key (`field: { type: string, ... }`). Unknown or
+/// missing types fall back to a string placeholder.
+fn placeholder_for_type(decl: &serde_yaml::Value) -> Value {
+    let type_name = match decl {
+        serde_yaml::Value::String(s) => s.as_str(),
+        serde_yaml::Value::Mapping(_) => decl.get("type").and_then(|t| t.as_str()).unwrap_or(""),
+        _ => "",
+    };
+    match type_name {
+        "number" | "integer" | "int" | "float" => serde_json::json!(0),
+        "boolean" | "bool" => serde_json::json!(false),
+        "array" | "list" => serde_json::json!([]),
+        "object" | "map" | "mapping" => serde_json::json!({}),
+        _ => Value::String("<simulated>".to_string()),
+    }
+}
+
 fn most_recent_upstream(ctx: &RuntimeContext, app: &App, node_id: &str) -> Option<Value> {
     // Find this node's predecessors; return the first one with output in ctx.
     for c in &app.connections {
@@ -750,6 +831,7 @@ mod tests {
             inputs: serde_json::json!({}),
             fan_in: FanInState::default(),
             dry_run: false,
+            simulate: false,
         };
         (orch, tmp, log_path)
     }
@@ -794,6 +876,104 @@ requires: []
         } else {
             panic!();
         }
+    }
+
+    #[tokio::test]
+    async fn simulate_stubs_read_node_with_schema_shape() {
+        // A single read-mode node. In `--simulate` the orchestrator must NOT
+        // call the invoker (an empty MockInvoker would error if it did) and
+        // must emit a NodeOutput shaped from the command's output-schema.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: sim
+version: 0.1.0
+description: x
+nodes:
+  - id: r
+    agent: ag-read
+    command: report
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        // Empty invoker: any real call surfaces as NotFound and fails the run.
+        let inv = Arc::new(MockInvoker::new());
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        // Install a manifest declaring `report` as a read command with a typed
+        // output-schema, so mode-lookup + synthesis resolve from disk.
+        let agent_dir = tmp.path().join("aware").join("agents").join("ag-read");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: ag-read
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  report:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: emits a report path
+    outputs:
+      type: single
+      schema:
+        path: string
+        row-count: number
+"#,
+        )
+        .unwrap();
+
+        orch.simulate = true;
+        // Must succeed despite no host binary and an empty invoker.
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let output = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "r" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("read node must emit a synthesized NodeOutput");
+        assert_eq!(output["path"], serde_json::json!("<simulated>"));
+        assert_eq!(output["row-count"], serde_json::json!(0));
+        if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
+            assert_eq!(status, "ok");
+        } else {
+            panic!("run did not end cleanly");
+        }
+    }
+
+    #[test]
+    fn placeholder_for_type_maps_each_kind() {
+        let s = |y: &str| serde_yaml::from_str::<serde_yaml::Value>(y).unwrap();
+        assert_eq!(placeholder_for_type(&s("number")), serde_json::json!(0));
+        assert_eq!(
+            placeholder_for_type(&s("boolean")),
+            serde_json::json!(false)
+        );
+        assert_eq!(placeholder_for_type(&s("array")), serde_json::json!([]));
+        assert_eq!(placeholder_for_type(&s("object")), serde_json::json!({}));
+        assert_eq!(
+            placeholder_for_type(&s("string")),
+            serde_json::json!("<simulated>")
+        );
+        // Unknown type → string placeholder.
+        assert_eq!(
+            placeholder_for_type(&s("guid")),
+            serde_json::json!("<simulated>")
+        );
+        // Mapping form `{ type: number, description: ... }` reads `type`.
+        assert_eq!(
+            placeholder_for_type(&s("type: number\ndescription: a count")),
+            serde_json::json!(0)
+        );
     }
 
     #[tokio::test]

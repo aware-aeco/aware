@@ -46,6 +46,12 @@ pub enum AppCommand {
         /// instead of calling the agent's mutation transport. (v0.11)
         #[arg(long)]
         dry_run: bool,
+        /// Fully-stubbed run: stub read-mode nodes too. Every node yields a
+        /// schema-shaped placeholder from its command's `output-schema` and no
+        /// host sidecar is contacted, so a composition can be validated
+        /// end-to-end without a live app installed. Implies `--dry-run`. (#103)
+        #[arg(long)]
+        simulate: bool,
     },
     /// Print a one-screen summary of an app's reads, writes, and external
     /// posts, plus the union of required permissions. (v0.11)
@@ -96,7 +102,8 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             instance,
             config,
             dry_run,
-        } => run(ctx, &app, instance.as_deref(), &config, dry_run).await,
+            simulate,
+        } => run(ctx, &app, instance.as_deref(), &config, dry_run, simulate).await,
         AppCommand::Explain { app } => explain(ctx, &app),
         AppCommand::Compile { path } => compile_cmd(ctx, &path),
         AppCommand::Inspect { path } => inspect_cmd(ctx, &path),
@@ -127,7 +134,12 @@ async fn run(
     instance: Option<&str>,
     configs: &[String],
     dry_run: bool,
+    simulate: bool,
 ) -> Result<(), AwareError> {
+    // `--simulate` is a strict superset of `--dry-run`: it also stubs read
+    // nodes. Fold it into `dry_run` so every write-mode safety path downstream
+    // (pre-flight skip, would-write events) treats a simulate run as a dry run.
+    let dry_run = dry_run || simulate;
     use crate::runtime::context::RuntimeContext;
     use crate::runtime::invoker::CliInvoker;
     use crate::runtime::orchestrator::Orchestrator;
@@ -233,6 +245,7 @@ async fn run(
             inputs: serde_json::Value::Object(serde_json::Map::new()),
             fan_in: Default::default(),
             dry_run,
+            simulate,
         };
 
         // Write pidfile.
@@ -305,9 +318,15 @@ async fn run(
         inputs: serde_json::Value::Object(serde_json::Map::new()),
         fan_in: Default::default(),
         dry_run,
+        simulate,
     };
 
-    if dry_run {
+    if simulate {
+        println!("\u{25b6} simulate {app_id} (instance {instance}, run-id {run_id})");
+        println!(
+            "  every node is stubbed with a schema-shaped placeholder; no host sidecar is contacted"
+        );
+    } else if dry_run {
         println!("\u{25b6} dry-run {app_id} (instance {instance}, run-id {run_id})");
         println!("  write-mode nodes will emit `would-write:` events instead of mutating state");
     } else {
@@ -601,7 +620,13 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
             continue;
         };
         let mode = d.manifest.mode_of(cmd_name, cmd);
-        let desc = cmd.description.lines().next().unwrap_or("").trim().to_string();
+        let desc = cmd
+            .description
+            .lines()
+            .next()
+            .unwrap_or("")
+            .trim()
+            .to_string();
         match mode {
             Mode::Read => reads.push((node.id.clone(), format!("{agent_id}.{cmd_name}"), desc)),
             Mode::Write => writes.push((
@@ -648,7 +673,11 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
         println!("  (none — read-only app)");
     }
     for (node, cmd, desc, safety_declared) in &writes {
-        let marker = if *safety_declared { "\u{2713}" } else { "\u{2717}" };
+        let marker = if *safety_declared {
+            "\u{2713}"
+        } else {
+            "\u{2717}"
+        };
         println!("  {marker} {node:<20} {cmd:<40} {desc}");
     }
     if writes.iter().any(|(_, _, _, s)| !s) {
@@ -770,7 +799,11 @@ fn render_glass_box_html(lock: &crate::app_lock::LockFile) -> String {
             "node-read"
         };
         let cmd_str = match (&node.agent, &node.command) {
-            (Some(a), Some(c)) => format!("<code>{}.{}</code>", html_escape_local(a), html_escape_local(c)),
+            (Some(a), Some(c)) => format!(
+                "<code>{}.{}</code>",
+                html_escape_local(a),
+                html_escape_local(c)
+            ),
             _ => format!("<em>{}</em>", html_escape_local(&node.kind)),
         };
         let safety_badge = if node.safety.is_some() {
