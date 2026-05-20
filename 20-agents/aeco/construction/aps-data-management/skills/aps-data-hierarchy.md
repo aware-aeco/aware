@@ -27,7 +27,7 @@ hub  (b.<account>)                     get-hubs / get-hub
 
 ## `get-hub-projects` returns only YOUR projects
 
-`GET /project/v1/hubs/{hub}/projects` (`get-hub-projects`) returns only the projects the **token's user is a member of** — *not* the whole account portfolio. For the full list (including projects the user isn't on), use the [acc-account-admin](../../acc-account-admin/) agent's `get-projects` (which also wants the **bare** project GUID, while this API uses `b.<guid>` — see [aps-data-management-auth-and-ids](./aps-data-management-auth-and-ids.md)).
+`GET /project/v1/hubs/{hub}/projects` (`get-hub-projects`) returns only the projects the **token's user is a member of** — *not* the whole account portfolio. For the full list (including projects the user isn't on), use the [acc-account-admin](../../acc-account-admin/) agent's `get-projects`, which lists by **account** (`GET /construction/admin/v1/accounts/{accountId}/projects`) and takes the **bare** account GUID — whereas this API's hub id is the `b.<account-guid>` form, so strip the `b.` when crossing over (see [aps-data-management-auth-and-ids](./aps-data-management-auth-and-ids.md)).
 
 ## Everything is JSON:API
 
