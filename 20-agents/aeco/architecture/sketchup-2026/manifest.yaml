@@ -172,6 +172,111 @@ commands:
             position: object
             rotation: number
             scale:    object
+  selection.by-attribute:
+    lifecycle: single
+    category: curated
+    description: |
+      Select entities whose AttributeDictionary value (in a named dictionary)
+      matches a regex or exact value. The SketchUp analog of Rhino's
+      selection.by-attribute.
+    inputs:
+      dictionary:
+        type: string
+        description: AttributeDictionary name (e.g. "AWARE").
+      key:
+        type: string
+        description: Key within that dictionary.
+      value:
+        type: string
+        description: Exact value to match. Use this OR pattern.
+      pattern:
+        type: string
+        description: Ruby regex. Use this OR value.
+      add-to-selection:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        matched-count: number
+        ids:
+          type: array
+          items: number
+  attribute.bulk-write:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write multiple key/value pairs into a named AttributeDictionary on every
+      selected entity. Creates the dictionary if missing. The v0.11
+      audit-stamp primitive for SketchUp.
+    inputs:
+      dictionary:
+        type: string
+        description: AttributeDictionary name (e.g. "AWARE").
+      entries:
+        type: object
+        description: Map of key -> value (both strings).
+    outputs:
+      type: single
+      schema:
+        entities-stamped: number
+        keys-written:     number
+  snapshot.save-scene:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Save the current active viewport (camera + style + shadows + layers)
+      as a SketchUp scene/page.
+    inputs:
+      scene-name:
+        type: string
+      overwrite:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        scene-name:    string
+        overwritten:   boolean
+        camera-eye:    object
+        camera-target: object
+  model-info.summary:
+    lifecycle: single
+    category: curated
+    description: |
+      Compact model summary: entity counts by class, tag (layer) count,
+      component-definition count, material count, scene count, units,
+      bounding box.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        units:                     string
+        entity-count:              number
+        entities-by-class:         object
+        tag-count:                 number
+        component-definition-count: number
+        material-count:            number
+        scene-count:               number
+        bounding-box:              object
+  outliner.tree:
+    lifecycle: single
+    category: curated
+    description: |
+      Export the Outliner hierarchy (groups + component instances, nested)
+      as a JSON tree. The "what does this model contain" structural view.
+    inputs:
+      max-depth:
+        type: number
+        default: 8
+        description: Cap on recursion depth.
+    outputs:
+      type: single
+      schema:
+        node-count: number
+        tree:       object
   # === Auto-generated catalog commands =======================================
   array-cross:
     lifecycle: single
