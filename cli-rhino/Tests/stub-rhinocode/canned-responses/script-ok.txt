@@ -1,5 +1,0 @@
-some pre-result chatter from Rhino
-__AWARE_RESULT_BEGIN__
-{"count": 42}
-__AWARE_RESULT_END__
-trailing chatter

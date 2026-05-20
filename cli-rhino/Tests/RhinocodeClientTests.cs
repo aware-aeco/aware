@@ -58,8 +58,8 @@ public class RhinocodeClientTests : IDisposable
         var c = NewStubClient();
         var lastIdFile = Path.Combine(_dumpDir, "last-rhino-id.txt");
 
-        var tempScript = Path.Combine(_dumpDir, $"aware-rhino-test-{Guid.NewGuid():N}.cs");
-        File.WriteAllText(tempScript, "// noop");
+        var tempScript = Path.Combine(_dumpDir, $"aware-rhino-test-{Guid.NewGuid():N}.py");
+        File.WriteAllText(tempScript, "# noop");
 
         var (exit, stdout, stderr) = c.RunScript(tempScript,
                                                  rhinoId: "rhinocode_remotepipe_75029",
@@ -74,18 +74,25 @@ public class RhinocodeClientTests : IDisposable
     }
 
     [Fact]
-    public void RunScript_StdoutContainsSentinelBlock()
+    public void RunScript_WritesResultFileToResultPath_NotStdout()
     {
+        // Real rhinocode `script` returns no stdout; the script writes a result
+        // file. The stub mirrors that: given AWARE_RESULT_PATH it copies a canned
+        // {ok,result} JSON there and prints nothing. Verify the file appears.
         var c = NewStubClient();
-        var tempScript = Path.Combine(_dumpDir, $"aware-rhino-test-{Guid.NewGuid():N}.cs");
-        File.WriteAllText(tempScript, "// noop");
+        var tempScript = Path.Combine(_dumpDir, $"aware-rhino-test-{Guid.NewGuid():N}.py");
+        File.WriteAllText(tempScript, "# noop");
+        var resultPath = Path.Combine(_dumpDir, $"aware-rhino-result-{Guid.NewGuid():N}.json");
 
-        var (exit, stdout, _) = c.RunScript(tempScript, rhinoId: null, argsJson: "{}");
+        var (exit, stdout, _) = c.RunScript(tempScript, rhinoId: null, argsJson: "{}", resultPath: resultPath);
         File.Delete(tempScript);
 
         Assert.Equal(0, exit);
-        Assert.Contains(ScriptWrapper.ResultBeginSentinel, stdout);
-        Assert.Contains(ScriptWrapper.ResultEndSentinel, stdout);
+        Assert.True(string.IsNullOrWhiteSpace(stdout), $"expected empty stdout, got: {stdout}");
+        Assert.True(File.Exists(resultPath), $"stub did not write result file to {resultPath}");
+        var body = File.ReadAllText(resultPath);
+        Assert.Contains("\"ok\": true", body);
+        Assert.Contains("\"count\": 42", body);
     }
 
     [Fact]

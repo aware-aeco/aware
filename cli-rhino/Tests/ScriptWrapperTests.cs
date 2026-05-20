@@ -5,139 +5,111 @@ namespace AwareRhino.Tests;
 
 public class ScriptWrapperTests
 {
+    const string ResultPath = @"C:\Temp\aware-result.json";
+    const string ArgsJson = "{}";
+
     [Fact]
-    public void SplitUsings_NoUsings_BodyOnly()
+    public void Wrap_NestsBodyInsideAwareRunFunction()
     {
-        var (usings, body) = ScriptWrapper.SplitUsingsAndBody(
-            "var x = 1;\nreturn x;");
-        Assert.Empty(usings);
-        Assert.Equal("var x = 1;\nreturn x;", body.Trim());
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, ArgsJson);
+        Assert.Contains("def __aware_run(args):", wrapped);
+        // Body line is indented 4 spaces under the function.
+        Assert.Contains("\n    return 1\n", wrapped);
     }
 
     [Fact]
-    public void SplitUsings_OneDirective()
+    public void Wrap_EmitsPythonPreambleImports()
     {
-        var (usings, body) = ScriptWrapper.SplitUsingsAndBody(
-            "using Rhino.Geometry;\nvar p = new Point3d(0,0,0);\nreturn p;");
-        Assert.Single(usings);
-        Assert.Contains("using Rhino.Geometry;", usings);
-        Assert.DoesNotContain("using Rhino.Geometry", body);
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, ArgsJson);
+        Assert.Contains("import json, traceback, os", wrapped);
+        Assert.Contains("import Rhino", wrapped);
+        Assert.Contains("import rhinoscriptsyntax as rs", wrapped);
+        Assert.Contains("import scriptcontext as sc", wrapped);
+        Assert.Contains("import System", wrapped);
     }
 
     [Fact]
-    public void SplitUsings_MultipleDirectives()
+    public void Wrap_WritesResultToTheGivenPath()
     {
-        var (usings, body) = ScriptWrapper.SplitUsingsAndBody(
-            "using System.IO;\nusing Rhino;\nusing Rhino.Geometry;\nvar p = new Point3d(0,0,0);");
-        Assert.Equal(3, usings.Count);
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, ArgsJson);
+        // The path is embedded as a Python string literal (backslashes escaped).
+        Assert.Contains(@"""C:\\Temp\\aware-result.json""", wrapped);
+        Assert.Contains("open(__aware_result_path, \"w\", encoding=\"utf-8\")", wrapped);
+        Assert.Contains("json.dump(__aware_out, __aware_f, default=str)", wrapped);
     }
 
     [Fact]
-    public void SplitUsings_AliasDirective()
+    public void Wrap_BuildsOkAndErrorBranches()
     {
-        var (usings, body) = ScriptWrapper.SplitUsingsAndBody(
-            "using Geo = Rhino.Geometry;\nvar p = new Geo.Point3d(0,0,0);");
-        Assert.Single(usings);
-        Assert.Contains("using Geo = Rhino.Geometry;", usings);
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, ArgsJson);
+        Assert.Contains("__aware_retval = __aware_run(__aware_args)", wrapped);
+        Assert.Contains("\"ok\": True, \"result\": __aware_retval", wrapped);
+        Assert.Contains("except Exception as __aware_ex:", wrapped);
+        Assert.Contains("\"ok\": False, \"error\": str(__aware_ex), \"stack\": traceback.format_exc()", wrapped);
     }
 
     [Fact]
-    public void SplitUsings_IgnoresUsingStatement()
+    public void Wrap_EmbedsArgsJsonLiteral()
     {
-        // "using (var x = ...)" is a using-STATEMENT, not a directive. Keep it in body.
-        var (usings, body) = ScriptWrapper.SplitUsingsAndBody(
-            "using (var sw = new System.IO.StringWriter()) { sw.Write(\"x\"); }\nreturn null;");
-        Assert.Empty(usings);
-        Assert.Contains("using (var sw", body);
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, """{"a":1}""");
+        // Embedded literal with the inner quotes escaped for Python.
+        Assert.Contains("__aware_args_json = \"{\\\"a\\\":1}\"", wrapped);
+        Assert.Contains("__aware_args = json.loads(", wrapped);
     }
 
     [Fact]
-    public void Wrap_ProducesCompilableShape()
+    public void Wrap_PreservesMultiLineBodyIndentation()
     {
-        var wrapped = ScriptWrapper.Wrap(
-            "using Rhino.Geometry;\nvar p = new Point3d(0,0,0);\nreturn new { x = p.X };");
-
-        // Result must contain preamble sentinels and our __AwareRun shape.
-        Assert.Contains("__AWARE_RESULT_BEGIN__", wrapped);
-        Assert.Contains("__AWARE_RESULT_END__", wrapped);
-        Assert.Contains("static object? __AwareRun(IDictionary<string, object?> args)", wrapped);
-        Assert.Contains("var p = new Point3d(0,0,0);", wrapped);
-        Assert.Contains("return new { x = p.X };", wrapped);
-        // Preamble brings in the Rhino namespace already so user's "using Rhino.Geometry;"
-        // should still appear once (deduped against preamble).
-        var usingRhinoGeometryCount = System.Text.RegularExpressions.Regex.Matches(
-            wrapped, @"^using Rhino\.Geometry;\s*$",
-            System.Text.RegularExpressions.RegexOptions.Multiline).Count;
-        Assert.Equal(1, usingRhinoGeometryCount);
+        var body = "doc = Rhino.RhinoDoc.ActiveDoc\nn = doc.Objects.Count\nreturn n";
+        var wrapped = ScriptWrapper.Wrap(body, ResultPath, ArgsJson);
+        Assert.Contains("\n    doc = Rhino.RhinoDoc.ActiveDoc\n", wrapped);
+        Assert.Contains("\n    n = doc.Objects.Count\n", wrapped);
+        Assert.Contains("\n    return n\n", wrapped);
     }
 
     [Fact]
-    public void Wrap_DedupesPreambleUsings()
+    public void Wrap_PreservesNestedIndentation()
     {
-        // User supplies a using that's already in the preamble (Rhino).
-        var wrapped = ScriptWrapper.Wrap("using Rhino;\nreturn 1;");
-        var usingRhinoCount = System.Text.RegularExpressions.Regex.Matches(
-            wrapped, @"^using Rhino;\s*$",
-            System.Text.RegularExpressions.RegexOptions.Multiline).Count;
-        Assert.Equal(1, usingRhinoCount);
+        // A user `for` loop body keeps its own 4-space indent ON TOP of the
+        // function's 4-space indent → 8 spaces total for the inner line.
+        var body = "total = 0\nfor x in range(3):\n    total += x\nreturn total";
+        var wrapped = ScriptWrapper.Wrap(body, ResultPath, ArgsJson);
+        Assert.Contains("\n    for x in range(3):\n", wrapped);
+        Assert.Contains("\n        total += x\n", wrapped);
     }
 
     [Fact]
-    public void Wrap_PreservesUserBodyVerbatim()
+    public void Wrap_BodyWithoutReturnGetsImplicitNoneReturn()
     {
-        var body = "// my comment\nvar doc = Rhino.RhinoDoc.ActiveDoc;\nint n = doc.Objects.Count;\nreturn n;";
-        var wrapped = ScriptWrapper.Wrap(body);
-        Assert.Contains("// my comment", wrapped);
-        Assert.Contains("int n = doc.Objects.Count;", wrapped);
-        Assert.Contains("return n;", wrapped);
+        var wrapped = ScriptWrapper.Wrap("x = 1", ResultPath, ArgsJson);
+        Assert.Contains("\n    x = 1\n", wrapped);
+        // No top-level return in the body → wrapper appends one.
+        Assert.Contains("\n    return None\n", wrapped);
     }
 
     [Fact]
-    public void Wrap_PlacesPreambleUsingsAtTop()
+    public void Wrap_EmptyBodyStillProducesValidFunction()
     {
-        var wrapped = ScriptWrapper.Wrap("return 1;");
-        var idxUsing = wrapped.IndexOf("using System;", StringComparison.Ordinal);
-        var idxRun = wrapped.IndexOf("__AwareRun", StringComparison.Ordinal);
-        Assert.True(idxUsing >= 0);
-        Assert.True(idxRun > idxUsing, "using directives must precede the __AwareRun function");
+        var wrapped = ScriptWrapper.Wrap("", ResultPath, ArgsJson);
+        Assert.Contains("def __aware_run(args):", wrapped);
+        Assert.Contains("\n    return None\n", wrapped);
     }
 
     [Fact]
-    public void Wrap_TopLevelStatementsBeforeLocalFunctions()
+    public void Wrap_DoesNotEmitCSharpOrSentinels()
     {
-        // C# 9 top-level statements MUST come before any type/method declarations
-        // (local functions at file bottom are allowed because they belong to the
-        // synthetic Program.<Main>$). Top-level call site of __AwareRun must
-        // appear before the function definition.
-        var wrapped = ScriptWrapper.Wrap("return 1;");
-        var idxCall = wrapped.IndexOf("__AwareRun(args)", StringComparison.Ordinal);
-        var idxDefn = wrapped.IndexOf("static object? __AwareRun(", StringComparison.Ordinal);
-        Assert.True(idxCall >= 0);
-        Assert.True(idxDefn >= 0);
-        Assert.True(idxCall < idxDefn, "call site must come before local function definition");
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, ArgsJson);
+        Assert.DoesNotContain("__AWARE_RESULT_BEGIN__", wrapped);
+        Assert.DoesNotContain("__AWARE_RESULT_END__", wrapped);
+        Assert.DoesNotContain("Console.WriteLine", wrapped);
+        Assert.DoesNotContain("using System;", wrapped);
     }
 
     [Fact]
-    public void Wrap_EmptyBodyStillCompiles()
+    public void PyStringLiteral_EscapesBackslashesAndQuotes()
     {
-        var wrapped = ScriptWrapper.Wrap("");
-        Assert.Contains("__AwareRun", wrapped);
-        Assert.Contains("return null;", wrapped);  // safe default body
-    }
-
-    [Fact]
-    public void Wrap_BodyWithoutReturnGetsImplicitNullReturn()
-    {
-        // If user body has no `return`, we still want __AwareRun to return null
-        // rather than be a CS0161 (not all code paths return a value). Wrapper
-        // appends a `return null;` if no top-level `return` keyword found.
-        var wrapped = ScriptWrapper.Wrap("Console.WriteLine(\"hi\");");
-        // Verify there IS a return null somewhere inside __AwareRun.
-        // Naive substring check: the wrapper appends a final `return null;` if absent.
-        Assert.Contains("Console.WriteLine(\"hi\");", wrapped);
-        // Count return statements in the synthetic function — at least 1.
-        var runFnStart = wrapped.IndexOf("static object? __AwareRun(", StringComparison.Ordinal);
-        var afterFn = wrapped.Substring(runFnStart);
-        Assert.Contains("return null;", afterFn);
+        Assert.Equal(@"""C:\\a\\b.json""", ScriptWrapper.PyStringLiteral(@"C:\a\b.json"));
+        Assert.Equal("\"say \\\"hi\\\"\"", ScriptWrapper.PyStringLiteral("say \"hi\""));
+        Assert.Equal("\"line1\\nline2\"", ScriptWrapper.PyStringLiteral("line1\nline2"));
     }
 }

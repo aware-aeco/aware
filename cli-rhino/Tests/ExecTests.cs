@@ -28,64 +28,84 @@ public class ExecTests : IDisposable
         "stub-rhinocode",
         "rhinocode.cmd");
 
-    [Fact]
-    public void Run_AgainstStubBinary_ProducesOkReceiptWithStubResult()
-    {
-        // End-to-end through Exec.Run: wrap user code → write temp .cs →
-        // shell out to stub rhinocode → parse stub's canned sentinel block →
-        // emit AWARE-shaped receipt. Validates the full pipeline minus rhinocode.
-        var client = new RhinocodeClient(rhinocodeExeOverride: StubExePath);
-        var input = JsonNode.Parse("""{"verb":"exec","code":"return 42;"}""");
+    static string SilentStubExePath => Path.Combine(
+        Path.GetDirectoryName(typeof(ExecTests).Assembly.Location)!,
+        "stub-rhinocode",
+        "rhinocode-silent.cmd");
 
-        // Capture Exec.Run's stdout into a string so we can inspect the receipt.
+    static (int exit, JsonObject? receipt) RunExec(RhinocodeClient client, JsonNode? input)
+    {
         using var sw = new StringWriter();
         var originalOut = Console.Out;
         Console.SetOut(sw);
         int exit;
         try { exit = Exec.Run(client, input); }
         finally { Console.SetOut(originalOut); }
+        var receipt = JsonNode.Parse(sw.ToString().Trim()) as JsonObject;
+        return (exit, receipt);
+    }
+
+    [Fact]
+    public void Run_AgainstStubBinary_ProducesOkReceiptWithResultFromFile()
+    {
+        // End-to-end through Exec.Run: wrap user Python → write temp .py → shell
+        // out to the stub → stub writes the canned result to AWARE_RESULT_PATH →
+        // Exec reads that file → emits AWARE-shaped receipt. Validates the full
+        // file-based pipeline minus real Rhino.
+        var client = new RhinocodeClient(rhinocodeExeOverride: StubExePath);
+        var input = JsonNode.Parse("""{"verb":"exec","code":"return 42"}""");
+
+        var (exit, receipt) = RunExec(client, input);
 
         Assert.Equal(0, exit);
-        var receipt = JsonNode.Parse(sw.ToString().Trim()) as JsonObject;
         Assert.NotNull(receipt);
         Assert.True(receipt!["ok"]?.GetValue<bool>());
         Assert.Equal("rhino", receipt["host"]?.GetValue<string>());
         Assert.Equal("exec", receipt["verb"]?.GetValue<string>());
-        // Stub's canned result is {"count": 42} — confirm it round-trips.
+        // Stub's canned result is {"ok":true,"result":{"count":42}} — confirm it round-trips.
         var result = receipt["result"] as JsonObject;
         Assert.NotNull(result);
         Assert.Equal(42, result!["count"]?.GetValue<int>());
-        // The "trailing chatter" line from the stub's canned response lands in stdout_log.
-        Assert.Contains("trailing chatter", receipt["stdout_log"]?.GetValue<string>() ?? "");
     }
 
     [Fact]
-    public void ExtractResultJson_HappyPath()
+    public void Run_MissingCode_FailsWithExit2()
     {
-        var stdout = "noise\n__AWARE_RESULT_BEGIN__\n{\"x\":1}\n__AWARE_RESULT_END__\nmore noise";
-        var (json, rest) = Exec.ExtractResultJson(stdout);
-        Assert.Equal("{\"x\":1}", json);
-        Assert.Contains("noise", rest);
-        Assert.Contains("more noise", rest);
-        Assert.DoesNotContain("__AWARE_RESULT_", rest);
+        var client = new RhinocodeClient(rhinocodeExeOverride: StubExePath);
+        var input = JsonNode.Parse("""{"verb":"exec"}""");
+
+        var (exit, receipt) = RunExec(client, input);
+
+        Assert.Equal(2, exit);
+        Assert.NotNull(receipt);
+        Assert.False(receipt!["ok"]?.GetValue<bool>());
+        Assert.Contains("code", receipt["error"]?.GetValue<string>() ?? "");
     }
 
     [Fact]
-    public void ExtractResultJson_MultiLineJson()
+    public void Run_WhenScriptWritesNoResultFile_FailsWithInfraError()
     {
-        var stdout = "__AWARE_RESULT_BEGIN__\n{\n  \"x\": 1,\n  \"y\": 2\n}\n__AWARE_RESULT_END__";
-        var (json, _) = Exec.ExtractResultJson(stdout);
-        Assert.NotNull(json);
-        Assert.Contains("\"x\": 1", json!);
-        Assert.Contains("\"y\": 2", json!);
-    }
+        // The silent stub returns exit 0 but writes NOTHING — simulating a script
+        // that never ran or threw before the result write. Exec polls for the
+        // file and, when it never appears, must report the "result file not
+        // written" infra failure rather than a false success. Use a short
+        // timeout so the test doesn't sit through the 60s production default.
+        Environment.SetEnvironmentVariable("AWARE_EXEC_TIMEOUT_MS", "300");
+        try
+        {
+            var client = new RhinocodeClient(rhinocodeExeOverride: SilentStubExePath);
+            var input = JsonNode.Parse("""{"verb":"exec","code":"return 1"}""");
 
-    [Fact]
-    public void ExtractResultJson_NoSentinels_ReturnsNullAndAllStdout()
-    {
-        var stdout = "boom this script threw\nat line 5";
-        var (json, rest) = Exec.ExtractResultJson(stdout);
-        Assert.Null(json);
-        Assert.Contains("boom this script threw", rest);
+            var (exit, receipt) = RunExec(client, input);
+
+            Assert.Equal(2, exit);
+            Assert.NotNull(receipt);
+            Assert.False(receipt!["ok"]?.GetValue<bool>());
+            Assert.Contains("result file not written", receipt["error"]?.GetValue<string>() ?? "");
+        }
+        finally
+        {
+            Environment.SetEnvironmentVariable("AWARE_EXEC_TIMEOUT_MS", null);
+        }
     }
 }
