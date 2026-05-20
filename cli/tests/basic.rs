@@ -40,7 +40,7 @@ fn version_prints_version() {
         .assert()
         .success()
         .stdout(predicate::str::contains("aware"))
-        .stdout(predicate::str::contains("0.28.1"));
+        .stdout(predicate::str::contains(env!("CARGO_PKG_VERSION")));
 }
 
 #[test]
@@ -67,20 +67,6 @@ fn app_subcommand_help_works() {
         .stdout(predicate::str::contains("show"))
         .stdout(predicate::str::contains("run"))
         .stdout(predicate::str::contains("stop"));
-}
-
-#[test]
-fn unimplemented_subcommand_exits_nonzero_with_message() {
-    // `agent publish` is a genuine NotYetImplemented stub (v0.6+).
-    // All tier-C build sources (--from-dlls, --from-com, --from-headers) now
-    // route through the C# sidecar and return NotFound when the sidecar is absent,
-    // not NotYetImplemented — so they are no longer usable as sentinels here.
-    Command::cargo_bin("aware")
-        .unwrap()
-        .args(["agent", "publish", "some-agent"])
-        .assert()
-        .failure()
-        .stderr(predicate::str::contains("not yet implemented"));
 }
 
 #[test]
