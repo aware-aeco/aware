@@ -152,10 +152,12 @@ jobs:
   publish-npm:
     needs: release
     runs-on: ubuntu-latest
-    # npm is a secondary distribution channel. A publish failure (e.g. the
-    # @aware-aeco scope/org or NPM_TOKEN not yet provisioned) must NOT fail the
-    # release — the GitHub Release binaries are the primary, authoritative
-    # artifact. Once npm is set up this job goes green on its own.
+    # Publishes via npm Trusted Publishing (OIDC) -- no long-lived token.
+    # npm revoked the old NPM_TOKEN in its 2026 granular-token rotation
+    # (Shai-Hulud supply-chain precaution), which is why 0.28.1 published but
+    # 0.36.0 404'd with no repo change. Kept continue-on-error so a npm hiccup
+    # can't fail the release -- the GitHub Release binaries are the primary
+    # artifact. Safe to remove once trusted publishing is confirmed green.
     continue-on-error: true
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
@@ -165,8 +167,11 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
         with:
-          node-version: '20'
+          node-version: '24'   # trusted publishing needs Node >= 22.14.0
           registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: Ensure npm supports trusted publishing (>= 11.5.1)
+        run: npm install -g npm@latest
       - name: Sync package.json version from tag
         working-directory: cli-npm
         run: |
@@ -175,8 +180,6 @@ jobs:
           # Use Node to update version (avoids jq dependency)
           node -e "const pkg=require('./package.json'); pkg.version='$version'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2) + '\n')"
           cat package.json
-      - name: Publish to npm
+      - name: Publish to npm (OIDC trusted publishing -- no token)
         working-directory: cli-npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npm publish --access public --provenance
