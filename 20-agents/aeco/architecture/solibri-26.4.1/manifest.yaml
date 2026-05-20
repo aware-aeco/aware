@@ -232,5 +232,8 @@ commands:
     description: Update IFC Model
 
 skills:
+  - solibri-rule-sets-and-checks.md
+  - solibri-ifc-and-federation.md
+  - solibri-bcf-export-import.md
   - solibri-rest-api.md
   - solibri-rest-model.md

@@ -251,5 +251,7 @@ commands:
         invited: number
 
 skills:
+  - bluebeam-rest-auth.md
+  - bluebeam-markup-types.md
   - sessions-vs-projects.md
   - markup-disposition-workflow.md

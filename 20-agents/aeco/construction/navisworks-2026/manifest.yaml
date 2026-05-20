@@ -314,6 +314,12 @@ commands:
         task-count: number
 
 skills:
+  - viewpoints-and-markup.md
+  - timeliner-and-4d.md
+  - selection-and-search-sets.md
+  - publish-and-export.md
+  - property-search-and-quantification.md
+  - appearance-profiler.md
   - federation-and-coordinates.md
   - clash-detection-workflow.md
   - bcf-roundtrip.md
