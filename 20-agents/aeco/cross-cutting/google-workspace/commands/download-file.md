@@ -33,7 +33,7 @@ filename: string
 
 ## Implementation note
 
-Calls `GET files.get?alt=media` (Drive v3) to stream the raw bytes. For native Google formats (Docs / Sheets / Slides) use `files.export` instead — `alt=media` only works on binary blobs. Read scope: `drive.readonly`. Back off on HTTP 429 / 403 `rateLimitExceeded`.
+Calls `GET files.get?alt=media` (Drive v3) to stream the raw bytes. For native Google formats (Docs / Sheets / Slides) use `files.export` instead — `alt=media` only works on binary blobs (`files.export` also works under `drive.readonly`). Read scope: `drive.readonly`. Back off on HTTP 429 / 403 `rateLimitExceeded`.
 
 ## See also
 

@@ -40,7 +40,7 @@ web-url: string
 
 ## Implementation note
 
-Calls `POST files.create` (Drive v3) with `uploadType=multipart` for payloads ≤ 5MB and `uploadType=resumable` for larger ones. Write scope: `drive.file` (or broader `drive`). Back off on HTTP 429 / 403 `rateLimitExceeded`.
+Calls `POST files.create` (Drive v3) with `uploadType=multipart` for payloads ≤ 5MB and `uploadType=resumable` for larger ones. Write scope: **`drive`** — uploading into an existing/shared `parent-folder-id` (as in the example) is outside `drive.file`'s reach; `drive.file` suffices only when the app created the parent or no parent is given. Back off on HTTP 429 / 403 `rateLimitExceeded`.
 
 ## See also
 

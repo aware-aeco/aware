@@ -40,7 +40,7 @@ web-url:    "https://teams.microsoft.com/l/message/19:abc.../1715958331234?..."
 
 ## Implementation note
 
-Calls `POST /chats/{chat-id}/messages`. Microsoft Graph limits chat sends to ~15/sec per user — the transport rate-limits to stay under, and honors the `Retry-After` header on HTTP 429. Requires the `ChatMessage.Send` scope; provision via `aware connect microsoft-365`.
+Calls `POST /chats/{chat-id}/messages`. Microsoft Graph caps a chat-message POST at **~1 request/second per user** for a given chat (higher per-app/per-tenant ceilings apply); the transport honors the `Retry-After` header on HTTP 429. Requires the `ChatMessage.Send` scope; provision via `aware connect microsoft-365`.
 
 ## See also
 
