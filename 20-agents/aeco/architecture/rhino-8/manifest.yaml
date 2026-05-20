@@ -33,6 +33,245 @@ transport:
     binary: aware-rhino
 
 commands:
+  # === v0.33 curated workflow verbs ==========================================
+  # Hand-curated workflow verbs per the v0.10 curation framework. Each
+  # declares typed inputs/outputs; the implementation is the documented
+  # C# snippet in commands/<name>.md, shipped through aware-rhino exec.
+  view.capture-bitmap:
+    lifecycle: single
+    category: curated
+    description: |
+      Capture the named view as a PNG bitmap at a specified resolution.
+      The designer/architect "Monday-shot" + RFI-screenshot primitive.
+    inputs:
+      view-name:
+        type: string
+        description: Named view to activate before capture. Empty = active viewport.
+      out-path:
+        type: string
+        description: Output PNG file path.
+      width:
+        type: number
+        default: 1920
+      height:
+        type: number
+        default: 1080
+      transparent-background:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        path:   string
+        bytes:  number
+        width:  number
+        height: number
+  layer.set-by-pattern:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Move every object whose current layer matches a regex onto a target
+      layer. Used for cleaning imported models. Creates the target layer
+      if it doesn't exist.
+    inputs:
+      from-pattern:
+        type: string
+        description: .NET regex matched against the source layer's FullPath.
+      to-layer:
+        type: string
+        description: Target layer FullPath. Created if missing.
+      to-layer-color:
+        type: string
+        description: Optional CSS hex color (e.g. "#FF8800"). Used only on layer create.
+    outputs:
+      type: single
+      schema:
+        target-layer-index: number
+        moved-count:        number
+        created-target:     boolean
+  block.list-instances:
+    lifecycle: single
+    category: curated
+    description: |
+      Enumerate every InstanceObject for a given block definition (by name
+      OR id), returning location, scale, and rotation.
+    inputs:
+      definition-name:
+        type: string
+        description: Block definition name. Use this OR definition-id.
+      definition-id:
+        type: string
+        description: Block definition GUID. Use this OR definition-name.
+    outputs:
+      type: single
+      schema:
+        definition-name: string
+        definition-id:   string
+        instance-count:  number
+        instances:
+          type: array
+          items:
+            id:       string
+            position: object
+            rotation: number
+            scale:    object
+  mesh.repair:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Close naked edges, weld vertices, and remove duplicate faces on the
+      selected meshes. The pre-export sanity pass before STL/3MF.
+    inputs:
+      weld-angle-degrees:
+        type: number
+        default: 0
+        description: 0 disables welding. Common value 30.
+      close-naked-edges:
+        type: boolean
+        default: true
+      cull-degenerate-faces:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        processed-count: number
+        results:
+          type: array
+          items:
+            id:                 string
+            naked-edges-closed: number
+            faces-removed:      number
+            vertices-welded:    number
+  export.layouts-to-pdf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export every layout in the active doc to a single PDF (or one PDF
+      per layout). The architect "issue the sheet pack" primitive.
+    inputs:
+      out-path:
+        type: string
+        description: Output PDF path, or DIRECTORY when one-per-layout=true.
+      one-per-layout:
+        type: boolean
+        default: false
+      dpi:
+        type: number
+        default: 300
+      layout-name-filter:
+        type: string
+        description: Optional regex; only layouts matching are exported. Empty = all.
+    outputs:
+      type: single
+      schema:
+        exported-count: number
+        files:
+          type: array
+          items: string
+  selection.by-attribute:
+    lifecycle: single
+    category: curated
+    description: |
+      Select objects whose user-text attribute matches a value or regex.
+      The "find every part tagged X" / "select by mark" primitive.
+    inputs:
+      key:
+        type: string
+        description: User-text key to read (e.g. "AWARE_RUN_ID").
+      value:
+        type: string
+        description: Exact value to match (case-insensitive). Use this OR pattern.
+      pattern:
+        type: string
+        description: Regex to match the value. Use this OR value.
+      add-to-selection:
+        type: boolean
+        default: false
+        description: When true, ADDS to the current selection. When false (default), replaces.
+    outputs:
+      type: single
+      schema:
+        matched-count: number
+        ids:
+          type: array
+          items: string
+  user-text.bulk-write:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write multiple user-text key/value pairs onto every selected object.
+      The "stamp the run id" / "tag-by-mark" primitive.
+    inputs:
+      entries:
+        type: object
+        description: Map of key -> value (both strings) to write on every selected object.
+    outputs:
+      type: single
+      schema:
+        objects-stamped: number
+        keys-written:    number
+  snapshot.save-named-view:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Save the current active viewport (camera + display mode) as a named view.
+      The "capture this perspective for later" primitive.
+    inputs:
+      view-name:
+        type: string
+        description: Name for the new named view. If exists, overwrites unless overwrite=false.
+      overwrite:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        view-name:    string
+        overwritten:  boolean
+        camera-location: object
+        camera-target:   object
+  model-info.summary:
+    lifecycle: single
+    category: curated
+    description: |
+      Compact model summary: object counts by class, layer count, block-def
+      count, units, bounding box, named-view list. The "what's in this 3dm"
+      one-shot inventory.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        units:         string
+        object-count:  number
+        objects-by-class: object
+        layer-count:   number
+        block-definition-count: number
+        named-view-count: number
+        bounding-box:  object
+  worksession.reload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Reload all worksession-attached models (out-of-process references).
+      The "pull the latest from teammates" primitive. Reports per-file
+      success/failure.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        attached-count: number
+        results:
+          type: array
+          items:
+            path:    string
+            success: boolean
+            error:   string
   # === v0.32 runtime verbs (aware-rhino sidecar) =============================
   exec:
     lifecycle: single
