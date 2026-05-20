@@ -1,119 +1,130 @@
-// Wraps the user's C# `code` (from {verb:"exec", code: "..."}) into a complete
-// .cs file that rhinocode can execute. The wrapped file uses C# 9 top-level
-// statements + a synthetic `__AwareRun(args)` local function so the user's
-// body can use `return X;` semantics — same UX as cli-tekla's exec.
+// Wraps the user's Python `code` (from {verb:"exec", code: "..."}) into a
+// complete .py file that rhinocode can execute. The user's body ends with a
+// `return <value>` statement, so we nest it inside a synthetic
+// `__aware_run(args)` function — same `return X` UX as cli-tekla's exec.
+//
+// IMPORTANT — why the result path is BAKED INTO the source (not an env var):
+// `rhinocode script foo.py` does NOT spawn a fresh interpreter. It ships the
+// script over a named pipe into the ALREADY-RUNNING Rhino process and runs it
+// there. That process inherited Rhino's environment at launch — NOT the
+// environment of the short-lived `rhinocode.exe` child we start. So env vars
+// we set on the child (AWARE_RESULT_PATH / AWARE_ARGS_JSON) are invisible to
+// the script, and the script's stdout never comes back to us either. The only
+// channel that works is: bake the values into the source as literals, have the
+// script WRITE its result to a file, then read that file back. Proven against
+// live Rhino 8.31.
 
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace AwareRhino;
 
 internal static class ScriptWrapper
 {
-    // Matches `using <id>(.<id>)*;` and `using <alias> = <id>(.<id>)*;`
-    // but NOT `using (var x = ...)` statement form.
-    //
-    // Caveat: user scripts that wrap usings in #if / #region preprocessor
-    // blocks will be mis-split — the using gets pulled to the top, but the
-    // surrounding #if stays in the body, so the directive becomes
-    // unconditional. The AI orchestrators that generate exec scripts don't
-    // use preprocessor directives; document this in the agent's exec command
-    // description if that ever changes.
-    static readonly Regex UsingDirectiveRe = new(
-        @"^\s*using\s+(?:[A-Za-z_][A-Za-z0-9_]*\s*=\s*)?[A-Za-z_][A-Za-z0-9_.]*\s*;\s*$",
-        RegexOptions.Compiled);
-
-    // Preamble brings in the standard Rhino + BCL namespaces. Dedup against
-    // user-supplied directives is by exact string match (C# is case-sensitive).
-    static readonly string[] PreambleUsings = new[]
+    // Preamble brings in the standard Rhino + stdlib modules most exec scripts
+    // need. We do NOT dedup against user imports — Python tolerates redundant
+    // `import` statements, and user fixtures use fully-qualified `Rhino.*`.
+    static readonly string[] PreambleImports = new[]
     {
-        "using System;",
-        "using System.Collections.Generic;",
-        "using System.Linq;",
-        "using System.IO;",
-        "using System.Text.Json;",
-        "using System.Text.Json.Serialization;",
-        "using Rhino;",
-        "using Rhino.DocObjects;",
-        "using Rhino.Geometry;",
-        "using Rhino.Input;",
-        "using Rhino.Input.Custom;",
-        "using Rhino.PlugIns;",
-        "using Rhino.UI;",
+        "import json, traceback, os",
+        "import Rhino",
+        "import rhinoscriptsyntax as rs",
+        "import scriptcontext as sc",
+        "import System",
     };
 
-    public static (List<string> usings, string body) SplitUsingsAndBody(string code)
+    /// <summary>
+    /// Builds the full Python script. <paramref name="resultPath"/> is where the
+    /// script writes its <c>{ok,result}</c> / <c>{ok:false,error,stack}</c> dict;
+    /// <paramref name="argsJson"/> is the JSON the user body reads via its
+    /// <c>args</c> parameter. Both are embedded as source literals (see header).
+    /// </summary>
+    public static string Wrap(string userCode, string resultPath, string argsJson)
     {
-        var usings = new List<string>();
-        var bodyLines = new List<string>();
-        bool inDirectives = true;  // Stop collecting directives at first non-directive line.
+        // Normalise newlines, then indent every user line by 4 spaces so it sits
+        // inside `def __aware_run(args):`. Blank lines stay blank (no trailing
+        // whitespace) to keep the body clean.
+        var normalised = (userCode ?? string.Empty).Replace("\r\n", "\n").Replace("\r", "\n");
+        var bodyLines = normalised.Split('\n').ToList();
 
-        foreach (var line in code.Replace("\r\n", "\n").Split('\n'))
+        // Defensive: if the body has no top-level `return`, append one so
+        // __aware_run always yields a value. Naive check — a `return` nested in
+        // a comment/string would suppress this, but then the user owns the bug.
+        bool hasReturn = bodyLines.Any(l =>
         {
-            if (inDirectives && UsingDirectiveRe.IsMatch(line))
-            {
-                usings.Add(line.Trim());
-            }
-            else if (inDirectives && string.IsNullOrWhiteSpace(line))
-            {
-                // Whitespace between directives is allowed; stays in directives bucket.
-                // We don't add it anywhere — body re-starts at first real statement.
-            }
-            else
-            {
-                inDirectives = false;
-                bodyLines.Add(line);
-            }
-        }
+            var t = l.TrimStart();
+            return t.StartsWith("return ", StringComparison.Ordinal)
+                || t == "return"
+                || t.StartsWith("return\t", StringComparison.Ordinal);
+        });
 
-        return (usings, string.Join("\n", bodyLines));
-    }
-
-    public static string Wrap(string userCode)
-    {
-        var (userUsings, body) = SplitUsingsAndBody(userCode);
-
-        // Dedup: keep preamble usings; add only user usings that aren't already there.
-        var preambleSet = new HashSet<string>(PreambleUsings, StringComparer.Ordinal);
-        var extraUsings = userUsings.Where(u => !preambleSet.Contains(u)).Distinct().ToList();
-
-        // Defensive: if body has no `return` keyword, append `return null;` so the
-        // synthetic function doesn't fail CS0161. Naive keyword search is fine for
-        // top-level snippets; nested `return`s inside lambdas count too — false-
-        // negatives just append a dead `return null;` which is harmless.
-        var bodyHasReturn = Regex.IsMatch(body, @"\breturn\b");
-        var bodyWithReturn = bodyHasReturn ? body : (body.TrimEnd() + "\nreturn null;");
-        if (string.IsNullOrWhiteSpace(body))
-            bodyWithReturn = "return null;";
+        var indented = new List<string>();
+        foreach (var line in bodyLines)
+            indented.Add(string.IsNullOrEmpty(line.TrimEnd()) ? string.Empty : "    " + line);
+        if (!hasReturn) indented.Add("    return None");
+        // Guard against an entirely-empty body producing an empty function.
+        if (indented.All(l => string.IsNullOrEmpty(l))) indented.Add("    return None");
 
         var sb = new StringBuilder();
-        sb.AppendLine("// AWARE-generated script (do not edit)");
-        foreach (var u in PreambleUsings) sb.AppendLine(u);
-        foreach (var u in extraUsings) sb.AppendLine(u);
-        sb.AppendLine();
-        sb.AppendLine("var __awareArgsJson = Environment.GetEnvironmentVariable(\"AWARE_ARGS_JSON\") ?? \"{}\";");
-        sb.AppendLine("var args = JsonSerializer.Deserialize<Dictionary<string, object?>>(__awareArgsJson)");
-        sb.AppendLine("           ?? new Dictionary<string, object?>();");
-        sb.AppendLine();
-        sb.AppendLine("var __result = __AwareRun(args);");
-        sb.AppendLine("Console.WriteLine(\"__AWARE_RESULT_BEGIN__\");");
-        sb.AppendLine("Console.WriteLine(JsonSerializer.Serialize(__result, new JsonSerializerOptions {");
-        sb.AppendLine("    WriteIndented = false,");
-        sb.AppendLine("    ReferenceHandler = ReferenceHandler.IgnoreCycles,");
-        sb.AppendLine("    MaxDepth = 6,");
-        sb.AppendLine("}));");
-        sb.AppendLine("Console.WriteLine(\"__AWARE_RESULT_END__\");");
-        sb.AppendLine();
-        sb.AppendLine("static object? __AwareRun(IDictionary<string, object?> args)");
-        sb.AppendLine("{");
-        foreach (var line in bodyWithReturn.Split('\n'))
-            sb.AppendLine("    " + line);
-        sb.AppendLine("}");
+        sb.Append("# AWARE-generated script (do not edit)\n");
+        foreach (var imp in PreambleImports) sb.Append(imp).Append('\n');
+        sb.Append('\n');
+
+        sb.Append("def __aware_run(args):\n");
+        foreach (var line in indented) sb.Append(line).Append('\n');
+        sb.Append('\n');
+
+        // Embed args + result path as literals. Also read the env var as a
+        // fallback in case a future rhinocode variant DOES propagate env.
+        sb.Append("__aware_args_json = ").Append(PyStringLiteral(argsJson)).Append('\n');
+        sb.Append("__aware_result_path = os.environ.get(\"AWARE_RESULT_PATH\") or ")
+          .Append(PyStringLiteral(resultPath)).Append('\n');
+        sb.Append("try:\n");
+        sb.Append("    __aware_args = json.loads(os.environ.get(\"AWARE_ARGS_JSON\") or __aware_args_json or \"{}\")\n");
+        sb.Append("except Exception:\n");
+        sb.Append("    __aware_args = {}\n");
+        sb.Append('\n');
+
+        sb.Append("try:\n");
+        sb.Append("    __aware_retval = __aware_run(__aware_args)\n");
+        sb.Append("    __aware_out = {\"ok\": True, \"result\": __aware_retval}\n");
+        sb.Append("except Exception as __aware_ex:\n");
+        sb.Append("    __aware_out = {\"ok\": False, \"error\": str(__aware_ex), \"stack\": traceback.format_exc()}\n");
+        sb.Append('\n');
+
+        sb.Append("with open(__aware_result_path, \"w\", encoding=\"utf-8\") as __aware_f:\n");
+        sb.Append("    json.dump(__aware_out, __aware_f, default=str)\n");
 
         return sb.ToString();
     }
 
-    // Result-sentinel markers (constants — used by Exec verb too).
-    public const string ResultBeginSentinel = "__AWARE_RESULT_BEGIN__";
-    public const string ResultEndSentinel   = "__AWARE_RESULT_END__";
+    /// <summary>
+    /// Renders <paramref name="value"/> as a safe Python single-line string
+    /// literal: double-quoted with backslash, quote, and control chars escaped.
+    /// Used for both the file path (Windows backslashes) and the args JSON.
+    /// </summary>
+    internal static string PyStringLiteral(string? value)
+    {
+        var s = value ?? string.Empty;
+        var sb = new StringBuilder(s.Length + 2);
+        sb.Append('"');
+        foreach (var ch in s)
+        {
+            switch (ch)
+            {
+                case '\\': sb.Append("\\\\"); break;
+                case '"':  sb.Append("\\\""); break;
+                case '\n': sb.Append("\\n"); break;
+                case '\r': sb.Append("\\r"); break;
+                case '\t': sb.Append("\\t"); break;
+                default:
+                    if (ch < 0x20)
+                        sb.Append("\\x").Append(((int)ch).ToString("x2"));
+                    else
+                        sb.Append(ch);
+                    break;
+            }
+        }
+        sb.Append('"');
+        return sb.ToString();
+    }
 }

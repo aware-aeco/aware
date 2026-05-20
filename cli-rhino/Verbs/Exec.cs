@@ -1,6 +1,11 @@
-// `exec` verb: wraps the user's C# in a temp .cs file, ships it through
-// rhinocode (optionally targeting a specific Rhino instance), parses the
-// result between sentinels, emits an AWARE-shaped receipt.
+// `exec` verb: wraps the user's Python in a temp .py file, ships it through
+// rhinocode (optionally targeting a specific Rhino instance), reads the result
+// the script wrote to a temp file, and emits an AWARE-shaped receipt.
+//
+// Why a result FILE and not stdout: `rhinocode script` runs the script inside
+// the already-running Rhino process and returns nothing on stdout. The script
+// writes its {ok,result} dict to a path we chose and baked into its source;
+// we read that file back here. See ScriptWrapper for the full rationale.
 
 using System.Text.Json.Nodes;
 
@@ -14,7 +19,7 @@ internal static class Exec
         if (string.IsNullOrEmpty(code))
         {
             Console.WriteLine(Receipts.ExecFail(
-                "missing required field: code (C# script to compile + run)", "", "")
+                "missing required field: code (Python script to run against the active Rhino doc)", "", "")
                 .ToJsonString());
             return 2;
         }
@@ -74,83 +79,85 @@ internal static class Exec
             }
         }
 
-        // Wrap, write temp, ship.
-        var wrapped = ScriptWrapper.Wrap(code!);
-        var tempPath = Path.Combine(Path.GetTempPath(),
-            $"aware-rhino-exec-{Guid.NewGuid():N}.cs");
-        File.WriteAllText(tempPath, wrapped);
+        // Choose a unique result-file path, wrap the user's Python around it
+        // (baking the path + args into the source), write the temp .py, ship it.
+        var resultPath = Path.Combine(Path.GetTempPath(),
+            $"aware-rhino-result-{Guid.NewGuid():N}.json");
+        var wrapped = ScriptWrapper.Wrap(code!, resultPath, argsJson);
+        var scriptPath = Path.Combine(Path.GetTempPath(),
+            $"aware-rhino-exec-{Guid.NewGuid():N}.py");
+        File.WriteAllText(scriptPath, wrapped);
 
         try
         {
-            var (exit, stdout, stderr) = client.RunScript(tempPath, rhinoId, argsJson);
+            var (exit, stdout, stderr) = client.RunScript(scriptPath, rhinoId, argsJson, resultPath);
 
-            // Find the sentinel block.
-            var (jsonText, otherStdout) = ExtractResultJson(stdout);
-            if (jsonText is null)
+            // `rhinocode script` is FIRE-AND-FORGET: it ships the script to the
+            // live Rhino over a named pipe and returns exit 0 *immediately*,
+            // before the script has finished running and written its result
+            // file (empirically ~100ms later). So we poll for the file rather
+            // than checking once. The result file is the only reliable channel —
+            // if it never appears within the timeout the script either didn't
+            // run or threw before the write.
+            //
+            // The timeout is generous (default 60s) so long geometry ops don't
+            // get cut off; override with AWARE_EXEC_TIMEOUT_MS. We stop early as
+            // soon as the file appears AND is fully written (parse succeeds).
+            var timeoutMs = ParseTimeoutMs(Environment.GetEnvironmentVariable("AWARE_EXEC_TIMEOUT_MS"), 60_000);
+            var fileText = WaitForResultFile(resultPath, timeoutMs);
+            if (fileText is null)
             {
-                // Failure mode 1: rhinocode exited non-zero. Surface stderr.
-                if (exit != 0)
-                {
-                    Console.WriteLine(Receipts.ExecFail(
-                        FirstLine(stderr) ?? $"rhinocode exited {exit}",
-                        stderr.Trim(), stdout).ToJsonString());
-                    return 2;
-                }
-                // Failure mode 2: rhinocode exited 0 but no sentinel. Likely the
-                // user's script threw before writing the result. Surface the
-                // last non-empty stdout line as the best clue.
-                Console.WriteLine(Receipts.ExecFail(
-                    "result sentinel not found in script output (script may have thrown)",
-                    stderr.Trim(), stdout).ToJsonString());
+                var msg = exit != 0
+                    ? (FirstLine(stderr) ?? $"rhinocode exited {exit}; result file not written")
+                    : "result file not written; script did not run or threw before writing";
+                Console.WriteLine(Receipts.ExecFail(msg, stderr.Trim(), stdout.Trim()).ToJsonString());
                 return 2;
             }
 
-            JsonNode? resultNode;
-            try { resultNode = JsonNode.Parse(jsonText); }
+            JsonNode? fileNode;
+            try { fileNode = JsonNode.Parse(fileText); }
             catch (Exception e)
             {
                 Console.WriteLine(Receipts.ExecFail(
-                    $"result JSON parse failed: {e.Message}",
-                    jsonText, stdout).ToJsonString());
+                    $"result file JSON parse failed: {e.Message}", fileText, stdout.Trim()).ToJsonString());
                 return 2;
             }
 
-            Console.WriteLine(Receipts.ExecOk(resultNode, resolvedVersion, resolvedPid, rhinoId, otherStdout).ToJsonString());
-            return 0;
+            // The file already carries the AWARE {ok,...} shape produced by the
+            // wrapper. Map it onto the receipt envelope.
+            var fileObj = fileNode as JsonObject;
+            var ok = fileObj?["ok"]?.GetValue<bool>() ?? false;
+            if (ok)
+            {
+                // DeepClone detaches the node from fileObj — assigning a still-
+                // parented node into the receipt's JsonObject throws.
+                var resultNode = fileObj?["result"]?.DeepClone();
+                Console.WriteLine(Receipts.ExecOk(
+                    resultNode, resolvedVersion, resolvedPid, rhinoId, stdout.Trim()).ToJsonString());
+                return 0;
+            }
+            else
+            {
+                var error = fileObj?["error"]?.GetValue<string>() ?? "script reported failure";
+                var stack = fileObj?["stack"]?.GetValue<string>() ?? "";
+                Console.WriteLine(Receipts.ExecFail(error, stack, stdout.Trim()).ToJsonString());
+                return 1;
+            }
         }
         finally
         {
-            try { File.Delete(tempPath); } catch { /* best-effort */ }
-        }
-    }
-
-    // Pulls the JSON between __AWARE_RESULT_BEGIN__ and __AWARE_RESULT_END__ out
-    // of stdout. Returns (jsonText, otherStdout) — otherStdout has the sentinel
-    // block stripped so the receipt's stdout_log is just the user's noise.
-    internal static (string? jsonText, string otherStdout) ExtractResultJson(string stdout)
-    {
-        var lines = stdout.Replace("\r\n", "\n").Split('\n');
-        int beginIdx = -1, endIdx = -1;
-        for (int i = 0; i < lines.Length; i++)
-        {
-            if (beginIdx < 0 && lines[i].Trim() == ScriptWrapper.ResultBeginSentinel)
-                beginIdx = i;
-            else if (beginIdx >= 0 && lines[i].Trim() == ScriptWrapper.ResultEndSentinel)
+            // AWARE_KEEP_TEMP=1 leaves the generated .py + result file on disk for
+            // debugging a failing exec. Off by default — temp files are deleted.
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AWARE_KEEP_TEMP")))
             {
-                endIdx = i;
-                break;
+                try { File.Delete(scriptPath); } catch { /* best-effort */ }
+                try { File.Delete(resultPath); } catch { /* best-effort */ }
+            }
+            else
+            {
+                Console.Error.WriteLine($"aware-rhino exec: kept temp script {scriptPath} and result {resultPath}");
             }
         }
-        if (beginIdx < 0 || endIdx < 0) return (null, stdout);
-
-        var jsonLines = new List<string>();
-        for (int i = beginIdx + 1; i < endIdx; i++) jsonLines.Add(lines[i]);
-        var json = string.Join("\n", jsonLines).Trim();
-
-        var rest = new List<string>();
-        for (int i = 0; i < lines.Length; i++)
-            if (i < beginIdx || i > endIdx) rest.Add(lines[i]);
-        return (json, string.Join("\n", rest).Trim());
     }
 
     // Picks one entry from `rhinocode list --json`. If `rhinoId` is supplied,
@@ -183,6 +190,44 @@ internal static class Exec
             }
         }
         return null;
+    }
+
+    // Polls for the result file because `rhinocode script` returns before the
+    // in-Rhino script finishes writing it. Returns the file's text once it
+    // exists and parses as complete JSON (guards against reading a half-written
+    // file), or null on timeout. Poll interval starts tight (10ms) for the
+    // common fast case and the loop simply spins until the deadline.
+    internal static string? WaitForResultFile(string resultPath, int timeoutMs)
+    {
+        var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+        while (true)
+        {
+            if (File.Exists(resultPath))
+            {
+                // Read with shared access so we don't collide with the writer,
+                // and confirm it parses (i.e. the write completed) before using.
+                try
+                {
+                    using var fs = new FileStream(resultPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    using var reader = new StreamReader(fs);
+                    var text = reader.ReadToEnd();
+                    if (!string.IsNullOrWhiteSpace(text))
+                    {
+                        try { JsonNode.Parse(text); return text; }
+                        catch { /* partial write — keep polling */ }
+                    }
+                }
+                catch (IOException) { /* writer still has it locked — keep polling */ }
+            }
+            if (DateTime.UtcNow >= deadline) return null;
+            Thread.Sleep(10);
+        }
+    }
+
+    static int ParseTimeoutMs(string? raw, int fallback)
+    {
+        if (!string.IsNullOrWhiteSpace(raw) && int.TryParse(raw, out var v) && v > 0) return v;
+        return fallback;
     }
 
     static string TrimVersion(string full)

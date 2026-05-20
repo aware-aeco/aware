@@ -28,16 +28,23 @@ internal sealed class RhinocodeClient
             return;
         }
 
-        // 2. Standard install location.
-        var stdPath = @"C:\Program Files\Rhino 8\System\rhinocode.exe";
-        if (fileExists(stdPath))
+        // 2. Standard install locations. McNeel ships the CLI as RhinoCode.exe;
+        // older builds used rhinocode.exe — probe both.
+        foreach (var stdPath in new[]
         {
-            RhinocodeExePath = stdPath;
-            return;
+            @"C:\Program Files\Rhino 8\System\RhinoCode.exe",
+            @"C:\Program Files\Rhino 8\System\rhinocode.exe",
+        })
+        {
+            if (fileExists(stdPath))
+            {
+                RhinocodeExePath = stdPath;
+                return;
+            }
         }
 
         // 3. PATH lookup.
-        var found = pathLookup("rhinocode.exe") ?? pathLookup("rhinocode");
+        var found = pathLookup("rhinocode.exe") ?? pathLookup("rhinocode") ?? pathLookup("RhinoCode.exe");
         if (!string.IsNullOrEmpty(found) && fileExists(found))
         {
             RhinocodeExePath = found;
@@ -45,8 +52,8 @@ internal sealed class RhinocodeClient
         }
 
         throw new FileNotFoundException(
-            "Could not find rhinocode.exe. Install Rhino 8.11+ (standard path: " +
-            @"C:\Program Files\Rhino 8\System\rhinocode.exe), add it to PATH, or set RHINOCODE_EXE env var.");
+            "Could not find rhinocode/RhinoCode.exe. Install Rhino 8.11+ (standard path: " +
+            @"C:\Program Files\Rhino 8\System\RhinoCode.exe), add it to PATH, or set RHINOCODE_EXE env var.");
     }
 
     public (int exitCode, string stdout, string stderr) RunListJson()
@@ -54,8 +61,13 @@ internal sealed class RhinocodeClient
         return Run(new[] { "list", "--json" }, argsJson: null);
     }
 
+    // Runs a Python script via `rhinocode script <path.py>`. resultPath is the
+    // file the script writes its result to; we set it as an env var for
+    // best-effort compatibility, but the canonical channel is the path baked
+    // into the script source by ScriptWrapper (rhinocode runs the script inside
+    // the live Rhino process, which does NOT inherit this child's environment).
     public (int exitCode, string stdout, string stderr) RunScript(
-        string scriptPath, string? rhinoId, string argsJson)
+        string scriptPath, string? rhinoId, string argsJson, string? resultPath = null)
     {
         var args = new List<string>();
         // --rhino must come BEFORE the subcommand (it's a global flag).
@@ -66,10 +78,10 @@ internal sealed class RhinocodeClient
         }
         args.Add("script");
         args.Add(scriptPath);
-        return Run(args.ToArray(), argsJson);
+        return Run(args.ToArray(), argsJson, resultPath);
     }
 
-    (int exitCode, string stdout, string stderr) Run(string[] args, string? argsJson)
+    (int exitCode, string stdout, string stderr) Run(string[] args, string? argsJson, string? resultPath = null)
     {
         var psi = new ProcessStartInfo
         {
@@ -86,6 +98,12 @@ internal sealed class RhinocodeClient
         // Inject AWARE_ARGS_JSON for the user's script to read. Always set (even
         // for `list`) — harmless when unused.
         psi.Environment["AWARE_ARGS_JSON"] = argsJson ?? "{}";
+        // Set AWARE_RESULT_PATH so the test stub (which DOES run as this child)
+        // knows where to write its canned result. Real rhinocode ignores it
+        // because the script runs in a different process — that path is baked
+        // into the script source instead — but setting it here is harmless and
+        // lets the stub faithfully simulate the file-write behaviour.
+        if (!string.IsNullOrEmpty(resultPath)) psi.Environment["AWARE_RESULT_PATH"] = resultPath;
         // Pass through AWARE_STUB_DUMP_DIR if set — test fixtures use this to
         // give the stub an unambiguous write location independent of %TEMP%.
         var dumpDir = Environment.GetEnvironmentVariable("AWARE_STUB_DUMP_DIR");

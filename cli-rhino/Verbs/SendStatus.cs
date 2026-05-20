@@ -1,4 +1,4 @@
-// `send-status` verb: synthesizes a tiny C# snippet that calls
+// `send-status` verb: synthesizes a tiny Python snippet that calls
 // Rhino.UI.StatusBar.ShowMessage(args["message"]) and dispatches it through
 // the same Exec pipeline. Validates the wrapper end-to-end on every call.
 
@@ -26,12 +26,10 @@ internal static class SendStatus
             ["rhino_id"] = input?["rhino_id"]?.GetValue<string>(),
             ["code"]     =
                 """
-                var msg = args.TryGetValue("message", out var m) ? (string?)m?.ToString() : null;
-                if (!string.IsNullOrEmpty(msg))
-                {
-                    Rhino.UI.StatusBar.ShowMessage(msg);
-                }
-                return new { delivered = !string.IsNullOrEmpty(msg), message = msg };
+                msg = args.get("message")
+                if msg:
+                    Rhino.UI.StatusBar.ShowMessage(str(msg))
+                return {"delivered": bool(msg), "message": msg}
                 """,
             ["args"]     = new JsonObject { ["message"] = message },
         };

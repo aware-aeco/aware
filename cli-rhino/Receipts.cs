@@ -80,8 +80,8 @@ internal static class Receipts
         return o;
     }
 
-    // Pre-parsed result (from the script's sentinel block) is already a JsonNode.
-    // For other paths the caller may hand us a raw primitive — keep it.
+    // Pre-parsed result (read from the script's result file) is already a
+    // JsonNode. For other paths the caller may hand us a raw primitive — keep it.
     static JsonNode? SerializeForReceipt(object? result)
     {
         return result switch

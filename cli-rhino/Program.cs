@@ -125,7 +125,7 @@ internal static class Program
               aware-rhino --json-stdin            (verb embedded in JSON body)
 
             Verbs:
-              exec             Compile + run an ad-hoc C# script against the active Rhino doc
+              exec             Run an ad-hoc Python script against the active Rhino doc
               list-instances   Print running Rhino instances (PID + version + active doc)
               send-status      Display a transient status-bar message in Rhino
               launch           Spawn a fresh Rhino instance (optionally with a model + auto Script Server)
