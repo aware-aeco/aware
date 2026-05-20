@@ -205,6 +205,250 @@ impl AgentInvoker for CliInvoker {
     }
 }
 
+/// Production invoker for the `rest` transport: build an HTTP request from the
+/// rendered command inputs and execute it via the bundled `ureq` client.
+///
+/// Designed for the generic `http` agent, where the command name *is* the HTTP
+/// method (`get`/`post`/`patch`/`delete`/`put`/`head`) and the inputs carry
+/// `url` / `headers` / `query` / `body`. Secrets are already substituted into
+/// the inputs by the template layer before they reach here (e.g. an
+/// `apikey: "{{ secrets.supabase }}"` header), so the "header/secret handling
+/// via the vault" the issue asks for is the existing secret-render path — this
+/// invoker just sends what it's handed.
+pub struct RestInvoker {
+    pub agents_dir: std::path::PathBuf,
+}
+
+#[async_trait]
+impl AgentInvoker for RestInvoker {
+    async fn invoke_single(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        let method = command.to_ascii_uppercase();
+        if !matches!(
+            method.as_str(),
+            "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"
+        ) {
+            return Err(AwareError::Validation(format!(
+                "rest transport: command {command:?} is not an HTTP method (expected get/post/put/patch/delete/head)"
+            )));
+        }
+
+        let raw_url = args
+            .get("url")
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| {
+                AwareError::Validation(format!("{agent}/{command}: missing required input `url`"))
+            })?
+            .to_string();
+        let url = match rest_base_url(&self.agents_dir, agent) {
+            Some(base) if !raw_url.starts_with("http://") && !raw_url.starts_with("https://") => {
+                format!(
+                    "{}/{}",
+                    base.trim_end_matches('/'),
+                    raw_url.trim_start_matches('/')
+                )
+            }
+            _ => raw_url,
+        };
+
+        let headers = collect_str_map(args.get("headers"));
+        let query = collect_str_map(args.get("query"));
+        let body = args.get("body").cloned();
+        let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
+            && body.as_ref().is_some_and(|b| !b.is_null());
+        // Owned label for the error path — `agent`/`command` are borrows that
+        // can't escape into the `'static` blocking closure.
+        let label = format!("{agent}/{command}");
+
+        // `ureq` is blocking; run it off the async runtime so we don't stall
+        // the orchestrator's reactor.
+        tokio::task::spawn_blocking(move || -> Result<Value, AwareError> {
+            let mut req = ureq::request(&method, &url);
+            for (k, v) in &headers {
+                req = req.set(k, v);
+            }
+            for (k, v) in &query {
+                req = req.query(k, v);
+            }
+            let outcome = if send_body {
+                // `ureq` is built without the `json` feature, so serialize here.
+                // Objects/arrays are sent as application/json (unless the caller
+                // set their own Content-Type); a string body is sent verbatim.
+                let has_ct = headers
+                    .iter()
+                    .any(|(k, _)| k.eq_ignore_ascii_case("content-type"));
+                let payload = match body.unwrap() {
+                    Value::String(s) => s,
+                    other => {
+                        if !has_ct {
+                            req = req.set("Content-Type", "application/json");
+                        }
+                        other.to_string()
+                    }
+                };
+                req.send_string(&payload)
+            } else {
+                req.call()
+            };
+            let response = match outcome {
+                Ok(r) => r,
+                // 4xx/5xx is a *completed* HTTP exchange — return it as a normal
+                // response object (with its status) so the app can branch on it,
+                // rather than aborting the run.
+                Err(ureq::Error::Status(_code, r)) => r,
+                Err(ureq::Error::Transport(t)) => {
+                    return Err(AwareError::Network(format!("{label}: {t}")));
+                }
+            };
+            Ok(shape_response(response))
+        })
+        .await
+        .map_err(|e| AwareError::Internal(format!("rest task join: {e}")))?
+    }
+
+    async fn invoke_stream(
+        &self,
+        _agent: &str,
+        _command: &str,
+        _args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        Err(AwareError::Validation(
+            "rest transport is request/response only and does not support streaming".into(),
+        ))
+    }
+}
+
+/// Read an optional `base` URL from an agent's `rest` transport block. The
+/// generic `http` agent declares no base (callers pass absolute URLs); a
+/// domain-specific rest agent may set one and pass relative paths.
+fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
+    let m =
+        crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml")).ok()?;
+    m.transport
+        .rest
+        .as_ref()?
+        .get("base")?
+        .as_str()
+        .map(|s| s.to_string())
+}
+
+/// Flatten an optional `{ key: value }` input (headers / query) into ordered
+/// string pairs. Non-string scalar values are stringified; nested objects and
+/// arrays are skipped (a header value can't be a structure).
+fn collect_str_map(v: Option<&Value>) -> Vec<(String, String)> {
+    let mut out = Vec::new();
+    if let Some(Value::Object(m)) = v {
+        for (k, val) in m {
+            match val {
+                Value::String(s) => out.push((k.clone(), s.clone())),
+                Value::Number(_) | Value::Bool(_) => out.push((k.clone(), val.to_string())),
+                _ => {}
+            }
+        }
+    }
+    out
+}
+
+/// Shape a `ureq::Response` into the `{ status, headers, body }` value the
+/// `http` agent's output-schema declares. The body is parsed as JSON when it
+/// parses, else returned as a string.
+fn shape_response(resp: ureq::Response) -> Value {
+    let status = resp.status();
+    let mut headers = serde_json::Map::new();
+    for name in resp.headers_names() {
+        if let Some(val) = resp.header(&name) {
+            headers.insert(name, Value::String(val.to_string()));
+        }
+    }
+    let text = resp.into_string().unwrap_or_default();
+    let body = serde_json::from_str::<Value>(&text).unwrap_or(Value::String(text));
+    serde_json::json!({
+        "status": status,
+        "headers": Value::Object(headers),
+        "body": body,
+    })
+}
+
+/// The invoker the orchestrator uses in production. Routes each call to the
+/// right transport invoker by inspecting the agent's manifest: a `cli`
+/// transport spawns a subprocess; otherwise a `rest` transport makes an HTTP
+/// call. This lets one app graph mix host-backed (cli) and web-API (rest)
+/// agents.
+pub struct DispatchInvoker {
+    pub agents_dir: std::path::PathBuf,
+}
+
+enum TransportKind {
+    Cli,
+    Rest,
+}
+
+impl DispatchInvoker {
+    fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
+        let m = crate::manifest::loader::load_agent(
+            &self.agents_dir.join(agent).join("manifest.yaml"),
+        )?;
+        if m.transport.cli.is_some() {
+            Ok(TransportKind::Cli)
+        } else if m.transport.rest.is_some() {
+            Ok(TransportKind::Rest)
+        } else {
+            Err(AwareError::Validation(format!(
+                "agent {agent} has no executable transport (need `cli` or `rest`)"
+            )))
+        }
+    }
+}
+
+#[async_trait]
+impl AgentInvoker for DispatchInvoker {
+    async fn invoke_single(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        let dir = self.agents_dir.clone();
+        match self.transport_kind(agent)? {
+            TransportKind::Cli => {
+                CliInvoker { agents_dir: dir }
+                    .invoke_single(agent, command, args)
+                    .await
+            }
+            TransportKind::Rest => {
+                RestInvoker { agents_dir: dir }
+                    .invoke_single(agent, command, args)
+                    .await
+            }
+        }
+    }
+
+    async fn invoke_stream(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        let dir = self.agents_dir.clone();
+        match self.transport_kind(agent)? {
+            TransportKind::Cli => {
+                CliInvoker { agents_dir: dir }
+                    .invoke_stream(agent, command, args)
+                    .await
+            }
+            TransportKind::Rest => {
+                RestInvoker { agents_dir: dir }
+                    .invoke_stream(agent, command, args)
+                    .await
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod cli_invoker_tests {
     use super::*;
@@ -368,5 +612,212 @@ mod tests {
         }
         // We can't assert exact count due to timing — but it must terminate
         assert!(count <= 5);
+    }
+}
+
+#[cfg(test)]
+mod rest_invoker_tests {
+    use super::*;
+    use std::io::{Read, Write};
+    use std::net::TcpListener;
+    use std::sync::mpsc;
+
+    /// Minimal one-shot HTTP/1.1 server (no extra deps). Accepts a single
+    /// connection, captures the raw request, replies with `status` + JSON
+    /// `body`, and ships the captured request back over the channel.
+    fn mock_server(status: u16, body: &'static str) -> (u16, mpsc::Receiver<String>) {
+        let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+        let port = listener.local_addr().unwrap().port();
+        let (tx, rx) = mpsc::channel();
+        std::thread::spawn(move || {
+            if let Ok((mut stream, _)) = listener.accept() {
+                stream
+                    .set_read_timeout(Some(std::time::Duration::from_millis(300)))
+                    .unwrap();
+                let mut data = Vec::new();
+                let mut tmp = [0u8; 1024];
+                loop {
+                    match stream.read(&mut tmp) {
+                        Ok(0) => break,
+                        Ok(n) => data.extend_from_slice(&tmp[..n]),
+                        Err(_) => break, // read-timeout: request fully received
+                    }
+                }
+                let _ = tx.send(String::from_utf8_lossy(&data).to_string());
+                let resp = format!(
+                    "HTTP/1.1 {status} X\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                    body.len()
+                );
+                let _ = stream.write_all(resp.as_bytes());
+            }
+        });
+        (port, rx)
+    }
+
+    fn http_agent_dir() -> tempfile::TempDir {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("http");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: http
+version: 0.1.0
+description: generic http
+stateful: false
+license: MIT
+transport:
+  rest: {}
+commands:
+  get:
+    lifecycle: single
+    description: GET
+  post:
+    lifecycle: single
+    mode: write
+    description: POST
+"#,
+        )
+        .unwrap();
+        tmp
+    }
+
+    #[tokio::test]
+    async fn post_builds_request_and_shapes_response() {
+        let (port, rx) = mock_server(200, r#"{"ok":true,"id":42}"#);
+        let tmp = http_agent_dir();
+        let inv = RestInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let out = inv
+            .invoke_single(
+                "http",
+                "post",
+                serde_json::json!({
+                    "url": format!("http://127.0.0.1:{port}/rest/v1/projects"),
+                    "headers": { "apikey": "sek-ret", "Prefer": "resolution=merge-duplicates" },
+                    "body": { "name": "Tower A", "status": "active" }
+                }),
+            )
+            .await
+            .unwrap();
+
+        // Response shape: status + parsed JSON body.
+        assert_eq!(out["status"], serde_json::json!(200));
+        assert_eq!(out["body"]["ok"], serde_json::json!(true));
+        assert_eq!(out["body"]["id"], serde_json::json!(42));
+
+        // Request the server actually received.
+        let req = rx.recv().unwrap();
+        assert!(req.starts_with("POST /rest/v1/projects"), "req line: {req}");
+        assert!(req.contains("apikey: sek-ret"), "missing header in: {req}");
+        assert!(
+            req.contains("Content-Type: application/json"),
+            "json body should default Content-Type; got: {req}"
+        );
+        assert!(
+            req.contains("\"name\":\"Tower A\""),
+            "missing body in: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn query_params_are_appended() {
+        let (port, rx) = mock_server(200, r#"{"rows":[]}"#);
+        let tmp = http_agent_dir();
+        let inv = RestInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let _ = inv
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({
+                    "url": format!("http://127.0.0.1:{port}/rest/v1/drawings"),
+                    "query": { "select": "id,status", "project": "eq.42" }
+                }),
+            )
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(req.contains("select=id%2Cstatus"), "req: {req}");
+        assert!(req.contains("project=eq.42"), "req: {req}");
+    }
+
+    #[tokio::test]
+    async fn non_2xx_is_returned_as_response_not_error() {
+        let (port, _rx) = mock_server(404, r#"{"message":"not found"}"#);
+        let tmp = http_agent_dir();
+        let inv = RestInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let out = inv
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port}/missing") }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(404));
+        assert_eq!(out["body"]["message"], serde_json::json!("not found"));
+    }
+
+    #[tokio::test]
+    async fn transport_failure_is_network_error() {
+        // Bind then drop to obtain a port nothing is listening on.
+        let port = {
+            let l = TcpListener::bind("127.0.0.1:0").unwrap();
+            l.local_addr().unwrap().port()
+        };
+        let tmp = http_agent_dir();
+        let inv = RestInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let err = inv
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port}/") }),
+            )
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Network(_)), "got: {err:?}");
+    }
+
+    #[tokio::test]
+    async fn command_that_is_not_a_method_is_rejected() {
+        let tmp = http_agent_dir();
+        let inv = RestInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let err = inv
+            .invoke_single(
+                "http",
+                "frobnicate",
+                serde_json::json!({ "url": "http://x" }),
+            )
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+    }
+
+    #[tokio::test]
+    async fn dispatch_routes_rest_agent_to_http() {
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let tmp = http_agent_dir();
+        let inv = DispatchInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let out = inv
+            .invoke_single(
+                "http",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port}/ping") }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(req.starts_with("GET /ping"), "req: {req}");
     }
 }

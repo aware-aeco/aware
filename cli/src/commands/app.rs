@@ -141,7 +141,7 @@ async fn run(
     // (pre-flight skip, would-write events) treats a simulate run as a dry run.
     let dry_run = dry_run || simulate;
     use crate::runtime::context::RuntimeContext;
-    use crate::runtime::invoker::CliInvoker;
+    use crate::runtime::invoker::DispatchInvoker;
     use crate::runtime::orchestrator::Orchestrator;
     use crate::runtime::provenance::{ProvenanceWriter, log_path_for, run_id_now};
 
@@ -214,7 +214,7 @@ async fn run(
 
         let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
         let provenance = ProvenanceWriter::open(&log_path).await?;
-        let invoker = std::sync::Arc::new(CliInvoker {
+        let invoker = std::sync::Arc::new(DispatchInvoker {
             agents_dir: ctx.paths.agents_dir(),
         });
 
@@ -285,7 +285,7 @@ async fn run(
     // One-shot path.
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
-    let invoker = std::sync::Arc::new(CliInvoker {
+    let invoker = std::sync::Arc::new(DispatchInvoker {
         agents_dir: ctx.paths.agents_dir(),
     });
 
