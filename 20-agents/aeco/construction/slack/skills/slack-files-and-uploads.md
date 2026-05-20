@@ -19,8 +19,8 @@ Because steps 1 and 3 aren't reflected here, **this agent cannot do a current-Sl
 
 ## What to do about it
 
-- **Preferred:** regenerate the agent from a current spec — `aware build agent --from-openapi https://api.slack.com/specs/openapi/v2/slack_web.json` — so `files.getUploadURLExternal` / `files.completeUploadExternal` land in the catalog, then use the 3-step flow.
-- **Interim:** don't attach the binary; **post a link instead**. Upload the artifact to where it already lives (Trimble Connect, ACC Docs, SharePoint) and `chat.postMessage` a Block Kit link to it. For AECO this is usually *better* anyway — the file stays in the document-control system of record, and Slack carries the notification + link, not a stray copy.
+- **Preferred (and usually better anyway): post a link, not the bytes.** Upload the artifact to where it already lives (Trimble Connect, ACC Docs, SharePoint) and `chat.postMessage` a Block Kit link. The file stays in the document-control system of record; Slack carries the notification + link, not a stray copy.
+- **If you must push bytes into Slack:** you need `files.getUploadURLExternal` + `files.completeUploadExternal`, which this catalog lacks. **Caution:** Slack's published OpenAPI spec lags the real API, so `aware build agent --from-openapi <slack spec>` adds these methods only *if/when the spec actually exposes them* — regeneration is **not** a guaranteed fix. The reliable route is a small hand-authored shim that calls the three-step flow directly. Don't assume re-running `--from-openapi` against the same URL fixes uploads.
 
 ## What still works
 
@@ -30,4 +30,4 @@ The non-upload file verbs reflect fine and are current: `files.list`, `files.inf
 
 - [slack-messaging-and-block-kit](./slack-messaging-and-block-kit.md) — the "post a link, not the bytes" pattern
 - [slack-auth-and-scopes](./slack-auth-and-scopes.md) — `files:write` scope
-- The `aware build agent --from-openapi` flow — regenerate to pick up the new upload methods
+- `aware build agent --from-openapi` — adds the new upload methods only if Slack's spec exposes them (it may not); a hand-authored shim is the reliable route
