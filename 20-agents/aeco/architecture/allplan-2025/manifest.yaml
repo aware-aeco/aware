@@ -69,7 +69,9 @@ commands:
     mode: write
     description: |
       Move every element whose current layer matches a regex onto a target
-      layer. Creates target layer if missing.
+      layer. The target layer should already exist (or be provided via a
+      layer favorite) — Allplan exposes no documented Python layer-creation
+      API; see the command doc.
     inputs:
       from-pattern:
         type: string

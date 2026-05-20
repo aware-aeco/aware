@@ -1,6 +1,6 @@
 # layer.set-by-pattern
 
-Move every element whose **current layer name matches a regex** onto a **target layer**, creating the target layer if it is missing. Returns the target layer id, the number of elements moved, and whether the target had to be created — the bulk "re-home everything on `*_TEMP` onto `AR_WALL`" primitive.
+Move every element whose **current layer name matches a regex** onto a **target layer** (which should already exist — see the layer-creation gotcha). Returns the target layer id, the number of elements moved, and whether the target had to be created — the bulk "re-home everything on `*_TEMP` onto `AR_WALL`" primitive.
 
 **WRITE-mode.**
 
