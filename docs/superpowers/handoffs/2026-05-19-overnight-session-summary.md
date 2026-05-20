@@ -119,13 +119,15 @@ Captured in memory entry [`project_substrate_maturity_audit.md`](../../../C:/Use
 
 ## Suggested order for the morning
 
-1. **(Optional) Run the rhino drill** if you can spare a few minutes for an admin-elevation install — gates the only remaining unproven sidecar. Recipe in [`2026-05-19-v032-rhino-exec-ready.md`](./2026-05-19-v032-rhino-exec-ready.md).
-2. **Review + merge cadence** — Pick a small batch (5-7 PRs) to land first; the rest can roll in over the day. Suggested first batch: the foundational sidecars and their drill evidence — #66, #67 (stacked), #68, #76, #77.
-3. **Merge stacked PRs in order**:
-   - #67 requires #66 first
-   - #73 requires #69 first
-   - #74 requires #72 first
-   - All other PRs are independent of each other
+**Verified merge state (checked 2026-05-20):** all 27 PRs are `MERGEABLE` — zero merge conflicts. There is **no CI configured** on this repo (`statusCheckRollup` is empty) and `main` is **not branch-protected**, so the only thing gating any PR is your review (`REVIEW_REQUIRED`). Nothing is failing; you can merge in any order that respects the 3 stacking dependencies below.
+
+1. **Review + merge cadence** — Pick a small batch (5-7 PRs) to land first; the rest can roll in over the day. Suggested first batch: the three runtime sidecars + their drill evidence — #66, #67 (stacked), #76, #77, plus the tekla receipt backport #68.
+2. **Merge stacked PRs in order** (the only ordering constraint — GitHub auto-retargets the child to `main` when the parent merges):
+   - #67 (base `v0.32-rhino-exec`) requires #66 first
+   - #73 (base `v0.33-rhino-curated-workflow`) requires #69 first
+   - #74 (base `v0.33-sketchup-curated-workflow`) requires #72 first
+   - The other 24 PRs are all based on `main` and independent of each other
+3. **Rhino PRs (#66, #67) merge on code/infra review alone** — the live drill is N/A (no license), not a merge gate.
 4. **After this session's merges, candidates for the next session** (audit-priority, narrowed since archicad-29 just shipped):
    - BCF 3.0 file-format agent (audit's #4 ranked; doesn't exist yet)
    - IFC inspector agent (audit's #5 ranked; doesn't exist yet)
