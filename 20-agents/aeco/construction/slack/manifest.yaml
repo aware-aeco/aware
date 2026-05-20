@@ -1,5 +1,5 @@
 agent:        slack
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.7.0
 display-name: Slack Web API (raw)
 description: |
@@ -556,3 +556,10 @@ commands:
   workflows-update-step:
     lifecycle: single
     description: GET /workflows.updateStep — Update the configuration for a workflow extension step.
+
+skills:
+  - slack-auth-and-scopes.md
+  - slack-conversations-model.md
+  - slack-messaging-and-block-kit.md
+  - slack-rate-limits-and-pagination.md
+  - slack-files-and-uploads.md
