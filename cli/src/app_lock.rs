@@ -12,7 +12,7 @@
 
 #![allow(dead_code)]
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 
 use serde::Serialize;
@@ -136,6 +136,46 @@ pub fn compile(
         nodes.push(compile_node(node, agents)?);
     }
 
+    // Second pass — compile-time reference checking. Build node-id → known
+    // output field set (None when the schema can't be resolved: inline glue,
+    // primitives, or an uninstalled agent), then verify every
+    // `{{ <node>.<field> }}` reference in a node's inputs points at a real
+    // field on the referenced node. A miss becomes a compile note (same
+    // channel as command-not-found), turning a silent runtime failure into a
+    // fixable compile-time signal — the deterministic plan validation that
+    // makes decalog #9 usable in practice.
+    let field_sets: BTreeMap<String, Option<BTreeSet<String>>> = nodes
+        .iter()
+        .map(|n| (n.id.clone(), output_field_set(n.output_schema.as_ref())))
+        .collect();
+    for (i, node) in app.nodes.iter().enumerate() {
+        let mut refs: Vec<(String, String)> = Vec::new();
+        collect_refs(&node.config, &mut refs);
+        collect_refs(&node.inputs, &mut refs);
+        refs.sort();
+        refs.dedup();
+        for (nid, field) in refs {
+            if nid == nodes[i].id {
+                continue; // self-reference — skip
+            }
+            // Only check references into a node whose output schema is known.
+            // Non-node prefixes (inputs/secrets/run/now/ctx) and schema-less
+            // nodes (inline/primitive/uninstalled) are skipped, never flagged.
+            if let Some(Some(fields)) = field_sets.get(&nid)
+                && !fields.contains(&field)
+            {
+                let available = if fields.is_empty() {
+                    "none".to_string()
+                } else {
+                    fields.iter().cloned().collect::<Vec<_>>().join(", ")
+                };
+                nodes[i].notes.push(format!(
+                    "input references {{{{ {nid}.{field} }}}} but node {nid:?} has no output field {field:?} (available: {available})"
+                ));
+            }
+        }
+    }
+
     let schedule = app
         .schedule
         .as_ref()
@@ -251,11 +291,69 @@ fn classify_node(node: &crate::manifest::app::Node) -> &'static str {
     }
 }
 
+/// Extract the set of top-level output field names from a resolved
+/// `output-schema` (the `outputs:` block, shaped `{ type, schema: {...} }`).
+/// Returns `None` when the schema is absent or has no `schema:` mapping — the
+/// caller treats `None` as "unknown, don't check references into this node".
+fn output_field_set(output_schema: Option<&serde_yaml::Value>) -> Option<BTreeSet<String>> {
+    let inner = output_schema?.get("schema")?.as_mapping()?;
+    let mut set = BTreeSet::new();
+    for (k, _) in inner {
+        if let Some(s) = k.as_str() {
+            set.insert(s.to_string());
+        }
+    }
+    Some(set)
+}
+
+/// Walk a config/inputs value and collect `(node-id, field)` pairs from every
+/// `{{ <node>.<field>… }}` template reference. Only the leading dotted path is
+/// parsed (the first two segments); function calls / operators terminate it,
+/// so complex expressions like `{{ join(a, b) }}` yield nothing — keeping the
+/// check to direct references, which is the high-signal case.
+fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
+    match value {
+        serde_yaml::Value::String(s) => {
+            let mut rest = s.as_str();
+            while let Some(start) = rest.find("{{") {
+                let after = &rest[start + 2..];
+                let Some(end) = after.find("}}") else { break };
+                let inner = after[..end].trim();
+                let path_end = inner
+                    .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
+                    .unwrap_or(inner.len());
+                let parts: Vec<&str> = inner[..path_end]
+                    .split('.')
+                    .filter(|p| !p.is_empty())
+                    .collect();
+                if parts.len() >= 2 {
+                    out.push((parts[0].to_string(), parts[1].to_string()));
+                }
+                rest = &after[end + 2..];
+            }
+        }
+        serde_yaml::Value::Mapping(m) => {
+            for (_, v) in m {
+                collect_refs(v, out);
+            }
+        }
+        serde_yaml::Value::Sequence(seq) => {
+            for v in seq {
+                collect_refs(v, out);
+            }
+        }
+        _ => {}
+    }
+}
+
 /// Write a lockfile to disk as YAML next to the source app file.
 ///
 /// Output filename: `<app-name>.lock` (substrate-correct per
 /// `10-core/app-spec.md § Lockfile sidecar`; NEVER `.flo.lock`).
-pub fn write_lockfile(lock: &LockFile, source_path: &Path) -> Result<std::path::PathBuf, AwareError> {
+pub fn write_lockfile(
+    lock: &LockFile,
+    source_path: &Path,
+) -> Result<std::path::PathBuf, AwareError> {
     let dir = source_path
         .parent()
         .ok_or_else(|| AwareError::Internal("source path has no parent".into()))?;
@@ -343,5 +441,100 @@ mod tests {
         std::fs::write(tmp.path().join("x.flow"), "x").unwrap();
         let found = find_app_source(tmp.path()).unwrap();
         assert_eq!(found.extension().unwrap(), "flow");
+    }
+
+    #[test]
+    fn output_field_set_reads_schema_keys() {
+        let v: serde_yaml::Value =
+            serde_yaml::from_str("type: single\nschema:\n  path: string\n  row-count: number\n")
+                .unwrap();
+        let fields = output_field_set(Some(&v)).unwrap();
+        assert!(fields.contains("path") && fields.contains("row-count"));
+        // No `schema:` mapping → None (treated as "unknown, don't check").
+        let no_schema: serde_yaml::Value = serde_yaml::from_str("type: stream").unwrap();
+        assert!(output_field_set(Some(&no_schema)).is_none());
+    }
+
+    #[test]
+    fn collect_refs_extracts_direct_paths_only() {
+        let v: serde_yaml::Value = serde_yaml::from_str(
+            "a: '{{ src.path }}'\nb: '{{ join(x.y, z) }}'\nc: '{{ list.folders.*.id }}'\n",
+        )
+        .unwrap();
+        let mut refs = Vec::new();
+        collect_refs(&v, &mut refs);
+        assert!(refs.contains(&("src".to_string(), "path".to_string())));
+        assert!(refs.contains(&("list".to_string(), "folders".to_string())));
+        // Function-call expression contributes no direct ref.
+        assert!(!refs.iter().any(|(n, _)| n == "join"));
+    }
+
+    #[test]
+    fn compile_flags_unknown_output_field_references() {
+        use crate::manifest::loader::DiscoveredAgent;
+        let agent_yaml = r#"
+agent: testagent
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-test } }
+commands:
+  emit:
+    lifecycle: single
+    category: curated
+    description: emits a path
+    outputs:
+      type: single
+      schema:
+        path: string
+        row-count: number
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: consumes
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("app.flo");
+        std::fs::write(
+            &src,
+            r#"app: refcheck
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: testagent
+    command: emit
+  - id: sink
+    agent: testagent
+    command: consume
+    config:
+      good: '{{ src.path }}'
+      bad: '{{ src.nope }}'
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
+        assert!(
+            sink.notes.iter().any(|n| n.contains("src.nope")),
+            "expected a note for the bad reference; notes: {:?}",
+            sink.notes
+        );
+        assert!(
+            !sink.notes.iter().any(|n| n.contains("{{ src.path }}")),
+            "valid reference must NOT be flagged; notes: {:?}",
+            sink.notes
+        );
     }
 }
