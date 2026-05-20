@@ -5,8 +5,11 @@
 //!
 //! The command surface spans v0.1–v0.27 (agent/app/connect/skill/build/
 //! coverage/doctor/plugins/diagram/tree/search/report/voice/key/receipt).
-//! All groups are implemented; the only `NotYetImplemented` cases are
-//! `agent publish` and the Windows-only `build --from-com` guard.
+//! Most groups are implemented. Known `NotYetImplemented` stubs:
+//! `agent publish`, the Windows-only `build --from-com` guard,
+//! `CliInvoker::invoke_stream` (streaming/stateful-agent transport), and
+//! the v0.19 substrate primitives other than `assert:` (parsed +
+//! validated; runtime execution lands in v0.19.x patches).
 
 mod app_lock;
 mod auth;

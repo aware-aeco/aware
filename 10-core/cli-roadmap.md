@@ -14,7 +14,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 |---|---|---|
 | v0.1 foundation | ✅ shipped | all read-only commands real |
 | v0.2 install + validate | ✅ shipped | `agent`/`app install\|uninstall\|validate`, lockfile |
-| v0.3 runtime | ✅ shipped | `app run\|stop\|logs`, orchestrator + provenance |
+| v0.3 runtime | ✅ single-shot | `app run\|stop\|logs`, orchestrator + provenance; streaming/stateful-agent transport (`invoke_stream`) still stubbed |
 | v0.4 auth + plugins | ✅ shipped | `connect`/`disconnect`, plugin generators |
 | v0.5 builders | ✅ shipped | `build --from-*`, `skill` group (`--from-com` is a Windows-only guard) |
 | v0.10 curation framework | ✅ shipped | `category:`, `tree\|search --curated` |
@@ -26,7 +26,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 | v0.16 fabricator | ✅ agents present | tekla-powerfab, peddinghaus-translator |
 | v0.17 visualization | ✅ shipped | rhino-8/grasshopper-8 curated; enscape-prep, twinmotion-prep |
 | v0.18 spec authoring | ✅ agents present | nbs-chorus, avitru-speclink, csi-masterformat |
-| v0.19 substrate primitives | ✅ shipped | orchestrator implements for-each/compare/sweep/approve/schedule/assert/snapshot/model-lock |
+| v0.19 substrate primitives | 🟡 partial | parsed + validated, but only `assert:` executes at runtime — for-each/compare/sweep/approve/snapshot/model-lock (+ schedule) return `NotYetImplemented` pending v0.19.x |
 | v0.20 named atoms | 🟡 partial | 8 atoms (tekla 5, revit 3); no cross-cutting atoms yet (target ~40) |
 | v0.21 engineering envelope | ✅ shipped | agent-spec `engineering:`, `signed-output`, units (CLI `app reproduce` not yet wired) |
 | v0.22 persona apps | ✅ shipped | all 5 reference `.flo` present |
@@ -44,7 +44,8 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 4. **Vendor `*.exec` fan-out** — Allplan, Archicad, Navisworks (blocked on host install/license).
 5. **`aware agent publish`** — the one remaining CLI stub.
 6. **Agent dedup** — sketchup + navisworks each appear under both `architecture/` and `construction/`; many version-pairs. Needs a consolidation decision.
-7. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
+7. **Runtime execution gaps** — `CliInvoker::invoke_stream` (streaming/stateful-agent transport) and the v0.19 primitives beyond `assert:` (for-each/compare/sweep/approve/snapshot/model-lock) return `NotYetImplemented`. Single-shot apps run fully; these complete the runtime.
+8. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
 
 ---
 
