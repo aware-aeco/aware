@@ -50,6 +50,20 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get update && sudo apt-get install -y clang libsecret-1-dev libdbus-1-dev pkg-config
 
+      - name: Sync crate version from tag
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: bash
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          echo "Syncing cli/Cargo.toml [package] version to $version"
+          # Replace only the FIRST `version = "..."` line (the [package] version);
+          # dependency version specs further down are left untouched. awk ships on
+          # all three runners (incl. Git Bash on windows-latest), so this is portable
+          # where BSD/GNU `sed -i` and `0,/re/` address ranges are not.
+          awk -v v="$version" 'BEGIN{done=0} !done && /^version[[:space:]]*=/ {print "version     = \"" v "\""; done=1; next} {print}' cli/Cargo.toml > cli/Cargo.toml.tmp
+          mv cli/Cargo.toml.tmp cli/Cargo.toml
+          grep -m1 '^version' cli/Cargo.toml
+
       - name: Build Rust CLI (release)
         working-directory: cli
         run: cargo build --release
