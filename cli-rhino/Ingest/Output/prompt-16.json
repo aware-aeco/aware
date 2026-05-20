@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar xform = Rhino.Geometry.Transform.Mirror(Rhino.Geometry.Plane.WorldYZ);\nint mirrored = 0;\nforeach (var obj in doc.Objects.GetSelectedObjects(false, false))\n{\n    if (doc.Objects.Transform(obj.Id, xform, false) != Guid.Empty) mirrored++;\n}\ndoc.Views.Redraw();\nreturn new { mirrored = mirrored, plane = \"WorldYZ\" };",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nxform = Rhino.Geometry.Transform.Mirror(Rhino.Geometry.Plane.WorldYZ)\nmirrored = 0\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    if doc.Objects.Transform(obj.Id, xform, False) != System.Guid.Empty:\n        mirrored += 1\ndoc.Views.Redraw()\nreturn {\"mirrored\": mirrored, \"plane\": \"WorldYZ\"}",
   "args": {}
 }

@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar bbox = Rhino.Geometry.BoundingBox.Empty;\nforeach (var obj in doc.Objects)\n{\n    if (obj.IsHidden) continue;\n    bbox.Union(obj.Geometry.GetBoundingBox(true));\n}\nreturn new {\n    is_valid = bbox.IsValid,\n    min = new { x = bbox.Min.X, y = bbox.Min.Y, z = bbox.Min.Z },\n    max = new { x = bbox.Max.X, y = bbox.Max.Y, z = bbox.Max.Z }\n};",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nbbox = Rhino.Geometry.BoundingBox.Empty\nfor obj in doc.Objects:\n    if obj.IsHidden:\n        continue\n    bbox.Union(obj.Geometry.GetBoundingBox(True))\nreturn {\n    \"is_valid\": bbox.IsValid,\n    \"min\": {\"x\": bbox.Min.X, \"y\": bbox.Min.Y, \"z\": bbox.Min.Z},\n    \"max\": {\"x\": bbox.Max.X, \"y\": bbox.Max.Y, \"z\": bbox.Max.Z}\n}",
   "args": {}
 }

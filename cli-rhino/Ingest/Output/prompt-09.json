@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar plane = Rhino.Geometry.Plane.WorldXY;\nvar box = new Rhino.Geometry.Box(plane, new Rhino.Geometry.Interval(0, 1000), new Rhino.Geometry.Interval(0, 1000), new Rhino.Geometry.Interval(0, 500));\nvar id = doc.Objects.AddBox(box);\ndoc.Views.Redraw();\nreturn new { added = id != Guid.Empty, id = id.ToString() };",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nplane = Rhino.Geometry.Plane.WorldXY\nbox = Rhino.Geometry.Box(plane, Rhino.Geometry.Interval(0, 1000), Rhino.Geometry.Interval(0, 1000), Rhino.Geometry.Interval(0, 500))\nobj_id = doc.Objects.AddBox(box)\ndoc.Views.Redraw()\nreturn {\"added\": obj_id != System.Guid.Empty, \"id\": str(obj_id)}",
   "args": {}
 }

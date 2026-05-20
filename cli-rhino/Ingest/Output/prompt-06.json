@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar p0 = new Rhino.Geometry.Point3d(0, 0, 0);\nvar p1 = new Rhino.Geometry.Point3d(1000, 0, 0);\nvar id = doc.Objects.AddLine(p0, p1);\ndoc.Views.Redraw();\nreturn new { added = id != Guid.Empty, id = id.ToString() };",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\np0 = Rhino.Geometry.Point3d(0, 0, 0)\np1 = Rhino.Geometry.Point3d(1000, 0, 0)\nobj_id = doc.Objects.AddLine(p0, p1)\ndoc.Views.Redraw()\nreturn {\"added\": obj_id != System.Guid.Empty, \"id\": str(obj_id)}",
   "args": {}
 }

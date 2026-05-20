@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar target = System.IO.Path.Combine(System.IO.Path.GetTempPath(), \"aware-drill.3dm\");\nvar options = new Rhino.FileIO.FileWriteOptions { SuppressDialogBoxes = true, IncludeRenderMeshes = true };\nbool ok = doc.WriteFile(target, options);\nreturn new { ok = ok, path = target };",
+  "code": "import tempfile, os\ndoc = Rhino.RhinoDoc.ActiveDoc\ntarget = os.path.join(tempfile.gettempdir(), \"aware-drill.3dm\")\noptions = Rhino.FileIO.FileWriteOptions()\noptions.SuppressDialogBoxes = True\noptions.IncludeRenderMeshes = True\nok = doc.WriteFile(target, options)\nreturn {\"ok\": ok, \"path\": target}",
   "args": {}
 }

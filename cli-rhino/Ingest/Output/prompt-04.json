@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar counts = new Dictionary<int, int>();\nforeach (var obj in doc.Objects)\n{\n    counts[obj.Attributes.LayerIndex] = (counts.TryGetValue(obj.Attributes.LayerIndex, out var n) ? n : 0) + 1;\n}\nvar rows = new List<object>();\nforeach (var layer in doc.Layers)\n{\n    rows.Add(new { index = layer.Index, name = layer.FullPath, visible = layer.IsVisible, count = counts.TryGetValue(layer.Index, out var c) ? c : 0 });\n}\nreturn new { layer_count = doc.Layers.Count, layers = rows };",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\ncounts = {}\nfor obj in doc.Objects:\n    idx = obj.Attributes.LayerIndex\n    counts[idx] = counts.get(idx, 0) + 1\nrows = []\nfor layer in doc.Layers:\n    rows.append({\"index\": layer.Index, \"name\": layer.FullPath, \"visible\": layer.IsVisible, \"count\": counts.get(layer.Index, 0)})\nreturn {\"layer_count\": doc.Layers.Count, \"layers\": rows}",
   "args": {}
 }

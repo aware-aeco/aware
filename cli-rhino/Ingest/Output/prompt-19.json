@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar selected = new List<Guid>();\nforeach (var obj in doc.Objects.GetSelectedObjects(false, false)) selected.Add(obj.Id);\nif (selected.Count == 0) return new { ok = false, error = \"no objects selected\" };\nvar target = System.IO.Path.Combine(System.IO.Path.GetTempPath(), \"aware-drill.stl\");\nvar cmd = $\"_-Export \\\"{target}\\\" _Enter _Enter\";\nbool issued = Rhino.RhinoApp.RunScript(cmd, false);\nreturn new { ok = issued, path = target, selected_count = selected.Count };",
+  "code": "import tempfile, os\ndoc = Rhino.RhinoDoc.ActiveDoc\nselected = [obj.Id for obj in doc.Objects.GetSelectedObjects(False, False)]\nif len(selected) == 0:\n    return {\"ok\": False, \"error\": \"no objects selected\"}\ntarget = os.path.join(tempfile.gettempdir(), \"aware-drill.stl\")\ncmd = '_-Export \"%s\" _Enter _Enter' % target\nissued = Rhino.RhinoApp.RunScript(cmd, False)\nreturn {\"ok\": issued, \"path\": target, \"selected_count\": len(selected)}",
   "args": {}
 }

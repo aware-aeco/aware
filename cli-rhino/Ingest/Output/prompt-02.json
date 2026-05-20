@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar guids = new List<string>();\nforeach (var obj in doc.Objects.GetSelectedObjects(false, false))\n{\n    guids.Add(obj.Id.ToString());\n}\nreturn new { count = guids.Count, guids = guids };",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nguids = []\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    guids.append(str(obj.Id))\nreturn {\"count\": len(guids), \"guids\": guids}",
   "args": {}
 }

@@ -1,6 +1,6 @@
 {
   "verb": "exec",
   "version": "8",
-  "code": "var doc = Rhino.RhinoDoc.ActiveDoc;\nvar rng = new Random();\nvar ids = new List<Guid>();\nfor (int i = 0; i < 10; i++)\n{\n    var p = new Rhino.Geometry.Point3d(rng.NextDouble() * 1000, rng.NextDouble() * 1000, 0);\n    ids.Add(doc.Objects.AddPoint(p));\n}\nint groupIndex = doc.Groups.Add(ids);\ndoc.Views.Redraw();\nreturn new { group_index = groupIndex, point_count = ids.Count, ids = ids.ConvertAll(g => g.ToString()) };",
+  "code": "import random\nfrom System.Collections.Generic import List\ndoc = Rhino.RhinoDoc.ActiveDoc\nids = []\nfor i in range(10):\n    p = Rhino.Geometry.Point3d(random.random() * 1000, random.random() * 1000, 0)\n    ids.append(doc.Objects.AddPoint(p))\nglist = List[System.Guid]()\nfor g in ids:\n    glist.Add(g)\ngroup_index = doc.Groups.Add(glist)\ndoc.Views.Redraw()\nreturn {\"group_index\": group_index, \"point_count\": len(ids), \"ids\": [str(g) for g in ids]}",
   "args": {}
 }
