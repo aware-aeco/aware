@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nsel = model.selection.to_a\nif sel.empty?\n  { 'ok' => false, 'error' => 'no objects selected' }\nelse\n  model.start_operation('AWARE rotate selected', true)\n  t = Geom::Transformation.rotation(Geom::Point3d.new(0, 0, 0), Geom::Vector3d.new(0, 0, 1), 45.degrees)\n  model.entities.transform_entities(t, sel)\n  model.commit_operation\n  { 'ok' => true, 'rotated' => sel.length, 'degrees' => 45, 'axis' => 'Z' }\nend",
+  "args": {}
+}

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nsel = model.selection.to_a\n{ 'count' => sel.length, 'ids' => sel.map { |e| e.persistent_id.to_s } }",
+  "args": {}
+}

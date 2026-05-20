@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nview = model.active_view\n{ 'length_unit' => model.options['UnitsOptions']['LengthUnit'], 'render_mode' => view.rendering_options['RenderMode'], 'active_view_name' => view.respond_to?(:name) ? view.name : 'unnamed' }",
+  "args": {}
+}

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nmodel.start_operation('AWARE add layer', true)\nrng = Random.new\nlayer = model.layers.add('AWARE')\nlayer.color = Sketchup::Color.new(rng.rand(256), rng.rand(256), rng.rand(256))\nmodel.commit_operation\n{ 'name' => layer.name, 'visible' => layer.visible?, 'color' => [layer.color.red, layer.color.green, layer.color.blue] }",
+  "args": {}
+}

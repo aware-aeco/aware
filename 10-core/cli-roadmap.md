@@ -538,6 +538,48 @@ Defer until adoption signals demand it. Don't ship the "stamped" tier until 2–
 
 ---
 
+## Vendor `*.exec` fan-out — bringing each AECO host to live-write parity
+
+The `*.exec` verb is the structural primitive that closes the catalog → live-host loop in one call. The orchestrator reads the agent's catalog (knowledge), drafts a script, ships it through `*.exec`, sees the host's response. Same receipt vocabulary across vendors so orchestrator UX is uniform.
+
+### v0.31 — `tekla.exec` (Tekla Structures 2026, .NET 4.8 + Roslyn) — *shipped*
+
+Roslyn scripting over Tekla's classic-framework Open API. Sidecar at `cli-tekla/` (net48). 13/20 PASS on live-Tekla drill. Shape: `{verb, code, args}` stdin-JSON, AWARE-shaped receipt on stdout.
+
+### v0.32 — `rhino.exec` (Rhino 8, .NET 10 + rhinocode CLI) — *shipped*
+
+Wraps McNeel's `rhinocode` CLI which speaks named-pipe to Rhino's `ScriptServer`. Sidecar at `cli-rhino/` (net10). C# 9 top-level statements wrapped around the user body. Identical receipt vocabulary to Tekla; only `host` differs.
+
+### v0.34 — `sketchup.exec` (SketchUp 2026, .NET 10 + in-process Ruby bridge)
+
+**Goal:** bring SketchUp to live-write parity with Tekla and Rhino.
+
+**Why this is non-trivial:** Trimble ships no out-of-process CLI bridge for SketchUp. The only public extensibility surface is the in-process Ruby 3.2 interpreter. Therefore the sidecar can't shell out — it must invent the bridge.
+
+**Architecture:**
+- `cli-sketchup/` (.NET 10 single-file binary, mirrors cli-rhino's shape)
+- `cli-sketchup/BridgeAssets/aware_sketchup_bridge.rb` + `aware_sketchup_bridge/core.rb` — an auto-loaded SketchUp extension that opens a TCP listener on 127.0.0.1:8765 (first free in 8765..8865), drains an inbox queue on SketchUp's main thread via `UI.start_timer(0.05, true)`, evaluates user Ruby against `Sketchup.active_model`, returns a JSON receipt over the socket.
+- Wire protocol: 4-byte big-endian length prefix + UTF-8 JSON body. Unambiguous, fast, no escaping concerns.
+- Discovery: each SketchUp PID writes `%TEMP%/aware-sketchup/<pid>.json` so the sidecar can find which port belongs to which instance.
+- Bridge install: `aware-sketchup --install-bridge` copies the loader + support into `%APPDATA%\SketchUp\SketchUp <year>\SketchUp\Plugins\`. One-time setup; SketchUp auto-loads on next launch.
+
+**Verbs (identical contract to cli-tekla / cli-rhino):**
+- `exec` — evaluate Ruby against the active model
+- `list-instances` — enumerate live bridges via the discovery folder
+- `send-status` — convenience verb that ships `Sketchup.set_status_text(msg)` through `exec`
+- `launch` — spawn SketchUp.exe (optionally opens a `.skp` file)
+- `close` — clean shutdown (save + CloseMainWindow) or `force: true` (Process.Kill)
+
+**Live-drill target:** 13/20 PASS against SketchUp 2026, matching Tekla's v0.31 bar.
+
+**Realistic effort:** 1–2 days. Shipped at this writing; live drill pending one-time human dismissal of the SketchUp 2026 Welcome dialog (CEF-rendered, blocks plugin loading on first launch only).
+
+### v0.35+ — Future fan-out
+
+The same shape applies to every vendor whose API surface is scriptable in-process: Allplan (CSharp scripts), Archicad (JavaScript via PythonPalette), Revit (Python/C# via pyRevit or RvtPy), Navisworks (.NET via NwApi). Each lands as a new `cli-<vendor>/` directory with the same {verb, code, args} contract and AWARE-shaped receipts.
+
+---
+
 ## v1.0 — Stable
 
 After v0.5, all five spec documents (decalog, manifesto, agent-spec, app-spec, cli-spec) and the CLI implementation are frozen for at least one major version.

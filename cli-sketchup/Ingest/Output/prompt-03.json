@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nbb = model.bounds\n{ 'valid' => bb.valid?, 'min' => [bb.min.x.to_f, bb.min.y.to_f, bb.min.z.to_f], 'max' => [bb.max.x.to_f, bb.max.y.to_f, bb.max.z.to_f] }",
+  "args": {}
+}

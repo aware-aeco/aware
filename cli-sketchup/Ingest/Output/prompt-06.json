@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nmodel.start_operation('AWARE add line', true)\np0 = Geom::Point3d.new(0, 0, 0)\np1 = Geom::Point3d.new(1000.mm, 0, 0)\nedge = model.entities.add_line(p0, p1)\nmodel.commit_operation\n{ 'added' => !edge.nil?, 'id' => edge && edge.persistent_id.to_s }",
+  "args": {}
+}

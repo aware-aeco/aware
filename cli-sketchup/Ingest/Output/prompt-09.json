@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nmodel.start_operation('AWARE add group with points', true)\ngrp = model.entities.add_group\nrng = Random.new(42)\npts = []\n5.times do\n  p = Geom::Point3d.new(rng.rand(1000).mm, rng.rand(1000).mm, 0)\n  pts << grp.entities.add_cpoint(p)\nend\nmodel.commit_operation\n{ 'group_id' => grp.persistent_id.to_s, 'point_count' => pts.length }",
+  "args": {}
+}

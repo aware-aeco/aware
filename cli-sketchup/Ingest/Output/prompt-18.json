@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nrows = model.pages.map { |p| { 'name' => p.name, 'description' => p.description } }\n{ 'count' => model.pages.length, 'pages' => rows }",
+  "args": {}
+}

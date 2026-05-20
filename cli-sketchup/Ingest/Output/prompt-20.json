@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\n{ 'guid' => model.guid, 'title' => model.title, 'description' => model.description, 'path' => model.path, 'modified' => model.modified? }",
+  "args": {}
+}

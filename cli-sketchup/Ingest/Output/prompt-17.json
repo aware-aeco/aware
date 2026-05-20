@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\ntarget = File.join(ENV['TEMP'] || Dir.tmpdir, 'aware-drill.dae')\nok = model.export(target, false)\n{ 'ok' => ok, 'path' => target, 'entity_count' => model.entities.length }",
+  "args": {}
+}

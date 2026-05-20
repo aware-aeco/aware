@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nsel = model.selection.to_a\nexplodable = sel.select { |e| e.respond_to?(:explode) }\nif explodable.empty?\n  { 'ok' => false, 'error' => 'no selected groups or components to explode' }\nelse\n  model.start_operation('AWARE explode', true)\n  exploded = 0\n  explodable.each { |e| e.explode; exploded += 1 }\n  model.commit_operation\n  { 'ok' => true, 'exploded' => exploded }\nend",
+  "args": {}
+}

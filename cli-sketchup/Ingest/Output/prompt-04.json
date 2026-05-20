@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nrows = model.materials.map do |m|\n  c = m.color\n  { 'name' => m.name, 'rgb' => [c.red, c.green, c.blue] }\nend\n{ 'count' => model.materials.length, 'materials' => rows }",
+  "args": {}
+}

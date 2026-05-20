@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "26",
+  "code": "model = Sketchup.active_model\nsel = model.selection.to_a\nif sel.empty?\n  { 'ok' => false, 'error' => 'no objects selected' }\nelse\n  model.start_operation('AWARE scale selected', true)\n  t = Geom::Transformation.scaling(Geom::Point3d.new(0, 0, 0), 2.0)\n  model.entities.transform_entities(t, sel)\n  model.commit_operation\n  { 'ok' => true, 'scaled' => sel.length, 'factor' => 2.0 }\nend",
+  "args": {}
+}
