@@ -1,5 +1,5 @@
 agent:        acc-account-admin
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.0
 display-name: Autodesk Construction Cloud — Account Admin (raw)
 description: |
@@ -18,8 +18,11 @@ description: |
   audit who has access to what across a portfolio of projects, sync
   company directory to a billing tool.
 
-  Auth via `aware connect autodesk`. Requires admin-level scopes
-  (account:read, account:write).
+  Auth: APS OAuth with admin scopes (`account:read`, `account:write`) —
+  usually 2-legged via an app provisioned as an account custom
+  integration. NOTE: `aware connect` does not yet wire Autodesk (only
+  trimble-connect / microsoft-365 / google-workspace); supply an APS
+  token via the AWARE credential store. See skills/acc-admin-auth-and-scopes.md.
 
   Marked `stateful: false` — every endpoint is request/response.
 
@@ -132,3 +135,7 @@ commands:
   update-project-user:
     lifecycle: single
     description: PATCH /construction/admin/v1/projects/{projectId}/users/{userId} — Update user in project
+
+skills:
+  - acc-admin-auth-and-scopes.md
+  - acc-account-admin-model.md

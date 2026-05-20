@@ -27,14 +27,16 @@ Reach for `aps-data-management` only when:
 
 ## Auth scope
 
-Both agents share the `acc` credential. `aware connect acc` provisions
-a token with the `data:read data:write account:read viewables:read`
-scopes, which covers both. For tenant-restricted hubs, use the
-device-code flow (v0.13):
-
-```bash
-aware connect acc --device-code --tenant <acc-hub-id>
-```
+Both agents read an APS token with the `data:read data:write
+account:read viewables:read` scopes, which covers both. **NOTE:**
+`aware connect` does not yet wire Autodesk/APS — its OAuth config
+covers only `trimble-connect`, `microsoft-365`, and `google-workspace`,
+so `aware connect acc` is **not** available yet. Supply the APS token
+out-of-band via the AWARE credential store until first-class support
+lands (a tractable follow-up, since APS 3-legged is standard
+authorization-code + PKCE). See the acc-issues
+[acc-platform-auth-and-ids](../../acc-issues/skills/acc-platform-auth-and-ids.md)
+skill for the full picture (2-legged vs 3-legged, the `b.` project-ID gotcha).
 
 ## Common cross-agent flow
 

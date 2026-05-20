@@ -1,5 +1,5 @@
 agent:        acc-issues
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.0
 display-name: Autodesk Construction Cloud — Issues (raw)
 description: |
@@ -19,8 +19,11 @@ description: |
   punch list from a Trimble Connect viewpoint; aggregate weekly
   issue rollup for site PMs.
 
-  Auth via `aware connect autodesk` (3-legged OAuth — most ACC
-  endpoints need a user-context token, not a 2-legged app token).
+  Auth: 3-legged APS OAuth (user-context token — most ACC endpoints
+  need a project member's token, not a 2-legged app token). NOTE:
+  `aware connect` does not yet wire Autodesk (only trimble-connect /
+  microsoft-365 / google-workspace); supply an APS token via the AWARE
+  credential store. See skills/acc-platform-auth-and-ids.md.
 
   Marked `stateful: false` — every endpoint is request/response.
 
@@ -85,3 +88,7 @@ commands:
   patch-issue-details:
     lifecycle: single
     description: PATCH /construction/issues/v1/projects/{projectId}/issues/{issueId} — 
+
+skills:
+  - acc-platform-auth-and-ids.md
+  - acc-issues-domain.md
