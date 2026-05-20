@@ -594,8 +594,9 @@ commands:
       name:
         type: string
         description: |
-          New worksheet name. Optional — Graph auto-names (`Sheet1`, …)
-          when omitted. Max 31 chars; `\ / ? * [ ]` are rejected.
+          New worksheet name. Optional — Excel auto-names (`Sheet1`, …)
+          when omitted. Max 31 chars; the characters \ / ? * : [ ] are
+          rejected, as is a leading/trailing apostrophe.
     outputs:
       type: single
       schema:
