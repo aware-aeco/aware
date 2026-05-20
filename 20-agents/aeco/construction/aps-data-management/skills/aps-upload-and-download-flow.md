@@ -19,16 +19,19 @@ To land a new file (or a new revision):
 
 **The old way is gone.** The legacy direct upload (`PUT object` / `PUT resumable` to `developer.api.autodesk.com`) was **removed on 2022-12-31**; OSS **v1** endpoints sunset **2025-10-31**. Only the signed-S3 (v2) flow works now — don't document or attempt the old PUT-to-storage upload.
 
-## Download: it's asynchronous
+## Download: resolve storage, then OSS signed-download
 
-Downloading isn't a single GET — Autodesk may transcode to the requested format first:
+The bytes always come from OSS via a **signed S3 download** — the Data Management endpoints only hand you a *storage reference*, never the bytes (symmetric with upload). Two routes to the storage URN:
 
-1. `get-version-downloads` / `get-version-download-formats` — what formats this version can be delivered as.
-2. **`create-download`** — request a download in a format → returns a **job**.
-3. **`get-download-job`** — poll until the job completes (poll, don't sleep blindly).
-4. **`get-download`** — returns the signed S3 URL; `GET` the bytes from it.
+**Source file (a specific version):**
+1. `get-version` (or `get-item-tip`) → read `data.relationships.storage.data.id` → an OSS URN `urn:adsk.objects:os.object:<bucket>/<object>`.
+2. Parse the URN → `bucketKey` + `objectKey`.
+3. `GET /oss/v2/buckets/{bucketKey}/objects/{objectKey}/signeds3download` → a signed S3 URL (default ~2-min expiry; up to 60 via `minutesExpiration`; `batchsigneds3download` for up to 20 files at once).
+4. `GET` the bytes from the signed S3 URL.
 
-For the *current* file, resolve the tip first (`get-item-tip`; see [aps-data-hierarchy](./aps-data-hierarchy.md)).
+**Transcoded / derivative format (async job):** when you need a *different* format than the source, `create-download` requests it → poll `get-download-job` until complete → the resulting `get-download` resource references the output **storage** (a JSON:API `relationships.storage`, not a ready URL) → then do the same OSS signed-download (steps 2–4). `get-version-downloads` / `get-version-download-formats` list which formats a version can be delivered as.
+
+> Same gap as upload: steps 3–4 are the **OSS API**, **not in this catalog**. This agent gets you the storage URN; fetching the bytes needs the OSS `signeds3download` call (hand-shim or a regenerated OSS agent).
 
 ## `execute-command`
 
