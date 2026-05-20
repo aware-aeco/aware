@@ -1,5 +1,5 @@
 agent:        aps-data-management
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.0
 display-name: Autodesk APS — Data Management (raw)
 description: |
@@ -23,8 +23,11 @@ description: |
   versions of an IFC across folders, automated weekly export of
   punch-list photos to a Slack channel.
 
-  Auth via `aware connect autodesk`. Both 2-legged (server-to-server)
-  and 3-legged (user-context) flows supported by different endpoints.
+  Auth: APS OAuth — 2-legged (server-to-server) and 3-legged
+  (user-context) per endpoint. NOTE: `aware connect` does not yet wire
+  Autodesk (only trimble-connect / microsoft-365 / google-workspace);
+  supply an APS token via the AWARE credential store. See
+  skills/aps-data-management-auth-and-ids.md.
 
   Marked `stateful: false` — every endpoint is request/response.
 
@@ -170,3 +173,8 @@ commands:
   patch-version:
     lifecycle: single
     description: PATCH /data/v1/projects/{project_id}/versions/{version_id} — Update a Version
+
+skills:
+  - aps-data-management-auth-and-ids.md
+  - aps-data-hierarchy.md
+  - aps-upload-and-download-flow.md
