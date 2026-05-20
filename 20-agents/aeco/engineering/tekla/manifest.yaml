@@ -387,6 +387,12 @@ commands:
       all model objects. Wraps `Operation.CreateReportFromAll` /
       `CreateReportFromSelected`. The bolt-list / weld-list / part-list /
       assembly-list source verb. Read-only.
+
+      Emits the report **file path** + `row-count` — not the rows
+      themselves. To land the data in a spreadsheet, upload the file then
+      `microsoft-365.excel.range.read` it, or read it locally and feed
+      `excel.range.write`. (A future `include-rows` flag may emit parsed
+      `rows` directly; tracked in #103.)
     inputs:
       template:
         type: string
