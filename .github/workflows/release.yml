@@ -152,6 +152,11 @@ jobs:
   publish-npm:
     needs: release
     runs-on: ubuntu-latest
+    # npm is a secondary distribution channel. A publish failure (e.g. the
+    # @aware-aeco scope/org or NPM_TOKEN not yet provisioned) must NOT fail the
+    # release — the GitHub Release binaries are the primary, authoritative
+    # artifact. Once npm is set up this job goes green on its own.
+    continue-on-error: true
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: read
