@@ -39,28 +39,21 @@ Pawel, here's what ran while you were asleep.
 | Vendor | Sidecar verbs | Curated workflow verbs | Craft skills | Live drill |
 |---|---|---|---|---|
 | Tekla (reference) | 5 (pre-session) | yes | 33 (pre-session) | 13/20 v0.31 |
-| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | blocked on EULA acceptance — see correction below |
+| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | **N/A — no Rhino license** (see resolution below) |
 | Revit | 5 (#77) | 10 (in main) | 6 (#79) | **20/20 PASS** ✨ (subagent re-drilled) |
 | SketchUp | 5 (#76) | 10 (#72 + #74) | 6 (#78) | **19/20 PASS** ✅ (Welcome dialog unblocked late-session — see below) |
 
-**Revit + SketchUp both exceed tekla's 13/20 baseline.** All three vendors meet sidecar + curated-workflow + craft-skills parity with tekla; two of three have live-drill PASS. Rhino's drill is owed but the blocker is NOT what the earlier session claimed — see correction below.
+**Revit + SketchUp both exceed tekla's 13/20 baseline.** All three vendors meet sidecar + curated-workflow + craft-skills parity with tekla; two of three have live-drill PASS. Rhino's drill is **N/A** — Pawel confirmed he has no Rhino license (only Revit, SketchUp, Tekla). See resolution below.
 
-### Correction — Rhino IS installed; the actual blocker is EULA acceptance
+### Resolution — Rhino drill is N/A (no license), not a blocker to fix
 
-The prior session reported Rhino as "physically blocked — no Rhino install possible without UAC elevation". That was wrong. Verified post-session:
+Two prior framings of the Rhino drill were both wrong:
+1. The earlier session claimed "physically blocked — no Rhino install possible without UAC elevation". Wrong — `C:\Program Files\Rhino 8` exists with `RhinoCode.exe 8.31.26126` functional.
+2. The follow-up claimed "blocked on EULA acceptance". Technically true (the first-run "Welcome to Rhino" WPF dialog gates the script server), but irrelevant — completing it would only start a 90-day eval.
 
-- **`C:\Program Files\Rhino 8` exists** (install dated 2026-05-20 00:09 — apparently completed late-session or by Pawel)
-- **`RhinoCode.exe` 8.31.26126 functional** — `--version` and `--help` both respond
-- Launching `Rhino.exe /nosplash /runscript=_StartScriptServer` brings Rhino up but the script server doesn't initialize because the first-time **"Welcome to Rhino" licensing dialog** is blocking (WPF dialog, HwndWrapper class).
+**The real resolution: Pawel has no Rhino license** (confirmed directly: "i do not have licence for this, only revit, sketchup, tekla"). The Rhino live drill is therefore N/A on this machine — the same category as "Mac/Linux N/A for Windows-only tools". It is not owed and not fixable without purchasing a license. Rhino's tekla-parity is met by the shipped infrastructure: 5 sidecar verbs (#66+#67), 10 curated workflow verbs (#69+#73), 5 craft skills (#75). The drill harness (#67, BOM-fixed in commit `718323360`) is ready should a licensed Rhino ever be available.
 
-The dialog requires:
-1. Email entry in an Edit field (currently shows `you@example.com` placeholder)
-2. Checking "I have read and agree to: 1. Rhino End User License Agreement / 2. The McNeel Privacy Policy"
-3. Clicking a Continue/Submit button
-
-License-state discovery: Pawel has a **Rhino 6** Cloud Zoo license (`%APPDATA%\McNeel\Rhinoceros\6.0\License Manager\Licenses\cloudzoo.json`, 2MB) but Rhino 8.0's License Manager has no Licenses subdir. Rhino licenses are per-major-version, so the Rhino 6 license cannot activate Rhino 8.
-
-**Why not auto-click**: Accepting an EULA on Pawel's behalf is a legal acceptance that misrepresents who agreed — out of scope for autonomous action per the "executing actions with care" rule. Rhino is currently left running with the dialog visible so Pawel only needs the 10-second click + email entry; the drill harness will pick up the script server automatically once it initializes.
+**Net: the first-phase goal ("all three vendors at tekla level") is complete to the maximum extent the licensing allows** — full infrastructure parity for all three, live-drill PASS for the two that are licensed for drilling on this machine.
 
 ### Late-session breakthrough — SketchUp Welcome dialog dismissal solved
 
@@ -74,17 +67,11 @@ Plus craft-skills coverage extended to other audit-priority vendors:
 - Navisworks (#80) — was 3, now 8 craft skills
 - AutoCAD (#81) — was 0, now 6 craft skills
 
-## The only live drill still owed
+## Live drills: 2 PASS, 1 N/A
 
-Rhino. #66 and #67 ship rhino.exec to feature parity with cli-tekla and Rhino 8.31 is verified installed. The drill is gated on Pawel completing the Welcome dialog (already on screen if you didn't restart). Steps:
+Revit (20/20) and SketchUp (19/20) PASS. Rhino is **N/A — no license on this machine** (resolution section above). The cli-rhino drill harness is ready and BOM-fixed (commit `718323360` on PR #67); should a licensed Rhino 8 ever be available, the drill runs with: `git checkout v0.32.1-rhino-launch-close && pwsh -File cli-rhino/Ingest/run-drill.ps1` (after the script server is up). #66 + #67 can merge on code/infra review alone — the live drill is not a merge gate given the licensing reality.
 
-1. Click into the "Welcome to Rhino" window already open, enter your email, check the EULA box, click Continue
-2. Wait for the script server to register (~10 sec) — verify with: `& "C:\Program Files\Rhino 8\System\RhinoCode.exe" list`
-3. From repo root: `git checkout v0.32.1-rhino-launch-close && pwsh -File cli-rhino/Ingest/run-drill.ps1`
-
-If the harness fails with `'0xEF' is an invalid start of a value`, the run-drill.ps1 has the same UTF-16 BOM bug the SketchUp subagent fixed — port the `cmd /c "exe < file"` change from cli-sketchup/Ingest/run-drill.ps1.
-
-Recipe in [`2026-05-19-v032-rhino-exec-ready.md`](./2026-05-19-v032-rhino-exec-ready.md). If PASS rate is at or above tekla's 13/20, merge #66 + #67.
+Recipe in [`2026-05-19-v032-rhino-exec-ready.md`](./2026-05-19-v032-rhino-exec-ready.md).
 
 ## Background work — Revit + SketchUp (both LANDED)
 
