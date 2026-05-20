@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var docs = new List<object>();\nforeach (Document d in uiapp.Application.Documents) {\n    docs.Add(new { title = d.Title, path = d.PathName, is_family = d.IsFamilyDocument, is_linked = d.IsLinked });\n}\nreturn new { count = docs.Count, documents = docs };",
+  "args": {}
+}

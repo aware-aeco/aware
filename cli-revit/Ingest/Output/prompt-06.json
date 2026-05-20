@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nif (!doc.IsWorkshared) return new { workshared = false, worksets = new List<object>() };\nvar wsets = new FilteredWorksetCollector(doc).OfKind(WorksetKind.UserWorkset).Select(w => new { id = w.Id.IntegerValue, name = w.Name, owner = w.Owner, is_open = w.IsOpen }).ToList();\nreturn new { workshared = true, count = wsets.Count, worksets = wsets };",
+  "args": {}
+}

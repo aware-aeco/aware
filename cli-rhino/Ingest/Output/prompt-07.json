@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nplane = Rhino.Geometry.Plane.WorldXY\ncircle = Rhino.Geometry.Circle(plane, 500)\nobj_id = doc.Objects.AddCircle(circle)\ndoc.Views.Redraw()\nreturn {\"added\": obj_id != System.Guid.Empty, \"id\": str(obj_id), \"radius\": 500}",
+  "args": {}
+}

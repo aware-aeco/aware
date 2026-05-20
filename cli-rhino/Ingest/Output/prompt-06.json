@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\np0 = Rhino.Geometry.Point3d(0, 0, 0)\np1 = Rhino.Geometry.Point3d(1000, 0, 0)\nobj_id = doc.Objects.AddLine(p0, p1)\ndoc.Views.Redraw()\nreturn {\"added\": obj_id != System.Guid.Empty, \"id\": str(obj_id)}",
+  "args": {}
+}

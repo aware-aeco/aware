@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar levels = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().OrderBy(l => l.Elevation).Select(l => new { name = l.Name, elevation_ft = l.Elevation, id = l.Id.Value }).ToList();\nreturn new { count = levels.Count, levels = levels };",
+  "args": {}
+}

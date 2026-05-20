@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nif (string.IsNullOrEmpty(doc.PathName)) return new { saved = false, reason = \"document has no path (save-as required)\" };\ntry { doc.Save(); return new { saved = true, path = doc.PathName }; }\ncatch (System.Exception e) { return new { saved = false, error = e.Message }; }",
+  "args": {}
+}

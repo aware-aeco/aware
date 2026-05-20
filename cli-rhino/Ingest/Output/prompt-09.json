@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nplane = Rhino.Geometry.Plane.WorldXY\nbox = Rhino.Geometry.Box(plane, Rhino.Geometry.Interval(0, 1000), Rhino.Geometry.Interval(0, 1000), Rhino.Geometry.Interval(0, 500))\nobj_id = doc.Objects.AddBox(box)\ndoc.Views.Redraw()\nreturn {\"added\": obj_id != System.Guid.Empty, \"id\": str(obj_id)}",
+  "args": {}
+}

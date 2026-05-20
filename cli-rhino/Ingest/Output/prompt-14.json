@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "import math\ndoc = Rhino.RhinoDoc.ActiveDoc\nxform = Rhino.Geometry.Transform.Rotation(math.pi / 4, Rhino.Geometry.Vector3d.ZAxis, Rhino.Geometry.Point3d.Origin)\nrotated = 0\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    if doc.Objects.Transform(obj.Id, xform, True) != System.Guid.Empty:\n        rotated += 1\ndoc.Views.Redraw()\nreturn {\"rotated\": rotated, \"degrees\": 45, \"axis\": \"Z\"}",
+  "args": {}
+}

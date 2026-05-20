@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar info = doc.ProjectInformation;\nreturn new { number = info.Number, name = info.Name, address = info.Address, status = info.Status, client_name = info.ClientName };",
+  "args": {}
+}

@@ -33,6 +33,125 @@ transport:
     binary: aware-solibri
 
 commands:
+  # === v0.33 curated workflow verbs ==========================================
+  # Solibri's API is REST/OpenAPI (Solibri Anywhere). Curated verbs target
+  # the BIM-coordinator's daily workflows: load IFC, run checks, export BCF.
+  # The implementation in each commands/<name>.md is the REST call shape.
+  model.import-ifc:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Load an IFC file into the current Solibri project as a federated
+      submodel. The "attach the structural engineer's deliverable" primitive.
+    inputs:
+      ifc-path:
+        type: string
+        description: Absolute path to an .ifc file.
+      discipline:
+        type: enum
+        values: [architectural, structural, mep, other]
+        default: other
+        description: Discipline tag for federation organization.
+    outputs:
+      type: single
+      schema:
+        model-id:    string
+        component-count: number
+        load-warnings:
+          type: array
+          items: string
+  check.run-rule-set:
+    lifecycle: single
+    category: curated
+    description: |
+      Execute a Solibri rule set against the loaded model(s) and return a
+      summary of issues found per rule. The Monday-clash-digest primitive.
+    inputs:
+      ruleset-name:
+        type: string
+        description: Name of the rule set as defined in Solibri (e.g. "Architectural Checks").
+      include-resolved:
+        type: boolean
+        default: false
+    outputs:
+      type: single
+      schema:
+        ruleset-name: string
+        rules:
+          type: array
+          items:
+            name: string
+            severity: string
+            issue-count: number
+            issues:
+              type: array
+              items:
+                guid: string
+                title: string
+                affected-components:
+                  type: array
+                  items: string
+  bcf.export-checking-results:
+    lifecycle: single
+    category: curated
+    description: |
+      Export the current set of Solibri checking results as a BCF 2.1 or
+      3.0 archive for round-trip to Revit / Navisworks / Tekla.
+    inputs:
+      out-path:
+        type: string
+        description: Output .bcfzip path.
+      bcf-version:
+        type: enum
+        values: ["2.1", "3.0"]
+        default: "2.1"
+      filter-severity:
+        type: enum
+        values: [all, critical, moderate, low]
+        default: all
+    outputs:
+      type: single
+      schema:
+        out-path:    string
+        topic-count: number
+        bytes:       number
+  presentation.export-pdf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export a Solibri presentation as PDF for design-review attendance.
+    inputs:
+      presentation-id:
+        type: string
+      out-path:
+        type: string
+    outputs:
+      type: single
+      schema:
+        out-path: string
+        page-count: number
+  components.delete-by-guids:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Remove components from the current Solibri project by IFC GUID list.
+      The "delete the deprecated objects per the BCF resolution" primitive.
+    inputs:
+      guids:
+        type: array
+        items: string
+        description: IFC GUIDs to remove.
+    outputs:
+      type: single
+      schema:
+        requested: number
+        deleted:   number
+        not-found:
+          type: array
+          items: string
+  # === Auto-generated catalog commands =======================================
   paths-about-async:
     lifecycle: single
     description: Get information about running product

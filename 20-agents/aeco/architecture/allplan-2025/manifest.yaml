@@ -33,6 +33,133 @@ transport:
     binary: aware-allplan
 
 commands:
+  # === v0.33 curated workflow verbs ==========================================
+  # Allplan's API is Python (PythonParts) for in-process scripting + a small
+  # RESTful Bimplus surface for cloud integration. The curated verbs target
+  # the BIM-architect's daily workflow lifecycle. Routes via a future
+  # aware-allplan sidecar (v0.38+).
+  element.list-by-trade:
+    lifecycle: single
+    category: curated
+    description: |
+      List elements in the active project filtered by trade (architecture /
+      structure / MEP / civil). Returns id, type, layer, and trade.
+    inputs:
+      trade:
+        type: enum
+        values: [architecture, structure, mep, civil, all]
+        default: all
+      layer-filter:
+        type: string
+        description: Optional regex matched against the element's layer name.
+    outputs:
+      type: single
+      schema:
+        count: number
+        elements:
+          type: array
+          items:
+            id: string
+            type: string
+            layer: string
+            trade: string
+  layer.set-by-pattern:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Move every element whose current layer matches a regex onto a target
+      layer. Creates target layer if missing.
+    inputs:
+      from-pattern:
+        type: string
+      to-layer:
+        type: string
+      to-layer-color-aci:
+        type: number
+        default: 7
+    outputs:
+      type: single
+      schema:
+        target-layer-id: string
+        moved-count:     number
+        created-target:  boolean
+  pythonpart.execute:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Execute a PythonPart definition (.pyp + .py) at a specified position
+      in the active document. The "instantiate parametric component"
+      primitive.
+    inputs:
+      pyp-path:
+        type: string
+        description: Absolute path to the .pyp definition.
+      placement:
+        type: object
+        description: "{x, y, z, rotation-deg} in document units."
+      parameters:
+        type: object
+        description: Map of parameter-name to value to override defaults.
+    outputs:
+      type: single
+      schema:
+        placed: boolean
+        element-id: string
+        warnings:
+          type: array
+          items: string
+  report.export-quantities:
+    lifecycle: single
+    category: curated
+    description: |
+      Export quantities (bill of materials) for elements matching a filter.
+      Supports CSV / Excel / XML output for downstream cost takeoff.
+    inputs:
+      filter-trade:
+        type: enum
+        values: [architecture, structure, mep, civil, all]
+        default: all
+      out-path:
+        type: string
+      format:
+        type: enum
+        values: [csv, xlsx, xml]
+        default: csv
+    outputs:
+      type: single
+      schema:
+        out-path: string
+        row-count: number
+        bytes:    number
+  view.export-plans-to-pdf:
+    lifecycle: single
+    category: curated
+    description: |
+      Export all sheet plans in the project to PDF. The "issue the floor-
+      plan pack" primitive. Supports per-plan or combined PDF output.
+    inputs:
+      out-path:
+        type: string
+        description: PDF file path, OR directory when one-per-plan=true.
+      one-per-plan:
+        type: boolean
+        default: false
+      dpi:
+        type: number
+        default: 300
+      plan-name-filter:
+        type: string
+        description: Optional regex; only matching plans are exported.
+    outputs:
+      type: single
+      schema:
+        exported-count: number
+        files:
+          type: array
+          items: string
+  # === Auto-generated catalog commands =======================================
   any-value-by-type-gt:
     lifecycle: single
     description: ""

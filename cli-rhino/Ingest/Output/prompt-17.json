@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nbreps = []\npicked_ids = []\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    if isinstance(obj.Geometry, Rhino.Geometry.Brep):\n        breps.append(obj.Geometry)\n        picked_ids.append(obj.Id)\nif len(breps) < 2:\n    return {\"ok\": False, \"error\": \"need at least 2 selected breps; got %d\" % len(breps)}\ntol = doc.ModelAbsoluteTolerance\nresult = Rhino.Geometry.Brep.CreateBooleanUnion(breps, tol)\nif result is None or len(result) == 0:\n    return {\"ok\": False, \"error\": \"boolean union returned no breps\"}\nfor obj_id in picked_ids:\n    doc.Objects.Delete(obj_id, True)\nnew_ids = []\nfor brep in result:\n    new_ids.append(str(doc.Objects.AddBrep(brep)))\ndoc.Views.Redraw()\nreturn {\"ok\": True, \"inputs\": len(picked_ids), \"outputs\": len(new_ids), \"ids\": new_ids}",
+  "args": {}
+}

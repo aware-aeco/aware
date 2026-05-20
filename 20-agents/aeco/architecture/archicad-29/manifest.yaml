@@ -33,6 +33,142 @@ transport:
     binary: aware-archicad
 
 commands:
+  # === v0.34 curated workflow verbs ==========================================
+  # Hand-curated workflow verbs per the v0.10 curation framework. Each
+  # declares typed inputs/outputs; the implementation is the documented
+  # JSON-RPC payload in commands/<name>.md. Archicad's automation surface
+  # is JSON-RPC over HTTP (the Tapir Add-On + Graphisoft's built-in JSON
+  # Interface), so each verb is a thin orchestration of one-to-three
+  # native Tapir / Graphisoft commands. No sidecar needed: any HTTP
+  # client (curl, PowerShell Invoke-RestMethod, requests, etc.) can POST
+  # the payload to http://127.0.0.1:19723 while Archicad is running with
+  # the Tapir Add-On loaded.
+  element.list-by-classification:
+    lifecycle: single
+    category: curated
+    description: |
+      List every element on the plan that is classified under the given
+      ClassificationItem in the given ClassificationSystem (typically
+      "ARCHICAD Classification" or an IFC system). The audit primitive
+      for "show me every IfcWall" / "every fire-rated assembly".
+    inputs:
+      classification-system-name:
+        type: string
+        description: Display name of the ClassificationSystem (e.g. "ARCHICAD Classification - v 2.0").
+      classification-item-id-guid:
+        type: string
+        description: The ClassificationItem GUID. Use GetAllClassificationsInSystem to resolve from a human name.
+    outputs:
+      type: single
+      schema:
+        classification-system-name: string
+        classification-item-id:     string
+        element-count:              number
+        elements:
+          type: array
+          items:
+            element-id: string
+            type:       string
+  element.set-layer-by-pattern:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Move every element whose current layer name matches a regex onto a
+      target layer. Used for cleaning imported models or normalizing
+      DWG-derived geometry. The target layer must already exist (create
+      it via Tapir AttributeCommands.CreateLayers first if needed).
+    inputs:
+      from-pattern:
+        type: string
+        description: Regex matched against the source layer's name.
+      to-layer-name:
+        type: string
+        description: Target layer name. Must exist; create via CreateLayers if needed.
+      element-types:
+        type: array
+        items: string
+        description: Optional filter — only elements of these ElementTypes are touched. Empty = all.
+    outputs:
+      type: single
+      schema:
+        target-layer-name:  string
+        target-layer-index: number
+        matched-count:      number
+        moved-count:        number
+  view.publish-set:
+    lifecycle: single
+    category: curated
+    description: |
+      Publish a Publisher Set to its configured output (PDF, DWG, BIMx,
+      etc. — whatever the set's Publisher format is). The architect
+      "issue the sheet pack" primitive in Archicad. Wraps Tapir's
+      PublishPublisherSet which is the only sanctioned way to trigger
+      a non-interactive PDF/DWG/BIMx export.
+    inputs:
+      publisher-set-name:
+        type: string
+        description: Display name of the Publisher Set as shown in Navigator.
+      output-path:
+        type: string
+        description: Override the set's configured output dir. Empty = use the set's default.
+      navigator-item-ids:
+        type: array
+        items: string
+        description: Optional — publish only these items inside the set instead of the whole set.
+    outputs:
+      type: single
+      schema:
+        publisher-set-name: string
+        output-path:        string
+        published-count:    number
+  zone.list-with-properties:
+    lifecycle: single
+    category: curated
+    description: |
+      Enumerate every Zone (room) on the plan with name, number, category,
+      area, polygon, and the requested property values. The room/zone
+      audit primitive — produces the input for a room schedule, an area
+      check, or a programming-vs-actual delta.
+    inputs:
+      property-ids:
+        type: array
+        items: string
+        description: Tapir PropertyId GUIDs to fetch per zone. Empty = name/number/category only.
+      story-filter:
+        type: number
+        description: Optional story index. Omit to scan every story.
+    outputs:
+      type: single
+      schema:
+        zone-count: number
+        zones:
+          type: array
+          items:
+            element-id:        string
+            name:              string
+            number:            string
+            category-name:     string
+            area:              number
+            story-index:       number
+            property-values:   object
+  library.reload-all:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Reload every linked / external library in the project. The "I
+      pushed an object update to the team server, refresh now"
+      primitive. Wraps Tapir LibraryCommands.ReloadLibraries.
+      Note — Archicad has no "ReloadHotlinks" verb; hotlink module
+      refresh is a separate workflow (manual or via Teamwork sync).
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        libraries-reloaded: number
+        execution-result:   object
+  # === Auto-generated catalog commands =======================================
   add-on-commands-execute-add-on-command:
     lifecycle: single
     description: Executes a command registered in an Add-On.
@@ -641,6 +777,15 @@ commands:
     description: Performs a send operation on the currently opened Teamwork project.
 
 skills:
+  # === v0.34 curated craft skills =============================================
+  # Hand-written narrative skills covering the workflow / orchestration layer
+  # the AI agent needs in order to compose the curated workflow verbs above.
+  - archicad-scripting-context.md
+  - archicad-element-model.md
+  - archicad-zones-and-spaces.md
+  - archicad-layouts-and-issue.md
+  - archicad-hotlinks-and-teamwork.md
+  # === Auto-generated namespace skills ========================================
   - archicad-officialcommands.md
   - tapir-additionalcommands.md
   - tapir-schema.md
