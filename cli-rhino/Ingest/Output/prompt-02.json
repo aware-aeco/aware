@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nguids = []\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    guids.append(str(obj.Id))\nreturn {\"count\": len(guids), \"guids\": guids}",
+  "args": {}
+}

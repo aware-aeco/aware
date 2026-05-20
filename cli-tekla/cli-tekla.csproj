@@ -13,6 +13,10 @@
     <RootNamespace>AwareTekla</RootNamespace>
     <AssemblyName>aware-tekla</AssemblyName>
 
+    <!-- The unit-test project lives under Tests/; keep its sources out of the
+         exe build (the SDK would otherwise glob them into this compile). -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);Tests\**</DefaultItemExcludes>
+
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <Version>0.31.0</Version>
 
@@ -20,6 +24,13 @@
          we'll just ship aware-tekla.exe alongside its (minimal) .dll deps
          in the publish dir. -->
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Expose internal members to the unit-test assembly so tests can reach
+         pure-logic helpers (ParseArgs, ExtractVersionFromPath, etc.) without
+         making them part of the public surface. -->
+    <InternalsVisibleTo Include="AwareTekla.Tests" />
+  </ItemGroup>
 
   <ItemGroup>
     <!-- System.Text.Json for net48 — JSON parsing without writing a parser. -->

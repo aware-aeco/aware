@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nbuckets = {}\nfor obj in doc.Objects:\n    layer_name = doc.Layers[obj.Attributes.LayerIndex].FullPath\n    buckets[layer_name] = buckets.get(layer_name, 0) + 1\nreturn {\"total\": doc.Objects.Count, \"by_layer\": buckets}",
+  "args": {}
+}

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nrows = []\nfor view in doc.Views:\n    vp = view.ActiveViewport\n    if vp.IsParallelProjection:\n        projection = \"parallel\"\n    elif vp.IsPerspectiveProjection:\n        projection = \"perspective\"\n    else:\n        projection = \"other\"\n    rows.append({\n        \"name\": view.MainViewport.Name,\n        \"projection\": projection,\n        \"camera_location\": {\"x\": vp.CameraLocation.X, \"y\": vp.CameraLocation.Y, \"z\": vp.CameraLocation.Z},\n        \"target\": {\"x\": vp.CameraTarget.X, \"y\": vp.CameraTarget.Y, \"z\": vp.CameraTarget.Z}\n    })\nreturn {\"count\": len(rows), \"viewports\": rows}",
+  "args": {}
+}

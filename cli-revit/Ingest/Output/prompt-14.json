@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar view = uiapp.ActiveUIDocument.ActiveView;\nvar elsInView = new FilteredElementCollector(doc, view.Id).WhereElementIsNotElementType().ToList();\nvar cats = elsInView.Select(e => e.Category?.Name ?? \"<none>\").GroupBy(c => c).Select(g => new { category = g.Key, count = g.Count() }).OrderByDescending(x => x.count).ToList();\nreturn new { view_name = view.Name, total_visible_elements = elsInView.Count, categories = cats };",
+  "args": {}
+}

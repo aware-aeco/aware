@@ -1,0 +1,7 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "transaction": "auto",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar info = doc.ProjectInformation;\nvar p = info.LookupParameter(\"Project Status\");\nstring before = p?.AsString() ?? \"\";\nif (p != null && !p.IsReadOnly && p.StorageType == StorageType.String) p.Set((before ?? \"\") + \" \");\ndoc.Regenerate();\nreturn new { regenerated = true, marker_was = before };",
+  "args": {}
+}

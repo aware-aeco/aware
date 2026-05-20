@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar tempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), \"aware-revit-ifc\");\nSystem.IO.Directory.CreateDirectory(tempDir);\nvar opts = new IFCExportOptions();\nopts.FileVersion = IFCVersion.IFC4;\nvar name = (doc.Title ?? \"export\") + \".ifc\";\nbool ok;\nusing (var tx = new Transaction(doc, \"AWARE IFC export\"))\n{\n    tx.Start();\n    ok = doc.Export(tempDir, name, opts);\n    tx.Commit();\n}\nreturn new { exported = ok, path = System.IO.Path.Combine(tempDir, name) };",
+  "args": {}
+}

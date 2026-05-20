@@ -33,6 +33,139 @@ transport:
     binary: aware-dynamo
 
 commands:
+  # === v0.33 curated workflow verbs ==========================================
+  # Dynamo is primarily a graph-execution tool. Workflow verbs target the
+  # graph lifecycle (open / run / inspect / compare / validate) rather than
+  # the imperative DesignScript API. Routes via a future aware-dynamo
+  # sidecar (v0.37+) wrapping DynamoCLI.
+  graph.run-and-collect:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Open a .dyn (or .dyf) graph, run it, return values of every Watch node
+      and output port. The "execute this engineer-authored script" primitive.
+    inputs:
+      graph-path:
+        type: string
+      inputs:
+        type: object
+        description: Map of input-node-name -> value (primitives only).
+      host:
+        type: enum
+        values: [sandbox, revit, civil3d]
+        default: sandbox
+    outputs:
+      type: single
+      schema:
+        ran: boolean
+        elapsed-ms: number
+        watch-values: object
+        output-values: object
+        warnings:
+          type: array
+          items: string
+  graph.list-with-status:
+    lifecycle: single
+    category: curated
+    description: |
+      List all .dyn files in a directory with author, last-modified, and
+      input/output node summary. The "audit our Dynamo library" primitive.
+    inputs:
+      directory:
+        type: string
+      recursive:
+        type: boolean
+        default: true
+    outputs:
+      type: single
+      schema:
+        count: number
+        graphs:
+          type: array
+          items:
+            path: string
+            name: string
+            author: string
+            last-modified: string
+            node-count: number
+            input-nodes:
+              type: array
+              items: string
+            output-nodes:
+              type: array
+              items: string
+  node.diff-graphs:
+    lifecycle: single
+    category: curated
+    description: |
+      Compare two .dyn versions; return added/removed/modified nodes.
+      The "what changed in this script" primitive for review.
+    inputs:
+      from-graph:
+        type: string
+      to-graph:
+        type: string
+    outputs:
+      type: single
+      schema:
+        added:
+          type: array
+          items: object
+        removed:
+          type: array
+          items: object
+        modified:
+          type: array
+          items: object
+  package.list-installed:
+    lifecycle: single
+    category: curated
+    description: |
+      List every Dynamo package installed in the current user's library,
+      with versions. The "what's in our team's Dynamo loadout" primitive.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        count: number
+        packages:
+          type: array
+          items:
+            name: string
+            version: string
+            path: string
+            description: string
+  graph.validate-inputs:
+    lifecycle: single
+    category: curated
+    description: |
+      Open a .dyn and verify its input nodes match an expected schema
+      (name + type). The "pre-flight check before running this script
+      in a pipeline" primitive.
+    inputs:
+      graph-path:
+        type: string
+      expected:
+        type: object
+        description: Map of input-name -> {type, required}.
+    outputs:
+      type: single
+      schema:
+        valid: boolean
+        missing:
+          type: array
+          items: string
+        extra:
+          type: array
+          items: string
+        type-mismatches:
+          type: array
+          items:
+            name: string
+            expected: string
+            actual: string
+  # === Auto-generated catalog commands =======================================
   dictionary-by-keys-values-system.collections.generic.ilist-string-system.collections.generic.ilist-object:
     lifecycle: single
     description: Produces a Dictionary with the supplied keys and values. The number of entries is the shorter of keys or values.

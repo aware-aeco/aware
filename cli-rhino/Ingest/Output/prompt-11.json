@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "import random\nfrom System.Collections.Generic import List\ndoc = Rhino.RhinoDoc.ActiveDoc\nids = []\nfor i in range(10):\n    p = Rhino.Geometry.Point3d(random.random() * 1000, random.random() * 1000, 0)\n    ids.append(doc.Objects.AddPoint(p))\nglist = List[System.Guid]()\nfor g in ids:\n    glist.Add(g)\ngroup_index = doc.Groups.Add(glist)\ndoc.Views.Redraw()\nreturn {\"group_index\": group_index, \"point_count\": len(ids), \"ids\": [str(g) for g in ids]}",
+  "args": {}
+}

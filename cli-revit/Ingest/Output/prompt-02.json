@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var sel = uiapp.ActiveUIDocument.Selection.GetElementIds();\nvar ids = sel.Select(id => id.Value).ToList();\nreturn new { count = ids.Count, ids = ids };",
+  "args": {}
+}
