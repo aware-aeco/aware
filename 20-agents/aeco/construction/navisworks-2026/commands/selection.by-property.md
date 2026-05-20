@@ -7,7 +7,7 @@ Find every `ModelItem` whose property matches a value — the coordination-side 
 | Field | Type | Required | Description |
 |---|---|---|---|
 | `document-id` | string | yes | The open federation. |
-| `category` | string | no | Property category (e.g. `"Element"`, `"Item"`). |
+| `category` | string | no | Property category (e.g. `"Element"`, `"LcOaNode"`). |
 | `property-name` | string | yes | Property display name (e.g. `"Material"`, `"Family"`). |
 | `operator` | enum `equals\|contains\|is-null\|is-not-null` | no (default `equals`) | Match operator. |
 | `value` | string | no | Value to match (for equals/contains). |
