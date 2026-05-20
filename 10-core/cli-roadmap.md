@@ -19,7 +19,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 | v0.5 builders | ✅ shipped | `build --from-*`, `skill` group (`--from-com` is a Windows-only guard) |
 | v0.10 curation framework | ✅ shipped | `category:`, `tree\|search --curated` |
 | v0.11 safety contract | ✅ shipped | `safety:` block + `E_APP_WRITE_WITHOUT_SAFETY`, `app explain`, `--dry-run` (CLI `app rollback` not yet wired) |
-| v0.12 comms depth | 🟡 partial | microsoft-365 = 8 cmds, google-workspace = 5 (target ~30 each) |
+| v0.12 comms depth | ✅ shipped | microsoft-365 23 verbs + google-workspace 24 (at target); full per-verb command-doc coverage |
 | v0.13 SSO auth | ✅ shipped | device-code grant (`auth/device.rs`) |
 | v0.14 coordination | ✅ shipped | navisworks, solibri, bcf-file, ifc-inspector present |
 | v0.15 document control | ✅ agents present | bluebeam-studio, procore, aconex, acc-docs (curation depth varies — see backlog) |
@@ -38,8 +38,8 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 
 ### Actually remaining (the real backlog)
 
-1. **Catalogue curation tail** — the persona-audit #1 gap. Cleared so far: `slack`, `acc-issues`, `acc-account-admin`, `aps-data-management` (now have craft skills). Still open for the largest reflected agents: `csi-api` (4282 cmds / 2 skills), `autocad-2026` (~4.4k / ~77), `revit-2026` (~7.6k / ~53).
-2. **v0.12 comms depth** — microsoft-365 + google-workspace to ~30 verbs each.
+1. **Catalogue curation tail** — the persona-audit #1 gap. Cleared so far: `slack`, `acc-issues`, `acc-account-admin`, `aps-data-management` (now have craft skills); `microsoft-365` + `google-workspace` now have full per-verb command docs. Still open for the largest reflected agents: `csi-api` (4282 cmds / 2 skills), `autocad-2026` (~4.4k / ~77), `revit-2026` (~7.6k / ~53).
+2. **Command-doc coverage** — a cross-agent curated-grade polish: many curated verbs still lack a `commands/<verb>.md` (e.g. tekla 3 docs/6 verbs). Not phase-specific.
 3. **Vendor `*.exec` fan-out** — Allplan, Archicad, Navisworks (blocked on host install/license).
 4. **`aware agent publish`** — the one remaining CLI stub.
 5. **`aware connect` providers** — Autodesk/APS + Slack aren't wired into `aware connect` (only trimble-connect/microsoft-365/google-workspace); their agents' auth is token-out-of-band until added.

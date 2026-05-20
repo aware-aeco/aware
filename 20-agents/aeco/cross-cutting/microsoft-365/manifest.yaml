@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -84,6 +84,7 @@ commands:
   upload-file:
     lifecycle: single
     category: curated
+    mode: write
     description: Upload bytes as a new file. Uses simple (≤ 4MB) or resumable (large file) upload depending on size.
     inputs:
       drive-id:  string
@@ -122,8 +123,9 @@ commands:
     mode: write
     description: |
       Post a message to a 1:1 or group chat. Returns the messageId for
-      reply threading. Throttling: Microsoft Graph limits chat sends to
-      ~15/sec per user — the transport rate-limits to stay under.
+      reply threading. Throttling: Microsoft Graph caps a chat-message
+      POST at ~1 request/sec per user for a given chat; the transport
+      honors Retry-After on 429.
     inputs:
       chat-id:
         type: string
