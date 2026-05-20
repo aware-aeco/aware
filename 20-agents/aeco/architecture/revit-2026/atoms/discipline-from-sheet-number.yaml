@@ -1,0 +1,15 @@
+id: discipline-from-sheet-number
+kind: map
+description: |
+  Extract the discipline designator (the leading letter run) from a sheet
+  number — e.g. "A-101" -> "A", "S2.04" -> "S", "MEP-12" -> "MEP". Follows
+  the US National CAD Standard convention where the leading alpha prefix is
+  the discipline. Used to group/route sheets by discipline.
+inputs:
+  - name: sheetNumber
+    type: string
+    description: The sheet number string.
+output:
+  type: string
+code: |
+  (sheetNumber) => (String(sheetNumber).match(/^([A-Za-z]+)/) || [, ''])[1].toUpperCase()
