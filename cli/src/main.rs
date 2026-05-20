@@ -3,9 +3,10 @@
 //! See `10-core/cli-spec.md` for the full surface contract and
 //! `10-core/cli-roadmap.md` for phased delivery.
 //!
-//! v0.1 scaffold — every subcommand is a stub that returns
-//! `Err(AwareError::NotYetImplemented(<command>))`. The fresh session
-//! implements them per the roadmap, one phase at a time.
+//! The command surface spans v0.1–v0.27 (agent/app/connect/skill/build/
+//! coverage/doctor/plugins/diagram/tree/search/report/voice/key/receipt).
+//! All groups are implemented; the only `NotYetImplemented` cases are
+//! `agent publish` and the Windows-only `build --from-com` guard.
 
 mod app_lock;
 mod auth;

@@ -6,6 +6,48 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 
 ---
 
+## Implementation status — 2026-05-20
+
+**The phase write-ups below are the original plans. The implementation has run well ahead of the narrative** — the `aware` CLI now ships command surfaces through ~v0.27, and most content phases are done. This section is the authoritative status; the per-phase sections are kept for their design rationale, not as a live to-do list. Verified against `cli/src/main.rs` dispatch, `validate.rs`, `runtime/`, the agent catalogue, and `30-apps/_examples/`.
+
+| Phase | Status | Evidence / note |
+|---|---|---|
+| v0.1 foundation | ✅ shipped | all read-only commands real |
+| v0.2 install + validate | ✅ shipped | `agent`/`app install\|uninstall\|validate`, lockfile |
+| v0.3 runtime | ✅ shipped | `app run\|stop\|logs`, orchestrator + provenance |
+| v0.4 auth + plugins | ✅ shipped | `connect`/`disconnect`, plugin generators |
+| v0.5 builders | ✅ shipped | `build --from-*`, `skill` group (`--from-com` is a Windows-only guard) |
+| v0.10 curation framework | ✅ shipped | `category:`, `tree\|search --curated` |
+| v0.11 safety contract | ✅ shipped | `safety:` block + `E_APP_WRITE_WITHOUT_SAFETY`, `app explain`, `--dry-run` (CLI `app rollback` not yet wired) |
+| v0.12 comms depth | 🟡 partial | microsoft-365 = 8 cmds, google-workspace = 5 (target ~30 each) |
+| v0.13 SSO auth | ✅ shipped | device-code grant (`auth/device.rs`) |
+| v0.14 coordination | ✅ shipped | navisworks, solibri, bcf-file, ifc-inspector present |
+| v0.15 document control | ✅ agents present | bluebeam-studio, procore, aconex, acc-docs (curation depth varies — see backlog) |
+| v0.16 fabricator | ✅ agents present | tekla-powerfab, peddinghaus-translator |
+| v0.17 visualization | ✅ shipped | rhino-8/grasshopper-8 curated; enscape-prep, twinmotion-prep |
+| v0.18 spec authoring | ✅ agents present | nbs-chorus, avitru-speclink, csi-masterformat |
+| v0.19 substrate primitives | ✅ shipped | orchestrator implements for-each/compare/sweep/approve/schedule/assert/snapshot/model-lock |
+| v0.20 named atoms | 🟡 partial | 8 atoms (tekla 5, revit 3); no cross-cutting atoms yet (target ~40) |
+| v0.21 engineering envelope | ✅ shipped | agent-spec `engineering:`, `signed-output`, units (CLI `app reproduce` not yet wired) |
+| v0.22 persona apps | ✅ shipped | all 5 reference `.flo` present |
+| v0.23 decalog #9 | ✅ shipped | "AI composes the plan; deterministic code is the plan" |
+| v0.24 lockfile + Glass Box | ✅ shipped | `app compile\|inspect`, `app_lock.rs` |
+| v0.25 voice packs | ✅ shipped | `voice` command group |
+| v0.26/v0.27 signed receipts | ✅ shipped | `key` + `receipt` command groups (ed25519) |
+| vendor `*.exec` | 🟡 4 of N | tekla, rhino, revit, sketchup live; allplan/archicad/navisworks catalog-only |
+
+### Actually remaining (the real backlog)
+
+1. **Catalogue curation tail** — the persona-audit #1 gap, still open for high-traffic reflected agents with no craft skills: `slack` (172 cmds / 0 skills), `acc-issues` (14/0), `acc-account-admin` (30/0), `aps-data-management` (41/0), `csi-api` (4282/2), `autocad-2026` (~4.4k/~77), `revit-2026` (~7.6k/~53).
+2. **v0.20 atoms** — add the ~20 cross-cutting atoms + finish the revit/tekla sets.
+3. **v0.12 comms depth** — microsoft-365 + google-workspace to ~30 verbs each.
+4. **Vendor `*.exec` fan-out** — Allplan, Archicad, Navisworks (blocked on host install/license).
+5. **`aware agent publish`** — the one remaining CLI stub.
+6. **Agent dedup** — sketchup + navisworks each appear under both `architecture/` and `construction/`; many version-pairs. Needs a consolidation decision.
+7. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
+
+---
+
 ## v0.1 — Read-only foundation
 
 **Goal:** a single binary that explores everything already in `~/.aware/`. No installs, no execution, no network. Pure exploration.
