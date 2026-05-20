@@ -290,6 +290,11 @@ fn find_registry_root(start: &std::path::Path) -> Option<(std::path::PathBuf, St
 
 /// Insert `id@version → {tarball, subdir}` into a registry index document,
 /// refreshing `updated-at`. Pure (string → string) for testability.
+///
+/// Merges at the JSON-value level (relying on serde_json's `preserve_order`)
+/// so existing agents keep their on-disk order — a new agent is appended, and
+/// a new version is appended within an existing agent — which keeps the
+/// publish diff minimal and reviewable instead of re-sorting the whole index.
 fn merge_publish_entry(
     index_json: &str,
     id: &str,
@@ -297,23 +302,26 @@ fn merge_publish_entry(
     tarball: &str,
     subdir: &str,
 ) -> Result<String, AwareError> {
-    use crate::registry::{Index, IndexEntry, VersionEntry};
-    let mut index = Index::parse(index_json.as_bytes())?;
-    let entry = index
-        .agents
+    let mut doc: serde_json::Value = serde_json::from_str(index_json)?;
+    let agents = doc
+        .get_mut("agents")
+        .and_then(|a| a.as_object_mut())
+        .ok_or_else(|| AwareError::Validation("registry index missing `agents` object".into()))?;
+    let entry = agents
         .entry(id.to_string())
-        .or_insert_with(|| IndexEntry {
-            versions: std::collections::BTreeMap::new(),
-        });
-    entry.versions.insert(
+        .or_insert_with(|| serde_json::json!({ "versions": {} }));
+    let versions = entry
+        .get_mut("versions")
+        .and_then(|v| v.as_object_mut())
+        .ok_or_else(|| {
+            AwareError::Validation(format!("registry entry {id} missing a `versions` object"))
+        })?;
+    versions.insert(
         version.to_string(),
-        VersionEntry {
-            tarball: tarball.to_string(),
-            subdir: subdir.to_string(),
-        },
+        serde_json::json!({ "tarball": tarball, "subdir": subdir }),
     );
-    index.updated_at = crate::builder::now_iso();
-    let mut out = serde_json::to_string_pretty(&index)?;
+    doc["updated-at"] = serde_json::Value::String(crate::builder::now_iso());
+    let mut out = serde_json::to_string_pretty(&doc)?;
     out.push('\n');
     Ok(out)
 }
@@ -350,6 +358,20 @@ mod publish_tests {
         let tekla = parsed.agents.get("tekla").unwrap();
         assert!(tekla.versions.contains_key("2025.0.1"), "old version kept");
         assert!(tekla.versions.contains_key("2026.0.0"), "new version added");
+    }
+
+    #[test]
+    fn merge_preserves_existing_agent_order_and_appends() {
+        // Deliberately non-alphabetical on-disk order: zebra before alpha.
+        let src = r#"{"version":"1.0","updated-at":"old","agents":{"zebra":{"versions":{"1.0.0":{"tarball":"t","subdir":"z"}}},"alpha":{"versions":{"1.0.0":{"tarball":"t","subdir":"a"}}}},"bundles":{}}"#;
+        let out = merge_publish_entry(src, "middle", "1.0.0", "t", "m").unwrap();
+        let zebra = out.find("\"zebra\"").unwrap();
+        let alpha = out.find("\"alpha\"").unwrap();
+        let middle = out.find("\"middle\"").unwrap();
+        // Original order is kept (zebra, then alpha) and the new agent is appended last —
+        // NOT re-sorted alphabetically.
+        assert!(zebra < alpha, "existing order preserved (zebra before alpha)");
+        assert!(alpha < middle, "new agent appended after existing ones");
     }
 }
 

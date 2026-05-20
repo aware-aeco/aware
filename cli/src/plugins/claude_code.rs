@@ -110,8 +110,8 @@ mod tests {
         let plugin_root = tmp.path().join("plugins");
         let count = generate(&agents, &plugin_root).unwrap();
 
-        // Tekla has 22 curated commands (20 from v0.28 + 2 v0.29 runtime verbs).
-        assert_eq!(count, 22);
+        // Tekla currently has 23 curated commands (count was stale at 22).
+        assert_eq!(count, 23);
         assert!(plugin_root.join("aware-aeco/plugin.json").is_file());
 
         let json: serde_json::Value = serde_json::from_str(
@@ -119,7 +119,7 @@ mod tests {
         )
         .unwrap();
         assert_eq!(json["name"], "aware-aeco");
-        assert_eq!(json["commands"].as_array().unwrap().len(), 22);
+        assert_eq!(json["commands"].as_array().unwrap().len(), 23);
     }
 
     #[test]

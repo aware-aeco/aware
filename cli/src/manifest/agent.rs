@@ -376,10 +376,10 @@ commands: {}
         let text = std::fs::read_to_string(&path).unwrap();
         let a: Agent = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.agent, "tekla");
-        // v0.29 added 2 runtime skills + 2 verbs to the curated tekla manifest
-        // (33 skills total, 22 commands). The v0.28 baseline was 31 / 20.
+        // tekla is the gold-standard curated agent — currently 33 skills and
+        // 23 commands. (Count was stale at 22; the manifest has since grown.)
         assert_eq!(a.skill_count(), 33);
-        assert_eq!(a.command_count(), 22);
+        assert_eq!(a.command_count(), 23);
         assert!(a.stateful);
     }
 
@@ -393,8 +393,8 @@ commands: {}
             .join("20-agents/aeco/engineering/tekla/manifest.yaml");
         let text = std::fs::read_to_string(&path).unwrap();
         let a: Agent = serde_yaml::from_str(&text).unwrap();
-        // v0.29 added 2 verbs to the curated tekla manifest (22 total, was 20).
-        assert_eq!(a.curated_count(), 22);
+        // All tekla commands are explicitly `category: curated` (23 total).
+        assert_eq!(a.curated_count(), 23);
         assert_eq!(a.reflected_count(), 0);
         for (_name, cmd) in &a.commands {
             assert_eq!(cmd.category, Some(Category::Curated));
