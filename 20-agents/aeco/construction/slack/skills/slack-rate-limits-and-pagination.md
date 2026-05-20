@@ -18,6 +18,8 @@ Each method sits in a tier (documented on its API page). Rough budgets (per work
 | Tier 3 | ~50 | `conversations.history`, `conversations.replies` |
 | Tier 4 | ~100 | light reads (`conversations.info`, `auth.test`) |
 
+> **Major caveat — `conversations.history` / `conversations.replies` are throttled for *distributed* apps.** Since **2025-05-29** (new non-Marketplace apps + new installs) and **2025-09-02** (existing installs), apps distributed **outside the Slack Marketplace** ("unlisted") are capped at **1 request/minute and 15 objects per page** on these two methods — *not* the Tier 3 budget above — to curb bulk conversation-data exfiltration. **Internal, customer-built apps keep the Tier 3 limits.** A self-registered AWARE Slack app used inside your own workspace is internal → fine; a broadly-distributed one will crawl when paging history. Confirm which regime your app is in before building a history-paging workflow.
+
 **Special case — `chat.postMessage`:** limited to roughly **1 message per second per channel** (short bursts tolerated). A "notify 30 channels" fan-out is fine; a "post 30 messages to one channel" loop will throttle — batch into one Block Kit message instead.
 
 ## On `429`, honor `Retry-After`
