@@ -11,10 +11,10 @@ Data Management is the **lower-level** Autodesk file/folder/version API beneath 
 
 Tokens come from `https://developer.api.autodesk.com/authentication/v2/token`:
 
-- **3-legged** (`authorization_code`, user context) — needed for **hub/project/folder/item browsing** (the `/project/v1` and `/data/v1` endpoints). The user must have access to the hub.
-- **2-legged** (`client_credentials`, app context) — works for **OSS bucket-level** object operations and some account flows, but **not** for browsing a user's hubs/projects (a 2-legged token has no user, so `GET /project/v1/hubs` returns nothing useful).
+- **3-legged** (`authorization_code`, user context) — browses the **hubs/projects/folders the signed-in user can see** (`/project/v1`, `/data/v1`). The default for user-facing flows.
+- **2-legged** (`client_credentials`, app context) — **also** browses `/project/v1` + `/data/v1`, **but only when the app is provisioned as a custom integration / service account** on the ACC/BIM 360 account (the server-to-server pattern — same provisioning as [acc-account-admin](../../acc-account-admin/skills/acc-admin-auth-and-scopes.md)). Without that provisioning a 2-legged token authenticates but sees no hubs. Also used for OSS bucket-level object ops.
 
-Scopes: `data:read`, `data:write`, `data:create`; `bucket:read`/`bucket:create` for OSS.
+Scopes: `data:read`, `data:write`, `data:create`, and **`data:search`** (required by `get-folder-search`); `bucket:read`/`bucket:create` for OSS.
 
 > **`aware connect` does NOT wire Autodesk/APS yet** — only `trimble-connect`, `microsoft-365`, `google-workspace`. `aware connect autodesk` returns *not supported*; supply an APS token out-of-band via the AWARE credential store until first-class support lands. (APS 3-legged is standard auth-code + PKCE — a tractable follow-up.)
 
