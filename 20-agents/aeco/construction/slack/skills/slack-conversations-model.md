@@ -7,15 +7,17 @@ description: This skill should be used when listing channels, reading message hi
 
 Slack collapsed channels, private groups, DMs, and group-DMs into one **`conversations.*`** API. The legacy `channels.*` / `groups.*` / `im.*` / `mpim.*` families are deprecated — use `conversations.*` for everything. (The reflected catalog may still list legacy names; prefer the `conversations-*` commands.)
 
-## Everything is a "conversation", keyed by an ID
+## Conversation IDs — and why the prefix does NOT tell you privacy
 
-A conversation ID's first letter tells you what it is:
+A conversation ID starts with `C`, `G`, or `D`. It is tempting to read the type off that letter — **don't.** Slack states the **prefix is an unreliable indicator of privacy**: a private channel keeps its `C…` ID (e.g. when a shared private channel is unshared, the `C…` ID does *not* revert to `G…`), so `C…` is **not** "public only."
 
-| Prefix | Type | `types` filter value |
-|---|---|---|
-| `C…` | public **or** private channel | `public_channel`, `private_channel` |
-| `D…` | direct message (1:1) | `im` |
-| `G…` | legacy private channel / group DM | `mpim` |
+| Prefix | Rough hint (not authoritative) |
+|---|---|
+| `C…` | a channel — **public or private** |
+| `G…` | legacy private channel / multi-person DM (mpim) |
+| `D…` | 1:1 direct message (im) |
+
+**The authoritative type comes from booleans, not the prefix.** Call `conversations.info` and read `is_private`, `is_mpim`, `is_im`; treat the ID itself as opaque. When *listing*, pass the `types` filter (`public_channel,private_channel,mpim,im`) to scope what comes back.
 
 You almost always need the **ID**, not the `#name`. Resolve names → IDs with `conversations.list` (and cache the mapping; see [slack-rate-limits-and-pagination](./slack-rate-limits-and-pagination.md) — `conversations.list` is paginated and rate-limited, so resolve once per run).
 
@@ -37,7 +39,7 @@ You almost always need the **ID**, not the `#name`. Resolve names → IDs with `
 
 ## Common gotcha
 
-`channel_not_found` usually means the bot isn't in a *private* channel (or you passed a `#name` instead of a `C…` ID), **not** that the channel is missing. Check membership before assuming the ID is wrong.
+`channel_not_found` usually means the bot isn't in a *private* channel (or you passed a `#name` instead of a conversation ID), **not** that the channel is missing. Check membership before assuming the ID is wrong.
 
 ## See also
 
