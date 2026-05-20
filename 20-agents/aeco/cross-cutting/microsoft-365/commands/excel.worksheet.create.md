@@ -63,6 +63,6 @@ Calls `POST /drives/{drive-id}/items/{item-id}/workbook/worksheets/add` with bod
 
 ## See also
 
-- `excel.worksheet.list` — discover existing sheets (call first to avoid a 409)
+- `excel.worksheet.list` — discover existing sheets (call first to skip the create if the name already exists)
 - `excel.range.write` — write a 2D array into the new sheet
 - `excel.table.append-row` — append to a named table instead of a raw range
