@@ -43,18 +43,26 @@ internal static class SendStatus
         finally { Console.SetOut(originalOut); }
 
         var execReceipt = JsonNode.Parse(sw.ToString().Trim()) as JsonObject;
-        if (execReceipt is null || execReceipt["ok"]?.GetValue<bool>() != true)
+        // Read `ok` tolerantly — a non-bool (or missing) field must not throw a
+        // hard cast into the top-level handler. Anything other than a true bool
+        // is treated as failure.
+        var execOk = execReceipt?["ok"] is JsonValue okv && okv.TryGetValue<bool>(out var okb) && okb;
+        if (execReceipt is null || !execOk)
         {
             // Forward exec's error envelope but mark verb as send-status.
-            var err = execReceipt?["error"]?.GetValue<string>() ?? "exec failed";
+            var err = AsString(execReceipt?["error"]) ?? "exec failed";
             Console.WriteLine(Receipts.GenericFail("send-status", err,
-                execReceipt?["stack"]?.GetValue<string>()).ToJsonString());
+                AsString(execReceipt?["stack"])).ToJsonString());
             return execExit;
         }
 
-        var version = execReceipt["host_version"]?.GetValue<string>();
-        var pid     = execReceipt["host_pid"]?.GetValue<int?>();
+        var version = AsString(execReceipt["host_version"]);
+        var pid     = execReceipt["host_pid"] is JsonValue pv && pv.TryGetValue<int>(out var pi) ? pi : (int?)null;
         Console.WriteLine(Receipts.SendStatusOk(message!, version, pid).ToJsonString());
         return 0;
     }
+
+    // Reads a node as a string only when it actually is one (null otherwise).
+    static string? AsString(JsonNode? node)
+        => node is JsonValue jv && jv.TryGetValue<string>(out var s) ? s : null;
 }

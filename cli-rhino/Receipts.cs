@@ -25,7 +25,13 @@ internal static class Receipts
         };
     }
 
-    public static JsonObject ExecFail(string error, string stack, string stdoutLog)
+    // exitCode is the rhinocode process exit code when the failure is an infra
+    // fault (rhinocode itself errored / never wrote the file). It's null for a
+    // script-reported failure ({ok:false} from a script that ran fine), so a
+    // caller can tell infra-fault from script-fault: exit_code != null && != 0
+    // ⇒ rhinocode/infra problem; exit_code == 0 or null ⇒ the script ran.
+    public static JsonObject ExecFail(string error, string stack, string stdoutLog,
+                                      int? exitCode = null, string? stderrLog = null)
     {
         return new JsonObject
         {
@@ -34,7 +40,9 @@ internal static class Receipts
             ["stack"]         = stack,
             ["host"]          = "rhino",
             ["verb"]          = "exec",
+            ["exit_code"]     = exitCode,
             ["stdout_log"]    = stdoutLog,
+            ["stderr_log"]    = stderrLog,
             ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
         };
     }

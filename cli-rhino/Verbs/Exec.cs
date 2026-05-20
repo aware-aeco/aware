@@ -107,39 +107,62 @@ internal static class Exec
             var fileText = WaitForResultFile(resultPath, timeoutMs);
             if (fileText is null)
             {
+                // No file ever appeared within the timeout. This is an infra
+                // fault — surface the rhinocode exit code + stderr so callers can
+                // distinguish it from a script-reported failure. Don't assert
+                // "script did not run": it may have run and failed to write.
                 var msg = exit != 0
                     ? (FirstLine(stderr) ?? $"rhinocode exited {exit}; result file not written")
-                    : "result file not written; script did not run or threw before writing";
-                Console.WriteLine(Receipts.ExecFail(msg, stderr.Trim(), stdout.Trim()).ToJsonString());
+                    : "result file not written within timeout (script may have failed before writing)";
+                Console.WriteLine(Receipts.ExecFail(
+                    msg, stderr.Trim(), stdout.Trim(), exit, stderr.Trim()).ToJsonString());
                 return 2;
             }
 
-            JsonNode? fileNode;
+            JsonNode? fileNode = null;
+            Exception? parseEx = null;
             try { fileNode = JsonNode.Parse(fileText); }
-            catch (Exception e)
+            catch (Exception e) { parseEx = e; }
+
+            // A file that exists but doesn't parse (truncated / non-JSON) — or
+            // parses to something other than an object — is a malformed-result
+            // fault. Surface the contents so the failure is diagnosable.
+            if (fileNode is not JsonObject fileObj)
+            {
+                var why = parseEx is not null ? parseEx.Message : "result file is not a JSON object";
+                Console.WriteLine(Receipts.ExecFail(
+                    $"result file JSON parse failed: {why}", fileText, stdout.Trim(), exit, stderr.Trim())
+                    .ToJsonString());
+                return 2;
+            }
+
+            // The file carries the AWARE {ok,...} shape produced by the wrapper.
+            // Read `ok` tolerantly — a non-bool there means the file is
+            // structurally wrong, which we treat as a parse failure rather than
+            // letting a hard cast leak to the top-level handler.
+            if (fileObj["ok"] is not JsonValue okVal || !okVal.TryGetValue<bool>(out var ok))
             {
                 Console.WriteLine(Receipts.ExecFail(
-                    $"result file JSON parse failed: {e.Message}", fileText, stdout.Trim()).ToJsonString());
+                    "result file JSON parse failed: missing or non-boolean 'ok' field",
+                    fileText, stdout.Trim(), exit, stderr.Trim()).ToJsonString());
                 return 2;
             }
 
-            // The file already carries the AWARE {ok,...} shape produced by the
-            // wrapper. Map it onto the receipt envelope.
-            var fileObj = fileNode as JsonObject;
-            var ok = fileObj?["ok"]?.GetValue<bool>() ?? false;
             if (ok)
             {
                 // DeepClone detaches the node from fileObj — assigning a still-
                 // parented node into the receipt's JsonObject throws.
-                var resultNode = fileObj?["result"]?.DeepClone();
+                var resultNode = fileObj["result"]?.DeepClone();
                 Console.WriteLine(Receipts.ExecOk(
                     resultNode, resolvedVersion, resolvedPid, rhinoId, stdout.Trim()).ToJsonString());
                 return 0;
             }
             else
             {
-                var error = fileObj?["error"]?.GetValue<string>() ?? "script reported failure";
-                var stack = fileObj?["stack"]?.GetValue<string>() ?? "";
+                // Script ran but reported failure. This is a script-fault, not
+                // infra — leave exit_code null so callers can tell them apart.
+                var error = TolerantString(fileObj["error"]) ?? "script reported failure";
+                var stack = TolerantString(fileObj["stack"]) ?? "";
                 Console.WriteLine(Receipts.ExecFail(error, stack, stdout.Trim()).ToJsonString());
                 return 1;
             }
@@ -192,33 +215,68 @@ internal static class Exec
         return null;
     }
 
+    // How long a non-empty-but-unparseable result file must stay byte-for-byte
+    // unchanged before we accept it as "settled" and hand it back for an
+    // accurate parse-failed receipt (rather than polling to the full timeout
+    // and then falsely reporting "not written").
+    const int SettledMs = 200;
+
     // Polls for the result file because `rhinocode script` returns before the
-    // in-Rhino script finishes writing it. Returns the file's text once it
-    // exists and parses as complete JSON (guards against reading a half-written
-    // file), or null on timeout. Poll interval starts tight (10ms) for the
-    // common fast case and the loop simply spins until the deadline.
+    // in-Rhino script finishes writing it. Returns:
+    //   - the file's text as soon as it exists and parses as complete JSON
+    //     (the happy path — guards against reading a half-written file), OR
+    //   - the file's text once it exists, is non-empty, and has been stable
+    //     (size + mtime unchanged) for SettledMs without ever parsing — so the
+    //     caller can emit "result file JSON parse failed" with the contents
+    //     instead of contradicting the filesystem, OR
+    //   - null on timeout (file never appeared, or never settled).
+    // Poll interval is tight (10ms) for the common fast case.
     internal static string? WaitForResultFile(string resultPath, int timeoutMs)
     {
         var deadline = DateTime.UtcNow.AddMilliseconds(timeoutMs);
+        long lastLen = -1;
+        DateTime lastWrite = DateTime.MinValue;
+        DateTime stableSince = DateTime.MaxValue;
+
         while (true)
         {
-            if (File.Exists(resultPath))
+            string? text = null;
+            try
             {
-                // Read with shared access so we don't collide with the writer,
-                // and confirm it parses (i.e. the write completed) before using.
-                try
+                var fi = new FileInfo(resultPath);
+                if (fi.Exists)
                 {
+                    // Read with shared access so we don't collide with the writer.
                     using var fs = new FileStream(resultPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     using var reader = new StreamReader(fs);
-                    var text = reader.ReadToEnd();
+                    text = reader.ReadToEnd();
+
                     if (!string.IsNullOrWhiteSpace(text))
                     {
+                        // Complete write ⇒ done.
                         try { JsonNode.Parse(text); return text; }
-                        catch { /* partial write — keep polling */ }
+                        catch { /* not parseable yet — track whether it's settled */ }
+
+                        // Track byte-length + mtime; reset the stable clock on any change.
+                        var len = fs.Length;
+                        var mtime = fi.LastWriteTimeUtc;
+                        if (len != lastLen || mtime != lastWrite)
+                        {
+                            lastLen = len;
+                            lastWrite = mtime;
+                            stableSince = DateTime.UtcNow;
+                        }
+                        else if (DateTime.UtcNow - stableSince >= TimeSpan.FromMilliseconds(SettledMs))
+                        {
+                            // Non-empty, unchanged for SettledMs, still won't
+                            // parse ⇒ accept it so the caller reports the truth.
+                            return text;
+                        }
                     }
                 }
-                catch (IOException) { /* writer still has it locked — keep polling */ }
             }
+            catch (IOException) { /* writer still has it locked — keep polling */ }
+
             if (DateTime.UtcNow >= deadline) return null;
             Thread.Sleep(10);
         }
@@ -229,6 +287,11 @@ internal static class Exec
         if (!string.IsNullOrWhiteSpace(raw) && int.TryParse(raw, out var v) && v > 0) return v;
         return fallback;
     }
+
+    // Reads a node as a string only when it actually is one. Returns null for
+    // null / non-string nodes rather than throwing on a bad cast.
+    static string? TolerantString(JsonNode? node)
+        => node is JsonValue jv && jv.TryGetValue<string>(out var s) ? s : null;
 
     static string TrimVersion(string full)
     {

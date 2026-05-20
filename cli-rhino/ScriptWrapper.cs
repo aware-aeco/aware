@@ -91,8 +91,26 @@ internal static class ScriptWrapper
         sb.Append("    __aware_out = {\"ok\": False, \"error\": str(__aware_ex), \"stack\": traceback.format_exc()}\n");
         sb.Append('\n');
 
+        // Serialize to a STRING first, with allow_nan=False so NaN/inf raise here
+        // (instead of emitting `NaN` which is invalid JSON the C# side chokes on).
+        // If the result isn't JSON-serializable, degrade to a guaranteed-
+        // serializable error payload rather than writing nothing — writing
+        // nothing would make Exec poll the full timeout and falsely report
+        // "result file not written". Only after we hold a complete string do we
+        // open + write it once (a single complete write also closes the
+        // truncated-file race the reader would otherwise hit).
+        sb.Append("try:\n");
+        sb.Append("    __aware_text = json.dumps(__aware_out, default=str, allow_nan=False)\n");
+        sb.Append("except Exception as __aware_ser_ex:\n");
+        sb.Append("    __aware_text = json.dumps(\n");
+        sb.Append("        {\"ok\": False,\n");
+        sb.Append("         \"error\": \"result not JSON-serializable: \" + repr(__aware_ser_ex),\n");
+        sb.Append("         \"stack\": traceback.format_exc()},\n");
+        sb.Append("        default=str)\n");
+        sb.Append('\n');
+
         sb.Append("with open(__aware_result_path, \"w\", encoding=\"utf-8\") as __aware_f:\n");
-        sb.Append("    json.dump(__aware_out, __aware_f, default=str)\n");
+        sb.Append("    __aware_f.write(__aware_text)\n");
 
         return sb.ToString();
     }

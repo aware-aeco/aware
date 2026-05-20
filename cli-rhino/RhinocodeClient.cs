@@ -113,8 +113,38 @@ internal sealed class RhinocodeClient
             ?? throw new InvalidOperationException($"Process.Start returned null for {RhinocodeExePath}");
         var stdoutTask = p.StandardOutput.ReadToEndAsync();
         var stderrTask = p.StandardError.ReadToEndAsync();
+
+        // Defense-in-depth: `rhinocode` itself returns fast (fire-and-forget for
+        // `script`, bounded output for `list`), so a process that hasn't exited
+        // within a generous bound is hung. Kill it and report a non-zero exit so
+        // the caller surfaces an infra fault instead of blocking forever.
+        // Override the bound with AWARE_RHINOCODE_WAIT_MS.
+        var waitMs = ParseWaitMs(Environment.GetEnvironmentVariable("AWARE_RHINOCODE_WAIT_MS"), 30_000);
+        if (!p.WaitForExit(waitMs))
+        {
+            try { p.Kill(entireProcessTree: true); } catch { /* best-effort */ }
+            var partialErr = SafeResult(stderrTask);
+            return (124, SafeResult(stdoutTask),
+                (string.IsNullOrEmpty(partialErr) ? "" : partialErr + "\n")
+                + $"rhinocode did not exit within {waitMs}ms; killed");
+        }
+        // WaitForExit(ms) can return before async stdout/stderr flush — the
+        // parameterless overload guarantees the streams are drained.
         p.WaitForExit();
-        return (p.ExitCode, stdoutTask.GetAwaiter().GetResult(), stderrTask.GetAwaiter().GetResult());
+        return (p.ExitCode, SafeResult(stdoutTask), SafeResult(stderrTask));
+    }
+
+    static int ParseWaitMs(string? raw, int fallback)
+    {
+        if (!string.IsNullOrWhiteSpace(raw) && int.TryParse(raw, out var v) && v > 0) return v;
+        return fallback;
+    }
+
+    // Reads an already-running read task without throwing; a killed process can
+    // fault the stream read, which shouldn't mask the real "process hung" signal.
+    static string SafeResult(Task<string> t)
+    {
+        try { return t.GetAwaiter().GetResult(); } catch { return ""; }
     }
 
     // Naive PATH lookup using `where` shipped with Windows. Synchronous read
