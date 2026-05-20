@@ -35,7 +35,7 @@ You almost always need the **ID**, not the `#name`. Resolve names → IDs with `
 
 - **Public channel:** with the `chat:write.public` scope the bot can post **without joining**. Otherwise `conversations.join` first.
 - **Private channel:** the bot must be a **member** — invite it (`conversations.invite`) once; there is no "post to private without joining."
-- **DM a user:** you can't `chat.postMessage` to a `U…` user ID directly. First `conversations.open` with `users: ["U0123"]` → it returns a `D…` channel ID → post to that.
+- **DM a user:** pass the `U…` user ID **directly** as `chat.postMessage`'s `channel` — Slack opens the 1:1 DM if it isn't already (no explicit open needed). `conversations.open` (with `users: ["U0123"]` → returns a `D…` ID) is the explicit form, and is what you need for **group DMs** (multiple users) or when you want the `D…` ID up front. Direct DMs may require the `im:write` scope.
 
 ## Common gotcha
 
