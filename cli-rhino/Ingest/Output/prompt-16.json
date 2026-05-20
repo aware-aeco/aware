@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nxform = Rhino.Geometry.Transform.Mirror(Rhino.Geometry.Plane.WorldYZ)\nmirrored = 0\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    if doc.Objects.Transform(obj.Id, xform, False) != System.Guid.Empty:\n        mirrored += 1\ndoc.Views.Redraw()\nreturn {\"mirrored\": mirrored, \"plane\": \"WorldYZ\"}",
+  "args": {}
+}

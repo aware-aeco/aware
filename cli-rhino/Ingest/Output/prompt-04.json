@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\ncounts = {}\nfor obj in doc.Objects:\n    idx = obj.Attributes.LayerIndex\n    counts[idx] = counts.get(idx, 0) + 1\nrows = []\nfor layer in doc.Layers:\n    rows.append({\"index\": layer.Index, \"name\": layer.FullPath, \"visible\": layer.IsVisible, \"count\": counts.get(layer.Index, 0)})\nreturn {\"layer_count\": doc.Layers.Count, \"layers\": rows}",
+  "args": {}
+}

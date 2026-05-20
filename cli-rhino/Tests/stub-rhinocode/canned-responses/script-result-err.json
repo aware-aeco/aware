@@ -1,0 +1,1 @@
+{"ok": false, "error": "boom", "stack": "Traceback (most recent call last):\n  File \"<aware>\", line 9, in __aware_run\nRuntimeError: boom"}

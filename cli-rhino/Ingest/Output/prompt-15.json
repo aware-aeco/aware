@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nxform = Rhino.Geometry.Transform.Scale(Rhino.Geometry.Point3d.Origin, 2.0)\nscaled = 0\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    if doc.Objects.Transform(obj.Id, xform, True) != System.Guid.Empty:\n        scaled += 1\ndoc.Views.Redraw()\nreturn {\"scaled\": scaled, \"factor\": 2.0}",
+  "args": {}
+}

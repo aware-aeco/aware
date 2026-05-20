@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "import random\ndoc = Rhino.RhinoDoc.ActiveDoc\nr, g, b = random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)\ncolor = System.Drawing.Color.FromArgb(r, g, b)\nlayer = Rhino.DocObjects.Layer()\nlayer.Name = \"AWARE\"\nlayer.Color = color\nindex = doc.Layers.Add(layer)\nreturn {\"added\": index >= 0, \"index\": index, \"color\": \"#%02X%02X%02X\" % (r, g, b)}",
+  "args": {}
+}
