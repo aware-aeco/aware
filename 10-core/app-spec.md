@@ -315,6 +315,32 @@ If the expression evaluates false: the run halts with the `on-fail` message as t
 
 It MUST NOT be a `think-node` / `smart-node` call. `aware app validate` enforces this. Truth #9 is structural: an LLM may *compose* an assert (write the expression in the first place), but the *evaluation* at run time is always deterministic. PE seals and steel deliveries do not survive hallucinations.
 
+### Reading a drawing / PDF / image (compose-time extraction)
+
+The same truth #9 boundary answers *"I have a contract drawing / PDF / schedule screenshot to read."* The reading is an LLM act, so it happens at **compose time**, never in the run path:
+
+1. The terminal AI (composing the app) reads the artifact — a connection schedule, a BOM screenshot, a spec PDF — and **bakes the extracted values into the deterministic app file** (a `for-each` over the parsed rows, literal attribute values, etc.).
+2. Execution then runs deterministically against those baked values — no model reads the artifact at run time.
+
+When the extraction is high-stakes or the human should eyeball it before any write, gate the first write-mode node behind an **`approve:`** block (the extracted values appear in the Adaptive Card; the human confirms or rejects before the deterministic write proceeds).
+
+```yaml
+# `schedule-rows` is baked in by the terminal AI after reading the screenshot —
+# the joint ids and preset names are LITERALS in the file, not a runtime read.
+- id: write-attributes
+  for-each: '{{ schedule-rows }}'
+  do:
+    - id: save
+      agent: tekla
+      command: save-attributes
+      config:
+        joint-id: '{{ item.joint-id }}'    # from the compose-time extraction
+        filename: '{{ item.preset }}'
+      safety: { transaction-group: schedule-import, snapshot: true }
+```
+
+What this is **not**: a runtime `think-node` that reads the drawing while the app executes. `aware app validate` rejects that for the same structural reason it rejects an LLM `assert:` — the run path is deterministic, so front doors like floless.app should extract up front (optionally behind `approve:`), not defer reading to execution.
+
 ### `snapshot`
 
 Freeze model state to an immutable artifact. Pairs with the v0.11 safety contract's `snapshot:` flag but operates at the topology level — the artifact is *named* in the topology and addressable by downstream nodes.
