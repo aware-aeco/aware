@@ -276,10 +276,12 @@ commands:
   exec:
     lifecycle: single
     description: |
-      Compile + run an ad-hoc C# script against the active Rhino document.
+      Run an ad-hoc Python script against the active Rhino document.
       Input: { code, args, version?, rhino_id? }. Output: { ok, result, ... }.
-      The script body is wrapped in `static object? __AwareRun(IDictionary<string, object?> args)` --
-      use `return X;` to return a value. Requires Rhino 8.11+ with StartScriptServer active.
+      The script body is wrapped in `def __aware_run(args)` -- use `return X`
+      to return a value; the result is returned via a file the script writes
+      (rhinocode is fire-and-forget and does not return stdout). Requires
+      Rhino 8.11+ with StartScriptServer active (run it inside Rhino).
   list-instances:
     lifecycle: single
     description: List running Rhino instances (pid, version, active doc, rhino_id pipe).
