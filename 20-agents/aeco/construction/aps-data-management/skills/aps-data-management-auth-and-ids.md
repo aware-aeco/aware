@@ -12,7 +12,7 @@ Data Management is the **lower-level** Autodesk file/folder/version API beneath 
 Tokens come from `https://developer.api.autodesk.com/authentication/v2/token`:
 
 - **3-legged** (`authorization_code`, user context) — browses the **hubs/projects/folders the signed-in user can see** (`/project/v1`, `/data/v1`). The default for user-facing flows.
-- **2-legged** (`client_credentials`, app context) — **also** browses `/project/v1` + `/data/v1`, **but only when the app is provisioned as a custom integration / service account** on the ACC/BIM 360 account (the server-to-server pattern — same provisioning as [acc-account-admin](../../acc-account-admin/skills/acc-admin-auth-and-scopes.md)). Without that provisioning a 2-legged token authenticates but sees no hubs. Also used for OSS bucket-level object ops.
+- **2-legged** (`client_credentials`, app context) — **also** browses `/project/v1` + `/data/v1`, **but only when the app is provisioned as a custom integration / service account** on the ACC/BIM 360 account (the server-to-server pattern — same provisioning as [acc-account-admin](../../acc-account-admin/skills/acc-admin-auth-and-scopes.md)). Without that provisioning a 2-legged token authenticates but sees no hubs. Also used for OSS bucket-level object ops. **One more catch:** user-scoped `/project/v1` + `/data/v1` calls made with a 2-legged token also need an **`x-user-id`** header carrying the target user's Autodesk ID (the app acts on that user's behalf); omit it and those endpoints can return empty even though the token is valid.
 
 Scopes: `data:read`, `data:write`, `data:create`, and **`data:search`** (required by `get-folder-search`); `bucket:read`/`bucket:create` for OSS.
 
