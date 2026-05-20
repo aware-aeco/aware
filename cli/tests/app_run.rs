@@ -192,3 +192,103 @@ requires: []
     let pidfile = aware.join("apps/stubapp/instances/default/pidfile.yaml");
     assert!(!pidfile.exists(), "pidfile leaked: {}", pidfile.display());
 }
+
+/// End-to-end: the real `http` agent (from the repo) executed through the
+/// actual `aware` binary against a local mock server. Proves the manifest's
+/// verb-named commands wire through DispatchInvoker → RestInvoker.
+#[test]
+fn http_agent_runs_get_end_to_end() {
+    use std::io::{Read, Write};
+    use std::net::TcpListener;
+
+    // Local one-shot HTTP server.
+    let listener = TcpListener::bind("127.0.0.1:0").unwrap();
+    let port = listener.local_addr().unwrap().port();
+    let (tx, rx) = std::sync::mpsc::channel();
+    let server = std::thread::spawn(move || {
+        if let Ok((mut stream, _)) = listener.accept() {
+            stream
+                .set_read_timeout(Some(std::time::Duration::from_millis(300)))
+                .unwrap();
+            let mut data = Vec::new();
+            let mut tmp = [0u8; 1024];
+            loop {
+                match stream.read(&mut tmp) {
+                    Ok(0) => break,
+                    Ok(n) => data.extend_from_slice(&tmp[..n]),
+                    Err(_) => break,
+                }
+            }
+            let _ = tx.send(String::from_utf8_lossy(&data).to_string());
+            let body = r#"{"ok":true}"#;
+            let resp = format!(
+                "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: {}\r\nConnection: close\r\n\r\n{body}",
+                body.len()
+            );
+            let _ = stream.write_all(resp.as_bytes());
+        }
+    });
+
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    // Install the real http agent from the repo into AWARE_HOME/agents/http.
+    let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .to_path_buf();
+    copy_dir(
+        &repo.join("20-agents/_core/http"),
+        &aware.join("agents/http"),
+    )
+    .unwrap();
+
+    // A one-shot app with a single read-mode GET node. The mock server's port
+    // is dynamic, so bake the URL straight into the node config (avoids the
+    // `app run --config` flag, which collides with the global `--config`).
+    let app_dir = aware.join("apps/http-smoke");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("http-smoke.flo"),
+        format!(
+            r#"app: http-smoke
+version: 0.0.1
+description: x
+nodes:
+  - id: ping
+    agent: http
+    command: get
+    config:
+      url: "http://127.0.0.1:{port}/ping"
+connections: []
+requires: []
+"#
+        ),
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["app", "run", "http-smoke"])
+        .assert()
+        .success();
+
+    let req = rx.recv().unwrap();
+    assert!(req.starts_with("GET /ping"), "server got: {req}");
+    server.join().unwrap();
+}
+
+fn copy_dir(src: &std::path::Path, dst: &std::path::Path) -> std::io::Result<()> {
+    std::fs::create_dir_all(dst)?;
+    for entry in std::fs::read_dir(src)?.flatten() {
+        let from = entry.path();
+        let to = dst.join(entry.file_name());
+        if entry.file_type()?.is_dir() {
+            copy_dir(&from, &to)?;
+        } else {
+            std::fs::copy(&from, &to)?;
+        }
+    }
+    Ok(())
+}

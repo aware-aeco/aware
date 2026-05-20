@@ -298,6 +298,14 @@
         }
       }
     },
+    "http": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/http"
+        }
+      }
+    },
     "aware-agent-builder": {
       "versions": {
         "0.1.0": {
