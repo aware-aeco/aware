@@ -794,7 +794,7 @@ internal static class Program
         return null;
     }
 
-    static Dictionary<string, object?> JsonObjectToDictionary(JsonObject? obj)
+    internal static Dictionary<string, object?> JsonObjectToDictionary(JsonObject? obj)
     {
         var dict = new Dictionary<string, object?>(StringComparer.Ordinal);
         if (obj is null) return dict;
@@ -805,7 +805,7 @@ internal static class Program
         return dict;
     }
 
-    static object? JsonNodeToObject(JsonNode? node)
+    internal static object? JsonNodeToObject(JsonNode? node)
     {
         if (node is null) return null;
         if (node is JsonValue v)
@@ -872,7 +872,7 @@ internal static class Program
         Console.Error.WriteLine("  IDictionary<string,object> args // input args block");
     }
 
-    static JsonNode? SerializeResult(object? result)
+    internal static JsonNode? SerializeResult(object? result)
     {
         // Defensive serializer — Tekla types are complex (often containing
         // COM proxies or self-referencing children), so we can't trust
@@ -1094,7 +1094,7 @@ internal static class Program
             """);
     }
 
-    sealed class ParsedArgs
+    internal sealed class ParsedArgs
     {
         public string? Version;
         public int? Pid;
@@ -1102,7 +1102,7 @@ internal static class Program
         public bool All;
     }
 
-    static ParsedArgs ParseArgs(string[] args)
+    internal static ParsedArgs ParseArgs(string[] args)
     {
         var p = new ParsedArgs();
         for (int i = 0; i < args.Length; i++)
@@ -1130,7 +1130,7 @@ internal static class Program
 
     // ── Process discovery ─────────────────────────────────────────────────────
 
-    sealed class TeklaInstance
+    internal sealed class TeklaInstance
     {
         public int Pid { get; }
         public string Version { get; }
@@ -1167,7 +1167,7 @@ internal static class Program
         return result;
     }
 
-    static string? ExtractVersionFromPath(string path)
+    internal static string? ExtractVersionFromPath(string path)
     {
         // Look for "Tekla Structures/<X.Y>/" segment in the path.
         var parts = path.Replace('\\', '/').Split('/');
@@ -1360,7 +1360,7 @@ internal static class Program
         Console.WriteLine(receipt.ToJsonString());
     }
 
-    static List<TeklaInstance> FilterTargets(List<TeklaInstance> all, ParsedArgs args)
+    internal static List<TeklaInstance> FilterTargets(List<TeklaInstance> all, ParsedArgs args)
     {
         if (args.Pid is { } pid)
             return all.Where(i => i.Pid == pid).ToList();

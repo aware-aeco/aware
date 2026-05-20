@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- Must match cli-tekla's target so the test assembly can reference the
+         net48 exe project and exercise its internal helpers. -->
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <!-- Explicit name so the [InternalsVisibleTo("AwareTekla.Tests")] in the
+         exe project actually matches (the default would be the csproj name). -->
+    <AssemblyName>AwareTekla.Tests</AssemblyName>
+    <RootNamespace>AwareTekla.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\cli-tekla.csproj" />
+  </ItemGroup>
+
+</Project>
