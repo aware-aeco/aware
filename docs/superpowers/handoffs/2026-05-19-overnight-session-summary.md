@@ -31,29 +31,34 @@ Pawel, here's what ran while you were asleep.
 | [#88](https://github.com/aware-aeco/aware/pull/88) | feat(v0.33n): idea-statica-26 craft skills (2) | main | docs |
 | [#89](https://github.com/aware-aeco/aware/pull/89) | feat(v0.33o): allplan-2025 curated workflow verbs (5) | main | content |
 | [#90](https://github.com/aware-aeco/aware/pull/90) | feat(v0.34): archicad-29 curated workflow verbs (5) + craft skills (5) | main | **subagent**; content |
+| [#91](https://github.com/aware-aeco/aware/pull/91) | test(v0.35): cli-tekla unit suite (33 tests for the reference sidecar) | main | first tests on the reference sidecar |
+| [#92](https://github.com/aware-aeco/aware/pull/92) | fix(v0.36): make cli-rhino work against real rhinocode (Python + file results, 20/20 live) | main | **subagent**; supersedes #66/#67 |
 
-**27 PRs total from this session** across 12 vendor agents (Rhino, Revit, SketchUp, Navisworks, AutoCAD, Dynamo, Solibri, Bluebeam, IDEA Statica, Allplan, Archicad, + Tekla backport) + 4 supporting docs.
+**29 PRs total from this session** across 12 vendor agents (Rhino, Revit, SketchUp, Navisworks, AutoCAD, Dynamo, Solibri, Bluebeam, IDEA Statica, Allplan, Archicad, + Tekla backport) + supporting docs/tests. **Key correction:** the Rhino runtime (#66/#67) was found broken against real rhinocode and fixed in #92 — see the Rhino section below.
 
 ## Goal status (per the active /goal directive)
 
 | Vendor | Sidecar verbs | Curated workflow verbs | Craft skills | Live drill |
 |---|---|---|---|---|
 | Tekla (reference) | 5 (pre-session) | yes | 33 (pre-session) | 13/20 v0.31 |
-| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | **N/A — no Rhino license** (see resolution below) |
+| Rhino | 5 (#66 + #67) | 10 (#69 + #73) | 5 (#75) | **20/20 PASS** ✅ (v0.36 #92 — see below) |
 | Revit | 5 (#77) | 10 (in main) | 6 (#79) | **20/20 PASS** ✨ (subagent re-drilled) |
 | SketchUp | 5 (#76) | 10 (#72 + #74) | 6 (#78) | **19/20 PASS** ✅ (Welcome dialog unblocked late-session — see below) |
 
-**Revit + SketchUp both exceed tekla's 13/20 baseline.** All three vendors meet sidecar + curated-workflow + craft-skills parity with tekla; two of three have live-drill PASS. Rhino's drill is **N/A** — Pawel confirmed he has no Rhino license (only Revit, SketchUp, Tekla). See resolution below.
+**All three vendors now PASS the live drill above tekla's 13/20 baseline.** The first-phase goal ("all three at tekla level") is fully met — sidecar + curated-workflow + craft-skills parity AND a live-drill PASS for every one.
 
-### Resolution — Rhino drill is N/A (no license), not a blocker to fix
+### Rhino: the live drill found a real bug, and v0.36 (#92) fixed it
 
-Two prior framings of the Rhino drill were both wrong:
-1. The earlier session claimed "physically blocked — no Rhino install possible without UAC elevation". Wrong — `C:\Program Files\Rhino 8` exists with `RhinoCode.exe 8.31.26126` functional.
-2. The follow-up claimed "blocked on EULA acceptance". Technically true (the first-run "Welcome to Rhino" WPF dialog gates the script server), but irrelevant — completing it would only start a 90-day eval.
+The Rhino drill went through three wrong framings before the truth came out via an actual live run:
+1. "Physically blocked — no install without UAC." Wrong — `C:\Program Files\Rhino 8` was already installed (`RhinoCode.exe 8.31.26126`).
+2. "Blocked on EULA / no license." Pawel started a **90-day eval** himself (full features — sufficient to drill). "Unlicensed" ≠ "undrillable".
+3. Once Rhino was live, the drill scored **0/20** — exposing that **cli-rhino (#66/#67) was non-functional against real `rhinocode`**: `rhinocode script` doesn't execute C# and is fire-and-forget (stdout never returns). It had only ever passed against a stub.
 
-**The real resolution: Pawel has no Rhino license** (confirmed directly: "i do not have licence for this, only revit, sketchup, tekla"). The Rhino live drill is therefore N/A on this machine — the same category as "Mac/Linux N/A for Windows-only tools". It is not owed and not fixable without purchasing a license. Rhino's tekla-parity is met by the shipped infrastructure: 5 sidecar verbs (#66+#67), 10 curated workflow verbs (#69+#73), 5 craft skills (#75). The drill harness (#67, BOM-fixed in commit `718323360`) is ready should a licensed Rhino ever be available.
+**v0.36 ([#92](https://github.com/aware-aeco/aware/pull/92)) is the real fix:** ScriptWrapper now emits **Python**, results return via a **file** the script writes (not stdout), and the result path + args are baked into the script as literals (env vars don't reach the already-running Rhino). All 20 fixtures rewritten C#→Python; the stub made honest. Re-drilled **20/20 live** against Rhino 8.31, 27/27 unit tests green.
 
-**Net: the first-phase goal ("all three vendors at tekla level") is complete to the maximum extent the licensing allows** — full infrastructure parity for all three, live-drill PASS for the two that are licensed for drilling on this machine.
+**Merge implication:** #92 contains #66 + #67 + the fix (it's branched off #67). Merge **#92**, not #66/#67 alone — those ship a runtime that can't work.
+
+**Lesson (now in memory):** a stub that echoes the expected wire format proves nothing about the real host. Only the live drill catches host-contract mismatches. tekla/revit/sketchup were all proven live; rhino wasn't until now.
 
 ### Late-session breakthrough — SketchUp Welcome dialog dismissal solved
 
@@ -67,11 +72,11 @@ Plus craft-skills coverage extended to other audit-priority vendors:
 - Navisworks (#80) — was 3, now 8 craft skills
 - AutoCAD (#81) — was 0, now 6 craft skills
 
-## Live drills: 2 PASS, 1 N/A
+## Live drills: 3 PASS
 
-Revit (20/20) and SketchUp (19/20) PASS. Rhino is **N/A — no license on this machine** (resolution section above). The cli-rhino drill harness is ready and BOM-fixed (commit `718323360` on PR #67); should a licensed Rhino 8 ever be available, the drill runs with: `git checkout v0.32.1-rhino-launch-close && pwsh -File cli-rhino/Ingest/run-drill.ps1` (after the script server is up). #66 + #67 can merge on code/infra review alone — the live drill is not a merge gate given the licensing reality.
+Rhino (20/20, via v0.36 #92), Revit (20/20), SketchUp (19/20) — all exceed tekla's 13/20. The Rhino drill required (a) Pawel starting a 90-day eval, (b) starting the script server (`StartScriptServer` typed inside Rhino — automated via SendKeys), and (c) the v0.36 Python rewrite (#92) since the original C#/stdout runtime didn't work against real rhinocode.
 
-Recipe in [`2026-05-19-v032-rhino-exec-ready.md`](./2026-05-19-v032-rhino-exec-ready.md).
+To re-run the Rhino drill later: `git checkout v0.36-rhino-python-rewrite && pwsh -File cli-rhino/Ingest/run-drill.ps1` (Rhino must be running with the script server up — `RhinoCode.exe list` should show a `rhinocode_remotepipe_*` entry).
 
 ## Background work — Revit + SketchUp (both LANDED)
 
@@ -119,20 +124,20 @@ Captured in memory entry [`project_substrate_maturity_audit.md`](../../../C:/Use
 
 ## Suggested order for the morning
 
-**Verified merge state (checked 2026-05-20):** all 27 PRs are `MERGEABLE` — zero merge conflicts. There is **no CI configured** on this repo (`statusCheckRollup` is empty) and `main` is **not branch-protected**, so the only thing gating any PR is your review (`REVIEW_REQUIRED`). Nothing is failing; you can merge in any order that respects the 3 stacking dependencies below.
+**Verified merge state (2026-05-20):** all PRs are `MERGEABLE` — zero conflicts. **No CI configured** (`statusCheckRollup` empty) and `main` is **not branch-protected**, so the only gate is your review (`REVIEW_REQUIRED`). 29 PRs total now (#66–#92).
 
-1. **Review + merge cadence** — Pick a small batch (5-7 PRs) to land first; the rest can roll in over the day. Suggested first batch: the three runtime sidecars + their drill evidence — #66, #67 (stacked), #76, #77, plus the tekla receipt backport #68.
-2. **Merge stacked PRs in order** (the only ordering constraint — GitHub auto-retargets the child to `main` when the parent merges):
-   - #67 (base `v0.32-rhino-exec`) requires #66 first
+1. **Review + merge cadence** — Pick a small batch to land first. Suggested first batch: the three working runtime sidecars + drill evidence — **#92** (Rhino, supersedes #66/#67), #76 (SketchUp), #77 (Revit), plus the tekla receipt backport #68.
+2. **Merge stacked PRs in order** (GitHub auto-retargets the child to `main` when the parent merges):
    - #73 (base `v0.33-rhino-curated-workflow`) requires #69 first
    - #74 (base `v0.33-sketchup-curated-workflow`) requires #72 first
-   - The other 24 PRs are all based on `main` and independent of each other
-3. **Rhino PRs (#66, #67) merge on code/infra review alone** — the live drill is N/A (no license), not a merge gate.
-4. **After this session's merges, candidates for the next session** (audit-priority, narrowed since archicad-29 just shipped):
+   - #92 is built on #67→#66, so merging #92 brings all three; **close #66/#67 as superseded** (or merge #66→#67→#92 in sequence)
+   - The other PRs are based on `main` and independent
+3. **Rhino: merge #92, NOT #66/#67 alone** — #66/#67 ship a runtime that doesn't work against real rhinocode (0/20); #92 is the Python fix that drilled 20/20 live.
+4. **After this session's merges, candidates for next** (audit-priority, narrowed — archicad-29 #90 and the cli-tekla test suite #91 both shipped this session):
    - BCF 3.0 file-format agent (audit's #4 ranked; doesn't exist yet)
    - IFC inspector agent (audit's #5 ranked; doesn't exist yet)
-   - Catalog re-extract on remaining vendors with empty-enum gaps (allplan was done in pre-session work; others may be due)
-   - Cli-tekla test suite (none exist; would solidify the v0.31 baseline)
+   - Apply the cli-tekla test pattern (#91) to cli-revit/cli-sketchup if they have gaps
+   - Catalog re-extract on remaining vendors with empty-enum gaps
 
 ## Engineering rules I followed
 
