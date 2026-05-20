@@ -4576,6 +4576,12 @@ commands:
     description: The write_image method is used to grab a portion of the web dialog screen and save the image to the given file path.
 
 skills:
+  - sketchup-units-and-precision.md
+  - sketchup-undo-transactions.md
+  - sketchup-tags-vs-layers.md
+  - sketchup-scripting-context.md
+  - sketchup-export-paths.md
+  - sketchup-entity-hierarchy.md
   - _root.md
   - geom.md
   - layout.md

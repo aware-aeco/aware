@@ -23325,6 +23325,12 @@ commands:
     lifecycle: single
     description: Remove a set of existing spaces to the current Zone element.
 skills:
+  - revit-views-and-sheets.md
+  - revit-transactions.md
+  - revit-scripting-context.md
+  - revit-parameters.md
+  - revit-element-collector.md
+  - revit-categories-and-families.md
   - a0xe24ce9e1.md
   - autodesk-admin.md
   - autodesk-internal-info-center.md

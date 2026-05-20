@@ -51027,6 +51027,11 @@ commands:
     description: ""
 
 skills:
+  - rhino-units-and-tolerances.md
+  - rhino-scripting-context.md
+  - rhino-meshes-vs-breps.md
+  - rhino-layers-and-tags.md
+  - rhino-blocks-and-references.md
   - rhino.md
   - rhino-applicationsettings.md
   - rhino-collections.md

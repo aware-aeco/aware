@@ -13392,6 +13392,12 @@ commands:
     lifecycle: single
     description: ZipExtractor.ExtractAll
 skills:
+  - autocad-transactions-and-symbol-tables.md
+  - autocad-selection-and-filters.md
+  - autocad-layouts-and-plotting.md
+  - autocad-extension-dictionaries-and-xdata.md
+  - autocad-document-and-database.md
+  - autocad-block-references.md
   - autodesk-auto-cad-ac-info-center-conn.md
   - autodesk-auto-cad-ac-seamless.md
   - autodesk-auto-cad-application-services.md

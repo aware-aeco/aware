@@ -386,6 +386,8 @@ commands:
     description: Update a section in the RCS project
 
 skills:
+  - idea-rcs-cross-section-design.md
+  - idea-connection-design-flow.md
   - ideastatica-connectionapi-api.md
   - ideastatica-connectionapi-model.md
   - ideastatica-rcsapi-api.md
