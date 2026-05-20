@@ -1,0 +1,185 @@
+agent:        http
+version:      0.1.0
+display-name: HTTP / REST
+description: |
+  A generic HTTP client — the substrate's escape hatch for any web API that
+  doesn't (yet) have a curated agent. One command per HTTP method
+  (`get`/`post`/`put`/`patch`/`delete`/`head`); the caller supplies the `url`,
+  `headers`, `query`, and `body` as inputs, and the agent returns a uniform
+  `{ status, headers, body }`.
+
+  This is the "organic growth" primitive from decalog #6 (ship agents, not
+  apps): reach for `http` to wire up a Supabase register, a webhook, a status
+  endpoint, or any REST/JSON service today — then graduate the hot paths into
+  a hand-curated vendor agent when the usage justifies it. Secrets (API keys,
+  bearer tokens) are pulled from the credential vault via `{{ secrets.<name> }}`
+  in a header value and never written into the app file.
+
+stateful: false
+
+vendor:   null
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/http
+keywords: [aware, http, rest, json, api, webhook, supabase, cross-cutting, escape-hatch]
+
+provenance:
+  generated-by: hand-curated
+  refined-by:   [pawellisowski]
+
+requires:
+  # Network targets are determined per-call by the `url` input — a generic
+  # client can reach any host. Secrets are per-call too: name the vault entry
+  # in a header value (e.g. `apikey: "{{ secrets.supabase }}"`).
+  network:
+    - "*"
+
+transport:
+  rest: {}
+
+commands:
+  get:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      HTTP GET — fetch a resource. The read primitive for any REST/JSON
+      endpoint. Read-only.
+    inputs:
+      url:
+        type: string
+        description: Absolute request URL (scheme + host + path).
+      headers:
+        type: object
+        description: |
+          Optional request headers as a flat `{ name: value }` map. Put auth
+          here, e.g. `Authorization: "Bearer {{ secrets.api }}"`.
+      query:
+        type: object
+        description: |
+          Optional query parameters as a flat `{ key: value }` map.
+    outputs:
+      type: single
+      schema:
+        status:  number
+        headers: object
+        body:    object
+
+  post:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      HTTP POST — create a resource or invoke an action. JSON `body` is
+      serialized and sent with `Content-Type: application/json` unless the
+      caller sets their own.
+    inputs:
+      url:
+        type: string
+      headers:
+        type: object
+      query:
+        type: object
+      body:
+        type: object
+        description: |
+          Request payload. An object/array is sent as JSON; a string is sent
+          verbatim.
+    outputs:
+      type: single
+      schema:
+        status:  number
+        headers: object
+        body:    object
+
+  put:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: HTTP PUT — replace a resource at a known URL.
+    inputs:
+      url:
+        type: string
+      headers:
+        type: object
+      query:
+        type: object
+      body:
+        type: object
+    outputs:
+      type: single
+      schema:
+        status:  number
+        headers: object
+        body:    object
+
+  patch:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      HTTP PATCH — partial update / upsert. The workhorse for Supabase
+      (PostgREST) upserts via `Prefer: resolution=merge-duplicates`.
+    inputs:
+      url:
+        type: string
+      headers:
+        type: object
+      query:
+        type: object
+      body:
+        type: object
+    outputs:
+      type: single
+      schema:
+        status:  number
+        headers: object
+        body:    object
+
+  delete:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: HTTP DELETE — remove a resource.
+    inputs:
+      url:
+        type: string
+      headers:
+        type: object
+      query:
+        type: object
+      body:
+        type: object
+        description: Optional body (some APIs accept a filter/payload on DELETE).
+    outputs:
+      type: single
+      schema:
+        status:  number
+        headers: object
+        body:    object
+
+  head:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      HTTP HEAD — fetch only the status + headers (no body). Cheap existence /
+      freshness checks (ETag, Last-Modified, Content-Length). Read-only.
+    inputs:
+      url:
+        type: string
+      headers:
+        type: object
+      query:
+        type: object
+    outputs:
+      type: single
+      schema:
+        status:  number
+        headers: object
+        body:    object
+
+skills:
+  - rest-basics.md
+  - auth-and-secrets.md
+  - response-and-errors.md
+  - supabase-rest.md
