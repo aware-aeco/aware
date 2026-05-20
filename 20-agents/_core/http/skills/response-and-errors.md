@@ -27,7 +27,7 @@ Gate downstream work with an inline predicate:
 - id: fetch
   agent: http
   command: get
-  inputs: { url: "https://api.example.com/v1/items/{{ inputs.id }}" }
+  config: { url: "https://api.example.com/v1/items/{{ inputs.id }}" }
 - id: exists?
   inline:
     kind: predicate
