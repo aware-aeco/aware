@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nrows = []\nfor idef in doc.InstanceDefinitions:\n    if idef is None:\n        continue\n    objs = idef.GetObjects()\n    member_count = len(objs) if objs else 0\n    rows.append({\"name\": idef.Name, \"id\": str(idef.Id), \"member_count\": member_count})\nreturn {\"definition_count\": len(rows), \"definitions\": rows}",
+  "args": {}
+}

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "import tempfile, os\ndoc = Rhino.RhinoDoc.ActiveDoc\ntarget = os.path.join(tempfile.gettempdir(), \"aware-drill.3dm\")\noptions = Rhino.FileIO.FileWriteOptions()\noptions.SuppressDialogBoxes = True\noptions.IncludeRenderMeshes = True\nok = doc.WriteFile(target, options)\nreturn {\"ok\": ok, \"path\": target}",
+  "args": {}
+}

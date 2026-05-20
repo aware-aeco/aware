@@ -1,0 +1,7 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "transaction": "auto",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar level = new FilteredElementCollector(doc).OfClass(typeof(Level)).Cast<Level>().FirstOrDefault();\nvar wallType = new FilteredElementCollector(doc).OfClass(typeof(WallType)).Cast<WallType>().FirstOrDefault();\nif (level == null || wallType == null) return new { placed = false, reason = \"no level or wall type available\" };\nvar p1 = new XYZ(0, 0, 0);\nvar p2 = new XYZ(10, 0, 0);\nvar line = Line.CreateBound(p1, p2);\nvar wall = Wall.Create(doc, line, wallType.Id, level.Id, 10.0, 0.0, false, false);\nreturn new { placed = true, id = wall.Id.Value, wall_type = wallType.Name };",
+  "args": {}
+}

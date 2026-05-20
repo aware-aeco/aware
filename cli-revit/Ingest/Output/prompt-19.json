@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var app = uiapp.Application;\nreturn new { version = app.VersionNumber, build = app.VersionBuild, name = app.VersionName, language = app.Language.ToString() };",
+  "args": {}
+}

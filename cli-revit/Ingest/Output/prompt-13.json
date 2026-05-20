@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar view = uiapp.ActiveUIDocument.ActiveView;\nvar selIds = uiapp.ActiveUIDocument.Selection.GetElementIds().ToList();\nif (selIds.Count == 0) return new { bbox = (object)null, note = \"no selection\" };\nvar boxes = selIds.Select(id => doc.GetElement(id).get_BoundingBox(view)).Where(b => b != null).ToList();\nif (boxes.Count == 0) return new { bbox = (object)null, note = \"no bounding box for selected elements in this view\" };\nvar min = new XYZ(boxes.Min(b => b.Min.X), boxes.Min(b => b.Min.Y), boxes.Min(b => b.Min.Z));\nvar max = new XYZ(boxes.Max(b => b.Max.X), boxes.Max(b => b.Max.Y), boxes.Max(b => b.Max.Z));\nreturn new { selected = selIds.Count, min = new { x = min.X, y = min.Y, z = min.Z }, max = new { x = max.X, y = max.Y, z = max.Z } };",
+  "args": {}
+}

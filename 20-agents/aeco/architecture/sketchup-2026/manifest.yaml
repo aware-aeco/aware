@@ -42,6 +42,137 @@ commands:
       `args` (Hash). Returns JSON receipt matching tekla.exec and rhino.exec
       vocabulary; only the `host` field differs ("sketchup"). See
       commands/exec.md for the full spec.
+  # === v0.33 curated workflow verbs ==========================================
+  # Hand-curated workflow verbs per the v0.10 curation framework. Each
+  # declares typed inputs/outputs; the implementation is the documented
+  # Ruby snippet in commands/<name>.md, shipped through aware-sketchup exec.
+  entity.list-by-tag:
+    lifecycle: single
+    category: curated
+    description: |
+      List entities on the active model filtered by their layer (tag).
+      Returns one row per entity with its id, class, and bbox.
+    inputs:
+      tag-name:
+        type: string
+        description: Layer/tag name to match. Use "*" for all tags.
+      visible-only:
+        type: boolean
+        default: true
+        description: When true, skips entities on hidden tags.
+    outputs:
+      type: single
+      schema:
+        tag-name: string
+        count:    number
+        entities:
+          type: array
+          items:
+            id:        number
+            class:     string
+            bbox:      object
+  material.bulk-apply:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Apply a material to every entity whose layer (tag) matches a regex.
+      Creates the material from a CSS hex color if it doesn't exist.
+    inputs:
+      from-pattern:
+        type: string
+        description: Ruby regex matched against the entity's layer name.
+      material-name:
+        type: string
+        description: Material name. Created if missing.
+      material-color:
+        type: string
+        description: CSS hex color (e.g. "#FF8800"). Used only on material create.
+    outputs:
+      type: single
+      schema:
+        material-name: string
+        created:       boolean
+        applied-count: number
+  group.flatten:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Explode top-level selected groups one level deep, leaving their
+      contents in the parent context. Useful for cleaning over-grouped
+      imports. Recursive flatten available via `recursive: true`.
+    inputs:
+      recursive:
+        type: boolean
+        default: false
+        description: When true, keeps exploding until no groups remain.
+      include-component-instances:
+        type: boolean
+        default: false
+        description: When true, also explodes component instances (destructive — loses re-use semantics).
+    outputs:
+      type: single
+      schema:
+        exploded-count: number
+        passes:         number
+  scene.export-to-images:
+    lifecycle: single
+    category: curated
+    description: |
+      Render each named scene (page) to a PNG. The designer "Friday client
+      shot pack" primitive.
+    inputs:
+      out-dir:
+        type: string
+        description: Output directory. PNG filenames derived from scene names.
+      width:
+        type: number
+        default: 1920
+      height:
+        type: number
+        default: 1080
+      antialias:
+        type: boolean
+        default: true
+      scene-name-filter:
+        type: string
+        description: Optional Ruby regex; only matching scenes are exported.
+    outputs:
+      type: single
+      schema:
+        exported-count: number
+        files:
+          type: array
+          items: string
+  component.list-instances:
+    lifecycle: single
+    category: curated
+    description: |
+      Enumerate every instance of a component definition (by name OR
+      definition GUID), returning location, scale, and rotation. The
+      block-audit primitive for SketchUp.
+    inputs:
+      definition-name:
+        type: string
+        description: Component definition name. Use this OR definition-guid.
+      definition-guid:
+        type: string
+        description: Component definition GUID. Use this OR definition-name.
+    outputs:
+      type: single
+      schema:
+        definition-name: string
+        definition-guid: string
+        instance-count:  number
+        instances:
+          type: array
+          items:
+            id:       number
+            position: object
+            rotation: number
+            scale:    object
+  # === Auto-generated catalog commands =======================================
   array-cross:
     lifecycle: single
     description: "The #cross method is used to compute the cross product between two vectors."

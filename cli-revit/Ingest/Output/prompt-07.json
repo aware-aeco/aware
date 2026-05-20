@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar links = new FilteredElementCollector(doc).OfClass(typeof(RevitLinkInstance)).Cast<RevitLinkInstance>().Select(l => new { name = l.Name, link_doc = l.GetLinkDocument()?.Title ?? \"<unloaded>\" }).ToList();\nreturn new { count = links.Count, links = links };",
+  "args": {}
+}

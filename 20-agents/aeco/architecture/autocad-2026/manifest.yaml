@@ -39,6 +39,119 @@ transport:
   cli:
     binary: aware-autocad-2026
 commands:
+  # === v0.33 curated workflow verbs ==========================================
+  # Hand-curated workflow verbs per the v0.10 curation framework. Each
+  # declares typed inputs/outputs; the implementation is the documented
+  # C# snippet in commands/<name>.md. Routes via the future aware-autocad
+  # exec sidecar (v0.36+); usable today by pasting into AutoCAD's .NET
+  # console or wrapping in an AwareRevit-equivalent in-process add-in.
+  layer.set-by-pattern:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Move every entity whose layer matches a regex onto a target layer.
+      Creates target layer if missing.
+    inputs:
+      from-pattern:
+        type: string
+        description: .NET regex matched against the source layer's Name.
+      to-layer:
+        type: string
+        description: Target layer Name. Created if missing.
+      to-layer-color-aci:
+        type: number
+        default: 7
+    outputs:
+      type: single
+      schema:
+        target-layer-handle: string
+        moved-count:         number
+        created-target:      boolean
+  block.list-instances:
+    lifecycle: single
+    category: curated
+    description: |
+      Enumerate every BlockReference for a given block definition, returning
+      insertion point, scale, rotation, and AttributeReferences.
+    inputs:
+      definition-name:
+        type: string
+    outputs:
+      type: single
+      schema:
+        definition-name: string
+        instance-count:  number
+        instances:
+          type: array
+          items:
+            handle:    string
+            position:  object
+            rotation:  number
+            scale:     object
+            attributes: object
+  entity.by-xdata-app:
+    lifecycle: single
+    category: curated
+    description: |
+      Find every entity that has XData attached by a named application
+      (e.g. "AWARE"). The "find every part stamped by this app" primitive.
+    inputs:
+      app-name:
+        type: string
+      space:
+        type: enum
+        values: [model, paper, all]
+        default: all
+    outputs:
+      type: single
+      schema:
+        matched-count: number
+        handles:
+          type: array
+          items: string
+  layout.export-pdfs:
+    lifecycle: single
+    category: curated
+    description: |
+      Export every paper-space layout to PDF via PlotEngine. The "issue
+      the sheet pack" primitive.
+    inputs:
+      out-dir:
+        type: string
+      pc3-name:
+        type: string
+        default: "DWG to PDF.pc3"
+      paper-size-name:
+        type: string
+      layout-name-filter:
+        type: string
+        description: Optional regex.
+    outputs:
+      type: single
+      schema:
+        exported-count: number
+        files:
+          type: array
+          items: string
+  xdata.bulk-write:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write XData (with auto-RegApp registration) onto every selected entity.
+      The v0.11 audit-stamp primitive for AutoCAD.
+    inputs:
+      app-name:
+        type: string
+      entries:
+        type: array
+        items: object
+    outputs:
+      type: single
+      schema:
+        entities-stamped: number
+  # === Auto-generated catalog commands =======================================
   abstract-ribbon-sub-panel-copy-from:
     lifecycle: single
     description: Copies the AbstractRibbonSubPanel data from an item source to this item.

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\naware_layer = doc.Layers.FindName(\"AWARE\")\nif aware_layer is None:\n    return {\"ok\": False, \"error\": \"layer 'AWARE' does not exist; create it first (prompt 10)\"}\naware_index = aware_layer.Index\nmoved = 0\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    attrs = obj.Attributes.Duplicate()\n    attrs.LayerIndex = aware_index\n    if doc.Objects.ModifyAttributes(obj, attrs, False):\n        moved += 1\ndoc.Views.Redraw()\nreturn {\"ok\": True, \"moved\": moved, \"target_layer\": \"AWARE\"}",
+  "args": {}
+}

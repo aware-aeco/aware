@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "8",
+  "code": "doc = Rhino.RhinoDoc.ActiveDoc\nxform = Rhino.Geometry.Transform.Translation(100, 100, 0)\nmoved = 0\nfor obj in doc.Objects.GetSelectedObjects(False, False):\n    if doc.Objects.Transform(obj.Id, xform, True) != System.Guid.Empty:\n        moved += 1\ndoc.Views.Redraw()\nreturn {\"moved\": moved, \"dx\": 100, \"dy\": 100, \"dz\": 0}",
+  "args": {}
+}

@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nreturn new { title = doc.Title, path = doc.PathName, is_workshared = doc.IsWorkshared };",
+  "args": {}
+}

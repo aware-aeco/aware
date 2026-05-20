@@ -1,0 +1,7 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "transaction": "auto",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar selIds = uiapp.ActiveUIDocument.Selection.GetElementIds().ToList();\nif (selIds.Count == 0) return new { updated = 0, note = \"no selection; select an element with a Comments parameter\" };\nint updated = 0;\nforeach (var id in selIds)\n{\n    var el = doc.GetElement(id);\n    var p = el.LookupParameter(\"Comments\");\n    if (p != null && !p.IsReadOnly && p.StorageType == StorageType.String)\n    {\n        p.Set(\"AWARE touched on \" + System.DateTime.UtcNow.ToString(\"o\"));\n        updated++;\n    }\n}\nreturn new { updated = updated, selected = selIds.Count };",
+  "args": {}
+}
