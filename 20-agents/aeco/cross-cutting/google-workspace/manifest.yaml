@@ -1,5 +1,5 @@
 agent:        google-workspace
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.0.0
 display-name: Google Workspace
 description: |
@@ -83,6 +83,7 @@ commands:
   upload-file:
     lifecycle: single
     category: curated
+    mode: write
     description: Upload bytes to Drive. Uses simple (≤ 5MB) or resumable (large) upload.
     inputs:
       filename:  string

@@ -1,5 +1,5 @@
 agent:        microsoft-365
-version:      0.1.0
+version:      0.2.0
 sdk-target:   1.0.0
 display-name: Microsoft 365 (Graph API)
 description: |
@@ -84,6 +84,7 @@ commands:
   upload-file:
     lifecycle: single
     category: curated
+    mode: write
     description: Upload bytes as a new file. Uses simple (≤ 4MB) or resumable (large file) upload depending on size.
     inputs:
       drive-id:  string
