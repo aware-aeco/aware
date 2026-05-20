@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar view = uiapp.ActiveUIDocument.ActiveView;\nif (view.ViewType != ViewType.DrawingSheet) return new { exported = false, reason = \"active view is not a sheet; open a sheet first\" };\nvar tempDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), \"aware-revit-pdf\");\nSystem.IO.Directory.CreateDirectory(tempDir);\nvar opts = new PDFExportOptions { FileName = \"aware-export\", Combine = true };\nvar viewSet = new List<ElementId> { view.Id };\nbool ok = doc.Export(tempDir, viewSet, opts);\nreturn new { exported = ok, path = System.IO.Path.Combine(tempDir, \"aware-export.pdf\") };",
+  "args": {}
+}

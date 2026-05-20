@@ -1,0 +1,6 @@
+{
+  "verb": "exec",
+  "version": "2026",
+  "code": "var doc = uiapp.ActiveUIDocument.Document;\nvar views = new FilteredElementCollector(doc).OfClass(typeof(View)).Cast<View>().Where(v => !v.IsTemplate).Select(v => new { name = v.Name, type = v.ViewType.ToString() }).Take(50).ToList();\nreturn new { count = views.Count, views = views };",
+  "args": {}
+}

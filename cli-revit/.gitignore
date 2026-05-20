@@ -1,0 +1,4 @@
+bin/
+obj/
+Ingest/Output/drill-summary.md
+*.user
