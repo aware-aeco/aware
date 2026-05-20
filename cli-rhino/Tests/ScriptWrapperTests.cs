@@ -35,7 +35,26 @@ public class ScriptWrapperTests
         // The path is embedded as a Python string literal (backslashes escaped).
         Assert.Contains(@"""C:\\Temp\\aware-result.json""", wrapped);
         Assert.Contains("open(__aware_result_path, \"w\", encoding=\"utf-8\")", wrapped);
-        Assert.Contains("json.dump(__aware_out, __aware_f, default=str)", wrapped);
+        // The result is serialized to a STRING first, then written in one shot.
+        Assert.Contains("__aware_f.write(__aware_text)", wrapped);
+    }
+
+    [Fact]
+    public void Wrap_SerializesWithAllowNanFalseAndDegradesOnUnserializable()
+    {
+        // The write must be bulletproof: NaN/inf raise (allow_nan=False) instead
+        // of emitting invalid JSON, and a non-serializable result degrades to a
+        // guaranteed-serializable error payload so a parseable file ALWAYS lands.
+        var wrapped = ScriptWrapper.Wrap("return 1", ResultPath, ArgsJson);
+        Assert.Contains("json.dumps(__aware_out, default=str, allow_nan=False)", wrapped);
+        Assert.Contains("except Exception as __aware_ser_ex:", wrapped);
+        Assert.Contains("result not JSON-serializable: ", wrapped);
+        // The serialize-then-write sequence: the write references the string the
+        // serialize step produced (not a live object dumped into the file).
+        var idxSerialize = wrapped.IndexOf("__aware_text = json.dumps", StringComparison.Ordinal);
+        var idxWrite = wrapped.IndexOf("__aware_f.write(__aware_text)", StringComparison.Ordinal);
+        Assert.True(idxSerialize >= 0 && idxWrite > idxSerialize,
+            "serialize-to-string must precede the file write");
     }
 
     [Fact]
