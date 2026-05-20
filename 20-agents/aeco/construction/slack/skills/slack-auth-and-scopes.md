@@ -24,8 +24,10 @@ Slack scopes are fine-grained; each endpoint lists the scope(s) it needs. The on
 |---|---|
 | `chat:write` | `chat.postMessage`, `chat.update`, `chat.delete` (channels the bot is in) |
 | `chat:write.public` | post to **public** channels the bot has *not* joined (no `conversations.join` needed) |
-| `channels:read` / `groups:read` | `conversations.list`, `conversations.info` (public / private) |
-| `channels:history` / `groups:history` | `conversations.history`, `conversations.replies` |
+| `channels:read` / `groups:read` | `conversations.list`, `conversations.info` (public / private channels) |
+| `channels:history` / `groups:history` | `conversations.history`, `conversations.replies` (public / private channels) |
+| `im:read` / `im:history` · `mpim:read` / `mpim:history` | the **DM** (`im`) and **group-DM** (`mpim`) equivalents — required *in addition* to the channel scopes when your `types` filter or workflow touches DMs / mpims |
+| `im:write` / `mpim:write` | open a DM / group DM (`conversations.open`); also needed to DM a user by `U…` id |
 | `files:write` | upload files (but see [slack-files-and-uploads](./slack-files-and-uploads.md) — the catalog's `files.upload` is deprecated) |
 | `users:read` / `users:read.email` | `users.info`, `users.lookupByEmail` (map a PM's email → Slack user) |
 | `reactions:write` | `reactions.add` (✅ a build-passed message) |

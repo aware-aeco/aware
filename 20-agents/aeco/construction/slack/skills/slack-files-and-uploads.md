@@ -24,7 +24,7 @@ Because steps 1 and 3 aren't reflected here, **this agent cannot do a current-Sl
 
 ## What still works
 
-The non-upload file verbs reflect fine and are current: `files.list`, `files.info`, `files.delete`, `files.revokePublicUrl`, and the `files.remote.*` family (register an externally-hosted file as a Slack "remote file" and share its reference). `files.remote.add` + `files.remote.share` is a clean way to surface an ACC/Trimble-hosted document in a channel without copying bytes into Slack.
+The non-upload file verbs reflect fine and are current: `files.list`, `files.info`, `files.delete`, `files.revokePublicUrl`, and the `files.remote.*` family (register an externally-hosted file as a Slack "remote file" and share its reference). `files.remote.add` + `files.remote.share` is a clean way to surface an ACC/Trimble-hosted document in a channel without copying bytes into Slack. **Scope note:** the `files.remote.*` methods require `remote_files:write` / `remote_files:share` (and `remote_files:read`) — **not** `files:write`; mixing these up yields `missing_scope`.
 
 ## See also
 
