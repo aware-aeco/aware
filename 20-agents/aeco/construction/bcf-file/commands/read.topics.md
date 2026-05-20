@@ -28,7 +28,7 @@ topics:
     assigned-to:      string
     creation-date:    string   # ISO-8601
     creation-author:  string
-    stage:            string   # BCF 3.0 only; "" on 2.1 files
+    stage:            string   # topic lifecycle stage; present in both 2.1 and 3.0, "" if unset
     labels:           array
     description:      string
 ```

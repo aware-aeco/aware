@@ -1,6 +1,6 @@
 # `ifc-inspector.file.info` — header-only pre-flight
 
-Stateless, read-only. Reads the IFC `HEADER` section without loading geometry — fast even on a 500 MB file (~1s). Returns schema version, originating application, timestamp, total entity count, and file size. The "is this IFC valid enough to bother federating?" gate you run before anything expensive.
+Stateless, read-only. Reads the IFC `HEADER` plus a lightweight entity-line count — without parsing the object graph or meshing geometry. Returns schema version, originating application, timestamp, total entity count, and file size. The "is this IFC valid enough to bother federating?" gate you run before anything expensive.
 
 ## Lifecycle
 
@@ -40,7 +40,7 @@ DATA;
   ...
 ```
 
-`schema` comes from `FILE_SCHEMA`; `source-app` and `timestamp` from `FILE_NAME` (positions 6 and 2 respectively). `entity-count` is the count of `#n=` lines in `DATA` — obtained via `web-ifc` `OpenModel` + a line-count pass, which is cheap because no geometry is meshed. `.ifczip` is unzipped to a temp stream first.
+`schema` comes from `FILE_SCHEMA`; `source-app` and `timestamp` from `FILE_NAME` (positions 6 and 2 respectively) — all from the first few KB, effectively instant. `entity-count` is a **raw scan** counting `#<n>=` line starts in `DATA`; it streams the file but does **not** call `web-ifc` `OpenModel` (which would tokenise the whole object graph) and does not mesh geometry, so it stays I/O-bound and cheap rather than parse-bound. `.ifczip` is unzipped to a temp stream first. (Verbs that need the actual entities — `entities.*`, `psets.*` — do call `OpenModel`; `file.info` deliberately doesn't.)
 
 `source-app` is the single most useful field for triage: it tells you which authoring tool produced the file, which predicts the GUID-stability and Pset conventions you'll hit downstream (see [ifc-guid-and-class-model](../skills/ifc-guid-and-class-model.md)).
 
@@ -70,7 +70,7 @@ DATA;
 |---|---|---|
 | `ifc.file-not-found` | `path` doesn't exist | Check the path |
 | `ifc.not-an-ifc` | No `ISO-10303-21;` magic / no `FILE_SCHEMA` | Confirm it's a STEP IFC, not an `.ifcXML` or a renamed RVT |
-| `ifc.unsupported-schema` | `FILE_SCHEMA` is something `web-ifc` can't open (e.g. IFC4X1) | Re-export from the authoring tool to IFC4 or IFC2X3 |
+| `ifc.unsupported-schema` | `FILE_SCHEMA` is one the bundled `web-ifc` build can't open (e.g. an intermediate draft like IFC4X1) | Re-export from the authoring tool to IFC4 or IFC2X3 |
 
 ## See also
 

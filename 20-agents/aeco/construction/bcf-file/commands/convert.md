@@ -29,22 +29,21 @@ warnings:
 
 ## What the conversion does
 
-The full field-by-field behaviour lives in [bcf-21-vs-30](../skills/bcf-21-vs-30.md). Summary:
+The 2.1↔3.0 difference is mostly **structural re-serialisation, not topic-data difference** (full schema-verified detail in [bcf-21-vs-30](../skills/bcf-21-vs-30.md)). Summary:
 
-**2.1 → 3.0 (lossless-ish, additive):**
-- `Labels` kept as labels
-- `ReferenceLinks` upgraded from bare strings to `{ Url, Description }` objects (Description left empty)
-- `ModifiedDate` populated from `CreationDate` where absent (best-effort)
-- `Stage` left empty — there is no 2.1 source for it; a downstream tool fills it in
+**2.1 → 3.0 (structural, lossless):**
+- Wrap repeated elements into 3.0 containers (`ReferenceLink`→`ReferenceLinks/ReferenceLink`, `Label`→`Labels/Label`, `DocumentReference`→`DocumentReferences/…`, `RelatedTopic`→`RelatedTopics/…`).
+- Move `Comment`s and `Viewpoints` from `Markup` level into `Topic`.
+- `ServerAssignedId` has no 2.1 source — left absent.
+- All topic data (Stage, DueDate, ModifiedDate, priority, labels, colourings) carries over unchanged.
 
-**3.0 → 2.1 (lossy — every drop is a `warnings` entry):**
-- `Stage` has no 2.1 equivalent → preserved as a label `Stage:<value>` so the data isn't lost, just relocated
-- `ReferenceLinks` objects flattened to their URL string only
-- Extension-schema fields (custom topic types) dropped
-- Per-comment images and threaded replies flattened (2.1 comments are flat)
-- Viewpoint colouring alpha channel dropped to RGB
+**3.0 → 2.1 (structural; one real drop, surfaced in `warnings`):**
+- Un-wrap the containers; lift `Comment`s/`Viewpoints` from `Topic` back to `Markup` level.
+- **Drop `ServerAssignedId`** — the only field with no 2.1 home.
+- Map `DocumentReference`'s `DocumentGuid`/`Url` to the 2.1 `ReferencedDocument` string.
+- Everything else (Stage, DueDate, ReferenceLinks-as-strings, ModifiedDate, comment list, colouring alpha) round-trips losslessly — these are **not** 3.0-only, contrary to common belief.
 
-**Default outbound is 2.1.** As of 2026, ACC Issues / BIMcollab / Revizto / Trimble Connect support for 3.0 is still patchy — emit 2.1 unless you've confirmed every consumer in the chain reads 3.0. See [bcf-21-vs-30](../skills/bcf-21-vs-30.md) for the recommendation.
+**Default outbound is 2.1.** As of 2026, ACC Issues / BIMcollab / Revizto / Trimble Connect support for 3.0 is still patchy — emit 2.1 unless you've confirmed every consumer in the chain reads 3.0. See [bcf-21-vs-30](../skills/bcf-21-vs-30.md) for the recommendation and the list of fields that are commonly but wrongly assumed to be 3.0-only.
 
 ## Composition example — downgrade for an older consumer
 

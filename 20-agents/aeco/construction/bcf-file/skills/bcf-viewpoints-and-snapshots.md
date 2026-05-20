@@ -44,7 +44,7 @@ All camera coordinates are **world-space** (the same coordinate system as the re
     <Component IfcGuid="2O2Fr$t4X7Zf8NOew3FNr2" />
   </Selection>
   <Coloring>
-    <Color Color="ffff0000"><Component IfcGuid="…"/></Color>   <!-- AARRGGBB in 3.0; RRGGBB in 2.1 -->
+    <Color Color="ff0000"><Component IfcGuid="…"/></Color>   <!-- 6-hex RGB, or optional 8-hex RRGGBBAA (alpha trailing) -->
   </Coloring>
   <Visibility DefaultVisibility="true">
     <Exceptions><Component IfcGuid="…"/></Exceptions>
@@ -52,7 +52,7 @@ All camera coordinates are **world-space** (the same coordinate system as the re
 </Components>
 ```
 
-The selection / colouring / visibility-exception lists all reference **IFC GUIDs**, which is what makes a viewpoint portable between tools — but also what makes it fragile. If a model re-export churns those GUIDs, the camera still works while the highlight resolves to nothing. This is the silent-break failure detailed in [bcf-round-trip-interop](./bcf-round-trip-interop.md). The colour string gained an alpha channel in 3.0; [`convert`](../commands/convert.md) 3.0→2.1 drops it to RGB.
+The selection / colouring / visibility-exception lists all reference **IFC GUIDs**, which is what makes a viewpoint portable between tools — but also what makes it fragile. If a model re-export churns those GUIDs, the camera still works while the highlight resolves to nothing. This is the silent-break failure detailed in [bcf-round-trip-interop](./bcf-round-trip-interop.md). Component colours are 6-hex RGB or an optional 8-hex form with a **trailing** alpha byte (`RRGGBBAA`, e.g. `ff000099`) — identical in 2.1 and 3.0 per `visinfo.xsd`, so [`convert`](../commands/convert.md) leaves colouring untouched (the common belief that 2.1 lacks alpha is wrong).
 
 ## Clipping planes & sections
 

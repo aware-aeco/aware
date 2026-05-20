@@ -38,7 +38,7 @@ Topic GUIDs are stable across tools (a topic created in Solibri keeps its GUID t
 
 ## Version gotcha (read this)
 
-**Do not merge mixed BCF versions blindly.** If `input-paths` mixes 2.1 and 3.0 files, the merge would have to drop 3.0-only fields (Stage, threaded replies, extension schemas) or fabricate them — both lossy. The agent **refuses** a mixed-version merge with `bcf.version-mismatch` rather than silently degrading. Normalise first with [`convert`](./convert.md), then merge same-version files. The output `bcf.version` equals the (now uniform) input version.
+**Do not merge mixed BCF versions blindly.** 2.1 and 3.0 serialise the same topic data with **different structure** (3.0 wraps repeated elements in containers and nests comments/viewpoints inside the topic; see [bcf-21-vs-30](../skills/bcf-21-vs-30.md)). Merging across versions would force a reshape mid-merge and silently drop the 3.0-only `ServerAssignedId`. The agent **refuses** a mixed-version merge with `bcf.version-mismatch` rather than degrading silently. Normalise first with [`convert`](./convert.md), then merge same-version files. The output `bcf.version` equals the (now uniform) input version.
 
 ## Composition example — federated weekly package
 

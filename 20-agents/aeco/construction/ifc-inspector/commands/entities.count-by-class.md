@@ -38,7 +38,7 @@ for (const typeId of api.GetAllTypesOfModel(modelID)) {
 // filter substring applied to typeName, then sort by count desc
 ```
 
-This counts **direct class membership**, not subtype rollups: `IfcWall` and `IfcWallStandardCase` are reported as separate rows (the latter is a subtype). When you reason about "all walls," sum the rows whose class matches `Wall` — that is exactly what the `filter` substring is for. See [ifc-guid-and-class-model](../skills/ifc-guid-and-class-model.md) for the subtype gotcha.
+This counts **direct class membership**, not subtype rollups (`GetLineIDsWithType` defaults to exact-type): `IfcWall` and `IfcWallStandardCase` are reported as separate rows. To total "all walls," sum the matching rows — that's what the `filter` substring is for. **But the substring is a dumb text match**: `"Wall"` also sweeps in `IfcCurtainWall`, which is a *different element category* (a curtain-wall assembly, not a layered wall) — don't blindly fold it into a wall area takeoff. When precision matters, enumerate the concrete classes you want with [`entities.list-guids`](./entities.list-guids.md) (one exact class per call) rather than trusting the substring. See [ifc-guid-and-class-model](../skills/ifc-guid-and-class-model.md) for the subtype gotcha.
 
 ## Composition example — sanity-check a discipline IFC
 

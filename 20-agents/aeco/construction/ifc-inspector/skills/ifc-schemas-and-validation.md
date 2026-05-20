@@ -15,17 +15,19 @@ IFC is defined in the EXPRESS data-modelling language. The versions you meet in 
 | `IFC4` | IFC4 Add2 TC1 (2017) | Adds proper georeferencing (LoGeoRef 50), richer Psets, type objects. The current default for new work. |
 | `IFC4X3` | IFC4.3 ADD2 (2024) | Adds infrastructure (alignment, road, rail, bridge, marine). Building tools are only starting to emit it. |
 
-The version is declared in the header's `FILE_SCHEMA` and surfaced by [`file.info`](../commands/file.info.md) as `schema`. `web-ifc` opens all three; `IFC4X1` and other intermediate drafts are **not** supported (re-export to IFC4). Validation uses buildingSMART's published EXPRESS schemas: IFC2x3-TC1, IFC4-Add2-TC1, IFC4X3-ADD2.
+The version is declared in the header's `FILE_SCHEMA` and surfaced by [`file.info`](../commands/file.info.md) as `schema`. The **bundled `web-ifc` build** opens all three; intermediate drafts like `IFC4X1`/`IFC4X2` have variable support across `web-ifc` releases, so treat the supported set as a property of the pinned build, not a permanent fact — re-export odd drafts to IFC4 or IFC2X3.
 
-## What `validate.schema` checks
+## What `validate.schema` checks — and the engine's limit
 
-[`validate.schema`](../commands/validate.schema.md) checks the file against the EXPRESS schema it *declares*. It catches **structural** problems:
+`ifc-inspector` wraps the `web-ifc` parser, which is a **parser, not a full EXPRESS schema engine**. So [`validate.schema`](../commands/validate.schema.md) covers the structural problems a parser can see:
 
-- **Missing required attributes** — an `IfcWall` with no `GlobalId`; a required field left null.
-- **Type mismatches** — a `Real` where an `Integer` is required; a string where an enumeration is expected.
-- **Orphan references** — an `IfcRelAggregates` pointing at a `#n` that doesn't exist.
-- **Cardinality / WHERE-rule violations** — schema constraints on counts and value ranges.
-- **Circular containment** — rare, breaks traversal.
+- **Well-formedness** — the STEP / `ISO-10303-21` syntax parses at all.
+- **Schema membership** — every entity type exists in the declared schema (no IFC4-only class smuggled into an IFC2x3 file).
+- **Missing required *direct* attributes** — an `IfcWall` with no `GlobalId`.
+- **Reference integrity** — no `#n` reference pointing at a line that doesn't exist (orphans); no circular containment.
+- **Basic type conformance** — a string where an enumeration label is expected.
+
+What it does **not** do: full EXPRESS `WHERE`-rule evaluation, derived-attribute checks, inverse-attribute cardinality, or function-based constraints. Those need a dedicated schema engine — **IfcOpenShell's `ifcopenshell.validate`** or the **buildingSMART validation service** — not a geometry/data parser. If your acceptance gate hinges on WHERE-rule conformance, route to one of those; `validate.schema` is the fast, in-process well-formedness + reference-integrity pre-check, not a certification.
 
 ## What it cannot check
 

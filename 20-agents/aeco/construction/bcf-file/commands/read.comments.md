@@ -41,7 +41,7 @@ Comments are siblings of `<Topic>` inside `markup.bcf`:
 </Comment>
 ```
 
-BCF 2.1 comments are **flat** (no threading). BCF 3.0 adds an optional `<ReplyToComment>` reference and makes `ModifiedDate` required; this verb returns the flat list either way — if you need the 3.0 reply tree, read the raw `markup.bcf` (the agent does not synthesise threading on 2.1 files). See [bcf-21-vs-30](../skills/bcf-21-vs-30.md).
+Comments are **flat in both BCF 2.1 and 3.0** — neither schema has a `ReplyToComment` / threading element (it existed only in the abandoned 2.0). `ModifiedDate` / `ModifiedAuthor` are optional in both versions. The only 2.1↔3.0 difference is *where* comments live in the XML — siblings of `<Topic>` under `<Markup>` in 2.1, nested inside `<Topic><Comments>` in 3.0 — which this verb abstracts away; you get the same flat list regardless of version. See [bcf-21-vs-30](../skills/bcf-21-vs-30.md).
 
 ## Composition examples
 
@@ -93,4 +93,4 @@ BCF 2.1 comments are **flat** (no threading). BCF 3.0 adds an optional `<ReplyTo
 
 - [`read.topics`](./read.topics.md) — get the topic GUIDs to scope by
 - [`diff`](./diff.md) — find which topics gained comments between two BCFs
-- [bcf-21-vs-30](../skills/bcf-21-vs-30.md) — flat vs threaded comments
+- [bcf-21-vs-30](../skills/bcf-21-vs-30.md) — why comments are flat in both versions (no threading)

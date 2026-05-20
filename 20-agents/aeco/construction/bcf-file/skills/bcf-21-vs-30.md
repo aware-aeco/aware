@@ -1,9 +1,11 @@
 ---
 name: bcf-21-vs-30
-description: This skill should be used when choosing a BCF version to emit or when running the bcf-file convert verb — deciding between BCF 2.1 and 3.0, understanding the field-level differences, and knowing exactly what is lost converting 3.0→2.1. Encodes the version-selection rule (default 2.1 outbound) and the conversion behaviour.
+description: This skill should be used when choosing a BCF version to emit or when running the bcf-file convert verb — deciding between BCF 2.1 and 3.0, understanding the (mostly structural) schema differences, and knowing what actually changes on conversion. Encodes the version-selection rule (default 2.1 outbound) and the real, schema-verified conversion behaviour.
 ---
 
 # BCF 2.1 vs 3.0 — what changed
+
+> Verified against the buildingSMART BCF-XML schemas: `release_2_1/Schemas/markup.xsd`, `release_3_0/Schemas/markup.xsd`, and `visinfo.xsd` for both. Where field-level intuition and the schema disagree, the schema wins — several "obvious" 2.1→3.0 differences are myths (see the box below).
 
 ## The rule
 
@@ -11,49 +13,57 @@ description: This skill should be used when choosing a BCF version to emit or wh
 
 Both versions are buildingSMART specs; 3.0 (2021) is the successor to 2.1 (2014).
 
-## Field-level differences
+## What actually changed (3.0 vs 2.1)
 
-| Field | 2.1 | 3.0 |
+The 3.0 changes are **mostly structural re-serialisation, not new topic data**:
+
+| Aspect | 2.1 | 3.0 |
 |---|---|---|
-| `Topic.Stage` | not present | new — explicit project lifecycle stage |
-| `Topic.Labels` | string array | string array (unchanged) |
-| `Topic.ReferenceLinks` | string array | array of `{ Url, Description }` objects |
-| `Topic.ServerAssignedId` | not present | new — human-readable issue number |
-| `Markup.Header` | per-topic | promoted to schema level |
-| `Comment.ModifiedDate` | optional | required |
-| `Comment` threading | flat | optional `ReplyToComment` reference |
-| `Viewpoint.Components.Coloring` | hex colour | hex colour **with alpha** |
-| Allowed status/type/priority values | free text | declared in `extensions.xml` |
-| Extension schemas | limited | extensible (custom topic types) |
-| Cross-vendor compatibility | High (everything reads 2.1) | Mixed (newer tools only) |
+| Repeated child elements (`ReferenceLink`, `Label`, `DocumentReference`, `RelatedTopic`) | direct repeated elements on `Topic` | each wrapped in a container (`ReferenceLinks`, `Labels`, `DocumentReferences`, `RelatedTopics`) |
+| `Comment`s and `Viewpoints` | siblings of `Topic` under `Markup` | nested **inside** `Topic` (`Topic > Comments`, `Topic > Viewpoints`) |
+| `Topic.ServerAssignedId` | not present | **new** — human-readable issue id (the only genuinely new topic datum) |
+| `Topic.Index` | present | present but **deprecated** |
+| `DocumentReference` | `ReferencedDocument` (string path/URL) + `Description` | `DocumentGuid` \| `Url` choice + `Description` |
 
-## Conversion behaviour
+## Myths — fields that did NOT change (don't write conversion logic around these)
 
-### 2.1 → 3.0 (additive, near-lossless)
+The following are **identical in both 2.1 and 3.0** per the schemas. Earlier drafts of these docs (and a lot of folklore) get them wrong:
 
-- `Labels` → kept as labels
-- `ReferenceLinks` upgraded from strings to `{ Url, Description }` with `Description` empty
-- `ModifiedDate` populated from `CreationDate` where absent (best-effort)
-- `Stage` **not** synthesised — left empty for a downstream tool to fill
+- **`Stage` is in both.** `markup.xsd` declares `Topic/Stage` in 2.1 *and* 3.0. It is not a 3.0 addition; a 3.0→2.1 conversion does **not** drop it.
+- **`DueDate` is in both.**
+- **`ModifiedDate` is optional in both** (`minOccurs="0"`), on `Topic` and `Comment`. It is not "required in 3.0".
+- **`ReferenceLinks` are plain strings in both** (`NonEmptyOrBlankString`). The `{ Url, Description }` object shape belongs to the separate **`DocumentReference`** element, not to reference links. There is no string→object upgrade.
+- **Comments are flat in both.** Neither 2.1 nor 3.0 `Comment` has a `ReplyToComment` / threading element (`ReplyToComment` existed only in the abandoned 2.0 and was removed). There is no "3.0 reply tree."
+- **Component colouring supports an optional alpha byte in both.** `visinfo.xsd` `Color` pattern is `[0-9A-Fa-f]{6}([0-9A-Fa-f]{2})?` in 2.1 *and* 3.0 — 6 hex (`FF00FF`) or 8 hex with a **trailing** alpha byte (`FF00FF99` = RRGGBB**AA**). 2.1 is not "RGB only", and downgrade does not drop alpha.
 
-### 3.0 → 2.1 (lossy — every drop is a `warnings` entry from `convert`)
+## Conversion behaviour ([`convert`](../commands/convert.md))
 
-- `Stage` dropped → preserved as a label `Stage:<value>` so the data survives, relocated
-- `ReferenceLinks` objects flattened to the URL string only
-- Extension-schema fields dropped (recorded as warnings)
-- Per-comment images + threaded replies flattened (2.1 comments are flat)
-- Viewpoint colouring alpha channel dropped to RGB
+Because the difference is structural, conversion is mostly reshaping, not data loss.
 
-## Why 3.0 matters in AECO
+### 2.1 → 3.0 (structural, lossless)
 
-- **`Stage`** lets you say "this clash is for *tender* coordination, not *construction*" — useful when running BCF round-trips across RIBA / AIA stages on one project. In 2.1 you fake it with a label.
-- **Extension schemas** let domain tools attach proprietary metadata without breaking interop.
-- **Threaded comments** make a long dispute readable instead of a flat wall.
+- Wrap repeated elements into their 3.0 containers (`ReferenceLink`→`ReferenceLinks/ReferenceLink`, `Label`→`Labels/Label`, etc.).
+- Move `Comment`s and `Viewpoints` from `Markup` level into `Topic`.
+- `ServerAssignedId` has no 2.1 source — left absent.
+- All topic data (Stage, DueDate, ModifiedDate, priority, labels, …) carries over unchanged.
 
-The practical loss when forced back to 2.1 is `Stage` and threading — both recoverable as labels/flat text, neither fatal.
+### 3.0 → 2.1 (structural; one real drop)
+
+- Un-wrap containers back to direct repeated elements; lift `Comment`s/`Viewpoints` from `Topic` to `Markup` level.
+- **`ServerAssignedId` is dropped** (no 2.1 equivalent) — the one genuine data loss; `convert` records it in `warnings`.
+- Map `DocumentReference` `DocumentGuid`/`Url` to the 2.1 `ReferencedDocument` string.
+- Everything else round-trips losslessly.
+
+## Why pick 3.0 when you can
+
+- **`ServerAssignedId`** gives issues a stable human-readable number.
+- **Topic-as-container** (comments + viewpoints nested in the topic) is a cleaner unit to pass around than 2.1's flat `Markup` siblings.
+- It's the actively-maintained schema; new tooling targets it first.
+
+None of these outweigh 2.1's wider compatibility for outbound delivery today — hence the default-2.1 rule above.
 
 ## See also
 
 - [`convert`](../commands/convert.md) — the verb that performs the translation
 - [`merge`](../commands/merge.md) — requires uniform versions; convert first
-- [bcf-format-anatomy](./bcf-format-anatomy.md) — `extensions.xml` and the version marker
+- [bcf-format-anatomy](./bcf-format-anatomy.md) — the archive layout and the markup structure that gets reshaped

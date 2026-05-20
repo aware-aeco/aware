@@ -19,10 +19,10 @@ Separately, the STEP file gives each instance a **line id** `#n` (e.g. `#4711`).
 
 IFC classes form a deep inheritance tree: `IfcWall` is a subtype of `IfcBuildingElement` → `IfcElement` → `IfcProduct` → `IfcObject` → `IfcRoot`. Crucially, some "kinds" of thing split into sibling concrete classes:
 
-- `IfcWall` **and** `IfcWallStandardCase` (the latter is a constrained subtype for prismatic walls — present in IFC2x3/IFC4, deprecated in IFC4X3 where everything is just `IfcWall`).
+- `IfcWall` **and** `IfcWallStandardCase` (the latter is a constrained subtype for prismatic walls). It is **defined in all three schemas** (IFC2x3, IFC4, IFC4X3) — so a file in any version can contain it and `web-ifc` will return it. It has been **deprecated-for-export since IFC4** (the guidance is to export plain `IfcWall` + an `IfcMaterialLayerSetUsage`); IFC4X3 keeps it importable but says it shall not be exported. Don't assume a 4X3 file won't contain it.
 - `IfcSlab`, `IfcSlabStandardCase`, `IfcSlabElementedCase`.
 
-[`entities.count-by-class`](../commands/entities.count-by-class.md) reports **direct class membership** — `IfcWall` and `IfcWallStandardCase` are separate rows, not rolled up. `web-ifc`'s `GetLineIDsWithType` returns exactly-this-type instances, not subtypes. Consequences:
+[`entities.count-by-class`](../commands/entities.count-by-class.md) reports **direct class membership** — `IfcWall` and `IfcWallStandardCase` are separate rows, not rolled up. `web-ifc`'s `GetLineIDsWithType(modelID, type, includeInherited = false)` returns exactly-this-type instances **by default**; pass `includeInherited = true` and it rolls subtypes up under the supertype. The agent uses the default (exact type), so: Consequences:
 
 - To count "all walls," sum the rows whose class matches `Wall` — exactly what the `filter` substring is for.
 - [`entities.list-guids`](../commands/entities.list-guids.md) takes one **exact** class per call (no substring). List `IfcWall` and `IfcWallStandardCase` separately and union the results.

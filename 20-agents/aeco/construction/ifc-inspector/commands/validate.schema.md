@@ -27,14 +27,17 @@ errors:
 
 ## What it checks (and what it doesn't)
 
-Validation runs against buildingSMART's published EXPRESS schemas — IFC2x3-TC1, IFC4-Add2-TC1, IFC4X3-ADD2. It catches:
+It runs through the in-process `web-ifc` parser — a **parser, not a full EXPRESS schema engine** — so it catches the structural problems a parser can see:
 
-- **Missing required attributes** — e.g. an `IfcWall` with no `GlobalId`.
-- **Type mismatches** — a `Real` where the schema demands an `Integer`, a string where an enum is required.
-- **Orphan references** — e.g. an `IfcRelAggregates` pointing at a deleted `#n`.
-- **Circular containment** — rare, but it happens and breaks traversal.
+- **Well-formedness** — the STEP syntax parses at all.
+- **Schema membership** — every entity type exists in the declared schema.
+- **Missing required *direct* attributes** — e.g. an `IfcWall` with no `GlobalId`.
+- **Reference integrity** — an `IfcRelAggregates` pointing at a deleted `#n` (orphan); circular containment.
+- **Basic type conformance** — a string where an enum label is required.
 
 It does **not** check:
+
+- **Full EXPRESS `WHERE`-rule / cardinality / derived-attribute constraints** → these need a real schema engine, not a parser. Use **IfcOpenShell's `ifcopenshell.validate`** or the **buildingSMART validation service**. `validate.schema` is a fast pre-check, not a certification.
 
 - BEP compliance, classification, cross-discipline coordination → the [`solibri`](../../../architecture/solibri-26.4.1/) agent's rule engine.
 - "The wall thickness is wrong" → no rule; this verb has no notion of correct values.
@@ -75,7 +78,7 @@ Full validation walks the entire entity graph. On a 500 MB IFC this is ~5 minute
 | Error | Cause | Recovery |
 |---|---|---|
 | `ifc.file-not-found` | `path` doesn't exist | Check the path |
-| `ifc.unsupported-schema` | `FILE_SCHEMA` is one with no published EXPRESS schema bundled (e.g. IFC4X1) | Re-export to IFC4 or IFC2X3 |
+| `ifc.unsupported-schema` | `FILE_SCHEMA` is one the bundled `web-ifc` build can't open (e.g. an intermediate draft like IFC4X1) | Re-export to IFC4 or IFC2X3 |
 | `ifc.parse-abort` | File is so malformed `web-ifc` can't open it at all | This is worse than `valid: false` — the STEP syntax itself is broken; re-export |
 
 ## See also
