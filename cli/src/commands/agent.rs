@@ -73,7 +73,7 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
         }
         AgentCommand::Update { agent, all } => update(ctx, agent.as_deref(), all),
         AgentCommand::Validate { path } => validate_cmd(ctx, &path),
-        AgentCommand::Publish { .. } => Err(AwareError::NotYetImplemented("agent publish")),
+        AgentCommand::Publish { path } => publish(ctx, &path),
     }
 }
 
@@ -210,6 +210,147 @@ fn validate_cmd(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError
         return Err(AwareError::Validation("agent failed validation".into()));
     }
     Ok(())
+}
+
+/// Standard tarball for substrate-hosted agents: every entry in the
+/// aware-aeco/aware registry points at the repo's `main` archive and is
+/// distinguished only by `subdir` (see `registry-index.json`).
+const SUBSTRATE_TARBALL: &str =
+    "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
+
+/// `aware agent publish <path>` — validate an agent, stage its entry in the
+/// registry index, and print the steps to open a PR to the GitHub registry.
+///
+/// Scope: agents inside an aware-substrate checkout (the registry's tarball
+/// IS the repo's `main` archive, so an entry is just a `subdir` into it).
+/// Publish does NOT commit or push — opening a PR is a shared-state action
+/// that stays under the contributor's control; this stages the index change
+/// for review.
+fn publish(_ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
+    let manifest_path = path.join("manifest.yaml");
+    let agent = crate::manifest::loader::load_agent(&manifest_path)?;
+
+    let issues = crate::validate::validate_agent_on_disk(&agent, path);
+    for i in &issues {
+        let tag = match i.severity {
+            crate::validate::Severity::Error => "✗",
+            crate::validate::Severity::Warning => "⚠",
+        };
+        println!("{tag} [{}] {}", i.code, i.message);
+    }
+    if crate::validate::has_errors(&issues) {
+        return Err(AwareError::Validation(
+            "agent failed validation; fix the errors above before publishing".into(),
+        ));
+    }
+
+    let id = agent.agent.clone();
+    let version = agent.version.clone();
+
+    let abs = path.canonicalize()?;
+    let Some((index_path, rel)) = find_registry_root(&abs) else {
+        println!();
+        println!("This registry hosts agents inside the aware-aeco/aware repo —");
+        println!("every entry's tarball is the repo's `main` archive. To publish");
+        println!("{id}@{version}, run `aware agent publish` from inside an aware");
+        println!("checkout (one containing registry-index.json), or host your own");
+        println!("tarball + index for an external agent.");
+        return Ok(());
+    };
+
+    let subdir = format!("aware-main/{}", rel.replace('\\', "/"));
+    let raw = std::fs::read_to_string(&index_path)?;
+    let updated = merge_publish_entry(&raw, &id, &version, SUBSTRATE_TARBALL, &subdir)?;
+    std::fs::write(&index_path, &updated)?;
+
+    println!("✓ staged {id}@{version} in {}", index_path.display());
+    println!("  subdir: {subdir}");
+    println!();
+    println!("Review the change, then open a PR to the GitHub registry:");
+    println!("  git add registry-index.json");
+    println!("  git commit -m \"registry: publish {id}@{version}\"");
+    println!("  gh pr create --fill        # or push your fork and open the PR on GitHub");
+    Ok(())
+}
+
+/// Walk up from `start` for `registry-index.json`. Returns
+/// `(index_path, agent_path_relative_to_repo_root)` when found.
+fn find_registry_root(start: &std::path::Path) -> Option<(std::path::PathBuf, String)> {
+    let mut dir = Some(start);
+    while let Some(d) = dir {
+        let candidate = d.join("registry-index.json");
+        if candidate.is_file() {
+            let rel = start.strip_prefix(d).ok()?;
+            return Some((candidate, rel.to_string_lossy().into_owned()));
+        }
+        dir = d.parent();
+    }
+    None
+}
+
+/// Insert `id@version → {tarball, subdir}` into a registry index document,
+/// refreshing `updated-at`. Pure (string → string) for testability.
+fn merge_publish_entry(
+    index_json: &str,
+    id: &str,
+    version: &str,
+    tarball: &str,
+    subdir: &str,
+) -> Result<String, AwareError> {
+    use crate::registry::{Index, IndexEntry, VersionEntry};
+    let mut index = Index::parse(index_json.as_bytes())?;
+    let entry = index
+        .agents
+        .entry(id.to_string())
+        .or_insert_with(|| IndexEntry {
+            versions: std::collections::BTreeMap::new(),
+        });
+    entry.versions.insert(
+        version.to_string(),
+        VersionEntry {
+            tarball: tarball.to_string(),
+            subdir: subdir.to_string(),
+        },
+    );
+    index.updated_at = crate::builder::now_iso();
+    let mut out = serde_json::to_string_pretty(&index)?;
+    out.push('\n');
+    Ok(out)
+}
+
+#[cfg(test)]
+mod publish_tests {
+    use super::*;
+
+    const SAMPLE: &str = r#"{"version":"1.0","updated-at":"old","agents":{"tekla":{"versions":{"2025.0.1":{"tarball":"t","subdir":"s"}}}},"bundles":{}}"#;
+
+    #[test]
+    fn merge_adds_new_agent_and_preserves_existing() {
+        let out = merge_publish_entry(
+            SAMPLE,
+            "bcf-file",
+            "0.2.0",
+            SUBSTRATE_TARBALL,
+            "aware-main/20-agents/aeco/construction/bcf-file",
+        )
+        .unwrap();
+        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        assert!(parsed.agents.contains_key("tekla"), "existing agent kept");
+        let (v, e) = parsed.resolve("bcf-file", Some("0.2.0")).unwrap();
+        assert_eq!(v, "0.2.0");
+        assert_eq!(e.tarball, SUBSTRATE_TARBALL);
+        assert_eq!(e.subdir, "aware-main/20-agents/aeco/construction/bcf-file");
+        assert_ne!(parsed.updated_at, "old", "updated-at refreshed");
+    }
+
+    #[test]
+    fn merge_adds_version_to_existing_agent() {
+        let out = merge_publish_entry(SAMPLE, "tekla", "2026.0.0", "tb", "sd").unwrap();
+        let parsed = crate::registry::Index::parse(out.as_bytes()).unwrap();
+        let tekla = parsed.agents.get("tekla").unwrap();
+        assert!(tekla.versions.contains_key("2025.0.1"), "old version kept");
+        assert!(tekla.versions.contains_key("2026.0.0"), "new version added");
+    }
 }
 
 #[derive(Serialize)]
