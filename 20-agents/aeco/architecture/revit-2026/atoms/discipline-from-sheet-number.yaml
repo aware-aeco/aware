@@ -12,4 +12,7 @@ inputs:
 output:
   type: string
 code: |
-  (sheetNumber) => (String(sheetNumber).match(/^([A-Za-z]+)/) || [, ''])[1].toUpperCase()
+  (sheetNumber) => {
+    const m = String(sheetNumber).match(/^([A-Za-z]+)/);
+    return m ? m[1].toUpperCase() : '';
+  }

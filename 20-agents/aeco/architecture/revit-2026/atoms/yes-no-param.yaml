@@ -12,4 +12,4 @@ inputs:
 output:
   type: boolean
 code: |
-  (value) => value === 1 || value === true || String(value).toLowerCase() === 'yes'
+  (value) => value === 1 || value === true || ['yes', '1', 'true'].includes(String(value).toLowerCase())
