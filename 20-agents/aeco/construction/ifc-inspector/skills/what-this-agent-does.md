@@ -1,3 +1,8 @@
+---
+name: what-this-agent-does
+description: This skill should be used when deciding whether ifc-inspector is the right tool for an IFC task — its data-only scope vs the web-ifc renderer and the solibri rule engine, when to reach for each, how the WASM is bundled, what "validation" means here, and the performance envelope on large files. Encodes the agent's boundaries.
+---
+
 # What this agent does (and doesn't)
 
 The `ifc-inspector` agent is the **data-side** companion to the
@@ -41,17 +46,20 @@ subsequent calls reuse the loaded module within a single CLI process.
 
 ## What "validation" means here
 
-`validate.schema` runs the IFC against its declared schema using
-buildingSMART's published EXPRESS schemas (IFC2x3-TC1, IFC4-Add2-TC1,
-IFC4X3-ADD2). It catches:
+`validate.schema` runs the IFC through the `web-ifc` parser — a parser,
+not a full EXPRESS schema engine — so it catches the structural problems
+a parser can see:
 
-- missing required attributes
-- type mismatches (e.g. a Real where an Integer is required)
-- orphan references (e.g. IfcRelAggregates pointing at deleted GUIDs)
-- circular containment (rare but happens)
+- well-formedness (the STEP syntax parses)
+- schema membership (entity types exist in the declared schema)
+- missing required direct attributes (e.g. an IfcWall with no GlobalId)
+- reference integrity (orphan #refs, circular containment)
+- basic type conformance
 
 It does **not** catch:
 
+- full EXPRESS WHERE-rule / cardinality constraints (needs IfcOpenShell
+  `validate` or the buildingSMART validation service — not web-ifc)
 - BEP compliance (Solibri's job)
 - "the wall thickness is wrong" (no rule)
 - "this IfcSpace has no name" (Pset-level — use `psets.find-missing`)
@@ -65,3 +73,10 @@ It does **not** catch:
 
 For routine work on large federations, prefer running this overnight
 via v0.19's `schedule:` primitive.
+
+## See also
+
+- [ifc-guid-and-class-model](./ifc-guid-and-class-model.md) — GlobalId encoding + the class/subtype model the query verbs rely on
+- [ifc-psets-and-cobie](./ifc-psets-and-cobie.md) — property sets, instance vs type, COBie naming
+- [ifc-georeferencing](./ifc-georeferencing.md) — the LoGeoRef levels behind `georef.check`
+- [ifc-schemas-and-validation](./ifc-schemas-and-validation.md) — what schema validation does and doesn't prove

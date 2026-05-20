@@ -1,5 +1,5 @@
 agent:        bcf-file
-version:      0.1.0
+version:      0.2.0
 display-name: BCF (file format)
 description: |
   Pure file-format agent for BCF-XML 2.1 / 3.0 — read, write, merge,
@@ -162,6 +162,9 @@ commands:
         path:        string
         kept-count:  number
         dropped-count: number
+        warnings:
+          type: array
+          items: string  # e.g. count of topics with unrecognised priority coerced to 'normal'
 
   merge:
     lifecycle: single
@@ -220,8 +223,10 @@ commands:
     category: curated
     mode: write
     description: |
-      Convert between BCF 2.1 ↔ BCF 3.0. 2.1→3.0 promotes labels to
-      `Stage`; 3.0→2.1 drops 3.0-only fields (e.g. extension schemas).
+      Convert between BCF 2.1 ↔ BCF 3.0. The difference is mostly
+      structural (3.0 wraps repeated elements in containers and nests
+      comments/viewpoints inside the topic); the only topic datum dropped
+      on 3.0→2.1 is the 3.0-only `ServerAssignedId`, reported in warnings.
     inputs:
       input-path:  string
       output-path: string
@@ -253,7 +258,9 @@ commands:
         type: object
         description: |
           Map CSV column names to BCF fields (title, description,
-          status, priority, assigned-to). Required.
+          status, priority, assigned-to, topic-type, labels). The
+          mapping is required and must include `title`; other fields
+          are optional and omitted when unmapped.
     outputs:
       type: single
       schema:
@@ -263,3 +270,6 @@ commands:
 skills:
   - bcf-format-anatomy.md
   - bcf-21-vs-30.md
+  - bcf-status-and-priority-vocabularies.md
+  - bcf-round-trip-interop.md
+  - bcf-viewpoints-and-snapshots.md
