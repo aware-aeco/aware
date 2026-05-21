@@ -97,7 +97,7 @@ pub fn build_from_url_or_path(
     // An OpenAPI agent is an HTTP API → `rest` transport (with the spec's base
     // URL), plus declarative `auth` derived from `securitySchemes` (#106).
     let rest = Some(RestBlock {
-        base: server_base(&spec),
+        base: server_base(&spec, input),
         auth: build_auth(&spec, &id),
     });
 
@@ -115,14 +115,41 @@ pub fn build_from_url_or_path(
     })
 }
 
-/// The first `servers[].url` — the REST base URL commands are resolved against.
-fn server_base(spec: &Value) -> Option<String> {
-    spec.get("servers")?
-        .as_array()?
-        .first()?
-        .get("url")?
-        .as_str()
-        .map(|s| s.to_string())
+/// The absolute REST base URL operation commands resolve against. Prefers the
+/// first `servers[].url` when absolute; if it's relative or absent, derives the
+/// origin from the spec's input URL (so a spec fetched from `https://api.x/...`
+/// still yields a usable base). `None` only when neither is available (e.g. a
+/// local-file spec with no absolute server).
+fn server_base(spec: &Value, input: &str) -> Option<String> {
+    let declared = spec
+        .get("servers")
+        .and_then(|v| v.as_array())
+        .and_then(|a| a.first())
+        .and_then(|s| s.get("url"))
+        .and_then(|v| v.as_str());
+    match declared {
+        Some(u) if u.starts_with("http://") || u.starts_with("https://") => Some(u.to_string()),
+        Some(rel) => input_origin(input).map(|o| {
+            format!(
+                "{}/{}",
+                o.trim_end_matches('/'),
+                rel.trim_start_matches('/')
+            )
+        }),
+        None => input_origin(input),
+    }
+}
+
+/// The scheme + authority of an http(s) URL (`https://host:port`), or `None`
+/// when `input` isn't an http(s) URL (e.g. a local file path).
+fn input_origin(input: &str) -> Option<String> {
+    let scheme_len = ["https://", "http://"]
+        .iter()
+        .find_map(|p| input.starts_with(p).then_some(p.len()))?;
+    let authority_len = input[scheme_len..]
+        .find('/')
+        .unwrap_or(input.len() - scheme_len);
+    Some(input[..scheme_len + authority_len].to_string())
 }
 
 /// Append every scheme name referenced by a `security` requirement array to
@@ -791,6 +818,31 @@ paths:
         let loaded = crate::manifest::loader::load_agent(&root.join("manifest.yaml")).unwrap();
         let cmd = loaded.commands.get("delete-pet").unwrap();
         assert_eq!(cmd.mode, Some(crate::manifest::agent::Mode::Write));
+    }
+
+    #[test]
+    fn server_base_derives_from_input_when_servers_relative_or_absent() {
+        let url_input = "https://api.example.com/v3/openapi.json";
+        // No `servers` → the input URL's origin.
+        let no_servers = serde_json::json!({});
+        assert_eq!(
+            server_base(&no_servers, url_input).as_deref(),
+            Some("https://api.example.com")
+        );
+        // Relative server → origin + relative.
+        let rel = serde_json::json!({ "servers": [ { "url": "/api/v3" } ] });
+        assert_eq!(
+            server_base(&rel, url_input).as_deref(),
+            Some("https://api.example.com/api/v3")
+        );
+        // Absolute server → used verbatim.
+        let abs = serde_json::json!({ "servers": [ { "url": "https://cdn.example.com/base" } ] });
+        assert_eq!(
+            server_base(&abs, url_input).as_deref(),
+            Some("https://cdn.example.com/base")
+        );
+        // Local-file input with no absolute server → no base.
+        assert_eq!(server_base(&no_servers, "/tmp/spec.json"), None);
     }
 
     #[test]

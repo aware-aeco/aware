@@ -270,14 +270,23 @@ impl AgentInvoker for RestInvoker {
             )
         };
         // Inject declarative auth (#106): if the agent's manifest carries an
-        // `auth:` block, load its secret and add the credential — bearer/oauth2
-        // as `Authorization: Bearer …`, api-key as a header or query param. Only
-        // fills when the caller hasn't already set that header/param, so an
-        // explicit `{{ secrets.x }}` in the app still wins.
-        if let Some(auth) = load_agent_auth(&self.agents_dir, agent)
-            && let Some(secret) = load_secret_value(&self.agents_dir, &auth.secret)
-        {
-            inject_auth(&auth, &secret, &mut headers, &mut query);
+        // `auth:` block, load its credential and add it — bearer/oauth2 as
+        // `Authorization: Bearer …`, api-key as a header / query / cookie. Only
+        // fills when the caller hasn't already set that slot, so an explicit
+        // `{{ secrets.x }}` in the app still wins. A declared-but-unprovisioned
+        // credential is a fail-fast error (not a silent unauthenticated call).
+        if let Some(auth) = load_agent_auth(&self.agents_dir, agent) {
+            let cred = load_secret_value(&self.agents_dir, &auth.secret)
+                .as_ref()
+                .and_then(secret_as_str);
+            let Some(cred) = cred else {
+                return Err(AwareError::Validation(format!(
+                    "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
+                     provision it (`~/.aware/credentials/{}.json` or `aware connect`)",
+                    auth.secret, auth.secret
+                )));
+            };
+            inject_auth(&auth, &cred, &mut headers, &mut query);
         }
         let body = args.get("body").cloned();
         let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
@@ -453,15 +462,30 @@ fn build_operation_request(
                 .and_then(|s| s.get("in"))
                 .and_then(|v| v.as_str())
                 .unwrap_or("query");
-            let Some(sval) = value_to_str(val) else {
-                continue;
+            // Expand the value into one or more string pieces — an array yields
+            // multiple (a scalar, one). Empty (object/unstringifiable) is skipped.
+            let pieces: Vec<String> = match val {
+                Value::Array(items) => items.iter().filter_map(value_to_str).collect(),
+                other => value_to_str(other).into_iter().collect(),
             };
+            if pieces.is_empty() {
+                continue;
+            }
             match loc {
-                "path" => path = path.replace(&format!("{{{name}}}"), &percent_encode_path(&sval)),
-                "header" => headers.push((name.clone(), sval)),
-                "cookie" => cookies.push(format!("{name}={sval}")),
+                // style=simple (default): comma-join, then encode the segment.
+                "path" => {
+                    let joined = pieces.join(",");
+                    path = path.replace(&format!("{{{name}}}"), &percent_encode_path(&joined));
+                }
+                "header" => headers.push((name.clone(), pieces.join(","))),
+                "cookie" => cookies.push(format!("{name}={}", pieces.join(","))),
                 "body" => {}
-                _ => query.push((name.clone(), sval)),
+                // style=form, explode=true (query default): repeat per item.
+                _ => {
+                    for piece in pieces {
+                        query.push((name.clone(), piece));
+                    }
+                }
             }
         }
     }
@@ -514,17 +538,14 @@ fn secret_as_str(secret: &Value) -> Option<String> {
 }
 
 /// Inject the declared credential into the request: bearer/oauth2 as an
-/// `Authorization: Bearer` header, api-key as a header or query param. A slot
+/// `Authorization: Bearer` header, api-key as a header / query / cookie. A slot
 /// the caller already populated is left untouched (explicit input wins).
 fn inject_auth(
     auth: &crate::manifest::agent::AuthScheme,
-    secret: &Value,
+    cred: &str,
     headers: &mut Vec<(String, String)>,
     query: &mut Vec<(String, String)>,
 ) {
-    let Some(cred) = secret_as_str(secret) else {
-        return;
-    };
     match auth.scheme.as_str() {
         "bearer" | "oauth2"
             if !headers
@@ -538,7 +559,7 @@ fn inject_auth(
             match auth.location.as_deref() {
                 Some("query") => {
                     if !query.iter().any(|(k, _)| k == name) {
-                        query.push((name.to_string(), cred));
+                        query.push((name.to_string(), cred.to_string()));
                     }
                 }
                 // apiKey `in: cookie` → `Cookie: name=value`. Append to an
@@ -564,7 +585,7 @@ fn inject_auth(
                 // header (default).
                 _ => {
                     if !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
-                        headers.push((name.to_string(), cred));
+                        headers.push((name.to_string(), cred.to_string()));
                     }
                 }
             }
@@ -1125,7 +1146,7 @@ commands:
         };
         let mut h = Vec::new();
         let mut q = Vec::new();
-        inject_auth(&bearer, &serde_json::json!({"token":"tok"}), &mut h, &mut q);
+        inject_auth(&bearer, "tok", &mut h, &mut q);
         assert_eq!(h, vec![("Authorization".into(), "Bearer tok".into())]);
 
         let apikey_query = AuthScheme {
@@ -1136,18 +1157,13 @@ commands:
         };
         let mut h2 = Vec::new();
         let mut q2 = Vec::new();
-        inject_auth(&apikey_query, &serde_json::json!("raw"), &mut h2, &mut q2);
+        inject_auth(&apikey_query, "raw", &mut h2, &mut q2);
         assert_eq!(q2, vec![("apikey".into(), "raw".into())]);
 
         // An explicit Authorization the caller set is never overridden.
         let mut h3 = vec![("Authorization".to_string(), "Bearer explicit".to_string())];
         let mut q3 = Vec::new();
-        inject_auth(
-            &bearer,
-            &serde_json::json!({"token":"other"}),
-            &mut h3,
-            &mut q3,
-        );
+        inject_auth(&bearer, "other", &mut h3, &mut q3);
         assert_eq!(h3[0].1, "Bearer explicit");
 
         // apiKey `in: cookie` → `Cookie: name=value` header.
@@ -1159,12 +1175,7 @@ commands:
         };
         let mut h4 = Vec::new();
         let mut q4 = Vec::new();
-        inject_auth(
-            &apikey_cookie,
-            &serde_json::json!("sid-9"),
-            &mut h4,
-            &mut q4,
-        );
+        inject_auth(&apikey_cookie, "sid-9", &mut h4, &mut q4);
         assert_eq!(h4, vec![("Cookie".into(), "session=sid-9".into())]);
     }
 
@@ -1458,5 +1469,94 @@ commands:
         let req = rx.recv().unwrap();
         assert!(req.contains("sid=abc"), "cookie param missing: {req}");
         assert!(req.contains("token=tok-9"), "auth cookie missing: {req}");
+    }
+
+    #[tokio::test]
+    async fn declared_auth_with_missing_credential_errors_clearly() {
+        // An agent that declares `auth:` but whose credential isn't provisioned
+        // must fail fast with an actionable error, not send an unauthenticated
+        // request and get a remote 401 (#106).
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("secured");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: secured
+version: 0.1.0
+description: x
+stateful: false
+license: MIT
+transport:
+  rest: {}
+auth:
+  scheme: bearer
+  secret: secured
+requires:
+  secrets:
+    - secured
+commands:
+  get:
+    lifecycle: single
+    description: GET
+"#,
+        )
+        .unwrap();
+        // Deliberately no credentials/secured.json.
+        let inv = RestInvoker { agents_dir: agents };
+        let err = inv
+            .invoke_single(
+                "secured",
+                "get",
+                serde_json::json!({ "url": "http://127.0.0.1:1/x" }),
+            )
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        assert!(
+            format!("{err}").contains("credential"),
+            "error should name the missing credential: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn operation_array_query_param_repeats() {
+        // An `in: query` array parameter expands to repeated entries
+        // (form/explode default), e.g. `tags=a&tags=b` (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  list:
+    lifecycle: single
+    description: "GET /pets"
+    method: GET
+    path: /pets
+    inputs:
+      tags:
+        type: array<string>
+        in: query
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "list", serde_json::json!({ "tags": ["a", "b"] }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(req.contains("tags=a"), "first array item missing: {req}");
+        assert!(req.contains("tags=b"), "second array item missing: {req}");
     }
 }
