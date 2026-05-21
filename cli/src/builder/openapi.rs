@@ -181,7 +181,9 @@ fn build_inputs_yaml(spec: &Value, op: &Value) -> String {
                 }
             );
             out.push_str(&format!(
-                "{name}:\n  type: {ty}\n  description: {}\n",
+                "{}:\n  type: {}\n  description: {}\n",
+                yaml_quote(name),
+                yaml_quote(&ty),
                 yaml_quote(&note)
             ));
         }
@@ -194,13 +196,17 @@ fn build_inputs_yaml(spec: &Value, op: &Value) -> String {
         let label = ref_name.unwrap_or_else(|| "request body".into());
         out.push_str(&format!(
             "body:\n  type: {}\n  description: {}\n",
-            schema_type_label(resolved),
+            yaml_quote(&schema_type_label(resolved)),
             yaml_quote(&format!("{label} (request body)"))
         ));
         if let Some(props) = resolved.get("properties").and_then(|v| v.as_object()) {
             out.push_str("  schema:\n");
             for (pname, pschema) in props {
-                out.push_str(&format!("    {pname}: {}\n", schema_type_label(pschema)));
+                out.push_str(&format!(
+                    "    {}: {}\n",
+                    yaml_quote(pname),
+                    yaml_quote(&schema_type_label(pschema))
+                ));
             }
         }
     }
@@ -230,10 +236,17 @@ fn build_outputs_yaml(spec: &Value, op: &Value) -> String {
     if let Some(props) = resolved.get("properties").and_then(|v| v.as_object()) {
         out.push_str("schema:\n");
         for (pname, pschema) in props {
-            out.push_str(&format!("  {pname}: {}\n", schema_type_label(pschema)));
+            out.push_str(&format!(
+                "  {}: {}\n",
+                yaml_quote(pname),
+                yaml_quote(&schema_type_label(pschema))
+            ));
         }
     } else {
-        out.push_str(&format!("schema: {}\n", schema_type_label(resolved)));
+        out.push_str(&format!(
+            "schema: {}\n",
+            yaml_quote(&schema_type_label(resolved))
+        ));
     }
     out
 }
@@ -434,6 +447,40 @@ paths:
             getcmd.inputs
         );
         assert!(getcmd.outputs.is_some(), "outputs did not round-trip");
+    }
+
+    #[test]
+    fn quotes_colon_bearing_names_so_manifest_stays_valid() {
+        // OpenAPI parameter/property names are arbitrary strings — a colon must
+        // not corrupt the generated YAML (regression guard for the writer).
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "weird", "version": "1.0.0" },
+            "components": { "schemas": { "Odd": { "type": "object", "properties": {
+                "a:b": { "type": "string" }
+            } } } },
+            "paths": { "/x": { "post": {
+                "operationId": "doX",
+                "parameters": [ { "name": "q:p", "in": "query", "schema": { "type": "string" } } ],
+                "requestBody": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Odd" } } } },
+                "responses": { "200": { "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Odd" } } } } }
+            } } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("weird.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), None).unwrap();
+
+        // Must write + reload without YAML corruption.
+        let out = tempfile::tempdir().unwrap();
+        let root = crate::builder::write_agent(&agent, out.path()).unwrap();
+        let loaded = crate::manifest::loader::load_agent(&root.join("manifest.yaml")).unwrap();
+        let cmd = loaded.commands.get("do-x").unwrap();
+        assert!(
+            cmd.inputs.get("q:p").is_some(),
+            "colon-bearing param key corrupted: {:?}",
+            cmd.inputs
+        );
     }
 
     #[test]
