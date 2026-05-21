@@ -76,6 +76,10 @@ pub struct GeneratedCommand {
     /// `None` for SDK/CLI-derived commands.
     pub method: Option<String>,
     pub path: Option<String>,
+    /// Explicit read/write mode (e.g. `write` for mutating HTTP methods), so the
+    /// safety contract applies regardless of the command name. `None` lets the
+    /// loader infer mode from the name convention.
+    pub mode: Option<String>,
 }
 
 #[derive(Debug)]
@@ -208,6 +212,9 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
                 "    description: {}\n",
                 quote_yaml_scalar(&desc_one_line)
             ));
+            if let Some(mode) = &cmd.mode {
+                out.push_str(&format!("    mode: {mode}\n"));
+            }
             if let Some(method) = &cmd.method {
                 out.push_str(&format!("    method: {method}\n"));
             }

@@ -75,6 +75,11 @@ pub fn build_from_url_or_path(
                             outputs_yaml: build_outputs_yaml(&spec, op),
                             method: Some(method.to_uppercase()),
                             path: Some(path.clone()),
+                            // Mutating HTTP methods are write-mode so the safety
+                            // contract applies (operationIds like `add-pet` don't
+                            // match the name-suffix write convention). #106.
+                            mode: matches!(method.as_str(), "post" | "put" | "patch" | "delete")
+                                .then(|| "write".to_string()),
                         },
                     );
                 }
@@ -260,6 +265,18 @@ fn resolve_ref<'a>(spec: &'a Value, schema: &'a Value) -> (&'a Value, Option<Str
     (schema, None)
 }
 
+/// Resolve a parameter `$ref` (`#/components/parameters/X`) against the spec;
+/// returns the input unchanged when it isn't a reference.
+fn resolve_param<'a>(spec: &'a Value, p: &'a Value) -> &'a Value {
+    if let Some(r) = p.get("$ref").and_then(|v| v.as_str())
+        && let Some(name) = r.strip_prefix("#/components/parameters/")
+        && let Some(resolved) = spec.pointer(&format!("/components/parameters/{name}"))
+    {
+        return resolved;
+    }
+    p
+}
+
 /// Pick a request/response body schema from a `content` map, preferring
 /// `application/json`, else the first media type present.
 fn body_schema(content: &Value) -> Option<&Value> {
@@ -284,6 +301,8 @@ fn build_inputs_yaml(spec: &Value, op: &Value, path_params: Option<&Value>) -> S
             continue;
         };
         for p in params {
+            // A parameter may be a `$ref` into `components/parameters`.
+            let p = resolve_param(spec, p);
             let Some(name) = p.get("name").and_then(|v| v.as_str()) else {
                 continue;
             };
@@ -728,6 +747,50 @@ paths:
             .expect("op-level security must yield an auth block");
         assert_eq!(auth.scheme, "api-key");
         assert_eq!(auth.name.as_deref(), Some("X-Key"));
+    }
+
+    #[test]
+    fn mutating_method_is_write_mode_and_param_refs_resolve() {
+        // A `$ref` path-item parameter resolves into the inputs, and a mutating
+        // method (DELETE) is emitted as `mode: write` so the safety contract
+        // applies (Codex #106).
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "shop", "version": "1.0.0" },
+            "components": { "parameters": {
+                "PetId": { "name": "petId", "in": "path", "required": true, "schema": { "type": "integer" } }
+            } },
+            "paths": { "/pets/{petId}": {
+                "parameters": [ { "$ref": "#/components/parameters/PetId" } ],
+                "delete": { "operationId": "deletePet", "responses": {} }
+            } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("shop.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("shop")).unwrap();
+
+        let del = &agent.commands["delete-pet"];
+        // `$ref` path param resolved into the inputs.
+        assert!(
+            del.inputs_yaml.contains("petId:"),
+            "in: {}",
+            del.inputs_yaml
+        );
+        assert!(
+            del.inputs_yaml.contains("in: path"),
+            "in: {}",
+            del.inputs_yaml
+        );
+        // DELETE → write mode.
+        assert_eq!(del.mode.as_deref(), Some("write"));
+
+        // Round-trip: the loader sees the command as write-mode.
+        let out = tempfile::tempdir().unwrap();
+        let root = crate::builder::write_agent(&agent, out.path()).unwrap();
+        let loaded = crate::manifest::loader::load_agent(&root.join("manifest.yaml")).unwrap();
+        let cmd = loaded.commands.get("delete-pet").unwrap();
+        assert_eq!(cmd.mode, Some(crate::manifest::agent::Mode::Write));
     }
 
     #[test]
