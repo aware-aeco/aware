@@ -44,7 +44,7 @@ commands are composed from these:
 |---|---|---|
 | `resolve_window(ref) -> handle` | `FindWindow` / enumerate top-level + substring match, or parse `0x` HWND | all |
 | `enumerate(handle) -> control[]` | `EnumChildWindows` + per-control class/text/rect | enumerate-controls, walk-tabs |
-| `tabs(handle) -> tab[]` + `select_tab(i)` | `TCM_GETITEMW` cross-process read; `TCM_SETCURSEL` + settle | walk-tabs |
+| `tabs(handle) -> tab[]` + `select_tab(i)` | `TCM_GETITEMW` cross-process read; `PSM_SETCURSEL` / synthesized click (NOT `TCM_SETCURSEL` alone — see win32 skill) + settle | walk-tabs |
 | `capture(handle, rect) -> png` | `PrintWindow` PW_CLIENTONLY \| PW_RENDERFULLCONTENT | capture-window, walk-tabs |
 
 `map-fields` and `build-overlay` are **adapter-independent** — they compose

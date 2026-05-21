@@ -16,10 +16,14 @@ matches each field's visible value back to the attribute that produced it. Works
 for any app that round-trips settings through a dialog — no hand-maintained field
 list. See [sentinel-field-mapping](../skills/sentinel-field-mapping.md).
 
-> **On "mode: read".** map-fields writes sentinels into a *disposable copy* of
-> the preset and never touches the user's original or the deliverable model, so
-> it carries no safety-contract obligation. The only persistent artifact is the
-> returned mapping.
+> **On "mode: read".** map-fields never modifies the user's preset file or the
+> deliverable model — it sentinelizes a *disposable copy*. It does load those
+> sentinels into the **live dialog**, so it MUST restore the dialog to its
+> original state before returning (re-load the original preset, or close without
+> applying) — leave the host exactly as found. With that leave-as-found guarantee
+> it carries no safety-contract obligation; the only persistent artifact is the
+> returned mapping. A sidecar that cannot guarantee the restore must instead run
+> this command write-mode and safety-gated.
 
 ## Inputs
 
@@ -73,8 +77,11 @@ runs are safe and return the same mapping.
 ## Implementation notes for sidecar authors
 
 Round-trip through the app's **own** preset loader (don't poke fields directly —
-that's what proves the binding). `walk-tabs` first so fields on every tab are
-laid out, or attributes on unvisited tabs land in `unmatched`. Numeric stride of
+that's what proves the binding). **Restore the dialog before returning** — re-load
+the original preset (or close without applying) so the open dialog is left exactly
+as found; the sentinels are loaded into the live UI and must not be left there for
+a user/automation to commit. `walk-tabs` first so fields on every tab are laid
+out, or attributes on unvisited tabs land in `unmatched`. Numeric stride of
 `11.111111` keeps adjacent attributes >10 apart so ±0.5 matching never aliases;
 widen it if you see collisions. Report low-confidence/ambiguous matches rather
 than guessing.

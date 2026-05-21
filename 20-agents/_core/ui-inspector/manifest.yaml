@@ -35,6 +35,7 @@ keywords: [aware, ui, inspector, win32, uiautomation, accessibility, dialog, int
 
 requires:
   filesystem:
+    - read: any         # caller-supplied preset (map-fields), screenshots + controls JSON (build-overlay)
     - write: any        # screenshots + overlay HTML written to the caller's chosen path
   software:
     - windows@10+       # the only implemented adapter is Win32; other OSes need their own adapter

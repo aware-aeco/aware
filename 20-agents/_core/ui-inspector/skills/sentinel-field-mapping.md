@@ -68,8 +68,13 @@ Emit `field-id -> attribute` with a `confidence` 0..1:
   that's what proves the field truly *is* bound to the attribute.
 - **Walk all tabs first** (`walk-tabs`): an attribute on an unvisited tab reads
   as `unmatched` purely because its field was never laid out.
-- **Restore nothing in the live model** — the sentinel copy is disposable; the
-  user's real preset was never modified, so there is nothing to undo. This is why
-  `map-fields` is read-mode under the safety contract despite "writing" sentinels.
+- **Restore the live dialog before returning** — the sentinel *file* is a
+  disposable copy (the user's real preset is never modified), but loading it
+  changes the **open dialog's** visible values. Re-load the original preset (or
+  close the dialog without applying) so you leave the host exactly as found —
+  otherwise a later OK/apply by the user or downstream automation would commit
+  sentinel values. This leave-as-found guarantee is what keeps `map-fields`
+  read-mode despite transiently "writing" sentinels; a sidecar that can't
+  guarantee it must run the command write-mode + safety-gated.
 - **Collisions** mean your stride is too small or two attributes share a field
   (alias) — widen the stride or report both candidates rather than guessing.
