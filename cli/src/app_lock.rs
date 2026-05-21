@@ -122,12 +122,14 @@ pub fn compile(
 
     // Flatten the node tree: top-level nodes plus the bodies of `do:`-bearing
     // primitives (for-each / sweep), so inner nodes are pinned, compiled, and
-    // ref-checked rather than silently ignored (#117 finding #3).
-    let flat = flatten_nodes(&app.nodes);
+    // ref-checked rather than silently ignored (#117 finding #3). Body nodes
+    // carry a scoped id (`parent.child`) so the flat lockfile stays unambiguous.
+    let mut flat: Vec<FlatNode> = Vec::new();
+    flatten_nodes(&app.nodes, None, &mut flat);
 
     // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
-    for &node in &flat {
+    for (node, _, _) in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
@@ -135,10 +137,13 @@ pub fn compile(
         }
     }
 
-    // Compile each node (flattened — `do:` bodies included).
+    // Compile each node (flattened — `do:` bodies included), labelling body
+    // nodes with their scoped id in the lockfile.
     let mut nodes: Vec<CompiledNode> = Vec::new();
-    for &node in &flat {
-        nodes.push(compile_node(node, agents)?);
+    for (node, scoped_id, _) in &flat {
+        let mut cn = compile_node(node, agents)?;
+        cn.id = scoped_id.clone();
+        nodes.push(cn);
     }
 
     // Second pass — compile-time reference checking. Build node-id → known
@@ -150,28 +155,26 @@ pub fn compile(
     // fixable compile-time signal — the deterministic plan validation that
     // makes decalog #9 usable in practice.
     //
-    // Only TOP-LEVEL node ids are globally addressable: a `do:`-body-local id
-    // is scoped to its parent (per app-spec, for-each outputs aggregate under
-    // the parent id), so it must not enter the global field set — otherwise an
-    // outer `{{ body_local.field }}` ref would be silently blessed and reused
-    // body ids would collide. Body nodes still get *their* refs checked against
-    // this top-level set below (so a `do:` ref to an outer node is validated);
-    // sibling-within-body resolution is a future scoped-checking enhancement.
-    // Identify top-level nodes by IDENTITY, not id string: `flat`'s top-level
-    // entries borrow directly from `app.nodes`, and `nodes` is index-parallel
-    // with `flat`. Matching by id string would let a `do:` body that reuses a
-    // top-level id overwrite the real top-level schema (body ids are scoped and
-    // reusable) — pointer identity can't be fooled that way.
+    // Only TOP-LEVEL node ids are globally addressable: a `do:`-body-local id is
+    // scoped to its parent (per app-spec, for-each outputs aggregate under the
+    // parent id), so the field set is built from top-level nodes alone — a body
+    // node reusing a top-level id can't overwrite the real schema, and an outer
+    // `{{ body_local.field }}` ref isn't silently blessed. Body nodes still get
+    // *their* refs checked against this top-level set below (so a `do:` ref to an
+    // outer node is validated); sibling-within-body resolution is a future
+    // scoped-checking enhancement. `flat`/`nodes` are index-parallel; the third
+    // tuple element flags top-level nodes.
     let mut field_sets: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
-    for (flat_node, compiled) in flat.iter().zip(nodes.iter()) {
-        if app.nodes.iter().any(|top| std::ptr::eq(top, *flat_node)) {
+    for ((_, _, is_top), compiled) in flat.iter().zip(nodes.iter()) {
+        if *is_top {
             field_sets.insert(
                 compiled.id.clone(),
                 output_field_set(compiled.output_schema.as_ref()),
             );
         }
     }
-    for (i, &node) in flat.iter().enumerate() {
+    for (i, entry) in flat.iter().enumerate() {
+        let node = entry.0;
         let mut refs: Vec<(String, String)> = Vec::new();
         collect_refs(&node.config, &mut refs);
         collect_refs(&node.inputs, &mut refs);
@@ -226,18 +229,28 @@ pub fn compile(
     })
 }
 
-/// Depth-first flatten of the node tree: each node followed by the nodes in its
-/// `do:` body (for-each / sweep / schedule-scoped). Returns borrows in a stable
-/// order so the compiled-node vec stays index-parallel with this list.
-fn flatten_nodes(nodes: &[crate::manifest::app::Node]) -> Vec<&crate::manifest::app::Node> {
-    let mut out = Vec::new();
+/// One entry per node in a depth-first flatten of the node tree: the node, its
+/// **scoped lockfile id** (parent ids joined by `.`, so a `do:`-body node
+/// becomes `parent.child`), and whether it is a genuine top-level node. Body
+/// ids are scoped + reusable, so the scoped id keeps the flat lockfile node
+/// list unambiguous and lets ref-checking treat only top-level ids as global.
+type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool);
+
+fn flatten_nodes<'a>(
+    nodes: &'a [crate::manifest::app::Node],
+    prefix: Option<&str>,
+    out: &mut Vec<FlatNode<'a>>,
+) {
     for n in nodes {
-        out.push(n);
+        let scoped_id = match prefix {
+            Some(p) => format!("{p}.{}", n.id),
+            None => n.id.clone(),
+        };
+        out.push((n, scoped_id.clone(), prefix.is_none()));
         if let Some(body) = &n.do_ {
-            out.extend(flatten_nodes(body));
+            flatten_nodes(body, Some(&scoped_id), out);
         }
     }
-    out
 }
 
 fn compile_node(
@@ -683,12 +696,12 @@ requires: []
             "inner do: agent not pinned: {:?}",
             lock.agent_pins
         );
-        // Inner node is compiled into the lock.
+        // Inner node is compiled into the lock under its scoped id.
         let upsert = lock
             .nodes
             .iter()
-            .find(|n| n.id == "upsert")
-            .expect("inner do: node 'upsert' missing from lock");
+            .find(|n| n.id == "sync.upsert")
+            .expect("inner do: node 'sync.upsert' missing from lock");
         // Ref-check descended into the do: body (bad ref flagged, good one not).
         assert!(
             upsert.notes.iter().any(|n| n.contains("src.nope")),
