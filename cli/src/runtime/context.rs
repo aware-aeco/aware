@@ -37,6 +37,31 @@ pub fn load_secret(ctx: &mut RenderContext, creds_dir: &Path, id: &str) -> Resul
     Ok(())
 }
 
+/// Build the ambient `run` context (`run.id`, `run.date`, `run.operator`) that is
+/// injected into every node's template environment for a single run, so the
+/// documented time-dependent expressions resolve (#127).
+///
+/// - `run.id`   — the run identifier (the same UUID used for the provenance log).
+/// - `run.date` — the UTC calendar date as `YYYY-MM-DD`, the form the specs and
+///   example apps embed in file names and titles (`monday-audit-{{ run.date }}`).
+/// - `run.operator` — the human running the workflow, from `AWARE_OPERATOR`, else
+///   the OS user (`USER` / `USERNAME`), else empty.
+///
+/// Populated identically for live, dry-run, and simulate runs: the goal is only
+/// that `{{ run.* }}` renders, which a real value satisfies as well as a stub.
+pub fn run_context(run_id: &str) -> serde_json::Map<String, serde_json::Value> {
+    let date = chrono::Utc::now().format("%Y-%m-%d").to_string();
+    let operator = std::env::var("AWARE_OPERATOR")
+        .or_else(|_| std::env::var("USER"))
+        .or_else(|_| std::env::var("USERNAME"))
+        .unwrap_or_default();
+    let mut m = serde_json::Map::new();
+    m.insert("id".into(), serde_json::Value::String(run_id.to_string()));
+    m.insert("date".into(), serde_json::Value::String(date));
+    m.insert("operator".into(), serde_json::Value::String(operator));
+    m
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -57,5 +82,17 @@ mod tests {
         let mut ctx = RuntimeContext::default();
         load_secret(&mut ctx, tmp.path(), "nope").unwrap();
         assert!(ctx.secrets.is_empty());
+    }
+
+    #[test]
+    fn run_context_populates_id_date_operator() {
+        let m = run_context("run-123");
+        assert_eq!(m["id"], serde_json::json!("run-123"));
+        let date = m["date"].as_str().unwrap();
+        assert_eq!(date.len(), 10, "run.date should be YYYY-MM-DD: {date:?}");
+        assert_eq!(date.matches('-').count(), 2, "run.date format: {date:?}");
+        // `operator` is always present (possibly empty) so `{{ run.operator }}` renders.
+        assert!(m.contains_key("operator"));
+        assert!(m["operator"].is_string());
     }
 }

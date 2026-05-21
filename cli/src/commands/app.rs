@@ -149,6 +149,9 @@ async fn run(
 
     let instance = instance.unwrap_or("default").to_string();
     let run_id = run_id_now();
+    // Ambient `{{ run.* }}` context (run.id / run.date / run.operator), shared by
+    // every node so they render the same values within one run (#127).
+    let run_ctx = crate::runtime::context::run_context(&run_id);
 
     // Load the app.
     let app_dir = ctx.paths.apps_dir().join(app_id);
@@ -222,6 +225,7 @@ async fn run(
 
         let mut rt_ctx = RuntimeContext {
             inputs: serde_json::Value::Object(inputs.clone()),
+            run: run_ctx.clone(),
             ..Default::default()
         };
         let creds_dir = ctx.paths.credentials_dir();
@@ -293,6 +297,7 @@ async fn run(
 
     let mut rt_ctx = RuntimeContext {
         inputs: serde_json::Value::Object(inputs),
+        run: run_ctx,
         ..Default::default()
     };
 

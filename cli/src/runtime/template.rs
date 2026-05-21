@@ -23,6 +23,12 @@ pub struct RenderContext {
     pub secrets: Map<String, serde_json::Value>,
     /// App-level config kv.
     pub config: Map<String, serde_json::Value>,
+    /// Ambient per-run context: `run.id`, `run.date`, `run.operator`. Populated
+    /// once at run start (see `context::run_context`) so every node renders the
+    /// same values. Always inserted as an object — even when empty — so a
+    /// `{{ run.* }}` ref degrades to empty rather than erroring on attribute
+    /// access against an undefined `run` (#127).
+    pub run: Map<String, serde_json::Value>,
 }
 
 impl RenderContext {
@@ -228,6 +234,10 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
         "config".into(),
         serde_json::Value::Object(ctx.config.clone()),
     );
+    // Ambient run context. Always an object (possibly empty) so a `{{ run.date }}`
+    // ref resolves attribute access against a defined value — an *undefined* `run`
+    // errors under minijinja's default behavior, which is the #127 bug.
+    top.insert("run".into(), serde_json::Value::Object(ctx.run.clone()));
     // `upstream` object exposes raw kebab keys via bracket syntax:
     //   {{ upstream["tekla-watch"].mark }}
     // Flat top-level underscore-translated keys allow dot notation:
@@ -290,6 +300,15 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
         "inputs" => ctx.inputs.clone(),
         "config" => serde_json::Value::Object(ctx.config.clone()),
         "secrets" => serde_json::Value::Object(ctx.secrets.clone()),
+        // Ambient run namespace — but an upstream node literally named `run`
+        // takes precedence, mirroring `render()` (where the upstream loop
+        // overwrites the `run` key). This keeps a pre-existing `{{ run.* }}`
+        // node reference resolving to that node instead of being shadowed.
+        "run" => ctx
+            .upstream
+            .get("run")
+            .cloned()
+            .unwrap_or_else(|| serde_json::Value::Object(ctx.run.clone())),
         // Upstream node id — `record_output` stores raw kebab and underscore forms.
         _ => ctx
             .upstream
@@ -361,6 +380,70 @@ mod tests {
             .insert("pdf-inbox".into(), serde_json::json!("/tmp/inbox"));
         let out = render("path={{ config['pdf-inbox'] }}", &ctx).unwrap();
         assert_eq!(out, "path=/tmp/inbox");
+    }
+
+    // ── #127: the documented `{{ run.* }}` namespace renders ────────────────
+
+    #[test]
+    fn substitutes_run_namespace() {
+        let mut ctx = RenderContext::default();
+        ctx.run.insert("id".into(), serde_json::json!("run-abc"));
+        ctx.run
+            .insert("date".into(), serde_json::json!("2026-05-21"));
+        ctx.run
+            .insert("operator".into(), serde_json::json!("p.lisowski"));
+        assert_eq!(
+            render("audit-{{ run.date }}.html", &ctx).unwrap(),
+            "audit-2026-05-21.html"
+        );
+        assert_eq!(render("{{ run.id }}", &ctx).unwrap(), "run-abc");
+        assert_eq!(
+            render("by {{ run.operator }}", &ctx).unwrap(),
+            "by p.lisowski"
+        );
+    }
+
+    #[test]
+    fn run_ref_with_empty_namespace_renders_empty_not_error() {
+        // The #127 failure: an *undefined* `run` makes `{{ run.date }}` error on
+        // attribute access. With `run` always inserted as an object, a missing
+        // sub-key degrades to empty (lenient), exactly like inputs/config/secrets.
+        let ctx = RenderContext::default();
+        let out = render("audit-{{ run.date }}.html", &ctx);
+        assert_eq!(out.unwrap(), "audit-.html");
+    }
+
+    #[test]
+    fn resolve_value_reads_run_namespace() {
+        let mut ctx = RenderContext::default();
+        ctx.run.insert("id".into(), serde_json::json!("run-xyz"));
+        assert_eq!(
+            resolve_value("{{ run.id }}", &ctx),
+            serde_json::json!("run-xyz")
+        );
+    }
+
+    #[test]
+    fn upstream_node_named_run_is_not_shadowed_by_ambient_run() {
+        // Codex P2: a node `id: run` feeding `for-each: {{ run.items }}` must keep
+        // resolving to the node output, not the ambient run namespace (which has
+        // no `items` → Null → loop skipped). An upstream `run` wins over ambient.
+        let mut ctx = ctx_with_upstream("run", serde_json::json!({ "items": [1, 2] }));
+        ctx.run
+            .insert("date".into(), serde_json::json!("2026-05-21"));
+        assert_eq!(
+            resolve_value("{{ run.items }}", &ctx),
+            serde_json::json!([1, 2])
+        );
+        // With no upstream node named `run`, the ambient namespace is used.
+        let ambient_only = RenderContext {
+            run: ctx.run.clone(),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_value("{{ run.date }}", &ambient_only),
+            serde_json::json!("2026-05-21")
+        );
     }
 
     #[test]
