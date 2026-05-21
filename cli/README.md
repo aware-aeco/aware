@@ -403,8 +403,8 @@ aware app run my-oneshot-app
 # Long-running app (any stateful node like a watcher): blocks until Ctrl+C
 aware app run welded-to-tc --instance fab-east
 
-# Inputs and config overrides
-aware app run welded-to-tc --config tc-project-id=proj-123 --config tc-folder-id=folder-456
+# Per-run input overrides (key=value, repeatable)
+aware app run welded-to-tc --input tc-project-id=proj-123 --input tc-folder-id=folder-456
 
 # Stop a long-running app from another terminal
 aware app stop welded-to-tc --instance fab-east

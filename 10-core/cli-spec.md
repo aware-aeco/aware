@@ -198,8 +198,8 @@ Output streams to stdout per run; full trace written to `~/.aware/logs/<app>/<in
 
 ```
 $ aware app run welded-to-tc --instance fab-east \
-    --config tc-project-id="...." \
-    --config tc-folder-id="...."
+    --input tc-project-id="...." \
+    --input tc-folder-id="...."
 
 ✓ Loaded welded-to-tc@0.3.1 (instance: fab-east)
 ✓ Resolved: tekla@2025.0.1 + trimble-connect@2.4.0
