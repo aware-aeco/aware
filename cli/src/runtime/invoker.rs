@@ -440,6 +440,7 @@ fn build_operation_request(
     let mut path = cmd.path.clone().unwrap_or_default();
     let mut headers = Vec::new();
     let mut query = Vec::new();
+    let mut cookies: Vec<String> = Vec::new();
     if let Value::Object(provided) = args {
         for (name, val) in provided {
             // The `body` input is sent as the request body by the caller.
@@ -458,10 +459,15 @@ fn build_operation_request(
             match loc {
                 "path" => path = path.replace(&format!("{{{name}}}"), &percent_encode_path(&sval)),
                 "header" => headers.push((name.clone(), sval)),
+                "cookie" => cookies.push(format!("{name}={sval}")),
                 "body" => {}
                 _ => query.push((name.clone(), sval)),
             }
         }
+    }
+    // `in: cookie` parameters fold into a single `Cookie` header.
+    if !cookies.is_empty() {
+        headers.push(("Cookie".to_string(), cookies.join("; ")));
     }
     let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
     Ok((method, url, headers, query))
@@ -1341,6 +1347,53 @@ commands:
         assert!(
             req.starts_with("GET /health"),
             "verb-named command should use its mapping, not the url path: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn operation_cookie_param_folds_into_cookie_header() {
+        // An `in: cookie` operation parameter must be sent as a `Cookie` header,
+        // not appended to the query string (Codex #106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  get-thing:
+    lifecycle: single
+    description: "GET /thing"
+    method: GET
+    path: /thing
+    inputs:
+      sid:
+        type: string
+        in: cookie
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "get-thing", serde_json::json!({ "sid": "abc-9" }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(
+            req.contains("Cookie: sid=abc-9"),
+            "cookie param should be a Cookie header: {req}"
+        );
+        assert!(
+            req.starts_with("GET /thing "),
+            "cookie param must not leak into the query string: {req}"
         );
     }
 }
