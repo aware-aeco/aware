@@ -254,12 +254,13 @@ pub fn compile(
 /// ids are scoped + reusable, so the scoped id keeps the flat lockfile node
 /// list unambiguous and lets ref-checking treat only top-level ids as global.
 /// A node in the flattened tree: `(node, scoped_id, is_top, iter_var)`.
-/// `iter_vars` is the set of per-iteration variables reserved by ALL enclosing
-/// `do:`-bearing primitives — `item` for each `for-each`, the `var:` name for
-/// each `sweep` — accumulated outermost-to-innermost. Empty for top-level nodes.
-/// Each is a runtime prefix, not a node ref, so the ref checker skips it within
-/// scope. Nested bodies inherit their ancestors' vars (a `sweep` inside a
-/// `for-each` keeps `item` reserved alongside the sweep var).
+/// `iter_vars` is the set of per-step runtime prefixes reserved by ALL enclosing
+/// `do:`-bearing primitives — the literal `item` for each `for-each`, the literal
+/// `var` for each `sweep` (per app-spec § Substrate primitives) — accumulated
+/// outermost-to-innermost. Empty for top-level nodes. Each is a runtime prefix,
+/// not a node ref, so the ref checker skips it within scope. Nested bodies inherit
+/// their ancestors' prefixes (a `sweep` inside a `for-each` keeps `item` reserved
+/// alongside `var`).
 type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool, Vec<String>);
 
 fn flatten_nodes<'a>(
@@ -275,16 +276,19 @@ fn flatten_nodes<'a>(
         };
         out.push((n, scoped_id.clone(), prefix.is_none(), iter_vars.to_vec()));
         if let Some(body) = &n.do_ {
-            // The body adds THIS node's per-iteration variable to the inherited
-            // set: `for-each` binds `item`, `sweep` binds its `var:` name. Other
-            // `do:`-bearing nodes (e.g. schedule scopes) add nothing. Ancestors'
-            // vars stay reserved so a nested body can still reference an outer
-            // `{{ item.* }}` without it being mistaken for a node ref.
+            // The body adds THIS node's per-step runtime prefix to the inherited
+            // set. Per app-spec § Substrate primitives, `for-each` binds the
+            // literal `{{ item }}` and `sweep` binds the literal `{{ var }}` (the
+            // `var:` field only NAMES the swept value; the body still references
+            // it as `{{ var }}`). Other `do:`-bearing nodes (e.g. schedule scopes)
+            // add nothing. Ancestors' prefixes stay reserved so a nested body can
+            // still reference an outer `{{ item.* }}` without it being mistaken
+            // for a node ref.
             let mut body_vars = iter_vars.to_vec();
             if n.for_each.is_some() {
                 body_vars.push("item".to_string());
-            } else if let Some(s) = &n.sweep {
-                body_vars.push(s.var.clone());
+            } else if n.sweep.is_some() {
+                body_vars.push("var".to_string());
             }
             flatten_nodes(body, Some(&scoped_id), &body_vars, out);
         }
@@ -1092,12 +1096,14 @@ requires: []
     }
 
     #[test]
-    fn sweep_body_checks_item_ref_but_skips_sweep_var() {
+    fn sweep_body_checks_item_ref_but_skips_literal_var_prefix() {
         use crate::manifest::loader::DiscoveredAgent;
-        // In a `sweep` body, `item` is NOT the per-iteration variable (that's the
-        // sweep's `var:` name). `{{ item.foo }}` must still be validated against a
-        // real top-level `item` node, while the sweep var (`storeys`) is the
-        // reserved runtime prefix and is skipped (Codex #117-3).
+        // In a `sweep` body, the per-step prefix is the literal `{{ var }}` (app-
+        // spec § Substrate primitives), NOT the configured `var:` name. So:
+        // `{{ item.foo }}` is not reserved here (that's the for-each var) and must
+        // be checked against a real top-level `item` node, while `{{ var.foo }}` is
+        // the reserved runtime prefix and is skipped even when a top-level node is
+        // literally named `var` (Codex #117-3).
         let a: crate::manifest::Agent = serde_yaml::from_str(
             r#"
 agent: a
@@ -1115,6 +1121,14 @@ commands:
       type: single
       schema:
         bar: array
+  varcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        qux: array
   consume:
     lifecycle: single
     category: curated
@@ -1138,6 +1152,9 @@ nodes:
   - id: item
     agent: a
     command: itemcmd
+  - id: var
+    agent: a
+    command: varcmd
   - id: study
     sweep:
       var: storeys
@@ -1148,7 +1165,7 @@ nodes:
         command: consume
         config:
           a: '{{ item.foo }}'
-          b: '{{ storeys.label }}'
+          b: '{{ var.foo }}'
 requires: []
 "#,
         )
@@ -1165,8 +1182,8 @@ requires: []
             worker.notes
         );
         assert!(
-            !worker.notes.iter().any(|n| n.contains("storeys")),
-            "sweep var `storeys` wrongly validated as a node ref: {:?}",
+            !worker.notes.iter().any(|n| n.contains("\"var\"")),
+            "literal sweep prefix `var` wrongly validated against top-level `var` node: {:?}",
             worker.notes
         );
     }
@@ -1243,7 +1260,7 @@ nodes:
             command: consume
             config:
               a: '{{ item.target }}'
-              b: '{{ storeys.label }}'
+              b: '{{ var.label }}'
 requires: []
 "#,
         )
@@ -1261,8 +1278,8 @@ requires: []
             worker.notes
         );
         assert!(
-            !worker.notes.iter().any(|n| n.contains("storeys")),
-            "inner sweep var `storeys` wrongly validated as a node ref: {:?}",
+            !worker.notes.iter().any(|n| n.contains("\"var\"")),
+            "inner sweep prefix `var` wrongly validated as a node ref: {:?}",
             worker.notes
         );
     }
