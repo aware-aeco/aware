@@ -188,7 +188,10 @@ impl Orchestrator {
                 .clone();
             let agent = node.agent.as_ref().unwrap();
             let command = node.command.as_deref().unwrap_or("");
-            let args = render_config(&yaml_to_json(node.config.clone())?, &self.ctx)?;
+            let args = render_config(
+                &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
+                &self.ctx,
+            )?;
 
             self.emit(RunEvent::NodeStart {
                 ts: now_iso(),
@@ -433,7 +436,10 @@ impl Orchestrator {
         }
         self.ctx.record_output(&node.id, current_event.clone());
 
-        let args = render_config(&yaml_to_json(node.config.clone())?, &self.ctx)?;
+        let args = render_config(
+            &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
+            &self.ctx,
+        )?;
         let out = self.invoker.invoke_single(agent_id, command, args).await?;
 
         self.emit(RunEvent::NodeOutput {
@@ -543,8 +549,10 @@ impl Orchestrator {
 
         if let Some(agent_id) = &node.agent {
             let command = node.command.as_deref().unwrap_or("");
-            // Convert serde_yaml::Value config to serde_json::Value, then render templates.
-            let config_json = yaml_to_json(node.config.clone())?;
+            // Source params via the shared config:+inputs: merge rule, then
+            // convert serde_yaml::Value → serde_json::Value and render templates.
+            let config_json =
+                yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?;
             let args = render_config(&config_json, &self.ctx)?;
 
             // Dry-run / simulate short-circuit. Write-mode nodes never touch

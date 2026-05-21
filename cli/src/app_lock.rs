@@ -120,9 +120,16 @@ pub fn compile(
     hasher.update(&source_bytes);
     let source_hash = format!("sha256:{:x}", hasher.finalize());
 
-    // Pin every agent referenced by any node.
+    // Flatten the node tree: top-level nodes plus the bodies of `do:`-bearing
+    // primitives (for-each / sweep), so inner nodes are pinned, compiled, and
+    // ref-checked rather than silently ignored (#117 finding #3). Body nodes
+    // carry a scoped id (`parent.child`) so the flat lockfile stays unambiguous.
+    let mut flat: Vec<FlatNode> = Vec::new();
+    flatten_nodes(&app.nodes, None, &[], &mut flat);
+
+    // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
-    for node in &app.nodes {
+    for (node, _, _, _) in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
@@ -130,13 +137,16 @@ pub fn compile(
         }
     }
 
-    // Compile each node.
+    // Compile each node (flattened — `do:` bodies included), labelling body
+    // nodes with their scoped id in the lockfile.
     let mut nodes: Vec<CompiledNode> = Vec::new();
-    for node in &app.nodes {
-        nodes.push(compile_node(node, agents)?);
+    for (node, scoped_id, _, _) in &flat {
+        let mut cn = compile_node(node, agents)?;
+        cn.id = scoped_id.clone();
+        nodes.push(cn);
     }
 
-    // Second pass — compile-time reference checking. Build node-id → known
+    // Second pass — compile-time reference checking. Build scoped-id → known
     // output field set (None when the schema can't be resolved: inline glue,
     // primitives, or an uninstalled agent), then verify every
     // `{{ <node>.<field> }}` reference in a node's inputs points at a real
@@ -144,24 +154,64 @@ pub fn compile(
     // channel as command-not-found), turning a silent runtime failure into a
     // fixable compile-time signal — the deterministic plan validation that
     // makes decalog #9 usable in practice.
-    let field_sets: BTreeMap<String, Option<BTreeSet<String>>> = nodes
-        .iter()
-        .map(|n| (n.id.clone(), output_field_set(n.output_schema.as_ref())))
-        .collect();
-    for (i, node) in app.nodes.iter().enumerate() {
+    //
+    // The field set is keyed by SCOPED id (`parent.child`) so every node — top
+    // level and `do:`-body-local — is addressable. A reference is resolved with
+    // lexical scoping: `resolve_scope` walks the enclosing `do:` scopes from the
+    // referrer outward (innermost body → … → top level) and validates against the
+    // first node that matches, so a body-local id correctly shadows a same-named
+    // outer/top-level node at any nesting depth. `flat`/`nodes` are index-parallel.
+    let mut field_sets: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
+    for compiled in nodes.iter() {
+        field_sets.insert(
+            compiled.id.clone(),
+            output_field_set(compiled.output_schema.as_ref()),
+        );
+    }
+    for (i, entry) in flat.iter().enumerate() {
+        let (node, scoped_id, iter_vars) = (entry.0, &entry.1, &entry.3);
+        // This node's own scope prefix (`a.b.c` → `a.b`; `None` for top level).
+        // References inside it are resolved starting one level out from here.
+        let scope_prefix = scoped_id.rsplit_once('.').map(|(p, _)| p);
+        let local_id = node.id.as_str();
         let mut refs: Vec<(String, String)> = Vec::new();
-        collect_refs(&node.config, &mut refs);
-        collect_refs(&node.inputs, &mut refs);
+        // Scan the COMPILED inputs (config: + inputs: already merged by
+        // `Node::merged_params`), not the raw keys — so an `inputs:` value that
+        // overrode a `config:` value on the same key isn't double-checked
+        // against the discarded `config:` ref (Codex #117-3).
+        if let Some(compiled_inputs) = nodes[i].inputs.as_ref() {
+            collect_refs(compiled_inputs, &mut refs);
+        }
+        // The `for-each` source expression (e.g. `{{ drawings.rows }}`) is also a
+        // reference into an upstream node's output — check it too.
+        if let Some(expr) = &node.for_each {
+            collect_refs(&serde_yaml::Value::String(expr.clone()), &mut refs);
+        }
         refs.sort();
         refs.dedup();
         for (nid, field) in refs {
-            if nid == nodes[i].id {
+            if nid == local_id {
                 continue; // self-reference — skip
             }
-            // Only check references into a node whose output schema is known.
-            // Non-node prefixes (inputs/secrets/run/now/ctx) and schema-less
-            // nodes (inline/primitive/uninstalled) are skipped, never flagged.
-            if let Some(Some(fields)) = field_sets.get(&nid)
+            // Any enclosing primitive's per-iteration variable (`item` for
+            // for-each, the `var:` name for sweep) is a runtime prefix inside the
+            // body, not a node ref. Skip it even if a node shares the name —
+            // scoped to this body's ancestors only (Codex #117-3).
+            if iter_vars.iter().any(|v| v == &nid) {
+                continue;
+            }
+            // Resolve `nid` through the lexical scope chain (innermost enclosing
+            // `do:` body → … → top level). The first matching node wins, so a
+            // body-local id shadows a same-named outer/top-level node at any depth.
+            // Unresolved => a runtime prefix (inputs/secrets/run/now/ctx) or
+            // unknown id — neither is flagged.
+            let Some(target) = resolve_scope(&nid, scope_prefix, &field_sets) else {
+                continue;
+            };
+            // Only flag when the resolved node's output schema is known and the
+            // field is genuinely absent. Schema-less targets (inline/primitive/
+            // uninstalled) resolve but carry `None`, so they're skipped.
+            if let Some(Some(fields)) = field_sets.get(&target)
                 && !fields.contains(&field)
             {
                 let available = if fields.is_empty() {
@@ -196,6 +246,81 @@ pub fn compile(
         schedule,
         engineering,
     })
+}
+
+/// One entry per node in a depth-first flatten of the node tree: the node, its
+/// **scoped lockfile id** (parent ids joined by `.`, so a `do:`-body node
+/// becomes `parent.child`), and whether it is a genuine top-level node. Body
+/// ids are scoped + reusable, so the scoped id keeps the flat lockfile node
+/// list unambiguous and lets ref-checking treat only top-level ids as global.
+/// A node in the flattened tree: `(node, scoped_id, is_top, iter_var)`.
+/// `iter_vars` is the set of per-step runtime prefixes reserved by ALL enclosing
+/// `do:`-bearing primitives — the literal `item` for each `for-each`, the literal
+/// `var` for each `sweep` (per app-spec § Substrate primitives) — accumulated
+/// outermost-to-innermost. Empty for top-level nodes. Each is a runtime prefix,
+/// not a node ref, so the ref checker skips it within scope. Nested bodies inherit
+/// their ancestors' prefixes (a `sweep` inside a `for-each` keeps `item` reserved
+/// alongside `var`).
+type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool, Vec<String>);
+
+fn flatten_nodes<'a>(
+    nodes: &'a [crate::manifest::app::Node],
+    prefix: Option<&str>,
+    iter_vars: &[String],
+    out: &mut Vec<FlatNode<'a>>,
+) {
+    for n in nodes {
+        let scoped_id = match prefix {
+            Some(p) => format!("{p}.{}", n.id),
+            None => n.id.clone(),
+        };
+        out.push((n, scoped_id.clone(), prefix.is_none(), iter_vars.to_vec()));
+        if let Some(body) = &n.do_ {
+            // The body adds THIS node's per-step runtime prefix to the inherited
+            // set. Per app-spec § Substrate primitives, `for-each` binds the
+            // literal `{{ item }}` and `sweep` binds the literal `{{ var }}` (the
+            // `var:` field only NAMES the swept value; the body still references
+            // it as `{{ var }}`). Other `do:`-bearing nodes (e.g. schedule scopes)
+            // add nothing. Ancestors' prefixes stay reserved so a nested body can
+            // still reference an outer `{{ item.* }}` without it being mistaken
+            // for a node ref.
+            let mut body_vars = iter_vars.to_vec();
+            if n.for_each.is_some() {
+                body_vars.push("item".to_string());
+            } else if n.sweep.is_some() {
+                body_vars.push("var".to_string());
+            }
+            flatten_nodes(body, Some(&scoped_id), &body_vars, out);
+        }
+    }
+}
+
+/// Resolve a referenced node id through the lexical scope chain: try the
+/// innermost enclosing `do:` scope first (`<scope_prefix>.<nid>`), then each
+/// outer scope, then top level (`<nid>`). Returns the scoped id of the first
+/// node present in `field_sets`, or `None` if it resolves to no node (a runtime
+/// prefix like inputs/secrets/run/now/ctx, or an unknown id). This is what lets
+/// a body-local node shadow a same-named outer/top-level node at any nesting
+/// depth (Codex #117-3).
+fn resolve_scope(
+    nid: &str,
+    scope_prefix: Option<&str>,
+    field_sets: &BTreeMap<String, Option<BTreeSet<String>>>,
+) -> Option<String> {
+    let mut scope = scope_prefix.map(str::to_string);
+    loop {
+        let candidate = match &scope {
+            Some(p) => format!("{p}.{nid}"),
+            None => nid.to_string(),
+        };
+        if field_sets.contains_key(&candidate) {
+            return Some(candidate);
+        }
+        match scope {
+            None => return None,
+            Some(p) => scope = p.rsplit_once('.').map(|(par, _)| par.to_string()),
+        }
+    }
 }
 
 fn compile_node(
@@ -248,11 +373,11 @@ fn compile_node(
         .as_ref()
         .and_then(|s| serde_yaml::to_value(s).ok());
 
-    let inputs = if node.config.is_null() {
-        None
-    } else {
-        Some(node.config.clone())
-    };
+    // A node's invocation parameters may be written under `config:` or
+    // `inputs:` (app-spec allows both; examples favor `inputs:`). `Node::merged_
+    // params` collapses them into one map — the SAME rule the runtime uses to
+    // invoke the node — so the lockfile can't show args the run drops (#117-3).
+    let inputs = node.merged_params();
 
     Ok(CompiledNode {
         id: node.id.clone(),
@@ -534,6 +659,795 @@ requires: []
         assert!(
             !sink.notes.iter().any(|n| n.contains("{{ src.path }}")),
             "valid reference must NOT be flagged; notes: {:?}",
+            sink.notes
+        );
+    }
+
+    #[test]
+    fn compile_descends_into_for_each_do_body() {
+        use crate::manifest::loader::DiscoveredAgent;
+        let testagent: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: testagent
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-test } }
+commands:
+  emit:
+    lifecycle: single
+    category: curated
+    description: emits
+    outputs:
+      type: single
+      schema:
+        path: string
+        rows: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: consumes
+"#,
+        )
+        .unwrap();
+        // `writer` is referenced ONLY inside the for-each `do:` body — proving
+        // the compiler descends (pins + compiles + ref-checks inner nodes).
+        let writer: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: writer
+version: 2.3.4
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-writer } }
+commands:
+  post:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: writes
+    outputs:
+      type: single
+      schema:
+        file-id: string
+"#,
+        )
+        .unwrap();
+        let agents = vec![
+            DiscoveredAgent {
+                manifest: testagent,
+                root: std::path::PathBuf::from("/dev/null"),
+            },
+            DiscoveredAgent {
+                manifest: writer,
+                root: std::path::PathBuf::from("/dev/null"),
+            },
+        ];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("feach.flo");
+        std::fs::write(
+            &src,
+            r#"app: feach
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: testagent
+    command: emit
+  - id: sync
+    for-each: '{{ src.rows }}'
+    do:
+      - id: upsert
+        agent: writer
+        command: post
+        config:
+          good: '{{ src.path }}'
+          bad:  '{{ src.nope }}'
+  - id: after
+    agent: testagent
+    command: consume
+    config:
+      x: '{{ upsert.nope }}'
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+
+        // Inner do: agent is pinned.
+        assert_eq!(
+            lock.agent_pins.get("writer").map(String::as_str),
+            Some("2.3.4"),
+            "inner do: agent not pinned: {:?}",
+            lock.agent_pins
+        );
+        // Inner node is compiled into the lock under its scoped id.
+        let upsert = lock
+            .nodes
+            .iter()
+            .find(|n| n.id == "sync.upsert")
+            .expect("inner do: node 'sync.upsert' missing from lock");
+        // Ref-check descended into the do: body (bad ref flagged, good one not).
+        assert!(
+            upsert.notes.iter().any(|n| n.contains("src.nope")),
+            "bad ref inside do: not flagged; notes: {:?}",
+            upsert.notes
+        );
+        assert!(
+            !upsert.notes.iter().any(|n| n.contains("{{ src.path }}")),
+            "valid ref inside do: must not be flagged; notes: {:?}",
+            upsert.notes
+        );
+        // Scope: a top-level node referencing a do:-body-local id (`upsert`)
+        // must NOT resolve it — body ids aren't globally addressable, so the
+        // ref is treated as an unknown prefix (skipped), not blessed or flagged.
+        let after = lock.nodes.iter().find(|n| n.id == "after").unwrap();
+        assert!(
+            !after.notes.iter().any(|n| n.contains("upsert")),
+            "body-local id leaked into global scope (should not resolve): {:?}",
+            after.notes
+        );
+    }
+
+    #[test]
+    fn do_body_reusing_top_level_id_does_not_overwrite_field_set() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // `dup` is BOTH a top-level node (outputs `rows`) and a reused do:-body
+        // id (outputs `file-id`, no `rows`). The top-level schema must win in
+        // the global field set; a string-keyed filter would let the body node
+        // overwrite it and falsely flag `{{ dup.rows }}`.
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  hasrows:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        rows: array
+  norows:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+    outputs:
+      type: single
+      schema:
+        file-id: string
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("reuse.flo");
+        std::fs::write(
+            &src,
+            r#"app: reuse
+version: 0.0.1
+description: x
+nodes:
+  - id: dup
+    agent: a
+    command: hasrows
+  - id: loop
+    for-each: '{{ dup.rows }}'
+    do:
+      - id: dup
+        agent: a
+        command: norows
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        // `{{ dup.rows }}` (on `loop`) must validate against the TOP-LEVEL dup,
+        // which has `rows` — not the body dup, which doesn't. So: no note.
+        let lp = lock.nodes.iter().find(|n| n.id == "loop").unwrap();
+        assert!(
+            !lp.notes.iter().any(|n| n.contains("rows")),
+            "top-level dup schema overwritten by the do:-body dup: {:?}",
+            lp.notes
+        );
+    }
+
+    #[test]
+    fn do_body_ref_to_shadowing_sibling_not_validated_against_top_level() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A do:-body node `rfis` shadows a same-named top-level node. A sibling
+        // body node references `{{ rfis.issues }}` — which lexically resolves to
+        // the body `rfis`, so it must NOT be validated against (and falsely
+        // flagged by) the top-level `rfis` schema (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  toprows:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        rows: array
+  bodyissues:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+    outputs:
+      type: single
+      schema:
+        issues: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("shadow.flo");
+        std::fs::write(
+            &src,
+            r#"app: shadow
+version: 0.0.1
+description: x
+nodes:
+  - id: rfis
+    agent: a
+    command: toprows
+  - id: loop
+    for-each: '{{ rfis.rows }}'
+    do:
+      - id: rfis
+        agent: a
+        command: bodyissues
+      - id: consumer
+        agent: a
+        command: consume
+        config:
+          x: '{{ rfis.issues }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
+        assert!(
+            !consumer.notes.iter().any(|n| n.contains("rfis")),
+            "body ref to shadowing sibling wrongly validated against top-level: {:?}",
+            consumer.notes
+        );
+    }
+
+    #[test]
+    fn do_body_item_ref_not_validated_against_same_named_top_level_node() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // `item` is the for-each per-iteration variable inside a `do:` body. A
+        // top-level node ALSO named `item` (outputs `bar`, not `foo`) must not
+        // cause `{{ item.foo }}` in a body node to be flagged: inside the body,
+        // `item` is the runtime per-iteration prefix, not the node (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  itemcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("itemvar.flo");
+        std::fs::write(
+            &src,
+            r#"app: itemvar
+version: 0.0.1
+description: x
+nodes:
+  - id: item
+    agent: a
+    command: itemcmd
+  - id: loop
+    for-each: '{{ item.bar }}'
+    do:
+      - id: consumer
+        agent: a
+        command: consume
+        config:
+          x: '{{ item.foo }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        // The body `{{ item.foo }}` is the per-iteration var — no note. The
+        // top-level `{{ item.bar }}` on `loop` is a real ref that resolves.
+        let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
+        assert!(
+            !consumer.notes.iter().any(|n| n.contains("item")),
+            "body `item` per-iteration ref wrongly validated against top-level node: {:?}",
+            consumer.notes
+        );
+    }
+
+    #[test]
+    fn do_body_node_inputs_key_is_preserved_in_lockfile() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A for-each `do:` body node that declares its parameters under the
+        // `inputs:` key (the app-spec key the examples favor) must keep them in
+        // the compiled lockfile — `compile_node` historically copied only
+        // `config:`, dropping `inputs:` from newly-flattened body nodes (Codex
+        // #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  rows:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        items: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("bodyinputs.flo");
+        std::fs::write(
+            &src,
+            r#"app: bodyinputs
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: a
+    command: rows
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: worker
+        agent: a
+        command: consume
+        inputs:
+          target: '{{ item.id }}'
+          mode: 'sync'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock.nodes.iter().find(|n| n.id == "loop.worker").unwrap();
+        let inputs = worker
+            .inputs
+            .as_ref()
+            .expect("body node inputs: dropped from lockfile");
+        let map = inputs.as_mapping().expect("inputs not a mapping");
+        assert!(
+            map.contains_key(serde_yaml::Value::String("target".into()))
+                && map.contains_key(serde_yaml::Value::String("mode".into())),
+            "body node `inputs:` keys missing from lockfile: {inputs:?}"
+        );
+    }
+
+    #[test]
+    fn sweep_body_checks_item_ref_but_skips_literal_var_prefix() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // In a `sweep` body, the per-step prefix is the literal `{{ var }}` (app-
+        // spec § Substrate primitives), NOT the configured `var:` name. So:
+        // `{{ item.foo }}` is not reserved here (that's the for-each var) and must
+        // be checked against a real top-level `item` node, while `{{ var.foo }}` is
+        // the reserved runtime prefix and is skipped even when a top-level node is
+        // literally named `var` (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  itemcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  varcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        qux: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("sweepitem.flo");
+        std::fs::write(
+            &src,
+            r#"app: sweepitem
+version: 0.0.1
+description: x
+nodes:
+  - id: item
+    agent: a
+    command: itemcmd
+  - id: var
+    agent: a
+    command: varcmd
+  - id: study
+    sweep:
+      var: storeys
+      values: [3, 4, 5]
+    do:
+      - id: worker
+        agent: a
+        command: consume
+        config:
+          a: '{{ item.foo }}'
+          b: '{{ var.foo }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock.nodes.iter().find(|n| n.id == "study.worker").unwrap();
+        assert!(
+            worker
+                .notes
+                .iter()
+                .any(|n| n.contains("item") && n.contains("foo")),
+            "sweep body `item` ref should be checked against top-level node: {:?}",
+            worker.notes
+        );
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("\"var\"")),
+            "literal sweep prefix `var` wrongly validated against top-level `var` node: {:?}",
+            worker.notes
+        );
+    }
+
+    #[test]
+    fn nested_body_keeps_outer_iteration_var_in_scope() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A `sweep` nested inside a `for-each` body: the inner worker references
+        // the OUTER for-each var `{{ item.target }}`. `item` must stay reserved
+        // from the enclosing for-each — even with a top-level node named `item`
+        // that lacks `target` — so no bogus note is produced. The inner sweep var
+        // (`storeys`) is also reserved (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  itemcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  produce:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        items: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("nested.flo");
+        std::fs::write(
+            &src,
+            r#"app: nested
+version: 0.0.1
+description: x
+nodes:
+  - id: item
+    agent: a
+    command: itemcmd
+  - id: src
+    agent: a
+    command: produce
+  - id: outer
+    for-each: '{{ src.items }}'
+    do:
+      - id: study
+        sweep:
+          var: storeys
+          values: [1, 2]
+        do:
+          - id: worker
+            agent: a
+            command: consume
+            config:
+              a: '{{ item.target }}'
+              b: '{{ var.label }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock
+            .nodes
+            .iter()
+            .find(|n| n.id == "outer.study.worker")
+            .unwrap();
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("item")),
+            "outer for-each `item` var lost in nested sweep body: {:?}",
+            worker.notes
+        );
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("\"var\"")),
+            "inner sweep prefix `var` wrongly validated as a node ref: {:?}",
+            worker.notes
+        );
+    }
+
+    #[test]
+    fn nested_body_ref_resolves_to_enclosing_body_local_shadow() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A body-local `rfis` (outputs `issues`) in the OUTER for-each body
+        // shadows a top-level `rfis` (outputs `bar`). A worker in a NESTED sweep
+        // body references `{{ rfis.issues }}`: lexical resolution must walk out to
+        // the enclosing `outer.rfis` (which has `issues`), not fall through to the
+        // top-level `rfis` (which doesn't) and emit a bogus note (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  topcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  produce:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        items: array
+  bodycmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        issues: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("shadownest.flo");
+        std::fs::write(
+            &src,
+            r#"app: shadownest
+version: 0.0.1
+description: x
+nodes:
+  - id: rfis
+    agent: a
+    command: topcmd
+  - id: src
+    agent: a
+    command: produce
+  - id: outer
+    for-each: '{{ src.items }}'
+    do:
+      - id: rfis
+        agent: a
+        command: bodycmd
+      - id: study
+        sweep:
+          var: storeys
+          values: [1, 2]
+        do:
+          - id: worker
+            agent: a
+            command: consume
+            config:
+              x: '{{ rfis.issues }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock
+            .nodes
+            .iter()
+            .find(|n| n.id == "outer.study.worker")
+            .unwrap();
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("rfis")),
+            "nested ref resolved to top-level `rfis` instead of the enclosing body-local one: {:?}",
+            worker.notes
+        );
+    }
+
+    #[test]
+    fn ref_check_uses_merged_params_not_overridden_config() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A node declares the same key under both `config:` and `inputs:`. The
+        // merge keeps the `inputs:` value, so the ref checker must validate that
+        // surviving value — not the discarded `config:` ref (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  produce:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        path: string
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("override.flo");
+        std::fs::write(
+            &src,
+            r#"app: override
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: a
+    command: produce
+  - id: sink
+    agent: a
+    command: consume
+    config:
+      x: '{{ src.nope }}'
+    inputs:
+      x: '{{ src.path }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
+        assert!(
+            !sink.notes.iter().any(|n| n.contains("nope")),
+            "ref check flagged the overridden config: ref instead of the merged inputs: value: {:?}",
             sink.notes
         );
     }
