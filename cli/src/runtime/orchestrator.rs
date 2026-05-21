@@ -434,6 +434,19 @@ impl Orchestrator {
             )));
         }
 
+        // ── for-each (substrate primitive) ────────────────────────────────────
+        // A streaming source can feed a `for-each` node; its work lives in `do:`,
+        // not an `agent`/`inline` block, so the agent path below would reject it.
+        // Run the loop body per item (binding `{{ item }}`) and forward the
+        // aggregate downstream like any other node output (#124).
+        if let Some(expr) = node.for_each.clone() {
+            if let NodeResult::Output(aggregate) = self.run_for_each(node, &expr).await? {
+                self.ctx.record_output(&node.id, aggregate.clone());
+                frontier.push((node.id.clone(), aggregate));
+            }
+            return Ok(());
+        }
+
         // ── Agent invocation ──────────────────────────────────────────────────
         let agent_id = node.agent.as_ref().ok_or_else(|| {
             AwareError::Validation(format!(
@@ -679,7 +692,11 @@ impl Orchestrator {
                     let code = inline.code.as_deref().unwrap_or("true");
                     // Predicate gates against the most recent upstream output.
                     // For a linear topology, the immediate predecessor's output is in ctx.upstream.
+                    // Inside a `for-each` `do:` body the predicate has no graph
+                    // predecessor (the body topology is implicit), so it gates on
+                    // the bound `{{ item }}` — a per-item filter (#124).
                     let event_to_test = most_recent_upstream(&self.ctx, &self.app, &node.id)
+                        .or_else(|| self.ctx.upstream.get("item").cloned())
                         .unwrap_or(serde_json::json!({}));
                     let pass = eval_predicate(code, &event_to_test)?;
                     self.emit(RunEvent::NodeOutput {
@@ -782,6 +799,7 @@ impl Orchestrator {
             // for-each prefix the compiler scopes inside the body (#117-3).
             self.ctx.record_output("item", item);
             let mut iter_output = Value::Null;
+            let mut gated = false;
             for body_node in &body {
                 // Box the recursive call: `execute_node` → `run_for_each` →
                 // `execute_node` is a cycle that needs a heap indirection to size.
@@ -790,10 +808,19 @@ impl Orchestrator {
                         self.ctx.record_output(&body_node.id, v.clone());
                         iter_output = v;
                     }
-                    NodeResult::Gated => {}
+                    NodeResult::Gated => {
+                        // An inline predicate in the body filters this item out:
+                        // skip the rest of the body and drop the item from the
+                        // aggregate (for-each + predicate = filter+map), mirroring
+                        // top-level predicate gating which skips downstream nodes.
+                        gated = true;
+                        break;
+                    }
                 }
             }
-            results.push(iter_output);
+            if !gated {
+                results.push(iter_output);
+            }
         }
 
         let aggregate = Value::Array(results);
@@ -1231,6 +1258,128 @@ commands:
         } else {
             panic!("run did not end cleanly");
         }
+    }
+
+    #[tokio::test]
+    async fn for_each_body_predicate_filters_items() {
+        // The for-each body is `[gate, body]`. `gate` keeps only items where
+        // `item.keep == true`. With two items (one kept, one dropped), the write
+        // node `body` runs once and the aggregate has a single element — proving
+        // a gated body predicate stops the rest of that iteration AND drops the
+        // item from the result (Codex P2-1).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feachfilter
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: gate
+        inline:
+          kind: predicate
+          description: keep flagged items
+          code: "e => e.keep == true"
+      - id: body
+        agent: ag-body
+        command: process
+connections:
+  - from: src
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-src",
+                    "list",
+                    serde_json::json!({ "items": [{ "keep": true }, { "keep": false }] }),
+                )
+                .with_single("ag-body", "process", serde_json::json!({ "ok": true })),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let body_starts = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "body"))
+            .count();
+        assert_eq!(body_starts, 1, "write body must run only for the kept item");
+
+        let loop_out = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "loop" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("for-each node must emit an aggregate");
+        assert_eq!(loop_out.as_array().map(|a| a.len()), Some(1));
+    }
+
+    #[tokio::test]
+    async fn for_each_runs_in_long_running_stream() {
+        // A watcher source emits one event carrying a 2-element array; the
+        // downstream for-each node (reached via the streaming `execute_and_chain`
+        // path) must run its body once per element (Codex P2-2).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: streamfeach
+version: 0.1.0
+description: x
+nodes:
+  - id: watch
+    agent: ag-watch
+    command: watch
+  - id: loop
+    for-each: '{{ watch.marks }}'
+    do:
+      - id: sink
+        agent: ag-sink
+        command: upload
+        inputs:
+          id: '{{ item.id }}'
+connections:
+  - from: watch
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-watch",
+                    "watch",
+                    vec![serde_json::json!({ "marks": [{ "id": 1 }, { "id": 2 }] })],
+                )
+                .with_single("ag-sink", "upload", serde_json::json!({ "received": "ok" })),
+        );
+
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (stop_tx, stop_rx) = stop_channel();
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let _ = stop_tx.send(true);
+        run_handle.await.unwrap().unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let sink_outputs = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink"))
+            .count();
+        assert_eq!(
+            sink_outputs, 2,
+            "for-each body must run once per array element in the streaming path, events: {events:?}"
+        );
     }
 
     #[test]
