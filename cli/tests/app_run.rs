@@ -112,6 +112,79 @@ requires: []
 }
 
 #[test]
+fn simulate_runs_streaming_watcher_app_without_invoke_stream() {
+    // The #117-2 scenario: a `lifecycle: start` watcher source routes to the
+    // long-running path. A real run fails (`invoke_stream` not implemented);
+    // `--simulate` must stub the stream and complete cleanly.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    // A stateful watcher agent → makes `is_long_running` true.
+    let agent_dir = aware.join("agents/stub-watcher");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        r#"agent: stub-watcher
+version: 0.0.1
+description: x
+stateful: true
+license: MIT
+transport:
+  cli:
+    binary: this-watch-binary-does-not-exist
+commands:
+  watch:
+    lifecycle: start
+    category: curated
+    mode: read
+    description: stream of marks
+    outputs:
+      type: stream
+      schema:
+        mark: string
+"#,
+    )
+    .unwrap();
+
+    let app_dir = aware.join("apps/watchapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("watchapp.flo"),
+        r#"app: watchapp
+version: 0.0.1
+description: x
+nodes:
+  - id: watch
+    agent: stub-watcher
+    command: watch
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    // A real run takes the long-running path and fails: invoke_stream is not
+    // yet implemented (the exact #117-2 error).
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(30))
+        .args(["app", "run", "watchapp"])
+        .assert()
+        .failure();
+
+    // `--simulate` stubs the stream source (one placeholder event, then the
+    // source closes) and the run completes — no invoke_stream.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(30))
+        .args(["app", "run", "watchapp", "--simulate"])
+        .assert()
+        .success();
+}
+
+#[test]
 fn run_nonexistent_app_exits_7() {
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
