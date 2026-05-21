@@ -125,11 +125,11 @@ pub fn compile(
     // ref-checked rather than silently ignored (#117 finding #3). Body nodes
     // carry a scoped id (`parent.child`) so the flat lockfile stays unambiguous.
     let mut flat: Vec<FlatNode> = Vec::new();
-    flatten_nodes(&app.nodes, None, &mut flat);
+    flatten_nodes(&app.nodes, None, None, &mut flat);
 
     // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
-    for (node, _, _) in &flat {
+    for (node, _, _, _) in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
@@ -140,7 +140,7 @@ pub fn compile(
     // Compile each node (flattened — `do:` bodies included), labelling body
     // nodes with their scoped id in the lockfile.
     let mut nodes: Vec<CompiledNode> = Vec::new();
-    for (node, scoped_id, _) in &flat {
+    for (node, scoped_id, _, _) in &flat {
         let mut cn = compile_node(node, agents)?;
         cn.id = scoped_id.clone();
         nodes.push(cn);
@@ -165,7 +165,7 @@ pub fn compile(
     // scoped-checking enhancement. `flat`/`nodes` are index-parallel; the third
     // tuple element flags top-level nodes.
     let mut field_sets: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
-    for ((_, _, is_top), compiled) in flat.iter().zip(nodes.iter()) {
+    for ((_, _, is_top, _), compiled) in flat.iter().zip(nodes.iter()) {
         if *is_top {
             field_sets.insert(
                 compiled.id.clone(),
@@ -174,7 +174,7 @@ pub fn compile(
         }
     }
     for (i, entry) in flat.iter().enumerate() {
-        let (node, scoped_id, is_top) = (entry.0, &entry.1, entry.2);
+        let (node, scoped_id, is_top, iter_var) = (entry.0, &entry.1, entry.2, entry.3.as_deref());
         // Parent scope prefix for a body node (`a.b.c` → `a.b`), used to detect
         // sibling shadowing below.
         let scope_prefix = if is_top {
@@ -183,8 +183,13 @@ pub fn compile(
             scoped_id.rsplit_once('.').map(|(p, _)| p)
         };
         let mut refs: Vec<(String, String)> = Vec::new();
-        collect_refs(&node.config, &mut refs);
-        collect_refs(&node.inputs, &mut refs);
+        // Scan the COMPILED inputs (config: + inputs: already merged by
+        // `merge_node_params`), not the raw keys — so an `inputs:` value that
+        // overrode a `config:` value on the same key isn't double-checked
+        // against the discarded `config:` ref (Codex #117-3).
+        if let Some(compiled_inputs) = nodes[i].inputs.as_ref() {
+            collect_refs(compiled_inputs, &mut refs);
+        }
         // The `for-each` source expression (e.g. `{{ drawings.rows }}`) is also a
         // reference into an upstream node's output — check it too.
         if let Some(expr) = &node.for_each {
@@ -196,18 +201,20 @@ pub fn compile(
             if nid == nodes[i].id {
                 continue; // self-reference — skip
             }
-            // `item` is the for-each per-iteration variable inside a `do:` body —
-            // a runtime prefix, not a node ref. Skip it even if a top-level node
-            // happens to share the name (Codex #117-3), like other runtime
-            // prefixes (inputs/secrets/run/now/ctx).
-            if !is_top && nid == "item" {
+            // The enclosing primitive's per-iteration variable (`item` for
+            // for-each, the `var:` name for sweep) is a runtime prefix inside the
+            // body, not a node ref. Skip it even if a top-level node shares the
+            // name — but ONLY within that body, and ONLY for that primitive's var,
+            // so a `sweep` body still validates `{{ item.* }}` against a real
+            // top-level `item` node (Codex #117-3).
+            if iter_var == Some(nid.as_str()) {
                 continue;
             }
             // A body node's ref to a SIBLING in its own `do:` body resolves
             // locally (lexical scope). Skip it rather than validate against a
             // same-named top-level node — body ids shadow globals (Codex #117-3).
             if let Some(parent) = scope_prefix
-                && flat.iter().any(|(_, osid, _)| {
+                && flat.iter().any(|(_, osid, _, _)| {
                     matches!(osid.rsplit_once('.'), Some((op, seg)) if op == parent && seg == nid)
                 })
             {
@@ -258,11 +265,17 @@ pub fn compile(
 /// becomes `parent.child`), and whether it is a genuine top-level node. Body
 /// ids are scoped + reusable, so the scoped id keeps the flat lockfile node
 /// list unambiguous and lets ref-checking treat only top-level ids as global.
-type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool);
+/// A node in the flattened tree: `(node, scoped_id, is_top, iter_var)`.
+/// `iter_var` is the per-iteration variable reserved by the *enclosing*
+/// `do:`-bearing primitive — `item` for `for-each`, the `var:` name for
+/// `sweep` — or `None` for top-level nodes and non-iterating bodies. It is a
+/// runtime prefix, not a node ref, so the ref checker skips it within scope.
+type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool, Option<String>);
 
 fn flatten_nodes<'a>(
     nodes: &'a [crate::manifest::app::Node],
     prefix: Option<&str>,
+    iter_var: Option<&str>,
     out: &mut Vec<FlatNode<'a>>,
 ) {
     for n in nodes {
@@ -270,9 +283,22 @@ fn flatten_nodes<'a>(
             Some(p) => format!("{p}.{}", n.id),
             None => n.id.clone(),
         };
-        out.push((n, scoped_id.clone(), prefix.is_none()));
+        out.push((
+            n,
+            scoped_id.clone(),
+            prefix.is_none(),
+            iter_var.map(str::to_string),
+        ));
         if let Some(body) = &n.do_ {
-            flatten_nodes(body, Some(&scoped_id), out);
+            // The body's reserved per-iteration variable is set by THIS node's
+            // primitive: `for-each` binds `item`, `sweep` binds its `var:` name.
+            // Other `do:`-bearing nodes (e.g. schedule scopes) bind nothing.
+            let body_iter_var: Option<&str> = if n.for_each.is_some() {
+                Some("item")
+            } else {
+                n.sweep.as_ref().map(|s| s.var.as_str())
+            };
+            flatten_nodes(body, Some(&scoped_id), body_iter_var, out);
         }
     }
 }
@@ -1092,5 +1118,152 @@ requires: []
         );
         // Absent on both → None (field omitted from lockfile).
         assert!(merge_node_params(&serde_yaml::Value::Null, &serde_yaml::Value::Null).is_none());
+    }
+
+    #[test]
+    fn sweep_body_checks_item_ref_but_skips_sweep_var() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // In a `sweep` body, `item` is NOT the per-iteration variable (that's the
+        // sweep's `var:` name). `{{ item.foo }}` must still be validated against a
+        // real top-level `item` node, while the sweep var (`storeys`) is the
+        // reserved runtime prefix and is skipped (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  itemcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("sweepitem.flo");
+        std::fs::write(
+            &src,
+            r#"app: sweepitem
+version: 0.0.1
+description: x
+nodes:
+  - id: item
+    agent: a
+    command: itemcmd
+  - id: study
+    sweep:
+      var: storeys
+      values: [3, 4, 5]
+    do:
+      - id: worker
+        agent: a
+        command: consume
+        config:
+          a: '{{ item.foo }}'
+          b: '{{ storeys.label }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock.nodes.iter().find(|n| n.id == "study.worker").unwrap();
+        assert!(
+            worker
+                .notes
+                .iter()
+                .any(|n| n.contains("item") && n.contains("foo")),
+            "sweep body `item` ref should be checked against top-level node: {:?}",
+            worker.notes
+        );
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("storeys")),
+            "sweep var `storeys` wrongly validated as a node ref: {:?}",
+            worker.notes
+        );
+    }
+
+    #[test]
+    fn ref_check_uses_merged_params_not_overridden_config() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A node declares the same key under both `config:` and `inputs:`. The
+        // merge keeps the `inputs:` value, so the ref checker must validate that
+        // surviving value — not the discarded `config:` ref (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  produce:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        path: string
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("override.flo");
+        std::fs::write(
+            &src,
+            r#"app: override
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: a
+    command: produce
+  - id: sink
+    agent: a
+    command: consume
+    config:
+      x: '{{ src.nope }}'
+    inputs:
+      x: '{{ src.path }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
+        assert!(
+            !sink.notes.iter().any(|n| n.contains("nope")),
+            "ref check flagged the overridden config: ref instead of the merged inputs: value: {:?}",
+            sink.notes
+        );
     }
 }
