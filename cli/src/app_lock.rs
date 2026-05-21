@@ -146,7 +146,7 @@ pub fn compile(
         nodes.push(cn);
     }
 
-    // Second pass — compile-time reference checking. Build node-id → known
+    // Second pass — compile-time reference checking. Build scoped-id → known
     // output field set (None when the schema can't be resolved: inline glue,
     // primitives, or an uninstalled agent), then verify every
     // `{{ <node>.<field> }}` reference in a node's inputs points at a real
@@ -155,36 +155,28 @@ pub fn compile(
     // fixable compile-time signal — the deterministic plan validation that
     // makes decalog #9 usable in practice.
     //
-    // Only TOP-LEVEL node ids are globally addressable: a `do:`-body-local id is
-    // scoped to its parent (per app-spec, for-each outputs aggregate under the
-    // parent id), so the field set is built from top-level nodes alone — a body
-    // node reusing a top-level id can't overwrite the real schema, and an outer
-    // `{{ body_local.field }}` ref isn't silently blessed. Body nodes still get
-    // *their* refs checked against this top-level set below (so a `do:` ref to an
-    // outer node is validated); sibling-within-body resolution is a future
-    // scoped-checking enhancement. `flat`/`nodes` are index-parallel; the third
-    // tuple element flags top-level nodes.
+    // The field set is keyed by SCOPED id (`parent.child`) so every node — top
+    // level and `do:`-body-local — is addressable. A reference is resolved with
+    // lexical scoping: `resolve_scope` walks the enclosing `do:` scopes from the
+    // referrer outward (innermost body → … → top level) and validates against the
+    // first node that matches, so a body-local id correctly shadows a same-named
+    // outer/top-level node at any nesting depth. `flat`/`nodes` are index-parallel.
     let mut field_sets: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
-    for ((_, _, is_top, _), compiled) in flat.iter().zip(nodes.iter()) {
-        if *is_top {
-            field_sets.insert(
-                compiled.id.clone(),
-                output_field_set(compiled.output_schema.as_ref()),
-            );
-        }
+    for compiled in nodes.iter() {
+        field_sets.insert(
+            compiled.id.clone(),
+            output_field_set(compiled.output_schema.as_ref()),
+        );
     }
     for (i, entry) in flat.iter().enumerate() {
-        let (node, scoped_id, is_top, iter_vars) = (entry.0, &entry.1, entry.2, &entry.3);
-        // Parent scope prefix for a body node (`a.b.c` → `a.b`), used to detect
-        // sibling shadowing below.
-        let scope_prefix = if is_top {
-            None
-        } else {
-            scoped_id.rsplit_once('.').map(|(p, _)| p)
-        };
+        let (node, scoped_id, iter_vars) = (entry.0, &entry.1, &entry.3);
+        // This node's own scope prefix (`a.b.c` → `a.b`; `None` for top level).
+        // References inside it are resolved starting one level out from here.
+        let scope_prefix = scoped_id.rsplit_once('.').map(|(p, _)| p);
+        let local_id = node.id.as_str();
         let mut refs: Vec<(String, String)> = Vec::new();
         // Scan the COMPILED inputs (config: + inputs: already merged by
-        // `merge_node_params`), not the raw keys — so an `inputs:` value that
+        // `Node::merged_params`), not the raw keys — so an `inputs:` value that
         // overrode a `config:` value on the same key isn't double-checked
         // against the discarded `config:` ref (Codex #117-3).
         if let Some(compiled_inputs) = nodes[i].inputs.as_ref() {
@@ -198,32 +190,28 @@ pub fn compile(
         refs.sort();
         refs.dedup();
         for (nid, field) in refs {
-            if nid == nodes[i].id {
+            if nid == local_id {
                 continue; // self-reference — skip
             }
             // Any enclosing primitive's per-iteration variable (`item` for
             // for-each, the `var:` name for sweep) is a runtime prefix inside the
-            // body, not a node ref. Skip it even if a top-level node shares the
-            // name — scoped to this body's ancestors only, so a `sweep` body still
-            // validates `{{ item.* }}` against a real top-level `item` node unless
-            // an outer `for-each` also reserved it (Codex #117-3).
+            // body, not a node ref. Skip it even if a node shares the name —
+            // scoped to this body's ancestors only (Codex #117-3).
             if iter_vars.iter().any(|v| v == &nid) {
                 continue;
             }
-            // A body node's ref to a SIBLING in its own `do:` body resolves
-            // locally (lexical scope). Skip it rather than validate against a
-            // same-named top-level node — body ids shadow globals (Codex #117-3).
-            if let Some(parent) = scope_prefix
-                && flat.iter().any(|(_, osid, _, _)| {
-                    matches!(osid.rsplit_once('.'), Some((op, seg)) if op == parent && seg == nid)
-                })
-            {
+            // Resolve `nid` through the lexical scope chain (innermost enclosing
+            // `do:` body → … → top level). The first matching node wins, so a
+            // body-local id shadows a same-named outer/top-level node at any depth.
+            // Unresolved => a runtime prefix (inputs/secrets/run/now/ctx) or
+            // unknown id — neither is flagged.
+            let Some(target) = resolve_scope(&nid, scope_prefix, &field_sets) else {
                 continue;
-            }
-            // Only check references into a node whose output schema is known.
-            // Non-node prefixes (inputs/secrets/run/now/ctx) and schema-less
-            // nodes (inline/primitive/uninstalled) are skipped, never flagged.
-            if let Some(Some(fields)) = field_sets.get(&nid)
+            };
+            // Only flag when the resolved node's output schema is known and the
+            // field is genuinely absent. Schema-less targets (inline/primitive/
+            // uninstalled) resolve but carry `None`, so they're skipped.
+            if let Some(Some(fields)) = field_sets.get(&target)
                 && !fields.contains(&field)
             {
                 let available = if fields.is_empty() {
@@ -299,6 +287,34 @@ fn flatten_nodes<'a>(
                 body_vars.push(s.var.clone());
             }
             flatten_nodes(body, Some(&scoped_id), &body_vars, out);
+        }
+    }
+}
+
+/// Resolve a referenced node id through the lexical scope chain: try the
+/// innermost enclosing `do:` scope first (`<scope_prefix>.<nid>`), then each
+/// outer scope, then top level (`<nid>`). Returns the scoped id of the first
+/// node present in `field_sets`, or `None` if it resolves to no node (a runtime
+/// prefix like inputs/secrets/run/now/ctx, or an unknown id). This is what lets
+/// a body-local node shadow a same-named outer/top-level node at any nesting
+/// depth (Codex #117-3).
+fn resolve_scope(
+    nid: &str,
+    scope_prefix: Option<&str>,
+    field_sets: &BTreeMap<String, Option<BTreeSet<String>>>,
+) -> Option<String> {
+    let mut scope = scope_prefix.map(str::to_string);
+    loop {
+        let candidate = match &scope {
+            Some(p) => format!("{p}.{nid}"),
+            None => nid.to_string(),
+        };
+        if field_sets.contains_key(&candidate) {
+            return Some(candidate);
+        }
+        match scope {
+            None => return None,
+            Some(p) => scope = p.rsplit_once('.').map(|(par, _)| par.to_string()),
         }
     }
 }
@@ -1247,6 +1263,107 @@ requires: []
         assert!(
             !worker.notes.iter().any(|n| n.contains("storeys")),
             "inner sweep var `storeys` wrongly validated as a node ref: {:?}",
+            worker.notes
+        );
+    }
+
+    #[test]
+    fn nested_body_ref_resolves_to_enclosing_body_local_shadow() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A body-local `rfis` (outputs `issues`) in the OUTER for-each body
+        // shadows a top-level `rfis` (outputs `bar`). A worker in a NESTED sweep
+        // body references `{{ rfis.issues }}`: lexical resolution must walk out to
+        // the enclosing `outer.rfis` (which has `issues`), not fall through to the
+        // top-level `rfis` (which doesn't) and emit a bogus note (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  topcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  produce:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        items: array
+  bodycmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        issues: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("shadownest.flo");
+        std::fs::write(
+            &src,
+            r#"app: shadownest
+version: 0.0.1
+description: x
+nodes:
+  - id: rfis
+    agent: a
+    command: topcmd
+  - id: src
+    agent: a
+    command: produce
+  - id: outer
+    for-each: '{{ src.items }}'
+    do:
+      - id: rfis
+        agent: a
+        command: bodycmd
+      - id: study
+        sweep:
+          var: storeys
+          values: [1, 2]
+        do:
+          - id: worker
+            agent: a
+            command: consume
+            config:
+              x: '{{ rfis.issues }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock
+            .nodes
+            .iter()
+            .find(|n| n.id == "outer.study.worker")
+            .unwrap();
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("rfis")),
+            "nested ref resolved to top-level `rfis` instead of the enclosing body-local one: {:?}",
             worker.notes
         );
     }
