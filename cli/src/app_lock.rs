@@ -120,9 +120,14 @@ pub fn compile(
     hasher.update(&source_bytes);
     let source_hash = format!("sha256:{:x}", hasher.finalize());
 
-    // Pin every agent referenced by any node.
+    // Flatten the node tree: top-level nodes plus the bodies of `do:`-bearing
+    // primitives (for-each / sweep), so inner nodes are pinned, compiled, and
+    // ref-checked rather than silently ignored (#117 finding #3).
+    let flat = flatten_nodes(&app.nodes);
+
+    // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
-    for node in &app.nodes {
+    for &node in &flat {
         if let Some(aid) = &node.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid)
         {
@@ -130,9 +135,9 @@ pub fn compile(
         }
     }
 
-    // Compile each node.
+    // Compile each node (flattened — `do:` bodies included).
     let mut nodes: Vec<CompiledNode> = Vec::new();
-    for node in &app.nodes {
+    for &node in &flat {
         nodes.push(compile_node(node, agents)?);
     }
 
@@ -148,10 +153,15 @@ pub fn compile(
         .iter()
         .map(|n| (n.id.clone(), output_field_set(n.output_schema.as_ref())))
         .collect();
-    for (i, node) in app.nodes.iter().enumerate() {
+    for (i, &node) in flat.iter().enumerate() {
         let mut refs: Vec<(String, String)> = Vec::new();
         collect_refs(&node.config, &mut refs);
         collect_refs(&node.inputs, &mut refs);
+        // The `for-each` source expression (e.g. `{{ drawings.rows }}`) is also a
+        // reference into an upstream node's output — check it too.
+        if let Some(expr) = &node.for_each {
+            collect_refs(&serde_yaml::Value::String(expr.clone()), &mut refs);
+        }
         refs.sort();
         refs.dedup();
         for (nid, field) in refs {
@@ -196,6 +206,20 @@ pub fn compile(
         schedule,
         engineering,
     })
+}
+
+/// Depth-first flatten of the node tree: each node followed by the nodes in its
+/// `do:` body (for-each / sweep / schedule-scoped). Returns borrows in a stable
+/// order so the compiled-node vec stays index-parallel with this list.
+fn flatten_nodes(nodes: &[crate::manifest::app::Node]) -> Vec<&crate::manifest::app::Node> {
+    let mut out = Vec::new();
+    for n in nodes {
+        out.push(n);
+        if let Some(body) = &n.do_ {
+            out.extend(flatten_nodes(body));
+        }
+    }
+    out
 }
 
 fn compile_node(
@@ -535,6 +559,114 @@ requires: []
             !sink.notes.iter().any(|n| n.contains("{{ src.path }}")),
             "valid reference must NOT be flagged; notes: {:?}",
             sink.notes
+        );
+    }
+
+    #[test]
+    fn compile_descends_into_for_each_do_body() {
+        use crate::manifest::loader::DiscoveredAgent;
+        let testagent: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: testagent
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-test } }
+commands:
+  emit:
+    lifecycle: single
+    category: curated
+    description: emits
+    outputs:
+      type: single
+      schema:
+        path: string
+        rows: array
+"#,
+        )
+        .unwrap();
+        // `writer` is referenced ONLY inside the for-each `do:` body — proving
+        // the compiler descends (pins + compiles + ref-checks inner nodes).
+        let writer: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: writer
+version: 2.3.4
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-writer } }
+commands:
+  post:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: writes
+"#,
+        )
+        .unwrap();
+        let agents = vec![
+            DiscoveredAgent {
+                manifest: testagent,
+                root: std::path::PathBuf::from("/dev/null"),
+            },
+            DiscoveredAgent {
+                manifest: writer,
+                root: std::path::PathBuf::from("/dev/null"),
+            },
+        ];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("feach.flo");
+        std::fs::write(
+            &src,
+            r#"app: feach
+version: 0.0.1
+description: x
+nodes:
+  - id: src
+    agent: testagent
+    command: emit
+  - id: sync
+    for-each: '{{ src.rows }}'
+    do:
+      - id: upsert
+        agent: writer
+        command: post
+        config:
+          good: '{{ src.path }}'
+          bad:  '{{ src.nope }}'
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+
+        // Inner do: agent is pinned.
+        assert_eq!(
+            lock.agent_pins.get("writer").map(String::as_str),
+            Some("2.3.4"),
+            "inner do: agent not pinned: {:?}",
+            lock.agent_pins
+        );
+        // Inner node is compiled into the lock.
+        let upsert = lock
+            .nodes
+            .iter()
+            .find(|n| n.id == "upsert")
+            .expect("inner do: node 'upsert' missing from lock");
+        // Ref-check descended into the do: body (bad ref flagged, good one not).
+        assert!(
+            upsert.notes.iter().any(|n| n.contains("src.nope")),
+            "bad ref inside do: not flagged; notes: {:?}",
+            upsert.notes
+        );
+        assert!(
+            !upsert.notes.iter().any(|n| n.contains("{{ src.path }}")),
+            "valid ref inside do: must not be flagged; notes: {:?}",
+            upsert.notes
         );
     }
 }
