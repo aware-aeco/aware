@@ -196,6 +196,13 @@ pub fn compile(
             if nid == nodes[i].id {
                 continue; // self-reference — skip
             }
+            // `item` is the for-each per-iteration variable inside a `do:` body —
+            // a runtime prefix, not a node ref. Skip it even if a top-level node
+            // happens to share the name (Codex #117-3), like other runtime
+            // prefixes (inputs/secrets/run/now/ctx).
+            if !is_top && nid == "item" {
+                continue;
+            }
             // A body node's ref to a SIBLING in its own `do:` body resolves
             // locally (lexical scope). Skip it rather than validate against a
             // same-named top-level node — body ids shadow globals (Codex #117-3).
@@ -891,6 +898,77 @@ requires: []
         assert!(
             !consumer.notes.iter().any(|n| n.contains("rfis")),
             "body ref to shadowing sibling wrongly validated against top-level: {:?}",
+            consumer.notes
+        );
+    }
+
+    #[test]
+    fn do_body_item_ref_not_validated_against_same_named_top_level_node() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // `item` is the for-each per-iteration variable inside a `do:` body. A
+        // top-level node ALSO named `item` (outputs `bar`, not `foo`) must not
+        // cause `{{ item.foo }}` in a body node to be flagged: inside the body,
+        // `item` is the runtime per-iteration prefix, not the node (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  itemcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("itemvar.flo");
+        std::fs::write(
+            &src,
+            r#"app: itemvar
+version: 0.0.1
+description: x
+nodes:
+  - id: item
+    agent: a
+    command: itemcmd
+  - id: loop
+    for-each: '{{ item.bar }}'
+    do:
+      - id: consumer
+        agent: a
+        command: consume
+        config:
+          x: '{{ item.foo }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        // The body `{{ item.foo }}` is the per-iteration var — no note. The
+        // top-level `{{ item.bar }}` on `loop` is a real ref that resolves.
+        let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
+        assert!(
+            !consumer.notes.iter().any(|n| n.contains("item")),
+            "body `item` per-iteration ref wrongly validated against top-level node: {:?}",
             consumer.notes
         );
     }
