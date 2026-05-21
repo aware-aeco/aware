@@ -152,6 +152,34 @@ pub struct Node {
     pub do_: Option<Vec<Node>>,
 }
 
+impl Node {
+    /// A node's invocation parameters: its `config:` and `inputs:` maps merged
+    /// into one, with `inputs:` winning on a key collision. The app-spec allows
+    /// either key (examples favor `inputs:`, esp. for-each `do:` bodies). The
+    /// lockfile compiler and the runtime orchestrator BOTH source params through
+    /// this single rule, so the compiled plan can't diverge from what actually
+    /// executes. Returns `None` when the node declares neither (the lockfile then
+    /// omits the field; the runtime treats it as empty).
+    pub fn merged_params(&self) -> Option<Value> {
+        match (self.config.is_null(), self.inputs.is_null()) {
+            (true, true) => None,
+            (false, true) => Some(self.config.clone()),
+            (true, false) => Some(self.inputs.clone()),
+            (false, false) => match (&self.config, &self.inputs) {
+                (Value::Mapping(c), Value::Mapping(i)) => {
+                    let mut merged = c.clone();
+                    for (k, v) in i {
+                        merged.insert(k.clone(), v.clone());
+                    }
+                    Some(Value::Mapping(merged))
+                }
+                // Non-mapping (unusual) — `inputs:` takes precedence.
+                _ => Some(self.inputs.clone()),
+            },
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone)]
 pub struct PanelBlock {
     /// Quorum policy: `unanimous`, `majority`, or `quorum-N` (e.g. `quorum-3`).
@@ -374,6 +402,30 @@ impl App {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn merged_params_unions_config_and_inputs_inputs_wins() {
+        // A node declaring both keys merges them; `inputs:` overrides `config:`
+        // on a shared key. Absent on both → None (lockfile omits, runtime empty).
+        let node: Node = serde_yaml::from_str(
+            "id: n\nconfig: { a: 1, shared: from-config }\ninputs: { b: 2, shared: from-inputs }",
+        )
+        .unwrap();
+        let m = node.merged_params().unwrap();
+        let map = m.as_mapping().unwrap();
+        assert_eq!(map.get(Value::String("a".into())).unwrap(), 1);
+        assert_eq!(map.get(Value::String("b".into())).unwrap(), 2);
+        assert_eq!(
+            map.get(Value::String("shared".into())).unwrap(),
+            "from-inputs"
+        );
+
+        let only_inputs: Node = serde_yaml::from_str("id: n\ninputs: { x: 1 }").unwrap();
+        assert!(only_inputs.merged_params().unwrap().as_mapping().is_some());
+
+        let neither: Node = serde_yaml::from_str("id: n").unwrap();
+        assert!(neither.merged_params().is_none());
+    }
 
     #[test]
     fn parses_real_welded_to_tc() {

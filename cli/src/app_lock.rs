@@ -354,11 +354,10 @@ fn compile_node(
         .and_then(|s| serde_yaml::to_value(s).ok());
 
     // A node's invocation parameters may be written under `config:` or
-    // `inputs:` — the app-spec allows both, and the examples favor `inputs:`
-    // (especially for-each `do:` body nodes). The lockfile collapses them into
-    // its single `inputs` map; merge both so neither key is dropped from the
-    // compiled plan (Codex #117-3). `inputs:` wins on the rare key collision.
-    let inputs = merge_node_params(&node.config, &node.inputs);
+    // `inputs:` (app-spec allows both; examples favor `inputs:`). `Node::merged_
+    // params` collapses them into one map — the SAME rule the runtime uses to
+    // invoke the node — so the lockfile can't show args the run drops (#117-3).
+    let inputs = node.merged_params();
 
     Ok(CompiledNode {
         id: node.id.clone(),
@@ -371,32 +370,6 @@ fn compile_node(
         output_schema,
         notes: command_notes,
     })
-}
-
-/// Collapse a node's `config:` and `inputs:` parameter maps into the single
-/// `inputs` map the lockfile carries. Returns `None` when both are absent so
-/// the field is omitted. When both are present (unusual) their mappings are
-/// merged with `inputs:` taking precedence on a key collision; a non-mapping
-/// value also defers to `inputs:`.
-fn merge_node_params(
-    config: &serde_yaml::Value,
-    inputs: &serde_yaml::Value,
-) -> Option<serde_yaml::Value> {
-    match (config.is_null(), inputs.is_null()) {
-        (true, true) => None,
-        (false, true) => Some(config.clone()),
-        (true, false) => Some(inputs.clone()),
-        (false, false) => match (config, inputs) {
-            (serde_yaml::Value::Mapping(c), serde_yaml::Value::Mapping(i)) => {
-                let mut merged = c.clone();
-                for (k, v) in i {
-                    merged.insert(k.clone(), v.clone());
-                }
-                Some(serde_yaml::Value::Mapping(merged))
-            }
-            _ => Some(inputs.clone()),
-        },
-    }
 }
 
 fn classify_node(node: &crate::manifest::app::Node) -> &'static str {
@@ -1100,24 +1073,6 @@ requires: []
                 && map.contains_key(serde_yaml::Value::String("mode".into())),
             "body node `inputs:` keys missing from lockfile: {inputs:?}"
         );
-    }
-
-    #[test]
-    fn merge_node_params_merges_both_keys_inputs_wins() {
-        // When a node declares both `config:` and `inputs:`, the merge keeps all
-        // keys and lets `inputs:` win on collision.
-        let config: serde_yaml::Value = serde_yaml::from_str("a: 1\nshared: from-config").unwrap();
-        let inputs: serde_yaml::Value = serde_yaml::from_str("b: 2\nshared: from-inputs").unwrap();
-        let merged = merge_node_params(&config, &inputs).unwrap();
-        let m = merged.as_mapping().unwrap();
-        assert_eq!(m.get(serde_yaml::Value::String("a".into())).unwrap(), 1);
-        assert_eq!(m.get(serde_yaml::Value::String("b".into())).unwrap(), 2);
-        assert_eq!(
-            m.get(serde_yaml::Value::String("shared".into())).unwrap(),
-            "from-inputs"
-        );
-        // Absent on both → None (field omitted from lockfile).
-        assert!(merge_node_params(&serde_yaml::Value::Null, &serde_yaml::Value::Null).is_none());
     }
 
     #[test]
