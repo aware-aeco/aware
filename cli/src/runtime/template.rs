@@ -50,31 +50,30 @@ impl RenderContext {
 /// and the contents of string literals are copied through unchanged, so any
 /// template that already renders keeps rendering identically (#117-4).
 fn normalize_hyphenated_paths(template: &str) -> String {
-    let bytes = template.as_bytes();
-    let n = bytes.len();
+    let b = template.as_bytes();
+    let n = b.len();
     let mut out = String::with_capacity(n);
-    let mut i = 0;
+    // Start of the pending run of bytes copied through verbatim. Copying by
+    // SLICE (not byte-by-byte) keeps multi-byte UTF-8 literal text intact.
+    let mut flush_from = 0usize;
+    let mut i = 0usize;
     let mut in_expr = false;
     let mut quote: Option<u8> = None;
+    let ident = |byte: u8| byte.is_ascii_alphanumeric() || byte == b'_' || byte == b'-';
     while i < n {
-        let c = bytes[i];
+        let c = b[i];
         if !in_expr {
-            if c == b'{' && i + 1 < n && (bytes[i + 1] == b'{' || bytes[i + 1] == b'%') {
+            if c == b'{' && i + 1 < n && (b[i + 1] == b'{' || b[i + 1] == b'%') {
                 in_expr = true;
-                out.push('{');
-                out.push(bytes[i + 1] as char);
                 i += 2;
             } else {
-                out.push(c as char);
                 i += 1;
             }
             continue;
         }
         // Inside a `{{ }}` / `{% %}` block.
         if let Some(q) = quote {
-            out.push(c as char);
             if c == b'\\' && i + 1 < n {
-                out.push(bytes[i + 1] as char);
                 i += 2;
             } else {
                 if c == q {
@@ -84,61 +83,90 @@ fn normalize_hyphenated_paths(template: &str) -> String {
             }
             continue;
         }
-        // Block close: `}}` or `%}`.
-        if (c == b'}' || c == b'%') && i + 1 < n && bytes[i + 1] == b'}' {
+        if (c == b'}' || c == b'%') && i + 1 < n && b[i + 1] == b'}' {
             in_expr = false;
-            out.push(c as char);
-            out.push('}');
             i += 2;
             continue;
         }
         if c == b'\'' || c == b'"' {
             quote = Some(c);
-            out.push(c as char);
             i += 1;
             continue;
         }
-        // A path token starts with a letter or underscore and runs over
-        // `[A-Za-z0-9_.-]` (dots and hyphens are part of the path).
+        // A potential accessor-chain base: a leading identifier.
         if c.is_ascii_alphabetic() || c == b'_' {
-            let start = i;
-            while i < n
-                && (bytes[i].is_ascii_alphanumeric()
-                    || bytes[i] == b'_'
-                    || bytes[i] == b'-'
-                    || bytes[i] == b'.')
-            {
+            let base_start = i;
+            i += 1;
+            while i < n && ident(b[i]) {
                 i += 1;
             }
-            out.push_str(&rewrite_path_token(&template[start..i]));
+            // Only an accessor chain (base followed by `.` or `[`) is rewritten;
+            // a bare token is left alone so `a - b` subtraction is never mangled.
+            if i < n && (b[i] == b'.' || b[i] == b'[') {
+                // A kebab base node id resolves via its underscore-translated key.
+                let mut chain = template[base_start..i].replace('-', "_");
+                loop {
+                    if i < n && b[i] == b'.' {
+                        let seg_start = i + 1;
+                        let mut j = seg_start;
+                        while j < n && ident(b[j]) {
+                            j += 1;
+                        }
+                        if j == seg_start {
+                            break; // `.` not followed by an identifier (e.g. `.*`)
+                        }
+                        let seg = &template[seg_start..j];
+                        if seg.contains('-') {
+                            chain.push_str("['");
+                            chain.push_str(seg);
+                            chain.push_str("']");
+                        } else {
+                            chain.push('.');
+                            chain.push_str(seg);
+                        }
+                        i = j;
+                    } else if i < n && b[i] == b'[' {
+                        // Copy a `[ … ]` lookup verbatim (kebab keys already work),
+                        // tracking quotes so a `]` inside a string doesn't end it.
+                        let br_start = i;
+                        i += 1;
+                        let mut q2: Option<u8> = None;
+                        while i < n {
+                            let cc = b[i];
+                            if let Some(qq) = q2 {
+                                if cc == b'\\' && i + 1 < n {
+                                    i += 2;
+                                    continue;
+                                }
+                                if cc == qq {
+                                    q2 = None;
+                                }
+                                i += 1;
+                            } else if cc == b'\'' || cc == b'"' {
+                                q2 = Some(cc);
+                                i += 1;
+                            } else if cc == b']' {
+                                i += 1;
+                                break;
+                            } else {
+                                i += 1;
+                            }
+                        }
+                        chain.push_str(&template[br_start..i]);
+                    } else {
+                        break;
+                    }
+                }
+                out.push_str(&template[flush_from..base_start]);
+                out.push_str(&chain);
+                flush_from = i;
+            }
             continue;
         }
-        out.push(c as char);
         i += 1;
     }
+    out.push_str(&template[flush_from..]);
     out
-}
-
-/// Rewrite a single path token (e.g. `tekla-watch.drawing-bytes`) to bracket
-/// form. Tokens without a dot, or without a hyphen, are returned unchanged.
-fn rewrite_path_token(token: &str) -> String {
-    if !token.contains('.') || !token.contains('-') {
-        return token.to_string();
-    }
-    let mut parts = token.split('.');
-    // Base: a kebab node id resolves via its underscore-translated key.
-    let mut result = parts.next().unwrap_or("").replace('-', "_");
-    for seg in parts {
-        if seg.contains('-') {
-            result.push_str("['");
-            result.push_str(seg);
-            result.push_str("']");
-        } else {
-            result.push('.');
-            result.push_str(seg);
-        }
-    }
-    result
 }
 
 pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError> {
@@ -333,6 +361,38 @@ mod tests {
         assert_eq!(
             normalize_hyphenated_paths("{{ x.a-b | replace: \".h-t\" }}"),
             "{{ x['a-b'] | replace: \".h-t\" }}"
+        );
+    }
+
+    #[test]
+    fn normalizer_preserves_non_ascii_literal_text() {
+        // Byte-by-byte copy would mojibake multi-byte UTF-8; slice copy keeps it.
+        let ctx = RenderContext {
+            inputs: serde_json::json!({ "name": "World" }),
+            ..Default::default()
+        };
+        let out = render("Zażółć {{ inputs.name }} gęślą jaźń", &ctx).unwrap();
+        assert_eq!(out, "Zażółć World gęślą jaźń");
+    }
+
+    #[test]
+    fn hyphenated_field_after_bracket_lookup_renders() {
+        // `upstream['kebab-id'].kebab-field` — the field follows `]`, not a base.
+        let ctx = ctx_with_upstream("tekla-watch", serde_json::json!({ "drawing-bytes": "PDF" }));
+        let out = render("{{ upstream['tekla-watch'].drawing-bytes }}", &ctx).unwrap();
+        assert_eq!(out, "PDF");
+    }
+
+    #[test]
+    fn normalize_brackets_field_after_bracket_and_keeps_utf8() {
+        assert_eq!(
+            normalize_hyphenated_paths("{{ upstream['a-b'].c-d }}"),
+            "{{ upstream['a-b']['c-d'] }}"
+        );
+        // Non-ASCII literal outside the block is byte-preserved.
+        assert_eq!(
+            normalize_hyphenated_paths("café {{ x.y-z }}"),
+            "café {{ x['y-z'] }}"
         );
     }
 }
