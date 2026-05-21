@@ -77,6 +77,22 @@ pub fn build_from_url_or_path(
                         .or_else(|| op["description"].as_str())
                         .unwrap_or("OpenAPI operation")
                         .to_string();
+                    // An operation- or path-level `servers` overrides the root
+                    // base for this command: emit an absolute command path so the
+                    // runtime targets the override host, not the agent base.
+                    let op_path = match first_server_url(op.get("servers"))
+                        .or_else(|| first_server_url(methods_obj.get("servers")))
+                        .and_then(|s| resolve_server_url(s, input))
+                    {
+                        Some(base) => {
+                            format!(
+                                "{}/{}",
+                                base.trim_end_matches('/'),
+                                path.trim_start_matches('/')
+                            )
+                        }
+                        None => path.clone(),
+                    };
                     commands.insert(
                         kebab(&raw_op_id),
                         GeneratedCommand {
@@ -88,7 +104,7 @@ pub fn build_from_url_or_path(
                             inputs_yaml: build_inputs_yaml(&spec, op, path_params),
                             outputs_yaml: build_outputs_yaml(&spec, op),
                             method: Some(method.to_uppercase()),
-                            path: Some(path.clone()),
+                            path: Some(op_path),
                             // Mutating HTTP methods are write-mode so the safety
                             // contract applies (operationIds like `add-pet` don't
                             // match the name-suffix write convention). #106.
@@ -138,31 +154,35 @@ pub fn build_from_url_or_path(
 /// still yields a usable base). `None` only when neither is available (e.g. a
 /// local-file spec with no absolute server).
 fn server_base(spec: &Value, input: &str) -> Option<String> {
-    let declared = spec
-        .get("servers")
-        .and_then(|v| v.as_array())
-        .and_then(|a| a.first())
-        .and_then(|s| s.get("url"))
-        .and_then(|v| v.as_str());
-    match declared {
-        Some(u) if u.starts_with("http://") || u.starts_with("https://") => Some(u.to_string()),
-        // A relative server URL resolves against the spec document's URL (RFC
-        // 3986): a leading-slash path is origin-relative; otherwise it's relative
-        // to the document's directory.
-        Some(rel) => {
-            let origin = input_origin(input)?;
-            if let Some(abs) = rel.strip_prefix('/') {
-                Some(format!("{}/{}", origin.trim_end_matches('/'), abs))
-            } else {
-                let path = &input[origin.len()..];
-                let dir = match path.rfind('/') {
-                    Some(i) => &path[..=i],
-                    None => "/",
-                };
-                Some(format!("{origin}{dir}{rel}"))
-            }
-        }
+    match first_server_url(spec.get("servers")) {
+        Some(declared) => resolve_server_url(declared, input),
         None => input_origin(input),
+    }
+}
+
+/// The first `servers[].url` string from a `servers` array, if any.
+fn first_server_url(servers: Option<&Value>) -> Option<&str> {
+    servers?.as_array()?.first()?.get("url")?.as_str()
+}
+
+/// Resolve a (possibly relative) `servers[].url` to an absolute base. An
+/// absolute URL is used verbatim; a relative one resolves against the spec
+/// document's URL per RFC 3986 (leading-slash → origin-relative; otherwise
+/// relative to the document's directory). `None` when neither is possible.
+fn resolve_server_url(declared: &str, input: &str) -> Option<String> {
+    if declared.starts_with("http://") || declared.starts_with("https://") {
+        return Some(declared.to_string());
+    }
+    let origin = input_origin(input)?;
+    if let Some(abs) = declared.strip_prefix('/') {
+        Some(format!("{}/{}", origin.trim_end_matches('/'), abs))
+    } else {
+        let path = &input[origin.len()..];
+        let dir = match path.rfind('/') {
+            Some(i) => &path[..=i],
+            None => "/",
+        };
+        Some(format!("{origin}{dir}{declared}"))
     }
 }
 
@@ -985,6 +1005,36 @@ paths:
             .expect("mappable alternative must yield an auth block");
         assert_eq!(auth.scheme, "api-key");
         assert_eq!(auth.name.as_deref(), Some("X-Key"));
+    }
+
+    #[test]
+    fn operation_level_server_overrides_base() {
+        // An operation's own `servers` overrides the root base → that command
+        // gets an absolute path targeting the override host (Codex #106).
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "multi", "version": "1.0.0" },
+            "servers": [ { "url": "https://api.example.com" } ],
+            "paths": { "/upload": { "post": {
+                "operationId": "upload",
+                "servers": [ { "url": "https://upload.example.com" } ],
+                "responses": {}
+            } } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("multi.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("multi")).unwrap();
+        // Operation override → absolute command path on the upload host.
+        assert_eq!(
+            agent.commands["upload"].path.as_deref(),
+            Some("https://upload.example.com/upload")
+        );
+        // Agent base is still the root server.
+        assert_eq!(
+            agent.rest.as_ref().and_then(|r| r.base.as_deref()),
+            Some("https://api.example.com")
+        );
     }
 
     #[test]

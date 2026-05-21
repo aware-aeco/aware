@@ -240,7 +240,7 @@ impl AgentInvoker for RestInvoker {
         //    carry `url` / `headers` / `query` / `body`.
         // A manifest mapping is preferred, so an operationId that kebab-cases to
         // an HTTP verb still routes to its mapped operation (Codex #106).
-        let (method, url, mut headers, mut query) = if command_method(
+        let (method, url, mut headers, mut query, body) = if command_method(
             &self.agents_dir,
             agent,
             command,
@@ -267,6 +267,7 @@ impl AgentInvoker for RestInvoker {
                 url,
                 collect_str_map(args.get("headers")),
                 collect_str_map(args.get("query")),
+                args.get("body").cloned(),
             )
         };
         // Inject declarative auth (#106): if the agent's manifest carries an
@@ -297,7 +298,6 @@ impl AgentInvoker for RestInvoker {
                 inject_auth(auth, &cred, &mut headers, &mut query);
             }
         }
-        let body = args.get("body").cloned();
         let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
             && body.as_ref().is_some_and(|b| !b.is_null());
         // Owned label for the error path — `agent`/`command` are borrows that
@@ -428,14 +428,22 @@ fn value_to_str(v: &Value) -> Option<String> {
     }
 }
 
-/// `(method, url, headers, query)` — the parts of an HTTP request the REST
-/// transport assembles before adding auth + body and dispatching it.
-type RequestParts = (String, String, Vec<(String, String)>, Vec<(String, String)>);
+/// `(method, url, headers, query, body)` — the parts of an HTTP request the REST
+/// transport assembles before adding auth and dispatching it.
+type RequestParts = (
+    String,
+    String,
+    Vec<(String, String)>,
+    Vec<(String, String)>,
+    Option<Value>,
+);
 
 /// Build a request for a built OpenAPI operation command (#106): resolve the
 /// manifest command's `method` + `path` template, fill `{name}` path segments,
-/// and route each input to path / query / header by its declared `in:` location
-/// (default query). The `body` input is sent as the request body by the caller.
+/// and route each input to path / query / header / body by its declared `in:`
+/// location (default query). The `in: body` input becomes the request body —
+/// keyed by location, not name, so a query/header param named `body` is routed
+/// correctly.
 fn build_operation_request(
     agents_dir: &std::path::Path,
     agent: &str,
@@ -459,18 +467,20 @@ fn build_operation_request(
     let mut headers = Vec::new();
     let mut query = Vec::new();
     let mut cookies: Vec<String> = Vec::new();
+    let mut body = None;
     if let Value::Object(provided) = args {
         for (name, val) in provided {
-            // The `body` input is sent as the request body by the caller.
-            if name == "body" {
-                continue;
-            }
+            // The `in: body` input is the request body (by location, not name).
             let loc = cmd
                 .inputs
                 .get(name.as_str())
                 .and_then(|s| s.get("in"))
                 .and_then(|v| v.as_str())
                 .unwrap_or("query");
+            if loc == "body" {
+                body = Some(val.clone());
+                continue;
+            }
             // Expand the value into one or more string pieces — an array yields
             // multiple (a scalar, one). Empty (object/unstringifiable) is skipped.
             let pieces: Vec<String> = match val {
@@ -488,7 +498,6 @@ fn build_operation_request(
                 }
                 "header" => headers.push((name.clone(), pieces.join(","))),
                 "cookie" => cookies.push(format!("{name}={}", pieces.join(","))),
-                "body" => {}
                 // style=form, explode=true (query default): repeat per item.
                 _ => {
                     for piece in pieces {
@@ -511,7 +520,7 @@ fn build_operation_request(
         headers.push(("Cookie".to_string(), cookies.join("; ")));
     }
     let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
-    Ok((method, url, headers, query))
+    Ok((method, url, headers, query, body))
 }
 
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
@@ -1656,6 +1665,49 @@ commands:
         assert!(
             format!("{err}").contains("petId"),
             "error should name the missing path param: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn query_param_named_body_is_routed_by_location() {
+        // A query parameter literally named `body` (declared `in: query`) must be
+        // sent as a query param, not dropped or treated as the request body (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  search:
+    lifecycle: single
+    description: "GET /search"
+    method: GET
+    path: /search
+    inputs:
+      body:
+        type: string
+        in: query
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "search", serde_json::json!({ "body": "hello" }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(
+            req.starts_with("GET /search?body=hello"),
+            "query param named `body` should be in the query string: {req}"
         );
     }
 }
