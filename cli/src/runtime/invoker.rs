@@ -275,18 +275,27 @@ impl AgentInvoker for RestInvoker {
         // fills when the caller hasn't already set that slot, so an explicit
         // `{{ secrets.x }}` in the app still wins. A declared-but-unprovisioned
         // credential is a fail-fast error (not a silent unauthenticated call).
-        if let Some(auth) = load_agent_auth(&self.agents_dir, agent) {
-            let cred = load_secret_value(&self.agents_dir, &auth.secret)
-                .as_ref()
-                .and_then(secret_as_str);
-            let Some(cred) = cred else {
-                return Err(AwareError::Validation(format!(
-                    "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
-                     provision it (`~/.aware/credentials/{}.json` or `aware connect`)",
-                    auth.secret, auth.secret
-                )));
-            };
-            inject_auth(&auth, &cred, &mut headers, &mut query);
+        // Load the manifest once for the auth block + this command's `no-auth`
+        // (public-endpoint) flag, which opts a command out of agent auth.
+        if let Ok(m) =
+            crate::manifest::loader::load_agent(&self.agents_dir.join(agent).join("manifest.yaml"))
+        {
+            let is_public = m.commands.get(command).is_some_and(|c| c.no_auth);
+            if let Some(auth) = &m.auth
+                && !is_public
+            {
+                let cred = load_secret_value(&self.agents_dir, &auth.secret)
+                    .as_ref()
+                    .and_then(secret_as_str);
+                let Some(cred) = cred else {
+                    return Err(AwareError::Validation(format!(
+                        "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
+                         provision it (`~/.aware/credentials/{}.json` or `aware connect`)",
+                        auth.secret, auth.secret
+                    )));
+                };
+                inject_auth(auth, &cred, &mut headers, &mut query);
+            }
         }
         let body = args.get("body").cloned();
         let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
@@ -495,16 +504,6 @@ fn build_operation_request(
     }
     let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
     Ok((method, url, headers, query))
-}
-
-/// Read the agent's declarative `auth:` block from its manifest, if any (#106).
-fn load_agent_auth(
-    agents_dir: &std::path::Path,
-    agent: &str,
-) -> Option<crate::manifest::agent::AuthScheme> {
-    crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))
-        .ok()?
-        .auth
 }
 
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
@@ -1558,5 +1557,53 @@ commands:
         let req = rx.recv().unwrap();
         assert!(req.contains("tags=a"), "first array item missing: {req}");
         assert!(req.contains("tags=b"), "second array item missing: {req}");
+    }
+
+    #[tokio::test]
+    async fn no_auth_command_skips_auth_even_without_credential() {
+        // A `no-auth` (public) command on an auth-declaring agent must neither
+        // inject the credential nor fail-fast when it's unprovisioned (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: bearer
+  secret: svc
+requires:
+  secrets:
+    - svc
+commands:
+  get-health:
+    lifecycle: single
+    description: "GET /health"
+    method: GET
+    path: /health
+    no-auth: true
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        // Deliberately no credentials/svc.json.
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single("svc", "get-health", serde_json::json!({}))
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            !req.contains("Authorization"),
+            "no-auth command must not inject auth: {req}"
+        );
     }
 }

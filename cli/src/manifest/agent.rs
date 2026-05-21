@@ -175,6 +175,12 @@ pub struct Command {
     /// are filled from inputs whose schema declares `in: path`.
     #[serde(default)]
     pub path: Option<String>,
+    /// This command is a public endpoint that does NOT use the agent's declared
+    /// `auth:` — set by `--from-openapi` for operations whose effective security
+    /// is empty (e.g. login/health). The REST transport skips auth injection
+    /// (and its missing-credential check) for such commands.
+    #[serde(rename = "no-auth", default)]
+    pub no_auth: bool,
     /// Explicit per-command category. If `None`, the agent-level provenance
     /// is used to infer the default (see `Agent::default_category`).
     #[serde(default)]

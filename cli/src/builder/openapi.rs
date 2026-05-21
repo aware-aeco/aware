@@ -38,6 +38,20 @@ pub fn build_from_url_or_path(
 
     let id = agent_id.map(String::from).unwrap_or_else(|| kebab(&title));
 
+    // Declarative auth + whether the API requires it by default (root-level
+    // `security`). Public operations (empty effective security) are flagged
+    // `no-auth` so the transport skips auth for them — only meaningful when the
+    // agent actually has an auth block.
+    let auth = build_auth(&spec, &id);
+    let agent_has_auth = auth.is_some();
+    let root_secured = spec
+        .get("security")
+        .and_then(|v| v.as_array())
+        .is_some_and(|reqs| {
+            reqs.iter()
+                .any(|r| r.as_object().is_some_and(|o| !o.is_empty()))
+        });
+
     let mut commands = BTreeMap::new();
     if let Some(paths) = spec["paths"].as_object() {
         for (path, methods) in paths {
@@ -80,6 +94,9 @@ pub fn build_from_url_or_path(
                             // match the name-suffix write convention). #106.
                             mode: matches!(method.as_str(), "post" | "put" | "patch" | "delete")
                                 .then(|| "write".to_string()),
+                            // A public operation (empty effective security) opts
+                            // out of the agent's auth — only when auth exists.
+                            no_auth: agent_has_auth && op_effective_public(op, root_secured),
                         },
                     );
                 }
@@ -98,7 +115,7 @@ pub fn build_from_url_or_path(
     // URL), plus declarative `auth` derived from `securitySchemes` (#106).
     let rest = Some(RestBlock {
         base: server_base(&spec, input),
-        auth: build_auth(&spec, &id),
+        auth,
     });
 
     Ok(GeneratedAgent {
@@ -129,13 +146,22 @@ fn server_base(spec: &Value, input: &str) -> Option<String> {
         .and_then(|v| v.as_str());
     match declared {
         Some(u) if u.starts_with("http://") || u.starts_with("https://") => Some(u.to_string()),
-        Some(rel) => input_origin(input).map(|o| {
-            format!(
-                "{}/{}",
-                o.trim_end_matches('/'),
-                rel.trim_start_matches('/')
-            )
-        }),
+        // A relative server URL resolves against the spec document's URL (RFC
+        // 3986): a leading-slash path is origin-relative; otherwise it's relative
+        // to the document's directory.
+        Some(rel) => {
+            let origin = input_origin(input)?;
+            if let Some(abs) = rel.strip_prefix('/') {
+                Some(format!("{}/{}", origin.trim_end_matches('/'), abs))
+            } else {
+                let path = &input[origin.len()..];
+                let dir = match path.rfind('/') {
+                    Some(i) => &path[..=i],
+                    None => "/",
+                };
+                Some(format!("{origin}{dir}{rel}"))
+            }
+        }
         None => input_origin(input),
     }
 }
@@ -150,6 +176,19 @@ fn input_origin(input: &str) -> Option<String> {
         .find('/')
         .unwrap_or(input.len() - scheme_len);
     Some(input[..scheme_len + authority_len].to_string())
+}
+
+/// Whether an operation's *effective* security is empty (a public endpoint).
+/// An operation's own `security` overrides the root default: an empty array (or
+/// one with no scheme) is public; otherwise it's secured. With no operation
+/// `security`, the root default (`root_secured`) applies.
+fn op_effective_public(op: &Value, root_secured: bool) -> bool {
+    match op.get("security").and_then(|v| v.as_array()) {
+        Some(reqs) => !reqs
+            .iter()
+            .any(|r| r.as_object().is_some_and(|o| !o.is_empty())),
+        None => !root_secured,
+    }
 }
 
 /// Append every scheme name referenced by a `security` requirement array to
@@ -829,11 +868,17 @@ paths:
             server_base(&no_servers, url_input).as_deref(),
             Some("https://api.example.com")
         );
-        // Relative server → origin + relative.
+        // Leading-slash relative server → origin + path.
         let rel = serde_json::json!({ "servers": [ { "url": "/api/v3" } ] });
         assert_eq!(
             server_base(&rel, url_input).as_deref(),
             Some("https://api.example.com/api/v3")
+        );
+        // No-leading-slash relative → resolved against the document directory.
+        let rel_doc = serde_json::json!({ "servers": [ { "url": "v1" } ] });
+        assert_eq!(
+            server_base(&rel_doc, url_input).as_deref(),
+            Some("https://api.example.com/v3/v1")
         );
         // Absolute server → used verbatim.
         let abs = serde_json::json!({ "servers": [ { "url": "https://cdn.example.com/base" } ] });
@@ -843,6 +888,40 @@ paths:
         );
         // Local-file input with no absolute server → no base.
         assert_eq!(server_base(&no_servers, "/tmp/spec.json"), None);
+    }
+
+    #[test]
+    fn public_operations_are_marked_no_auth() {
+        // Root security secures the API; an operation with `security: []` is
+        // public and must opt out of the agent's auth (Codex #106).
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "mixed", "version": "1.0.0" },
+            "components": { "securitySchemes": {
+                "api_key": { "type": "apiKey", "in": "header", "name": "X-Key" }
+            } },
+            "security": [ { "api_key": [] } ],
+            "paths": {
+                "/me": { "get": { "operationId": "getMe", "responses": {} } },
+                "/health": { "get": { "operationId": "health", "security": [], "responses": {} } }
+            }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("mixed.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("mixed")).unwrap();
+
+        // The agent still carries auth (for the secured operations).
+        assert!(agent.rest.as_ref().and_then(|r| r.auth.as_ref()).is_some());
+        // `/me` (root security applies) → secured; `/health` (`security: []`) → public.
+        assert!(
+            !agent.commands["get-me"].no_auth,
+            "secured op wrongly marked public"
+        );
+        assert!(
+            agent.commands["health"].no_auth,
+            "public op not marked no-auth"
+        );
     }
 
     #[test]

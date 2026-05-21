@@ -80,6 +80,9 @@ pub struct GeneratedCommand {
     /// safety contract applies regardless of the command name. `None` lets the
     /// loader infer mode from the name convention.
     pub mode: Option<String>,
+    /// Public endpoint that does not use the agent's declared auth (OpenAPI
+    /// operation with empty effective security). Emitted as `no-auth: true`.
+    pub no_auth: bool,
 }
 
 #[derive(Debug)]
@@ -220,6 +223,9 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
             }
             if let Some(path) = &cmd.path {
                 out.push_str(&format!("    path: {}\n", quote_yaml_scalar(path)));
+            }
+            if cmd.no_auth {
+                out.push_str("    no-auth: true\n");
             }
             if !cmd.inputs_yaml.trim().is_empty() {
                 out.push_str("    inputs:\n");
