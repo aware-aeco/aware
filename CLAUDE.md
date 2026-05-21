@@ -119,6 +119,13 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 - **Session cleanup before commit** — delete `tmpclaude-*` temp files first.
 - Stage specific files (`git add <path>`); avoid `git add -A` to prevent accidental secret commits.
 
+### PR review — non-negotiable
+
+- **Every PR must be reviewed before merge.** No PR merges without a review pass; address all findings (or justify why not) before merging.
+- **Codex reviews first.** Run `codex exec review --base main` on the branch. Codex is the primary reviewer.
+- **Fall back to the local reviewer only if Codex is genuinely unavailable** (rate-limited, errored, or not installed): use the `pr-review-toolkit:code-reviewer` agent instead.
+- **Re-check Codex every time.** A one-time rate-limit (e.g. "try again at …") is *not* permanent — try Codex again on the next PR / next day before falling back. Don't coast on the local reviewer because Codex was down once.
+
 ## What's already shipped
 
 The substrate is content-complete. Do not re-litigate decisions captured in the docs above unless you have a concrete new constraint.
