@@ -260,6 +260,11 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
 /// [`RenderContext::record_output`]). Nested segments are matched verbatim —
 /// agent-output fields aren't identifier-translated. A ref that doesn't resolve
 /// yields [`serde_json::Value::Null`], which the caller treats as empty.
+///
+/// Only the dot/kebab path form is resolved — the same subset the compiler
+/// validates. A bracket-syntax ref (`{{ src['items'] }}`) stops at `[`, so
+/// neither this resolver nor `collect_refs` sees the `items` segment; author
+/// `for-each` collections in dot form (`{{ src.items }}`), AWARE's convention.
 pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     let null = serde_json::Value::Null;
     let Some(start) = expr.find("{{") else {

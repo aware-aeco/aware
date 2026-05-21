@@ -782,6 +782,14 @@ impl Orchestrator {
     /// once — the upstream source was itself stubbed and may legitimately yield
     /// nothing, yet the composition must validate end-to-end without a live host.
     async fn run_for_each(&mut self, node: &Node, expr: &str) -> Result<NodeResult, AwareError> {
+        // Save any enclosing `item` binding before resolving the collection (the
+        // collection expr may itself reference the outer `{{ item }}`) so the
+        // outer per-iteration variable is restored when this loop returns. Nested
+        // for-each loops share one `ctx`; without this, an inner loop's last
+        // element would leak into a sibling body node's `{{ item }}` — a topology
+        // the compiler explicitly scopes (app_lock `nested_body_keeps_outer_iteration_var_in_scope`).
+        let prev_item = self.ctx.upstream.get("item").cloned();
+
         let mut collection = match template::resolve_value(expr, &self.ctx) {
             Value::Array(items) => items,
             Value::Null => Vec::new(),
@@ -820,6 +828,18 @@ impl Orchestrator {
             }
             if !gated {
                 results.push(iter_output);
+            }
+        }
+
+        // Restore the enclosing `item` (or clear it at the top level) so a sibling
+        // body node after a nested loop — or a connection-less downstream
+        // predicate — never reads this loop's last element as `{{ item }}`.
+        match prev_item {
+            Some(v) => {
+                self.ctx.upstream.insert("item".to_string(), v);
+            }
+            None => {
+                self.ctx.upstream.remove("item");
             }
         }
 
@@ -1380,6 +1400,104 @@ requires: []
             sink_outputs, 2,
             "for-each body must run once per array element in the streaming path, events: {events:?}"
         );
+    }
+
+    #[tokio::test]
+    async fn nested_for_each_restores_outer_item() {
+        // Outer loop over regions; inner loop over each region's parts. After the
+        // inner loop returns, a sibling body node (`mark`) must still resolve
+        // `{{ item.name }}` to the OUTER region — not the last inner part. Run
+        // under --dry-run so each write body node's `would-write:` event captures
+        // the rendered args (#126 review: nested-loop item clobbering).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nestfeach
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: outer
+    for-each: '{{ src.regions }}'
+    do:
+      - id: inner
+        for-each: '{{ item.parts }}'
+        do:
+          - id: tag
+            agent: ag-part
+            command: tag
+            inputs:
+              part: '{{ item }}'
+            safety:
+              snapshot: false
+      - id: mark
+        agent: ag-region
+        command: mark
+        inputs:
+          region: '{{ item.name }}'
+        safety:
+          snapshot: false
+connections:
+  - from: src
+    to: outer
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "ag-src",
+            "list",
+            serde_json::json!({
+                "regions": [
+                    { "name": "R1", "parts": ["p1", "p2"] },
+                    { "name": "R2", "parts": ["p3"] }
+                ]
+            }),
+        ));
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        // src is read (runs under dry-run via the mock); region/part are write
+        // (emit would-write, capturing rendered args without a host).
+        let agents = tmp.path().join("aware").join("agents");
+        for (name, cmd, mode) in [
+            ("ag-src", "list", "read"),
+            ("ag-region", "mark", "write"),
+            ("ag-part", "tag", "write"),
+        ] {
+            let dir = agents.join(name);
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(
+                dir.join("manifest.yaml"),
+                format!(
+                    "agent: {name}\nversion: 0.0.1\ndescription: x\nstateful: false\nlicense: MIT\ntransport: {{ cli: {{ binary: nope }} }}\ncommands:\n  {cmd}:\n    lifecycle: single\n    category: curated\n    mode: {mode}\n    description: x\n    outputs:\n      type: single\n      schema:\n        regions: array\n"
+                ),
+            )
+            .unwrap();
+        }
+
+        orch.dry_run = true;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The rendered `region` arg from every would-write on `mark`, in order.
+        let regions: Vec<String> = events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::WouldWrite {
+                    node,
+                    proposed_inputs,
+                    ..
+                } if node == "mark" => proposed_inputs
+                    .get("region")
+                    .and_then(|v| v.as_str())
+                    .map(|s| s.to_string()),
+                _ => None,
+            })
+            .collect();
+        // Two outer iterations → the outer region name each time, never a part.
+        assert_eq!(regions, vec!["R1".to_string(), "R2".to_string()]);
     }
 
     #[test]
