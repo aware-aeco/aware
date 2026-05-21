@@ -243,15 +243,14 @@ fn http_agent_runs_get_end_to_end() {
     )
     .unwrap();
 
-    // A one-shot app with a single read-mode GET node. The mock server's port
-    // is dynamic, so bake the URL straight into the node config (avoids the
-    // `app run --config` flag, which collides with the global `--config`).
+    // A one-shot app with a single read-mode GET node. The dynamic mock-server
+    // port is passed via `--input` (which also proves #117-1: the run-input
+    // override no longer collides with the global `--config` flag).
     let app_dir = aware.join("apps/http-smoke");
     std::fs::create_dir_all(&app_dir).unwrap();
     std::fs::write(
         app_dir.join("http-smoke.flo"),
-        format!(
-            r#"app: http-smoke
+        r#"app: http-smoke
 version: 0.0.1
 description: x
 nodes:
@@ -259,18 +258,18 @@ nodes:
     agent: http
     command: get
     config:
-      url: "http://127.0.0.1:{port}/ping"
+      url: "{{ inputs.target }}"
 connections: []
 requires: []
-"#
-        ),
+"#,
     )
     .unwrap();
 
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
-        .args(["app", "run", "http-smoke"])
+        .args(["app", "run", "http-smoke", "--input"])
+        .arg(format!("target=http://127.0.0.1:{port}/ping"))
         .assert()
         .success();
 

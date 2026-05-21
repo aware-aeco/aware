@@ -35,7 +35,7 @@ aware
 │   ├── show <app>                      print topology (ASCII) + provenance
 │   ├── install <path-or-name>          register an app
 │   ├── uninstall <app>
-│   ├── run <app> [--instance <id>] [--config <kv>...]      execute
+│   ├── run <app> [--instance <id>] [--input <kv>...]       execute
 │   ├── stop <app> [--instance <id>]    stop a running app
 │   ├── validate <path>                 schema + cycle + cap checks
 │   ├── export <app> <output-path>      copy .flo file out

@@ -38,9 +38,11 @@ pub enum AppCommand {
         /// Instance id for multiple concurrent runs.
         #[arg(long)]
         instance: Option<String>,
-        /// Override app input as `key=value`. Repeatable.
-        #[arg(long, action = clap::ArgAction::Append)]
-        config: Vec<String>,
+        /// Override an app input as `key=value`. Repeatable. (Named `--input`,
+        /// not `--config`, to avoid colliding with the global `--config`
+        /// config-file flag — see #117.)
+        #[arg(long = "input", action = clap::ArgAction::Append)]
+        input: Vec<String>,
         /// Preview the run without committing any write-mode side effects.
         /// Each write-mode node emits a `would-write:` block in the trace
         /// instead of calling the agent's mutation transport. (v0.11)
@@ -100,10 +102,10 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
         AppCommand::Run {
             app,
             instance,
-            config,
+            input,
             dry_run,
             simulate,
-        } => run(ctx, &app, instance.as_deref(), &config, dry_run, simulate).await,
+        } => run(ctx, &app, instance.as_deref(), &input, dry_run, simulate).await,
         AppCommand::Explain { app } => explain(ctx, &app),
         AppCommand::Compile { path } => compile_cmd(ctx, &path),
         AppCommand::Inspect { path } => inspect_cmd(ctx, &path),
@@ -132,7 +134,7 @@ async fn run(
     ctx: &Context,
     app_id: &str,
     instance: Option<&str>,
-    configs: &[String],
+    input_overrides: &[String],
     dry_run: bool,
     simulate: bool,
 ) -> Result<(), AwareError> {
@@ -183,10 +185,10 @@ async fn run(
         }
     }
 
-    // Parse k=v config overrides.
+    // Parse `--input key=value` overrides into the app's input map.
     let mut inputs = serde_json::Map::new();
-    for c in configs {
-        if let Some((k, v)) = c.split_once('=') {
+    for kv in input_overrides {
+        if let Some((k, v)) = kv.split_once('=') {
             inputs.insert(k.to_string(), serde_json::Value::String(v.to_string()));
         }
     }
