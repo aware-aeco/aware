@@ -719,8 +719,11 @@ impl Orchestrator {
                     .unwrap_or_else(|| format!("assertion failed: {}", assert.expr));
                 Err(AwareError::Validation(msg))
             }
-        } else if node.for_each.is_some()
-            || node.compare.is_some()
+        } else if let Some(expr) = node.for_each.clone() {
+            // `for-each` — iterate the resolved collection, binding `{{ item }}`
+            // per element, and run the `do:` body once per item (#124).
+            self.run_for_each(node, &expr).await
+        } else if node.compare.is_some()
             || node.sweep.is_some()
             || node.approve.is_some()
             || node.snapshot.is_some()
@@ -729,9 +732,7 @@ impl Orchestrator {
             // Substrate primitives parsed by v0.19 — runtime implementation
             // lands phase-by-phase in v0.19.x patches. For now, return a
             // clear "not yet implemented" error pointing at the spec section.
-            let primitive = if node.for_each.is_some() {
-                "for-each"
-            } else if node.compare.is_some() {
+            let primitive = if node.compare.is_some() {
                 "compare"
             } else if node.sweep.is_some() {
                 "sweep"
@@ -752,6 +753,58 @@ impl Orchestrator {
                 node.id
             )))
         }
+    }
+
+    /// `for-each` runtime (#124). Resolve the iteration collection from the
+    /// node's expression, bind `{{ item }}` per element, and run the `do:` body
+    /// once per item. The aggregate output is the array of each iteration's
+    /// final body-node output, recorded under the for-each node's id (by the
+    /// caller) so downstream nodes can consume it.
+    ///
+    /// Under `--simulate` an empty or unresolved collection still runs the body
+    /// once — the upstream source was itself stubbed and may legitimately yield
+    /// nothing, yet the composition must validate end-to-end without a live host.
+    async fn run_for_each(&mut self, node: &Node, expr: &str) -> Result<NodeResult, AwareError> {
+        let mut collection = match template::resolve_value(expr, &self.ctx) {
+            Value::Array(items) => items,
+            Value::Null => Vec::new(),
+            // A non-array, non-null value iterates once over itself.
+            other => vec![other],
+        };
+        if collection.is_empty() && self.simulate {
+            collection.push(serde_json::json!({ "simulated": true }));
+        }
+
+        let body = node.do_.clone().unwrap_or_default();
+        let mut results: Vec<Value> = Vec::with_capacity(collection.len());
+        for item in collection {
+            // Bind the per-iteration variable `{{ item }}` — the reserved
+            // for-each prefix the compiler scopes inside the body (#117-3).
+            self.ctx.record_output("item", item);
+            let mut iter_output = Value::Null;
+            for body_node in &body {
+                // Box the recursive call: `execute_node` → `run_for_each` →
+                // `execute_node` is a cycle that needs a heap indirection to size.
+                match Box::pin(self.execute_node(body_node)).await? {
+                    NodeResult::Output(v) => {
+                        self.ctx.record_output(&body_node.id, v.clone());
+                        iter_output = v;
+                    }
+                    NodeResult::Gated => {}
+                }
+            }
+            results.push(iter_output);
+        }
+
+        let aggregate = Value::Array(results);
+        self.emit(RunEvent::NodeOutput {
+            ts: now_iso(),
+            run_id: self.run_id.clone(),
+            node: node.id.clone(),
+            data: aggregate.clone(),
+        })
+        .await?;
+        Ok(NodeResult::Output(aggregate))
     }
 }
 
@@ -1010,6 +1063,169 @@ commands:
             .expect("read node must emit a synthesized NodeOutput");
         assert_eq!(output["path"], serde_json::json!("<simulated>"));
         assert_eq!(output["row-count"], serde_json::json!(0));
+        if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
+            assert_eq!(status, "ok");
+        } else {
+            panic!("run did not end cleanly");
+        }
+    }
+
+    #[tokio::test]
+    async fn for_each_runs_body_once_per_item() {
+        // src emits a 3-element array; the for-each `loop` runs its `do:` body
+        // (`body`) once per element, binding `{{ item }}`. The aggregate output
+        // recorded for `loop` is the array of each iteration's body output (#124).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feach
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: body
+        agent: ag-body
+        command: process
+        inputs:
+          val: '{{ item }}'
+connections:
+  - from: src
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-src",
+                    "list",
+                    serde_json::json!({ "items": [10, 20, 30] }),
+                )
+                .with_single("ag-body", "process", serde_json::json!({ "ok": true })),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The body node ran once per item → three NodeStart events for `body`.
+        let body_starts = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "body"))
+            .count();
+        assert_eq!(body_starts, 3, "body must run once per collection element");
+
+        // The for-each node's aggregate output is a 3-element array.
+        let loop_out = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "loop" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("for-each node must emit an aggregate NodeOutput");
+        assert_eq!(loop_out.as_array().map(|a| a.len()), Some(3));
+        assert_eq!(loop_out[0], serde_json::json!({ "ok": true }));
+    }
+
+    #[tokio::test]
+    async fn for_each_under_simulate_runs_body_when_collection_empty() {
+        // #124 repro: a one-shot `--simulate` app where the read source is
+        // stubbed to an empty array. The for-each body must STILL run once (the
+        // stubbed source legitimately yields nothing), and its write node must
+        // emit a `would-write:` event rather than calling a host.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feachsim
+version: 0.1.0
+description: x
+nodes:
+  - id: drawings
+    agent: tekla
+    command: drawing-list
+  - id: sync
+    for-each: '{{ drawings.drawings }}'
+    do:
+      - id: upsert
+        agent: http
+        command: post
+        inputs:
+          url: https://example.test/x
+        safety:
+          snapshot: false
+connections:
+  - from: drawings
+    to: sync
+requires: []
+"#,
+        )
+        .unwrap();
+
+        // Empty invoker: any real transport call surfaces as NotFound and fails.
+        let inv = Arc::new(MockInvoker::new());
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        let agents = tmp.path().join("aware").join("agents");
+        let tekla_dir = agents.join("tekla");
+        std::fs::create_dir_all(&tekla_dir).unwrap();
+        std::fs::write(
+            tekla_dir.join("manifest.yaml"),
+            r#"agent: tekla
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  drawing-list:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: lists drawings
+    outputs:
+      type: single
+      schema:
+        drawings: array
+"#,
+        )
+        .unwrap();
+        let http_dir = agents.join("http");
+        std::fs::create_dir_all(&http_dir).unwrap();
+        std::fs::write(
+            http_dir.join("manifest.yaml"),
+            r#"agent: http
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  post:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: posts a row
+"#,
+        )
+        .unwrap();
+
+        orch.simulate = true;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The write body node ran (once, for the synthetic iteration) and was
+        // stubbed as a would-write rather than dispatched to the host.
+        let would_write = events
+            .iter()
+            .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "upsert"));
+        assert!(
+            would_write,
+            "for-each body write node must emit a would-write under simulate"
+        );
         if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
             assert_eq!(status, "ok");
         } else {
