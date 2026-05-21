@@ -131,6 +131,7 @@ pub(crate) fn build_from_bytes(
         provenance,
         stateful: false,
         license,
+        rest: None,
     })
 }
 

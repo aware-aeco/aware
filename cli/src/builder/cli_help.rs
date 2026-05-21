@@ -50,6 +50,7 @@ pub fn build_from_cli(binary: &str, agent_id: Option<&str>) -> Result<GeneratedA
         provenance,
         stateful: false,
         license: "UNKNOWN".into(),
+        rest: None,
     })
 }
 

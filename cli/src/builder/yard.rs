@@ -113,6 +113,7 @@ pub fn build_from_url_or_dir(
         provenance,
         stateful: false,
         license: "see-source".into(),
+        rest: None,
     })
 }
 

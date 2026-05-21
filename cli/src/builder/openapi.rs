@@ -10,7 +10,7 @@ use std::io::Read;
 
 use serde_json::Value;
 
-use crate::builder::{GeneratedAgent, GeneratedCommand, Provenance, now_iso};
+use crate::builder::{AuthBlock, GeneratedAgent, GeneratedCommand, Provenance, RestBlock, now_iso};
 use crate::error::AwareError;
 
 pub fn build_from_url_or_path(
@@ -84,6 +84,13 @@ pub fn build_from_url_or_path(
         generated_at: now_iso(),
     };
 
+    // An OpenAPI agent is an HTTP API → `rest` transport (with the spec's base
+    // URL), plus declarative `auth` derived from `securitySchemes` (#106).
+    let rest = Some(RestBlock {
+        base: server_base(&spec),
+        auth: build_auth(&spec, &id),
+    });
+
     Ok(GeneratedAgent {
         id,
         version: "0.1.0".into(),
@@ -94,7 +101,83 @@ pub fn build_from_url_or_path(
         provenance,
         stateful: false,
         license,
+        rest,
     })
+}
+
+/// The first `servers[].url` — the REST base URL commands are resolved against.
+fn server_base(spec: &Value) -> Option<String> {
+    spec.get("servers")?
+        .as_array()?
+        .first()?
+        .get("url")?
+        .as_str()
+        .map(|s| s.to_string())
+}
+
+/// Derive a declarative `auth` block from the spec's `components.security
+/// Schemes` + root `security`. Picks the scheme named in root `security` (else
+/// the first declared scheme) and maps apiKey / http-bearer / oauth2 to the
+/// AWARE auth model. The credential handle is the agent id (one secret per
+/// built agent). Returns `None` for an unauthenticated spec or an unmodeled
+/// scheme (e.g. http-basic).
+fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
+    let schemes = spec.pointer("/components/securitySchemes")?.as_object()?;
+    if schemes.is_empty() {
+        return None;
+    }
+    // Prefer a scheme referenced by root `security`; else the first declared.
+    let chosen = spec
+        .get("security")
+        .and_then(|v| v.as_array())
+        .and_then(|reqs| {
+            reqs.iter()
+                .find_map(|r| r.as_object().and_then(|o| o.keys().next().cloned()))
+        })
+        .filter(|n| schemes.contains_key(n))
+        .or_else(|| schemes.keys().next().cloned())?;
+    let scheme = schemes.get(&chosen)?;
+    let secret = agent_id.to_string();
+    match scheme.get("type").and_then(|v| v.as_str())? {
+        "apiKey" => Some(AuthBlock {
+            scheme: "api-key".into(),
+            location: Some(
+                scheme
+                    .get("in")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("header")
+                    .to_string(),
+            ),
+            name: Some(
+                scheme
+                    .get("name")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("Authorization")
+                    .to_string(),
+            ),
+            secret,
+        }),
+        "http"
+            if scheme
+                .get("scheme")
+                .and_then(|v| v.as_str())
+                .is_some_and(|s| s.eq_ignore_ascii_case("bearer")) =>
+        {
+            Some(AuthBlock {
+                scheme: "bearer".into(),
+                location: None,
+                name: None,
+                secret,
+            })
+        }
+        "oauth2" | "openIdConnect" => Some(AuthBlock {
+            scheme: "oauth2".into(),
+            location: None,
+            name: None,
+            secret,
+        }),
+        _ => None,
+    }
 }
 
 /// Quote a YAML scalar if it contains characters that would make a plain scalar
@@ -481,6 +564,76 @@ paths:
             "colon-bearing param key corrupted: {:?}",
             cmd.inputs
         );
+    }
+
+    #[test]
+    fn captures_security_scheme_as_auth_block() {
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "secured", "version": "1.0.0" },
+            "servers": [ { "url": "https://api.example.com/v1" } ],
+            "components": { "securitySchemes": {
+                "api_key": { "type": "apiKey", "in": "header", "name": "X-API-Key" }
+            } },
+            "security": [ { "api_key": [] } ],
+            "paths": { "/ping": { "get": { "operationId": "ping", "summary": "Ping" } } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("secured.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("secured-demo")).unwrap();
+
+        let rest = agent
+            .rest
+            .as_ref()
+            .expect("an OpenAPI agent uses the rest transport");
+        assert_eq!(rest.base.as_deref(), Some("https://api.example.com/v1"));
+        let auth = rest
+            .auth
+            .as_ref()
+            .expect("declared securityScheme must yield an auth block");
+        assert_eq!(auth.scheme, "api-key");
+        assert_eq!(auth.location.as_deref(), Some("header"));
+        assert_eq!(auth.name.as_deref(), Some("X-API-Key"));
+        assert_eq!(auth.secret, "secured-demo");
+
+        // Round-trip: manifest carries auth: + requires.secrets + rest transport
+        // (no cli), and the loader parses it all back.
+        let out = tempfile::tempdir().unwrap();
+        let root = crate::builder::write_agent(&agent, out.path()).unwrap();
+        let loaded = crate::manifest::loader::load_agent(&root.join("manifest.yaml")).unwrap();
+        let la = loaded.auth.expect("auth did not round-trip");
+        assert_eq!(la.scheme, "api-key");
+        assert_eq!(la.name.as_deref(), Some("X-API-Key"));
+        assert_eq!(la.secret, "secured-demo");
+        assert!(loaded.transport.rest.is_some());
+        assert!(loaded.transport.cli.is_none());
+        assert!(
+            loaded
+                .requires
+                .expect("requires")
+                .secrets
+                .contains(&"secured-demo".to_string())
+        );
+    }
+
+    #[test]
+    fn maps_bearer_and_leaves_unauthenticated_specs_without_auth() {
+        let tmp = tempfile::tempdir().unwrap();
+        let bearer = r##"{ "openapi":"3.0.0","info":{"title":"b","version":"1"},
+            "components":{"securitySchemes":{"jwt":{"type":"http","scheme":"bearer"}}},
+            "paths":{} }"##;
+        let p = tmp.path().join("b.json");
+        std::fs::write(&p, bearer).unwrap();
+        let a = build_from_url_or_path(p.to_str().unwrap(), Some("b")).unwrap();
+        assert_eq!(a.rest.unwrap().auth.unwrap().scheme, "bearer");
+
+        let unauth = r##"{ "openapi":"3.0.0","info":{"title":"u","version":"1"},"paths":{} }"##;
+        let p2 = tmp.path().join("u.json");
+        std::fs::write(&p2, unauth).unwrap();
+        let a2 = build_from_url_or_path(p2.to_str().unwrap(), Some("u")).unwrap();
+        let rest = a2.rest.expect("rest transport even when unauthenticated");
+        assert!(rest.auth.is_none(), "unauthenticated spec → no auth block");
     }
 
     #[test]

@@ -336,6 +336,7 @@ fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
         provenance,
         stateful: s.stateful,
         license: s.license,
+        rest: None,
     }
 }
 

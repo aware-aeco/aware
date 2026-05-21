@@ -210,11 +210,13 @@ impl AgentInvoker for CliInvoker {
 ///
 /// Designed for the generic `http` agent, where the command name *is* the HTTP
 /// method (`get`/`post`/`patch`/`delete`/`put`/`head`) and the inputs carry
-/// `url` / `headers` / `query` / `body`. Secrets are already substituted into
-/// the inputs by the template layer before they reach here (e.g. an
-/// `apikey: "{{ secrets.supabase }}"` header), so the "header/secret handling
-/// via the vault" the issue asks for is the existing secret-render path — this
-/// invoker just sends what it's handed.
+/// `url` / `headers` / `query` / `body`. App-templated secrets
+/// (`apikey: "{{ secrets.supabase }}"`) arrive already substituted in the
+/// inputs. In addition, if the agent's manifest declares an `auth:` block, this
+/// invoker loads the referenced credential and injects it automatically
+/// (bearer/oauth2 → `Authorization: Bearer`; api-key → header/query), without
+/// the app author hand-templating it — fill-if-absent, so explicit input wins
+/// (#106).
 pub struct RestInvoker {
     pub agents_dir: std::path::PathBuf,
 }
@@ -255,8 +257,18 @@ impl AgentInvoker for RestInvoker {
             _ => raw_url,
         };
 
-        let headers = collect_str_map(args.get("headers"));
-        let query = collect_str_map(args.get("query"));
+        let mut headers = collect_str_map(args.get("headers"));
+        let mut query = collect_str_map(args.get("query"));
+        // Inject declarative auth (#106): if the agent's manifest carries an
+        // `auth:` block, load its secret and add the credential — bearer/oauth2
+        // as `Authorization: Bearer …`, api-key as a header or query param. Only
+        // fills when the caller hasn't already set that header/param, so an
+        // explicit `{{ secrets.x }}` in the app still wins.
+        if let Some(auth) = load_agent_auth(&self.agents_dir, agent)
+            && let Some(secret) = load_secret_value(&self.agents_dir, &auth.secret)
+        {
+            inject_auth(&auth, &secret, &mut headers, &mut query);
+        }
         let body = args.get("body").cloned();
         let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
             && body.as_ref().is_some_and(|b| !b.is_null());
@@ -334,6 +346,79 @@ fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
         .get("base")?
         .as_str()
         .map(|s| s.to_string())
+}
+
+/// Read the agent's declarative `auth:` block from its manifest, if any (#106).
+fn load_agent_auth(
+    agents_dir: &std::path::Path,
+    agent: &str,
+) -> Option<crate::manifest::agent::AuthScheme> {
+    crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))
+        .ok()?
+        .auth
+}
+
+/// Load a credential by handle, reusing the runtime secret loader (OS keychain,
+/// then `<aware-home>/credentials/<id>.json`). `agents_dir` is `<home>/agents`,
+/// so the credentials directory is its `credentials` sibling.
+fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
+    let creds_dir = agents_dir.parent()?.join("credentials");
+    let mut ctx = crate::runtime::template::RenderContext::default();
+    crate::runtime::context::load_secret(&mut ctx, &creds_dir, id).ok()?;
+    ctx.secrets.get(id).cloned()
+}
+
+/// Extract the usable credential string from a loaded secret: a raw string is
+/// used verbatim; an object is probed for the common token/key fields.
+fn secret_as_str(secret: &Value) -> Option<String> {
+    match secret {
+        Value::String(s) => Some(s.clone()),
+        Value::Object(m) => [
+            "token",
+            "access_token",
+            "key",
+            "apikey",
+            "api_key",
+            "value",
+            "secret",
+        ]
+        .iter()
+        .find_map(|k| m.get(*k).and_then(|v| v.as_str()).map(|s| s.to_string())),
+        _ => None,
+    }
+}
+
+/// Inject the declared credential into the request: bearer/oauth2 as an
+/// `Authorization: Bearer` header, api-key as a header or query param. A slot
+/// the caller already populated is left untouched (explicit input wins).
+fn inject_auth(
+    auth: &crate::manifest::agent::AuthScheme,
+    secret: &Value,
+    headers: &mut Vec<(String, String)>,
+    query: &mut Vec<(String, String)>,
+) {
+    let Some(cred) = secret_as_str(secret) else {
+        return;
+    };
+    match auth.scheme.as_str() {
+        "bearer" | "oauth2"
+            if !headers
+                .iter()
+                .any(|(k, _)| k.eq_ignore_ascii_case("authorization")) =>
+        {
+            headers.push(("Authorization".into(), format!("Bearer {cred}")));
+        }
+        "api-key" => {
+            let name = auth.name.as_deref().unwrap_or("Authorization");
+            let in_query = auth.location.as_deref() == Some("query");
+            if in_query && !query.iter().any(|(k, _)| k == name) {
+                query.push((name.to_string(), cred));
+            } else if !in_query && !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
+                headers.push((name.to_string(), cred));
+            }
+        }
+        _ => {}
+    }
 }
 
 /// Flatten an optional `{ key: value }` input (headers / query) into ordered
@@ -819,5 +904,112 @@ commands:
         assert_eq!(out["status"], serde_json::json!(200));
         let req = rx.recv().unwrap();
         assert!(req.starts_with("GET /ping"), "req: {req}");
+    }
+
+    #[tokio::test]
+    async fn rest_injects_declared_apikey_header_from_credential() {
+        // End-to-end: a rest agent declaring an `auth:` block + a stored
+        // credential → the transport injects the header without the caller
+        // templating it (#106). agents_dir is `<home>/agents`, so the
+        // credentials file lives in the `<home>/credentials` sibling.
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("secured");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: secured
+version: 0.1.0
+description: secured api
+stateful: false
+license: MIT
+transport:
+  rest: {}
+auth:
+  scheme: api-key
+  in: header
+  name: X-API-Key
+  secret: secured
+requires:
+  secrets:
+    - secured
+commands:
+  get:
+    lifecycle: single
+    description: GET
+"#,
+        )
+        .unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("secured.json"), r#"{"key":"sk-live-123"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single(
+                "secured",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port}/ping") }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.contains("X-API-Key: sk-live-123"),
+            "injected api-key header missing: {req}"
+        );
+    }
+
+    #[test]
+    fn inject_auth_covers_bearer_apikey_and_respects_explicit() {
+        use crate::manifest::agent::AuthScheme;
+        let bearer = AuthScheme {
+            scheme: "bearer".into(),
+            location: None,
+            name: None,
+            secret: "s".into(),
+        };
+        let mut h = Vec::new();
+        let mut q = Vec::new();
+        inject_auth(&bearer, &serde_json::json!({"token":"tok"}), &mut h, &mut q);
+        assert_eq!(h, vec![("Authorization".into(), "Bearer tok".into())]);
+
+        let apikey_query = AuthScheme {
+            scheme: "api-key".into(),
+            location: Some("query".into()),
+            name: Some("apikey".into()),
+            secret: "s".into(),
+        };
+        let mut h2 = Vec::new();
+        let mut q2 = Vec::new();
+        inject_auth(&apikey_query, &serde_json::json!("raw"), &mut h2, &mut q2);
+        assert_eq!(q2, vec![("apikey".into(), "raw".into())]);
+
+        // An explicit Authorization the caller set is never overridden.
+        let mut h3 = vec![("Authorization".to_string(), "Bearer explicit".to_string())];
+        let mut q3 = Vec::new();
+        inject_auth(
+            &bearer,
+            &serde_json::json!({"token":"other"}),
+            &mut h3,
+            &mut q3,
+        );
+        assert_eq!(h3[0].1, "Bearer explicit");
+    }
+
+    #[test]
+    fn secret_as_str_handles_string_and_objects() {
+        assert_eq!(secret_as_str(&serde_json::json!("raw")), Some("raw".into()));
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"token":"t"})),
+            Some("t".into())
+        );
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"apikey":"k"})),
+            Some("k".into())
+        );
+        assert_eq!(secret_as_str(&serde_json::json!({"other":"x"})), None);
     }
 }

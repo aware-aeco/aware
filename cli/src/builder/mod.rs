@@ -35,6 +35,34 @@ pub struct GeneratedAgent {
     pub provenance: Provenance,
     pub stateful: bool,
     pub license: String,
+    /// When set, the agent uses the `rest` transport (HTTP API) with an
+    /// optional base URL and declarative auth, instead of the default `cli`
+    /// transport (a wrapped binary). Set by the OpenAPI builder; `None` for
+    /// SDK/CLI-derived agents.
+    pub rest: Option<RestBlock>,
+}
+
+/// REST transport + declarative auth for a generated HTTP-API agent.
+#[derive(Debug, Default)]
+pub struct RestBlock {
+    /// Base URL (from the OpenAPI `servers`); commands pass relative paths.
+    pub base: Option<String>,
+    /// Declarative auth derived from the spec's `securitySchemes`.
+    pub auth: Option<AuthBlock>,
+}
+
+/// Declarative auth emitted into the manifest's `auth:` block. The credential
+/// `secret` is also added to `requires.secrets`.
+#[derive(Debug)]
+pub struct AuthBlock {
+    /// `api-key` | `bearer` | `oauth2`.
+    pub scheme: String,
+    /// For `api-key`: `header` | `query`.
+    pub location: Option<String>,
+    /// For `api-key`: the header / query-param name.
+    pub name: Option<String>,
+    /// Credential handle (also added to `requires.secrets`).
+    pub secret: String,
 }
 
 #[derive(Debug)]
@@ -136,7 +164,33 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
     }
 
     out.push_str("transport:\n");
-    out.push_str(&format!("  cli:\n    binary: aware-{}\n", agent.id));
+    match &agent.rest {
+        Some(rest) => {
+            out.push_str("  rest:");
+            match &rest.base {
+                Some(base) => out.push_str(&format!("\n    base: {}\n", quote_yaml_scalar(base))),
+                None => out.push_str(" {}\n"),
+            }
+        }
+        None => {
+            out.push_str(&format!("  cli:\n    binary: aware-{}\n", agent.id));
+        }
+    }
+
+    // Declarative auth + the credential it requires (REST agents only).
+    if let Some(auth) = agent.rest.as_ref().and_then(|r| r.auth.as_ref()) {
+        out.push_str("auth:\n");
+        out.push_str(&format!("  scheme: {}\n", auth.scheme));
+        if let Some(loc) = &auth.location {
+            out.push_str(&format!("  in: {loc}\n"));
+        }
+        if let Some(name) = &auth.name {
+            out.push_str(&format!("  name: {}\n", quote_yaml_scalar(name)));
+        }
+        out.push_str(&format!("  secret: {}\n", quote_yaml_scalar(&auth.secret)));
+        out.push_str("requires:\n  secrets:\n");
+        out.push_str(&format!("    - {}\n", quote_yaml_scalar(&auth.secret)));
+    }
 
     if !agent.commands.is_empty() {
         out.push_str("commands:\n");
@@ -235,6 +289,7 @@ mod tests {
             },
             stateful: false,
             license: "MIT".into(),
+            rest: None,
         }
     }
 

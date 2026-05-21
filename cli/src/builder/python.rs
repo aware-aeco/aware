@@ -74,6 +74,7 @@ pub fn build_from_python(
         provenance,
         stateful: false,
         license: "UNKNOWN".into(),
+        rest: None,
     })
 }
 
