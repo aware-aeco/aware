@@ -434,6 +434,19 @@ impl Orchestrator {
             )));
         }
 
+        // ── for-each (substrate primitive) ────────────────────────────────────
+        // A streaming source can feed a `for-each` node; its work lives in `do:`,
+        // not an `agent`/`inline` block, so the agent path below would reject it.
+        // Run the loop body per item (binding `{{ item }}`) and forward the
+        // aggregate downstream like any other node output (#124).
+        if let Some(expr) = node.for_each.clone() {
+            if let NodeResult::Output(aggregate) = self.run_for_each(node, &expr).await? {
+                self.ctx.record_output(&node.id, aggregate.clone());
+                frontier.push((node.id.clone(), aggregate));
+            }
+            return Ok(());
+        }
+
         // ── Agent invocation ──────────────────────────────────────────────────
         let agent_id = node.agent.as_ref().ok_or_else(|| {
             AwareError::Validation(format!(
@@ -679,7 +692,11 @@ impl Orchestrator {
                     let code = inline.code.as_deref().unwrap_or("true");
                     // Predicate gates against the most recent upstream output.
                     // For a linear topology, the immediate predecessor's output is in ctx.upstream.
+                    // Inside a `for-each` `do:` body the predicate has no graph
+                    // predecessor (the body topology is implicit), so it gates on
+                    // the bound `{{ item }}` — a per-item filter (#124).
                     let event_to_test = most_recent_upstream(&self.ctx, &self.app, &node.id)
+                        .or_else(|| self.ctx.upstream.get("item").cloned())
                         .unwrap_or(serde_json::json!({}));
                     let pass = eval_predicate(code, &event_to_test)?;
                     self.emit(RunEvent::NodeOutput {
@@ -719,8 +736,11 @@ impl Orchestrator {
                     .unwrap_or_else(|| format!("assertion failed: {}", assert.expr));
                 Err(AwareError::Validation(msg))
             }
-        } else if node.for_each.is_some()
-            || node.compare.is_some()
+        } else if let Some(expr) = node.for_each.clone() {
+            // `for-each` — iterate the resolved collection, binding `{{ item }}`
+            // per element, and run the `do:` body once per item (#124).
+            self.run_for_each(node, &expr).await
+        } else if node.compare.is_some()
             || node.sweep.is_some()
             || node.approve.is_some()
             || node.snapshot.is_some()
@@ -729,9 +749,7 @@ impl Orchestrator {
             // Substrate primitives parsed by v0.19 — runtime implementation
             // lands phase-by-phase in v0.19.x patches. For now, return a
             // clear "not yet implemented" error pointing at the spec section.
-            let primitive = if node.for_each.is_some() {
-                "for-each"
-            } else if node.compare.is_some() {
+            let primitive = if node.compare.is_some() {
                 "compare"
             } else if node.sweep.is_some() {
                 "sweep"
@@ -752,6 +770,88 @@ impl Orchestrator {
                 node.id
             )))
         }
+    }
+
+    /// `for-each` runtime (#124). Resolve the iteration collection from the
+    /// node's expression, bind `{{ item }}` per element, and run the `do:` body
+    /// once per item. The aggregate output is the array of each iteration's
+    /// final body-node output, recorded under the for-each node's id (by the
+    /// caller) so downstream nodes can consume it.
+    ///
+    /// Under `--simulate` an empty or unresolved collection still runs the body
+    /// once — the upstream source was itself stubbed and may legitimately yield
+    /// nothing, yet the composition must validate end-to-end without a live host.
+    async fn run_for_each(&mut self, node: &Node, expr: &str) -> Result<NodeResult, AwareError> {
+        // Save any enclosing `item` binding before resolving the collection (the
+        // collection expr may itself reference the outer `{{ item }}`) so the
+        // outer per-iteration variable is restored when this loop returns. Nested
+        // for-each loops share one `ctx`; without this, an inner loop's last
+        // element would leak into a sibling body node's `{{ item }}` — a topology
+        // the compiler explicitly scopes (app_lock `nested_body_keeps_outer_iteration_var_in_scope`).
+        let prev_item = self.ctx.upstream.get("item").cloned();
+
+        let mut collection = match template::resolve_value(expr, &self.ctx) {
+            Value::Array(items) => items,
+            Value::Null => Vec::new(),
+            // A non-array, non-null value iterates once over itself.
+            other => vec![other],
+        };
+        if collection.is_empty() && self.simulate {
+            collection.push(serde_json::json!({ "simulated": true }));
+        }
+
+        let body = node.do_.clone().unwrap_or_default();
+        let mut results: Vec<Value> = Vec::with_capacity(collection.len());
+        for item in collection {
+            // Bind the per-iteration variable `{{ item }}` — the reserved
+            // for-each prefix the compiler scopes inside the body (#117-3).
+            self.ctx.record_output("item", item);
+            let mut iter_output = Value::Null;
+            let mut gated = false;
+            for body_node in &body {
+                // Box the recursive call: `execute_node` → `run_for_each` →
+                // `execute_node` is a cycle that needs a heap indirection to size.
+                match Box::pin(self.execute_node(body_node)).await? {
+                    NodeResult::Output(v) => {
+                        self.ctx.record_output(&body_node.id, v.clone());
+                        iter_output = v;
+                    }
+                    NodeResult::Gated => {
+                        // An inline predicate in the body filters this item out:
+                        // skip the rest of the body and drop the item from the
+                        // aggregate (for-each + predicate = filter+map), mirroring
+                        // top-level predicate gating which skips downstream nodes.
+                        gated = true;
+                        break;
+                    }
+                }
+            }
+            if !gated {
+                results.push(iter_output);
+            }
+        }
+
+        // Restore the enclosing `item` (or clear it at the top level) so a sibling
+        // body node after a nested loop — or a connection-less downstream
+        // predicate — never reads this loop's last element as `{{ item }}`.
+        match prev_item {
+            Some(v) => {
+                self.ctx.upstream.insert("item".to_string(), v);
+            }
+            None => {
+                self.ctx.upstream.remove("item");
+            }
+        }
+
+        let aggregate = Value::Array(results);
+        self.emit(RunEvent::NodeOutput {
+            ts: now_iso(),
+            run_id: self.run_id.clone(),
+            node: node.id.clone(),
+            data: aggregate.clone(),
+        })
+        .await?;
+        Ok(NodeResult::Output(aggregate))
     }
 }
 
@@ -1015,6 +1115,389 @@ commands:
         } else {
             panic!("run did not end cleanly");
         }
+    }
+
+    #[tokio::test]
+    async fn for_each_runs_body_once_per_item() {
+        // src emits a 3-element array; the for-each `loop` runs its `do:` body
+        // (`body`) once per element, binding `{{ item }}`. The aggregate output
+        // recorded for `loop` is the array of each iteration's body output (#124).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feach
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: body
+        agent: ag-body
+        command: process
+        inputs:
+          val: '{{ item }}'
+connections:
+  - from: src
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-src",
+                    "list",
+                    serde_json::json!({ "items": [10, 20, 30] }),
+                )
+                .with_single("ag-body", "process", serde_json::json!({ "ok": true })),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The body node ran once per item → three NodeStart events for `body`.
+        let body_starts = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "body"))
+            .count();
+        assert_eq!(body_starts, 3, "body must run once per collection element");
+
+        // The for-each node's aggregate output is a 3-element array.
+        let loop_out = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "loop" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("for-each node must emit an aggregate NodeOutput");
+        assert_eq!(loop_out.as_array().map(|a| a.len()), Some(3));
+        assert_eq!(loop_out[0], serde_json::json!({ "ok": true }));
+    }
+
+    #[tokio::test]
+    async fn for_each_under_simulate_runs_body_when_collection_empty() {
+        // #124 repro: a one-shot `--simulate` app where the read source is
+        // stubbed to an empty array. The for-each body must STILL run once (the
+        // stubbed source legitimately yields nothing), and its write node must
+        // emit a `would-write:` event rather than calling a host.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feachsim
+version: 0.1.0
+description: x
+nodes:
+  - id: drawings
+    agent: tekla
+    command: drawing-list
+  - id: sync
+    for-each: '{{ drawings.drawings }}'
+    do:
+      - id: upsert
+        agent: http
+        command: post
+        inputs:
+          url: https://example.test/x
+        safety:
+          snapshot: false
+connections:
+  - from: drawings
+    to: sync
+requires: []
+"#,
+        )
+        .unwrap();
+
+        // Empty invoker: any real transport call surfaces as NotFound and fails.
+        let inv = Arc::new(MockInvoker::new());
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        let agents = tmp.path().join("aware").join("agents");
+        let tekla_dir = agents.join("tekla");
+        std::fs::create_dir_all(&tekla_dir).unwrap();
+        std::fs::write(
+            tekla_dir.join("manifest.yaml"),
+            r#"agent: tekla
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  drawing-list:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: lists drawings
+    outputs:
+      type: single
+      schema:
+        drawings: array
+"#,
+        )
+        .unwrap();
+        let http_dir = agents.join("http");
+        std::fs::create_dir_all(&http_dir).unwrap();
+        std::fs::write(
+            http_dir.join("manifest.yaml"),
+            r#"agent: http
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  post:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: posts a row
+"#,
+        )
+        .unwrap();
+
+        orch.simulate = true;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The write body node ran (once, for the synthetic iteration) and was
+        // stubbed as a would-write rather than dispatched to the host.
+        let would_write = events
+            .iter()
+            .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "upsert"));
+        assert!(
+            would_write,
+            "for-each body write node must emit a would-write under simulate"
+        );
+        if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
+            assert_eq!(status, "ok");
+        } else {
+            panic!("run did not end cleanly");
+        }
+    }
+
+    #[tokio::test]
+    async fn for_each_body_predicate_filters_items() {
+        // The for-each body is `[gate, body]`. `gate` keeps only items where
+        // `item.keep == true`. With two items (one kept, one dropped), the write
+        // node `body` runs once and the aggregate has a single element — proving
+        // a gated body predicate stops the rest of that iteration AND drops the
+        // item from the result (Codex P2-1).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: feachfilter
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: loop
+    for-each: '{{ src.items }}'
+    do:
+      - id: gate
+        inline:
+          kind: predicate
+          description: keep flagged items
+          code: "e => e.keep == true"
+      - id: body
+        agent: ag-body
+        command: process
+connections:
+  - from: src
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-src",
+                    "list",
+                    serde_json::json!({ "items": [{ "keep": true }, { "keep": false }] }),
+                )
+                .with_single("ag-body", "process", serde_json::json!({ "ok": true })),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let body_starts = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeStart { node, .. } if node == "body"))
+            .count();
+        assert_eq!(body_starts, 1, "write body must run only for the kept item");
+
+        let loop_out = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "loop" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("for-each node must emit an aggregate");
+        assert_eq!(loop_out.as_array().map(|a| a.len()), Some(1));
+    }
+
+    #[tokio::test]
+    async fn for_each_runs_in_long_running_stream() {
+        // A watcher source emits one event carrying a 2-element array; the
+        // downstream for-each node (reached via the streaming `execute_and_chain`
+        // path) must run its body once per element (Codex P2-2).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: streamfeach
+version: 0.1.0
+description: x
+nodes:
+  - id: watch
+    agent: ag-watch
+    command: watch
+  - id: loop
+    for-each: '{{ watch.marks }}'
+    do:
+      - id: sink
+        agent: ag-sink
+        command: upload
+        inputs:
+          id: '{{ item.id }}'
+connections:
+  - from: watch
+    to: loop
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-watch",
+                    "watch",
+                    vec![serde_json::json!({ "marks": [{ "id": 1 }, { "id": 2 }] })],
+                )
+                .with_single("ag-sink", "upload", serde_json::json!({ "received": "ok" })),
+        );
+
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (stop_tx, stop_rx) = stop_channel();
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let _ = stop_tx.send(true);
+        run_handle.await.unwrap().unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let sink_outputs = events
+            .iter()
+            .filter(|e| matches!(e, RunEvent::NodeOutput { node, .. } if node == "sink"))
+            .count();
+        assert_eq!(
+            sink_outputs, 2,
+            "for-each body must run once per array element in the streaming path, events: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn nested_for_each_restores_outer_item() {
+        // Outer loop over regions; inner loop over each region's parts. After the
+        // inner loop returns, a sibling body node (`mark`) must still resolve
+        // `{{ item.name }}` to the OUTER region — not the last inner part. Run
+        // under --dry-run so each write body node's `would-write:` event captures
+        // the rendered args (#126 review: nested-loop item clobbering).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nestfeach
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: outer
+    for-each: '{{ src.regions }}'
+    do:
+      - id: inner
+        for-each: '{{ item.parts }}'
+        do:
+          - id: tag
+            agent: ag-part
+            command: tag
+            inputs:
+              part: '{{ item }}'
+            safety:
+              snapshot: false
+      - id: mark
+        agent: ag-region
+        command: mark
+        inputs:
+          region: '{{ item.name }}'
+        safety:
+          snapshot: false
+connections:
+  - from: src
+    to: outer
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "ag-src",
+            "list",
+            serde_json::json!({
+                "regions": [
+                    { "name": "R1", "parts": ["p1", "p2"] },
+                    { "name": "R2", "parts": ["p3"] }
+                ]
+            }),
+        ));
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        // src is read (runs under dry-run via the mock); region/part are write
+        // (emit would-write, capturing rendered args without a host).
+        let agents = tmp.path().join("aware").join("agents");
+        for (name, cmd, mode) in [
+            ("ag-src", "list", "read"),
+            ("ag-region", "mark", "write"),
+            ("ag-part", "tag", "write"),
+        ] {
+            let dir = agents.join(name);
+            std::fs::create_dir_all(&dir).unwrap();
+            std::fs::write(
+                dir.join("manifest.yaml"),
+                format!(
+                    "agent: {name}\nversion: 0.0.1\ndescription: x\nstateful: false\nlicense: MIT\ntransport: {{ cli: {{ binary: nope }} }}\ncommands:\n  {cmd}:\n    lifecycle: single\n    category: curated\n    mode: {mode}\n    description: x\n    outputs:\n      type: single\n      schema:\n        regions: array\n"
+                ),
+            )
+            .unwrap();
+        }
+
+        orch.dry_run = true;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        // The rendered `region` arg from every would-write on `mark`, in order.
+        let regions: Vec<String> = events
+            .iter()
+            .filter_map(|e| match e {
+                RunEvent::WouldWrite {
+                    node,
+                    proposed_inputs,
+                    ..
+                } if node == "mark" => proposed_inputs
+                    .get("region")
+                    .and_then(|v| v.as_str())
+                    .map(|s| s.to_string()),
+                _ => None,
+            })
+            .collect();
+        // Two outer iterations → the outer region name each time, never a part.
+        assert_eq!(regions, vec!["R1".to_string(), "R2".to_string()]);
     }
 
     #[test]

@@ -247,6 +247,64 @@ pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError>
     Ok(rendered)
 }
 
+/// Resolve a `{{ <head>.<seg>… }}` reference to its structured value (array,
+/// object, scalar) rather than a rendered string. The `for-each` runtime needs
+/// the underlying [`serde_json::Value`] to iterate — [`render`] would stringify
+/// an array into `"[…]"`, which can't be iterated.
+///
+/// Mirrors the lockfile compiler's reference grammar
+/// (`app_lock::collect_refs`): the leading run of identifier / `_` / `-` / `.`
+/// characters inside the first `{{ … }}` is taken, split on `.`, and walked.
+/// `inputs` / `config` / `secrets` resolve to those namespaces; any other head
+/// is an upstream node id (raw kebab or underscore form, matching
+/// [`RenderContext::record_output`]). Nested segments are matched verbatim —
+/// agent-output fields aren't identifier-translated. A ref that doesn't resolve
+/// yields [`serde_json::Value::Null`], which the caller treats as empty.
+///
+/// Only the dot/kebab path form is resolved — the same subset the compiler
+/// validates. A bracket-syntax ref (`{{ src['items'] }}`) stops at `[`, so
+/// neither this resolver nor `collect_refs` sees the `items` segment; author
+/// `for-each` collections in dot form (`{{ src.items }}`), AWARE's convention.
+pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
+    let null = serde_json::Value::Null;
+    let Some(start) = expr.find("{{") else {
+        return null;
+    };
+    let after = &expr[start + 2..];
+    let Some(end) = after.find("}}") else {
+        return null;
+    };
+    let inner = after[..end].trim();
+    let path_end = inner
+        .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
+        .unwrap_or(inner.len());
+    let parts: Vec<&str> = inner[..path_end]
+        .split('.')
+        .filter(|p| !p.is_empty())
+        .collect();
+    let Some((head, rest)) = parts.split_first() else {
+        return null;
+    };
+
+    let mut cur = match *head {
+        "inputs" => ctx.inputs.clone(),
+        "config" => serde_json::Value::Object(ctx.config.clone()),
+        "secrets" => serde_json::Value::Object(ctx.secrets.clone()),
+        // Upstream node id — `record_output` stores raw kebab and underscore forms.
+        _ => ctx
+            .upstream
+            .get(*head)
+            .or_else(|| ctx.upstream.get(&head.replace('-', "_")))
+            .or_else(|| ctx.upstream.get(&head.replace('_', "-")))
+            .cloned()
+            .unwrap_or(null),
+    };
+    for seg in rest {
+        cur = cur.get(seg).cloned().unwrap_or(serde_json::Value::Null);
+    }
+    cur
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -322,6 +380,46 @@ mod tests {
     }
 
     // ── #117-4: hyphenated dot-paths now render via the normalizer ──────────
+
+    // ── #124: resolve_value returns structured values for for-each ──────────
+
+    #[test]
+    fn resolve_value_returns_upstream_array() {
+        let ctx = ctx_with_upstream("src", serde_json::json!({ "items": [1, 2, 3] }));
+        assert_eq!(
+            resolve_value("{{ src.items }}", &ctx),
+            serde_json::json!([1, 2, 3])
+        );
+    }
+
+    #[test]
+    fn resolve_value_resolves_kebab_node_head() {
+        // record_output stores both kebab and underscore forms; a `{{ a_b.x }}`
+        // ref must resolve the kebab node `a-b`.
+        let ctx = ctx_with_upstream("a-b", serde_json::json!({ "x": [true] }));
+        assert_eq!(
+            resolve_value("{{ a_b.x }}", &ctx),
+            serde_json::json!([true])
+        );
+    }
+
+    #[test]
+    fn resolve_value_missing_ref_is_null() {
+        let ctx = RenderContext::default();
+        assert!(resolve_value("{{ nope.items }}", &ctx).is_null());
+    }
+
+    #[test]
+    fn resolve_value_reads_inputs_namespace() {
+        let ctx = RenderContext {
+            inputs: serde_json::json!({ "ids": ["a", "b"] }),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_value("{{ inputs.ids }}", &ctx),
+            serde_json::json!(["a", "b"])
+        );
+    }
 
     #[test]
     fn dot_syntax_hyphenated_input_now_renders() {
