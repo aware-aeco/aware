@@ -42,6 +42,9 @@ pub fn build_from_url_or_path(
     if let Some(paths) = spec["paths"].as_object() {
         for (path, methods) in paths {
             if let Some(methods_obj) = methods.as_object() {
+                // Path-item-level `parameters` are shared by every operation on
+                // this path (OpenAPI); merge them into each command's inputs.
+                let path_params = methods_obj.get("parameters");
                 for (method, op) in methods_obj {
                     if !["get", "post", "put", "delete", "patch"].contains(&method.as_str()) {
                         continue;
@@ -68,7 +71,7 @@ pub fn build_from_url_or_path(
                                 "{} {path} \u{2014} {summary}",
                                 method.to_uppercase()
                             ),
-                            inputs_yaml: build_inputs_yaml(&spec, op),
+                            inputs_yaml: build_inputs_yaml(&spec, op, path_params),
                             outputs_yaml: build_outputs_yaml(&spec, op),
                             method: Some(method.to_uppercase()),
                             path: Some(path.clone()),
@@ -117,32 +120,48 @@ fn server_base(spec: &Value) -> Option<String> {
         .map(|s| s.to_string())
 }
 
+/// Append every scheme name referenced by a `security` requirement array to
+/// `out`. Each requirement is an object whose keys are scheme names.
+fn push_security_refs(security: Option<&Value>, out: &mut Vec<String>) {
+    if let Some(reqs) = security.and_then(|v| v.as_array()) {
+        for r in reqs {
+            if let Some(obj) = r.as_object() {
+                out.extend(obj.keys().cloned());
+            }
+        }
+    }
+}
+
 /// Derive a declarative `auth` block from the spec's `components.security
-/// Schemes` + root `security`. Picks the scheme named in root `security` (else
-/// the first declared scheme) and maps apiKey / http-bearer / oauth2 to the
+/// Schemes`. Picks the first scheme referenced by a `security` requirement —
+/// root-level or any operation's — and maps apiKey / http-bearer / oauth2 to the
 /// AWARE auth model. The credential handle is the agent id (one secret per
-/// built agent). Returns `None` for an unauthenticated spec or an unmodeled
-/// scheme (e.g. http-basic).
+/// built agent). Returns `None` when no scheme is required (unauthenticated) or
+/// the referenced scheme is unmodeled (e.g. http-basic).
 fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
     let schemes = spec.pointer("/components/securitySchemes")?.as_object()?;
     if schemes.is_empty() {
         return None;
     }
-    // Decide which scheme (if any) the API actually requires. A declared scheme
-    // is only *required* when referenced by a `security` requirement.
-    let chosen = match spec.get("security").and_then(|v| v.as_array()) {
-        // Explicit root `security`: use its first referenced scheme. An empty
-        // array (`security: []`) — or one referencing no known scheme — means
-        // the API is unauthenticated, so emit no auth block.
-        Some(reqs) => reqs
-            .iter()
-            .find_map(|r| r.as_object().and_then(|o| o.keys().next().cloned()))
-            .filter(|n| schemes.contains_key(n))?,
-        // No root `security`: a scheme is merely *available*. Default to the
-        // first declared — covers specs that attach `security` per-operation
-        // (e.g. petstore) rather than at the root.
-        None => schemes.keys().next().cloned()?,
-    };
+    // A declared scheme is only *required* when referenced by a `security`
+    // requirement. Gather every scheme name referenced at the root OR by any
+    // operation (operation-level security overrides an empty root default), and
+    // pick the first that resolves. If nothing references a scheme, the API is
+    // unauthenticated → no auth block (Codex #106).
+    let mut referenced: Vec<String> = Vec::new();
+    push_security_refs(spec.get("security"), &mut referenced);
+    if let Some(paths) = spec.get("paths").and_then(|v| v.as_object()) {
+        for methods in paths.values() {
+            if let Some(mobj) = methods.as_object() {
+                for (m, op) in mobj {
+                    if ["get", "post", "put", "delete", "patch"].contains(&m.as_str()) {
+                        push_security_refs(op.get("security"), &mut referenced);
+                    }
+                }
+            }
+        }
+    }
+    let chosen = referenced.into_iter().find(|n| schemes.contains_key(n))?;
     let scheme = schemes.get(&chosen)?;
     let secret = agent_id.to_string();
     match scheme.get("type").and_then(|v| v.as_str())? {
@@ -248,15 +267,24 @@ fn body_schema(content: &Value) -> Option<&Value> {
 /// Build the `inputs:` block (without the header) from an operation's
 /// `parameters` (path/query/header) + `requestBody`. Lines are emitted at
 /// column 0; the manifest writer indents them under `inputs:`.
-fn build_inputs_yaml(spec: &Value, op: &Value) -> String {
+fn build_inputs_yaml(spec: &Value, op: &Value, path_params: Option<&Value>) -> String {
     let mut out = String::new();
 
-    if let Some(params) = op.get("parameters").and_then(|v| v.as_array()) {
+    // Operation-level parameters first (they override path-item-level ones with
+    // the same name + location per OpenAPI), then the shared path-item params.
+    let mut seen: std::collections::HashSet<(String, String)> = std::collections::HashSet::new();
+    for src in [op.get("parameters"), path_params] {
+        let Some(params) = src.and_then(|v| v.as_array()) else {
+            continue;
+        };
         for p in params {
             let Some(name) = p.get("name").and_then(|v| v.as_str()) else {
                 continue;
             };
             let loc = p.get("in").and_then(|v| v.as_str()).unwrap_or("query");
+            if !seen.insert((name.to_string(), loc.to_string())) {
+                continue; // already emitted (operation-level wins)
+            }
             let required = p.get("required").and_then(|v| v.as_bool()).unwrap_or(false);
             let empty = Value::Null;
             let ty = schema_type_label(p.get("schema").unwrap_or(&empty));
@@ -632,6 +660,7 @@ paths:
         let tmp = tempfile::tempdir().unwrap();
         let bearer = r##"{ "openapi":"3.0.0","info":{"title":"b","version":"1"},
             "components":{"securitySchemes":{"jwt":{"type":"http","scheme":"bearer"}}},
+            "security":[{"jwt":[]}],
             "paths":{} }"##;
         let p = tmp.path().join("b.json");
         std::fs::write(&p, bearer).unwrap();
@@ -644,6 +673,55 @@ paths:
         let a2 = build_from_url_or_path(p2.to_str().unwrap(), Some("u")).unwrap();
         let rest = a2.rest.expect("rest transport even when unauthenticated");
         assert!(rest.auth.is_none(), "unauthenticated spec → no auth block");
+    }
+
+    #[test]
+    fn merges_path_item_params_and_honors_op_level_security() {
+        // Shared path-item `parameters` apply to every operation, and an
+        // operation's `security` overrides an empty root `security: []`.
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "shop", "version": "1.0.0" },
+            "components": { "securitySchemes": {
+                "api_key": { "type": "apiKey", "in": "header", "name": "X-Key" }
+            } },
+            "security": [],
+            "paths": { "/pets/{petId}": {
+                "parameters": [
+                    { "name": "petId", "in": "path", "required": true, "schema": { "type": "integer" } }
+                ],
+                "get": {
+                    "operationId": "getPet", "summary": "Get",
+                    "security": [ { "api_key": [] } ],
+                    "responses": {}
+                }
+            } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("shop.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("shop")).unwrap();
+
+        // Path-item `petId` is merged into the operation's inputs as a path param.
+        let get = &agent.commands["get-pet"];
+        assert!(
+            get.inputs_yaml.contains("petId:"),
+            "in: {}",
+            get.inputs_yaml
+        );
+        assert!(
+            get.inputs_yaml.contains("in: path"),
+            "in: {}",
+            get.inputs_yaml
+        );
+        // Empty root `security: []` but op-level security references api_key.
+        let auth = agent
+            .rest
+            .as_ref()
+            .and_then(|r| r.auth.as_ref())
+            .expect("op-level security must yield an auth block");
+        assert_eq!(auth.scheme, "api-key");
+        assert_eq!(auth.name.as_deref(), Some("X-Key"));
     }
 
     #[test]

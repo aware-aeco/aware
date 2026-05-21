@@ -233,16 +233,31 @@ impl AgentInvoker for RestInvoker {
         args: Value,
     ) -> Result<Value, AwareError> {
         // Two shapes reach this transport:
-        //  - generic `http` agent: the command IS the HTTP method, and inputs
-        //    carry `url` / `headers` / `query` / `body`.
         //  - built OpenAPI agent (#106): the command maps to a manifest `method`
         //    + `path` template, and inputs are routed by their declared `in:`
         //    location (path / query / header / body).
-        let upper = command.to_ascii_uppercase();
-        let (method, url, mut headers, mut query) = if matches!(
-            upper.as_str(),
-            "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"
-        ) {
+        //  - generic `http` agent: the command IS the HTTP method, and inputs
+        //    carry `url` / `headers` / `query` / `body`.
+        // A manifest mapping is preferred, so an operationId that kebab-cases to
+        // an HTTP verb still routes to its mapped operation (Codex #106).
+        let (method, url, mut headers, mut query) = if command_method(
+            &self.agents_dir,
+            agent,
+            command,
+        )
+        .is_some()
+        {
+            build_operation_request(&self.agents_dir, agent, command, &args)?
+        } else {
+            let upper = command.to_ascii_uppercase();
+            if !matches!(
+                upper.as_str(),
+                "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"
+            ) {
+                return Err(AwareError::Validation(format!(
+                    "rest transport: command {command:?} is not an HTTP method and has no manifest `method:` mapping"
+                )));
+            }
             let raw_url = args.get("url").and_then(|v| v.as_str()).ok_or_else(|| {
                 AwareError::Validation(format!("{agent}/{command}: missing required input `url`"))
             })?;
@@ -253,8 +268,6 @@ impl AgentInvoker for RestInvoker {
                 collect_str_map(args.get("headers")),
                 collect_str_map(args.get("query")),
             )
-        } else {
-            build_operation_request(&self.agents_dir, agent, command, &args)?
         };
         // Inject declarative auth (#106): if the agent's manifest carries an
         // `auth:` block, load its secret and add the credential — bearer/oauth2
@@ -343,6 +356,17 @@ fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
         .get("base")?
         .as_str()
         .map(|s| s.to_string())
+}
+
+/// The HTTP method a manifest command maps to (a built OpenAPI operation), if
+/// any. Used to prefer the operation executor over the generic url-based path.
+fn command_method(agents_dir: &std::path::Path, agent: &str, command: &str) -> Option<String> {
+    crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))
+        .ok()?
+        .commands
+        .get(command)?
+        .method
+        .clone()
 }
 
 /// Join an optional base URL with a (possibly relative) path. An absolute
@@ -1218,6 +1242,48 @@ commands:
         assert!(
             req.contains("Authorization: Bearer jwt-xyz"),
             "bearer auth not injected: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn operation_command_named_like_a_verb_uses_its_mapping() {
+        // An operationId that kebab-cases to `get` must still route via its
+        // manifest method/path mapping, not the generic url-based path that
+        // would demand a `url` input (Codex #106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  get:
+    lifecycle: single
+    description: "GET /health"
+    method: GET
+    path: /health
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        // No `url` input — the mapping must drive the request.
+        let out = inv
+            .invoke_single("svc", "get", serde_json::json!({}))
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.starts_with("GET /health"),
+            "verb-named command should use its mapping, not the url path: {req}"
         );
     }
 }
