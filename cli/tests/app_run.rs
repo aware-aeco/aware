@@ -185,6 +185,75 @@ requires: []
 }
 
 #[test]
+fn run_renders_hyphenated_input_ref_in_dot_syntax() {
+    // The #117-4 scenario: a node config references `{{ inputs.supabase-url }}`
+    // (kebab input name, dot syntax). Before the template normalizer this failed
+    // at render ("tried to use - operator"); now it renders end-to-end.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    let agent_dir = aware.join("agents/stub-writer");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        r#"agent: stub-writer
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: this-write-binary-does-not-exist
+commands:
+  push:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: push data
+"#,
+    )
+    .unwrap();
+
+    let app_dir = aware.join("apps/supabaseapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("supabaseapp.flo"),
+        r#"app: supabaseapp
+version: 0.0.1
+description: x
+nodes:
+  - id: push
+    agent: stub-writer
+    command: push
+    config:
+      url: '{{ inputs.supabase-url }}/rest/v1/drawings'
+    safety:
+      transaction-group: notify
+      snapshot: false
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    // `--simulate` renders the write node's config (for the would-write event),
+    // exercising the hyphenated dot-path. Must succeed.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args([
+            "app",
+            "run",
+            "supabaseapp",
+            "--simulate",
+            "--input",
+            "supabase-url=https://demo.supabase.co",
+        ])
+        .assert()
+        .success();
+}
+
+#[test]
 fn run_nonexistent_app_exits_7() {
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
