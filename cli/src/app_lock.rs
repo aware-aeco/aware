@@ -125,7 +125,7 @@ pub fn compile(
     // ref-checked rather than silently ignored (#117 finding #3). Body nodes
     // carry a scoped id (`parent.child`) so the flat lockfile stays unambiguous.
     let mut flat: Vec<FlatNode> = Vec::new();
-    flatten_nodes(&app.nodes, None, None, &mut flat);
+    flatten_nodes(&app.nodes, None, &[], &mut flat);
 
     // Pin every agent referenced by any node (incl. `do:` bodies).
     let mut agent_pins: BTreeMap<String, String> = BTreeMap::new();
@@ -174,7 +174,7 @@ pub fn compile(
         }
     }
     for (i, entry) in flat.iter().enumerate() {
-        let (node, scoped_id, is_top, iter_var) = (entry.0, &entry.1, entry.2, entry.3.as_deref());
+        let (node, scoped_id, is_top, iter_vars) = (entry.0, &entry.1, entry.2, &entry.3);
         // Parent scope prefix for a body node (`a.b.c` → `a.b`), used to detect
         // sibling shadowing below.
         let scope_prefix = if is_top {
@@ -201,13 +201,13 @@ pub fn compile(
             if nid == nodes[i].id {
                 continue; // self-reference — skip
             }
-            // The enclosing primitive's per-iteration variable (`item` for
+            // Any enclosing primitive's per-iteration variable (`item` for
             // for-each, the `var:` name for sweep) is a runtime prefix inside the
             // body, not a node ref. Skip it even if a top-level node shares the
-            // name — but ONLY within that body, and ONLY for that primitive's var,
-            // so a `sweep` body still validates `{{ item.* }}` against a real
-            // top-level `item` node (Codex #117-3).
-            if iter_var == Some(nid.as_str()) {
+            // name — scoped to this body's ancestors only, so a `sweep` body still
+            // validates `{{ item.* }}` against a real top-level `item` node unless
+            // an outer `for-each` also reserved it (Codex #117-3).
+            if iter_vars.iter().any(|v| v == &nid) {
                 continue;
             }
             // A body node's ref to a SIBLING in its own `do:` body resolves
@@ -266,16 +266,18 @@ pub fn compile(
 /// ids are scoped + reusable, so the scoped id keeps the flat lockfile node
 /// list unambiguous and lets ref-checking treat only top-level ids as global.
 /// A node in the flattened tree: `(node, scoped_id, is_top, iter_var)`.
-/// `iter_var` is the per-iteration variable reserved by the *enclosing*
-/// `do:`-bearing primitive — `item` for `for-each`, the `var:` name for
-/// `sweep` — or `None` for top-level nodes and non-iterating bodies. It is a
-/// runtime prefix, not a node ref, so the ref checker skips it within scope.
-type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool, Option<String>);
+/// `iter_vars` is the set of per-iteration variables reserved by ALL enclosing
+/// `do:`-bearing primitives — `item` for each `for-each`, the `var:` name for
+/// each `sweep` — accumulated outermost-to-innermost. Empty for top-level nodes.
+/// Each is a runtime prefix, not a node ref, so the ref checker skips it within
+/// scope. Nested bodies inherit their ancestors' vars (a `sweep` inside a
+/// `for-each` keeps `item` reserved alongside the sweep var).
+type FlatNode<'a> = (&'a crate::manifest::app::Node, String, bool, Vec<String>);
 
 fn flatten_nodes<'a>(
     nodes: &'a [crate::manifest::app::Node],
     prefix: Option<&str>,
-    iter_var: Option<&str>,
+    iter_vars: &[String],
     out: &mut Vec<FlatNode<'a>>,
 ) {
     for n in nodes {
@@ -283,22 +285,20 @@ fn flatten_nodes<'a>(
             Some(p) => format!("{p}.{}", n.id),
             None => n.id.clone(),
         };
-        out.push((
-            n,
-            scoped_id.clone(),
-            prefix.is_none(),
-            iter_var.map(str::to_string),
-        ));
+        out.push((n, scoped_id.clone(), prefix.is_none(), iter_vars.to_vec()));
         if let Some(body) = &n.do_ {
-            // The body's reserved per-iteration variable is set by THIS node's
-            // primitive: `for-each` binds `item`, `sweep` binds its `var:` name.
-            // Other `do:`-bearing nodes (e.g. schedule scopes) bind nothing.
-            let body_iter_var: Option<&str> = if n.for_each.is_some() {
-                Some("item")
-            } else {
-                n.sweep.as_ref().map(|s| s.var.as_str())
-            };
-            flatten_nodes(body, Some(&scoped_id), body_iter_var, out);
+            // The body adds THIS node's per-iteration variable to the inherited
+            // set: `for-each` binds `item`, `sweep` binds its `var:` name. Other
+            // `do:`-bearing nodes (e.g. schedule scopes) add nothing. Ancestors'
+            // vars stay reserved so a nested body can still reference an outer
+            // `{{ item.* }}` without it being mistaken for a node ref.
+            let mut body_vars = iter_vars.to_vec();
+            if n.for_each.is_some() {
+                body_vars.push("item".to_string());
+            } else if let Some(s) = &n.sweep {
+                body_vars.push(s.var.clone());
+            }
+            flatten_nodes(body, Some(&scoped_id), &body_vars, out);
         }
     }
 }
@@ -1151,6 +1151,102 @@ requires: []
         assert!(
             !worker.notes.iter().any(|n| n.contains("storeys")),
             "sweep var `storeys` wrongly validated as a node ref: {:?}",
+            worker.notes
+        );
+    }
+
+    #[test]
+    fn nested_body_keeps_outer_iteration_var_in_scope() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A `sweep` nested inside a `for-each` body: the inner worker references
+        // the OUTER for-each var `{{ item.target }}`. `item` must stay reserved
+        // from the enclosing for-each — even with a top-level node named `item`
+        // that lacks `target` — so no bogus note is produced. The inner sweep var
+        // (`storeys`) is also reserved (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  itemcmd:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        bar: array
+  produce:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        items: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("nested.flo");
+        std::fs::write(
+            &src,
+            r#"app: nested
+version: 0.0.1
+description: x
+nodes:
+  - id: item
+    agent: a
+    command: itemcmd
+  - id: src
+    agent: a
+    command: produce
+  - id: outer
+    for-each: '{{ src.items }}'
+    do:
+      - id: study
+        sweep:
+          var: storeys
+          values: [1, 2]
+        do:
+          - id: worker
+            agent: a
+            command: consume
+            config:
+              a: '{{ item.target }}'
+              b: '{{ storeys.label }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let worker = lock
+            .nodes
+            .iter()
+            .find(|n| n.id == "outer.study.worker")
+            .unwrap();
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("item")),
+            "outer for-each `item` var lost in nested sweep body: {:?}",
+            worker.notes
+        );
+        assert!(
+            !worker.notes.iter().any(|n| n.contains("storeys")),
+            "inner sweep var `storeys` wrongly validated as a node ref: {:?}",
             worker.notes
         );
     }
