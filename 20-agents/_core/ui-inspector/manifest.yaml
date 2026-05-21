@@ -156,6 +156,18 @@ commands:
       preset:
         type: string
         description: Path to the preset/attribute file to sentinelize (a copy is used).
+      load-via:
+        type: object
+        required: true
+        description: |
+          The host-specific action that makes the dialog load a preset file — the
+          one step map-fields cannot infer generically (Revit, Tekla, SketchUp each
+          load presets through different UI). Supplied by the caller, who knows the
+          host. Exactly one shape:
+            { control: "<id>" }  invoke this control (id from enumerate-controls);
+                                 its file picker is pointed at the sentinel copy
+            { menu: "<path>" }   invoke this menu item (e.g. "Settings > Load…")
+            { agent: "<verb>" }  call a host-agent verb that loads the named preset
       sentinel-strategy:
         type: enum
         values: [numeric-stride, token]

@@ -31,12 +31,21 @@ list. See [sentinel-field-mapping](../skills/sentinel-field-mapping.md).
 {
   "window": "End plate 144 — Properties",
   "preset": "C:/attrs/endplate.j144",
+  "load-via": { "control": "button#load-attributes" },
   "sentinel-strategy": "numeric-stride"
 }
 ```
 
 - `window` (string) — top-level window title (substring) or `0x`-prefixed HWND.
 - `preset` (string) — preset/attribute file to sentinelize (a copy is used).
+- `load-via` (object, required) — the host-specific action that makes the dialog
+  load a preset file. This is the one step map-fields can't infer generically
+  (every host loads presets through different UI), so the caller — who knows the
+  host — supplies it. Exactly one of: `{ control: "<id>" }` (invoke a control from
+  `enumerate-controls`; its file picker is pointed at the sentinel copy),
+  `{ menu: "<path>" }` (invoke a menu item), or `{ agent: "<verb>" }` (call a host
+  agent's preset-load verb). The other four commands need no such hook — they are
+  pure window introspection; only map-fields drives a load action.
 - `sentinel-strategy` (enum, default `numeric-stride`) — `numeric-stride`
   (write `i*11.111111`, fuzzy-match ±0.5) or `token` (write `__attr_<name>__`,
   literal-match). Real presets mix both.
@@ -76,8 +85,10 @@ runs are safe and return the same mapping.
 
 ## Implementation notes for sidecar authors
 
-Round-trip through the app's **own** preset loader (don't poke fields directly —
-that's what proves the binding). **Restore the dialog before returning** — re-load
+Trigger the load through the caller-supplied `load-via` (a control click, menu
+item, or host-agent verb) — the sidecar invokes it pointing at the sentinel copy,
+rather than poking fields directly; that round-trip through the app's **own**
+loader is what proves the binding. **Restore the dialog before returning** — re-load
 the original preset (or close without applying) so the open dialog is left exactly
 as found; the sentinels are loaded into the live UI and must not be left there for
 a user/automation to commit. `walk-tabs` first so fields on every tab are laid
@@ -89,7 +100,7 @@ than guessing.
 ## Example invocation (CLI)
 
 ```bash
-echo '{"window":"End plate 144 — Properties","preset":"C:/attrs/endplate.j144"}' \
+echo '{"window":"End plate 144 — Properties","preset":"C:/attrs/endplate.j144","load-via":{"control":"button#load-attributes"}}' \
   | aware-ui-inspector.exe map-fields --json-stdin
 ```
 
@@ -103,4 +114,5 @@ do:
     inputs:
       window: "{{ inputs.dialog-title }}"
       preset: "{{ inputs.preset-path }}"
+      load-via: { control: "{{ inputs.load-button-id }}" }   # host-specific load trigger
 ```

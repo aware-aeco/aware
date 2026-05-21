@@ -16,16 +16,19 @@ function from named attributes to on-screen field values. Invert it empirically:
 1. **Copy** the preset (never touch the user's original).
 2. **Sentinelize** the copy: replace each attribute's value with a *unique,
    recognizable* sentinel derived from the attribute.
-3. **Load** the sentinelized copy into the dialog (the app's normal "load preset"
-   path).
+3. **Load** the sentinelized copy into the dialog via the caller-supplied
+   `load-via` trigger (a control click, menu item, or host-agent verb). This is
+   the one **host-specific** step — every app loads presets through different UI —
+   so the caller, who knows the host, provides the trigger; the sidecar invokes it.
 4. **Enumerate + read** every field (see
    [win32-control-enumeration](win32-control-enumeration.md)).
 5. **Match** each visible field value back to the sentinel that produced it →
    `field-id -> attribute`.
 
 Because every sentinel is unique and traceable to its attribute, a field showing
-that sentinel *is* that attribute. No app-specific knowledge required — it works
-for any app that round-trips settings through a dialog.
+that sentinel *is* that attribute. The *matching* needs no app-specific knowledge
+— it works for any app that round-trips settings through a dialog. Only the load
+step (3) is host-specific, and the caller supplies it via `load-via`.
 
 ## Two strategies
 
