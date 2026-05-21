@@ -50,6 +50,7 @@ pub fn build_from_python(
                 },
                 inputs_yaml: String::new(),
                 outputs_yaml: String::new(),
+                ..Default::default()
             },
         );
     }
@@ -74,6 +75,7 @@ pub fn build_from_python(
         provenance,
         stateful: false,
         license: "UNKNOWN".into(),
+        rest: None,
     })
 }
 

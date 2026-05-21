@@ -35,14 +35,54 @@ pub struct GeneratedAgent {
     pub provenance: Provenance,
     pub stateful: bool,
     pub license: String,
+    /// When set, the agent uses the `rest` transport (HTTP API) with an
+    /// optional base URL and declarative auth, instead of the default `cli`
+    /// transport (a wrapped binary). Set by the OpenAPI builder; `None` for
+    /// SDK/CLI-derived agents.
+    pub rest: Option<RestBlock>,
 }
 
+/// REST transport + declarative auth for a generated HTTP-API agent.
+#[derive(Debug, Default)]
+pub struct RestBlock {
+    /// Base URL (from the OpenAPI `servers`); commands pass relative paths.
+    pub base: Option<String>,
+    /// Declarative auth derived from the spec's `securitySchemes`.
+    pub auth: Option<AuthBlock>,
+}
+
+/// Declarative auth emitted into the manifest's `auth:` block. The credential
+/// `secret` is also added to `requires.secrets`.
 #[derive(Debug)]
+pub struct AuthBlock {
+    /// `api-key` | `bearer` | `oauth2`.
+    pub scheme: String,
+    /// For `api-key`: `header` | `query`.
+    pub location: Option<String>,
+    /// For `api-key`: the header / query-param name.
+    pub name: Option<String>,
+    /// Credential handle (also added to `requires.secrets`).
+    pub secret: String,
+}
+
+#[derive(Debug, Default)]
 pub struct GeneratedCommand {
     pub lifecycle: String,
     pub description: String,
     pub inputs_yaml: String,
     pub outputs_yaml: String,
+    /// REST operation mapping (OpenAPI builder): HTTP method + path template,
+    /// emitted into the manifest so the REST transport can execute the command.
+    /// `None` for SDK/CLI-derived commands.
+    pub method: Option<String>,
+    pub path: Option<String>,
+    /// Explicit read/write mode (e.g. `write` for mutating HTTP methods), so the
+    /// safety contract applies regardless of the command name. `None` lets the
+    /// loader infer mode from the name convention.
+    pub mode: Option<String>,
+    /// Public endpoint that does not use the agent's declared auth (OpenAPI
+    /// operation with empty effective security). Emitted as `no-auth: true`.
+    pub no_auth: bool,
 }
 
 #[derive(Debug)]
@@ -136,7 +176,33 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
     }
 
     out.push_str("transport:\n");
-    out.push_str(&format!("  cli:\n    binary: aware-{}\n", agent.id));
+    match &agent.rest {
+        Some(rest) => {
+            out.push_str("  rest:");
+            match &rest.base {
+                Some(base) => out.push_str(&format!("\n    base: {}\n", quote_yaml_scalar(base))),
+                None => out.push_str(" {}\n"),
+            }
+        }
+        None => {
+            out.push_str(&format!("  cli:\n    binary: aware-{}\n", agent.id));
+        }
+    }
+
+    // Declarative auth + the credential it requires (REST agents only).
+    if let Some(auth) = agent.rest.as_ref().and_then(|r| r.auth.as_ref()) {
+        out.push_str("auth:\n");
+        out.push_str(&format!("  scheme: {}\n", auth.scheme));
+        if let Some(loc) = &auth.location {
+            out.push_str(&format!("  in: {loc}\n"));
+        }
+        if let Some(name) = &auth.name {
+            out.push_str(&format!("  name: {}\n", quote_yaml_scalar(name)));
+        }
+        out.push_str(&format!("  secret: {}\n", quote_yaml_scalar(&auth.secret)));
+        out.push_str("requires:\n  secrets:\n");
+        out.push_str(&format!("    - {}\n", quote_yaml_scalar(&auth.secret)));
+    }
 
     if !agent.commands.is_empty() {
         out.push_str("commands:\n");
@@ -149,6 +215,18 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
                 "    description: {}\n",
                 quote_yaml_scalar(&desc_one_line)
             ));
+            if let Some(mode) = &cmd.mode {
+                out.push_str(&format!("    mode: {mode}\n"));
+            }
+            if let Some(method) = &cmd.method {
+                out.push_str(&format!("    method: {method}\n"));
+            }
+            if let Some(path) = &cmd.path {
+                out.push_str(&format!("    path: {}\n", quote_yaml_scalar(path)));
+            }
+            if cmd.no_auth {
+                out.push_str("    no-auth: true\n");
+            }
             if !cmd.inputs_yaml.trim().is_empty() {
                 out.push_str("    inputs:\n");
                 for line in cmd.inputs_yaml.lines() {
@@ -215,6 +293,7 @@ mod tests {
                 description: "Does a thing.".into(),
                 inputs_yaml: String::new(),
                 outputs_yaml: String::new(),
+                ..Default::default()
             },
         );
         GeneratedAgent {
@@ -235,6 +314,7 @@ mod tests {
             },
             stateful: false,
             license: "MIT".into(),
+            rest: None,
         }
     }
 

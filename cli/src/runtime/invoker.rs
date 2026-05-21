@@ -208,13 +208,18 @@ impl AgentInvoker for CliInvoker {
 /// Production invoker for the `rest` transport: build an HTTP request from the
 /// rendered command inputs and execute it via the bundled `ureq` client.
 ///
-/// Designed for the generic `http` agent, where the command name *is* the HTTP
-/// method (`get`/`post`/`patch`/`delete`/`put`/`head`) and the inputs carry
-/// `url` / `headers` / `query` / `body`. Secrets are already substituted into
-/// the inputs by the template layer before they reach here (e.g. an
-/// `apikey: "{{ secrets.supabase }}"` header), so the "header/secret handling
-/// via the vault" the issue asks for is the existing secret-render path — this
-/// invoker just sends what it's handed.
+/// Handles two command shapes: the generic `http` agent, where the command name
+/// *is* the HTTP method (`get`/`post`/…) and the inputs carry
+/// `url` / `headers` / `query` / `body`; and built OpenAPI agents (#106), where
+/// the command maps to a manifest `method` + `path` template and inputs are
+/// routed to path / query / header / body by their declared `in:` location.
+/// App-templated secrets
+/// (`apikey: "{{ secrets.supabase }}"`) arrive already substituted in the
+/// inputs. In addition, if the agent's manifest declares an `auth:` block, this
+/// invoker loads the referenced credential and injects it automatically
+/// (bearer/oauth2 → `Authorization: Bearer`; api-key → header/query), without
+/// the app author hand-templating it — fill-if-absent, so explicit input wins
+/// (#106).
 pub struct RestInvoker {
     pub agents_dir: std::path::PathBuf,
 }
@@ -227,37 +232,72 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
-        let method = command.to_ascii_uppercase();
-        if !matches!(
-            method.as_str(),
-            "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"
-        ) {
-            return Err(AwareError::Validation(format!(
-                "rest transport: command {command:?} is not an HTTP method (expected get/post/put/patch/delete/head)"
-            )));
-        }
-
-        let raw_url = args
-            .get("url")
-            .and_then(|v| v.as_str())
-            .ok_or_else(|| {
-                AwareError::Validation(format!("{agent}/{command}: missing required input `url`"))
-            })?
-            .to_string();
-        let url = match rest_base_url(&self.agents_dir, agent) {
-            Some(base) if !raw_url.starts_with("http://") && !raw_url.starts_with("https://") => {
-                format!(
-                    "{}/{}",
-                    base.trim_end_matches('/'),
-                    raw_url.trim_start_matches('/')
-                )
+        // Two shapes reach this transport:
+        //  - built OpenAPI agent (#106): the command maps to a manifest `method`
+        //    + `path` template, and inputs are routed by their declared `in:`
+        //    location (path / query / header / body).
+        //  - generic `http` agent: the command IS the HTTP method, and inputs
+        //    carry `url` / `headers` / `query` / `body`.
+        // A manifest mapping is preferred, so an operationId that kebab-cases to
+        // an HTTP verb still routes to its mapped operation (Codex #106).
+        let (method, url, mut headers, mut query, body) = if command_method(
+            &self.agents_dir,
+            agent,
+            command,
+        )
+        .is_some()
+        {
+            build_operation_request(&self.agents_dir, agent, command, &args)?
+        } else {
+            let upper = command.to_ascii_uppercase();
+            if !matches!(
+                upper.as_str(),
+                "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"
+            ) {
+                return Err(AwareError::Validation(format!(
+                    "rest transport: command {command:?} is not an HTTP method and has no manifest `method:` mapping"
+                )));
             }
-            _ => raw_url,
+            let raw_url = args.get("url").and_then(|v| v.as_str()).ok_or_else(|| {
+                AwareError::Validation(format!("{agent}/{command}: missing required input `url`"))
+            })?;
+            let url = resolve_url(rest_base_url(&self.agents_dir, agent).as_deref(), raw_url);
+            (
+                upper,
+                url,
+                collect_str_map(args.get("headers")),
+                collect_str_map(args.get("query")),
+                args.get("body").cloned(),
+            )
         };
-
-        let headers = collect_str_map(args.get("headers"));
-        let query = collect_str_map(args.get("query"));
-        let body = args.get("body").cloned();
+        // Inject declarative auth (#106): if the agent's manifest carries an
+        // `auth:` block, load its credential and add it — bearer/oauth2 as
+        // `Authorization: Bearer …`, api-key as a header / query / cookie. Only
+        // fills when the caller hasn't already set that slot, so an explicit
+        // `{{ secrets.x }}` in the app still wins. A declared-but-unprovisioned
+        // credential is a fail-fast error (not a silent unauthenticated call).
+        // Load the manifest once for the auth block + this command's `no-auth`
+        // (public-endpoint) flag, which opts a command out of agent auth.
+        if let Ok(m) =
+            crate::manifest::loader::load_agent(&self.agents_dir.join(agent).join("manifest.yaml"))
+        {
+            let is_public = m.commands.get(command).is_some_and(|c| c.no_auth);
+            if let Some(auth) = &m.auth
+                && !is_public
+            {
+                let cred = load_secret_value(&self.agents_dir, &auth.secret)
+                    .as_ref()
+                    .and_then(secret_as_str);
+                let Some(cred) = cred else {
+                    return Err(AwareError::Validation(format!(
+                        "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
+                         provision it (`~/.aware/credentials/{}.json` or `aware connect`)",
+                        auth.secret, auth.secret
+                    )));
+                };
+                inject_auth(auth, &cred, &mut headers, &mut query);
+            }
+        }
         let send_body = matches!(method.as_str(), "POST" | "PUT" | "PATCH" | "DELETE")
             && body.as_ref().is_some_and(|b| !b.is_null());
         // Owned label for the error path — `agent`/`command` are borrows that
@@ -334,6 +374,240 @@ fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
         .get("base")?
         .as_str()
         .map(|s| s.to_string())
+}
+
+/// The HTTP method a manifest command maps to (a built OpenAPI operation), if
+/// any. Used to prefer the operation executor over the generic url-based path.
+fn command_method(agents_dir: &std::path::Path, agent: &str, command: &str) -> Option<String> {
+    crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))
+        .ok()?
+        .commands
+        .get(command)?
+        .method
+        .clone()
+}
+
+/// Percent-encode an OpenAPI path-parameter value (RFC 3986 unreserved set):
+/// everything except `A-Z a-z 0-9 - . _ ~` is `%`-escaped, so a value like
+/// `a/b.txt` becomes `a%2Fb.txt` rather than splitting the route (#106).
+fn percent_encode_path(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    for b in s.bytes() {
+        match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'.' | b'_' | b'~' => {
+                out.push(b as char)
+            }
+            _ => out.push_str(&format!("%{b:02X}")),
+        }
+    }
+    out
+}
+
+/// Join an optional base URL with a (possibly relative) path. An absolute
+/// `http(s)://` path is used as-is.
+fn resolve_url(base: Option<&str>, raw: &str) -> String {
+    match base {
+        Some(b) if !raw.starts_with("http://") && !raw.starts_with("https://") => {
+            format!(
+                "{}/{}",
+                b.trim_end_matches('/'),
+                raw.trim_start_matches('/')
+            )
+        }
+        _ => raw.to_string(),
+    }
+}
+
+/// Stringify a scalar JSON value for use as a path / query / header value.
+/// Objects and arrays (not valid in those positions) yield `None`.
+fn value_to_str(v: &Value) -> Option<String> {
+    match v {
+        Value::String(s) => Some(s.clone()),
+        Value::Number(_) | Value::Bool(_) => Some(v.to_string()),
+        _ => None,
+    }
+}
+
+/// `(method, url, headers, query, body)` — the parts of an HTTP request the REST
+/// transport assembles before adding auth and dispatching it.
+type RequestParts = (
+    String,
+    String,
+    Vec<(String, String)>,
+    Vec<(String, String)>,
+    Option<Value>,
+);
+
+/// Build a request for a built OpenAPI operation command (#106): resolve the
+/// manifest command's `method` + `path` template, fill `{name}` path segments,
+/// and route each input to path / query / header / body by its declared `in:`
+/// location (default query). The `in: body` input becomes the request body —
+/// keyed by location, not name, so a query/header param named `body` is routed
+/// correctly.
+fn build_operation_request(
+    agents_dir: &std::path::Path,
+    agent: &str,
+    command: &str,
+    args: &Value,
+) -> Result<RequestParts, AwareError> {
+    let m = crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))?;
+    let cmd = m.commands.get(command).ok_or_else(|| {
+        AwareError::Validation(format!("{agent}/{command}: command not found in manifest"))
+    })?;
+    let method = cmd
+        .method
+        .clone()
+        .ok_or_else(|| {
+            AwareError::Validation(format!(
+                "rest transport: command {command:?} is not an HTTP method and the manifest declares no `method:` mapping"
+            ))
+        })?
+        .to_ascii_uppercase();
+    let mut path = cmd.path.clone().unwrap_or_default();
+    let mut headers = Vec::new();
+    let mut query = Vec::new();
+    let mut cookies: Vec<String> = Vec::new();
+    let mut body = None;
+    if let Value::Object(provided) = args {
+        for (name, val) in provided {
+            // The `in: body` input is the request body (by location, not name).
+            let loc = cmd
+                .inputs
+                .get(name.as_str())
+                .and_then(|s| s.get("in"))
+                .and_then(|v| v.as_str())
+                .unwrap_or("query");
+            if loc == "body" {
+                body = Some(val.clone());
+                continue;
+            }
+            // Expand the value into one or more string pieces — an array yields
+            // multiple (a scalar, one). Empty (object/unstringifiable) is skipped.
+            let pieces: Vec<String> = match val {
+                Value::Array(items) => items.iter().filter_map(value_to_str).collect(),
+                other => value_to_str(other).into_iter().collect(),
+            };
+            if pieces.is_empty() {
+                continue;
+            }
+            match loc {
+                // style=simple (default): comma-join, then encode the segment.
+                "path" => {
+                    let joined = pieces.join(",");
+                    path = path.replace(&format!("{{{name}}}"), &percent_encode_path(&joined));
+                }
+                "header" => headers.push((name.clone(), pieces.join(","))),
+                "cookie" => cookies.push(format!("{name}={}", pieces.join(","))),
+                // style=form, explode=true (query default): repeat per item.
+                _ => {
+                    for piece in pieces {
+                        query.push((name.clone(), piece));
+                    }
+                }
+            }
+        }
+    }
+    // An unfilled `{name}` means a required path parameter wasn't supplied —
+    // fail clearly rather than dispatching a malformed URL (Codex #106).
+    if let Some(start) = path.find('{') {
+        let pname = path[start + 1..].split('}').next().unwrap_or("");
+        return Err(AwareError::Validation(format!(
+            "{agent}/{command}: missing required path parameter {{{pname}}} (path {path:?})"
+        )));
+    }
+    // `in: cookie` parameters fold into a single `Cookie` header.
+    if !cookies.is_empty() {
+        headers.push(("Cookie".to_string(), cookies.join("; ")));
+    }
+    let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
+    Ok((method, url, headers, query, body))
+}
+
+/// Load a credential by handle, reusing the runtime secret loader (OS keychain,
+/// then `<aware-home>/credentials/<id>.json`). `agents_dir` is `<home>/agents`,
+/// so the credentials directory is its `credentials` sibling.
+fn load_secret_value(agents_dir: &std::path::Path, id: &str) -> Option<Value> {
+    let creds_dir = agents_dir.parent()?.join("credentials");
+    let mut ctx = crate::runtime::template::RenderContext::default();
+    crate::runtime::context::load_secret(&mut ctx, &creds_dir, id).ok()?;
+    ctx.secrets.get(id).cloned()
+}
+
+/// Extract the usable credential string from a loaded secret: a raw string is
+/// used verbatim; an object is probed for the common token/key fields.
+fn secret_as_str(secret: &Value) -> Option<String> {
+    match secret {
+        Value::String(s) => Some(s.clone()),
+        Value::Object(m) => [
+            "token",
+            "access_token",
+            "key",
+            "apikey",
+            "api_key",
+            "value",
+            "secret",
+        ]
+        .iter()
+        .find_map(|k| m.get(*k).and_then(|v| v.as_str()).map(|s| s.to_string())),
+        _ => None,
+    }
+}
+
+/// Inject the declared credential into the request: bearer/oauth2 as an
+/// `Authorization: Bearer` header, api-key as a header / query / cookie. A slot
+/// the caller already populated is left untouched (explicit input wins).
+fn inject_auth(
+    auth: &crate::manifest::agent::AuthScheme,
+    cred: &str,
+    headers: &mut Vec<(String, String)>,
+    query: &mut Vec<(String, String)>,
+) {
+    match auth.scheme.as_str() {
+        "bearer" | "oauth2"
+            if !headers
+                .iter()
+                .any(|(k, _)| k.eq_ignore_ascii_case("authorization")) =>
+        {
+            headers.push(("Authorization".into(), format!("Bearer {cred}")));
+        }
+        "api-key" => {
+            let name = auth.name.as_deref().unwrap_or("Authorization");
+            match auth.location.as_deref() {
+                Some("query") => {
+                    if !query.iter().any(|(k, _)| k == name) {
+                        query.push((name.to_string(), cred.to_string()));
+                    }
+                }
+                // apiKey `in: cookie` → `Cookie: name=value`. Append to an
+                // existing Cookie header (e.g. one built from cookie params)
+                // instead of skipping it, unless that cookie name is already set.
+                Some("cookie") => {
+                    let pair = format!("{name}={cred}");
+                    if let Some((_, existing)) = headers
+                        .iter_mut()
+                        .find(|(k, _)| k.eq_ignore_ascii_case("cookie"))
+                    {
+                        let already = existing
+                            .split(';')
+                            .any(|c| c.trim_start().starts_with(&format!("{name}=")));
+                        if !already {
+                            existing.push_str("; ");
+                            existing.push_str(&pair);
+                        }
+                    } else {
+                        headers.push(("Cookie".into(), pair));
+                    }
+                }
+                // header (default).
+                _ => {
+                    if !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
+                        headers.push((name.to_string(), cred.to_string()));
+                    }
+                }
+            }
+        }
+        _ => {}
+    }
 }
 
 /// Flatten an optional `{ key: value }` input (headers / query) into ordered
@@ -819,5 +1093,621 @@ commands:
         assert_eq!(out["status"], serde_json::json!(200));
         let req = rx.recv().unwrap();
         assert!(req.starts_with("GET /ping"), "req: {req}");
+    }
+
+    #[tokio::test]
+    async fn rest_injects_declared_apikey_header_from_credential() {
+        // End-to-end: a rest agent declaring an `auth:` block + a stored
+        // credential → the transport injects the header without the caller
+        // templating it (#106). agents_dir is `<home>/agents`, so the
+        // credentials file lives in the `<home>/credentials` sibling.
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("secured");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: secured
+version: 0.1.0
+description: secured api
+stateful: false
+license: MIT
+transport:
+  rest: {}
+auth:
+  scheme: api-key
+  in: header
+  name: X-API-Key
+  secret: secured
+requires:
+  secrets:
+    - secured
+commands:
+  get:
+    lifecycle: single
+    description: GET
+"#,
+        )
+        .unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("secured.json"), r#"{"key":"sk-live-123"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single(
+                "secured",
+                "get",
+                serde_json::json!({ "url": format!("http://127.0.0.1:{port}/ping") }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.contains("X-API-Key: sk-live-123"),
+            "injected api-key header missing: {req}"
+        );
+    }
+
+    #[test]
+    fn inject_auth_covers_bearer_apikey_and_respects_explicit() {
+        use crate::manifest::agent::AuthScheme;
+        let bearer = AuthScheme {
+            scheme: "bearer".into(),
+            location: None,
+            name: None,
+            secret: "s".into(),
+        };
+        let mut h = Vec::new();
+        let mut q = Vec::new();
+        inject_auth(&bearer, "tok", &mut h, &mut q);
+        assert_eq!(h, vec![("Authorization".into(), "Bearer tok".into())]);
+
+        let apikey_query = AuthScheme {
+            scheme: "api-key".into(),
+            location: Some("query".into()),
+            name: Some("apikey".into()),
+            secret: "s".into(),
+        };
+        let mut h2 = Vec::new();
+        let mut q2 = Vec::new();
+        inject_auth(&apikey_query, "raw", &mut h2, &mut q2);
+        assert_eq!(q2, vec![("apikey".into(), "raw".into())]);
+
+        // An explicit Authorization the caller set is never overridden.
+        let mut h3 = vec![("Authorization".to_string(), "Bearer explicit".to_string())];
+        let mut q3 = Vec::new();
+        inject_auth(&bearer, "other", &mut h3, &mut q3);
+        assert_eq!(h3[0].1, "Bearer explicit");
+
+        // apiKey `in: cookie` → `Cookie: name=value` header.
+        let apikey_cookie = AuthScheme {
+            scheme: "api-key".into(),
+            location: Some("cookie".into()),
+            name: Some("session".into()),
+            secret: "s".into(),
+        };
+        let mut h4 = Vec::new();
+        let mut q4 = Vec::new();
+        inject_auth(&apikey_cookie, "sid-9", &mut h4, &mut q4);
+        assert_eq!(h4, vec![("Cookie".into(), "session=sid-9".into())]);
+    }
+
+    #[test]
+    fn percent_encode_path_escapes_reserved_chars() {
+        assert_eq!(percent_encode_path("a/b.txt"), "a%2Fb.txt");
+        assert_eq!(percent_encode_path("x y?z"), "x%20y%3Fz");
+        // Unreserved set passes through unchanged.
+        assert_eq!(percent_encode_path("Pet-1_2.3~ok"), "Pet-1_2.3~ok");
+    }
+
+    #[test]
+    fn secret_as_str_handles_string_and_objects() {
+        assert_eq!(secret_as_str(&serde_json::json!("raw")), Some("raw".into()));
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"token":"t"})),
+            Some("t".into())
+        );
+        assert_eq!(
+            secret_as_str(&serde_json::json!({"apikey":"k"})),
+            Some("k".into())
+        );
+        assert_eq!(secret_as_str(&serde_json::json!({"other":"x"})), None);
+    }
+
+    #[tokio::test]
+    async fn built_openapi_get_executes_with_path_query_and_auth() {
+        // A built OpenAPI agent: command `get-pet` maps to `GET /pets/{petId}`,
+        // `petId` is a path param, `verbose` a query param, and the agent
+        // declares api-key auth. The transport substitutes the path, appends the
+        // query, and injects the credential — end to end (#106).
+        let (port, rx) = mock_server(200, r#"{"id":42,"name":"Rex"}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("petstore");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: petstore
+version: 0.1.0
+description: petstore
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: api-key
+  in: header
+  name: X-API-Key
+  secret: petstore
+requires:
+  secrets:
+    - petstore
+commands:
+  get-pet:
+    lifecycle: single
+    description: "GET /pets/{petId}"
+    method: GET
+    path: /pets/{petId}
+    inputs:
+      petId:
+        type: integer
+        in: path
+        required: true
+      verbose:
+        type: boolean
+        in: query
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("petstore.json"), r#"{"key":"sk-abc"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single(
+                "petstore",
+                "get-pet",
+                serde_json::json!({ "petId": 42, "verbose": true }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        assert_eq!(out["body"]["name"], serde_json::json!("Rex"));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.starts_with("GET /pets/42"),
+            "path param not substituted: {req}"
+        );
+        assert!(req.contains("verbose=true"), "query param missing: {req}");
+        assert!(
+            req.contains("X-API-Key: sk-abc"),
+            "auth not injected: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn built_openapi_post_sends_body_with_bearer_auth() {
+        let (port, rx) = mock_server(201, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("petstore");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: petstore
+version: 0.1.0
+description: petstore
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: bearer
+  secret: petstore
+requires:
+  secrets:
+    - petstore
+commands:
+  add-pet:
+    lifecycle: single
+    mode: write
+    description: "POST /pets"
+    method: POST
+    path: /pets
+    inputs:
+      body:
+        type: Pet
+        in: body
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("petstore.json"), r#"{"token":"jwt-xyz"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single(
+                "petstore",
+                "add-pet",
+                serde_json::json!({ "body": { "name": "Rex" } }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(201));
+        let req = rx.recv().unwrap();
+        assert!(req.starts_with("POST /pets"), "method/path wrong: {req}");
+        assert!(req.contains("\"name\":\"Rex\""), "body missing: {req}");
+        assert!(
+            req.contains("Authorization: Bearer jwt-xyz"),
+            "bearer auth not injected: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn operation_command_named_like_a_verb_uses_its_mapping() {
+        // An operationId that kebab-cases to `get` must still route via its
+        // manifest method/path mapping, not the generic url-based path that
+        // would demand a `url` input (Codex #106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  get:
+    lifecycle: single
+    description: "GET /health"
+    method: GET
+    path: /health
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        // No `url` input — the mapping must drive the request.
+        let out = inv
+            .invoke_single("svc", "get", serde_json::json!({}))
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.starts_with("GET /health"),
+            "verb-named command should use its mapping, not the url path: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn operation_cookie_param_folds_into_cookie_header() {
+        // An `in: cookie` operation parameter must be sent as a `Cookie` header,
+        // not appended to the query string (Codex #106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  get-thing:
+    lifecycle: single
+    description: "GET /thing"
+    method: GET
+    path: /thing
+    inputs:
+      sid:
+        type: string
+        in: cookie
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "get-thing", serde_json::json!({ "sid": "abc-9" }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(
+            req.contains("Cookie: sid=abc-9"),
+            "cookie param should be a Cookie header: {req}"
+        );
+        assert!(
+            req.starts_with("GET /thing "),
+            "cookie param must not leak into the query string: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn cookie_auth_appends_to_operation_cookie_param() {
+        // apiKey `in: cookie` auth + an operation cookie param must coexist in
+        // one `Cookie` header — auth appends rather than being skipped (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: api-key
+  in: cookie
+  name: token
+  secret: svc
+requires:
+  secrets:
+    - svc
+commands:
+  get-thing:
+    lifecycle: single
+    description: "GET /thing"
+    method: GET
+    path: /thing
+    inputs:
+      sid:
+        type: string
+        in: cookie
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("svc.json"), r#"{"key":"tok-9"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "get-thing", serde_json::json!({ "sid": "abc" }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(req.contains("sid=abc"), "cookie param missing: {req}");
+        assert!(req.contains("token=tok-9"), "auth cookie missing: {req}");
+    }
+
+    #[tokio::test]
+    async fn declared_auth_with_missing_credential_errors_clearly() {
+        // An agent that declares `auth:` but whose credential isn't provisioned
+        // must fail fast with an actionable error, not send an unauthenticated
+        // request and get a remote 401 (#106).
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("secured");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: secured
+version: 0.1.0
+description: x
+stateful: false
+license: MIT
+transport:
+  rest: {}
+auth:
+  scheme: bearer
+  secret: secured
+requires:
+  secrets:
+    - secured
+commands:
+  get:
+    lifecycle: single
+    description: GET
+"#,
+        )
+        .unwrap();
+        // Deliberately no credentials/secured.json.
+        let inv = RestInvoker { agents_dir: agents };
+        let err = inv
+            .invoke_single(
+                "secured",
+                "get",
+                serde_json::json!({ "url": "http://127.0.0.1:1/x" }),
+            )
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        assert!(
+            format!("{err}").contains("credential"),
+            "error should name the missing credential: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn operation_array_query_param_repeats() {
+        // An `in: query` array parameter expands to repeated entries
+        // (form/explode default), e.g. `tags=a&tags=b` (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  list:
+    lifecycle: single
+    description: "GET /pets"
+    method: GET
+    path: /pets
+    inputs:
+      tags:
+        type: array<string>
+        in: query
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "list", serde_json::json!({ "tags": ["a", "b"] }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(req.contains("tags=a"), "first array item missing: {req}");
+        assert!(req.contains("tags=b"), "second array item missing: {req}");
+    }
+
+    #[tokio::test]
+    async fn no_auth_command_skips_auth_even_without_credential() {
+        // A `no-auth` (public) command on an auth-declaring agent must neither
+        // inject the credential nor fail-fast when it's unprovisioned (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: bearer
+  secret: svc
+requires:
+  secrets:
+    - svc
+commands:
+  get-health:
+    lifecycle: single
+    description: "GET /health"
+    method: GET
+    path: /health
+    no-auth: true
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        // Deliberately no credentials/svc.json.
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single("svc", "get-health", serde_json::json!({}))
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        let req = rx.recv().unwrap();
+        assert!(
+            !req.contains("Authorization"),
+            "no-auth command must not inject auth: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn missing_required_path_param_errors() {
+        // Omitting a `{petId}` path parameter must be a clear validation error,
+        // not a malformed URL with `{petId}` left in it (Codex #106).
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:1
+commands:
+  get-pet:
+    lifecycle: single
+    description: "GET /pets/{petId}"
+    method: GET
+    path: /pets/{petId}
+    inputs:
+      petId:
+        type: integer
+        in: path
+        required: true
+"#,
+        )
+        .unwrap();
+        let inv = RestInvoker { agents_dir: agents };
+        let err = inv
+            .invoke_single("svc", "get-pet", serde_json::json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        assert!(
+            format!("{err}").contains("petId"),
+            "error should name the missing path param: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn query_param_named_body_is_routed_by_location() {
+        // A query parameter literally named `body` (declared `in: query`) must be
+        // sent as a query param, not dropped or treated as the request body (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+commands:
+  search:
+    lifecycle: single
+    description: "GET /search"
+    method: GET
+    path: /search
+    inputs:
+      body:
+        type: string
+        in: query
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "search", serde_json::json!({ "body": "hello" }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(
+            req.starts_with("GET /search?body=hello"),
+            "query param named `body` should be in the query string: {req}"
+        );
     }
 }

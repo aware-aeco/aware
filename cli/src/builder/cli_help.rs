@@ -50,6 +50,7 @@ pub fn build_from_cli(binary: &str, agent_id: Option<&str>) -> Result<GeneratedA
         provenance,
         stateful: false,
         license: "UNKNOWN".into(),
+        rest: None,
     })
 }
 
@@ -95,6 +96,7 @@ pub(crate) fn parse_help(help: &str) -> BTreeMap<String, GeneratedCommand> {
                     },
                     inputs_yaml: String::new(),
                     outputs_yaml: String::new(),
+                    ..Default::default()
                 },
             );
         } else {

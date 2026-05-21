@@ -55,6 +55,7 @@ pub fn build_from_url_or_dir(
                     description: m.description.clone(),
                     inputs_yaml: String::new(),
                     outputs_yaml: String::new(),
+                    ..Default::default()
                 },
             );
         }
@@ -113,6 +114,7 @@ pub fn build_from_url_or_dir(
         provenance,
         stateful: false,
         license: "see-source".into(),
+        rest: None,
     })
 }
 

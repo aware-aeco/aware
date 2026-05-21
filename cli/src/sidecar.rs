@@ -309,6 +309,7 @@ fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
                 description: c.description,
                 inputs_yaml: String::new(),
                 outputs_yaml: String::new(),
+                ..Default::default()
             },
         );
     }
@@ -336,6 +337,7 @@ fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
         provenance,
         stateful: s.stateful,
         license: s.license,
+        rest: None,
     }
 }
 

@@ -60,10 +60,34 @@ pub struct Agent {
     #[serde(default)]
     pub engineering: Option<EngineeringDecl>,
     pub transport: Transport,
+    /// Declarative auth (v0.39). When present, the REST transport injects the
+    /// referenced secret on every call (apiKey header/query, or bearer/oauth2
+    /// `Authorization: Bearer`), so a built authenticated API works without the
+    /// app author hand-templating `{{ secrets.<id> }}` into each request.
+    /// Emitted by `aware build --from-openapi` from the spec's `securitySchemes`.
+    #[serde(default)]
+    pub auth: Option<AuthScheme>,
     #[serde(default)]
     pub commands: BTreeMap<String, Command>,
     #[serde(default)]
     pub skills: Vec<String>,
+}
+
+/// Declarative authentication for a REST-transport agent.
+#[derive(Debug, Deserialize, Clone)]
+pub struct AuthScheme {
+    /// `api-key` | `bearer` | `oauth2`. (`oauth2` is treated as bearer at the
+    /// transport: the provisioned secret is sent as `Authorization: Bearer`.)
+    pub scheme: String,
+    /// For `api-key`: where the key goes — `header` (default) or `query`.
+    #[serde(rename = "in", default)]
+    pub location: Option<String>,
+    /// For `api-key`: the header or query-param name (e.g. `apikey`, `X-API-Key`).
+    #[serde(default)]
+    pub name: Option<String>,
+    /// Credential handle — matches a `requires.secrets` entry and the
+    /// keychain account / `~/.aware/credentials/<secret>.json` file.
+    pub secret: String,
 }
 
 #[allow(dead_code)]
@@ -141,6 +165,22 @@ pub struct Command {
     pub inputs: Value,
     #[allow(dead_code)]
     pub outputs: Option<Value>,
+    /// REST operation mapping (v0.39, `--from-openapi`): the HTTP method this
+    /// command performs. When set, the REST transport executes the command as
+    /// `<method> <base><path>` rather than requiring the command name to be a
+    /// bare HTTP method. `None` for the generic `http` agent + non-REST agents.
+    #[serde(default)]
+    pub method: Option<String>,
+    /// REST operation path template (e.g. `/pets/{petId}`). `{name}` segments
+    /// are filled from inputs whose schema declares `in: path`.
+    #[serde(default)]
+    pub path: Option<String>,
+    /// This command is a public endpoint that does NOT use the agent's declared
+    /// `auth:` — set by `--from-openapi` for operations whose effective security
+    /// is empty (e.g. login/health). The REST transport skips auth injection
+    /// (and its missing-credential check) for such commands.
+    #[serde(rename = "no-auth", default)]
+    pub no_auth: bool,
     /// Explicit per-command category. If `None`, the agent-level provenance
     /// is used to infer the default (see `Agent::default_category`).
     #[serde(default)]

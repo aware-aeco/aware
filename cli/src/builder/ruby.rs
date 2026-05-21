@@ -131,6 +131,7 @@ pub(crate) fn build_from_bytes(
         provenance,
         stateful: false,
         license,
+        rest: None,
     })
 }
 
@@ -174,6 +175,7 @@ fn extract_surface(
                         description: display,
                         inputs_yaml: String::new(),
                         outputs_yaml: String::new(),
+                        ..Default::default()
                     },
                 );
                 by_class
