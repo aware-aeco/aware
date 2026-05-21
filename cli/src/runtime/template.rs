@@ -36,6 +36,27 @@ impl RenderContext {
     }
 }
 
+/// Find the byte index just past the next `{% endraw %}` tag at or after `from`,
+/// or `None` if the raw block is unterminated. Tolerates whitespace-control
+/// dashes (`{%- endraw -%}`).
+fn find_endraw(template: &str, from: usize) -> Option<usize> {
+    let mut search = from;
+    while let Some(open_rel) = template[search..].find("{%") {
+        let after_open = search + open_rel + 2;
+        let close_rel = template[after_open..].find("%}")?;
+        let tag = template[after_open..after_open + close_rel]
+            .trim()
+            .trim_matches('-')
+            .trim();
+        let close_end = after_open + close_rel + 2;
+        if tag == "endraw" {
+            return Some(close_end);
+        }
+        search = close_end;
+    }
+    None
+}
+
 /// Rewrite hyphenated dot-path segments inside `{{ … }}` / `{% … %}` blocks to
 /// bracket form, so kebab-case identifiers work in dot syntax. minijinja lexes
 /// `inputs.tc-project-id` as the expression `inputs.tc - project - id`
@@ -46,9 +67,13 @@ impl RenderContext {
 /// becomes `tekla_watch['drawing-bytes']`.
 ///
 /// Only hyphenated dot-paths are touched — exactly the refs that fail today.
-/// Hyphen-free paths, single tokens (so `a - b` subtraction is never mangled),
-/// and the contents of string literals are copied through unchanged, so any
-/// template that already renders keeps rendering identically (#117-4).
+/// Hyphen-free paths and the contents of string literals and `{% raw %}` blocks
+/// are copied through unchanged, so any template that already renders keeps
+/// rendering identically (#117-4).
+///
+/// Subtraction note: an explicit, spaced `{{ a.b - c }}` is preserved (the space
+/// ends the path). A *space-free* `{{ ns.a-b }}` is read as the kebab key `a-b`,
+/// matching AWARE's kebab-everywhere convention; write subtraction with spaces.
 fn normalize_hyphenated_paths(template: &str) -> String {
     let b = template.as_bytes();
     let n = b.len();
@@ -63,6 +88,22 @@ fn normalize_hyphenated_paths(template: &str) -> String {
     while i < n {
         let c = b[i];
         if !in_expr {
+            // `{% raw %}` … `{% endraw %}` is emitted literally by minijinja —
+            // skip the whole region so its body is never normalized.
+            if c == b'{'
+                && i + 1 < n
+                && b[i + 1] == b'%'
+                && let Some(close_rel) = template[i + 2..].find("%}")
+                && template[i + 2..i + 2 + close_rel]
+                    .trim()
+                    .trim_matches('-')
+                    .trim()
+                    == "raw"
+            {
+                let body_start = i + 2 + close_rel + 2;
+                i = find_endraw(template, body_start).unwrap_or(n);
+                continue;
+            }
             if c == b'{' && i + 1 < n && (b[i + 1] == b'{' || b[i + 1] == b'%') {
                 in_expr = true;
                 i += 2;
@@ -393,6 +434,29 @@ mod tests {
         assert_eq!(
             normalize_hyphenated_paths("café {{ x.y-z }}"),
             "café {{ x['y-z'] }}"
+        );
+    }
+
+    #[test]
+    fn normalize_skips_raw_blocks() {
+        // `{% raw %}` body is emitted literally — no normalization inside.
+        assert_eq!(
+            normalize_hyphenated_paths("{% raw %}{{ inputs.foo-bar }}{% endraw %}"),
+            "{% raw %}{{ inputs.foo-bar }}{% endraw %}"
+        );
+        // A real ref after the raw block is still normalized.
+        assert_eq!(
+            normalize_hyphenated_paths("{% raw %}{{ a.b-c }}{% endraw %} {{ x.y-z }}"),
+            "{% raw %}{{ a.b-c }}{% endraw %} {{ x['y-z'] }}"
+        );
+    }
+
+    #[test]
+    fn normalize_preserves_spaced_subtraction() {
+        // Explicit, spaced subtraction is left intact (the space ends the path).
+        assert_eq!(
+            normalize_hyphenated_paths("{{ inputs.count - discount }}"),
+            "{{ inputs.count - discount }}"
         );
     }
 }
