@@ -194,7 +194,11 @@ commands:
       screenshots:
         type: array
         items: string
-        description: Screenshot paths from capture-window / walk-tabs, in tab order.
+        required: false
+        description: |
+          Screenshot path strings in tab order (embedded as base64). Optional when
+          `controls` is walk-tabs output — each tab already carries its own
+          `screenshot-path`; required for single-dialog enumerate-controls output.
       output-path:
         type: string
         description: Destination HTML path.

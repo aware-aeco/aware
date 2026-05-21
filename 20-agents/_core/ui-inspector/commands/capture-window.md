@@ -62,8 +62,11 @@ equivalent image (modulo dialog state changes).
 ## Implementation notes for sidecar authors
 
 Size the bitmap from `GetClientRect`, not the window rect. Always pass
-`PW_CLIENTONLY | PW_RENDERFULLCONTENT`. When `tab` is set, switch the tab control
-and `Thread.Sleep(300)` before capturing — an 80 ms settle under-paints
+`PW_CLIENTONLY | PW_RENDERFULLCONTENT`. When `tab` is set, switch the page so the
+parent swaps it (`PSM_SETCURSEL` to the property-sheet window, or synthesize the
+tab click — `TCM_SETCURSEL` alone won't swap the page; see the
+[win32-control-enumeration](../skills/win32-control-enumeration.md) skill), then
+`Thread.Sleep(300)` before capturing — an 80 ms settle under-paints
 late-laid-out controls. Write PNG (lossless) so overlay hot-zones are crisp.
 
 ## Example invocation (CLI)

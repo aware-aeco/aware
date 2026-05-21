@@ -69,10 +69,14 @@ overwrites the per-tab screenshots with equivalent images.
 
 Find the `SysTabControl32`, read its item count, and `TCM_GETITEMW`
 cross-process for each label (allocate the `TCITEM` + text buffer in the target
-process with `VirtualAllocEx`; free it after). Switch with `TCM_SETCURSEL`, then
-`Thread.Sleep(300)` before enumerating/capturing. Number screenshots in tab
-order so `build-overlay` can pair them. Restore the original tab if you can; it's
-not required (read-mode).
+process with `VirtualAllocEx`; free it after). **Switch the page so the parent
+swaps it** — `PSM_SETCURSEL` to the property-sheet window, or synthesize the tab
+click; `TCM_SETCURSEL` alone moves the highlight without swapping the page, so
+you'd re-read tab 1 every time (see the
+[win32-control-enumeration](../skills/win32-control-enumeration.md) skill). Then
+`Thread.Sleep(300)` before enumerating/capturing. Number screenshots in tab order
+so `build-overlay` can pair them. Restore the original tab if you can; it's not
+required (read-mode).
 
 ## Example invocation (CLI)
 

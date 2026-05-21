@@ -53,15 +53,31 @@ IntPtr remote = VirtualAllocEx(proc, IntPtr.Zero, size, MEM_COMMIT, PAGE_READWRI
 Use the **W** (`TCM_GETITEMW`) variant and a UTF-16 buffer. The ANSI variant
 mangles non-ASCII tab names.
 
-## 3. Settle >= 300 ms after switching a tab
+## 3. Switch the tab so the PARENT swaps the page — then settle >= 300 ms
 
-After `TCM_SETCURSEL` (or clicking a tab), the dialog re-lays-out its controls
-asynchronously. Reading too soon under-counts: at **80 ms a property sheet
-under-counted its controls by ~50%**; **>=300 ms** is the floor that counts them
-all. Settle in the adapter, not the caller:
+A `SysTabControl32` is only the tab strip; the **parent** window owns the page
+content and swaps it when it receives a `TCN_SELCHANGE` notification. So
+`TCM_SETCURSEL` alone is a trap — it moves the highlighted tab but sends the
+parent no notification, so the page never changes and you enumerate/capture the
+**old** page for every tab. Switch in a way that notifies the parent:
+
+- **Property sheets** (the common case — a `#32770` dialog hosting the tabs):
+  send `PSM_SETCURSEL` / `PSM_SETCURSELID` to the **property-sheet window** (the
+  parent), not to the tab strip. That activates the page.
+- **Other tabbed dialogs:** synthesize a real tab click (post the mouse
+  down/up over the tab item, or UIAutomation `SelectionItem.Select`), or send the
+  parent the `TCN_SELCHANGE` `WM_NOTIFY` yourself. Synthesizing the click is the
+  most robust — it drives the exact notification chain the dialog expects.
+
+Then **settle**: the page re-lays-out its controls asynchronously, so reading too
+soon under-counts — at **80 ms a property sheet under-counted its controls by
+~50%**; **>=300 ms** is the floor that counts them all. Settle in the adapter,
+not the caller:
 
 ```csharp
-SendMessage(tabCtrl, TCM_SETCURSEL, idx, 0);
+// Property sheet: activate the page via the SHEET window (parent), not the strip.
+SendMessage(propSheet, PSM_SETCURSEL, (IntPtr)idx, IntPtr.Zero);
+// Generic dialog: synthesize the tab click instead, so the parent gets TCN_SELCHANGE.
 Thread.Sleep(300);   // floor; bump for heavy dialogs
 ```
 
@@ -90,6 +106,7 @@ The bitmap's `(0,0)` now equals the client origin — the same origin
 
 - [ ] `PW_CLIENTONLY` set (no chrome in the image)
 - [ ] control rects mapped to **client** coords (not screen)
-- [ ] tab read via `TCM_GETITEMW` cross-process (not a local pointer)
+- [ ] tab label read via `TCM_GETITEMW` cross-process (not a local pointer)
+- [ ] tab SWITCH notifies the parent (`PSM_SETCURSEL` / synthesized click), not `TCM_SETCURSEL` alone
 - [ ] >=300 ms settle after each tab switch
 - [ ] every `VirtualAllocEx` paired with `VirtualFreeEx`; every `OpenProcess` handle closed

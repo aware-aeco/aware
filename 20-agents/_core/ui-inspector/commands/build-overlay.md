@@ -34,8 +34,11 @@ output) see the html-report [styling](../../html-report/skills/styling.md) skill
 
 - `controls` (object) — `enumerate-controls` (`{controls:[…]}`) or `walk-tabs`
   (`{tabs:[…]}`) output. May also carry `map-fields` `mapping` to label hot zones.
-- `screenshots` (array) — screenshot paths in tab order (embedded as base64 so
-  the file is fully self-contained).
+- `screenshots` (array of path strings, optional) — screenshot paths in tab
+  order, embedded as base64 so the file is self-contained. **Optional when
+  `controls` is `walk-tabs` output** — each tab already carries its own
+  `screenshot-path`, which `build-overlay` uses directly; supply `screenshots`
+  for single-dialog `enumerate-controls` output, which has no embedded path.
 - `output-path` (string) — destination HTML path.
 - `title` (string, optional) — page title; defaults to the window title.
 
@@ -93,7 +96,6 @@ do:
     agent: ui-inspector
     command: build-overlay
     inputs:
-      controls: "{{ walk }}"
-      screenshots: "{{ walk.tabs }}"
-      output-path: "out/{{ inputs.connection }}-xray.html"
+      controls: "{{ walk }}"        # walk-tabs output embeds each tab's screenshot-path,
+      output-path: "out/{{ inputs.connection }}-xray.html"  # so `screenshots` isn't needed here
 ```
