@@ -44,13 +44,13 @@ pub fn build_from_url_or_path(
     // agent actually has an auth block.
     let auth = build_auth(&spec, &id);
     let agent_has_auth = auth.is_some();
+    // The API is secured by default only when root `security` is present,
+    // non-empty, and offers NO anonymous alternative (an empty `{}` requirement
+    // means auth is optional → effectively public).
     let root_secured = spec
         .get("security")
         .and_then(|v| v.as_array())
-        .is_some_and(|reqs| {
-            reqs.iter()
-                .any(|r| r.as_object().is_some_and(|o| !o.is_empty()))
-        });
+        .is_some_and(|reqs| !reqs.is_empty() && !reqs.iter().any(is_anonymous_alt));
 
     let mut commands = BTreeMap::new();
     if let Some(paths) = spec["paths"].as_object() {
@@ -178,15 +178,19 @@ fn input_origin(input: &str) -> Option<String> {
     Some(input[..scheme_len + authority_len].to_string())
 }
 
-/// Whether an operation's *effective* security is empty (a public endpoint).
-/// An operation's own `security` overrides the root default: an empty array (or
-/// one with no scheme) is public; otherwise it's secured. With no operation
-/// `security`, the root default (`root_secured`) applies.
+/// An anonymous security alternative — an empty `{}` requirement object, which
+/// OpenAPI treats as "no auth required" within a `security` list of alternatives.
+fn is_anonymous_alt(req: &Value) -> bool {
+    req.as_object().is_some_and(|o| o.is_empty())
+}
+
+/// Whether an operation can be called anonymously (a public endpoint). An
+/// operation's own `security` overrides the root default: an empty array, or one
+/// that lists an empty `{}` alternative, is public; otherwise it's secured. With
+/// no operation `security`, the root default (`root_secured`) applies.
 fn op_effective_public(op: &Value, root_secured: bool) -> bool {
     match op.get("security").and_then(|v| v.as_array()) {
-        Some(reqs) => !reqs
-            .iter()
-            .any(|r| r.as_object().is_some_and(|o| !o.is_empty())),
+        Some(reqs) => reqs.is_empty() || reqs.iter().any(is_anonymous_alt),
         None => !root_secured,
     }
 }
@@ -921,6 +925,29 @@ paths:
         assert!(
             agent.commands["health"].no_auth,
             "public op not marked no-auth"
+        );
+    }
+
+    #[test]
+    fn optional_auth_with_anonymous_alternative_is_public() {
+        // `security: [{}, {api_key: []}]` means auth is optional (the empty `{}`
+        // is an anonymous alternative) → the endpoint is public (Codex #106).
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "opt", "version": "1.0.0" },
+            "components": { "securitySchemes": {
+                "api_key": { "type": "apiKey", "in": "header", "name": "X-Key" }
+            } },
+            "security": [ {}, { "api_key": [] } ],
+            "paths": { "/data": { "get": { "operationId": "getData", "responses": {} } } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("opt.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("opt")).unwrap();
+        assert!(
+            agent.commands["get-data"].no_auth,
+            "optional-auth (anonymous alternative) endpoint should be public"
         );
     }
 
