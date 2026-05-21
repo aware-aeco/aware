@@ -202,24 +202,39 @@ impl Orchestrator {
             })
             .await?;
 
-            let handle = self.invoker.invoke_stream(agent, command, args).await?;
-            // Destructure — take rx into the forwarding task, keep stop for shutdown.
-            let (rx, stop) = (handle.rx, handle.stop);
-            stop_senders.push(stop);
+            if self.simulate {
+                // Stub the stream under `--simulate`: emit ONE schema-shaped
+                // placeholder event, then let the source close. Watcher
+                // compositions (`lifecycle: start`) thus validate end-to-end
+                // without `invoke_stream`, which isn't implemented yet (#117-2).
+                // The placeholder propagates through the downstream chain once.
+                let placeholder = self.synthesize_output(agent, command);
+                let tx = event_tx.clone();
+                let sid = source_id.clone();
+                tokio::spawn(async move {
+                    let _ = tx.send((sid, placeholder)).await;
+                    // tx clone dropped here → contributes to channel closure.
+                });
+            } else {
+                let handle = self.invoker.invoke_stream(agent, command, args).await?;
+                // Destructure — take rx into the forwarding task, keep stop for shutdown.
+                let (rx, stop) = (handle.rx, handle.stop);
+                stop_senders.push(stop);
 
-            let tx = event_tx.clone();
-            let sid = source_id.clone();
-            tokio::spawn(async move {
-                let mut rx = rx;
-                while let Some(res) = rx.recv().await {
-                    if let Ok(v) = res
-                        && tx.send((sid.clone(), v)).await.is_err()
-                    {
-                        break;
+                let tx = event_tx.clone();
+                let sid = source_id.clone();
+                tokio::spawn(async move {
+                    let mut rx = rx;
+                    while let Some(res) = rx.recv().await {
+                        if let Ok(v) = res
+                            && tx.send((sid.clone(), v)).await.is_err()
+                        {
+                            break;
+                        }
                     }
-                }
-                // When the loop exits the tx clone is dropped, contributing to channel closure.
-            });
+                    // When the loop exits the tx clone is dropped, contributing to channel closure.
+                });
+            }
         }
 
         // Drop our own clone so the channel closes when all forwarder tasks finish.
@@ -440,7 +455,51 @@ impl Orchestrator {
             &yaml_to_json(node.merged_params().unwrap_or(serde_yaml::Value::Null))?,
             &self.ctx,
         )?;
-        let out = self.invoker.invoke_single(agent_id, command, args).await?;
+
+        // Dry-run / simulate short-circuit — mirrors `execute_node` so that
+        // streaming (watcher) compositions validate end-to-end without touching
+        // the host transport (#117-2). Write nodes emit `would-write:`; under
+        // `--simulate` read nodes are stubbed with a schema-shaped placeholder.
+        let out = if self.dry_run || self.simulate {
+            let mode = self.lookup_command_mode(agent_id, command);
+            if mode == crate::manifest::agent::Mode::Write {
+                let safety_block = node
+                    .safety
+                    .as_ref()
+                    .and_then(|s| serde_json::to_value(s).ok())
+                    .unwrap_or(serde_json::json!(null));
+                self.emit(RunEvent::WouldWrite {
+                    ts: now_iso(),
+                    run_id: self.run_id.clone(),
+                    node: node.id.clone(),
+                    agent: agent_id.clone(),
+                    command: command.to_string(),
+                    proposed_inputs: args.clone(),
+                    safety: safety_block,
+                })
+                .await?;
+                // Downstream nodes may reference this write node's output, so in
+                // simulate hand them a schema-shaped value; plain dry-run keeps the
+                // lighter marker. A would-write node emits no NodeOutput.
+                let placeholder = if self.simulate {
+                    self.synthesize_output(agent_id, command)
+                } else {
+                    serde_json::json!({ "dry-run": true })
+                };
+                self.ctx.record_output(&node.id, placeholder.clone());
+                frontier.push((node.id.clone(), placeholder));
+                return Ok(());
+            }
+            // Read-mode node: stub under `--simulate`; under plain dry-run a read
+            // is safe, so run it for real.
+            if self.simulate {
+                self.synthesize_output(agent_id, command)
+            } else {
+                self.invoker.invoke_single(agent_id, command, args).await?
+            }
+        } else {
+            self.invoker.invoke_single(agent_id, command, args).await?
+        };
 
         self.emit(RunEvent::NodeOutput {
             ts: now_iso(),
@@ -1099,6 +1158,110 @@ requires: []
         assert_eq!(
             sink_outputs, 2,
             "expected 2 sink outputs (Bolted filtered), events: {events:?}"
+        );
+    }
+
+    #[tokio::test]
+    async fn simulate_stubs_stream_source_and_downstream() {
+        // A `lifecycle: start` watcher source → write sink. Under `--simulate`
+        // the orchestrator must NOT call invoke_stream or invoke_single (an empty
+        // MockInvoker errors if it does): the source emits one schema-shaped
+        // placeholder event and the write sink emits `would-write:` (#117-2).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: sim-stream
+version: 0.1.0
+description: x
+nodes:
+  - id: watch
+    agent: ag-watch
+    command: watch
+  - id: sink
+    agent: ag-sink
+    command: upload
+connections:
+  - from: watch
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+
+        // Empty invoker: any real invoke_stream/invoke_single fails the run.
+        let inv = Arc::new(MockInvoker::new());
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        let agents = tmp.path().join("aware").join("agents");
+        let watch_dir = agents.join("ag-watch");
+        std::fs::create_dir_all(&watch_dir).unwrap();
+        std::fs::write(
+            watch_dir.join("manifest.yaml"),
+            r#"agent: ag-watch
+version: 0.0.1
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  watch:
+    lifecycle: start
+    category: curated
+    mode: read
+    description: stream of marks
+    outputs:
+      type: stream
+      schema:
+        mark: string
+"#,
+        )
+        .unwrap();
+        let sink_dir = agents.join("ag-sink");
+        std::fs::create_dir_all(&sink_dir).unwrap();
+        std::fs::write(
+            sink_dir.join("manifest.yaml"),
+            r#"agent: ag-sink
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  upload:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: upload a mark
+    outputs:
+      type: single
+      schema:
+        received: string
+"#,
+        )
+        .unwrap();
+
+        orch.simulate = true;
+        let (stop_tx, stop_rx) = stop_channel();
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let _ = stop_tx.send(true);
+        // Must complete without ever touching the (empty) invoker.
+        run_handle.await.unwrap().unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let watch_out = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "watch" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("watch source must emit a synthesized placeholder event");
+        assert_eq!(watch_out["mark"], serde_json::json!("<simulated>"));
+        let saw_would_write = events
+            .iter()
+            .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "sink"));
+        assert!(
+            saw_would_write,
+            "write sink must emit would-write under simulate; events: {events:?}"
         );
     }
 
