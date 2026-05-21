@@ -157,12 +157,20 @@ pub fn compile(
     // body ids would collide. Body nodes still get *their* refs checked against
     // this top-level set below (so a `do:` ref to an outer node is validated);
     // sibling-within-body resolution is a future scoped-checking enhancement.
-    let top_level_ids: BTreeSet<&str> = app.nodes.iter().map(|n| n.id.as_str()).collect();
-    let field_sets: BTreeMap<String, Option<BTreeSet<String>>> = nodes
-        .iter()
-        .filter(|n| top_level_ids.contains(n.id.as_str()))
-        .map(|n| (n.id.clone(), output_field_set(n.output_schema.as_ref())))
-        .collect();
+    // Identify top-level nodes by IDENTITY, not id string: `flat`'s top-level
+    // entries borrow directly from `app.nodes`, and `nodes` is index-parallel
+    // with `flat`. Matching by id string would let a `do:` body that reuses a
+    // top-level id overwrite the real top-level schema (body ids are scoped and
+    // reusable) — pointer identity can't be fooled that way.
+    let mut field_sets: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
+    for (flat_node, compiled) in flat.iter().zip(nodes.iter()) {
+        if app.nodes.iter().any(|top| std::ptr::eq(top, *flat_node)) {
+            field_sets.insert(
+                compiled.id.clone(),
+                output_field_set(compiled.output_schema.as_ref()),
+            );
+        }
+    }
     for (i, &node) in flat.iter().enumerate() {
         let mut refs: Vec<(String, String)> = Vec::new();
         collect_refs(&node.config, &mut refs);
@@ -700,6 +708,79 @@ requires: []
             !after.notes.iter().any(|n| n.contains("upsert")),
             "body-local id leaked into global scope (should not resolve): {:?}",
             after.notes
+        );
+    }
+
+    #[test]
+    fn do_body_reusing_top_level_id_does_not_overwrite_field_set() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // `dup` is BOTH a top-level node (outputs `rows`) and a reused do:-body
+        // id (outputs `file-id`, no `rows`). The top-level schema must win in
+        // the global field set; a string-keyed filter would let the body node
+        // overwrite it and falsely flag `{{ dup.rows }}`.
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  hasrows:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        rows: array
+  norows:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+    outputs:
+      type: single
+      schema:
+        file-id: string
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("reuse.flo");
+        std::fs::write(
+            &src,
+            r#"app: reuse
+version: 0.0.1
+description: x
+nodes:
+  - id: dup
+    agent: a
+    command: hasrows
+  - id: loop
+    for-each: '{{ dup.rows }}'
+    do:
+      - id: dup
+        agent: a
+        command: norows
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        // `{{ dup.rows }}` (on `loop`) must validate against the TOP-LEVEL dup,
+        // which has `rows` — not the body dup, which doesn't. So: no note.
+        let lp = lock.nodes.iter().find(|n| n.id == "loop").unwrap();
+        assert!(
+            !lp.notes.iter().any(|n| n.contains("rows")),
+            "top-level dup schema overwritten by the do:-body dup: {:?}",
+            lp.notes
         );
     }
 }
