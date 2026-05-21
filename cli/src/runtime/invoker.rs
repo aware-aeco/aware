@@ -208,9 +208,12 @@ impl AgentInvoker for CliInvoker {
 /// Production invoker for the `rest` transport: build an HTTP request from the
 /// rendered command inputs and execute it via the bundled `ureq` client.
 ///
-/// Designed for the generic `http` agent, where the command name *is* the HTTP
-/// method (`get`/`post`/`patch`/`delete`/`put`/`head`) and the inputs carry
-/// `url` / `headers` / `query` / `body`. App-templated secrets
+/// Handles two command shapes: the generic `http` agent, where the command name
+/// *is* the HTTP method (`get`/`post`/…) and the inputs carry
+/// `url` / `headers` / `query` / `body`; and built OpenAPI agents (#106), where
+/// the command maps to a manifest `method` + `path` template and inputs are
+/// routed to path / query / header / body by their declared `in:` location.
+/// App-templated secrets
 /// (`apikey: "{{ secrets.supabase }}"`) arrive already substituted in the
 /// inputs. In addition, if the agent's manifest declares an `auth:` block, this
 /// invoker loads the referenced credential and injects it automatically
@@ -229,36 +232,30 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
-        let method = command.to_ascii_uppercase();
-        if !matches!(
-            method.as_str(),
+        // Two shapes reach this transport:
+        //  - generic `http` agent: the command IS the HTTP method, and inputs
+        //    carry `url` / `headers` / `query` / `body`.
+        //  - built OpenAPI agent (#106): the command maps to a manifest `method`
+        //    + `path` template, and inputs are routed by their declared `in:`
+        //    location (path / query / header / body).
+        let upper = command.to_ascii_uppercase();
+        let (method, url, mut headers, mut query) = if matches!(
+            upper.as_str(),
             "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD"
         ) {
-            return Err(AwareError::Validation(format!(
-                "rest transport: command {command:?} is not an HTTP method (expected get/post/put/patch/delete/head)"
-            )));
-        }
-
-        let raw_url = args
-            .get("url")
-            .and_then(|v| v.as_str())
-            .ok_or_else(|| {
+            let raw_url = args.get("url").and_then(|v| v.as_str()).ok_or_else(|| {
                 AwareError::Validation(format!("{agent}/{command}: missing required input `url`"))
-            })?
-            .to_string();
-        let url = match rest_base_url(&self.agents_dir, agent) {
-            Some(base) if !raw_url.starts_with("http://") && !raw_url.starts_with("https://") => {
-                format!(
-                    "{}/{}",
-                    base.trim_end_matches('/'),
-                    raw_url.trim_start_matches('/')
-                )
-            }
-            _ => raw_url,
+            })?;
+            let url = resolve_url(rest_base_url(&self.agents_dir, agent).as_deref(), raw_url);
+            (
+                upper,
+                url,
+                collect_str_map(args.get("headers")),
+                collect_str_map(args.get("query")),
+            )
+        } else {
+            build_operation_request(&self.agents_dir, agent, command, &args)?
         };
-
-        let mut headers = collect_str_map(args.get("headers"));
-        let mut query = collect_str_map(args.get("query"));
         // Inject declarative auth (#106): if the agent's manifest carries an
         // `auth:` block, load its secret and add the credential — bearer/oauth2
         // as `Authorization: Bearer …`, api-key as a header or query param. Only
@@ -346,6 +343,88 @@ fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
         .get("base")?
         .as_str()
         .map(|s| s.to_string())
+}
+
+/// Join an optional base URL with a (possibly relative) path. An absolute
+/// `http(s)://` path is used as-is.
+fn resolve_url(base: Option<&str>, raw: &str) -> String {
+    match base {
+        Some(b) if !raw.starts_with("http://") && !raw.starts_with("https://") => {
+            format!(
+                "{}/{}",
+                b.trim_end_matches('/'),
+                raw.trim_start_matches('/')
+            )
+        }
+        _ => raw.to_string(),
+    }
+}
+
+/// Stringify a scalar JSON value for use as a path / query / header value.
+/// Objects and arrays (not valid in those positions) yield `None`.
+fn value_to_str(v: &Value) -> Option<String> {
+    match v {
+        Value::String(s) => Some(s.clone()),
+        Value::Number(_) | Value::Bool(_) => Some(v.to_string()),
+        _ => None,
+    }
+}
+
+/// `(method, url, headers, query)` — the parts of an HTTP request the REST
+/// transport assembles before adding auth + body and dispatching it.
+type RequestParts = (String, String, Vec<(String, String)>, Vec<(String, String)>);
+
+/// Build a request for a built OpenAPI operation command (#106): resolve the
+/// manifest command's `method` + `path` template, fill `{name}` path segments,
+/// and route each input to path / query / header by its declared `in:` location
+/// (default query). The `body` input is sent as the request body by the caller.
+fn build_operation_request(
+    agents_dir: &std::path::Path,
+    agent: &str,
+    command: &str,
+    args: &Value,
+) -> Result<RequestParts, AwareError> {
+    let m = crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml"))?;
+    let cmd = m.commands.get(command).ok_or_else(|| {
+        AwareError::Validation(format!("{agent}/{command}: command not found in manifest"))
+    })?;
+    let method = cmd
+        .method
+        .clone()
+        .ok_or_else(|| {
+            AwareError::Validation(format!(
+                "rest transport: command {command:?} is not an HTTP method and the manifest declares no `method:` mapping"
+            ))
+        })?
+        .to_ascii_uppercase();
+    let mut path = cmd.path.clone().unwrap_or_default();
+    let mut headers = Vec::new();
+    let mut query = Vec::new();
+    if let Value::Object(provided) = args {
+        for (name, val) in provided {
+            // The `body` input is sent as the request body by the caller.
+            if name == "body" {
+                continue;
+            }
+            let loc = cmd
+                .inputs
+                .get(name.as_str())
+                .and_then(|s| s.get("in"))
+                .and_then(|v| v.as_str())
+                .unwrap_or("query");
+            let Some(sval) = value_to_str(val) else {
+                continue;
+            };
+            match loc {
+                "path" => path = path.replace(&format!("{{{name}}}"), &sval),
+                "header" => headers.push((name.clone(), sval)),
+                "body" => {}
+                _ => query.push((name.clone(), sval)),
+            }
+        }
+    }
+    let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
+    Ok((method, url, headers, query))
 }
 
 /// Read the agent's declarative `auth:` block from its manifest, if any (#106).
@@ -1011,5 +1090,134 @@ commands:
             Some("k".into())
         );
         assert_eq!(secret_as_str(&serde_json::json!({"other":"x"})), None);
+    }
+
+    #[tokio::test]
+    async fn built_openapi_get_executes_with_path_query_and_auth() {
+        // A built OpenAPI agent: command `get-pet` maps to `GET /pets/{petId}`,
+        // `petId` is a path param, `verbose` a query param, and the agent
+        // declares api-key auth. The transport substitutes the path, appends the
+        // query, and injects the credential — end to end (#106).
+        let (port, rx) = mock_server(200, r#"{"id":42,"name":"Rex"}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("petstore");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: petstore
+version: 0.1.0
+description: petstore
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: api-key
+  in: header
+  name: X-API-Key
+  secret: petstore
+requires:
+  secrets:
+    - petstore
+commands:
+  get-pet:
+    lifecycle: single
+    description: "GET /pets/{petId}"
+    method: GET
+    path: /pets/{petId}
+    inputs:
+      petId:
+        type: integer
+        in: path
+        required: true
+      verbose:
+        type: boolean
+        in: query
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("petstore.json"), r#"{"key":"sk-abc"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single(
+                "petstore",
+                "get-pet",
+                serde_json::json!({ "petId": 42, "verbose": true }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(200));
+        assert_eq!(out["body"]["name"], serde_json::json!("Rex"));
+        let req = rx.recv().unwrap();
+        assert!(
+            req.starts_with("GET /pets/42"),
+            "path param not substituted: {req}"
+        );
+        assert!(req.contains("verbose=true"), "query param missing: {req}");
+        assert!(
+            req.contains("X-API-Key: sk-abc"),
+            "auth not injected: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn built_openapi_post_sends_body_with_bearer_auth() {
+        let (port, rx) = mock_server(201, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("petstore");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: petstore
+version: 0.1.0
+description: petstore
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: bearer
+  secret: petstore
+requires:
+  secrets:
+    - petstore
+commands:
+  add-pet:
+    lifecycle: single
+    mode: write
+    description: "POST /pets"
+    method: POST
+    path: /pets
+    inputs:
+      body:
+        type: Pet
+        in: body
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("petstore.json"), r#"{"token":"jwt-xyz"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let out = inv
+            .invoke_single(
+                "petstore",
+                "add-pet",
+                serde_json::json!({ "body": { "name": "Rex" } }),
+            )
+            .await
+            .unwrap();
+        assert_eq!(out["status"], serde_json::json!(201));
+        let req = rx.recv().unwrap();
+        assert!(req.starts_with("POST /pets"), "method/path wrong: {req}");
+        assert!(req.contains("\"name\":\"Rex\""), "body missing: {req}");
+        assert!(
+            req.contains("Authorization: Bearer jwt-xyz"),
+            "bearer auth not injected: {req}"
+        );
     }
 }

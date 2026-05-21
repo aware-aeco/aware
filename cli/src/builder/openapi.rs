@@ -70,6 +70,8 @@ pub fn build_from_url_or_path(
                             ),
                             inputs_yaml: build_inputs_yaml(&spec, op),
                             outputs_yaml: build_outputs_yaml(&spec, op),
+                            method: Some(method.to_uppercase()),
+                            path: Some(path.clone()),
                         },
                     );
                 }
@@ -126,16 +128,21 @@ fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
     if schemes.is_empty() {
         return None;
     }
-    // Prefer a scheme referenced by root `security`; else the first declared.
-    let chosen = spec
-        .get("security")
-        .and_then(|v| v.as_array())
-        .and_then(|reqs| {
-            reqs.iter()
-                .find_map(|r| r.as_object().and_then(|o| o.keys().next().cloned()))
-        })
-        .filter(|n| schemes.contains_key(n))
-        .or_else(|| schemes.keys().next().cloned())?;
+    // Decide which scheme (if any) the API actually requires. A declared scheme
+    // is only *required* when referenced by a `security` requirement.
+    let chosen = match spec.get("security").and_then(|v| v.as_array()) {
+        // Explicit root `security`: use its first referenced scheme. An empty
+        // array (`security: []`) — or one referencing no known scheme — means
+        // the API is unauthenticated, so emit no auth block.
+        Some(reqs) => reqs
+            .iter()
+            .find_map(|r| r.as_object().and_then(|o| o.keys().next().cloned()))
+            .filter(|n| schemes.contains_key(n))?,
+        // No root `security`: a scheme is merely *available*. Default to the
+        // first declared — covers specs that attach `security` per-operation
+        // (e.g. petstore) rather than at the root.
+        None => schemes.keys().next().cloned()?,
+    };
     let scheme = schemes.get(&chosen)?;
     let secret = agent_id.to_string();
     match scheme.get("type").and_then(|v| v.as_str())? {
@@ -254,21 +261,23 @@ fn build_inputs_yaml(spec: &Value, op: &Value) -> String {
             let empty = Value::Null;
             let ty = schema_type_label(p.get("schema").unwrap_or(&empty));
             let desc = p.get("description").and_then(|v| v.as_str()).unwrap_or("");
-            let note = format!(
-                "in: {loc}{}{}",
-                if required { ", required" } else { "" },
-                if desc.is_empty() {
-                    String::new()
-                } else {
-                    format!(" — {}", desc.replace('\n', " "))
-                }
-            );
+            // `in:` is structural so the REST transport can route the param to
+            // path / query / header at runtime; `required:` and `description:`
+            // round out the input schema.
             out.push_str(&format!(
-                "{}:\n  type: {}\n  description: {}\n",
+                "{}:\n  type: {}\n  in: {loc}\n",
                 yaml_quote(name),
                 yaml_quote(&ty),
-                yaml_quote(&note)
             ));
+            if required {
+                out.push_str("  required: true\n");
+            }
+            if !desc.is_empty() {
+                out.push_str(&format!(
+                    "  description: {}\n",
+                    yaml_quote(&desc.replace('\n', " "))
+                ));
+            }
         }
     }
 
@@ -278,7 +287,7 @@ fn build_inputs_yaml(spec: &Value, op: &Value) -> String {
         let (resolved, ref_name) = resolve_ref(spec, schema);
         let label = ref_name.unwrap_or_else(|| "request body".into());
         out.push_str(&format!(
-            "body:\n  type: {}\n  description: {}\n",
+            "body:\n  type: {}\n  in: body\n  description: {}\n",
             yaml_quote(&schema_type_label(resolved)),
             yaml_quote(&format!("{label} (request body)"))
         ));
@@ -497,7 +506,8 @@ paths:
             get.inputs_yaml
         );
         assert!(get.inputs_yaml.contains("type: integer"));
-        assert!(get.inputs_yaml.contains("in: path, required"));
+        assert!(get.inputs_yaml.contains("in: path"));
+        assert!(get.inputs_yaml.contains("required: true"));
         assert!(get.inputs_yaml.contains("verbose:"));
         // Response $ref resolved to Pet's fields (incl. array<string>).
         assert!(

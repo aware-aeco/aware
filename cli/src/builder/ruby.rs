@@ -175,6 +175,7 @@ fn extract_surface(
                         description: display,
                         inputs_yaml: String::new(),
                         outputs_yaml: String::new(),
+                        ..Default::default()
                     },
                 );
                 by_class

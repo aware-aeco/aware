@@ -96,6 +96,7 @@ pub(crate) fn parse_help(help: &str) -> BTreeMap<String, GeneratedCommand> {
                     },
                     inputs_yaml: String::new(),
                     outputs_yaml: String::new(),
+                    ..Default::default()
                 },
             );
         } else {

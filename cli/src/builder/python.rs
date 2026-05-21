@@ -50,6 +50,7 @@ pub fn build_from_python(
                 },
                 inputs_yaml: String::new(),
                 outputs_yaml: String::new(),
+                ..Default::default()
             },
         );
     }

@@ -65,12 +65,17 @@ pub struct AuthBlock {
     pub secret: String,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct GeneratedCommand {
     pub lifecycle: String,
     pub description: String,
     pub inputs_yaml: String,
     pub outputs_yaml: String,
+    /// REST operation mapping (OpenAPI builder): HTTP method + path template,
+    /// emitted into the manifest so the REST transport can execute the command.
+    /// `None` for SDK/CLI-derived commands.
+    pub method: Option<String>,
+    pub path: Option<String>,
 }
 
 #[derive(Debug)]
@@ -203,6 +208,12 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
                 "    description: {}\n",
                 quote_yaml_scalar(&desc_one_line)
             ));
+            if let Some(method) = &cmd.method {
+                out.push_str(&format!("    method: {method}\n"));
+            }
+            if let Some(path) = &cmd.path {
+                out.push_str(&format!("    path: {}\n", quote_yaml_scalar(path)));
+            }
             if !cmd.inputs_yaml.trim().is_empty() {
                 out.push_str("    inputs:\n");
                 for line in cmd.inputs_yaml.lines() {
@@ -269,6 +280,7 @@ mod tests {
                 description: "Does a thing.".into(),
                 inputs_yaml: String::new(),
                 outputs_yaml: String::new(),
+                ..Default::default()
             },
         );
         GeneratedAgent {

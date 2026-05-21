@@ -165,6 +165,16 @@ pub struct Command {
     pub inputs: Value,
     #[allow(dead_code)]
     pub outputs: Option<Value>,
+    /// REST operation mapping (v0.39, `--from-openapi`): the HTTP method this
+    /// command performs. When set, the REST transport executes the command as
+    /// `<method> <base><path>` rather than requiring the command name to be a
+    /// bare HTTP method. `None` for the generic `http` agent + non-REST agents.
+    #[serde(default)]
+    pub method: Option<String>,
+    /// REST operation path template (e.g. `/pets/{petId}`). `{name}` segments
+    /// are filled from inputs whose schema declares `in: path`.
+    #[serde(default)]
+    pub path: Option<String>,
     /// Explicit per-command category. If `None`, the agent-level provenance
     /// is used to infer the default (see `Agent::default_category`).
     #[serde(default)]
