@@ -35,7 +35,7 @@ aware
 │   ├── show <app>                      print topology (ASCII) + provenance
 │   ├── install <path-or-name>          register an app
 │   ├── uninstall <app>
-│   ├── run <app> [--instance <id>] [--config <kv>...]      execute
+│   ├── run <app> [--instance <id>] [--input <kv>...]       execute
 │   ├── stop <app> [--instance <id>]    stop a running app
 │   ├── validate <path>                 schema + cycle + cap checks
 │   ├── export <app> <output-path>      copy .flo file out
@@ -198,8 +198,8 @@ Output streams to stdout per run; full trace written to `~/.aware/logs/<app>/<in
 
 ```
 $ aware app run welded-to-tc --instance fab-east \
-    --config tc-project-id="...." \
-    --config tc-folder-id="...."
+    --input tc-project-id="...." \
+    --input tc-folder-id="...."
 
 ✓ Loaded welded-to-tc@0.3.1 (instance: fab-east)
 ✓ Resolved: tekla@2025.0.1 + trimble-connect@2.4.0
