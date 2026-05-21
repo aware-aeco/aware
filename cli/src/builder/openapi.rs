@@ -242,9 +242,18 @@ fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
             }
         }
     }
-    let chosen = referenced.into_iter().find(|n| schemes.contains_key(n))?;
-    let scheme = schemes.get(&chosen)?;
+    // Pick the first referenced scheme that maps to a supported auth model —
+    // skip unmappable alternatives (e.g. http-basic) so a mappable alternative
+    // such as apiKey/bearer still wins (Codex #106).
     let secret = agent_id.to_string();
+    referenced
+        .iter()
+        .find_map(|name| schemes.get(name).and_then(|s| map_scheme(s, &secret)))
+}
+
+/// Map an OpenAPI security scheme object to an AWARE `AuthBlock`, or `None` for
+/// an unmodeled scheme (http-basic, mutualTLS, …).
+fn map_scheme(scheme: &Value, secret: &str) -> Option<AuthBlock> {
     match scheme.get("type").and_then(|v| v.as_str())? {
         "apiKey" => Some(AuthBlock {
             scheme: "api-key".into(),
@@ -262,7 +271,7 @@ fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
                     .unwrap_or("Authorization")
                     .to_string(),
             ),
-            secret,
+            secret: secret.to_string(),
         }),
         "http"
             if scheme
@@ -274,14 +283,14 @@ fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
                 scheme: "bearer".into(),
                 location: None,
                 name: None,
-                secret,
+                secret: secret.to_string(),
             })
         }
         "oauth2" | "openIdConnect" => Some(AuthBlock {
             scheme: "oauth2".into(),
             location: None,
             name: None,
-            secret,
+            secret: secret.to_string(),
         }),
         _ => None,
     }
@@ -949,6 +958,33 @@ paths:
             agent.commands["get-data"].no_auth,
             "optional-auth (anonymous alternative) endpoint should be public"
         );
+    }
+
+    #[test]
+    fn auth_skips_unmappable_scheme_for_mappable_alternative() {
+        // `security: [{basic}, {api_key}]` — basic is unmodeled, but the apiKey
+        // alternative is mappable and must be chosen (Codex #106).
+        let spec = r##"{
+            "openapi": "3.0.0",
+            "info": { "title": "alt", "version": "1.0.0" },
+            "components": { "securitySchemes": {
+                "basic": { "type": "http", "scheme": "basic" },
+                "api_key": { "type": "apiKey", "in": "header", "name": "X-Key" }
+            } },
+            "security": [ { "basic": [] }, { "api_key": [] } ],
+            "paths": { "/x": { "get": { "operationId": "getX", "responses": {} } } }
+        }"##;
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("alt.json");
+        std::fs::write(&path, spec).unwrap();
+        let agent = build_from_url_or_path(path.to_str().unwrap(), Some("alt")).unwrap();
+        let auth = agent
+            .rest
+            .as_ref()
+            .and_then(|r| r.auth.as_ref())
+            .expect("mappable alternative must yield an auth block");
+        assert_eq!(auth.scheme, "api-key");
+        assert_eq!(auth.name.as_deref(), Some("X-Key"));
     }
 
     #[test]

@@ -498,6 +498,14 @@ fn build_operation_request(
             }
         }
     }
+    // An unfilled `{name}` means a required path parameter wasn't supplied —
+    // fail clearly rather than dispatching a malformed URL (Codex #106).
+    if let Some(start) = path.find('{') {
+        let pname = path[start + 1..].split('}').next().unwrap_or("");
+        return Err(AwareError::Validation(format!(
+            "{agent}/{command}: missing required path parameter {{{pname}}} (path {path:?})"
+        )));
+    }
     // `in: cookie` parameters fold into a single `Cookie` header.
     if !cookies.is_empty() {
         headers.push(("Cookie".to_string(), cookies.join("; ")));
@@ -1604,6 +1612,50 @@ commands:
         assert!(
             !req.contains("Authorization"),
             "no-auth command must not inject auth: {req}"
+        );
+    }
+
+    #[tokio::test]
+    async fn missing_required_path_param_errors() {
+        // Omitting a `{petId}` path parameter must be a clear validation error,
+        // not a malformed URL with `{petId}` left in it (Codex #106).
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:1
+commands:
+  get-pet:
+    lifecycle: single
+    description: "GET /pets/{petId}"
+    method: GET
+    path: /pets/{petId}
+    inputs:
+      petId:
+        type: integer
+        in: path
+        required: true
+"#,
+        )
+        .unwrap();
+        let inv = RestInvoker { agents_dir: agents };
+        let err = inv
+            .invoke_single("svc", "get-pet", serde_json::json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        assert!(
+            format!("{err}").contains("petId"),
+            "error should name the missing path param: {err}"
         );
     }
 }
