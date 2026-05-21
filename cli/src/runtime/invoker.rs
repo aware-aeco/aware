@@ -369,6 +369,22 @@ fn command_method(agents_dir: &std::path::Path, agent: &str, command: &str) -> O
         .clone()
 }
 
+/// Percent-encode an OpenAPI path-parameter value (RFC 3986 unreserved set):
+/// everything except `A-Z a-z 0-9 - . _ ~` is `%`-escaped, so a value like
+/// `a/b.txt` becomes `a%2Fb.txt` rather than splitting the route (#106).
+fn percent_encode_path(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    for b in s.bytes() {
+        match b {
+            b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'-' | b'.' | b'_' | b'~' => {
+                out.push(b as char)
+            }
+            _ => out.push_str(&format!("%{b:02X}")),
+        }
+    }
+    out
+}
+
 /// Join an optional base URL with a (possibly relative) path. An absolute
 /// `http(s)://` path is used as-is.
 fn resolve_url(base: Option<&str>, raw: &str) -> String {
@@ -440,7 +456,7 @@ fn build_operation_request(
                 continue;
             };
             match loc {
-                "path" => path = path.replace(&format!("{{{name}}}"), &sval),
+                "path" => path = path.replace(&format!("{{{name}}}"), &percent_encode_path(&sval)),
                 "header" => headers.push((name.clone(), sval)),
                 "body" => {}
                 _ => query.push((name.clone(), sval)),
@@ -513,11 +529,27 @@ fn inject_auth(
         }
         "api-key" => {
             let name = auth.name.as_deref().unwrap_or("Authorization");
-            let in_query = auth.location.as_deref() == Some("query");
-            if in_query && !query.iter().any(|(k, _)| k == name) {
-                query.push((name.to_string(), cred));
-            } else if !in_query && !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
-                headers.push((name.to_string(), cred));
+            match auth.location.as_deref() {
+                Some("query") => {
+                    if !query.iter().any(|(k, _)| k == name) {
+                        query.push((name.to_string(), cred));
+                    }
+                }
+                // apiKey `in: cookie` → `Cookie: name=value`.
+                Some("cookie") => {
+                    if !headers
+                        .iter()
+                        .any(|(k, _)| k.eq_ignore_ascii_case("cookie"))
+                    {
+                        headers.push(("Cookie".into(), format!("{name}={cred}")));
+                    }
+                }
+                // header (default).
+                _ => {
+                    if !headers.iter().any(|(k, _)| k.eq_ignore_ascii_case(name)) {
+                        headers.push((name.to_string(), cred));
+                    }
+                }
             }
         }
         _ => {}
@@ -1100,6 +1132,31 @@ commands:
             &mut q3,
         );
         assert_eq!(h3[0].1, "Bearer explicit");
+
+        // apiKey `in: cookie` → `Cookie: name=value` header.
+        let apikey_cookie = AuthScheme {
+            scheme: "api-key".into(),
+            location: Some("cookie".into()),
+            name: Some("session".into()),
+            secret: "s".into(),
+        };
+        let mut h4 = Vec::new();
+        let mut q4 = Vec::new();
+        inject_auth(
+            &apikey_cookie,
+            &serde_json::json!("sid-9"),
+            &mut h4,
+            &mut q4,
+        );
+        assert_eq!(h4, vec![("Cookie".into(), "session=sid-9".into())]);
+    }
+
+    #[test]
+    fn percent_encode_path_escapes_reserved_chars() {
+        assert_eq!(percent_encode_path("a/b.txt"), "a%2Fb.txt");
+        assert_eq!(percent_encode_path("x y?z"), "x%20y%3Fz");
+        // Unreserved set passes through unchanged.
+        assert_eq!(percent_encode_path("Pet-1_2.3~ok"), "Pet-1_2.3~ok");
     }
 
     #[test]
