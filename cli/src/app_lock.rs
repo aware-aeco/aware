@@ -174,7 +174,14 @@ pub fn compile(
         }
     }
     for (i, entry) in flat.iter().enumerate() {
-        let node = entry.0;
+        let (node, scoped_id, is_top) = (entry.0, &entry.1, entry.2);
+        // Parent scope prefix for a body node (`a.b.c` → `a.b`), used to detect
+        // sibling shadowing below.
+        let scope_prefix = if is_top {
+            None
+        } else {
+            scoped_id.rsplit_once('.').map(|(p, _)| p)
+        };
         let mut refs: Vec<(String, String)> = Vec::new();
         collect_refs(&node.config, &mut refs);
         collect_refs(&node.inputs, &mut refs);
@@ -188,6 +195,16 @@ pub fn compile(
         for (nid, field) in refs {
             if nid == nodes[i].id {
                 continue; // self-reference — skip
+            }
+            // A body node's ref to a SIBLING in its own `do:` body resolves
+            // locally (lexical scope). Skip it rather than validate against a
+            // same-named top-level node — body ids shadow globals (Codex #117-3).
+            if let Some(parent) = scope_prefix
+                && flat.iter().any(|(_, osid, _)| {
+                    matches!(osid.rsplit_once('.'), Some((op, seg)) if op == parent && seg == nid)
+                })
+            {
+                continue;
             }
             // Only check references into a node whose output schema is known.
             // Non-node prefixes (inputs/secrets/run/now/ctx) and schema-less
@@ -794,6 +811,87 @@ requires: []
             !lp.notes.iter().any(|n| n.contains("rows")),
             "top-level dup schema overwritten by the do:-body dup: {:?}",
             lp.notes
+        );
+    }
+
+    #[test]
+    fn do_body_ref_to_shadowing_sibling_not_validated_against_top_level() {
+        use crate::manifest::loader::DiscoveredAgent;
+        // A do:-body node `rfis` shadows a same-named top-level node. A sibling
+        // body node references `{{ rfis.issues }}` — which lexically resolves to
+        // the body `rfis`, so it must NOT be validated against (and falsely
+        // flagged by) the top-level `rfis` schema (Codex #117-3).
+        let a: crate::manifest::Agent = serde_yaml::from_str(
+            r#"
+agent: a
+version: 1.0.0
+description: x
+stateful: false
+license: MIT
+transport: { cli: { binary: aware-a } }
+commands:
+  toprows:
+    lifecycle: single
+    category: curated
+    description: x
+    outputs:
+      type: single
+      schema:
+        rows: array
+  bodyissues:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+    outputs:
+      type: single
+      schema:
+        issues: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: x
+"#,
+        )
+        .unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("shadow.flo");
+        std::fs::write(
+            &src,
+            r#"app: shadow
+version: 0.0.1
+description: x
+nodes:
+  - id: rfis
+    agent: a
+    command: toprows
+  - id: loop
+    for-each: '{{ rfis.rows }}'
+    do:
+      - id: rfis
+        agent: a
+        command: bodyissues
+      - id: consumer
+        agent: a
+        command: consume
+        config:
+          x: '{{ rfis.issues }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
+        assert!(
+            !consumer.notes.iter().any(|n| n.contains("rfis")),
+            "body ref to shadowing sibling wrongly validated against top-level: {:?}",
+            consumer.notes
         );
     }
 }
