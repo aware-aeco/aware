@@ -184,7 +184,7 @@ commands:
           items:
             field-id:   string         # matches a control id from enumerate-controls
             attribute:  string         # the named preset attribute that field maps to
-            confidence: number         # 0..1 (1.0 = exact literal/in-tolerance match)
+            confidence: number         # 0..1 (1.0 = exact literal or numeric within ±0.05; wider ±0.5 → 0.5..0.99)
         unmatched:
           type: array
           items: string                # attribute names no visible field could be matched to
