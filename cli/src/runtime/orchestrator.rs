@@ -16,7 +16,7 @@ use tokio::sync::{mpsc, oneshot};
 use crate::error::AwareError;
 use crate::manifest::App;
 use crate::manifest::agent::Lifecycle;
-use crate::manifest::app::Node;
+use crate::manifest::app::{CompareBlock, Node};
 use crate::runtime::context::RuntimeContext;
 use crate::runtime::inline::eval_predicate;
 use crate::runtime::invoker::AgentInvoker;
@@ -447,6 +447,43 @@ impl Orchestrator {
             return Ok(());
         }
 
+        // ── compare (substrate primitive) ─────────────────────────────────────
+        // A streaming source can feed a `compare` node — diff the two lists its
+        // event (or earlier upstream outputs) carry. Like for-each its work
+        // isn't an `agent`/`inline` call, so run it here and forward the diff
+        // downstream (#127).
+        if let Some(cmp) = node.compare.clone() {
+            // A fan-in `compare` (>1 incoming) receives the paired buffered event
+            // as `current_event`, keyed by slot (the connection `input:` name,
+            // defaulting to the source node id). Resolve `a`/`b` against a SCOPED
+            // context that overlays each paired side under both its slot name and
+            // its source node id, so either reference style sees the buffered
+            // pair — not whatever each source last emitted globally (Codex P2:
+            // out-of-order arrivals would otherwise mis-pair). The overlay is
+            // discarded after, so the slot aliases never leak into later nodes
+            // and the app `inputs` namespace is untouched.
+            let incoming = self
+                .app
+                .connections
+                .iter()
+                .filter(|c| c.to == node.id)
+                .count();
+            let merged = if incoming > 1 {
+                current_event.as_object()
+            } else {
+                None
+            };
+            let scoped = self.compare_resolve_ctx(node, merged);
+            let saved = std::mem::replace(&mut self.ctx, scoped);
+            let result = self.run_compare(node, &cmp).await;
+            self.ctx = saved;
+            if let NodeResult::Output(diff) = result? {
+                self.ctx.record_output(&node.id, diff.clone());
+                frontier.push((node.id.clone(), diff));
+            }
+            return Ok(());
+        }
+
         // ── Agent invocation ──────────────────────────────────────────────────
         let agent_id = node.agent.as_ref().ok_or_else(|| {
             AwareError::Validation(format!(
@@ -740,8 +777,21 @@ impl Orchestrator {
             // `for-each` — iterate the resolved collection, binding `{{ item }}`
             // per element, and run the `do:` body once per item (#124).
             self.run_for_each(node, &expr).await
-        } else if node.compare.is_some()
-            || node.sweep.is_some()
+        } else if let Some(cmp) = node.compare.clone() {
+            // `compare` — diff two collections by an identity key (#127). Resolve
+            // `a`/`b` against a SCOPED context that overlays each incoming
+            // connection's predecessor output under its declared `input:` slot
+            // name, so a one-shot fan-in compare can reference sides by slot
+            // (`{{ left.rows }}` for `input: left`) — parity with the streaming
+            // path (Codex P2). The overlay is discarded after run_compare, so a
+            // slot alias never leaks into (or clobbers) a real node's upstream
+            // output for later nodes (Codex P3).
+            let scoped = self.compare_resolve_ctx(node, None);
+            let saved = std::mem::replace(&mut self.ctx, scoped);
+            let result = self.run_compare(node, &cmp).await;
+            self.ctx = saved;
+            result
+        } else if node.sweep.is_some()
             || node.approve.is_some()
             || node.snapshot.is_some()
             || node.model_lock.is_some()
@@ -749,9 +799,7 @@ impl Orchestrator {
             // Substrate primitives parsed by v0.19 — runtime implementation
             // lands phase-by-phase in v0.19.x patches. For now, return a
             // clear "not yet implemented" error pointing at the spec section.
-            let primitive = if node.compare.is_some() {
-                "compare"
-            } else if node.sweep.is_some() {
+            let primitive = if node.sweep.is_some() {
                 "sweep"
             } else if node.approve.is_some() {
                 "approve"
@@ -853,6 +901,111 @@ impl Orchestrator {
         .await?;
         Ok(NodeResult::Output(aggregate))
     }
+
+    /// Build the scoped context a `compare` node resolves `a`/`b` against. It is
+    /// a clone of the live context with each incoming connection's paired side
+    /// overlaid under BOTH its slot name (the connection `input:`, defaulting to
+    /// the source id) and its source node id, so either reference style resolves
+    /// to the right side. `merged` carries the paired fan-in event in the
+    /// streaming path (value per slot); in the one-shot path it is `None` and the
+    /// value is the predecessor's already-recorded output. The clone is discarded
+    /// by the caller after resolving, so these aliases never leak into — or
+    /// clobber — the live context that later nodes read (Codex P2/P3).
+    fn compare_resolve_ctx(
+        &self,
+        node: &Node,
+        merged: Option<&serde_json::Map<String, Value>>,
+    ) -> RuntimeContext {
+        let mut scoped = self.ctx.clone();
+        for c in self.app.connections.iter().filter(|c| c.to == node.id) {
+            let slot = c.input.clone().unwrap_or_else(|| c.from.clone());
+            let value = match merged {
+                Some(m) => m.get(&slot).cloned(),
+                None => self.ctx.upstream.get(&c.from).cloned(),
+            };
+            if let Some(v) = value {
+                scoped.record_output(&slot, v.clone());
+                if c.from != slot {
+                    scoped.record_output(&c.from, v);
+                }
+            }
+        }
+        scoped
+    }
+
+    /// `compare` runtime (#127). Resolve the `a` / `b` collections to structured
+    /// arrays and diff them by the `by` identity key, emitting a
+    /// `{ added, removed, changed }` NodeOutput (app-spec § Substrate
+    /// primitives). `compare` is a pure, host-free computation, so it runs
+    /// identically under `--dry-run` / `--simulate` — no transport, no
+    /// `would-write:`. The caller records the output under the node id.
+    ///
+    /// Reference style is uniform across paths: `a`/`b` reference their sides by
+    /// id/slot (`{{ today-export.rows }}`). The caller installs a scoped context
+    /// (see [`Orchestrator::compare_resolve_ctx`]) so a fan-in compare reads the
+    /// buffered pair under either the slot name or the source id, while the app
+    /// `inputs` namespace is never shadowed — so either side may also reference a
+    /// run-supplied `{{ inputs.<name> }}` baseline.
+    async fn run_compare(
+        &mut self,
+        node: &Node,
+        cmp: &CompareBlock,
+    ) -> Result<NodeResult, AwareError> {
+        // Snapshot-keyed compare reads named artifacts the `snapshot` primitive
+        // produces, but that runtime isn't implemented yet — so reject ANY
+        // snapshot key (alone, paired, or alongside an inline `a`/`b`) up front
+        // rather than silently ignoring it in favor of an inline ref. Replace
+        // this with real snapshot resolution when the `snapshot` primitive lands.
+        if cmp.a_snapshot.is_some() || cmp.b_snapshot.is_some() {
+            return Err(AwareError::Validation(format!(
+                "compare node {} uses a-snapshot/b-snapshot — snapshot-backed compare needs the `snapshot` primitive runtime (spec § Substrate primitives), not yet implemented",
+                node.id
+            )));
+        }
+
+        // `compare` is a two-sided diff: with snapshots rejected above, both
+        // inline sides must be present. A missing side is a malformed app — fail
+        // rather than diff against an empty collection (which would report every
+        // record on the present side as added/removed).
+        let (Some(a_expr), Some(b_expr)) = (cmp.a.as_deref(), cmp.b.as_deref()) else {
+            return Err(AwareError::Validation(format!(
+                "compare node {} is missing an inline side — `compare` needs both `a` and `b` (spec § Substrate primitives)",
+                node.id
+            )));
+        };
+        let a_val = template::resolve_value(a_expr, &self.ctx);
+        let b_val = template::resolve_value(b_expr, &self.ctx);
+        // A side that doesn't resolve (missing node/field — e.g. a typo'd ref)
+        // is malformed: compare refs are required and aren't compile-checked
+        // like for-each's, so reject an unresolved side rather than coercing it
+        // to an empty list and emitting a false diff (every record on the other
+        // side reported as added/removed). Under `--simulate` the upstream is
+        // stubbed and may legitimately yield nothing, so tolerate Null there
+        // (mirrors run_for_each's simulate leniency). A resolved-but-empty array
+        // is a valid input and is left alone.
+        if !self.simulate {
+            for (side, expr, val) in [("a", a_expr, &a_val), ("b", b_expr, &b_val)] {
+                if val.is_null() {
+                    return Err(AwareError::Validation(format!(
+                        "compare node {} side `{side}` ({expr}) did not resolve — check the reference",
+                        node.id
+                    )));
+                }
+            }
+        }
+        let a = collection_of(a_val);
+        let b = collection_of(b_val);
+
+        let diff = diff_records(&a, &b, &cmp.by, &cmp.track);
+        self.emit(RunEvent::NodeOutput {
+            ts: now_iso(),
+            run_id: self.run_id.clone(),
+            node: node.id.clone(),
+            data: diff.clone(),
+        })
+        .await?;
+        Ok(NodeResult::Output(diff))
+    }
 }
 
 enum NodeResult {
@@ -895,6 +1048,106 @@ fn build_predecessors(app: &App) -> HashMap<String, Vec<String>> {
         preds.entry(c.to.clone()).or_default().push(c.from.clone());
     }
     preds
+}
+
+/// Coerce a resolved `{{ … }}` value into a list of records for `compare`:
+/// an array is taken as-is, null (an unresolved ref) is an empty list, any
+/// other scalar/object iterates once over itself.
+fn collection_of(v: Value) -> Vec<Value> {
+    match v {
+        Value::Array(items) => items,
+        Value::Null => Vec::new(),
+        other => vec![other],
+    }
+}
+
+/// Diff two record lists by an identity key, per `10-core/app-spec.md
+/// § Substrate primitives` (`compare`). Returns `{ added, removed, changed }`:
+/// `added` = records whose `by` value appears in `b` but not `a`; `removed` =
+/// the reverse; `changed` = records present in both whose tracked fields
+/// differ, each shaped `{ <by>: <id>, diffs: { <field>: { from, to } } }`.
+/// Records lacking the `by` key are ignored; on a duplicate `by` value the
+/// first record wins. Order is stable: added/removed follow first appearance
+/// on their side, changed follows `b` order.
+fn diff_records(a: &[Value], b: &[Value], by: &str, track: &[String]) -> Value {
+    // Stable map-key for an identity value: its compact JSON form, so a string
+    // "5" and a number 5 are distinct keys rather than colliding on "5".
+    fn id_key(v: &Value) -> String {
+        v.to_string()
+    }
+    // Ordered index of `by`-value → first record carrying it.
+    fn index(records: &[Value], by: &str) -> (Vec<String>, HashMap<String, Value>) {
+        let mut order = Vec::new();
+        let mut map: HashMap<String, Value> = HashMap::new();
+        for rec in records {
+            let Some(id) = rec.get(by) else { continue };
+            let key = id_key(id);
+            if let std::collections::hash_map::Entry::Vacant(slot) = map.entry(key.clone()) {
+                order.push(key);
+                slot.insert(rec.clone());
+            }
+        }
+        (order, map)
+    }
+
+    let (a_order, a_map) = index(a, by);
+    let (b_order, b_map) = index(b, by);
+
+    let added: Vec<Value> = b_order
+        .iter()
+        .filter(|k| !a_map.contains_key(*k))
+        .map(|k| b_map[k].clone())
+        .collect();
+    let removed: Vec<Value> = a_order
+        .iter()
+        .filter(|k| !b_map.contains_key(*k))
+        .map(|k| a_map[k].clone())
+        .collect();
+
+    let mut changed: Vec<Value> = Vec::new();
+    for k in &b_order {
+        let (Some(a_rec), Some(b_rec)) = (a_map.get(k), b_map.get(k)) else {
+            continue;
+        };
+        // Which fields to diff: the explicit `track` list, or — when none is
+        // given — every non-identity field across both records (union in
+        // first-seen order, `a` then `b`).
+        let fields: Vec<String> = if track.is_empty() {
+            let mut seen: Vec<String> = Vec::new();
+            for rec in [a_rec, b_rec] {
+                if let Some(obj) = rec.as_object() {
+                    for key in obj.keys() {
+                        if key != by && !seen.contains(key) {
+                            seen.push(key.clone());
+                        }
+                    }
+                }
+            }
+            seen
+        } else {
+            track.to_vec()
+        };
+
+        let mut diffs = serde_json::Map::new();
+        for field in &fields {
+            let av = a_rec.get(field).cloned().unwrap_or(Value::Null);
+            let bv = b_rec.get(field).cloned().unwrap_or(Value::Null);
+            if av != bv {
+                diffs.insert(field.clone(), serde_json::json!({ "from": av, "to": bv }));
+            }
+        }
+        if !diffs.is_empty() {
+            let mut entry = serde_json::Map::new();
+            entry.insert(
+                by.to_string(),
+                b_rec.get(by).cloned().unwrap_or(Value::Null),
+            );
+            entry.insert("diffs".to_string(), Value::Object(diffs));
+            changed.push(Value::Object(entry));
+        }
+    }
+
+    serde_json::json!({ "added": added, "removed": removed, "changed": changed })
 }
 
 /// Convert a `serde_yaml::Value` to a `serde_json::Value` by round-tripping
@@ -1498,6 +1751,743 @@ requires: []
             .collect();
         // Two outer iterations → the outer region name each time, never a part.
         assert_eq!(regions, vec!["R1".to_string(), "R2".to_string()]);
+    }
+
+    // ── #127: `compare` substrate primitive at runtime ──────────────────────
+
+    #[tokio::test]
+    async fn compare_one_shot_diffs_by_identity_key() {
+        // `before` and `after` each emit a row list; the `compare` node diffs
+        // them by the `mark` identity key, tracking the `profile` field. The
+        // node output is `{ added, removed, changed }` per the app-spec
+        // § Substrate primitives.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmp
+version: 0.1.0
+description: x
+nodes:
+  - id: before
+    agent: ag-before
+    command: list
+  - id: after
+    agent: ag-after
+    command: list
+  - id: delta
+    compare:
+      a: '{{ before.rows }}'
+      b: '{{ after.rows }}'
+      by: mark
+      track: [profile]
+connections:
+  - from: before
+    to: delta
+  - from: after
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-before",
+                    "list",
+                    serde_json::json!({ "rows": [
+                        { "mark": "A-1", "profile": "UB305" },
+                        { "mark": "A-2", "profile": "UB406" }
+                    ] }),
+                )
+                .with_single(
+                    "ag-after",
+                    "list",
+                    serde_json::json!({ "rows": [
+                        { "mark": "A-2", "profile": "UB457" },
+                        { "mark": "A-3", "profile": "UB203" }
+                    ] }),
+                ),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let diff = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("compare node must emit a NodeOutput");
+
+        assert_eq!(
+            diff["added"],
+            serde_json::json!([{ "mark": "A-3", "profile": "UB203" }]),
+            "A-3 is in b, not a"
+        );
+        assert_eq!(
+            diff["removed"],
+            serde_json::json!([{ "mark": "A-1", "profile": "UB305" }]),
+            "A-1 is in a, not b"
+        );
+        assert_eq!(
+            diff["changed"],
+            serde_json::json!([{
+                "mark": "A-2",
+                "diffs": { "profile": { "from": "UB406", "to": "UB457" } }
+            }]),
+            "A-2's tracked profile field changed"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_empty_track_diffs_all_non_identity_fields() {
+        // With `track` omitted, `changed` surfaces every differing non-identity
+        // field. id=1 is in both: `status` changed, `note` did not — so the
+        // diff lists only `status`.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmp2
+version: 0.1.0
+description: x
+nodes:
+  - id: before
+    agent: ag-before
+    command: list
+  - id: after
+    agent: ag-after
+    command: list
+  - id: delta
+    compare:
+      a: '{{ before.rows }}'
+      b: '{{ after.rows }}'
+      by: id
+connections:
+  - from: before
+    to: delta
+  - from: after
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-before",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 1, "status": "open", "note": "x" } ] }),
+                )
+                .with_single(
+                    "ag-after",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 1, "status": "closed", "note": "x" } ] }),
+                ),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let diff = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("compare node must emit a NodeOutput");
+
+        assert_eq!(diff["added"], serde_json::json!([]));
+        assert_eq!(diff["removed"], serde_json::json!([]));
+        assert_eq!(
+            diff["changed"],
+            serde_json::json!([{
+                "id": 1,
+                "diffs": { "status": { "from": "open", "to": "closed" } }
+            }]),
+            "empty track diffs all non-identity fields; only `status` changed"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_runs_in_long_running_stream() {
+        // A watcher emits one event carrying `before` + `after` lists; the
+        // downstream `compare` node, reached via the streaming
+        // `execute_and_chain` path, must diff them and emit a NodeOutput
+        // (mirrors for_each_runs_in_long_running_stream).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: streamcmp
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: watch
+  - id: delta
+    compare:
+      a: '{{ src.before }}'
+      b: '{{ src.after }}'
+      by: id
+connections:
+  - from: src
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_stream(
+            "ag-src",
+            "watch",
+            vec![serde_json::json!({
+                "before": [{ "id": 1 }],
+                "after":  [{ "id": 1 }, { "id": 2 }]
+            })],
+        ));
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (stop_tx, stop_rx) = stop_channel();
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        tokio::time::sleep(std::time::Duration::from_millis(150)).await;
+        let _ = stop_tx.send(true);
+        run_handle.await.unwrap().unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let diff = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("compare node must emit a NodeOutput in the streaming path");
+        assert_eq!(
+            diff["added"],
+            serde_json::json!([{ "id": 2 }]),
+            "id=2 is new in `after`"
+        );
+        assert_eq!(diff["removed"], serde_json::json!([]));
+    }
+
+    #[tokio::test]
+    async fn compare_snapshot_keyed_errors_pending_snapshot_runtime() {
+        // A snapshot-keyed compare (only `a-snapshot` / `b-snapshot`, no inline
+        // `a`/`b`) depends on the `snapshot` primitive runtime, which is not yet
+        // implemented. The run must fail with an error naming that dependency
+        // rather than silently diffing two empty sets.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmpsnap
+version: 0.1.0
+description: x
+nodes:
+  - id: delta
+    compare:
+      a-snapshot: 'pre-tender-2026-05-10'
+      b-snapshot: 'pre-tender-2026-05-21'
+      by: element-id
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new());
+        let (orch, _tmp, _log_path) = make_orchestrator(app, inv).await;
+        let err = orch.run_one_shot().await.unwrap_err();
+        assert!(
+            err.to_string().contains("snapshot"),
+            "snapshot-keyed compare must surface the snapshot-runtime dependency, got: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_mixed_inline_and_snapshot_errors() {
+        // A compare mixing an inline `a` with a `b-snapshot` (no inline `b`)
+        // must error on the snapshot dependency, not silently treat every `a`
+        // record as removed by diffing against an empty `b` (reviewer Low-1).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmpmixed
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: delta
+    compare:
+      a: '{{ src.rows }}'
+      b-snapshot: 'pre-tender-2026-05-10'
+      by: mark
+connections:
+  - from: src
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "ag-src",
+            "list",
+            serde_json::json!({ "rows": [ { "mark": "A-1" } ] }),
+        ));
+        let (orch, _tmp, _log_path) = make_orchestrator(app, inv).await;
+        let err = orch.run_one_shot().await.unwrap_err();
+        assert!(
+            err.to_string().contains("snapshot"),
+            "mixed inline/snapshot compare must surface the snapshot dependency, got: {err}"
+        );
+    }
+
+    #[test]
+    fn diff_records_distinguishes_identity_value_types_and_first_wins() {
+        // String "5" and numeric 5 are DISTINCT identities (no key collision);
+        // on a duplicate `by` the first record wins; a record missing `by` is
+        // skipped entirely (reviewer Low-2 + nits).
+        let a = vec![
+            serde_json::json!({ "id": "5", "v": "a-str" }),
+            serde_json::json!({ "id": 7, "v": "first" }),
+            serde_json::json!({ "id": 7, "v": "dupe-ignored" }),
+            serde_json::json!({ "v": "no-id" }),
+        ];
+        let b = vec![
+            serde_json::json!({ "id": 5, "v": "b-num" }),
+            serde_json::json!({ "id": 7, "v": "first" }),
+        ];
+        let diff = diff_records(&a, &b, "id", &[]);
+
+        assert_eq!(
+            diff["removed"],
+            serde_json::json!([{ "id": "5", "v": "a-str" }]),
+            "string \"5\" is a distinct identity from numeric 5"
+        );
+        assert_eq!(
+            diff["added"],
+            serde_json::json!([{ "id": 5, "v": "b-num" }]),
+            "numeric 5 is added, never matched to string \"5\""
+        );
+        assert_eq!(
+            diff["changed"],
+            serde_json::json!([]),
+            "id 7 unchanged; the duplicate id-7 record in `a` is ignored (first wins)"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_streaming_fan_in_pairs_by_slot() {
+        // Two watcher sources fan in to one `compare` node via explicit `input:`
+        // slots. The streaming compare must resolve `a`/`b` from the PAIRED
+        // fan-in event by slot name (`{{ left.rows }}`) — not from the global
+        // latest upstream outputs (Codex P2). left carries an extra record
+        // (id 2), so a correct paired diff reports it as removed.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmpfanin
+version: 0.1.0
+description: x
+nodes:
+  - id: left-feed
+    agent: ag-left
+    command: watch
+  - id: right-feed
+    agent: ag-right
+    command: watch
+  - id: delta
+    compare:
+      a: '{{ left.rows }}'
+      b: '{{ right.rows }}'
+      by: id
+connections:
+  - from: left-feed
+    to: delta
+    input: left
+  - from: right-feed
+    to: delta
+    input: right
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream(
+                    "ag-left",
+                    "watch",
+                    vec![serde_json::json!({ "rows": [ { "id": 1 }, { "id": 2 } ] })],
+                )
+                .with_stream(
+                    "ag-right",
+                    "watch",
+                    vec![serde_json::json!({ "rows": [ { "id": 1 } ] })],
+                ),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        let (stop_tx, stop_rx) = stop_channel();
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let _ = stop_tx.send(true);
+        let _ = run_handle.await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let diff = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("fan-in compare must emit a NodeOutput");
+        assert_eq!(
+            diff["removed"],
+            serde_json::json!([{ "id": 2 }]),
+            "id 2 is in the paired left input, not the right — resolved by slot"
+        );
+        assert_eq!(diff["added"], serde_json::json!([]));
+    }
+
+    #[tokio::test]
+    async fn compare_streaming_preserves_app_inputs() {
+        // A streaming compare diffs a run-supplied baseline (`{{ inputs.baseline }}`)
+        // against the live event stream. Binding the event must NOT shadow the
+        // `inputs` namespace (Codex P2), so side `a` still resolves to the app
+        // input — id 2 is new in the stream, so it shows up as added.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmpbaseline
+version: 0.1.0
+description: x
+nodes:
+  - id: stream
+    agent: ag-stream
+    command: watch
+  - id: delta
+    compare:
+      a: '{{ inputs.baseline }}'
+      b: '{{ stream.rows }}'
+      by: id
+connections:
+  - from: stream
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_stream(
+            "ag-stream",
+            "watch",
+            vec![serde_json::json!({ "rows": [ { "id": 1 }, { "id": 2 } ] })],
+        ));
+        let (mut orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        // Run-supplied baseline lives in the `inputs` namespace.
+        orch.ctx.inputs = serde_json::json!({ "baseline": [ { "id": 1 } ] });
+        let (stop_tx, stop_rx) = stop_channel();
+        let run_handle = tokio::spawn(orch.run_long_running(stop_rx));
+        tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+        let _ = stop_tx.send(true);
+        let _ = run_handle.await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let diff = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("compare must emit a NodeOutput");
+        assert_eq!(
+            diff["added"],
+            serde_json::json!([{ "id": 2 }]),
+            "id 2 is new in the stream vs the app-input baseline"
+        );
+        assert_eq!(diff["removed"], serde_json::json!([]));
+    }
+
+    #[tokio::test]
+    async fn compare_one_shot_fan_in_pairs_by_slot() {
+        // A one-shot DAG where two predecessors fan into a `compare` node via
+        // declared `input:` slots. The compare must resolve `a`/`b` by slot name
+        // (`{{ left.rows }}` for `input: left`) — parity with the streaming path
+        // (Codex P2). left carries an extra record (id 2) → reported as removed.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmposfanin
+version: 0.1.0
+description: x
+nodes:
+  - id: left-feed
+    agent: ag-left
+    command: list
+  - id: right-feed
+    agent: ag-right
+    command: list
+  - id: delta
+    compare:
+      a: '{{ left.rows }}'
+      b: '{{ right.rows }}'
+      by: id
+connections:
+  - from: left-feed
+    to: delta
+    input: left
+  - from: right-feed
+    to: delta
+    input: right
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-left",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 1 }, { "id": 2 } ] }),
+                )
+                .with_single(
+                    "ag-right",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 1 } ] }),
+                ),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let diff = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("one-shot fan-in compare must emit a NodeOutput");
+        assert_eq!(
+            diff["removed"],
+            serde_json::json!([{ "id": 2 }]),
+            "id 2 is in the `left` slot, not `right` — resolved by declared input slot"
+        );
+        assert_eq!(diff["added"], serde_json::json!([]));
+    }
+
+    #[tokio::test]
+    async fn compare_one_shot_slot_alias_does_not_leak() {
+        // `delta1`'s incoming edge uses `input: bbb`, whose slot name collides
+        // with the real node `bbb`. The compare's scoped overlay must NOT leak
+        // that alias into the shared context: the later compare `delta2` reading
+        // `{{ bbb.rows }}` must see the REAL `bbb` output ([id:2]), not delta1's
+        // `a` side ([id:1]) (Codex P3).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmpleak
+version: 0.1.0
+description: x
+nodes:
+  - id: aaa
+    agent: ag-aaa
+    command: list
+  - id: bbb
+    agent: ag-bbb
+    command: list
+  - id: ccc
+    agent: ag-ccc
+    command: list
+  - id: delta1
+    compare:
+      a: '{{ aaa.rows }}'
+      b: '{{ ccc.rows }}'
+      by: id
+  - id: delta2
+    compare:
+      a: '{{ bbb.rows }}'
+      b: '{{ ccc.rows }}'
+      by: id
+connections:
+  - from: aaa
+    to: delta1
+    input: bbb
+  - from: ccc
+    to: delta1
+  - from: bbb
+    to: delta2
+  - from: ccc
+    to: delta2
+  - from: delta1
+    to: delta2
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-aaa",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 1 } ] }),
+                )
+                .with_single(
+                    "ag-bbb",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 2 } ] }),
+                )
+                .with_single(
+                    "ag-ccc",
+                    "list",
+                    serde_json::json!({ "rows": [ { "id": 3 } ] }),
+                ),
+        );
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let delta2 = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "delta2" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("delta2 must emit a NodeOutput");
+        // delta2.a = bbb.rows = [{id:2}], delta2.b = ccc.rows = [{id:3}].
+        // A leaked `input: bbb` alias would make bbb resolve to aaa.rows ([id:1]).
+        assert_eq!(
+            delta2["removed"],
+            serde_json::json!([{ "id": 2 }]),
+            "delta2 must read the REAL bbb ([id:2]); a leaked slot alias would show [id:1]"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_inline_plus_same_side_snapshot_errors() {
+        // A side specifying BOTH an inline `a` AND `a-snapshot` must error —
+        // snapshot-backed compare isn't implemented, so a snapshot key must
+        // never be silently ignored in favor of the inline ref (Codex P2 #2).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmpboth
+version: 0.1.0
+description: x
+nodes:
+  - id: src
+    agent: ag-src
+    command: list
+  - id: delta
+    compare:
+      a: '{{ src.rows }}'
+      a-snapshot: 'pre-tender-2026-05-10'
+      b: '{{ src.rows }}'
+      by: mark
+connections:
+  - from: src
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "ag-src",
+            "list",
+            serde_json::json!({ "rows": [ { "mark": "A-1" } ] }),
+        ));
+        let (orch, _tmp, _log_path) = make_orchestrator(app, inv).await;
+        let err = orch.run_one_shot().await.unwrap_err();
+        assert!(
+            err.to_string().contains("snapshot"),
+            "any snapshot key must surface the snapshot dependency, got: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_missing_side_errors() {
+        // An inline compare that omits one side (no snapshots) is malformed —
+        // `compare` is a two-sided diff. It must error, not silently diff `a`
+        // against an empty `b` and report every record as removed (Codex P2 #3).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmphalf
+version: 0.1.0
+description: x
+nodes:
+  - id: before
+    agent: ag-before
+    command: list
+  - id: delta
+    compare:
+      a: '{{ before.rows }}'
+      by: mark
+connections:
+  - from: before
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "ag-before",
+            "list",
+            serde_json::json!({ "rows": [ { "mark": "A-1" } ] }),
+        ));
+        let (orch, _tmp, _log_path) = make_orchestrator(app, inv).await;
+        let err = orch.run_one_shot().await.unwrap_err();
+        assert!(
+            err.to_string().contains("missing"),
+            "a compare missing an inline side must be rejected, got: {err}"
+        );
+    }
+
+    #[tokio::test]
+    async fn compare_unresolved_side_errors() {
+        // A typo'd ref (`before.rowz` — the field is `rows`) resolves to Null.
+        // In a real run that must error, not coerce to an empty list and report
+        // every record on the other side as added (Codex P2 #4).
+        let app: App = serde_yaml::from_str(
+            r#"
+app: cmptypo
+version: 0.1.0
+description: x
+nodes:
+  - id: before
+    agent: ag-before
+    command: list
+  - id: after
+    agent: ag-after
+    command: list
+  - id: delta
+    compare:
+      a: '{{ before.rowz }}'
+      b: '{{ after.rows }}'
+      by: mark
+connections:
+  - from: before
+    to: delta
+  - from: after
+    to: delta
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single(
+                    "ag-before",
+                    "list",
+                    serde_json::json!({ "rows": [ { "mark": "A-1" } ] }),
+                )
+                .with_single(
+                    "ag-after",
+                    "list",
+                    serde_json::json!({ "rows": [ { "mark": "A-2" } ] }),
+                ),
+        );
+        let (orch, _tmp, _log_path) = make_orchestrator(app, inv).await;
+        let err = orch.run_one_shot().await.unwrap_err();
+        assert!(
+            err.to_string().contains("did not resolve"),
+            "an unresolved compare side must be rejected, got: {err}"
+        );
     }
 
     #[test]
