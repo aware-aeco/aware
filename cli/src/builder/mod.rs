@@ -90,10 +90,19 @@ pub fn write_agent(
     }
 
     for (name, cmd) in &agent.commands {
-        let body = format!(
+        let mut body = format!(
             "# {name}\n\nLifecycle: {}\n\n{}\n",
             cmd.lifecycle, cmd.description
         );
+        if !cmd.inputs_yaml.trim().is_empty() {
+            body.push_str(&format!("\n## Inputs\n\n```yaml\n{}```\n", cmd.inputs_yaml));
+        }
+        if !cmd.outputs_yaml.trim().is_empty() {
+            body.push_str(&format!(
+                "\n## Output\n\n```yaml\n{}```\n",
+                cmd.outputs_yaml
+            ));
+        }
         std::fs::write(dst.join("commands").join(format!("{name}.md")), body)?;
     }
 
