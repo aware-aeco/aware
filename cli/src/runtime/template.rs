@@ -36,9 +36,184 @@ impl RenderContext {
     }
 }
 
+/// Find the byte index just past the next `{% endraw %}` tag at or after `from`,
+/// or `None` if the raw block is unterminated. Tolerates whitespace-control
+/// dashes (`{%- endraw -%}`).
+fn find_endraw(template: &str, from: usize) -> Option<usize> {
+    let mut search = from;
+    while let Some(open_rel) = template[search..].find("{%") {
+        let after_open = search + open_rel + 2;
+        let close_rel = template[after_open..].find("%}")?;
+        let tag = template[after_open..after_open + close_rel]
+            .trim()
+            .trim_matches('-')
+            .trim();
+        let close_end = after_open + close_rel + 2;
+        if tag == "endraw" {
+            return Some(close_end);
+        }
+        search = close_end;
+    }
+    None
+}
+
+/// Rewrite hyphenated dot-path segments inside `{{ … }}` / `{% … %}` blocks to
+/// bracket form, so kebab-case identifiers work in dot syntax. minijinja lexes
+/// `inputs.tc-project-id` as the expression `inputs.tc - project - id`
+/// (subtraction over undefined values) and fails; this turns it into
+/// `inputs['tc-project-id']`. A hyphenated path BASE — a kebab node id such as
+/// `tekla-watch` — is translated to its underscore form (`tekla_watch`), which
+/// [`RenderContext::record_output`] also registers, so `tekla-watch.drawing-bytes`
+/// becomes `tekla_watch['drawing-bytes']`.
+///
+/// Only hyphenated dot-paths are touched — exactly the refs that fail today.
+/// Hyphen-free paths and the contents of string literals and `{% raw %}` blocks
+/// are copied through unchanged, so any template that already renders keeps
+/// rendering identically (#117-4).
+///
+/// Subtraction note: an explicit, spaced `{{ a.b - c }}` is preserved (the space
+/// ends the path). A *space-free* `{{ ns.a-b }}` is read as the kebab key `a-b`,
+/// matching AWARE's kebab-everywhere convention; write subtraction with spaces.
+fn normalize_hyphenated_paths(template: &str) -> String {
+    let b = template.as_bytes();
+    let n = b.len();
+    let mut out = String::with_capacity(n);
+    // Start of the pending run of bytes copied through verbatim. Copying by
+    // SLICE (not byte-by-byte) keeps multi-byte UTF-8 literal text intact.
+    let mut flush_from = 0usize;
+    let mut i = 0usize;
+    let mut in_expr = false;
+    let mut quote: Option<u8> = None;
+    let ident = |byte: u8| byte.is_ascii_alphanumeric() || byte == b'_' || byte == b'-';
+    while i < n {
+        let c = b[i];
+        if !in_expr {
+            // `{% raw %}` … `{% endraw %}` is emitted literally by minijinja —
+            // skip the whole region so its body is never normalized.
+            if c == b'{'
+                && i + 1 < n
+                && b[i + 1] == b'%'
+                && let Some(close_rel) = template[i + 2..].find("%}")
+                && template[i + 2..i + 2 + close_rel]
+                    .trim()
+                    .trim_matches('-')
+                    .trim()
+                    == "raw"
+            {
+                let body_start = i + 2 + close_rel + 2;
+                i = find_endraw(template, body_start).unwrap_or(n);
+                continue;
+            }
+            if c == b'{' && i + 1 < n && (b[i + 1] == b'{' || b[i + 1] == b'%') {
+                in_expr = true;
+                i += 2;
+            } else {
+                i += 1;
+            }
+            continue;
+        }
+        // Inside a `{{ }}` / `{% %}` block.
+        if let Some(q) = quote {
+            if c == b'\\' && i + 1 < n {
+                i += 2;
+            } else {
+                if c == q {
+                    quote = None;
+                }
+                i += 1;
+            }
+            continue;
+        }
+        if (c == b'}' || c == b'%') && i + 1 < n && b[i + 1] == b'}' {
+            in_expr = false;
+            i += 2;
+            continue;
+        }
+        if c == b'\'' || c == b'"' {
+            quote = Some(c);
+            i += 1;
+            continue;
+        }
+        // A potential accessor-chain base: a leading identifier.
+        if c.is_ascii_alphabetic() || c == b'_' {
+            let base_start = i;
+            i += 1;
+            while i < n && ident(b[i]) {
+                i += 1;
+            }
+            // Only an accessor chain (base followed by `.` or `[`) is rewritten;
+            // a bare token is left alone so `a - b` subtraction is never mangled.
+            if i < n && (b[i] == b'.' || b[i] == b'[') {
+                // A kebab base node id resolves via its underscore-translated key.
+                let mut chain = template[base_start..i].replace('-', "_");
+                loop {
+                    if i < n && b[i] == b'.' {
+                        let seg_start = i + 1;
+                        let mut j = seg_start;
+                        while j < n && ident(b[j]) {
+                            j += 1;
+                        }
+                        if j == seg_start {
+                            break; // `.` not followed by an identifier (e.g. `.*`)
+                        }
+                        let seg = &template[seg_start..j];
+                        if seg.contains('-') {
+                            chain.push_str("['");
+                            chain.push_str(seg);
+                            chain.push_str("']");
+                        } else {
+                            chain.push('.');
+                            chain.push_str(seg);
+                        }
+                        i = j;
+                    } else if i < n && b[i] == b'[' {
+                        // Copy a `[ … ]` lookup verbatim (kebab keys already work),
+                        // tracking quotes so a `]` inside a string doesn't end it.
+                        let br_start = i;
+                        i += 1;
+                        let mut q2: Option<u8> = None;
+                        while i < n {
+                            let cc = b[i];
+                            if let Some(qq) = q2 {
+                                if cc == b'\\' && i + 1 < n {
+                                    i += 2;
+                                    continue;
+                                }
+                                if cc == qq {
+                                    q2 = None;
+                                }
+                                i += 1;
+                            } else if cc == b'\'' || cc == b'"' {
+                                q2 = Some(cc);
+                                i += 1;
+                            } else if cc == b']' {
+                                i += 1;
+                                break;
+                            } else {
+                                i += 1;
+                            }
+                        }
+                        chain.push_str(&template[br_start..i]);
+                    } else {
+                        break;
+                    }
+                }
+                out.push_str(&template[flush_from..base_start]);
+                out.push_str(&chain);
+                flush_from = i;
+            }
+            continue;
+        }
+        i += 1;
+    }
+    out.push_str(&template[flush_from..]);
+    out
+}
+
 pub fn render(template: &str, ctx: &RenderContext) -> Result<String, AwareError> {
+    let normalized = normalize_hyphenated_paths(template);
     let mut env = Environment::new();
-    env.add_template("t", template)
+    env.add_template("t", &normalized)
         .map_err(|e| AwareError::Validation(format!("template parse: {e}")))?;
     let tmpl = env.get_template("t").unwrap();
 
@@ -144,5 +319,144 @@ mod tests {
         // minijinja default (lenient) mode renders missing keys as empty string.
         // Strict mode would error; v0.3 uses lenient to match Jinja2 defaults.
         let _ = result;
+    }
+
+    // ── #117-4: hyphenated dot-paths now render via the normalizer ──────────
+
+    #[test]
+    fn dot_syntax_hyphenated_input_now_renders() {
+        let ctx = RenderContext {
+            inputs: serde_json::json!({ "tc-project-id": "proj-123" }),
+            ..Default::default()
+        };
+        let out = render("{{ inputs.tc-project-id }}", &ctx).unwrap();
+        assert_eq!(out, "proj-123");
+    }
+
+    #[test]
+    fn dot_syntax_hyphenated_node_id_and_field_now_renders() {
+        let ctx = ctx_with_upstream("tekla-watch", serde_json::json!({ "drawing-bytes": "PDF" }));
+        let out = render("{{ tekla-watch.drawing-bytes }}", &ctx).unwrap();
+        assert_eq!(out, "PDF");
+    }
+
+    #[test]
+    fn dot_syntax_hyphenated_config_and_secrets_render() {
+        let mut ctx = RenderContext::default();
+        ctx.config
+            .insert("pdf-inbox".into(), serde_json::json!("/in"));
+        ctx.secrets
+            .insert("ceng-seal".into(), serde_json::json!("sig"));
+        assert_eq!(render("{{ config.pdf-inbox }}", &ctx).unwrap(), "/in");
+        assert_eq!(render("{{ secrets.ceng-seal }}", &ctx).unwrap(), "sig");
+    }
+
+    #[test]
+    fn hyphenated_path_inside_larger_string_renders() {
+        let ctx = RenderContext {
+            inputs: serde_json::json!({ "report-dir": "/r" }),
+            ..Default::default()
+        };
+        let out = render(
+            "{{ inputs.report-dir }}/monday-{{ inputs.report-dir }}.html",
+            &ctx,
+        )
+        .unwrap();
+        assert_eq!(out, "/r/monday-/r.html");
+    }
+
+    #[test]
+    fn normalize_leaves_valid_templates_untouched() {
+        // Hyphen-free dot paths, subtraction (no dot), already-bracketed kebab,
+        // and literal text outside blocks all pass through byte-identical.
+        assert_eq!(
+            normalize_hyphenated_paths("{{ inputs.plain }}"),
+            "{{ inputs.plain }}"
+        );
+        assert_eq!(
+            normalize_hyphenated_paths("{{ tekla_watch.mark }}"),
+            "{{ tekla_watch.mark }}"
+        );
+        assert_eq!(normalize_hyphenated_paths("{{ a - b }}"), "{{ a - b }}");
+        assert_eq!(
+            normalize_hyphenated_paths("{{ inputs['a-b'] }}"),
+            "{{ inputs['a-b'] }}"
+        );
+        assert_eq!(
+            normalize_hyphenated_paths("a-b.c-d not in a block"),
+            "a-b.c-d not in a block"
+        );
+    }
+
+    #[test]
+    fn normalize_rewrites_hyphenated_dot_paths_to_bracket_form() {
+        assert_eq!(
+            normalize_hyphenated_paths("{{ inputs.tc-project-id }}"),
+            "{{ inputs['tc-project-id'] }}"
+        );
+        assert_eq!(
+            normalize_hyphenated_paths("{{ delta-report.output-path }}"),
+            "{{ delta_report['output-path'] }}"
+        );
+        // Path rewritten; the hyphen inside the quoted literal is preserved.
+        assert_eq!(
+            normalize_hyphenated_paths("{{ x.a-b | replace: \".h-t\" }}"),
+            "{{ x['a-b'] | replace: \".h-t\" }}"
+        );
+    }
+
+    #[test]
+    fn normalizer_preserves_non_ascii_literal_text() {
+        // Byte-by-byte copy would mojibake multi-byte UTF-8; slice copy keeps it.
+        let ctx = RenderContext {
+            inputs: serde_json::json!({ "name": "World" }),
+            ..Default::default()
+        };
+        let out = render("Zażółć {{ inputs.name }} gęślą jaźń", &ctx).unwrap();
+        assert_eq!(out, "Zażółć World gęślą jaźń");
+    }
+
+    #[test]
+    fn hyphenated_field_after_bracket_lookup_renders() {
+        // `upstream['kebab-id'].kebab-field` — the field follows `]`, not a base.
+        let ctx = ctx_with_upstream("tekla-watch", serde_json::json!({ "drawing-bytes": "PDF" }));
+        let out = render("{{ upstream['tekla-watch'].drawing-bytes }}", &ctx).unwrap();
+        assert_eq!(out, "PDF");
+    }
+
+    #[test]
+    fn normalize_brackets_field_after_bracket_and_keeps_utf8() {
+        assert_eq!(
+            normalize_hyphenated_paths("{{ upstream['a-b'].c-d }}"),
+            "{{ upstream['a-b']['c-d'] }}"
+        );
+        // Non-ASCII literal outside the block is byte-preserved.
+        assert_eq!(
+            normalize_hyphenated_paths("café {{ x.y-z }}"),
+            "café {{ x['y-z'] }}"
+        );
+    }
+
+    #[test]
+    fn normalize_skips_raw_blocks() {
+        // `{% raw %}` body is emitted literally — no normalization inside.
+        assert_eq!(
+            normalize_hyphenated_paths("{% raw %}{{ inputs.foo-bar }}{% endraw %}"),
+            "{% raw %}{{ inputs.foo-bar }}{% endraw %}"
+        );
+        // A real ref after the raw block is still normalized.
+        assert_eq!(
+            normalize_hyphenated_paths("{% raw %}{{ a.b-c }}{% endraw %} {{ x.y-z }}"),
+            "{% raw %}{{ a.b-c }}{% endraw %} {{ x['y-z'] }}"
+        );
+    }
+
+    #[test]
+    fn normalize_preserves_spaced_subtraction() {
+        // Explicit, spaced subtraction is left intact (the space ends the path).
+        assert_eq!(
+            normalize_hyphenated_paths("{{ inputs.count - discount }}"),
+            "{{ inputs.count - discount }}"
+        );
     }
 }
