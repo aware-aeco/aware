@@ -138,6 +138,12 @@ fn push_security_refs(security: Option<&Value>, out: &mut Vec<String>) {
 /// AWARE auth model. The credential handle is the agent id (one secret per
 /// built agent). Returns `None` when no scheme is required (unauthenticated) or
 /// the referenced scheme is unmodeled (e.g. http-basic).
+///
+/// AWARE auth is **agent-level**: one credential applies to every command. A
+/// spec that mixes secured and public operations therefore yields a single
+/// agent-wide auth block, so the credential is also sent to its public
+/// endpoints (which ignore it). Per-operation auth would need a substrate-level
+/// per-command auth model — out of scope here.
 fn build_auth(spec: &Value, agent_id: &str) -> Option<AuthBlock> {
     let schemes = spec.pointer("/components/securitySchemes")?.as_object()?;
     if schemes.is_empty() {

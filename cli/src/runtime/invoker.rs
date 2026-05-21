@@ -541,13 +541,24 @@ fn inject_auth(
                         query.push((name.to_string(), cred));
                     }
                 }
-                // apiKey `in: cookie` → `Cookie: name=value`.
+                // apiKey `in: cookie` → `Cookie: name=value`. Append to an
+                // existing Cookie header (e.g. one built from cookie params)
+                // instead of skipping it, unless that cookie name is already set.
                 Some("cookie") => {
-                    if !headers
-                        .iter()
-                        .any(|(k, _)| k.eq_ignore_ascii_case("cookie"))
+                    let pair = format!("{name}={cred}");
+                    if let Some((_, existing)) = headers
+                        .iter_mut()
+                        .find(|(k, _)| k.eq_ignore_ascii_case("cookie"))
                     {
-                        headers.push(("Cookie".into(), format!("{name}={cred}")));
+                        let already = existing
+                            .split(';')
+                            .any(|c| c.trim_start().starts_with(&format!("{name}=")));
+                        if !already {
+                            existing.push_str("; ");
+                            existing.push_str(&pair);
+                        }
+                    } else {
+                        headers.push(("Cookie".into(), pair));
                     }
                 }
                 // header (default).
@@ -1395,5 +1406,57 @@ commands:
             req.starts_with("GET /thing "),
             "cookie param must not leak into the query string: {req}"
         );
+    }
+
+    #[tokio::test]
+    async fn cookie_auth_appends_to_operation_cookie_param() {
+        // apiKey `in: cookie` auth + an operation cookie param must coexist in
+        // one `Cookie` header — auth appends rather than being skipped (#106).
+        let (port, rx) = mock_server(200, r#"{"ok":true}"#);
+        let home = tempfile::tempdir().unwrap();
+        let agents = home.path().join("agents");
+        let dir = agents.join("svc");
+        std::fs::create_dir_all(&dir).unwrap();
+        let manifest = r#"agent: svc
+version: 0.1.0
+description: svc
+stateful: false
+license: MIT
+transport:
+  rest:
+    base: http://127.0.0.1:PORT
+auth:
+  scheme: api-key
+  in: cookie
+  name: token
+  secret: svc
+requires:
+  secrets:
+    - svc
+commands:
+  get-thing:
+    lifecycle: single
+    description: "GET /thing"
+    method: GET
+    path: /thing
+    inputs:
+      sid:
+        type: string
+        in: cookie
+"#
+        .replace("PORT", &port.to_string());
+        std::fs::write(dir.join("manifest.yaml"), manifest).unwrap();
+        let creds = home.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("svc.json"), r#"{"key":"tok-9"}"#).unwrap();
+
+        let inv = RestInvoker { agents_dir: agents };
+        let _ = inv
+            .invoke_single("svc", "get-thing", serde_json::json!({ "sid": "abc" }))
+            .await
+            .unwrap();
+        let req = rx.recv().unwrap();
+        assert!(req.contains("sid=abc"), "cookie param missing: {req}");
+        assert!(req.contains("token=tok-9"), "auth cookie missing: {req}");
     }
 }
