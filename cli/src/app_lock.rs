@@ -149,8 +149,18 @@ pub fn compile(
     // channel as command-not-found), turning a silent runtime failure into a
     // fixable compile-time signal — the deterministic plan validation that
     // makes decalog #9 usable in practice.
+    //
+    // Only TOP-LEVEL node ids are globally addressable: a `do:`-body-local id
+    // is scoped to its parent (per app-spec, for-each outputs aggregate under
+    // the parent id), so it must not enter the global field set — otherwise an
+    // outer `{{ body_local.field }}` ref would be silently blessed and reused
+    // body ids would collide. Body nodes still get *their* refs checked against
+    // this top-level set below (so a `do:` ref to an outer node is validated);
+    // sibling-within-body resolution is a future scoped-checking enhancement.
+    let top_level_ids: BTreeSet<&str> = app.nodes.iter().map(|n| n.id.as_str()).collect();
     let field_sets: BTreeMap<String, Option<BTreeSet<String>>> = nodes
         .iter()
+        .filter(|n| top_level_ids.contains(n.id.as_str()))
         .map(|n| (n.id.clone(), output_field_set(n.output_schema.as_ref())))
         .collect();
     for (i, &node) in flat.iter().enumerate() {
@@ -583,6 +593,11 @@ commands:
       schema:
         path: string
         rows: array
+  consume:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: consumes
 "#,
         )
         .unwrap();
@@ -602,6 +617,10 @@ commands:
     category: curated
     mode: write
     description: writes
+    outputs:
+      type: single
+      schema:
+        file-id: string
 "#,
         )
         .unwrap();
@@ -636,6 +655,11 @@ nodes:
         config:
           good: '{{ src.path }}'
           bad:  '{{ src.nope }}'
+  - id: after
+    agent: testagent
+    command: consume
+    config:
+      x: '{{ upsert.nope }}'
 requires: []
 "#,
         )
@@ -667,6 +691,15 @@ requires: []
             !upsert.notes.iter().any(|n| n.contains("{{ src.path }}")),
             "valid ref inside do: must not be flagged; notes: {:?}",
             upsert.notes
+        );
+        // Scope: a top-level node referencing a do:-body-local id (`upsert`)
+        // must NOT resolve it — body ids aren't globally addressable, so the
+        // ref is treated as an unknown prefix (skipped), not blessed or flagged.
+        let after = lock.nodes.iter().find(|n| n.id == "after").unwrap();
+        assert!(
+            !after.notes.iter().any(|n| n.contains("upsert")),
+            "body-local id leaked into global scope (should not resolve): {:?}",
+            after.notes
         );
     }
 }
