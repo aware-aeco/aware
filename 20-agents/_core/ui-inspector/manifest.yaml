@@ -1,0 +1,214 @@
+agent:        ui-inspector
+version:      0.1.0
+display-name: UI Inspector
+
+# Host-agnostic dialog/control inspector. Unlike the vendor agents (tekla,
+# revit, sketchup, …) this agent is NOT bound to one host .exe — every command
+# takes the target window/dialog as a runtime input, and the native work sits
+# behind a per-OS host-adapter seam. The Win32 adapter is the only one
+# implemented today; UIAutomation / macOS AX / Linux AT-SPI are future adapters
+# behind the SAME command surface. See skills/host-adapter-seam.md.
+host:
+  adapters-supported: [win32]          # future: uiautomation, macos-ax, linux-atspi
+  routing:            window-handle    # operate on the window/dialog handed in, NOT COM-ROT discovery
+  runtime-tfm:        net9.0           # pure Win32 P/Invoke; no host-managed-API binding, so net9 not net48
+
+description: |
+  Opens any desktop application's dialog, enumerates its controls, captures
+  coordinate-aligned screenshots, maps opaque fields back to their named
+  settings, and emits a self-contained interactive overlay. The Tekla
+  "connection X-ray" is the first APPLICATION of this capability, not the agent
+  itself — every host AWARE drives (Revit, AutoCAD, SketchUp, Rhino) and plenty
+  of non-AECO apps have dialogs whose field-to-setting mapping is opaque and
+  whose presets round-trip through a UI nobody can introspect programmatically.
+  It is the same problem everywhere (decalog #5: AECO is the wedge, not the
+  limit). Host specifics live behind a host-adapter seam; the command surface is
+  host-agnostic, so you build the inspector once and everyone composes it
+  (decalog #6: ship agents, not apps).
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/ui-inspector
+keywords: [aware, ui, inspector, win32, uiautomation, accessibility, dialog, introspection, host-agnostic]
+
+requires:
+  filesystem:
+    - write: any        # screenshots + overlay HTML written to the caller's chosen path
+  software:
+    - windows@10+       # the only implemented adapter is Win32; other OSes need their own adapter
+
+transport:
+  cli:
+    binary: aware-ui-inspector
+
+commands:
+  enumerate-controls:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Enumerate every control in a window or dialog — id, type, label, value,
+      client-area rectangle, and owning tab. Reads the real control tree via the
+      host adapter (Win32: EnumChildWindows), which surfaces controls that
+      higher-level accessibility trees collapse into opaque panes. Read-only.
+    inputs:
+      window:
+        type: string
+        description: Top-level window title (substring match) or an `0x`-prefixed HWND.
+      dialog-title:
+        type: string
+        required: false
+        description: Optional child-dialog title to scope enumeration to one modal.
+    outputs:
+      type: single
+      schema:
+        controls:
+          type: array
+          items:
+            id:    string          # stable per-window control identifier (Win32: control id + class + index)
+            type:  string          # normalized control kind (button, edit, combo, checkbox, tab, static, …)
+            label: string          # nearest associated label / window text
+            value: string          # current text / state ("" when none)
+            rect:                  # client-area rectangle, aligned to capture-window output
+              x: integer
+              y: integer
+              w: integer
+              h: integer
+            tab:   string          # owning tab label ("" if not under a tab control)
+
+  capture-window:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Capture a coordinate-aligned, client-area screenshot of a window or
+      dialog. Uses the host adapter's client-only render (Win32: PrintWindow with
+      PW_CLIENTONLY | PW_RENDERFULLCONTENT) so the pixel origin matches the
+      `rect` origin reported by enumerate-controls — overlay coordinates line up
+      exactly. Optionally switches to a named tab first (settling before capture).
+      Read-only (produces an image file at the caller's path).
+    inputs:
+      window:
+        type: string
+        description: Top-level window title (substring) or `0x`-prefixed HWND.
+      tab:
+        type: string
+        required: false
+        description: Switch to this tab and settle before capturing.
+      output-path:
+        type: string
+        description: Destination PNG path.
+    outputs:
+      type: single
+      schema:
+        path:   string
+        width:  integer
+        height: integer
+
+  walk-tabs:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Walk every tab of a tabbed dialog: switch to each tab, settle, enumerate
+      its controls, and capture a per-tab screenshot. The one-call version of
+      enumerate-controls + capture-window across a whole property sheet. Reads
+      tab labels cross-process (Win32: TCM_GETITEMW via VirtualAllocEx) and waits
+      out the per-tab settle (>=300 ms) so late-laid-out controls are counted.
+      Read-only.
+    inputs:
+      window:
+        type: string
+        description: Top-level window title (substring) or `0x`-prefixed HWND.
+      output-dir:
+        type: string
+        description: Directory for the per-tab screenshots.
+    outputs:
+      type: single
+      schema:
+        tabs:
+          type: array
+          items:
+            tab:             string
+            controls:        array      # same control shape as enumerate-controls
+            screenshot-path: string
+
+  map-fields:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Map opaque dialog fields to their named settings WITHOUT a per-app field
+      list, by sentinelizing a preset: write known sentinel values into a copy of
+      the preset, re-read the dialog, and match each visible field's text back to
+      the attribute it came from. Works for any app that round-trips settings
+      through a dialog. Numerics are matched fuzzily (±0.5); strings are matched
+      literally. Mutates only a scratch preset, never the deliverable model —
+      read-mode under the safety contract (see the command doc for the transient
+      sentinel-write detail).
+    inputs:
+      window:
+        type: string
+        description: Top-level window title (substring) or `0x`-prefixed HWND.
+      preset:
+        type: string
+        description: Path to the preset/attribute file to sentinelize (a copy is used).
+      sentinel-strategy:
+        type: enum
+        values: [numeric-stride, token]
+        default: numeric-stride
+        description: |
+          numeric-stride = write i*11.111111 (1-based) into numeric fields and
+          fuzzy-match on re-read; token = write `__attr_<name>__` strings and
+          literal-match. Use token for predominantly textual presets.
+    outputs:
+      type: single
+      schema:
+        mapping:
+          type: array
+          items:
+            field-id:   string         # matches a control id from enumerate-controls
+            attribute:  string         # the named preset attribute that field maps to
+            confidence: number         # 0..1 (1.0 = exact literal/in-tolerance match)
+        unmatched:
+          type: array
+          items: string                # attribute names no visible field could be matched to
+
+  build-overlay:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Emit a self-contained, interactive HTML overlay from enumerated controls
+      plus captured screenshots: the screenshot with absolutely-positioned hot
+      zones over each control's rect, so hovering a control reveals its
+      name / type / value / mapped attribute. One portable file, inline CSS/JS,
+      no external assets — opens in any browser. Pairs with html-report
+      (the `tekla-connection-xray` template is this overlay's first skin). Read-only.
+    inputs:
+      controls:
+        type: object
+        description: enumerate-controls / walk-tabs output (controls[] or tabs[]).
+      screenshots:
+        type: array
+        items: string
+        description: Screenshot paths from capture-window / walk-tabs, in tab order.
+      output-path:
+        type: string
+        description: Destination HTML path.
+      title:
+        type: string
+        required: false
+        description: Page title; defaults to the window title.
+    outputs:
+      type: single
+      schema:
+        path:  string
+        bytes: integer
+
+skills:
+  - host-adapter-seam.md
+  - win32-control-enumeration.md
+  - sentinel-field-mapping.md
