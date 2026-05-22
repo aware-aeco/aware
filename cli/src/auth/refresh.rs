@@ -11,8 +11,12 @@ use crate::error::AwareError;
 
 const REFRESH_BUFFER_SECS: i64 = 60;
 
-pub fn ensure_fresh(integration: &str, alias: Option<&str>) -> Result<StoredToken, AwareError> {
-    let token = keychain::load_token(integration, alias)?
+pub fn ensure_fresh(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+) -> Result<StoredToken, AwareError> {
+    let token = keychain::load_token(integration, alias, aware_home)?
         .ok_or_else(|| AwareError::AuthExpired(integration.to_string()))?;
 
     let now = SystemTime::now()
@@ -83,7 +87,7 @@ pub fn ensure_fresh(integration: &str, alias: Option<&str>) -> Result<StoredToke
         obtained_at: now,
         source: token.source.clone(),
     };
-    keychain::store_token(&new_token, alias)?;
+    keychain::store_token(&new_token, alias, aware_home)?;
     Ok(new_token)
 }
 
@@ -97,7 +101,9 @@ mod tests {
 
     #[test]
     fn missing_credential_returns_auth_expired() {
-        let err = ensure_fresh("test-never-stored-integration-12345", None).unwrap_err();
+        let tmp = tempfile::tempdir().unwrap();
+        let err =
+            ensure_fresh("test-never-stored-integration-12345", None, tmp.path()).unwrap_err();
         assert!(matches!(err, AwareError::AuthExpired(_)), "got: {err:?}");
     }
 }

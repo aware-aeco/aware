@@ -56,11 +56,15 @@ pub struct DisconnectArgs {
     pub r#as: Option<String>,
 }
 
-pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> {
+pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     let cfg = crate::auth::config::for_integration(&args.integration)?;
 
     if args.refresh {
-        let token = crate::auth::refresh::ensure_fresh(&args.integration, args.r#as.as_deref())?;
+        let token = crate::auth::refresh::ensure_fresh(
+            &args.integration,
+            args.r#as.as_deref(),
+            &ctx.paths.aware_home,
+        )?;
         println!(
             "\u{2713} refreshed {} (expires at unix-{})",
             args.integration, token.expires_at
@@ -104,20 +108,26 @@ pub fn run_connect(args: ConnectArgs, _ctx: &Context) -> Result<(), AwareError> 
         crate::auth::paste::run_paste_flow(&args.integration)?
     };
 
-    crate::auth::keychain::store_token(&token, args.r#as.as_deref())?;
+    crate::auth::keychain::store_token(&token, args.r#as.as_deref(), &ctx.paths.aware_home)?;
     let kind = match token.source {
         crate::auth::keychain::TokenSource::Paste => "paste token (user-managed)",
         crate::auth::keychain::TokenSource::Oauth => "OAuth token",
     };
+    // store_token may fall back to a credentials file on Windows (keyring blob limit);
+    // print a generic success that's accurate either way.
     println!(
-        "\u{2713} stored {} {} encrypted to OS keychain",
+        "\u{2713} stored {} {} (OS keychain or ~/.aware/credentials fallback)",
         args.integration, kind
     );
     Ok(())
 }
 
-pub fn run_disconnect(args: DisconnectArgs, _ctx: &Context) -> Result<(), AwareError> {
-    crate::auth::keychain::delete_token(&args.integration, args.r#as.as_deref())?;
+pub fn run_disconnect(args: DisconnectArgs, ctx: &Context) -> Result<(), AwareError> {
+    crate::auth::keychain::delete_token(
+        &args.integration,
+        args.r#as.as_deref(),
+        &ctx.paths.aware_home,
+    )?;
     println!("\u{2713} Removed credential for {}", args.integration);
     Ok(())
 }

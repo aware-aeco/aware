@@ -18,14 +18,20 @@ pub use crate::runtime::template::RenderContext as RuntimeContext;
 ///
 /// Missing credentials are not an error (they are surfaced at template render time).
 pub fn load_secret(ctx: &mut RenderContext, creds_dir: &Path, id: &str) -> Result<(), AwareError> {
-    // Try OS keychain first
-    if let Ok(Some(token)) = crate::auth::keychain::load_token(id, None) {
+    // `creds_dir` is `<aware_home>/credentials` at real call sites; derive the
+    // parent so we can pass `aware_home` to the new keychain API (which handles
+    // the file fallback internally). If `creds_dir` has no parent we fall back
+    // to using it as-is.
+    let aware_home = creds_dir.parent().unwrap_or(creds_dir);
+    // Try OS keychain (with built-in file fallback at <aware_home>/credentials/)
+    if let Ok(Some(token)) = crate::auth::keychain::load_token(id, None, aware_home) {
         let value = serde_json::to_value(&token)
             .map_err(|e| AwareError::Internal(format!("token to value: {e}")))?;
         ctx.secrets.insert(id.to_string(), value);
         return Ok(());
     }
-    // Fallback: plain JSON file (for tests + v0.3 migration)
+    // Secondary file fallback: raw JSON directly under `creds_dir` (supports
+    // legacy `{"token":"..."}` format in tests and v0.3 migration files).
     let path = creds_dir.join(format!("{id}.json"));
     if !path.is_file() {
         return Ok(()); // soft: missing secrets aren't fatal at load time
