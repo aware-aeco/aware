@@ -322,6 +322,14 @@
         }
       }
     },
+    "ui-inspector": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/ui-inspector"
+        }
+      }
+    },
     "navisworks-2026": {
       "versions": {
         "2026.0.0": {
@@ -502,6 +510,7 @@
         "html-report@1.0.0",
         "aware-agent-builder@0.1.0",
         "aware-skill-builder@0.1.0",
+        "ui-inspector@0.1.0",
         "navisworks-2026@2026.0.0",
         "solibri@9.13.0",
         "bcf-file@1.0.0",
