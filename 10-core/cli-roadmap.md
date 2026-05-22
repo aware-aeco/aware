@@ -44,7 +44,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 4. **`aware agent publish`** — the one remaining CLI stub.
 5. **`aware connect` providers** — Autodesk/APS + Slack aren't wired into `aware connect` (only trimble-connect/microsoft-365/google-workspace); their agents' auth is token-out-of-band until added.
 6. **Agent dedup** — sketchup + navisworks each appear under both `architecture/` and `construction/`; many version-pairs. Needs a consolidation decision.
-7. **Runtime execution gaps** — `CliInvoker::invoke_stream` (streaming/stateful-agent transport) and the v0.19 primitives beyond `assert:` (for-each/compare/sweep/approve/snapshot/model-lock) return `NotYetImplemented`. Single-shot apps run fully; these complete the runtime.
+7. **Runtime execution gaps** — `CliInvoker::invoke_stream` (streaming/stateful-agent transport) and the remaining v0.19 primitives return `NotYetImplemented`. Done at runtime: `assert:` (v0.19), `for-each` (#124), `compare` (#127). Remaining primitives: `sweep` / `approve` / `snapshot` / `model-lock`. Single-shot + for-each + compare apps run fully; these complete the runtime.
 8. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
 
 ---
