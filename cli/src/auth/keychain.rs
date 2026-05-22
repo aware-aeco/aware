@@ -1,8 +1,19 @@
 //! OS-keychain backed token storage via the `keyring` crate.
 //!
 //! Token JSON stored under service="aware-aeco", account="<integration>[.<alias>]".
+//!
+//! ## Windows file fallback
+//! Windows Credential Manager caps credential blobs at 2 560 bytes
+//! (`CRED_MAX_CREDENTIAL_BLOB_SIZE`). Microsoft Graph / Google / Trimble tokens
+//! are large JWTs — typically >4 KB — so `CredWrite` rejects them. When a
+//! keyring write fails for any reason we silently fall back to a JSON file at
+//! `~/.aware/credentials/<account>.json` (same path the runtime's
+//! `load_secret_value` already reads as a manual-override fallback). On read we
+//! check the keyring first, then the file; on delete we clear both.
 
 #![allow(dead_code)]
+
+use std::path::{Path, PathBuf};
 
 use serde::{Deserialize, Serialize};
 
@@ -41,43 +52,188 @@ fn account_name(integration: &str, alias: Option<&str>) -> String {
     }
 }
 
-pub fn store_token(token: &StoredToken, alias: Option<&str>) -> Result<(), AwareError> {
-    let entry = keyring::Entry::new(SERVICE_NAME, &account_name(&token.integration, alias))
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
-    let body = serde_json::to_string(token)
-        .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
-    entry
-        .set_password(&body)
-        .map_err(|e| AwareError::PermissionDenied(format!("keyring write: {e}")))?;
-    Ok(())
+/// Path of the file fallback for a given account.
+/// `account` is the value returned by `account_name()`.
+fn cred_file_path(aware_home: &Path, account: &str) -> PathBuf {
+    aware_home
+        .join("credentials")
+        .join(format!("{account}.json"))
 }
 
+// ── Public API ────────────────────────────────────────────────────────────────
+
+/// Persist `token` to the OS keychain.
+/// If the keychain write fails (e.g. Windows 2 560-byte blob limit), the full
+/// token JSON is written to `<aware_home>/credentials/<account>.json` instead
+/// so that large cloud JWTs are always stored regardless of platform limits.
+pub fn store_token(
+    token: &StoredToken,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
+    let body = serde_json::to_string(token)
+        .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
+
+    let entry = keyring::Entry::new(SERVICE_NAME, &account_name(&token.integration, alias))
+        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+
+    match entry.set_password(&body) {
+        Ok(()) => Ok(()),
+        Err(e) => {
+            // Keyring write failed — most commonly the Windows Credential Manager
+            // 2 560-byte limit. Fall back to a credentials file so large OAuth
+            // tokens don't silently fail the connect flow.
+            eprintln!(
+                "aware: keyring write failed ({e}); \
+                 falling back to ~/.aware/credentials file"
+            );
+            write_cred_file(aware_home, &account_name(&token.integration, alias), &body)
+        }
+    }
+}
+
+/// Load the token from the OS keychain, falling back to the credentials file
+/// if the keychain has no entry.
 pub fn load_token(
     integration: &str,
     alias: Option<&str>,
+    aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
-    let entry = keyring::Entry::new(SERVICE_NAME, &account_name(integration, alias))
+    let account = account_name(integration, alias);
+    let entry = keyring::Entry::new(SERVICE_NAME, &account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+
     match entry.get_password() {
         Ok(body) => {
             let token: StoredToken = serde_json::from_str(&body)
                 .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?;
             Ok(Some(token))
         }
-        Err(keyring::Error::NoEntry) => Ok(None),
+        Err(keyring::Error::NoEntry) => {
+            // Nothing in the keychain — check the file fallback.
+            read_cred_file(integration, alias, aware_home)
+        }
         Err(e) => Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
     }
 }
 
-pub fn delete_token(integration: &str, alias: Option<&str>) -> Result<(), AwareError> {
-    let entry = keyring::Entry::new(SERVICE_NAME, &account_name(integration, alias))
+/// Remove the credential from the OS keychain and the file fallback (if any).
+pub fn delete_token(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
+    let account = account_name(integration, alias);
+    let entry = keyring::Entry::new(SERVICE_NAME, &account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
-    match entry.delete_credential() {
+
+    let keyring_result = match entry.delete_credential() {
         Ok(()) => Ok(()),
         Err(keyring::Error::NoEntry) => Ok(()), // idempotent
         Err(e) => Err(AwareError::PermissionDenied(format!("keyring delete: {e}"))),
+    };
+
+    // Also clean up any file fallback, regardless of keyring result.
+    let file = cred_file_path(aware_home, &account);
+    if file.is_file() {
+        let _ = std::fs::remove_file(&file); // best-effort
     }
+
+    keyring_result
 }
+
+// ── File fallback helpers ────────────────────────────────────────────────────
+
+fn write_cred_file(aware_home: &Path, account: &str, body: &str) -> Result<(), AwareError> {
+    let path = cred_file_path(aware_home, account);
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent)
+            .map_err(|e| AwareError::Internal(format!("create credentials dir: {e}")))?;
+    }
+    // On Unix set mode 0o600; on Windows the user-profile directory is
+    // already ACL-restricted, so plain write suffices.
+    write_restricted(&path, body.as_bytes())
+        .map_err(|e| AwareError::PermissionDenied(format!("credential file write: {e}")))
+}
+
+fn read_cred_file(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<StoredToken>, AwareError> {
+    let account = account_name(integration, alias);
+    let path = cred_file_path(aware_home, &account);
+    if !path.is_file() {
+        return Ok(None);
+    }
+    let body = std::fs::read_to_string(&path)
+        .map_err(|e| AwareError::Internal(format!("credential file read: {e}")))?;
+
+    // Try the full StoredToken shape first (written by this module's fallback).
+    if let Ok(token) = serde_json::from_str::<StoredToken>(&body) {
+        return Ok(Some(token));
+    }
+
+    // Legacy / manual format: {"access_token": "...", ...} written by users or
+    // the runtime's documented manual-override path.
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs() as i64;
+    let v: serde_json::Value = serde_json::from_str(&body)
+        .map_err(|e| AwareError::Validation(format!("credential file JSON: {e}")))?;
+    let access_token = v
+        .get("access_token")
+        .and_then(|x| x.as_str())
+        .or_else(|| v.get("token").and_then(|x| x.as_str()))
+        .ok_or_else(|| {
+            AwareError::Validation(
+                "credential file has neither access_token nor token field".into(),
+            )
+        })?
+        .to_string();
+    Ok(Some(StoredToken {
+        access_token,
+        refresh_token: v
+            .get("refresh_token")
+            .and_then(|x| x.as_str())
+            .map(String::from),
+        expires_at: v.get("expires_at").and_then(|x| x.as_i64()).unwrap_or(0),
+        scope: v
+            .get("scope")
+            .and_then(|x| x.as_str())
+            .unwrap_or("")
+            .to_string(),
+        token_type: v
+            .get("token_type")
+            .and_then(|x| x.as_str())
+            .unwrap_or("Bearer")
+            .to_string(),
+        integration: integration.to_string(),
+        obtained_at: now,
+        source: TokenSource::Paste,
+    }))
+}
+
+#[cfg(unix)]
+fn write_restricted(path: &Path, data: &[u8]) -> std::io::Result<()> {
+    use std::io::Write;
+    use std::os::unix::fs::OpenOptionsExt;
+    std::fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .truncate(true)
+        .mode(0o600)
+        .open(path)?
+        .write_all(data)
+}
+
+#[cfg(not(unix))]
+fn write_restricted(path: &Path, data: &[u8]) -> std::io::Result<()> {
+    std::fs::write(path, data)
+}
+
+// ── Tests ─────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
 mod tests {
@@ -92,15 +248,70 @@ mod tests {
         );
     }
 
-    /// This test only runs when `AWARE_TEST_KEYRING=1` because keyring tests are flaky
-    /// on Linux without libsecret/dbus services. Production code path is unit-tested
-    /// implicitly via account_name; round-trip + integration tested via `aware connect`/`disconnect`
-    /// in subsequent tasks.
+    #[test]
+    fn file_fallback_round_trip() {
+        let tmp = tempfile::tempdir().unwrap();
+        let aware_home = tmp.path();
+        let token = StoredToken {
+            access_token: "tk_abc".repeat(300), // >2560 bytes when UTF-16 encoded
+            refresh_token: Some("rt_xyz".into()),
+            expires_at: 1_735_689_600,
+            scope: "openid profile".into(),
+            token_type: "Bearer".into(),
+            integration: "microsoft-365".into(),
+            obtained_at: 1_735_686_000,
+            source: TokenSource::Paste,
+        };
+
+        // Write directly to file (simulates keyring-write-fail path).
+        let body = serde_json::to_string(&token).unwrap();
+        write_cred_file(aware_home, "microsoft-365", &body).unwrap();
+
+        // load_token should find it via file fallback (keyring has no entry).
+        let loaded = read_cred_file("microsoft-365", None, aware_home)
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.access_token, token.access_token);
+        assert_eq!(loaded.refresh_token.as_deref(), Some("rt_xyz"));
+    }
+
+    #[test]
+    fn file_fallback_legacy_format() {
+        let tmp = tempfile::tempdir().unwrap();
+        let aware_home = tmp.path();
+        let cred_dir = aware_home.join("credentials");
+        std::fs::create_dir_all(&cred_dir).unwrap();
+        std::fs::write(
+            cred_dir.join("trimble-connect.json"),
+            r#"{"access_token":"manual_tk"}"#,
+        )
+        .unwrap();
+
+        let loaded = read_cred_file("trimble-connect", None, aware_home)
+            .unwrap()
+            .unwrap();
+        assert_eq!(loaded.access_token, "manual_tk");
+        assert_eq!(loaded.source, TokenSource::Paste);
+    }
+
+    #[test]
+    fn cred_file_path_with_alias() {
+        let home = Path::new("/home/user/.aware");
+        assert_eq!(
+            cred_file_path(home, "google-workspace.personal"),
+            PathBuf::from("/home/user/.aware/credentials/google-workspace.personal.json")
+        );
+    }
+
+    /// Only runs when `AWARE_TEST_KEYRING=1` because keyring tests are flaky
+    /// on Linux without libsecret/dbus services.
     #[test]
     fn store_load_delete_round_trip_when_keyring_available() {
         if std::env::var("AWARE_TEST_KEYRING").is_err() {
             return;
         }
+        let tmp = tempfile::tempdir().unwrap();
+        let aware_home = tmp.path();
         let token = StoredToken {
             access_token: "tk_abc".into(),
             refresh_token: Some("rt_xyz".into()),
@@ -111,13 +322,13 @@ mod tests {
             obtained_at: 1_735_686_000,
             source: TokenSource::Oauth,
         };
-        store_token(&token, None).unwrap();
-        let loaded = load_token("test-integration-keyring", None)
+        store_token(&token, None, aware_home).unwrap();
+        let loaded = load_token("test-integration-keyring", None, aware_home)
             .unwrap()
             .unwrap();
         assert_eq!(loaded.access_token, "tk_abc");
-        delete_token("test-integration-keyring", None).unwrap();
-        let after = load_token("test-integration-keyring", None).unwrap();
+        delete_token("test-integration-keyring", None, aware_home).unwrap();
+        let after = load_token("test-integration-keyring", None, aware_home).unwrap();
         assert!(after.is_none());
     }
 
@@ -139,7 +350,6 @@ mod tests {
 
     #[test]
     fn legacy_token_defaults_to_oauth_source() {
-        // Old token JSON without `source` field deserializes as Oauth
         let json = r#"{"access_token":"x","refresh_token":null,"expires_at":0,"scope":"","token_type":"Bearer","integration":"test","obtained_at":0}"#;
         let t: StoredToken = serde_json::from_str(json).unwrap();
         assert_eq!(t.source, TokenSource::Oauth);

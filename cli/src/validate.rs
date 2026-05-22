@@ -19,6 +19,15 @@ pub enum Severity {
     Warning,
 }
 
+impl std::fmt::Display for Severity {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Severity::Error => write!(f, "error"),
+            Severity::Warning => write!(f, "warning"),
+        }
+    }
+}
+
 #[derive(Debug)]
 pub struct ValidationIssue {
     pub severity: Severity,
