@@ -1070,9 +1070,27 @@ fn collection_of(v: Value) -> Vec<Value> {
 /// first record wins. Order is stable: added/removed follow first appearance
 /// on their side, changed follows `b` order.
 fn diff_records(a: &[Value], b: &[Value], by: &str, track: &[String]) -> Value {
-    // Stable map-key for an identity value: its compact JSON form, so a string
-    // "5" and a number 5 are distinct keys rather than colliding on "5".
+    // Stable map-key for an identity value. Rules:
+    // - String "5" and number 5 are DISTINCT (quotes in the JSON repr differ).
+    // - Integer 1 and float 1.0 are the SAME: agents serialize IDs inconsistently
+    //   across the wire (one may emit `{"id":1}`, another `{"id":1.0}`); treat
+    //   whole-number floats as their integer form so the same element ID always
+    //   resolves to the same key regardless of serialization. Non-whole floats
+    //   (e.g. 1.5) keep their decimal form and remain distinct from each other.
     fn id_key(v: &Value) -> String {
+        if let Value::Number(n) = v {
+            // Integer branch: already a native i64/u64.
+            if let Some(i) = n.as_i64() {
+                return i.to_string();
+            }
+            // Float branch: normalise whole numbers (1.0 → "1").
+            if let Some(f) = n.as_f64() {
+                if f.is_finite() && f.fract() == 0.0 && f.abs() < 9.007_199_254_740_992e15 {
+                    return (f as i64).to_string();
+                }
+                return f.to_string();
+            }
+        }
         v.to_string()
     }
     // Ordered index of `by`-value → first record carrying it.
@@ -2043,7 +2061,7 @@ requires: []
     fn diff_records_distinguishes_identity_value_types_and_first_wins() {
         // String "5" and numeric 5 are DISTINCT identities (no key collision);
         // on a duplicate `by` the first record wins; a record missing `by` is
-        // skipped entirely (reviewer Low-2 + nits).
+        // skipped entirely.
         let a = vec![
             serde_json::json!({ "id": "5", "v": "a-str" }),
             serde_json::json!({ "id": 7, "v": "first" }),
@@ -2070,6 +2088,77 @@ requires: []
             diff["changed"],
             serde_json::json!([]),
             "id 7 unchanged; the duplicate id-7 record in `a` is ignored (first wins)"
+        );
+    }
+
+    #[test]
+    fn diff_records_normalises_float_integer_identity() {
+        // Integer `1` and float `1.0` are the SAME identity: agents can
+        // serialise the same element ID as either type across the wire.
+        // Whole-number floats must key-match their integer counterpart.
+        let a = vec![serde_json::json!({ "id": 1, "status": "open" })];
+        // `serde_json::json!(1.0)` stores a float — distinct from `json!(1)`.
+        let b = vec![serde_json::json!({ "id": 1.0_f64, "status": "closed" })];
+        let diff = diff_records(&a, &b, "id", &["status".to_string()]);
+
+        assert_eq!(
+            diff["added"],
+            serde_json::json!([]),
+            "1 and 1.0 are the same identity — no spurious added"
+        );
+        assert_eq!(
+            diff["removed"],
+            serde_json::json!([]),
+            "1 and 1.0 are the same identity — no spurious removed"
+        );
+        assert_eq!(
+            diff["changed"],
+            serde_json::json!([{ "id": 1.0_f64, "diffs": { "status": { "from": "open", "to": "closed" } } }]),
+            "matched as same element; only `status` changed"
+        );
+    }
+
+    #[test]
+    fn diff_records_empty_a_reports_all_b_as_added() {
+        // First-run scenario: no prior state (`a = []`); everything in `b` is
+        // new. The null-guard must not fire on a resolved-but-empty array.
+        let diff = diff_records(
+            &[],
+            &[
+                serde_json::json!({ "id": 1 }),
+                serde_json::json!({ "id": 2 }),
+            ],
+            "id",
+            &[],
+        );
+        assert_eq!(diff["removed"], serde_json::json!([]));
+        assert_eq!(diff["changed"], serde_json::json!([]));
+        assert_eq!(
+            diff["added"],
+            serde_json::json!([{ "id": 1 }, { "id": 2 }]),
+            "empty a → all of b is added"
+        );
+    }
+
+    #[test]
+    fn diff_records_empty_b_reports_all_a_as_removed() {
+        // Cleared-state scenario: `b = []`; everything from the previous
+        // snapshot has been removed.
+        let diff = diff_records(
+            &[
+                serde_json::json!({ "id": 1 }),
+                serde_json::json!({ "id": 2 }),
+            ],
+            &[],
+            "id",
+            &[],
+        );
+        assert_eq!(diff["added"], serde_json::json!([]));
+        assert_eq!(diff["changed"], serde_json::json!([]));
+        assert_eq!(
+            diff["removed"],
+            serde_json::json!([{ "id": 1 }, { "id": 2 }]),
+            "empty b → all of a is removed"
         );
     }
 
