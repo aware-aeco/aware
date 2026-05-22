@@ -1,16 +1,22 @@
 //! `aware connect ...` / `aware disconnect ...` — credential management.
 //!
 //! Phase v0.4. Browser-paste flow (default) + OAuth/PKCE (--oauth) + non-interactive paths.
+//! Phase v0.13 additions: `--device-code` (RFC 8628) + `--tenant` (M365).
+//! Phase v0.41 additions: `--list` (machine-readable credential status, closes #140).
+
+use std::time::{SystemTime, UNIX_EPOCH};
 
 use clap::Args;
 
+use crate::auth::keychain::TokenSource;
 use crate::context::Context;
 use crate::error::AwareError;
 
 #[derive(Args, Debug)]
 pub struct ConnectArgs {
-    /// Integration id (e.g. trimble-connect).
-    pub integration: String,
+    /// Integration id (e.g. trimble-connect). Required unless --list is set.
+    #[arg(required_unless_present = "list")]
+    pub integration: Option<String>,
 
     /// Account alias for multi-account setups.
     #[arg(long = "as")]
@@ -46,6 +52,11 @@ pub struct ConnectArgs {
     /// departments that enforce tenant restrictions. M365 only. (v0.13)
     #[arg(long)]
     pub tenant: Option<String>,
+
+    /// List stored credentials for all integrations and exit.
+    /// Machine-readable when combined with global `--json`. (#140)
+    #[arg(long)]
+    pub list: bool,
 }
 
 #[derive(Args, Debug)]
@@ -56,23 +67,47 @@ pub struct DisconnectArgs {
     pub r#as: Option<String>,
 }
 
+// ── Known integrations for --list ────────────────────────────────────────────
+
+const KNOWN_INTEGRATIONS: &[&str] = &["trimble-connect", "microsoft-365", "google-workspace"];
+
+// ── run_connect ───────────────────────────────────────────────────────────────
+
 pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
-    let cfg = crate::auth::config::for_integration(&args.integration)?;
+    // --list: show all credential statuses and exit.
+    if args.list {
+        return run_list(ctx);
+    }
+
+    // `integration` is guaranteed Some by clap's `required_unless_present = "list"`.
+    let integration = args.integration.as_deref().unwrap();
+    let cfg = crate::auth::config::for_integration(integration)?;
 
     if args.refresh {
         let token = crate::auth::refresh::ensure_fresh(
-            &args.integration,
+            integration,
             args.r#as.as_deref(),
             &ctx.paths.aware_home,
         )?;
-        println!(
-            "\u{2713} refreshed {} (expires at unix-{})",
-            args.integration, token.expires_at
-        );
+        if ctx.json {
+            println!(
+                "{}",
+                serde_json::json!({
+                    "status": "refreshed",
+                    "integration": integration,
+                    "expires_at": token.expires_at,
+                })
+            );
+        } else {
+            println!(
+                "\u{2713} refreshed {} (expires at unix-{})",
+                integration, token.expires_at
+            );
+        }
         return Ok(());
     }
 
-    // Mutually exclusive: only one input source allowed
+    // Mutually exclusive: only one input source allowed.
     let modes_set = [
         args.from_file.is_some(),
         args.from_env,
@@ -87,40 +122,105 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
             "at most one of --from-file, --from-env, --oauth, --device-code may be set".into(),
         ));
     }
-    if args.tenant.is_some() && args.integration != "microsoft-365" {
+    if args.tenant.is_some() && integration != "microsoft-365" {
         return Err(AwareError::Validation(
             "--tenant is only supported for microsoft-365 today".into(),
         ));
     }
 
-    let token = if let Some(path) = &args.from_file {
-        load_token_from_file(path, &args.integration)?
-    } else if args.from_env {
-        load_token_from_env(&args.integration)?
-    } else if args.device_code {
+    // Device-code needs special handling: it emits NDJSON mid-flow when --json
+    // and errors need to be caught to emit a structured failure rather than
+    // propagating through main's eprintln path.
+    if args.device_code {
         let extra_scopes = parse_scopes(args.scopes.as_deref());
-        crate::auth::device::run_device_code_flow(&cfg, args.tenant.as_deref(), &extra_scopes)?
+        let result = crate::auth::device::run_device_code_flow(
+            &cfg,
+            args.tenant.as_deref(),
+            &extra_scopes,
+            ctx.json,
+        );
+        match result {
+            Ok(token) => {
+                crate::auth::keychain::store_token(
+                    &token,
+                    args.r#as.as_deref(),
+                    &ctx.paths.aware_home,
+                )?;
+                if ctx.json {
+                    // Final NDJSON line: completion signal (#143).
+                    println!(
+                        "{}",
+                        serde_json::json!({
+                            "phase": "result",
+                            "status": "connected",
+                            "integration": integration,
+                            "expires_at": token.expires_at,
+                        })
+                    );
+                } else {
+                    println!(
+                        "\u{2713} stored {} OAuth token (OS keychain or ~/.aware/credentials fallback)",
+                        integration
+                    );
+                }
+                return Ok(());
+            }
+            Err(e) => {
+                if ctx.json {
+                    // Emit structured failure; don't propagate to main's stderr path.
+                    let status = match &e {
+                        AwareError::Validation(msg)
+                            if msg.contains("access_denied")
+                                || msg.contains("expired")
+                                || msg.contains("denied") =>
+                        {
+                            "denied"
+                        }
+                        _ => "error",
+                    };
+                    println!(
+                        "{}",
+                        serde_json::json!({
+                            "phase": "result",
+                            "status": status,
+                            "integration": integration,
+                            "error": e.to_string(),
+                        })
+                    );
+                    return Ok(());
+                }
+                return Err(e);
+            }
+        }
+    }
+
+    let token = if let Some(path) = &args.from_file {
+        load_token_from_file(path, integration)?
+    } else if args.from_env {
+        load_token_from_env(integration)?
     } else if args.oauth {
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?
     } else {
-        // Default: browser-paste flow
-        crate::auth::paste::run_paste_flow(&args.integration)?
+        // Default: browser-paste flow.
+        crate::auth::paste::run_paste_flow(integration)?
     };
 
     crate::auth::keychain::store_token(&token, args.r#as.as_deref(), &ctx.paths.aware_home)?;
     let kind = match token.source {
-        crate::auth::keychain::TokenSource::Paste => "paste token (user-managed)",
-        crate::auth::keychain::TokenSource::Oauth => "OAuth token",
+        TokenSource::Paste => "paste token (user-managed)",
+        TokenSource::Oauth => "OAuth token",
     };
     // store_token may fall back to a credentials file on Windows (keyring blob limit);
     // print a generic success that's accurate either way.
     println!(
         "\u{2713} stored {} {} (OS keychain or ~/.aware/credentials fallback)",
-        args.integration, kind
+        integration, kind
     );
     Ok(())
 }
+
+// ── run_disconnect ────────────────────────────────────────────────────────────
 
 pub fn run_disconnect(args: DisconnectArgs, ctx: &Context) -> Result<(), AwareError> {
     crate::auth::keychain::delete_token(
@@ -131,6 +231,114 @@ pub fn run_disconnect(args: DisconnectArgs, ctx: &Context) -> Result<(), AwareEr
     println!("\u{2713} Removed credential for {}", args.integration);
     Ok(())
 }
+
+// ── run_list ──────────────────────────────────────────────────────────────────
+
+/// List credential status for all known integrations.
+/// Used by `aware connect --list [--json]`.
+fn run_list(ctx: &Context) -> Result<(), AwareError> {
+    let aware_home = &ctx.paths.aware_home;
+    let now = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs() as i64;
+
+    if ctx.json {
+        let items: Vec<serde_json::Value> = KNOWN_INTEGRATIONS
+            .iter()
+            .map(|integration| credential_status_json(integration, None, aware_home, now))
+            .collect();
+        println!(
+            "{}",
+            serde_json::to_string_pretty(&serde_json::Value::Array(items)).unwrap()
+        );
+    } else {
+        println!("Credentials:");
+        for integration in KNOWN_INTEGRATIONS {
+            print_credential_status_text(integration, None, aware_home, now);
+        }
+    }
+    Ok(())
+}
+
+// ── Shared credential-status helpers (used by doctor.rs too) ─────────────────
+
+/// Build the JSON object for one integration's credential status.
+pub fn credential_status_json(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+) -> serde_json::Value {
+    match crate::auth::keychain::load_token(integration, alias, aware_home) {
+        Ok(Some(token)) => {
+            let (status, source, expires_in) = match token.source {
+                TokenSource::Paste => ("valid".to_string(), "paste".to_string(), None),
+                TokenSource::Oauth => {
+                    let remaining = token.expires_at - now;
+                    if remaining > 0 {
+                        ("valid".to_string(), "oauth".to_string(), Some(remaining))
+                    } else {
+                        ("expired".to_string(), "oauth".to_string(), Some(0i64))
+                    }
+                }
+            };
+            serde_json::json!({
+                "integration": integration,
+                "status": status,
+                "source": source,
+                "expires_in_secs": expires_in,
+            })
+        }
+        Ok(None) => serde_json::json!({
+            "integration": integration,
+            "status": "missing",
+            "source": null,
+            "expires_in_secs": null,
+        }),
+        Err(_) => serde_json::json!({
+            "integration": integration,
+            "status": "keyring_unavailable",
+            "source": null,
+            "expires_in_secs": null,
+        }),
+    }
+}
+
+/// Print human-readable credential status for one integration.
+pub fn print_credential_status_text(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+    now: i64,
+) {
+    match crate::auth::keychain::load_token(integration, alias, aware_home) {
+        Ok(Some(token)) => match token.source {
+            TokenSource::Paste => {
+                println!("  \u{2713} {integration:<22} valid    paste token (user-managed)");
+            }
+            TokenSource::Oauth => {
+                let remaining = token.expires_at - now;
+                if remaining > 0 {
+                    let mins = remaining / 60;
+                    println!("  \u{2713} {integration:<22} valid    OAuth, expires in {mins}m");
+                } else {
+                    println!(
+                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
+                    );
+                }
+            }
+        },
+        Ok(None) => {
+            println!("  \u{2717} {integration:<22} missing  run: aware connect {integration}");
+        }
+        Err(_) => {
+            println!("  ? {integration:<22} (keyring unavailable)");
+        }
+    }
+}
+
+// ── helpers ───────────────────────────────────────────────────────────────────
 
 fn parse_scopes(s: Option<&str>) -> Vec<String> {
     s.map(|s| {
@@ -146,8 +354,6 @@ fn load_token_from_file(
     path: &std::path::Path,
     integration: &str,
 ) -> Result<crate::auth::keychain::StoredToken, AwareError> {
-    use std::time::{SystemTime, UNIX_EPOCH};
-
     use crate::auth::keychain::{StoredToken, TokenSource};
 
     let raw = std::fs::read_to_string(path)
@@ -161,11 +367,10 @@ fn load_token_from_file(
     }
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
-        .unwrap()
+        .unwrap_or_default()
         .as_secs() as i64;
 
     if body.starts_with('{') {
-        // JSON: try to parse fields
         let v: serde_json::Value = serde_json::from_str(&body)
             .map_err(|e| AwareError::Validation(format!("token JSON: {e}")))?;
         let access_token = v
@@ -173,7 +378,9 @@ fn load_token_from_file(
             .and_then(|x| x.as_str())
             .or_else(|| v.get("token").and_then(|x| x.as_str()))
             .ok_or_else(|| {
-                AwareError::Validation("token JSON has neither access_token nor token field".into())
+                AwareError::Validation(
+                    "token JSON has neither access_token nor token field".into(),
+                )
             })?
             .to_string();
         Ok(StoredToken {
@@ -198,7 +405,7 @@ fn load_token_from_file(
             source: TokenSource::Paste,
         })
     } else {
-        // Plain bearer token
+        // Plain bearer token.
         Ok(StoredToken {
             access_token: body,
             refresh_token: None,
@@ -215,8 +422,6 @@ fn load_token_from_file(
 fn load_token_from_env(
     integration: &str,
 ) -> Result<crate::auth::keychain::StoredToken, AwareError> {
-    use std::time::{SystemTime, UNIX_EPOCH};
-
     use crate::auth::keychain::{StoredToken, TokenSource};
 
     let env_var = format!(
@@ -235,7 +440,7 @@ fn load_token_from_env(
     }
     let now = SystemTime::now()
         .duration_since(UNIX_EPOCH)
-        .unwrap()
+        .unwrap_or_default()
         .as_secs() as i64;
     Ok(StoredToken {
         access_token: token.trim().to_string(),
@@ -248,6 +453,8 @@ fn load_token_from_env(
         source: TokenSource::Paste,
     })
 }
+
+// ── Tests ─────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
 mod tests {
@@ -295,5 +502,39 @@ mod tests {
         std::fs::write(&path, "   \n").unwrap();
         let err = load_token_from_file(&path, "x").unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
+    }
+
+    #[test]
+    fn credential_status_json_missing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
+        assert_eq!(v["status"], "missing");
+        assert_eq!(v["source"], serde_json::Value::Null);
+    }
+
+    #[test]
+    fn credential_status_json_paste_token() {
+        use crate::auth::keychain::{StoredToken, TokenSource};
+        let tmp = tempfile::tempdir().unwrap();
+        let creds = tmp.path().join("credentials");
+        std::fs::create_dir_all(&creds).unwrap();
+        let token = StoredToken {
+            access_token: "tk".into(),
+            refresh_token: None,
+            expires_at: 9_999_999_999,
+            scope: "openid".into(),
+            token_type: "Bearer".into(),
+            integration: "trimble-connect".into(),
+            obtained_at: 0,
+            source: TokenSource::Paste,
+        };
+        std::fs::write(
+            creds.join("trimble-connect.json"),
+            serde_json::to_string(&token).unwrap(),
+        )
+        .unwrap();
+        let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
+        assert_eq!(v["status"], "valid");
+        assert_eq!(v["source"], "paste");
     }
 }

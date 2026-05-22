@@ -61,10 +61,17 @@ fn device_endpoints_for(cfg: &IntegrationConfig, tenant: Option<&str>) -> Device
 ///
 /// `tenant` overrides the Microsoft tenant id (M365 only). For Google
 /// Workspace the `hd=` domain hint is passed as part of scopes only.
+///
+/// When `json` is `true` the function emits NDJSON on stdout instead of
+/// human-readable text, so a thin UI can read the device code and URL
+/// without scraping (closes #143):
+/// - Line 1 (prompt): `{"phase":"prompt","user_code":"...","verification_uri":"...","expires_in":N,"interval":N}`
+/// - The caller emits Line 2 (result) after `store_token` succeeds.
 pub fn run_device_code_flow(
     cfg: &IntegrationConfig,
     tenant: Option<&str>,
     extra_scopes: &[String],
+    json: bool,
 ) -> Result<StoredToken, AwareError> {
     let endpoints = device_endpoints_for(cfg, tenant);
     if endpoints.device_authorization_url.is_empty() {
@@ -120,16 +127,32 @@ pub fn run_device_code_flow(
         .and_then(|v| v.as_u64())
         .unwrap_or(900);
 
-    // Display instructions to the user.
-    println!();
-    println!("  Open this URL in any browser:");
-    println!("    {verification_uri}");
-    println!();
-    println!("  And enter this code:");
-    println!("    {user_code}");
-    println!();
-    println!("  (Waiting for authorization. This page expires in {expires_in} seconds.)");
-    println!();
+    // Display instructions to the user (or emit NDJSON prompt line for UI consumers).
+    if json {
+        use std::io::Write as _;
+        println!(
+            "{}",
+            serde_json::json!({
+                "phase": "prompt",
+                "user_code": user_code,
+                "verification_uri": verification_uri,
+                "expires_in": expires_in,
+                "interval": interval,
+            })
+        );
+        // Flush so a piping UI receives the line immediately before the poll loop.
+        std::io::stdout().flush().ok();
+    } else {
+        println!();
+        println!("  Open this URL in any browser:");
+        println!("    {verification_uri}");
+        println!();
+        println!("  And enter this code:");
+        println!("    {user_code}");
+        println!();
+        println!("  (Waiting for authorization. This page expires in {expires_in} seconds.)");
+        println!();
+    }
 
     // Step 2: poll the token endpoint.
     let started = SystemTime::now();

@@ -64,56 +64,23 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
         }
     }
 
-    // Credentials
-    let integrations = ["trimble-connect", "microsoft-365", "google-workspace"];
+    // Credentials — delegate to connect's shared helper (same logic as connect --list).
     let now = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
-        .unwrap()
+        .unwrap_or_default()
         .as_secs() as i64;
-    let credentials: Vec<serde_json::Value> = integrations
-        .iter()
-        .map(|integration| {
-            match crate::auth::keychain::load_token(integration, None, aware_home) {
-                Ok(Some(token)) => {
-                    let (status, source, expires_in) = match token.source {
-                        crate::auth::keychain::TokenSource::Paste => {
-                            ("valid".to_string(), "paste".to_string(), None)
-                        }
-                        crate::auth::keychain::TokenSource::Oauth => {
-                            let remaining = token.expires_at - now;
-                            if remaining > 0 {
-                                (
-                                    "valid".to_string(),
-                                    "oauth".to_string(),
-                                    Some(remaining),
-                                )
-                            } else {
-                                ("expired".to_string(), "oauth".to_string(), Some(0))
-                            }
-                        }
-                    };
-                    serde_json::json!({
-                        "integration": integration,
-                        "status": status,
-                        "source": source,
-                        "expires_in_secs": expires_in,
-                    })
-                }
-                Ok(None) => serde_json::json!({
-                    "integration": integration,
-                    "status": "missing",
-                    "source": null,
-                    "expires_in_secs": null,
-                }),
-                Err(_) => serde_json::json!({
-                    "integration": integration,
-                    "status": "keyring_unavailable",
-                    "source": null,
-                    "expires_in_secs": null,
-                }),
-            }
-        })
-        .collect();
+    let credentials: Vec<serde_json::Value> =
+        ["trimble-connect", "microsoft-365", "google-workspace"]
+            .iter()
+            .map(|integration| {
+                crate::commands::connect::credential_status_json(
+                    integration,
+                    None,
+                    aware_home,
+                    now,
+                )
+            })
+            .collect();
 
     // Host bridges
     let install_dir = crate::commands::sidecar::bridge_install_dir(ctx);
@@ -270,42 +237,12 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
 
     println!();
     println!("Credentials:");
-    let integrations = ["trimble-connect", "microsoft-365", "google-workspace"];
-    for integration in &integrations {
-        match crate::auth::keychain::load_token(integration, None, aware_home) {
-            Ok(Some(token)) => {
-                let now = std::time::SystemTime::now()
-                    .duration_since(std::time::UNIX_EPOCH)
-                    .unwrap()
-                    .as_secs() as i64;
-                match token.source {
-                    crate::auth::keychain::TokenSource::Paste => {
-                        println!(
-                            "  \u{2713} {integration:<22} valid    paste token (user-managed)"
-                        );
-                    }
-                    crate::auth::keychain::TokenSource::Oauth => {
-                        let remaining = token.expires_at - now;
-                        if remaining > 0 {
-                            let mins = remaining / 60;
-                            println!(
-                                "  \u{2713} {integration:<22} valid    OAuth, expires in {mins}m"
-                            );
-                        } else {
-                            println!(
-                                "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
-                            );
-                        }
-                    }
-                }
-            }
-            Ok(None) => {
-                println!("  \u{2717} {integration:<22} missing  run: aware connect {integration}");
-            }
-            Err(_) => {
-                println!("  ? {integration:<22} (keyring unavailable)");
-            }
-        }
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap_or_default()
+        .as_secs() as i64;
+    for integration in &["trimble-connect", "microsoft-365", "google-workspace"] {
+        crate::commands::connect::print_credential_status_text(integration, None, aware_home, now);
     }
 
     println!();
