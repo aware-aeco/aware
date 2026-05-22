@@ -159,7 +159,23 @@ impl AgentInvoker for CliInvoker {
             .stdout(std::process::Stdio::piped())
             .stderr(std::process::Stdio::piped())
             .spawn()
-            .map_err(|e| AwareError::Network(format!("spawn {binary}: {e}")))?;
+            .map_err(|e| {
+                // When a host bridge binary is missing, surface an actionable hint.
+                let hint = if e.kind() == std::io::ErrorKind::NotFound {
+                    // Strip the exe suffix on Windows to get the bare binary name.
+                    let bare = binary.strip_suffix(".exe").unwrap_or(binary);
+                    if let Some(id) = bare.strip_prefix("aware-") {
+                        format!(
+                            "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
+                        )
+                    } else {
+                        String::new()
+                    }
+                } else {
+                    String::new()
+                };
+                AwareError::Network(format!("spawn {binary}: {e}{hint}"))
+            })?;
 
         if let Some(mut stdin) = child.stdin.take() {
             use tokio::io::AsyncWriteExt;

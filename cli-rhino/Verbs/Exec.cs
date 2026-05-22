@@ -47,12 +47,19 @@ internal static class Exec
                 var resolved = ResolveInstance(client, version, rhinoId);
                 if (resolved is null && !string.IsNullOrEmpty(version) && string.IsNullOrEmpty(rhinoId))
                 {
-                    // Case (a) with no match is a hard error — caller asked for
-                    // a specific version and we can't find one.
-                    Console.WriteLine(Receipts.ExecFail(
-                        $"no running Rhino instance matches version='{version}'",
-                        "", "").ToJsonString());
-                    return 1;
+                    // Case (a) with no match — before giving up, try to auto-start
+                    // the Script Server on any running Rhino.exe process (mimics
+                    // typing `_StartScriptServer` in the command bar) and retry.
+                    if (ScriptServerHelper.TryEnsureScriptServer(client))
+                        resolved = ResolveInstance(client, version, rhinoId);
+
+                    if (resolved is null)
+                    {
+                        Console.WriteLine(Receipts.ExecFail(
+                            $"no running Rhino instance matches version='{version}'",
+                            "", "").ToJsonString());
+                        return 1;
+                    }
                 }
                 if (resolved is not null)
                 {

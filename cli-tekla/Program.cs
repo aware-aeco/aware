@@ -1,4 +1,4 @@
-// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
+﻿// aware-tekla — Tekla Open API sidecar for the AWARE runtime.
 // Spike v0.29: send-status verb only, single-instance Tekla, no ROT binding.
 // ROT-bind multi-instance precise routing lands in the hardening pass.
 //
@@ -82,6 +82,9 @@ internal static class Program
                 Console.Error.WriteLine($"aware-tekla: stdin not readable: {e.Message}");
                 return 2;
             }
+            // Strip leading UTF-8 BOM (U+FEFF) that some PowerShell versions
+            // prepend when piping strings to native executables.
+            buf = buf.TrimStart('﻿');
             JsonNode? peeked;
             try { peeked = JsonNode.Parse(buf); }
             catch (Exception e)
