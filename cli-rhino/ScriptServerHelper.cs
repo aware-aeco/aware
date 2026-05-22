@@ -20,19 +20,29 @@ internal static class ScriptServerHelper
     [DllImport("user32.dll", SetLastError = true)]
     static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
 
-    const uint INPUT_KEYBOARD      = 1;
-    const uint KEYEVENTF_KEYUP     = 0x0002;
-    const uint KEYEVENTF_UNICODE   = 0x0004;
-    const ushort VK_RETURN         = 0x0D;
+    const uint INPUT_KEYBOARD    = 1;
+    const uint KEYEVENTF_KEYUP   = 0x0002;
+    const uint KEYEVENTF_UNICODE = 0x0004;
+    const ushort VK_RETURN       = 0x0D;
 
+    // Use [FieldOffset] union so the compiler can compute the correct size
+    // (MOUSEINPUT is the largest member at 28 bytes on x64) without any
+    // manually-managed padding fields that would trigger CS0169.
     [StructLayout(LayoutKind.Sequential)]
     struct INPUT
     {
-        public uint   type;
-        public KEYBDINPUT ki;
-        // Pad to the size of the union (MOUSEINPUT is the largest at 28 bytes).
-        // On x64 the union is 28 bytes; KEYBDINPUT is 24 bytes → 4-byte pad.
-        uint _pad;
+        public uint      type;
+        public InputUnion u;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    struct InputUnion
+    {
+        // MOUSEINPUT is the largest member of the Windows INPUT union (28 bytes
+        // on x64); keeping it here ensures Marshal.SizeOf<INPUT>() matches the
+        // Windows ABI. KEYBDINPUT (20 bytes) is what we actually populate.
+        [FieldOffset(0)] public KEYBDINPUT ki;
+        [FieldOffset(0)] public MOUSEINPUT mi;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -40,6 +50,18 @@ internal static class ScriptServerHelper
     {
         public ushort wVk;
         public ushort wScan;
+        public uint   dwFlags;
+        public uint   time;
+        public IntPtr dwExtraInfo;
+    }
+
+    // Included solely to make InputUnion the right size via the [FieldOffset] union.
+    [StructLayout(LayoutKind.Sequential)]
+    struct MOUSEINPUT
+    {
+        public int    dx;
+        public int    dy;
+        public uint   mouseData;
         public uint   dwFlags;
         public uint   time;
         public IntPtr dwExtraInfo;
@@ -78,7 +100,7 @@ internal static class ScriptServerHelper
             TypeText("_StartScriptServer");
 
             // Send Enter to confirm the command.
-            SendInput(new[]
+            SendRawInput(new[]
             {
                 MakeKey(VK_RETURN, 0, 0),
                 MakeKey(VK_RETURN, 0, KEYEVENTF_KEYUP),
@@ -113,21 +135,21 @@ internal static class ScriptServerHelper
             inputs.Add(MakeUnicodeKey(c, 0));
             inputs.Add(MakeUnicodeKey(c, KEYEVENTF_KEYUP));
         }
-        SendInput(inputs.ToArray());
+        SendRawInput(inputs.ToArray());
     }
 
-    static void SendInput(INPUT[] inputs) =>
+    static void SendRawInput(INPUT[] inputs) =>
         SendInput((uint)inputs.Length, inputs, Marshal.SizeOf<INPUT>());
 
     static INPUT MakeUnicodeKey(char c, uint flags) => new INPUT
     {
         type = INPUT_KEYBOARD,
-        ki   = new KEYBDINPUT { wVk = 0, wScan = (ushort)c, dwFlags = KEYEVENTF_UNICODE | flags },
+        u    = new InputUnion { ki = new KEYBDINPUT { wVk = 0, wScan = (ushort)c, dwFlags = KEYEVENTF_UNICODE | flags } },
     };
 
     static INPUT MakeKey(ushort vk, ushort scan, uint flags) => new INPUT
     {
         type = INPUT_KEYBOARD,
-        ki   = new KEYBDINPUT { wVk = vk, wScan = scan, dwFlags = flags },
+        u    = new InputUnion { ki = new KEYBDINPUT { wVk = vk, wScan = scan, dwFlags = flags } },
     };
 }

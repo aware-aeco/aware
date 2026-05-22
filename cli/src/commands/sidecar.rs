@@ -225,15 +225,30 @@ fn uninstall(ctx: &Context, host: &str) -> Result<(), AwareError> {
 /// 2. `~/.aware/bin/` fallback (with a doctor warning to add to PATH).
 pub fn bridge_install_dir(ctx: &Context) -> PathBuf {
     // Same dir as `aware.exe` — always on PATH when installed via npm/cargo/MSI.
+    // Only use this dir if it is actually writable; a system-wide MSI install
+    // puts the binary under `C:\Program Files\` which regular users cannot write to.
     if let Ok(exe) = std::env::current_exe() {
         if let Some(dir) = exe.parent() {
-            if dir.is_dir() {
+            if dir.is_dir() && dir_is_writable(dir) {
                 return dir.to_path_buf();
             }
         }
     }
     // Fallback: ~/.aware/bin/
     ctx.paths.aware_home.join("bin")
+}
+
+/// Probe whether `dir` is writable by attempting to create (and immediately
+/// delete) a temporary file inside it.
+fn dir_is_writable(dir: &std::path::Path) -> bool {
+    let probe = dir.join(".aware-write-probe");
+    match std::fs::File::create(&probe) {
+        Ok(_) => {
+            let _ = std::fs::remove_file(&probe);
+            true
+        }
+        Err(_) => false,
+    }
 }
 
 /// Find a bridge binary on disk. Checks `install_dir/<binary>.exe` and PATH.
