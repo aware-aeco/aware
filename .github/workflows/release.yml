@@ -41,10 +41,13 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install .NET 9
+      - name: Install .NET SDKs (8 / 9 / 10)
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
 
       - name: Install clang on Linux
         if: matrix.os == 'ubuntu-latest'
@@ -135,6 +138,82 @@ jobs:
         with:
           name: aware-${{ env.VERSION }}-win-x64-msi
           path: ${{ env.MSI_ARTIFACT }}
+
+      # ── Host bridges (Windows-only; separate release assets) ────────────────
+      # Each bridge binary lives in its own repo sub-project. They are NOT
+      # bundled in the main aware zip (Windows-only + some ship with assets).
+      # Naming convention: <binary>-<version>-win-x64.<ext>
+      # which is what `aware sidecar install <host>` downloads.
+
+      - name: Build host bridges (Windows only)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          $version = $env:VERSION
+          Write-Host "=== Building host bridges for v$version ==="
+
+          # 1. aware-tekla (net48, multiple DLLs → zip)
+          Write-Host "--- aware-tekla (net48) ---"
+          dotnet publish cli-tekla/cli-tekla.csproj -c Release
+          $teklaPublish = "cli-tekla/bin/Release/net48/publish"
+          $teklaStage   = "bridge-tekla"
+          New-Item -ItemType Directory -Path $teklaStage -Force | Out-Null
+          Copy-Item "$teklaPublish/*" "$teklaStage/" -Recurse
+          Compress-Archive -Path "$teklaStage/*" `
+            -DestinationPath "aware-tekla-${version}-win-x64.zip" -Force
+          Write-Host "DONE: aware-tekla-${version}-win-x64.zip"
+
+          # 2. aware-rhino (net10, single-file exe)
+          Write-Host "--- aware-rhino (net10) ---"
+          dotnet publish cli-rhino/cli-rhino.csproj -c Release -r win-x64
+          Copy-Item "cli-rhino/bin/Release/net10.0-windows/win-x64/publish/aware-rhino.exe" `
+                    "aware-rhino-${version}-win-x64.exe"
+          Write-Host "DONE: aware-rhino-${version}-win-x64.exe"
+
+          # 3. aware-sketchup (net10, single-file + BridgeAssets → zip)
+          Write-Host "--- aware-sketchup (net10) ---"
+          dotnet publish cli-sketchup/cli-sketchup.csproj -c Release -r win-x64
+          $suPublish = "cli-sketchup/bin/Release/net10.0-windows/win-x64/publish"
+          $suStage   = "bridge-sketchup"
+          New-Item -ItemType Directory -Path $suStage -Force | Out-Null
+          Copy-Item "$suPublish/aware-sketchup.exe" "$suStage/"
+          if (Test-Path "$suPublish/BridgeAssets") {
+            Copy-Item -Recurse "$suPublish/BridgeAssets" "$suStage/"
+          }
+          Compress-Archive -Path "$suStage/*" `
+            -DestinationPath "aware-sketchup-${version}-win-x64.zip" -Force
+          Write-Host "DONE: aware-sketchup-${version}-win-x64.zip"
+
+          # 4. aware-revit (net8 sidecar single-file + install artifacts → zip)
+          #    AwareRevit.dll requires RevitAPI.dll from a local Revit 2026 install
+          #    which is not available on CI runners. Ship the sidecar exe, the
+          #    .addin manifest, and install-addin.ps1; the DLL must be built locally.
+          Write-Host "--- aware-revit (net8 sidecar) ---"
+          dotnet publish cli-revit/Sidecar/cli-revit.csproj -c Release -r win-x64
+          $revitPublish = "cli-revit/Sidecar/bin/Release/net8.0-windows/win-x64/publish"
+          $revitStage   = "bridge-revit"
+          New-Item -ItemType Directory -Path $revitStage -Force | Out-Null
+          Copy-Item "$revitPublish/aware-revit.exe" "$revitStage/"
+          if (Test-Path "cli-revit/install-addin.ps1") {
+            Copy-Item "cli-revit/install-addin.ps1" "$revitStage/"
+          }
+          if (Test-Path "cli-revit/AwareRevit/AwareRevit.addin") {
+            Copy-Item "cli-revit/AwareRevit/AwareRevit.addin" "$revitStage/"
+          }
+          Compress-Archive -Path "$revitStage/*" `
+            -DestinationPath "aware-revit-${version}-win-x64.zip" -Force
+          Write-Host "DONE: aware-revit-${version}-win-x64.zip"
+
+      - name: Upload bridge artifacts (Windows only)
+        if: matrix.os == 'windows-latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: bridges-${{ env.VERSION }}-win-x64
+          path: |
+            aware-tekla-${{ env.VERSION }}-win-x64.zip
+            aware-rhino-${{ env.VERSION }}-win-x64.exe
+            aware-sketchup-${{ env.VERSION }}-win-x64.zip
+            aware-revit-${{ env.VERSION }}-win-x64.zip
 
   release:
     needs: build

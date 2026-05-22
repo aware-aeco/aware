@@ -149,5 +149,27 @@ pub fn run(ctx: &Context) -> Result<(), AwareError> {
         }
     }
 
+    println!();
+    println!("Host Bridges:");
+    let install_dir = crate::commands::sidecar::bridge_install_dir(ctx);
+    let bridge_ids = ["tekla", "rhino", "sketchup", "revit"];
+    let mut any_missing = false;
+    for id in &bridge_ids {
+        match crate::commands::sidecar::find_bridge_by_id(id, &install_dir) {
+            Some(p) => {
+                println!("  \u{2713} aware-{id:<10}  {}", p.display());
+            }
+            None => {
+                any_missing = true;
+                println!(
+                    "  \u{2717} aware-{id:<10}  not found — run: aware sidecar install {id}"
+                );
+            }
+        }
+    }
+    if !any_missing {
+        println!("  all host bridges present");
+    }
+
     Ok(())
 }

@@ -31,6 +31,16 @@ internal static class ListInstances
             return 2;
         }
 
+        // If rhinocode sees no sessions but Rhino.exe is running, the Script
+        // Server was not started. Auto-start it and re-query so the caller gets
+        // a useful result rather than an empty list.
+        if (raw.Count == 0 && ScriptServerHelper.TryEnsureScriptServer(client))
+        {
+            var (exit2, stdout2, _) = client.RunListJson();
+            if (exit2 == 0)
+                try { raw = JsonNode.Parse(stdout2) as JsonArray ?? raw; } catch { }
+        }
+
         var reshaped = new JsonArray();
         foreach (var item in raw)
         {

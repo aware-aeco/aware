@@ -137,6 +137,13 @@ enum Command {
         #[command(subcommand)]
         action: commands::receipt_cli::ReceiptCommand,
     },
+
+    /// Download and manage host-execution bridge binaries
+    /// (tekla, rhino, sketchup, revit).
+    Sidecar {
+        #[command(subcommand)]
+        action: commands::sidecar::SidecarCommand,
+    },
 }
 
 #[tokio::main]
@@ -172,6 +179,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Voice { action } => commands::voice::dispatch(action, &ctx),
         Command::Key { action } => commands::key::dispatch(action, &ctx),
         Command::Receipt { action } => commands::receipt_cli::dispatch(action, &ctx),
+        Command::Sidecar { action } => commands::sidecar::dispatch(action, &ctx),
     };
 
     match result {

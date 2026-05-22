@@ -34,6 +34,8 @@ internal static class Program
                 Console.Error.WriteLine($"aware-revit: stdin not readable: {e.Message}");
                 return 2;
             }
+            // Strip leading UTF-8 BOM (U+FEFF) that PowerShell 5.1 may prepend.
+            buf = buf.TrimStart('﻿');
             try { stdinJson = JsonNode.Parse(buf); }
             catch (Exception e)
             {
@@ -60,6 +62,7 @@ internal static class Program
                     Console.Error.WriteLine($"aware-revit: stdin not readable: {e.Message}");
                     return 2;
                 }
+                buf = buf.TrimStart('﻿');
                 if (!string.IsNullOrWhiteSpace(buf))
                 {
                     try { stdinJson = JsonNode.Parse(buf); }
