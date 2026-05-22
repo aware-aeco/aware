@@ -492,6 +492,41 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
             path.display()
         )));
     }
+
+    // Validate BEFORE copying anything — fail fast, write nothing on error
+    // (app-spec § Safety contract: "aware app validate refuses to install an
+    // app missing `safety:` on a write-mode node"; install must enforce the
+    // same contract as the standalone `validate` command, #134).
+    let src_manifest = std::fs::read_dir(&path)?
+        .flatten()
+        .map(|e| e.path())
+        .find(|p| {
+            matches!(
+                p.extension().and_then(|e| e.to_str()),
+                Some("flo") | Some("app")
+            )
+        })
+        .ok_or_else(|| {
+            AwareError::Validation(format!("no .flo or .app file in {}", path.display()))
+        })?;
+    let src_app = crate::manifest::loader::load_app(&src_manifest)?;
+    let mut issues = crate::validate::validate_app(&src_app);
+    if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
+        issues.extend(crate::validate::validate_app_safety(&src_app, &agents));
+    }
+    if crate::validate::has_errors(&issues) {
+        for i in &issues {
+            let tag = match i.severity {
+                crate::validate::Severity::Error => "\u{2717}",
+                crate::validate::Severity::Warning => "\u{26a0}",
+            };
+            eprintln!("{tag} [{}] {}", i.code, i.message);
+        }
+        return Err(AwareError::Validation(
+            "app install refused: app failed validation (fix errors above and retry)".into(),
+        ));
+    }
+
     let app_id = crate::install::install_app_from_path(&path, &ctx.paths)?;
 
     // Locate the installed .flo / .app file
