@@ -164,11 +164,15 @@ pub fn run_device_code_flow(
             ));
         }
 
-        let poll_body = format!(
+        let mut poll_body = format!(
             "grant_type=urn:ietf:params:oauth:grant-type:device_code&device_code={}&client_id={}",
             urlencode(&device_code),
             urlencode(&cfg.client_id())
         );
+        // Public clients (M365) carry no secret; only appended when configured.
+        if let Some(secret) = cfg.client_secret() {
+            poll_body.push_str(&format!("&client_secret={}", urlencode(&secret)));
+        }
         let result = ureq::post(&endpoints.token_url)
             .set("Content-Type", "application/x-www-form-urlencoded")
             .send_string(&poll_body);

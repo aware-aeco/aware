@@ -69,6 +69,12 @@ jobs:
 
       - name: Build Rust CLI (release)
         working-directory: cli
+        env:
+          # Google "Desktop app" client secret, baked in at compile time via
+          # option_env! (see cli/src/auth/config.rs + cli/build.rs). Non-confidential
+          # per Google's native-app model, but kept in CI secrets rather than source
+          # to avoid quota-abuse bots + secret scanners. M365 needs no secret.
+          AWARE_GOOGLE_CLIENT_SECRET: ${{ secrets.AWARE_GOOGLE_CLIENT_SECRET }}
         run: cargo build --release
 
       - name: Publish C# sidecar (NativeAOT)
