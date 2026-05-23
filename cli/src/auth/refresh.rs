@@ -34,11 +34,15 @@ pub fn ensure_fresh(
     })?;
     let cfg = config::for_integration(integration)?;
 
-    let body_params = [
+    let mut body_params = vec![
         ("grant_type", "refresh_token".to_string()),
         ("refresh_token", refresh_token.to_string()),
         ("client_id", cfg.client_id()),
     ];
+    // Google requires the desktop client secret on refresh too; public clients add nothing.
+    if let Some(secret) = cfg.client_secret() {
+        body_params.push(("client_secret", secret));
+    }
     let body = body_params
         .iter()
         .map(|(k, v)| format!("{}={}", urlencode(k), urlencode(v)))

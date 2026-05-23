@@ -94,13 +94,18 @@ pub fn run_pkce_flow(
     println!("\u{2713} Received auth code");
     println!("\u{2713} Exchanging for tokens...");
 
-    let body_params = [
+    let mut body_params = vec![
         ("grant_type", "authorization_code".to_string()),
         ("code", code),
         ("redirect_uri", redirect_uri.clone()),
         ("client_id", config.client_id()),
         ("code_verifier", verifier),
     ];
+    // Google "Desktop app" clients require the (non-confidential) secret even with
+    // PKCE; public clients (M365, Trimble) return None and add nothing.
+    if let Some(secret) = config.client_secret() {
+        body_params.push(("client_secret", secret));
+    }
     let body = body_params
         .iter()
         .map(|(k, v)| format!("{}={}", urlencode(k), urlencode(v)))
