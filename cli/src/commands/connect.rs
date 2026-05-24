@@ -95,8 +95,11 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         return run_set_app_secret(integration, args.r#as.as_deref(), ctx);
     }
 
-    let cfg = crate::auth::config::for_integration(integration)?
-        .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?;
+    // Validate the integration up front. The BYO OAuth profile is loaded only on
+    // the OAuth paths (--oauth / --device-code) below — token-import paths
+    // (--from-file, --from-env, paste) must not be blocked by a malformed or
+    // unreadable OAuth profile, since they don't use OAuth config at all.
+    crate::auth::config::for_integration(integration)?;
 
     if args.refresh {
         let token = crate::auth::refresh::ensure_fresh(
@@ -147,6 +150,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     // and errors need to be caught to emit a structured failure rather than
     // propagating through main's eprintln path.
     if args.device_code {
+        let cfg = crate::auth::config::for_integration(integration)?
+            .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?;
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         let result = crate::auth::device::run_device_code_flow(
             &cfg,
@@ -214,6 +219,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     } else if args.from_env {
         load_token_from_env(integration)?
     } else if args.oauth {
+        let cfg = crate::auth::config::for_integration(integration)?
+            .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?;
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?
     } else {

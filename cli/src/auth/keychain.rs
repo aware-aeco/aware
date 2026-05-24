@@ -69,6 +69,24 @@ fn cred_file_path(aware_home: &Path, account: &str) -> PathBuf {
         .join(format!("{account}.json"))
 }
 
+/// Whether to use the OS keychain at all.
+///
+/// Disabled when `AWARE_DISABLE_KEYRING` is set — the credentials-file fallback
+/// under `aware_home` then becomes the sole store (useful on headless / locked-down
+/// machines, and for test isolation since the OS keychain is global and not scoped
+/// by `AWARE_HOME`). In unit tests we default to file-only for the same isolation
+/// reason, unless a test explicitly opts into the real keychain via
+/// `AWARE_TEST_KEYRING`.
+fn keyring_enabled() -> bool {
+    if std::env::var_os("AWARE_DISABLE_KEYRING").is_some() {
+        return false;
+    }
+    if cfg!(test) && std::env::var_os("AWARE_TEST_KEYRING").is_none() {
+        return false;
+    }
+    true
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 /// Persist `token` to the OS keychain.
@@ -82,8 +100,13 @@ pub fn store_token(
 ) -> Result<(), AwareError> {
     let body = serde_json::to_string(token)
         .map_err(|e| AwareError::Internal(format!("serialize token: {e}")))?;
+    let account = account_name(&token.integration, alias);
 
-    let entry = keyring::Entry::new(SERVICE_NAME, &account_name(&token.integration, alias))
+    if !keyring_enabled() {
+        return write_cred_file(aware_home, &account, &body);
+    }
+
+    let entry = keyring::Entry::new(SERVICE_NAME, &account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
     match entry.set_password(&body) {
@@ -96,7 +119,7 @@ pub fn store_token(
                 "aware: keyring write failed ({e}); \
                  falling back to ~/.aware/credentials file"
             );
-            write_cred_file(aware_home, &account_name(&token.integration, alias), &body)
+            write_cred_file(aware_home, &account, &body)
         }
     }
 }
@@ -109,6 +132,11 @@ pub fn load_token(
     aware_home: &Path,
 ) -> Result<Option<StoredToken>, AwareError> {
     let account = account_name(integration, alias);
+
+    if !keyring_enabled() {
+        return read_cred_file(integration, alias, aware_home);
+    }
+
     let entry = keyring::Entry::new(SERVICE_NAME, &account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
@@ -133,13 +161,17 @@ pub fn delete_token(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = account_name(integration, alias);
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
 
-    let keyring_result = match entry.delete_credential() {
-        Ok(()) => Ok(()),
-        Err(keyring::Error::NoEntry) => Ok(()), // idempotent
-        Err(e) => Err(AwareError::PermissionDenied(format!("keyring delete: {e}"))),
+    let keyring_result = if keyring_enabled() {
+        let entry = keyring::Entry::new(SERVICE_NAME, &account)
+            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+        match entry.delete_credential() {
+            Ok(()) => Ok(()),
+            Err(keyring::Error::NoEntry) => Ok(()), // idempotent
+            Err(e) => Err(AwareError::PermissionDenied(format!("keyring delete: {e}"))),
+        }
+    } else {
+        Ok(())
     };
 
     // Also clean up any file fallback, regardless of keyring result.
@@ -162,6 +194,9 @@ pub fn store_app_secret(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = app_account_name(integration, alias);
+    if !keyring_enabled() {
+        return write_app_secret_file(aware_home, &account, secret);
+    }
     let entry = keyring::Entry::new(SERVICE_NAME, &account)
         .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
     match entry.set_password(secret) {
@@ -189,6 +224,9 @@ pub fn load_app_secret(
     aware_home: &Path,
 ) -> Result<Option<String>, AwareError> {
     let account = app_account_name(integration, alias);
+    if !keyring_enabled() {
+        return read_app_secret_file(aware_home, &account);
+    }
     match keyring::Entry::new(SERVICE_NAME, &account).and_then(|e| e.get_password()) {
         Ok(s) => Ok(Some(s)),
         // NoEntry or any keyring-unavailable error → check the file fallback.
@@ -203,12 +241,16 @@ pub fn delete_app_secret(
     aware_home: &Path,
 ) -> Result<(), AwareError> {
     let account = app_account_name(integration, alias);
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
-    let keyring_result = match entry.delete_credential() {
-        Ok(()) => Ok(()),
-        Err(keyring::Error::NoEntry) => Ok(()),
-        Err(e) => Err(AwareError::PermissionDenied(format!("keyring delete: {e}"))),
+    let keyring_result = if keyring_enabled() {
+        let entry = keyring::Entry::new(SERVICE_NAME, &account)
+            .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+        match entry.delete_credential() {
+            Ok(()) => Ok(()),
+            Err(keyring::Error::NoEntry) => Ok(()),
+            Err(e) => Err(AwareError::PermissionDenied(format!("keyring delete: {e}"))),
+        }
+    } else {
+        Ok(())
     };
     let file = cred_file_path(aware_home, &account);
     if file.is_file() {
