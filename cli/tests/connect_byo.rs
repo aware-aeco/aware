@@ -3,6 +3,39 @@
 use assert_cmd::Command;
 use predicates::prelude::*;
 
+/// `trimble-connect --oauth` has no bundled app (placeholder client_id), so it
+/// must fail fast with a BYO hint rather than sending the placeholder to Trimble
+/// ("Unregistered client"). (#153)
+#[test]
+fn trimble_oauth_without_bundled_app_fails_with_byo_hint() {
+    let tmp = tempfile::tempdir().unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .env_remove("AWARE_OAUTH_TRIMBLE_CLIENT_ID")
+        .args(["connect", "trimble-connect", "--oauth"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("no bundled OAuth app"));
+}
+
+/// `google-workspace --device-code` must report device-code unsupported (point at
+/// --oauth) rather than leaking a raw Google 401. (#151)
+#[test]
+fn google_device_code_reports_unsupported_not_raw_401() {
+    let tmp = tempfile::tempdir().unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .args(["--json", "connect", "google-workspace", "--device-code"])
+        .assert()
+        .success()
+        .stdout(predicate::str::contains("does not support device-code"))
+        .stdout(predicate::str::contains("--oauth"));
+}
+
 /// A malformed BYO OAuth profile must NOT block the non-OAuth token-import paths
 /// (`--from-file`), since those don't use OAuth config at all. Regression for the
 /// eager-profile-load issue found in review.
