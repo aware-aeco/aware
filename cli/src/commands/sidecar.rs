@@ -17,9 +17,9 @@
 //!
 //! # Install location
 //!
-//! Bridges are placed in the same directory as the running `aware` binary so
-//! they are automatically on PATH. Fallback: `~/.aware/bin/` (created if
-//! absent) with a doctor warning to add it to PATH.
+//! Bridges are placed in `~/.aware/bridges/` — a persistent, version-independent
+//! directory that survives `npm install -g` upgrades (#148). The runtime resolves
+//! them by absolute path, so they do not need to be on PATH.
 
 use std::io::Write as _;
 use std::path::PathBuf;
@@ -96,8 +96,8 @@ pub enum SidecarCommand {
     /// Download and install a host bridge binary.
     ///
     /// Downloads from the GitHub release matching the current `aware` version
-    /// and places the binary next to `aware.exe` (or in `~/.aware/bin/` as a
-    /// fallback). Accepted host IDs: tekla, rhino, sketchup, revit.
+    /// and installs into `~/.aware/bridges/` (persistent across CLI upgrades).
+    /// Accepted host IDs: tekla, rhino, sketchup, revit.
     Install {
         /// Host bridge ID: `tekla`, `rhino`, `sketchup`, or `revit`.
         host: String,
@@ -220,40 +220,29 @@ fn uninstall(ctx: &Context, host: &str) -> Result<(), AwareError> {
 
 /// Resolve the directory where bridge binaries are installed.
 ///
-/// Priority:
-/// 1. Same directory as the running `aware` binary (so bridges land on PATH).
-/// 2. `~/.aware/bin/` fallback (with a doctor warning to add to PATH).
+/// `~/.aware/bridges/` — a persistent, version-independent location alongside the
+/// rest of `~/.aware` durable state. Earlier versions placed bridges next to the
+/// running `aware` binary (so they landed on PATH), but for npm installs that is
+/// the package's own dir, which `npm install -g` wipes wholesale on every upgrade
+/// — silently dropping every installed bridge (#148). Since the runtime resolves
+/// bridges by absolute path (see `find_bridge_by_binary`), they no longer need to
+/// be on PATH.
 pub fn bridge_install_dir(ctx: &Context) -> PathBuf {
-    // Same dir as `aware.exe` — always on PATH when installed via npm/cargo/MSI.
-    // Only use this dir if it is actually writable; a system-wide MSI install
-    // puts the binary under `C:\Program Files\` which regular users cannot write to.
-    if let Ok(exe) = std::env::current_exe() {
-        if let Some(dir) = exe.parent() {
-            if dir.is_dir() && dir_is_writable(dir) {
-                return dir.to_path_buf();
-            }
-        }
-    }
-    // Fallback: ~/.aware/bin/
-    ctx.paths.aware_home.join("bin")
+    ctx.paths.aware_home.join("bridges")
 }
 
-/// Probe whether `dir` is writable by attempting to create (and immediately
-/// delete) a temporary file inside it.
-fn dir_is_writable(dir: &std::path::Path) -> bool {
-    let probe = dir.join(".aware-write-probe");
-    match std::fs::File::create(&probe) {
-        Ok(_) => {
-            let _ = std::fs::remove_file(&probe);
-            true
-        }
-        Err(_) => false,
-    }
-}
-
-/// Find a bridge binary on disk. Checks `install_dir/<binary>.exe` and PATH.
+/// Find a bridge binary on disk by host id (e.g. `tekla`). Checks
+/// `install_dir/<binary>.exe`, the extracted sub-dir, then PATH.
 pub fn find_bridge_by_id(id: &str, install_dir: &std::path::Path) -> Option<PathBuf> {
     let b = BRIDGES.iter().find(|b| b.id == id)?;
+    find_bridge(b, install_dir)
+}
+
+/// Find a bridge binary on disk by binary name (e.g. `aware-tekla`, as it appears
+/// in an agent manifest's `transport.cli.binary`). Returns `None` for names that
+/// are not known host bridges, so the caller can fall back to PATH resolution.
+pub fn find_bridge_by_binary(binary: &str, install_dir: &std::path::Path) -> Option<PathBuf> {
+    let b = BRIDGES.iter().find(|b| b.binary == binary)?;
     find_bridge(b, install_dir)
 }
 
@@ -417,5 +406,29 @@ mod tests {
         std::fs::write(tmp.path().join("aware-tekla.exe"), b"fake").unwrap();
         let result = find_bridge_by_id("tekla", tmp.path());
         assert!(result.is_some());
+    }
+
+    #[test]
+    fn install_dir_is_persistent_under_aware_home() {
+        // Must be ~/.aware/bridges — NOT the (volatile) npm package dir that
+        // `npm install -g` wipes on upgrade (#148).
+        let tmp = tempfile::tempdir().unwrap();
+        let ctx = Context {
+            paths: crate::paths::Paths {
+                aware_home: tmp.path().to_path_buf(),
+            },
+            json: false,
+        };
+        assert_eq!(bridge_install_dir(&ctx), tmp.path().join("bridges"));
+    }
+
+    #[test]
+    fn find_bridge_by_binary_matches_manifest_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(tmp.path().join("aware-tekla.exe"), b"fake").unwrap();
+        // Manifest transport uses the binary name (`aware-tekla`), not the host id.
+        assert!(find_bridge_by_binary("aware-tekla", tmp.path()).is_some());
+        // Unknown / non-bridge binary → None (caller falls back to PATH).
+        assert!(find_bridge_by_binary("ripgrep", tmp.path()).is_none());
     }
 }
