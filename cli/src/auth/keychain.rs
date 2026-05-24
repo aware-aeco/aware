@@ -223,14 +223,30 @@ pub fn load_app_secret(
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<String>, AwareError> {
-    let account = app_account_name(integration, alias);
-    if !keyring_enabled() {
-        return read_app_secret_file(aware_home, &account);
+    // Try the alias-specific slot, then fall back to the default (no-alias) slot.
+    // This mirrors `profile::load_profile`'s alias→default fallback, so an aliased
+    // account that inherits the default profile's client_id also inherits the
+    // single app secret stored once via `aware connect <int> --set-app-secret`.
+    if let Some(a) = alias
+        && let Some(s) =
+            load_app_secret_for_account(&app_account_name(integration, Some(a)), aware_home)?
+    {
+        return Ok(Some(s));
     }
-    match keyring::Entry::new(SERVICE_NAME, &account).and_then(|e| e.get_password()) {
+    load_app_secret_for_account(&app_account_name(integration, None), aware_home)
+}
+
+fn load_app_secret_for_account(
+    account: &str,
+    aware_home: &Path,
+) -> Result<Option<String>, AwareError> {
+    if !keyring_enabled() {
+        return read_app_secret_file(aware_home, account);
+    }
+    match keyring::Entry::new(SERVICE_NAME, account).and_then(|e| e.get_password()) {
         Ok(s) => Ok(Some(s)),
         // NoEntry or any keyring-unavailable error → check the file fallback.
-        Err(_) => read_app_secret_file(aware_home, &account),
+        Err(_) => read_app_secret_file(aware_home, account),
     }
 }
 
@@ -460,6 +476,40 @@ mod tests {
                 .unwrap()
                 .is_none()
         );
+    }
+
+    #[test]
+    fn app_secret_alias_falls_back_to_default_slot() {
+        // Secret stored once without an alias; an aliased lookup with no
+        // alias-specific secret must inherit the default (mirrors profile fallback).
+        let tmp = tempfile::tempdir().unwrap();
+        write_app_secret_file(
+            tmp.path(),
+            &app_account_name("google-workspace", None),
+            "default-secret",
+        )
+        .unwrap();
+        let got = load_app_secret("google-workspace", Some("personal"), tmp.path()).unwrap();
+        assert_eq!(got.as_deref(), Some("default-secret"));
+    }
+
+    #[test]
+    fn app_secret_alias_specific_wins_over_default() {
+        let tmp = tempfile::tempdir().unwrap();
+        write_app_secret_file(
+            tmp.path(),
+            &app_account_name("google-workspace", None),
+            "default-secret",
+        )
+        .unwrap();
+        write_app_secret_file(
+            tmp.path(),
+            &app_account_name("google-workspace", Some("personal")),
+            "alias-secret",
+        )
+        .unwrap();
+        let got = load_app_secret("google-workspace", Some("personal"), tmp.path()).unwrap();
+        assert_eq!(got.as_deref(), Some("alias-secret"));
     }
 
     #[test]
