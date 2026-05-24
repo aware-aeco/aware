@@ -152,8 +152,10 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
         AwareError::Internal(format!("create {}: {e}", install_dir.display()))
     })?;
 
-    // Already installed?
-    if let Some(p) = find_bridge(bridge, &install_dir) {
+    // Already installed in the persistent dir? (A legacy on-PATH copy must NOT
+    // satisfy this — otherwise the bridge never migrates and the next npm upgrade
+    // wipes it. #148)
+    if let Some(p) = find_bridge_in_dir(bridge, &install_dir) {
         println!("\u{2713} {} already installed at {}", bridge.binary, p.display());
         if let Some(note) = bridge.note {
             println!("\u{26a0} {note}");
@@ -206,9 +208,9 @@ fn uninstall(ctx: &Context, host: &str) -> Result<(), AwareError> {
     let bridge = lookup_bridge(host)?;
     let install_dir = bridge_install_dir(ctx);
 
-    let path = find_bridge(bridge, &install_dir).ok_or_else(|| {
-        AwareError::NotFound(format!("{} is not installed", bridge.binary))
-    })?;
+    // Only remove what we manage in the persistent dir — never a PATH/legacy copy.
+    let path = find_bridge_in_dir(bridge, &install_dir)
+        .ok_or_else(|| AwareError::NotFound(format!("{} is not installed", bridge.binary)))?;
 
     std::fs::remove_file(&path)
         .map_err(|e| AwareError::Internal(format!("remove {}: {e}", path.display())))?;
@@ -246,19 +248,32 @@ pub fn find_bridge_by_binary(binary: &str, install_dir: &std::path::Path) -> Opt
     find_bridge(b, install_dir)
 }
 
+/// Find a bridge for RUNTIME resolution: the managed install dir first, then a
+/// `which`-style PATH lookup (so a legacy on-PATH bridge still spawns during the
+/// migration window).
 fn find_bridge(bridge: &Bridge, install_dir: &std::path::Path) -> Option<PathBuf> {
-    // 1. Check install dir (where `aware sidecar install` places it)
+    find_bridge_in_dir(bridge, install_dir).or_else(|| which_binary(bridge.binary))
+}
+
+/// Find a bridge ONLY within the managed install dir (`~/.aware/bridges`), never
+/// PATH. Used by install/uninstall: a legacy on-PATH copy must NOT make `install`
+/// think the bridge is already present (which would skip writing it to the
+/// persistent dir and let the next npm upgrade delete the only copy — #148), nor
+/// should `uninstall` reach out and delete a binary outside the dir we manage.
+fn find_bridge_in_dir(bridge: &Bridge, install_dir: &std::path::Path) -> Option<PathBuf> {
+    // Flat: <dir>/<binary>.exe
     let local = install_dir.join(format!("{}.exe", bridge.binary));
     if local.is_file() {
         return Some(local);
     }
-    // Also check a sub-dir (tekla/sketchup zips extract to a subdir)
-    let subdir = install_dir.join(bridge.binary).join(format!("{}.exe", bridge.binary));
+    // Sub-dir: tekla/sketchup zips extract to <dir>/<binary>/<binary>.exe
+    let subdir = install_dir
+        .join(bridge.binary)
+        .join(format!("{}.exe", bridge.binary));
     if subdir.is_file() {
         return Some(subdir);
     }
-    // 2. Check PATH via `which`-style lookup
-    which_binary(bridge.binary)
+    None
 }
 
 fn which_binary(name: &str) -> Option<PathBuf> {
@@ -420,6 +435,17 @@ mod tests {
             json: false,
         };
         assert_eq!(bridge_install_dir(&ctx), tmp.path().join("bridges"));
+    }
+
+    #[test]
+    fn find_bridge_in_dir_ignores_path() {
+        // The dir-only check (used by install/uninstall) must not be satisfied by
+        // a copy that only exists elsewhere/on PATH — empty dir → None, present → Some.
+        let tmp = tempfile::tempdir().unwrap();
+        let bridge = lookup_bridge("tekla").unwrap();
+        assert!(find_bridge_in_dir(bridge, tmp.path()).is_none());
+        std::fs::write(tmp.path().join("aware-tekla.exe"), b"fake").unwrap();
+        assert!(find_bridge_in_dir(bridge, tmp.path()).is_some());
     }
 
     #[test]
