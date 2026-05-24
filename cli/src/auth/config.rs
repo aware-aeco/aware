@@ -168,19 +168,6 @@ impl IntegrationConfig {
         alias: Option<&str>,
     ) -> Result<Self, AwareError> {
         let profile = crate::auth::profile::load_profile(aware_home, &self.id, alias)?;
-        // The app secret pairs with the resolved profile's client_id. Use the
-        // alias-specific secret slot only when an alias-specific profile file
-        // actually exists; otherwise the alias inherited the default profile, so
-        // read the default secret slot too. This mirrors load_profile's
-        // alias→default fallback and never pairs a secret with the wrong app.
-        let secret_alias =
-            if crate::auth::profile::alias_profile_exists(aware_home, &self.id, alias) {
-                alias
-            } else {
-                None
-            };
-        let app_secret =
-            crate::auth::keychain::load_app_secret(&self.id, secret_alias, aware_home)?;
 
         if self.id == "microsoft-365"
             && let Some(p) = &profile
@@ -202,6 +189,24 @@ impl IntegrationConfig {
             .as_ref()
             .and_then(|p| p.client_id.as_ref())
             .is_some();
+
+        // The keychain `oauth-app.<id>` slot belongs to a profile-based BYO app.
+        // Load it only for ByoProfile; env-sourced (ByoEnv) and first-party apps
+        // get their secret from env / bundled, never a stale keychain secret. The
+        // secret slot scope mirrors the resolved profile (alias-specific file →
+        // alias slot, else the default slot inherited alongside the default profile).
+        let app_secret = if profile_sets_client_id {
+            let secret_alias =
+                if crate::auth::profile::alias_profile_exists(aware_home, &self.id, alias) {
+                    alias
+                } else {
+                    None
+                };
+            crate::auth::keychain::load_app_secret(&self.id, secret_alias, aware_home)?
+        } else {
+            None
+        };
+
         let source = if profile_sets_client_id {
             AppSource::ByoProfile
         } else if std::env::var(self.client_id_env).is_ok() {
@@ -215,6 +220,37 @@ impl IntegrationConfig {
             source,
         };
         Ok(self)
+    }
+
+    /// Apply a CLI `--tenant` override (M365 only). Takes precedence over a
+    /// profile `tenant`, matching the device-code path's precedence
+    /// (CLI ▸ profile ▸ `common`). Rebuilds the standard Microsoft endpoints
+    /// unless the profile set explicit (e.g. sovereign-cloud) endpoint URLs.
+    pub fn with_tenant(mut self, tenant: Option<&str>) -> Self {
+        if self.id == "microsoft-365"
+            && let Some(t) = tenant
+        {
+            let has_profile_auth = self
+                .overlay
+                .profile
+                .as_ref()
+                .and_then(|p| p.auth_url.as_deref())
+                .is_some();
+            let has_profile_token = self
+                .overlay
+                .profile
+                .as_ref()
+                .and_then(|p| p.token_url.as_deref())
+                .is_some();
+            if !has_profile_auth {
+                self.auth_url =
+                    format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/authorize");
+            }
+            if !has_profile_token {
+                self.token_url = format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/token");
+            }
+        }
+        self
     }
 
     /// Resolved authorization endpoint (profile override ▸ bundled/tenant-rewritten).
@@ -477,6 +513,45 @@ mod tests {
             .unwrap();
         assert_eq!(cfg.client_id(), "personal-client");
         assert_eq!(cfg.client_secret(), None);
+    }
+
+    #[test]
+    fn cli_tenant_overrides_profile_tenant_for_pkce() {
+        // `--oauth --tenant <cli>` must win over a profile `tenant:` for the
+        // PKCE auth/token endpoints, matching the device-code precedence. (#146 review)
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("microsoft-365.yaml"),
+            "client_id: x\ntenant: profile-tenant.onmicrosoft.com\n",
+        )
+        .unwrap();
+        let cfg = for_integration("microsoft-365")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap()
+            .with_tenant(Some("cli-tenant.onmicrosoft.com"));
+        assert!(cfg.auth_url().contains("/cli-tenant.onmicrosoft.com/"));
+        assert!(cfg.token_url().contains("/cli-tenant.onmicrosoft.com/"));
+        assert!(!cfg.auth_url().contains("profile-tenant"));
+    }
+
+    #[test]
+    fn first_party_ignores_stored_keychain_app_secret() {
+        // A leftover keychain app secret with no BYO profile (first-party / env app)
+        // must not be loaded into the overlay — it belongs to a profile-based app.
+        let tmp = tempfile::tempdir().unwrap();
+        crate::auth::keychain::store_app_secret("google-workspace", None, "stale", tmp.path())
+            .unwrap();
+        let cfg = for_integration("google-workspace")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        assert_eq!(cfg.app_source_label(), "first-party");
+        if std::env::var("AWARE_OAUTH_GOOGLE_CLIENT_SECRET").is_err() {
+            assert_eq!(cfg.client_secret(), None);
+        }
     }
 
     #[test]

@@ -220,7 +220,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         load_token_from_env(integration)?
     } else if args.oauth {
         let cfg = crate::auth::config::for_integration(integration)?
-            .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?;
+            .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?
+            .with_tenant(args.tenant.as_deref());
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?
     } else {
