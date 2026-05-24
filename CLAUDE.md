@@ -114,7 +114,7 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 
 ### Git workflow
 
-- **Never commit automatically.** Only commit when the user explicitly asks. Wait for approval.
+- **Committing is pre-approved for this project.** You have standing approval to create commits when a unit of work is complete — no need to ask per commit. (Pushing, force-pushing, and merging to `main` still require explicit approval each time.)
 - **No `Co-Authored-By: Claude ...` trailers** in commit messages.
 - **Session cleanup before commit** — delete `tmpclaude-*` temp files first.
 - Stage specific files (`git add <path>`); avoid `git add -A` to prevent accidental secret commits.
