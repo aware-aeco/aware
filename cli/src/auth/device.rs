@@ -31,11 +31,21 @@ fn device_endpoints_for(cfg: &IntegrationConfig, tenant: Option<&str>) -> Device
         "microsoft-365" => {
             // CLI `--tenant` wins; otherwise honor a BYO profile tenant; else `common`.
             let t = tenant.or_else(|| cfg.tenant()).unwrap_or("common");
+            // An explicit profile endpoint override (e.g. sovereign cloud / proxy)
+            // wins over the tenant-built public-cloud URL.
             DeviceEndpoints {
-                device_authorization_url: format!(
-                    "https://login.microsoftonline.com/{t}/oauth2/v2.0/devicecode"
-                ),
-                token_url: format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/token"),
+                device_authorization_url: cfg
+                    .device_authorization_url_override()
+                    .map(String::from)
+                    .unwrap_or_else(|| {
+                        format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/devicecode")
+                    }),
+                token_url: cfg
+                    .token_url_override()
+                    .map(String::from)
+                    .unwrap_or_else(|| {
+                        format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/token")
+                    }),
             }
         }
         "google-workspace" => DeviceEndpoints {
@@ -292,6 +302,35 @@ mod tests {
         let e = device_endpoints_for(&cfg, Some("acme.onmicrosoft.com"));
         assert!(e.device_authorization_url.contains("/acme.onmicrosoft.com/"));
         assert!(e.token_url.contains("/acme.onmicrosoft.com/"));
+    }
+
+    #[test]
+    fn microsoft_device_honors_explicit_profile_endpoint_override() {
+        // A BYO profile with explicit sovereign-cloud endpoints must be honored by
+        // the device-code flow, not rebuilt as a public-cloud tenant URL (#146 review).
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("microsoft-365.yaml"),
+            "client_id: x\n\
+             token_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/token\n\
+             device_authorization_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/devicecode\n",
+        )
+        .unwrap();
+        let cfg = config::for_integration("microsoft-365")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        let e = device_endpoints_for(&cfg, None);
+        assert_eq!(
+            e.token_url,
+            "https://login.microsoftonline.us/contoso/oauth2/v2.0/token"
+        );
+        assert_eq!(
+            e.device_authorization_url,
+            "https://login.microsoftonline.us/contoso/oauth2/v2.0/devicecode"
+        );
     }
 
     #[test]

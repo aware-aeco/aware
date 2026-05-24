@@ -215,6 +215,24 @@ impl IntegrationConfig {
             .unwrap_or(&self.token_url)
     }
 
+    /// Explicit profile `token_url` override, if any (NOT the tenant-substituted
+    /// base). The device-code flow uses this to decide whether to honor an
+    /// override or build a tenant-specific endpoint.
+    pub fn token_url_override(&self) -> Option<&str> {
+        self.overlay
+            .profile
+            .as_ref()
+            .and_then(|p| p.token_url.as_deref())
+    }
+
+    /// Explicit profile `device_authorization_url` override, if any.
+    pub fn device_authorization_url_override(&self) -> Option<&str> {
+        self.overlay
+            .profile
+            .as_ref()
+            .and_then(|p| p.device_authorization_url.as_deref())
+    }
+
     /// Resolved scope set: a profile's `scopes` list fully REPLACES the bundled
     /// defaults; otherwise the bundled defaults are used.
     pub fn scopes(&self) -> Vec<String> {
@@ -251,48 +269,42 @@ impl IntegrationConfig {
         std::env::var(self.client_id_env).unwrap_or_else(|_| self.default_client_id.clone())
     }
 
-    /// Resolve the client secret: keychain (BYO) ▸ env var ▸ bundled default.
-    /// Returns `None` for public clients (M365, Trimble) with no secret.
+    /// Resolve the client secret.
     ///
-    /// The bundled first-party secret is deliberately NOT paired with a BYO
-    /// `client_id` from a profile — that mismatched combination would be rejected
-    /// by the provider, so we return `None` and let the operator store their own.
+    /// When a BYO app is active (profile or env client_id): keychain ▸ env, and
+    /// **never** the bundled first-party secret (that mismatched pair is rejected
+    /// by the provider). When first-party: env ▸ bundled, ignoring any stale
+    /// keychain app secret left over from a removed BYO profile.
     pub fn client_secret(&self) -> Option<String> {
         let env_secret = self.client_secret_env.and_then(|k| std::env::var(k).ok());
-        let byo_client_id = self
-            .overlay
-            .profile
-            .as_ref()
-            .and_then(|p| p.client_id.as_ref())
-            .is_some();
+        let byo_active = self.overlay.source != AppSource::FirstParty;
         resolve_client_secret(
             self.overlay.app_secret.as_deref(),
             env_secret.as_deref(),
-            byo_client_id,
+            byo_active,
             self.default_client_secret.as_deref(),
         )
     }
 }
 
-/// Pure client-secret precedence: keychain ▸ env ▸ (bundled, unless a BYO
-/// `client_id` is in play). Factored out so the precedence is unit-testable
-/// without touching the OS keychain or process env.
+/// Pure client-secret precedence. Factored out so it is unit-testable without
+/// touching the OS keychain or process env.
+///
+/// - **BYO active:** `app_secret` (keychain) ▸ `env_secret`; the bundled
+///   first-party secret is never paired with a BYO client id.
+/// - **First-party:** `env_secret` ▸ `bundled`; a leftover keychain `app_secret`
+///   is ignored, since it belongs to a no-longer-active BYO app.
 fn resolve_client_secret(
     app_secret: Option<&str>,
     env_secret: Option<&str>,
-    byo_client_id: bool,
+    byo_active: bool,
     bundled: Option<&str>,
 ) -> Option<String> {
-    if let Some(s) = app_secret {
-        return Some(s.to_string());
+    if byo_active {
+        app_secret.or(env_secret).map(String::from)
+    } else {
+        env_secret.or(bundled).map(String::from)
     }
-    if let Some(s) = env_secret {
-        return Some(s.to_string());
-    }
-    if byo_client_id {
-        return None;
-    }
-    bundled.map(String::from)
 }
 
 #[cfg(test)]
@@ -402,28 +414,46 @@ mod tests {
     // AWARE_HOME, so this is the reliable way to test the guard).
 
     #[test]
-    fn secret_keychain_wins_over_env_and_bundled() {
+    fn secret_byo_keychain_wins_over_env() {
         assert_eq!(
-            resolve_client_secret(Some("kc"), Some("env"), false, Some("bundled")),
+            resolve_client_secret(Some("kc"), Some("env"), true, Some("bundled")),
             Some("kc".to_string())
         );
     }
 
     #[test]
-    fn secret_env_wins_over_bundled() {
+    fn secret_byo_falls_back_to_env() {
         assert_eq!(
-            resolve_client_secret(None, Some("env"), false, Some("bundled")),
+            resolve_client_secret(None, Some("env"), true, Some("bundled")),
             Some("env".to_string())
         );
     }
 
     #[test]
-    fn secret_byo_client_id_suppresses_bundled() {
-        // BYO client_id with no stored secret must NOT borrow the bundled
+    fn secret_byo_never_uses_bundled() {
+        // BYO active with no stored/env secret must NOT borrow the bundled
         // first-party secret — that mismatched pair would be rejected anyway.
         assert_eq!(
             resolve_client_secret(None, None, true, Some("bundled")),
             None
+        );
+    }
+
+    #[test]
+    fn secret_first_party_ignores_stale_keychain_secret() {
+        // A leftover keychain secret from a removed BYO profile must not pair
+        // with the first-party client id; env ▸ bundled applies instead.
+        assert_eq!(
+            resolve_client_secret(Some("stale-kc"), None, false, Some("bundled")),
+            Some("bundled".to_string())
+        );
+    }
+
+    #[test]
+    fn secret_first_party_env_wins_over_bundled() {
+        assert_eq!(
+            resolve_client_secret(None, Some("env"), false, Some("bundled")),
+            Some("env".to_string())
         );
     }
 

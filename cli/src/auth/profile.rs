@@ -27,6 +27,9 @@ pub struct OAuthAppProfile {
     pub auth_url: Option<String>,
     /// Explicit token endpoint override.
     pub token_url: Option<String>,
+    /// Explicit RFC 8628 device-authorization endpoint override (sovereign cloud
+    /// / proxy). Only consulted by the device-code flow.
+    pub device_authorization_url: Option<String>,
 }
 
 /// Load the BYO profile for `integration`, preferring an alias-specific file

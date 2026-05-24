@@ -205,6 +205,19 @@ client_id: 9999-abc.apps.googleusercontent.com
 
 Never put a client secret in this file.
 
+For a sovereign / national cloud or a proxy, also set explicit endpoints — these
+override the tenant-substituted public-cloud URLs and are honored by PKCE, refresh,
+**and** device-code:
+
+```yaml
+# ~/.aware/oauth/microsoft-365.yaml (sovereign cloud example)
+client_id: ...
+tenant: contoso.onmicrosoft.com
+auth_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/authorize
+token_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/token
+device_authorization_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/devicecode
+```
+
 ### 3. Store the client secret in the OS keychain
 
 For Google (and any app that needs a secret), pipe it in via stdin — it never
