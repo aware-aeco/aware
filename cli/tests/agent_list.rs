@@ -57,8 +57,9 @@ fn json_output_returns_envelope() {
     let agents = v["data"]["agents"].as_array().unwrap();
     // The fixture mirrors every `manifest.yaml` under `20-agents/` (keyed by unique `agent:` id).
     // Count grew 57 (v0.28) → 63 (v0.29 vendor coverage) → 64 (the generic `http` agent, #101)
-    //              → 65 (bcf-file + ifc-inspector curated to v0.2.0, PR #93).
+    //              → 65 (bcf-file + ifc-inspector curated to v0.2.0, PR #93)
+    //              → 67 (tekla plugin-SDK agents, PR #149).
     // A strict equality keeps this honest — bump it whenever a new agent lands.
-    assert_eq!(agents.len(), 65);
+    assert_eq!(agents.len(), 67);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
 }
