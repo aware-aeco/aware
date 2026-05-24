@@ -7,7 +7,7 @@ fn phase_a_e2e_generates_three_artefact_types() {
     // Skip if sidecar binary is absent — this test exercises the BUILT binary,
     // not just the Rust crates. CI runs `dotnet publish` before `cargo test`.
     let sidecar_release =
-        Path::new("../cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe");
+        Path::new("../cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe");
     if !sidecar_release.exists() {
         eprintln!(
             "skipping E2E: sidecar binary not found at {}",

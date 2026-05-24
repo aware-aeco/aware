@@ -19,10 +19,10 @@ This agent is generated from a hybrid coverage IR built by fetching the **OpenAP
 ```bash
 # From repo root — run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"idea-statica","version":"26.0","out_path":"cli-sidecar/Ingest/Output/idea-statica-26.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Regenerate the agent from the IR:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate idea-statica 26.0 \
   --from-ir cli-sidecar/Ingest/Output/idea-statica-26.0.ir.json \
   --vendor idea-statica --vertical engineering

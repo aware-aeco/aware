@@ -9,12 +9,12 @@ fn sidecar_binary() -> Option<std::path::PathBuf> {
         .unwrap()
         .to_path_buf();
     let candidate =
-        repo_root.join("cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe");
+        repo_root.join("cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe");
     if candidate.is_file() {
         return Some(candidate);
     }
     // Also try non-Windows path layouts
-    let alt = repo_root.join("cli-sidecar/bin/Release/net9.0/linux-x64/publish/aware-sidecar");
+    let alt = repo_root.join("cli-sidecar/bin/Release/net10.0/linux-x64/publish/aware-sidecar");
     if alt.is_file() {
         return Some(alt);
     }
@@ -29,7 +29,7 @@ fn fixture_dll() -> Option<std::path::PathBuf> {
     // Try the test fixture build output (Debug build is fine; we only need the assembly metadata)
     for cfg in ["Debug", "Release"] {
         let candidate = repo_root.join(format!(
-            "cli-sidecar/Tests/FixtureAssembly/bin/{cfg}/net9.0/FixtureAssembly.dll"
+            "cli-sidecar/Tests/FixtureAssembly/bin/{cfg}/net10.0/FixtureAssembly.dll"
         ));
         if candidate.is_file() {
             return Some(candidate);

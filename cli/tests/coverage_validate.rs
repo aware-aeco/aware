@@ -21,7 +21,7 @@ fn repo_root() -> PathBuf {
 }
 
 fn sidecar_release() -> PathBuf {
-    repo_root().join("cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe")
+    repo_root().join("cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe")
 }
 
 fn skip_if_no_sidecar(path: &Path) -> bool {

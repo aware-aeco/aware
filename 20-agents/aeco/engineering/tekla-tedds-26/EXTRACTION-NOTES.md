@@ -14,11 +14,11 @@ This agent is generated from a coverage IR scraped from `developer.tekla.com`. T
 ```bash
 # From repo root — run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"tedds","version":"26.0","out_path":"cli-sidecar/Ingest/Output/tedds-26.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Regenerate the agent from the IR:
 echo '{"op":"coverage-generate","args":{"ir_path":"cli-sidecar/Ingest/Output/tedds-26.0.ir.json","out_dir":"20-agents/aeco/engineering/tekla-tedds-26","agent_id":"tekla-tedds-26.0","vendor":"trimble","vertical":"engineering"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 ```
 
 ## Naming caveat

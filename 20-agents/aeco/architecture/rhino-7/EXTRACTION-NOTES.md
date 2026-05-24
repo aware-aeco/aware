@@ -36,13 +36,13 @@ sibling rhino-8 agent, and the dedicated `7` branch for rhino-7.
 ```bash
 # From repo root â€” run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"rhino","version":"7.0","out_path":"cli-sidecar/Ingest/Output/rhino-7.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Or use the restart-on-stall wrapper (recommended if you hit github raw throttling):
 pwsh -File cli-sidecar/Ingest/Output/extract-rhino-with-restart.ps1 -Version 7.0
 
 # Regenerate the agent from the IR:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate rhino 7.0 \
   --from-ir cli-sidecar/Ingest/Output/rhino-7.0.ir.json \
   --vendor mcneel --vertical architecture

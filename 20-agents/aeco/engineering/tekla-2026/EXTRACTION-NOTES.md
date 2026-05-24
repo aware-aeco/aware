@@ -14,13 +14,13 @@ This agent is generated from a coverage IR scraped from `developer.tekla.com`. T
 ```bash
 # From repo root — run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"tekla","version":"2026.0","out_path":"cli-sidecar/Ingest/Output/tekla-2026.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Or use the restart-on-stall wrapper (recommended — Tekla's CDN throttles after ~3k member fetches per session):
 pwsh -File cli-sidecar/Ingest/Output/extract-with-restart.ps1 -Version 2026.0
 
 # Regenerate the agent from the IR:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate tekla 2026.0 \
   --from-ir cli-sidecar/Ingest/Output/tekla-2026.0.ir.json \
   --vendor trimble --vertical engineering

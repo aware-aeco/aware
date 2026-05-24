@@ -15,13 +15,13 @@ repository (branch `gh-pages` â€” Grasshopper for Rhino 8.31).
 
 ```bash
 echo '{"op":"coverage-extract","args":{"vendor":"grasshopper","version":"8.0","out_path":"cli-sidecar/Ingest/Output/grasshopper-8.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Or:
 pwsh -File cli-sidecar/Ingest/Output/extract-grasshopper-with-restart.ps1 -Version 8.0
 
 # Regenerate the agent:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate grasshopper 8.0 \
   --from-ir cli-sidecar/Ingest/Output/grasshopper-8.0.ir.json \
   --vendor mcneel --vertical architecture
