@@ -91,7 +91,7 @@ jobs:
           stage="aware-${version}-${{ matrix.rid }}"
           mkdir -p "$stage"
           cp "cli/target/release/aware${{ matrix.ext }}" "$stage/"
-          cp "cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/aware-sidecar${{ matrix.ext }}" "$stage/"
+          cp "cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/aware-sidecar${{ matrix.ext }}" "$stage/"
           cp LICENSE "$stage/" 2>/dev/null || echo "(no LICENSE file)" > "$stage/LICENSE"
           cp cli/README.md "$stage/README.md"
           echo "$version" > "$stage/VERSION"

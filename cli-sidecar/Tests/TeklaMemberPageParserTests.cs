@@ -13,7 +13,7 @@ public class TeklaMemberPageParserTests
     static string LoadFixture(string name)
     {
         var here = Path.GetDirectoryName(typeof(TeklaMemberPageParserTests).Assembly.Location)!;
-        // Tests/bin/Debug/net9.0/  → up three to Tests/, then /fixtures
+        // Tests/bin/Debug/net10.0/  → up three to Tests/, then /fixtures
         var path = Path.Combine(here, "fixtures", name);
         if (!File.Exists(path))
         {

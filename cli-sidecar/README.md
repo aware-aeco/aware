@@ -15,7 +15,7 @@ dotnet build
 
 # Release build with NativeAOT (single-file binary, no runtime needed)
 dotnet publish -c Release -r win-x64 -p:PublishAot=true
-# → bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+# → bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 ```
 
 ## IPC protocol

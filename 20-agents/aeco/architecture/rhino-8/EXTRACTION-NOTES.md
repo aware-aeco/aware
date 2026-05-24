@@ -23,13 +23,13 @@ github raw `gh-pages` path is the only authoritative source for Rhino 8 docs.
 
 ```bash
 echo '{"op":"coverage-extract","args":{"vendor":"rhino","version":"8.0","out_path":"cli-sidecar/Ingest/Output/rhino-8.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Or with auto-restart wrapper:
 pwsh -File cli-sidecar/Ingest/Output/extract-rhino-with-restart.ps1 -Version 8.0
 
 # Regenerate the agent:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate rhino 8.0 \
   --from-ir cli-sidecar/Ingest/Output/rhino-8.0.ir.json \
   --vendor mcneel --vertical architecture

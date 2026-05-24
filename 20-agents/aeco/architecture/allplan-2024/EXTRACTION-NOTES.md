@@ -40,10 +40,10 @@ PythonParts API is the canonical in-app scripting interface.
 ```bash
 # From repo root — run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"allplan","version":"2024.0","out_path":"cli-sidecar/Ingest/Output/allplan-2024.0.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Regenerate the agent from the IR:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate allplan 2024.0 \
   --from-ir cli-sidecar/Ingest/Output/allplan-2024.0.ir.json \
   --vendor nemetschek --vertical architecture

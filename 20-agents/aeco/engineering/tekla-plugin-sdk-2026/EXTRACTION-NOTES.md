@@ -18,7 +18,7 @@ This agent is the **reflected reference** for the Tekla plugin-authoring SDK NuG
 #    lists private ScaffPlan feeds that 401).
 dotnet build cli-sidecar -c Release --source "https://api.nuget.org/v3/index.json" --ignore-failed-sources -p:NuGetAudit=false
 
-SIDE=cli-sidecar/bin/Release/net9.0/aware-sidecar.exe
+SIDE=cli-sidecar/bin/Release/net10.0/aware-sidecar.exe
 
 # 2. Extract → IR (fetches both NuGets from nuget.org, reflects, merges).
 echo '{"op":"coverage-extract","args":{"vendor":"tekla-plugin-sdk","version":"2026.0","out_path":"cli-sidecar/Ingest/Output/tekla-plugin-sdk-2026.0.ir.json"}}' | "$SIDE"

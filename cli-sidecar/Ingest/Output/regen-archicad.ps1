@@ -14,7 +14,7 @@ $RepoRoot = "C:\Users\bimst\source\repos\aware"
 $VMajor = $Version.Split('.')[0]
 $Ir = Join-Path $RepoRoot "cli-sidecar\Ingest\Output\archicad-$Version.ir.json"
 $Aware = Join-Path $RepoRoot "cli\target\release\aware.exe"
-$Sidecar = Join-Path $RepoRoot "cli-sidecar\bin\Release\net9.0\win-x64\publish\aware-sidecar.exe"
+$Sidecar = Join-Path $RepoRoot "cli-sidecar\bin\Release\net10.0\win-x64\publish\aware-sidecar.exe"
 
 $env:AWARE_SIDECAR = $Sidecar
 

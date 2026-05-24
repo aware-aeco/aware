@@ -20,10 +20,10 @@ Bluebeam does NOT version the Studio API surface beyond the `/publicapi/v1/` pat
 ```bash
 # From repo root — run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"bluebeam","version":"v1","out_path":"cli-sidecar/Ingest/Output/bluebeam-v1.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Regenerate the agent from the IR:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate bluebeam v1 \
   --from-ir cli-sidecar/Ingest/Output/bluebeam-v1.ir.json \
   --vendor bluebeam --vertical architecture

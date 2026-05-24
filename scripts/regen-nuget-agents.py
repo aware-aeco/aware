@@ -26,7 +26,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 AWARE_EXE = REPO_ROOT / "cli" / "target" / "release" / "aware.exe"
-SIDECAR_EXE = REPO_ROOT / "cli-sidecar" / "bin" / "Debug" / "net9.0" / "aware-sidecar.exe"
+SIDECAR_EXE = REPO_ROOT / "cli-sidecar" / "bin" / "Debug" / "net10.0" / "aware-sidecar.exe"
 
 # (agent-id, nuget-pkg@version, repo-path)
 AGENTS = [

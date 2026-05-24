@@ -34,7 +34,7 @@ jobs:
 
       - uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '10.0.x'
 
       - name: Install clang on Linux
         if: matrix.os == 'ubuntu-latest'
@@ -48,8 +48,8 @@ jobs:
         shell: pwsh
         run: |
           dotnet build cli-sidecar/Tests/FixtureAssembly
-          $bin = "cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
-          $fixture = "cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
+          $bin = "cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
+          $fixture = "cli-sidecar/Tests/FixtureAssembly/bin/Debug/net10.0/FixtureAssembly.dll"
           $req = ('{{"op":"reflect-dlls","args":{{"globs":["{0}"],"agent_id":"ci-smoke"}}}}' -f $fixture.Replace("\","/"))
           $resp = $req | & $bin
           if (-not $resp.Contains('"ok":true')) {
@@ -63,9 +63,9 @@ jobs:
         shell: bash
         run: |
           dotnet build cli-sidecar/Tests/FixtureAssembly
-          bin="cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
+          bin="cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
           chmod +x "$bin"
-          fixture="cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
+          fixture="cli-sidecar/Tests/FixtureAssembly/bin/Debug/net10.0/FixtureAssembly.dll"
           req='{"op":"reflect-dlls","args":{"globs":["'"$fixture"'"],"agent_id":"ci-smoke"}}'
           resp=$(echo "$req" | "$bin")
           if [[ ! "$resp" == *'"ok":true'* ]]; then
@@ -79,9 +79,9 @@ jobs:
         shell: bash
         run: |
           dotnet build cli-sidecar/Tests/FixtureAssembly
-          bin="cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
+          bin="cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/${{ matrix.binary }}"
           chmod +x "$bin"
-          fixture="cli-sidecar/Tests/FixtureAssembly/bin/Debug/net9.0/FixtureAssembly.dll"
+          fixture="cli-sidecar/Tests/FixtureAssembly/bin/Debug/net10.0/FixtureAssembly.dll"
           req='{"op":"reflect-dlls","args":{"globs":["'"$fixture"'"],"agent_id":"ci-smoke"}}'
           resp=$(echo "$req" | "$bin")
           if [[ ! "$resp" == *'"ok":true'* ]]; then
@@ -94,7 +94,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.artifact }}
-          path: cli-sidecar/bin/Release/net9.0/${{ matrix.rid }}/publish/${{ matrix.binary }}
+          path: cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/${{ matrix.binary }}
 
 # All three platforms (Windows + Linux + macOS arm64) build in CI.
 # Intel macOS (osx-x64) and ARM Linux (linux-arm64) are not in scope.

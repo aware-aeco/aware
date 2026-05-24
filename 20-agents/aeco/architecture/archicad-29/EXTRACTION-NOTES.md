@@ -49,10 +49,10 @@ mapping). The v28 and v29 IRs differ only by:
 
 ```powershell
 echo '{"op":"coverage-extract","args":{"vendor":"archicad","version":"29.0","out_path":"cli-sidecar/Ingest/Output/archicad-29.0.ir.json"}}' `
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Then regenerate the agent:
-$env:AWARE_SIDECAR = "C:\Users\bimst\source\repos\aware\cli-sidecar\bin\Release\net9.0\win-x64\publish\aware-sidecar.exe"
+$env:AWARE_SIDECAR = "C:\Users\bimst\source\repos\aware\cli-sidecar\bin\Release\net10.0\win-x64\publish\aware-sidecar.exe"
 & "C:\Users\bimst\source\repos\aware\cli\target\release\aware.exe" coverage generate archicad 29.0 `
   --from-ir cli-sidecar/Ingest/Output/archicad-29.0.ir.json `
   --vendor graphisoft --vertical architecture

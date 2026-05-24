@@ -24,10 +24,10 @@ If Solibri later publishes a 26.4.x update that changes the YAML, re-running the
 ```bash
 # From repo root — run the sidecar via stdin envelope.
 echo '{"op":"coverage-extract","args":{"vendor":"solibri","version":"26.4.1","out_path":"cli-sidecar/Ingest/Output/solibri-26.4.1.ir.json"}}' \
-  | cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe
+  | cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe
 
 # Regenerate the agent from the IR:
-AWARE_SIDECAR=cli-sidecar/bin/Release/net9.0/win-x64/publish/aware-sidecar.exe \
+AWARE_SIDECAR=cli-sidecar/bin/Release/net10.0/win-x64/publish/aware-sidecar.exe \
   cli/target/release/aware.exe coverage generate solibri 26.4.1 \
   --from-ir cli-sidecar/Ingest/Output/solibri-26.4.1.ir.json \
   --vendor solibri --vertical architecture
