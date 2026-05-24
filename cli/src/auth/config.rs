@@ -289,6 +289,19 @@ impl IntegrationConfig {
             .and_then(|p| p.device_authorization_url.as_deref())
     }
 
+    /// BYO loopback `redirect_uri` override for the PKCE flow, if any. (#159)
+    pub fn redirect_uri_override(&self) -> Option<&str> {
+        self.overlay
+            .profile
+            .as_ref()
+            .and_then(|p| p.redirect_uri.as_deref())
+    }
+
+    /// BYO loopback listener port override, if any. (#159)
+    pub fn callback_port(&self) -> Option<u16> {
+        self.overlay.profile.as_ref().and_then(|p| p.callback_port)
+    }
+
     /// Resolved scope set: a profile's `scopes` list fully REPLACES the bundled
     /// defaults; otherwise the bundled defaults are used.
     pub fn scopes(&self) -> Vec<String> {
@@ -321,6 +334,30 @@ impl IntegrationConfig {
 
     pub fn app_source_label(&self) -> &'static str {
         self.overlay.source.label()
+    }
+
+    /// Interactive auth flows that work with this integration's *bundled* app,
+    /// most-recommended first. Lets a UI route `aware connect` without hardcoding
+    /// per-provider knowledge (#158). A BYO app may support more, but this reflects
+    /// the zero-setup bundled path:
+    /// - microsoft-365: `device-code` (the bundled public client has no loopback
+    ///   redirect, so `--oauth` returns AADSTS50011).
+    /// - google-workspace: `oauth` PKCE-loopback (bundled Desktop client can't do
+    ///   device-code — #151).
+    /// - trimble-connect: `oauth` PKCE-loopback (device-code unsupported); the
+    ///   bundled client is a placeholder, so this needs a BYO app today (#153).
+    pub fn supported_flows(&self) -> &'static [&'static str] {
+        match self.id.as_str() {
+            "microsoft-365" => &["device-code"],
+            "google-workspace" => &["oauth"],
+            "trimble-connect" => &["oauth"],
+            _ => &[],
+        }
+    }
+
+    /// The recommended interactive flow (first of [`supported_flows`]), if any.
+    pub fn recommended_flow(&self) -> Option<&'static str> {
+        self.supported_flows().first().copied()
     }
 
     /// Whether the resolved client id is still a bundled placeholder — i.e. no
@@ -407,6 +444,44 @@ mod tests {
         let m = for_integration("microsoft-365").unwrap();
         assert!(m.client_secret_env.is_none());
         assert!(m.client_secret().is_none());
+    }
+
+    #[test]
+    fn supported_flows_per_integration() {
+        assert_eq!(
+            for_integration("microsoft-365").unwrap().supported_flows(),
+            &["device-code"]
+        );
+        assert_eq!(
+            for_integration("google-workspace")
+                .unwrap()
+                .recommended_flow(),
+            Some("oauth")
+        );
+        assert_eq!(
+            for_integration("trimble-connect")
+                .unwrap()
+                .recommended_flow(),
+            Some("oauth")
+        );
+    }
+
+    #[test]
+    fn profile_redirect_and_callback_port_overrides_read() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("trimble-connect.yaml"),
+            "client_id: x\nredirect_uri: http://localhost\ncallback_port: 80\n",
+        )
+        .unwrap();
+        let cfg = for_integration("trimble-connect")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        assert_eq!(cfg.redirect_uri_override(), Some("http://localhost"));
+        assert_eq!(cfg.callback_port(), Some(80));
     }
 
     #[test]
