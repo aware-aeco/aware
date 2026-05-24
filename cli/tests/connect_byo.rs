@@ -29,6 +29,10 @@ fn google_device_code_reports_unsupported_not_raw_401() {
         .unwrap()
         .env("AWARE_HOME", tmp.path())
         .env("AWARE_DISABLE_KEYRING", "1")
+        // Exercise the bundled default client — clear any BYO env overrides so the
+        // test doesn't turn Google into a (device-capable) BYO client and hit the net.
+        .env_remove("AWARE_OAUTH_GOOGLE_CLIENT_ID")
+        .env_remove("AWARE_OAUTH_GOOGLE_CLIENT_SECRET")
         .args(["--json", "connect", "google-workspace", "--device-code"])
         .assert()
         .success()

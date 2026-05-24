@@ -412,11 +412,14 @@ mod tests {
     #[test]
     fn trimble_client_is_placeholder_until_registered() {
         // Trimble has no bundled app yet (#153); M365/Google got real apps in #145.
-        assert!(
-            for_integration("trimble-connect")
-                .unwrap()
-                .is_placeholder_client()
-        );
+        // Guard against a BYO env override that would resolve a real client_id.
+        if std::env::var("AWARE_OAUTH_TRIMBLE_CLIENT_ID").is_err() {
+            assert!(
+                for_integration("trimble-connect")
+                    .unwrap()
+                    .is_placeholder_client()
+            );
+        }
         assert!(
             !for_integration("microsoft-365")
                 .unwrap()
