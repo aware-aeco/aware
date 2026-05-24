@@ -183,6 +183,12 @@ internal static class Program
                             // at pythonparts.allplan.com. mkdocs-material layout, single-pass.
                             "allplan" => Ingest.Extractors.Allplan.Extractor.Extract(argsObj.Version, argsObj.OutPath)
                                 .GetAwaiter().GetResult(),
+                            // Tekla plugin-authoring SDK extractor — reflects the
+                            // Tekla.Structures.Plugins.DirectManipulation (+ XML doc) and
+                            // TeklaFusion (signatures-only) NuGets, which are absent from the
+                            // scraped Open API reference tree. Source.kind = "nuget".
+                            "tekla-plugin-sdk" => Ingest.Extractors.TeklaSdk.Extractor.Extract(argsObj.Version, argsObj.OutPath)
+                                .GetAwaiter().GetResult(),
                             _ => throw new NotSupportedException(
                                 $"coverage-extract: vendor '{argsObj.Vendor}' has no extractor yet")
                         };
