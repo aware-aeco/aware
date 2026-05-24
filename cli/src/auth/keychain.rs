@@ -177,18 +177,22 @@ pub fn store_app_secret(
 }
 
 /// Load a BYO client secret: keychain first, then file fallback. `Ok(None)` when unset.
+///
+/// A BYO app secret is *optional* config. If the OS keychain backend is
+/// unavailable (e.g. headless Linux / CI with no libsecret/dbus), we treat that
+/// as "not configured" and fall through to the credentials file — never an error.
+/// Otherwise `with_profile` would abort every `aware connect` flow (even
+/// `--from-file`, which needs no OAuth) on keychain-less machines.
 pub fn load_app_secret(
     integration: &str,
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<String>, AwareError> {
     let account = app_account_name(integration, alias);
-    let entry = keyring::Entry::new(SERVICE_NAME, &account)
-        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
-    match entry.get_password() {
+    match keyring::Entry::new(SERVICE_NAME, &account).and_then(|e| e.get_password()) {
         Ok(s) => Ok(Some(s)),
-        Err(keyring::Error::NoEntry) => read_app_secret_file(aware_home, &account),
-        Err(e) => Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
+        // NoEntry or any keyring-unavailable error → check the file fallback.
+        Err(_) => read_app_secret_file(aware_home, &account),
     }
 }
 
@@ -414,6 +418,19 @@ mod tests {
                 .unwrap()
                 .is_none()
         );
+    }
+
+    #[test]
+    fn load_app_secret_uses_file_fallback_without_keychain_entry() {
+        // Synthetic integration name → no keychain entry exists, so load_app_secret
+        // must resolve via the file fallback (and never error if the keychain
+        // backend is unavailable). Covers the headless/CI regression Codex flagged.
+        let tmp = tempfile::tempdir().unwrap();
+        let integration = "test-byo-fallback-xyz";
+        let account = app_account_name(integration, None);
+        write_app_secret_file(tmp.path(), &account, "file-secret").unwrap();
+        let got = load_app_secret(integration, None, tmp.path()).unwrap();
+        assert_eq!(got.as_deref(), Some("file-secret"));
     }
 
     #[test]
