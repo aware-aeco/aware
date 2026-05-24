@@ -1,0 +1,25 @@
+{
+  "name": "IsolatedContent",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "IsolatedContent class in Fusion.UI.",
+  "base": "System.Windows.Controls.ContentControl",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.IsolatedContent",
+  "constructors": [
+    {
+      "name": "IsolatedContent()",
+      "signature": "IsolatedContent()",
+      "summary": "Constructs a new IsolatedContent.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.IsolatedContent.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

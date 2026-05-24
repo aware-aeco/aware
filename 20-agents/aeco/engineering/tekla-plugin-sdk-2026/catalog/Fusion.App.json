@@ -1,0 +1,628 @@
+{
+  "name": "App",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "App class in Fusion.",
+  "base": "System.Windows.Application",
+  "interfaces": [
+    "System.ComponentModel.INotifyPropertyChanged"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.App",
+  "constructors": [
+    {
+      "name": "App()",
+      "signature": "App()",
+      "summary": "Constructs a new App.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.%23ctor"
+    },
+    {
+      "name": "App(Fusion.App.Feature[])",
+      "signature": "App(Fusion.App.Feature[] features)",
+      "summary": "Constructs a new App.",
+      "params": [
+        {
+          "name": "features",
+          "type": "Fusion.App.Feature[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.%23ctor%28Fusion.App.Feature%5B%5D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OpenFile",
+      "signature": "System.IO.Stream OpenFile(string path)",
+      "summary": "OpenFile method of App.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IO.Stream",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.OpenFile%28System.String%29"
+    },
+    {
+      "name": "Idle",
+      "signature": "System.Threading.Tasks.Task Idle()",
+      "summary": "Idle method of App.",
+      "params": [],
+      "returns": {
+        "type": "System.Threading.Tasks.Task",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Idle"
+    },
+    {
+      "name": "CreateViewInPopup",
+      "signature": "System.Windows.Controls.Primitives.Popup CreateViewInPopup(string viewName, object parameter)",
+      "summary": "CreateViewInPopup method of App.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Controls.Primitives.Popup",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.CreateViewInPopup%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "CreateView",
+      "signature": "System.Windows.FrameworkElement CreateView(string viewName, object parameter)",
+      "summary": "CreateView method of App.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.FrameworkElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.CreateView%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "CreateViewInWindow",
+      "signature": "System.Windows.Window CreateViewInWindow(string viewName, object parameter)",
+      "summary": "CreateViewInWindow method of App.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Window",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.CreateViewInWindow%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "Run",
+      "signature": "int Run()",
+      "summary": "Run method of App.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Run"
+    },
+    {
+      "name": "BlockingOperation",
+      "signature": "static System.IDisposable BlockingOperation()",
+      "summary": "BlockingOperation method of App.",
+      "params": [],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.BlockingOperation"
+    },
+    {
+      "name": "Busy",
+      "signature": "static System.IDisposable Busy(System.Windows.Input.Cursor busyCursor = null)",
+      "summary": "Busy method of App.",
+      "params": [
+        {
+          "name": "busyCursor",
+          "type": "System.Windows.Input.Cursor",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Busy%28System.Windows.Input.Cursor%29"
+    },
+    {
+      "name": "NotBusy",
+      "signature": "static System.IDisposable NotBusy()",
+      "summary": "NotBusy method of App.",
+      "params": [],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.NotBusy"
+    },
+    {
+      "name": "Invoke",
+      "signature": "static System.Threading.Tasks.Task Invoke(string publishedMethodSignature, object[] arguments)",
+      "summary": "Invoke method of App.",
+      "params": [
+        {
+          "name": "publishedMethodSignature",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Invoke%28System.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "InvokeDomainLogic",
+      "signature": "static System.Threading.Tasks.Task InvokeDomainLogic(System.Action action)",
+      "summary": "InvokeDomainLogic method of App.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.InvokeDomainLogic%28System.Action%29"
+    },
+    {
+      "name": "Invoke",
+      "signature": "static System.Threading.Tasks.Task\u003CT\u003E Invoke\u003CT\u003E(string publishedMethodSignature, object[] arguments)",
+      "summary": "Invoke method of App.",
+      "params": [
+        {
+          "name": "publishedMethodSignature",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "arguments",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Invoke%60%601%28System.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "InvokeDomainLogic",
+      "signature": "static System.Threading.Tasks.Task\u003CT\u003E InvokeDomainLogic\u003CT\u003E(System.Func\u003CT\u003E action)",
+      "summary": "InvokeDomainLogic method of App.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Func\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.InvokeDomainLogic%60%601%28System.Func%7B%60%600%7D%29"
+    },
+    {
+      "name": "InvokeAsync",
+      "signature": "static void InvokeAsync(System.Action action)",
+      "summary": "InvokeAsync method of App.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.InvokeAsync%28System.Action%29"
+    },
+    {
+      "name": "Start",
+      "signature": "static void Start(Fusion.App application)",
+      "summary": "Start method of App.",
+      "params": [
+        {
+          "name": "application",
+          "type": "Fusion.App",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Start%28Fusion.App%29"
+    },
+    {
+      "name": "Start",
+      "signature": "static void Start(Fusion.App application, Fusion.App.SettingsOverrides settingsOverrides)",
+      "summary": "Start method of App.",
+      "params": [
+        {
+          "name": "application",
+          "type": "Fusion.App",
+          "optional": false
+        },
+        {
+          "name": "settingsOverrides",
+          "type": "Fusion.App.SettingsOverrides",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Start%28Fusion.App%2CFusion.App.SettingsOverrides%29"
+    },
+    {
+      "name": "RaisePropertyChanged",
+      "signature": "void RaisePropertyChanged(string propertyName = null)",
+      "summary": "RaisePropertyChanged method of App.",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.RaisePropertyChanged%28System.String%29"
+    },
+    {
+      "name": "RaisePropertyChanged",
+      "signature": "void RaisePropertyChanged(string propertyName1, string propertyName2, string[] propertyNames)",
+      "summary": "RaisePropertyChanged method of App.",
+      "params": [
+        {
+          "name": "propertyName1",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyName2",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyNames",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.RaisePropertyChanged%28System.String%2CSystem.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "Restart",
+      "signature": "void Restart()",
+      "summary": "Restart method of App.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.App.Restart"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Company",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Company property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Company"
+    },
+    {
+      "name": "Current",
+      "type": "Fusion.App",
+      "getter": true,
+      "setter": false,
+      "summary": "Current property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Current"
+    },
+    {
+      "name": "DataFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DataFolder property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.DataFolder"
+    },
+    {
+      "name": "DialogOwner",
+      "type": "System.Windows.Window",
+      "getter": true,
+      "setter": false,
+      "summary": "DialogOwner property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.DialogOwner"
+    },
+    {
+      "name": "Executable",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Executable property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Executable"
+    },
+    {
+      "name": "FeatureFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "FeatureFolder property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.FeatureFolder"
+    },
+    {
+      "name": "Features",
+      "type": "System.Collections.Generic.IEnumerable\u003CFusion.App.Feature\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Features property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Features"
+    },
+    {
+      "name": "Folder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Folder property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Folder"
+    },
+    {
+      "name": "FullScreenMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "FullScreenMode property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.FullScreenMode"
+    },
+    {
+      "name": "Host",
+      "type": "Fusion.IHost",
+      "getter": true,
+      "setter": false,
+      "summary": "Host property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Host"
+    },
+    {
+      "name": "Identifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifier property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Identifier"
+    },
+    {
+      "name": "InstanceIdentifier",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "InstanceIdentifier property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.InstanceIdentifier"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Name property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Name"
+    },
+    {
+      "name": "PublishedViews",
+      "type": "System.Collections.Generic.IEnumerable\u003CFusion.PublishedViewInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "PublishedViews property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.PublishedViews"
+    },
+    {
+      "name": "Recovery",
+      "type": "Fusion.IRecovery",
+      "getter": true,
+      "setter": false,
+      "summary": "Recovery property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Recovery"
+    },
+    {
+      "name": "RecoveryPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "RecoveryPath property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.RecoveryPath"
+    },
+    {
+      "name": "RegistryPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "RegistryPath property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.RegistryPath"
+    },
+    {
+      "name": "Session",
+      "type": "Fusion.ISession",
+      "getter": true,
+      "setter": false,
+      "summary": "Session property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Session"
+    },
+    {
+      "name": "SessionPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "SessionPath property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.SessionPath"
+    },
+    {
+      "name": "Settings",
+      "type": "Fusion.ISettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Settings property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Settings"
+    },
+    {
+      "name": "SettingsPath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "SettingsPath property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.SettingsPath"
+    },
+    {
+      "name": "TabletMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "TabletMode property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.TabletMode"
+    },
+    {
+      "name": "TempFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "TempFolder property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.TempFolder"
+    },
+    {
+      "name": "Version",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Version property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.Version"
+    },
+    {
+      "name": "WindowOwner",
+      "type": "System.Windows.Window",
+      "getter": true,
+      "setter": false,
+      "summary": "WindowOwner property of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.App.WindowOwner"
+    }
+  ],
+  "events": [
+    {
+      "name": "KeyDown",
+      "delegate": "System.Windows.Input.KeyEventHandler",
+      "signature": "event System.Windows.Input.KeyEventHandler KeyDown",
+      "summary": "KeyDown event of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.App.KeyDown",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "KeyUp",
+      "delegate": "System.Windows.Input.KeyEventHandler",
+      "signature": "event System.Windows.Input.KeyEventHandler KeyUp",
+      "summary": "KeyUp event of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.App.KeyUp",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PropertyChanged",
+      "delegate": "System.ComponentModel.PropertyChangedEventHandler",
+      "signature": "event System.ComponentModel.PropertyChangedEventHandler PropertyChanged",
+      "summary": "PropertyChanged event of App.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.App.PropertyChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

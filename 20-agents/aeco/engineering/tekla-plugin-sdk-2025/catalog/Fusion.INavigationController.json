@@ -1,0 +1,64 @@
+{
+  "name": "INavigationController",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "INavigationController interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.INavigationController",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Navigate",
+      "signature": "void Navigate(string viewName, object parameter)",
+      "summary": "Navigate method of INavigationController.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.INavigationController.Navigate%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "NavigateBack",
+      "signature": "void NavigateBack()",
+      "summary": "NavigateBack method of INavigationController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.INavigationController.NavigateBack"
+    },
+    {
+      "name": "NavigateHome",
+      "signature": "void NavigateHome()",
+      "summary": "NavigateHome method of INavigationController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.INavigationController.NavigateHome"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanNavigateBack",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "CanNavigateBack property of INavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.INavigationController.CanNavigateBack"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

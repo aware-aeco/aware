@@ -1,0 +1,55 @@
+{
+  "name": "ConvertStringsNotEqualToBoolean",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertStringsNotEqualToBoolean class in Fusion.UI.",
+  "base": "Fusion.UI.MultiValueConverter\u003Cstring, bool\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertStringsNotEqualToBoolean",
+  "constructors": [
+    {
+      "name": "ConvertStringsNotEqualToBoolean()",
+      "signature": "ConvertStringsNotEqualToBoolean()",
+      "summary": "Constructs a new ConvertStringsNotEqualToBoolean.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertStringsNotEqualToBoolean.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "bool Convert(string[] values, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertStringsNotEqualToBoolean.",
+      "params": [
+        {
+          "name": "values",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertStringsNotEqualToBoolean.Convert%28System.String%5B%5D%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

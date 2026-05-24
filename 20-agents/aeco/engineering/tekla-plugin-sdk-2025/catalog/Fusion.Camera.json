@@ -1,0 +1,234 @@
+{
+  "name": "Camera",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Camera struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Camera\u003E",
+    "System.IEquatable\u003CFusion.Camera\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Camera",
+  "constructors": [
+    {
+      "name": "Camera(Fusion.Float3, Fusion.Float3, Fusion.Angle, Fusion.Angle, Fusion.Angle, float)",
+      "signature": "Camera(Fusion.Float3 position, Fusion.Float3 offset, Fusion.Angle pitch, Fusion.Angle yaw, Fusion.Angle fieldOfView, float scaleFactor)",
+      "summary": "Constructs a new Camera.",
+      "params": [
+        {
+          "name": "position",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "pitch",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "yaw",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "fieldOfView",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "scaleFactor",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.%23ctor%28Fusion.Float3%2CFusion.Float3%2CFusion.Angle%2CFusion.Angle%2CFusion.Angle%2CSystem.Single%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToMatrix",
+      "signature": "Fusion.Float4x4 ToMatrix()",
+      "summary": "ToMatrix method of Camera.",
+      "params": [],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.ToMatrix"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Camera other)",
+      "summary": "Equals method of Camera.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Camera",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.Equals%28Fusion.Camera%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Camera.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Camera other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Camera.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Camera",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.Near%28Fusion.Camera%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Camera.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.GetHashCode"
+    },
+    {
+      "name": "Interpolate",
+      "signature": "static Fusion.Camera Interpolate(Fusion.Camera a, Fusion.Camera b, float t)",
+      "summary": "Interpolate method of Camera.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Camera",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Camera",
+          "optional": false
+        },
+        {
+          "name": "t",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Camera",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.Interpolate%28Fusion.Camera%2CFusion.Camera%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Camera a, Fusion.Camera b)",
+      "summary": "op_Equality method of Camera.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Camera",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Camera",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.op_Equality%28Fusion.Camera%2CFusion.Camera%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Camera a, Fusion.Camera b)",
+      "summary": "op_Inequality method of Camera.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Camera",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Camera",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Camera.op_Inequality%28Fusion.Camera%2CFusion.Camera%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsPerspective",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsPerspective property of Camera.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Camera.IsPerspective"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

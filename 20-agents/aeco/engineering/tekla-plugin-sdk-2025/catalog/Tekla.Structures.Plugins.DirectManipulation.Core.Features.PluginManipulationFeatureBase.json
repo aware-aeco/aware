@@ -1,0 +1,14 @@
+{
+  "name": "PluginManipulationFeatureBase",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core.Features",
+  "kind": "class",
+  "summary": "The PluginManipulationFeatureBase class provides the base class for manipulation features for plugins.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Internal.Features.ComponentManipulationFeatureBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.Features.PluginManipulationFeatureBase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

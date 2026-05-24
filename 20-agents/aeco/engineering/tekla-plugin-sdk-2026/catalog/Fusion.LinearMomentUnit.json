@@ -1,0 +1,42 @@
+{
+  "name": "LinearMomentUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "LinearMomentUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.LinearMomentUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KilogramMeterPerMeter",
+      "value": 0
+    },
+    {
+      "name": "TonneMeterPerMeter",
+      "value": 1
+    },
+    {
+      "name": "NewtonMeterPerMeter",
+      "value": 2
+    },
+    {
+      "name": "DecaNewtonMeterPerMeter",
+      "value": 3
+    },
+    {
+      "name": "KiloNewtonMeterPerMeter",
+      "value": 4
+    },
+    {
+      "name": "PoundForceFootPerFoot",
+      "value": 5
+    },
+    {
+      "name": "KiloPoundForceFootPerFoot",
+      "value": 6
+    }
+  ]
+}

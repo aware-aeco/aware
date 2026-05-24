@@ -1,0 +1,41 @@
+{
+  "name": "AppExtension",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "AppExtension class in Fusion.UI.",
+  "base": "System.Windows.Data.Binding",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.AppExtension",
+  "constructors": [
+    {
+      "name": "AppExtension()",
+      "signature": "AppExtension()",
+      "summary": "Constructs a new AppExtension.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AppExtension.%23ctor"
+    },
+    {
+      "name": "AppExtension(string)",
+      "signature": "AppExtension(string path)",
+      "summary": "Constructs a new AppExtension.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AppExtension.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

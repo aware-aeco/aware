@@ -1,0 +1,30 @@
+{
+  "name": "EntityState",
+  "namespace": "Fusion.Models",
+  "kind": "enum",
+  "summary": "EntityState enum in Fusion.Models.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.EntityState",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0
+    },
+    {
+      "name": "Selected",
+      "value": 1
+    },
+    {
+      "name": "Grayed",
+      "value": 2
+    },
+    {
+      "name": "Ghosted",
+      "value": 3
+    }
+  ]
+}

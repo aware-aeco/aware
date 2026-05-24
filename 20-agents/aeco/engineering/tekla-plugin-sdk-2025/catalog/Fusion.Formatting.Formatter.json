@@ -1,0 +1,52 @@
+{
+  "name": "Formatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "Formatter class in Fusion.Formatting.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.Formatter",
+  "constructors": [
+    {
+      "name": "Formatter(string, System.IFormatProvider)",
+      "signature": "Formatter(string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new Formatter.",
+      "params": [
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.Formatter.%23ctor%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "FormatProvider",
+      "type": "System.IFormatProvider",
+      "getter": true,
+      "setter": false,
+      "summary": "FormatProvider property of Formatter.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.Formatter.FormatProvider"
+    },
+    {
+      "name": "FormatString",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "FormatString property of Formatter.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.Formatter.FormatString"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

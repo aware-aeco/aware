@@ -1,0 +1,14 @@
+{
+  "name": "CustomPartPluginManipulationFeatureBase",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core.Features",
+  "kind": "class",
+  "summary": "The CustomPartManipulationFeatureBase class provides the base class for manipulation features for plugins.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Internal.Features.CustomPartManipulationFeatureBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.Features.CustomPartPluginManipulationFeatureBase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

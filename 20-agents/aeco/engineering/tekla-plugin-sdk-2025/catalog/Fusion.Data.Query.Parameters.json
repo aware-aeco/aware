@@ -1,0 +1,219 @@
+{
+  "name": "Parameters",
+  "namespace": "Fusion.Data.Query",
+  "kind": "class",
+  "summary": "Parameters class in Fusion.Data.Query.",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CFusion.Data.Query.Parameter\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Data.Query.Parameters",
+  "constructors": [
+    {
+      "name": "Parameters()",
+      "signature": "Parameters()",
+      "summary": "Constructs a new Parameters.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CFusion.Data.Query.Parameter\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of Parameters.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CFusion.Data.Query.Parameter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.GetEnumerator"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.DateTime value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.DateTime",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.DateTime%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.TimeSpan value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.TimeSpan",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.TimeSpan%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, byte[] value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "byte[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.Byte%5B%5D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, double value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, int value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, long value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.Int64%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, string value)",
+      "summary": "Add method of Parameters.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Add%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "Bind",
+      "signature": "void Bind(Fusion.Data.Sqlite.Statement statement, int baseIndex = 0)",
+      "summary": "Bind method of Parameters.",
+      "params": [
+        {
+          "name": "statement",
+          "type": "Fusion.Data.Sqlite.Statement",
+          "optional": false
+        },
+        {
+          "name": "baseIndex",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Parameters.Bind%28Fusion.Data.Sqlite.Statement%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Count property of Parameters.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Data.Query.Parameters.Count"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,144 @@
+{
+  "name": "TimeSpanFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "TimeSpanFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.Formatter\u003CSystem.TimeSpan\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.TimeSpanFormatter",
+  "constructors": [
+    {
+      "name": "TimeSpanFormatter()",
+      "signature": "TimeSpanFormatter()",
+      "summary": "Constructs a new TimeSpanFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.TimeSpanFormatter.%23ctor"
+    },
+    {
+      "name": "TimeSpanFormatter(System.Globalization.TimeSpanStyles, string, System.IFormatProvider)",
+      "signature": "TimeSpanFormatter(System.Globalization.TimeSpanStyles timeSpanStyle, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new TimeSpanFormatter.",
+      "params": [
+        {
+          "name": "timeSpanStyle",
+          "type": "System.Globalization.TimeSpanStyles",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.TimeSpanFormatter.%23ctor%28System.Globalization.TimeSpanStyles%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, out System.TimeSpan value)",
+      "summary": "TryParse method of TimeSpanFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.TimeSpan",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.TimeSpanFormatter.TryParse%28System.String%2CSystem.TimeSpan%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.TimeSpanFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of TimeSpanFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.TimeSpanFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.TimeSpanFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.TimeSpanFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of TimeSpanFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.TimeSpanFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.TimeSpanFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.TimeSpanFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(System.TimeSpan value)",
+      "summary": "ToString method of TimeSpanFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.TimeSpan",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.TimeSpanFormatter.ToString%28System.TimeSpan%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "TimeSpanStyle",
+      "type": "System.Globalization.TimeSpanStyles",
+      "getter": true,
+      "setter": false,
+      "summary": "TimeSpanStyle property of TimeSpanFormatter.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.TimeSpanFormatter.TimeSpanStyle"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

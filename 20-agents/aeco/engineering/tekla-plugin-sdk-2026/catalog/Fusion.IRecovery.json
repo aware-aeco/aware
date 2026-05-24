@@ -1,0 +1,24 @@
+{
+  "name": "IRecovery",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IRecovery interface in Fusion.",
+  "interfaces": [
+    "Fusion.IKeyValueStore"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IRecovery",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Recover",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Recover property of IRecovery.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IRecovery.Recover"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

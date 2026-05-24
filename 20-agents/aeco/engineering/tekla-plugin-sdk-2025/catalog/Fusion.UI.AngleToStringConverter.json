@@ -1,0 +1,95 @@
+{
+  "name": "AngleToStringConverter",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "AngleToStringConverter class in Fusion.UI.",
+  "interfaces": [
+    "System.Windows.Data.IValueConverter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.AngleToStringConverter",
+  "constructors": [
+    {
+      "name": "AngleToStringConverter()",
+      "signature": "AngleToStringConverter()",
+      "summary": "Constructs a new AngleToStringConverter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AngleToStringConverter.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of AngleToStringConverter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "targetType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AngleToStringConverter.Convert%28System.Object%2CSystem.Type%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "ConvertBack",
+      "signature": "object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "ConvertBack method of AngleToStringConverter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "targetType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AngleToStringConverter.ConvertBack%28System.Object%2CSystem.Type%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

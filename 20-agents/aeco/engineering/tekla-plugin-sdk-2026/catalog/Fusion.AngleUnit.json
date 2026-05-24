@@ -1,0 +1,26 @@
+{
+  "name": "AngleUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "AngleUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.AngleUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Degrees",
+      "value": 1
+    },
+    {
+      "name": "Radians",
+      "value": 2
+    },
+    {
+      "name": "DegMinSec",
+      "value": 3
+    }
+  ]
+}

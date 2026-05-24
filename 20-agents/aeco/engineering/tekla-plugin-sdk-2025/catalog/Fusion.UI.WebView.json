@@ -1,0 +1,137 @@
+{
+  "name": "WebView",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "WebView class in Fusion.UI.",
+  "base": "System.Windows.FrameworkElement",
+  "interfaces": [
+    "Fusion.IWebViewController"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.WebView",
+  "constructors": [
+    {
+      "name": "WebView()",
+      "signature": "WebView()",
+      "summary": "Constructs a new WebView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Evaluate",
+      "signature": "void Evaluate(string script)",
+      "summary": "Evaluate method of WebView.",
+      "params": [
+        {
+          "name": "script",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.Evaluate%28System.String%29"
+    },
+    {
+      "name": "GoBack",
+      "signature": "void GoBack()",
+      "summary": "GoBack method of WebView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.GoBack"
+    },
+    {
+      "name": "GoForward",
+      "signature": "void GoForward()",
+      "summary": "GoForward method of WebView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.GoForward"
+    },
+    {
+      "name": "LoadFile",
+      "signature": "void LoadFile(string path)",
+      "summary": "LoadFile method of WebView.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.LoadFile%28System.String%29"
+    },
+    {
+      "name": "LoadHtml",
+      "signature": "void LoadHtml(string html)",
+      "summary": "LoadHtml method of WebView.",
+      "params": [
+        {
+          "name": "html",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.LoadHtml%28System.String%29"
+    },
+    {
+      "name": "Navigate",
+      "signature": "void Navigate(string uri)",
+      "summary": "Navigate method of WebView.",
+      "params": [
+        {
+          "name": "uri",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.WebView.Navigate%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanGoBack",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "CanGoBack property of WebView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.WebView.CanGoBack"
+    },
+    {
+      "name": "CanGoForward",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "CanGoForward property of WebView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.WebView.CanGoForward"
+    },
+    {
+      "name": "Source",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Source property of WebView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.WebView.Source"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,55 @@
+{
+  "name": "ConvertColorToSolidColorBrush",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertColorToSolidColorBrush class in Fusion.UI.",
+  "base": "Fusion.UI.ValueConverter\u003CSystem.Windows.Media.Color?, System.Windows.Media.SolidColorBrush\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertColorToSolidColorBrush",
+  "constructors": [
+    {
+      "name": "ConvertColorToSolidColorBrush()",
+      "signature": "ConvertColorToSolidColorBrush()",
+      "summary": "Constructs a new ConvertColorToSolidColorBrush.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertColorToSolidColorBrush.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "System.Windows.Media.SolidColorBrush Convert(System.Windows.Media.Color? value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertColorToSolidColorBrush.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Windows.Media.Color?",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Media.SolidColorBrush",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertColorToSolidColorBrush.Convert%28System.Nullable%7BSystem.Windows.Media.Color%7D%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,128 @@
+{
+  "name": "NavigationController",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "NavigationController class in Fusion.UI.",
+  "base": "System.Windows.Controls.ContentControl",
+  "interfaces": [
+    "Fusion.INavigationController"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.NavigationController",
+  "constructors": [
+    {
+      "name": "NavigationController()",
+      "signature": "NavigationController()",
+      "summary": "Constructs a new NavigationController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.NavigationController.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Navigate",
+      "signature": "void Navigate(string viewName, object parameter)",
+      "summary": "Navigate method of NavigationController.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.NavigationController.Navigate%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "NavigateBack",
+      "signature": "void NavigateBack()",
+      "summary": "NavigateBack method of NavigationController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.NavigationController.NavigateBack"
+    },
+    {
+      "name": "NavigateHome",
+      "signature": "void NavigateHome()",
+      "summary": "NavigateHome method of NavigationController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.NavigationController.NavigateHome"
+    },
+    {
+      "name": "OnApplyTemplate",
+      "signature": "void OnApplyTemplate()",
+      "summary": "OnApplyTemplate method of NavigationController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.NavigationController.OnApplyTemplate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CanNavigateBack",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "CanNavigateBack property of NavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationController.CanNavigateBack"
+    },
+    {
+      "name": "CurrentPage",
+      "type": "Fusion.UI.NavigationPage",
+      "getter": true,
+      "setter": false,
+      "summary": "CurrentPage property of NavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationController.CurrentPage"
+    },
+    {
+      "name": "HomeViewName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "HomeViewName property of NavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationController.HomeViewName"
+    },
+    {
+      "name": "HomeViewParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "HomeViewParameter property of NavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationController.HomeViewParameter"
+    },
+    {
+      "name": "NextPage",
+      "type": "Fusion.UI.NavigationPage",
+      "getter": true,
+      "setter": false,
+      "summary": "NextPage property of NavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationController.NextPage"
+    },
+    {
+      "name": "SlideDirection",
+      "type": "Fusion.UI.NavigationSlideDirection",
+      "getter": true,
+      "setter": false,
+      "summary": "SlideDirection property of NavigationController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationController.SlideDirection"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

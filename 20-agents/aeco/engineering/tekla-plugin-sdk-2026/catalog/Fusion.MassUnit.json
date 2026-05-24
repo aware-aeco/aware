@@ -1,0 +1,42 @@
+{
+  "name": "MassUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "MassUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.MassUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Kilogram",
+      "value": 0
+    },
+    {
+      "name": "Tonne",
+      "value": 1
+    },
+    {
+      "name": "Pound",
+      "value": 2
+    },
+    {
+      "name": "ShortTon",
+      "value": 3
+    },
+    {
+      "name": "Ounce",
+      "value": 4
+    },
+    {
+      "name": "Milligram",
+      "value": 5
+    },
+    {
+      "name": "Gram",
+      "value": 6
+    }
+  ]
+}

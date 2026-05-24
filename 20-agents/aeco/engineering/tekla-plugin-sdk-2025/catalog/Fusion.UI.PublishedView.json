@@ -1,0 +1,69 @@
+{
+  "name": "PublishedView",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "PublishedView class in Fusion.UI.",
+  "base": "System.Windows.Controls.Control",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.PublishedView",
+  "constructors": [
+    {
+      "name": "PublishedView()",
+      "signature": "PublishedView()",
+      "summary": "Constructs a new PublishedView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.PublishedView.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnApplyTemplate",
+      "signature": "void OnApplyTemplate()",
+      "summary": "OnApplyTemplate method of PublishedView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.PublishedView.OnApplyTemplate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultContent",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultContent property of PublishedView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.PublishedView.DefaultContent"
+    },
+    {
+      "name": "DefaultViewParameter",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "DefaultViewParameter property of PublishedView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.PublishedView.DefaultViewParameter"
+    },
+    {
+      "name": "ViewName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ViewName property of PublishedView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.PublishedView.ViewName"
+    },
+    {
+      "name": "ViewParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "ViewParameter property of PublishedView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.PublishedView.ViewParameter"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

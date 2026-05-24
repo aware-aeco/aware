@@ -1,0 +1,142 @@
+{
+  "name": "PublishedViewInfo",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "PublishedViewInfo class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PublishedViewInfo",
+  "constructors": [
+    {
+      "name": "PublishedViewInfo(System.Func\u003Cobject, Fusion.ViewModel\u003E, Fusion.PublishedViewAttribute, Fusion.PublishedViewMetadataAttribute[])",
+      "signature": "PublishedViewInfo(System.Func\u003Cobject, Fusion.ViewModel\u003E factoryMethod, Fusion.PublishedViewAttribute attribute, Fusion.PublishedViewMetadataAttribute[] metadataAttributes = null)",
+      "summary": "Constructs a new PublishedViewInfo.",
+      "params": [
+        {
+          "name": "factoryMethod",
+          "type": "System.Func\u003Cobject, Fusion.ViewModel\u003E",
+          "optional": false
+        },
+        {
+          "name": "attribute",
+          "type": "Fusion.PublishedViewAttribute",
+          "optional": false
+        },
+        {
+          "name": "metadataAttributes",
+          "type": "Fusion.PublishedViewMetadataAttribute[]",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedViewInfo.%23ctor%28System.Func%7BSystem.Object%2CFusion.ViewModel%7D%2CFusion.PublishedViewAttribute%2CFusion.PublishedViewMetadataAttribute%5B%5D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetMetadata",
+      "signature": "TValue GetMetadata\u003CTValue\u003E(object key, TValue defaultValue)",
+      "summary": "GetMetadata method of PublishedViewInfo.",
+      "params": [
+        {
+          "name": "key",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "TValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedViewInfo.GetMetadata%60%601%28System.Object%2C%60%600%29"
+    },
+    {
+      "name": "HasMetadata",
+      "signature": "bool HasMetadata(object key)",
+      "summary": "HasMetadata method of PublishedViewInfo.",
+      "params": [
+        {
+          "name": "key",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedViewInfo.HasMetadata%28System.Object%29"
+    },
+    {
+      "name": "HasMetadata",
+      "signature": "bool HasMetadata(object key, object expectedValue)",
+      "summary": "HasMetadata method of PublishedViewInfo.",
+      "params": [
+        {
+          "name": "key",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "expectedValue",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedViewInfo.HasMetadata%28System.Object%2CSystem.Object%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Documentation",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Documentation property of PublishedViewInfo.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewInfo.Documentation"
+    },
+    {
+      "name": "Metadata",
+      "type": "System.Collections.ObjectModel.ReadOnlyDictionary\u003Cobject, object\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Metadata property of PublishedViewInfo.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewInfo.Metadata"
+    },
+    {
+      "name": "ViewName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ViewName property of PublishedViewInfo.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewInfo.ViewName"
+    },
+    {
+      "name": "ViewType",
+      "type": "System.Type",
+      "getter": true,
+      "setter": false,
+      "summary": "ViewType property of PublishedViewInfo.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewInfo.ViewType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

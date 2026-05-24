@@ -1,0 +1,96 @@
+{
+  "name": "SearchBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "SearchBox class in Fusion.UI.",
+  "base": "System.Windows.Controls.TextBox",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.SearchBox",
+  "constructors": [
+    {
+      "name": "SearchBox()",
+      "signature": "SearchBox()",
+      "summary": "Constructs a new SearchBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.SearchBox.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnApplyTemplate",
+      "signature": "void OnApplyTemplate()",
+      "summary": "OnApplyTemplate method of SearchBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.SearchBox.OnApplyTemplate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Command",
+      "type": "System.Windows.Input.ICommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Command property of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.SearchBox.Command"
+    },
+    {
+      "name": "CommandParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "CommandParameter property of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.SearchBox.CommandParameter"
+    },
+    {
+      "name": "Delay",
+      "type": "System.TimeSpan?",
+      "getter": true,
+      "setter": true,
+      "summary": "Delay property of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.SearchBox.Delay"
+    },
+    {
+      "name": "IsDropDownOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IsDropDownOpen property of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.SearchBox.IsDropDownOpen"
+    },
+    {
+      "name": "ItemsSource",
+      "type": "System.Collections.IEnumerable",
+      "getter": true,
+      "setter": true,
+      "summary": "ItemsSource property of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.SearchBox.ItemsSource"
+    }
+  ],
+  "events": [
+    {
+      "name": "DropDownClosed",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler DropDownClosed",
+      "summary": "DropDownClosed event of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.UI.SearchBox.DropDownClosed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DropDownOpened",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler DropDownOpened",
+      "summary": "DropDownOpened event of SearchBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.UI.SearchBox.DropDownOpened",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

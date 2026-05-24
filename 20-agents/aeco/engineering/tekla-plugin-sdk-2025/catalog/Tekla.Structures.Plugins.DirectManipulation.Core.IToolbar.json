@@ -1,0 +1,302 @@
+{
+  "name": "IToolbar",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core",
+  "kind": "interface",
+  "summary": "The IToolbar interfaces the toolbar creation service.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.IToolbar",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateButton",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ButtonControl CreateButton(string text = null, System.Drawing.Image image = null)",
+      "summary": "Creates button control.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "The text.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "The image.",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ButtonControl",
+        "doc": "The button control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateButton%28System.String%2CSystem.Drawing.Image%29"
+    },
+    {
+      "name": "CreateCheckBox",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.CheckBoxControl CreateCheckBox(string text = null, System.Drawing.Image image = null)",
+      "summary": "Creates check box control.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "The text.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "The image.",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.CheckBoxControl",
+        "doc": "The check box control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateCheckBox%28System.String%2CSystem.Drawing.Image%29"
+    },
+    {
+      "name": "CreateDropDown",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl CreateDropDown()",
+      "summary": "Creates drop down control.",
+      "params": [],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl",
+        "doc": "The drop down list control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateDropDown"
+    },
+    {
+      "name": "CreateDropDown",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl CreateDropDown(System.Collections.Generic.IEnumerable\u003Cobject\u003E items)",
+      "summary": "Creates the drop down.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003Cobject\u003E",
+          "doc": "The items.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl",
+        "doc": "The drop down list control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateDropDown%28System.Collections.Generic.IEnumerable%7BSystem.Object%7D%29"
+    },
+    {
+      "name": "CreateDropDown",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl CreateDropDown(System.Collections.Generic.IEnumerable\u003Cobject\u003E items, object selectedItem)",
+      "summary": "Creates the drop down.",
+      "params": [
+        {
+          "name": "items",
+          "type": "System.Collections.Generic.IEnumerable\u003Cobject\u003E",
+          "doc": "The items.",
+          "optional": false
+        },
+        {
+          "name": "selectedItem",
+          "type": "object",
+          "doc": "The selected item.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl",
+        "doc": "The drop down list control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateDropDown%28System.Collections.Generic.IEnumerable%7BSystem.Object%7D%2CSystem.Object%29"
+    },
+    {
+      "name": "CreateLabel",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.LabelControl CreateLabel(string text = null, System.Drawing.Image image = null)",
+      "summary": "Creates the label control.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "The text.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "The image.",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.LabelControl",
+        "doc": "The label control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateLabel%28System.String%2CSystem.Drawing.Image%29"
+    },
+    {
+      "name": "CreateRadioButton",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.RadioButtonControl CreateRadioButton(string text = null, System.Drawing.Image image = null, string group = null)",
+      "summary": "Creates radio button control.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "The text.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "The image.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "group",
+          "type": "string",
+          "doc": "The group.",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.RadioButtonControl",
+        "doc": "The radio button control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateRadioButton%28System.String%2CSystem.Drawing.Image%2CSystem.String%29"
+    },
+    {
+      "name": "CreateTextBox",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.TextBoxControl CreateTextBox(string text = null, System.Drawing.Image image = null)",
+      "summary": "Creates text box control.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "The text.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "image",
+          "type": "System.Drawing.Image",
+          "doc": "The image.",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.TextBoxControl",
+        "doc": "The text box control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateTextBox%28System.String%2CSystem.Drawing.Image%29"
+    },
+    {
+      "name": "CreateAngleValueTextBox",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ValueBoxControl CreateAngleValueTextBox(double? value = 0)",
+      "summary": "Creates angle value text box control.",
+      "params": [
+        {
+          "name": "value",
+          "type": "double?",
+          "doc": "The value.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ValueBoxControl",
+        "doc": "The angle value text box control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateAngleValueTextBox%28System.Nullable%7BSystem.Double%7D%29"
+    },
+    {
+      "name": "CreateDistanceValueTextBox",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ValueBoxControl CreateDistanceValueTextBox(double? value = 0)",
+      "summary": "Creates distance value text box control.",
+      "params": [
+        {
+          "name": "value",
+          "type": "double?",
+          "doc": "The value.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ValueBoxControl",
+        "doc": "The distance value text box control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateDistanceValueTextBox%28System.Nullable%7BSystem.Double%7D%29"
+    },
+    {
+      "name": "CreateValueTextBox",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ValueBoxControl CreateValueTextBox(double? value = 0)",
+      "summary": "Creates value text box control.",
+      "params": [
+        {
+          "name": "value",
+          "type": "double?",
+          "doc": "The value.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls.ValueBoxControl",
+        "doc": "The value text box control."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.CreateValueTextBox%28System.Nullable%7BSystem.Double%7D%29"
+    },
+    {
+      "name": "Remove",
+      "signature": "void Remove(Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase control)",
+      "summary": "Removes the specified control.",
+      "params": [
+        {
+          "name": "control",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase",
+          "doc": "The control.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IToolbar.Remove%28Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

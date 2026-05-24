@@ -1,0 +1,762 @@
+{
+  "name": "HeatCapacity",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "HeatCapacity struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.HeatCapacity\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.HeatCapacity\u003E",
+    "System.IEquatable\u003CFusion.HeatCapacity\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.HeatCapacity",
+  "constructors": [
+    {
+      "name": "HeatCapacity(double)",
+      "signature": "HeatCapacity(double joulesPerKelvinKilogram)",
+      "summary": "Constructs a new HeatCapacity.",
+      "params": [
+        {
+          "name": "joulesPerKelvinKilogram",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.HeatCapacity other)",
+      "summary": "Equals method of HeatCapacity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Equals%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of HeatCapacity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.HeatCapacity other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of HeatCapacity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Near%28Fusion.HeatCapacity%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.HeatCapacityUnit heatCapacityUnit)",
+      "summary": "To method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacityUnit",
+          "type": "Fusion.HeatCapacityUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.To%28Fusion.HeatCapacityUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.HeatCapacity other)",
+      "summary": "CompareTo method of HeatCapacity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.CompareTo%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of HeatCapacity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of HeatCapacity.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.HeatCapacity Abs(Fusion.HeatCapacity heatCapacity)",
+      "summary": "Abs method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Abs%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.HeatCapacity From(double heatCapacity, Fusion.HeatCapacityUnit heatCapacityUnit)",
+      "summary": "From method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "heatCapacityUnit",
+          "type": "Fusion.HeatCapacityUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.From%28System.Double%2CFusion.HeatCapacityUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.HeatCapacity Max(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "Max method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Max%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.HeatCapacity Min(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "Min method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Min%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.HeatCapacity Round(Fusion.HeatCapacity heatCapacity, Fusion.HeatCapacity precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Round%28Fusion.HeatCapacity%2CFusion.HeatCapacity%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.HeatCapacity op_Addition(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_Addition method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Addition%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.HeatCapacity op_Division(Fusion.HeatCapacity a, double b)",
+      "summary": "op_Division method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Division%28Fusion.HeatCapacity%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.HeatCapacity op_Modulus(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_Modulus method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Modulus%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.HeatCapacity op_Multiply(Fusion.HeatCapacity a, double b)",
+      "summary": "op_Multiply method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Multiply%28Fusion.HeatCapacity%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.HeatCapacity op_Multiply(double a, Fusion.HeatCapacity b)",
+      "summary": "op_Multiply method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Multiply%28System.Double%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.HeatCapacity op_Subtraction(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_Subtraction method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Subtraction%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.HeatCapacity op_UnaryNegation(Fusion.HeatCapacity a)",
+      "summary": "op_UnaryNegation method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.HeatCapacity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_UnaryNegation%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.HeatCapacity heatCapacity)",
+      "summary": "IsInfinity method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.IsInfinity%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.HeatCapacity heatCapacity)",
+      "summary": "IsNaN method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.IsNaN%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.HeatCapacity heatCapacity)",
+      "summary": "IsNegativeInfinity method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.IsNegativeInfinity%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.HeatCapacity heatCapacity)",
+      "summary": "IsPositiveInfinity method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.IsPositiveInfinity%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_Equality method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Equality%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_GreaterThan method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_GreaterThan%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_GreaterThanOrEqual method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_GreaterThanOrEqual%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_Inequality method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Inequality%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_LessThan method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_LessThan%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_LessThanOrEqual method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_LessThanOrEqual%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.HeatCapacity a, Fusion.HeatCapacity b)",
+      "summary": "op_Division method of HeatCapacity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.op_Division%28Fusion.HeatCapacity%2CFusion.HeatCapacity%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.HeatCapacity heatCapacity)",
+      "summary": "Sign method of HeatCapacity.",
+      "params": [
+        {
+          "name": "heatCapacity",
+          "type": "Fusion.HeatCapacity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.Sign%28Fusion.HeatCapacity%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of HeatCapacity.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of HeatCapacity.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HeatCapacity.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "JoulesPerKelvinKilogram",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "JoulesPerKelvinKilogram property of HeatCapacity.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.HeatCapacity.JoulesPerKelvinKilogram"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

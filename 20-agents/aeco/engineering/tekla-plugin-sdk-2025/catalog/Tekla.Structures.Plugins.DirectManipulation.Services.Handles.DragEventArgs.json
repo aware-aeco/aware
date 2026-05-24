@@ -1,0 +1,47 @@
+{
+  "name": "DragEventArgs",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles",
+  "kind": "class",
+  "summary": "Contains the event arguments for a drag event on a handle.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "DeltaTranslation",
+      "type": "Tekla.Structures.Geometry3d.Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a vector indicating the translation since the last drag event.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs.DeltaTranslation"
+    },
+    {
+      "name": "Interrupted",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the event arg was interrupted.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs.Interrupted"
+    },
+    {
+      "name": "StartPosition",
+      "type": "Tekla.Structures.Geometry3d.Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point indicating the original position of the handle before the drag event. Property returns middle point in case of LineHandler.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs.StartPosition"
+    },
+    {
+      "name": "TotalTranslation",
+      "type": "Tekla.Structures.Geometry3d.Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a vector indicating the total translation since the drag started.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs.TotalTranslation"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

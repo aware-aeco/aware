@@ -1,0 +1,46 @@
+{
+  "name": "VolumeUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "VolumeUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.VolumeUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CubicMillimeter",
+      "value": 0
+    },
+    {
+      "name": "CubicCentimeter",
+      "value": 1
+    },
+    {
+      "name": "CubicMeter",
+      "value": 2
+    },
+    {
+      "name": "CubicInch",
+      "value": 3
+    },
+    {
+      "name": "CubicFoot",
+      "value": 4
+    },
+    {
+      "name": "CubicYard",
+      "value": 5
+    },
+    {
+      "name": "Liter",
+      "value": 6
+    },
+    {
+      "name": "Gallon",
+      "value": 7
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "name": "Overlay",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "Overlay class in Fusion.UI.",
+  "base": "System.Windows.Controls.Decorator",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.Overlay",
+  "constructors": [
+    {
+      "name": "Overlay()",
+      "signature": "Overlay()",
+      "summary": "Constructs a new Overlay.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Overlay.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Background",
+      "type": "System.Windows.Media.Brush",
+      "getter": true,
+      "setter": true,
+      "summary": "Background property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.Background"
+    },
+    {
+      "name": "Content",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Content property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.Content"
+    },
+    {
+      "name": "InputTarget",
+      "type": "System.Windows.UIElement",
+      "getter": true,
+      "setter": true,
+      "summary": "InputTarget property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.InputTarget"
+    },
+    {
+      "name": "IsOverlayWindowFocused",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IsOverlayWindowFocused property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.IsOverlayWindowFocused"
+    },
+    {
+      "name": "RerouteAllInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "RerouteAllInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.RerouteAllInputs"
+    },
+    {
+      "name": "RerouteKeyInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "RerouteKeyInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.RerouteKeyInputs"
+    },
+    {
+      "name": "RerouteManipulationInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "RerouteManipulationInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.RerouteManipulationInputs"
+    },
+    {
+      "name": "RerouteMouseInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "RerouteMouseInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.RerouteMouseInputs"
+    },
+    {
+      "name": "ReroutePreviewKeyInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ReroutePreviewKeyInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.ReroutePreviewKeyInputs"
+    },
+    {
+      "name": "ReroutePreviewMouseInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ReroutePreviewMouseInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.ReroutePreviewMouseInputs"
+    },
+    {
+      "name": "ReroutePreviewStylusInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ReroutePreviewStylusInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.ReroutePreviewStylusInputs"
+    },
+    {
+      "name": "ReroutePreviewTouchInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "ReroutePreviewTouchInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.ReroutePreviewTouchInputs"
+    },
+    {
+      "name": "RerouteStylusInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "RerouteStylusInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.RerouteStylusInputs"
+    },
+    {
+      "name": "RerouteTouchInputs",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "RerouteTouchInputs property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.RerouteTouchInputs"
+    },
+    {
+      "name": "UseManualVisibility",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "UseManualVisibility property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.UseManualVisibility"
+    },
+    {
+      "name": "Window",
+      "type": "System.Windows.Window",
+      "getter": true,
+      "setter": false,
+      "summary": "Window property of Overlay.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Overlay.Window"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

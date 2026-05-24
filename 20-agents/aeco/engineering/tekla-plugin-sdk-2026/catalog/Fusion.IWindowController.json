@@ -1,0 +1,135 @@
+{
+  "name": "IWindowController",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IWindowController interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IWindowController",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Activate",
+      "signature": "void Activate()",
+      "summary": "Activate method of IWindowController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IWindowController.Activate"
+    },
+    {
+      "name": "BringToTop",
+      "signature": "void BringToTop()",
+      "summary": "BringToTop method of IWindowController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IWindowController.BringToTop"
+    },
+    {
+      "name": "Close",
+      "signature": "void Close()",
+      "summary": "Close method of IWindowController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IWindowController.Close"
+    },
+    {
+      "name": "Close",
+      "signature": "void Close(object dialogResult)",
+      "summary": "Close method of IWindowController.",
+      "params": [
+        {
+          "name": "dialogResult",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IWindowController.Close%28System.Object%29"
+    },
+    {
+      "name": "SetOwnedWindowClosedCallback",
+      "signature": "void SetOwnedWindowClosedCallback(System.Action action)",
+      "summary": "SetOwnedWindowClosedCallback method of IWindowController.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IWindowController.SetOwnedWindowClosedCallback%28System.Action%29"
+    },
+    {
+      "name": "UpdateLayout",
+      "signature": "void UpdateLayout()",
+      "summary": "UpdateLayout method of IWindowController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IWindowController.UpdateLayout"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasOwnedWindow",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "HasOwnedWindow property of IWindowController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IWindowController.HasOwnedWindow"
+    },
+    {
+      "name": "Height",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Height property of IWindowController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IWindowController.Height"
+    },
+    {
+      "name": "IsOpen",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsOpen property of IWindowController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IWindowController.IsOpen"
+    },
+    {
+      "name": "Left",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Left property of IWindowController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IWindowController.Left"
+    },
+    {
+      "name": "Top",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Top property of IWindowController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IWindowController.Top"
+    },
+    {
+      "name": "Width",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Width property of IWindowController.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IWindowController.Width"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

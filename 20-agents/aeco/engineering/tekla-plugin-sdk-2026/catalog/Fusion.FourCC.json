@@ -1,0 +1,176 @@
+{
+  "name": "FourCC",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "FourCC struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.FourCC\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.FourCC",
+  "constructors": [
+    {
+      "name": "FourCC(char, char, char, char)",
+      "signature": "FourCC(char c1, char c2, char c3, char c4)",
+      "summary": "Constructs a new FourCC.",
+      "params": [
+        {
+          "name": "c1",
+          "type": "char",
+          "optional": false
+        },
+        {
+          "name": "c2",
+          "type": "char",
+          "optional": false
+        },
+        {
+          "name": "c3",
+          "type": "char",
+          "optional": false
+        },
+        {
+          "name": "c4",
+          "type": "char",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.%23ctor%28System.Char%2CSystem.Char%2CSystem.Char%2CSystem.Char%29"
+    },
+    {
+      "name": "FourCC(string)",
+      "signature": "FourCC(string code)",
+      "summary": "Constructs a new FourCC.",
+      "params": [
+        {
+          "name": "code",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.FourCC other)",
+      "summary": "Equals method of FourCC.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.FourCC",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.Equals%28Fusion.FourCC%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of FourCC.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of FourCC.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.GetHashCode"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.FourCC a, Fusion.FourCC b)",
+      "summary": "op_Equality method of FourCC.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FourCC",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FourCC",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.op_Equality%28Fusion.FourCC%2CFusion.FourCC%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.FourCC a, Fusion.FourCC b)",
+      "summary": "op_Inequality method of FourCC.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FourCC",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FourCC",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.op_Inequality%28Fusion.FourCC%2CFusion.FourCC%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of FourCC.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FourCC.ToString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

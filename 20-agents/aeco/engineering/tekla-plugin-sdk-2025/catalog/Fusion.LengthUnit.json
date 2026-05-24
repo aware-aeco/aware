@@ -1,0 +1,62 @@
+{
+  "name": "LengthUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "LengthUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.LengthUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Millimeter",
+      "value": 0
+    },
+    {
+      "name": "Centimeter",
+      "value": 1
+    },
+    {
+      "name": "Meter",
+      "value": 2
+    },
+    {
+      "name": "Inch",
+      "value": 3
+    },
+    {
+      "name": "Foot",
+      "value": 4
+    },
+    {
+      "name": "Yard",
+      "value": 5
+    },
+    {
+      "name": "Kilometer",
+      "value": 6
+    },
+    {
+      "name": "Mile",
+      "value": 7
+    },
+    {
+      "name": "USSurveyFoot",
+      "value": 8
+    },
+    {
+      "name": "USSurveyInch",
+      "value": 9
+    },
+    {
+      "name": "USSurveyYard",
+      "value": 10
+    },
+    {
+      "name": "USSurveyMile",
+      "value": 11
+    }
+  ]
+}

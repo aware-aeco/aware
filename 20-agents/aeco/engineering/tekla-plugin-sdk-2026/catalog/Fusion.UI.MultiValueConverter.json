@@ -1,0 +1,52 @@
+{
+  "name": "MultiValueConverter",
+  "namespace": "Fusion.UI",
+  "kind": "static-class",
+  "summary": "MultiValueConverter static class in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.MultiValueConverter",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Create",
+      "signature": "static Fusion.UI.MultiValueConverter\u003CTSource, TTarget\u003E Create\u003CTSource, TParameter, TTarget\u003E(System.Func\u003CTSource[], TParameter, TTarget\u003E convert)",
+      "summary": "Create method of MultiValueConverter.",
+      "params": [
+        {
+          "name": "convert",
+          "type": "System.Func\u003CTSource[], TParameter, TTarget\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UI.MultiValueConverter\u003CTSource, TTarget\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.MultiValueConverter.Create%60%603%28System.Func%7B%60%600%5B%5D%2C%60%601%2C%60%602%7D%29"
+    },
+    {
+      "name": "Create",
+      "signature": "static Fusion.UI.MultiValueConverter\u003CTSource, TTarget\u003E Create\u003CTSource, TTarget\u003E(System.Func\u003CTSource[], TTarget\u003E convert)",
+      "summary": "Create method of MultiValueConverter.",
+      "params": [
+        {
+          "name": "convert",
+          "type": "System.Func\u003CTSource[], TTarget\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UI.MultiValueConverter\u003CTSource, TTarget\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.MultiValueConverter.Create%60%602%28System.Func%7B%60%600%5B%5D%2C%60%601%7D%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,14 @@
+{
+  "name": "CustomPartPluginCreationFeatureBase",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core.Features",
+  "kind": "class",
+  "summary": "The CustomPartCreationFeatureBase class provides the base class for creation features for plugins.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Internal.Features.CustomPartCreationFeatureBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.Features.CustomPartPluginCreationFeatureBase",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

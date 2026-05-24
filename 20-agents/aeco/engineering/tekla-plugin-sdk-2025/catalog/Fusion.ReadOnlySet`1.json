@@ -1,0 +1,212 @@
+{
+  "name": "ReadOnlySet\u00601",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ReadOnlySet\u00601 class in Fusion.",
+  "interfaces": [
+    "System.Collections.Generic.ICollection\u003CT\u003E",
+    "System.Collections.Generic.IEnumerable\u003CT\u003E",
+    "System.Collections.Generic.ISet\u003CT\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ReadOnlySet\u00601",
+  "constructors": [
+    {
+      "name": "ReadOnlySet\u00601(System.Collections.Generic.ISet\u003CT\u003E)",
+      "signature": "ReadOnlySet\u00601(System.Collections.Generic.ISet\u003CT\u003E set)",
+      "summary": "Constructs a new ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "set",
+          "type": "System.Collections.Generic.ISet\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.%23ctor%28System.Collections.Generic.ISet%7B%600%7D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of ReadOnlySet\u00601.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.GetEnumerator"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(T item)",
+      "summary": "Contains method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "item",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.Contains%28%600%29"
+    },
+    {
+      "name": "IsProperSubsetOf",
+      "signature": "bool IsProperSubsetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "IsProperSubsetOf method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.IsProperSubsetOf%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    },
+    {
+      "name": "IsProperSupersetOf",
+      "signature": "bool IsProperSupersetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "IsProperSupersetOf method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.IsProperSupersetOf%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    },
+    {
+      "name": "IsSubsetOf",
+      "signature": "bool IsSubsetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "IsSubsetOf method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.IsSubsetOf%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    },
+    {
+      "name": "IsSupersetOf",
+      "signature": "bool IsSupersetOf(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "IsSupersetOf method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.IsSupersetOf%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    },
+    {
+      "name": "Overlaps",
+      "signature": "bool Overlaps(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "Overlaps method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.Overlaps%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    },
+    {
+      "name": "SetEquals",
+      "signature": "bool SetEquals(System.Collections.Generic.IEnumerable\u003CT\u003E other)",
+      "summary": "SetEquals method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.SetEquals%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    },
+    {
+      "name": "CopyTo",
+      "signature": "void CopyTo(T[] array, int arrayIndex)",
+      "summary": "CopyTo method of ReadOnlySet\u00601.",
+      "params": [
+        {
+          "name": "array",
+          "type": "T[]",
+          "optional": false
+        },
+        {
+          "name": "arrayIndex",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ReadOnlySet%601.CopyTo%28%600%5B%5D%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Count property of ReadOnlySet\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ReadOnlySet%601.Count"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

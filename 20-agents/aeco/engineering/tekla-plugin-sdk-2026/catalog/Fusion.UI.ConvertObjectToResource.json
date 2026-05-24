@@ -1,0 +1,55 @@
+{
+  "name": "ConvertObjectToResource",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertObjectToResource class in Fusion.UI.",
+  "base": "Fusion.UI.ValueConverter\u003Cobject, object\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertObjectToResource",
+  "constructors": [
+    {
+      "name": "ConvertObjectToResource()",
+      "signature": "ConvertObjectToResource()",
+      "summary": "Constructs a new ConvertObjectToResource.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertObjectToResource.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "object Convert(object value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertObjectToResource.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertObjectToResource.Convert%28System.Object%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,23 @@
+{
+  "name": "PointHandle",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles",
+  "kind": "class",
+  "summary": "Represents a handle that is represented as a point on the model.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Core.HandleBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PointHandle",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Point",
+      "type": "Tekla.Structures.Geometry3d.Point",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets the segment that the handle represents.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.PointHandle.Point"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

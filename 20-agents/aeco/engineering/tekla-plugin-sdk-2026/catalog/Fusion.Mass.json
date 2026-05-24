@@ -1,0 +1,762 @@
+{
+  "name": "Mass",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Mass struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Mass\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Mass\u003E",
+    "System.IEquatable\u003CFusion.Mass\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Mass",
+  "constructors": [
+    {
+      "name": "Mass(double)",
+      "signature": "Mass(double kilograms)",
+      "summary": "Constructs a new Mass.",
+      "params": [
+        {
+          "name": "kilograms",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Mass other)",
+      "summary": "Equals method of Mass.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Equals%28Fusion.Mass%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Mass.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Mass other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Mass.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Near%28Fusion.Mass%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.MassUnit massUnit)",
+      "summary": "To method of Mass.",
+      "params": [
+        {
+          "name": "massUnit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.To%28Fusion.MassUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Mass other)",
+      "summary": "CompareTo method of Mass.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.CompareTo%28Fusion.Mass%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Mass.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Mass.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Mass Abs(Fusion.Mass mass)",
+      "summary": "Abs method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Abs%28Fusion.Mass%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.Mass From(double mass, Fusion.MassUnit massUnit)",
+      "summary": "From method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "massUnit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.From%28System.Double%2CFusion.MassUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Mass Max(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "Max method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Max%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Mass Min(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "Min method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Min%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Mass Round(Fusion.Mass mass, Fusion.Mass precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Round%28Fusion.Mass%2CFusion.Mass%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Mass op_Addition(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_Addition method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Addition%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Mass op_Division(Fusion.Mass a, double b)",
+      "summary": "op_Division method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Division%28Fusion.Mass%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Mass op_Modulus(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_Modulus method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Modulus%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Mass op_Multiply(Fusion.Mass a, double b)",
+      "summary": "op_Multiply method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Multiply%28Fusion.Mass%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Mass op_Multiply(double a, Fusion.Mass b)",
+      "summary": "op_Multiply method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Multiply%28System.Double%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Mass op_Subtraction(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_Subtraction method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Subtraction%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Mass op_UnaryNegation(Fusion.Mass a)",
+      "summary": "op_UnaryNegation method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_UnaryNegation%28Fusion.Mass%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Mass mass)",
+      "summary": "IsInfinity method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.IsInfinity%28Fusion.Mass%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Mass mass)",
+      "summary": "IsNaN method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.IsNaN%28Fusion.Mass%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Mass mass)",
+      "summary": "IsNegativeInfinity method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.IsNegativeInfinity%28Fusion.Mass%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Mass mass)",
+      "summary": "IsPositiveInfinity method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.IsPositiveInfinity%28Fusion.Mass%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_Equality method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Equality%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_GreaterThan method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_GreaterThan%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_GreaterThanOrEqual method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_GreaterThanOrEqual%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_Inequality method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Inequality%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_LessThan method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_LessThan%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_LessThanOrEqual method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_LessThanOrEqual%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.Mass a, Fusion.Mass b)",
+      "summary": "op_Division method of Mass.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.op_Division%28Fusion.Mass%2CFusion.Mass%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Mass mass)",
+      "summary": "Sign method of Mass.",
+      "params": [
+        {
+          "name": "mass",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.Sign%28Fusion.Mass%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Mass.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Mass.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Mass.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kilograms",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Kilograms property of Mass.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Mass.Kilograms"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,88 @@
+{
+  "name": "ISettings",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "ISettings interface in Fusion.",
+  "interfaces": [
+    "Fusion.IKeyValueStore"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ISettings",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Culture",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Culture property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.Culture"
+    },
+    {
+      "name": "EnableExceptionHandling",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "EnableExceptionHandling property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.EnableExceptionHandling"
+    },
+    {
+      "name": "EnableMessageLogging",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "EnableMessageLogging property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.EnableMessageLogging"
+    },
+    {
+      "name": "EnableRecoveryAndRestart",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "EnableRecoveryAndRestart property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.EnableRecoveryAndRestart"
+    },
+    {
+      "name": "EnableSingleInstanceMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "EnableSingleInstanceMode property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.EnableSingleInstanceMode"
+    },
+    {
+      "name": "EnableWindowGhosting",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "EnableWindowGhosting property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.EnableWindowGhosting"
+    },
+    {
+      "name": "FeatureFolder",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "FeatureFolder property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.FeatureFolder"
+    },
+    {
+      "name": "LocalizationMode",
+      "type": "Fusion.LocalizationMode",
+      "getter": true,
+      "setter": true,
+      "summary": "LocalizationMode property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.LocalizationMode"
+    },
+    {
+      "name": "Theme",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Theme property of ISettings.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ISettings.Theme"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

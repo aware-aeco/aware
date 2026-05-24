@@ -1,0 +1,48 @@
+{
+  "name": "StringValidator",
+  "namespace": "Fusion.UI",
+  "kind": "static-class",
+  "summary": "StringValidator static class in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.StringValidator",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Sanitize",
+      "signature": "static string Sanitize(string text, int maxLength = 255)",
+      "summary": "Sanitize method of StringValidator.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "maxLength",
+          "type": "int",
+          "optional": true,
+          "default": "255"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.StringValidator.Sanitize%28System.String%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FileOrFolderName",
+      "type": "Fusion.UI.ValidatorCallback",
+      "getter": true,
+      "setter": false,
+      "summary": "FileOrFolderName property of StringValidator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.StringValidator.FileOrFolderName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

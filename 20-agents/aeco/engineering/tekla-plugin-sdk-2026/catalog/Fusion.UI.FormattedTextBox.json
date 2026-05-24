@@ -1,0 +1,31 @@
+{
+  "name": "FormattedTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "FormattedTextBox class in Fusion.UI.",
+  "base": "System.Windows.Controls.TextBox",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.FormattedTextBox",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "OnParseFailure",
+      "type": "Fusion.UI.OnParseFailure",
+      "getter": true,
+      "setter": true,
+      "summary": "OnParseFailure property of FormattedTextBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBox.OnParseFailure"
+    },
+    {
+      "name": "Symbols",
+      "type": "Fusion.Formatting.UnitSymbols",
+      "getter": true,
+      "setter": true,
+      "summary": "Symbols property of FormattedTextBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBox.Symbols"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

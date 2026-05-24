@@ -1,0 +1,34 @@
+{
+  "name": "DensityUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "DensityUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.DensityUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KilogramsPerCubicMeter",
+      "value": 0
+    },
+    {
+      "name": "TonsPerCubicMeter",
+      "value": 1
+    },
+    {
+      "name": "NewtonsPerCubicMeter",
+      "value": 2
+    },
+    {
+      "name": "KilonewtonsPerCubicMeter",
+      "value": 3
+    },
+    {
+      "name": "PoundForcePerCubicFoot",
+      "value": 4
+    }
+  ]
+}

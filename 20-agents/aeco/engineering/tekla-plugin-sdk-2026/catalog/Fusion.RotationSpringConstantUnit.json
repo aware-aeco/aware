@@ -1,0 +1,86 @@
+{
+  "name": "RotationSpringConstantUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "RotationSpringConstantUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.RotationSpringConstantUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KilogramMeterPerRadian",
+      "value": 0
+    },
+    {
+      "name": "KilogramMeterPerDegree",
+      "value": 1
+    },
+    {
+      "name": "TonMeterPerRadian",
+      "value": 2
+    },
+    {
+      "name": "TonMeterPerDegree",
+      "value": 3
+    },
+    {
+      "name": "NewtonMeterPerRadian",
+      "value": 4
+    },
+    {
+      "name": "NewtonMeterPerDegree",
+      "value": 5
+    },
+    {
+      "name": "DecaNewtonMeterPerRadian",
+      "value": 6
+    },
+    {
+      "name": "DecaNewtonMeterPerDegree",
+      "value": 7
+    },
+    {
+      "name": "KiloNewtonMeterPerRadian",
+      "value": 8
+    },
+    {
+      "name": "KiloNewtonMeterPerDegree",
+      "value": 9
+    },
+    {
+      "name": "PoundForceInchPerRadian",
+      "value": 10
+    },
+    {
+      "name": "PoundForceInchPerDegree",
+      "value": 11
+    },
+    {
+      "name": "PoundForceFootPerRadian",
+      "value": 12
+    },
+    {
+      "name": "PoundForceFootPerDegree",
+      "value": 13
+    },
+    {
+      "name": "KiloPoundForceInchPerRadian",
+      "value": 14
+    },
+    {
+      "name": "KiloPoundForceInchPerDegree",
+      "value": 15
+    },
+    {
+      "name": "KiloPoundForceFootPerRadian",
+      "value": 16
+    },
+    {
+      "name": "KiloPoundForceFootPerDegree",
+      "value": 17
+    }
+  ]
+}

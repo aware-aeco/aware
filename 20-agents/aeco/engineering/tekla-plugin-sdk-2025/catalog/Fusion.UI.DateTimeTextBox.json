@@ -1,0 +1,25 @@
+{
+  "name": "DateTimeTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "DateTimeTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CSystem.DateTime, Fusion.Formatting.DateTimeFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.DateTimeTextBox",
+  "constructors": [
+    {
+      "name": "DateTimeTextBox()",
+      "signature": "DateTimeTextBox()",
+      "summary": "Constructs a new DateTimeTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.DateTimeTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

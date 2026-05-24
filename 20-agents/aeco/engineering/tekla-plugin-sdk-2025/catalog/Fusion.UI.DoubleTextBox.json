@@ -1,0 +1,25 @@
+{
+  "name": "DoubleTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "DoubleTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003Cdouble, Fusion.Formatting.DoubleFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.DoubleTextBox",
+  "constructors": [
+    {
+      "name": "DoubleTextBox()",
+      "signature": "DoubleTextBox()",
+      "summary": "Constructs a new DoubleTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.DoubleTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

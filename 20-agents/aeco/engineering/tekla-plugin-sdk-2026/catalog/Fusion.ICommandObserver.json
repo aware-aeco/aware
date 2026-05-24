@@ -1,0 +1,113 @@
+{
+  "name": "ICommandObserver",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "ICommandObserver interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ICommandObserver",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Executed",
+      "signature": "void Executed(Fusion.ViewModel viewModel, string commandName, object parameter)",
+      "summary": "Executed method of ICommandObserver.",
+      "params": [
+        {
+          "name": "viewModel",
+          "type": "Fusion.ViewModel",
+          "optional": false
+        },
+        {
+          "name": "commandName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ICommandObserver.Executed%28Fusion.ViewModel%2CSystem.String%2CSystem.Object%29"
+    },
+    {
+      "name": "Executing",
+      "signature": "void Executing(Fusion.ViewModel viewModel, string commandName, object parameter)",
+      "summary": "Executing method of ICommandObserver.",
+      "params": [
+        {
+          "name": "viewModel",
+          "type": "Fusion.ViewModel",
+          "optional": false
+        },
+        {
+          "name": "commandName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ICommandObserver.Executing%28Fusion.ViewModel%2CSystem.String%2CSystem.Object%29"
+    },
+    {
+      "name": "HandlerMissing",
+      "signature": "void HandlerMissing(Fusion.ViewModel viewModel, string commandName)",
+      "summary": "HandlerMissing method of ICommandObserver.",
+      "params": [
+        {
+          "name": "viewModel",
+          "type": "Fusion.ViewModel",
+          "optional": false
+        },
+        {
+          "name": "commandName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ICommandObserver.HandlerMissing%28Fusion.ViewModel%2CSystem.String%29"
+    },
+    {
+      "name": "UnhandledException",
+      "signature": "void UnhandledException(Fusion.ViewModel viewModel, string commandName, System.Exception exception)",
+      "summary": "UnhandledException method of ICommandObserver.",
+      "params": [
+        {
+          "name": "viewModel",
+          "type": "Fusion.ViewModel",
+          "optional": false
+        },
+        {
+          "name": "commandName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "exception",
+          "type": "System.Exception",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ICommandObserver.UnhandledException%28Fusion.ViewModel%2CSystem.String%2CSystem.Exception%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

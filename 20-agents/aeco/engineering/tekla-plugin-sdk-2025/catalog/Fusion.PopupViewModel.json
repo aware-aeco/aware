@@ -1,0 +1,44 @@
+{
+  "name": "PopupViewModel",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "PopupViewModel class in Fusion.",
+  "base": "Fusion.ViewModel",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PopupViewModel",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "PopupClosed",
+      "signature": "void PopupClosed()",
+      "summary": "PopupClosed method of PopupViewModel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PopupViewModel.PopupClosed"
+    },
+    {
+      "name": "PopupOpened",
+      "signature": "void PopupOpened()",
+      "summary": "PopupOpened method of PopupViewModel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PopupViewModel.PopupOpened"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Popup",
+      "type": "Fusion.IPopupController",
+      "getter": true,
+      "setter": true,
+      "summary": "Popup property of PopupViewModel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PopupViewModel.Popup"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

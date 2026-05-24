@@ -1,0 +1,334 @@
+{
+  "name": "BoundingBox",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "BoundingBox struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.BoundingBox\u003E",
+    "System.IEquatable\u003CFusion.BoundingBox\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.BoundingBox",
+  "constructors": [
+    {
+      "name": "BoundingBox(Fusion.Float3, Fusion.Float3)",
+      "signature": "BoundingBox(Fusion.Float3 minimum, Fusion.Float3 maximum)",
+      "summary": "Constructs a new BoundingBox.",
+      "params": [
+        {
+          "name": "minimum",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "maximum",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.%23ctor%28Fusion.Float3%2CFusion.Float3%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Fusion.BoundingBox boundingBox)",
+      "summary": "Contains method of BoundingBox.",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Contains%28Fusion.BoundingBox%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Fusion.Float3 point)",
+      "summary": "Contains method of BoundingBox.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Contains%28Fusion.Float3%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Fusion.Triangle triangle)",
+      "summary": "Contains method of BoundingBox.",
+      "params": [
+        {
+          "name": "triangle",
+          "type": "Fusion.Triangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Contains%28Fusion.Triangle%29"
+    },
+    {
+      "name": "Contains",
+      "signature": "bool Contains(Fusion.TriangleMesh triangleMesh)",
+      "summary": "Contains method of BoundingBox.",
+      "params": [
+        {
+          "name": "triangleMesh",
+          "type": "Fusion.TriangleMesh",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Contains%28Fusion.TriangleMesh%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.BoundingBox other)",
+      "summary": "Equals method of BoundingBox.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Equals%28Fusion.BoundingBox%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of BoundingBox.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Equals%28System.Object%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "bool Intersects(Fusion.BoundingBox boundingBox)",
+      "summary": "Intersects method of BoundingBox.",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Intersects%28Fusion.BoundingBox%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.BoundingBox other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of BoundingBox.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Near%28Fusion.BoundingBox%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of BoundingBox.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.GetHashCode"
+    },
+    {
+      "name": "FromPoints",
+      "signature": "static Fusion.BoundingBox FromPoints(System.Collections.Generic.IEnumerable\u003CFusion.Float3\u003E points)",
+      "summary": "FromPoints method of BoundingBox.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IEnumerable\u003CFusion.Float3\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.FromPoints%28System.Collections.Generic.IEnumerable%7BFusion.Float3%7D%29"
+    },
+    {
+      "name": "Merge",
+      "signature": "static Fusion.BoundingBox Merge(Fusion.BoundingBox a, Fusion.BoundingBox b)",
+      "summary": "Merge method of BoundingBox.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.BoundingBox",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.Merge%28Fusion.BoundingBox%2CFusion.BoundingBox%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.BoundingBox a, Fusion.BoundingBox b)",
+      "summary": "op_Equality method of BoundingBox.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.op_Equality%28Fusion.BoundingBox%2CFusion.BoundingBox%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.BoundingBox a, Fusion.BoundingBox b)",
+      "summary": "op_Inequality method of BoundingBox.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BoundingBox.op_Inequality%28Fusion.BoundingBox%2CFusion.BoundingBox%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Fusion.Float3",
+      "getter": true,
+      "setter": false,
+      "summary": "Center property of BoundingBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.BoundingBox.Center"
+    },
+    {
+      "name": "Empty",
+      "type": "Fusion.BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "Empty property of BoundingBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.BoundingBox.Empty"
+    },
+    {
+      "name": "IsEmpty",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsEmpty property of BoundingBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.BoundingBox.IsEmpty"
+    },
+    {
+      "name": "Radius",
+      "type": "float",
+      "getter": true,
+      "setter": false,
+      "summary": "Radius property of BoundingBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.BoundingBox.Radius"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

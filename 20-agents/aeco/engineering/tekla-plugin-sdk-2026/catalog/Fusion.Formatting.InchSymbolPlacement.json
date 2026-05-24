@@ -1,0 +1,22 @@
+{
+  "name": "InchSymbolPlacement",
+  "namespace": "Fusion.Formatting",
+  "kind": "enum",
+  "summary": "InchSymbolPlacement enum in Fusion.Formatting.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.InchSymbolPlacement",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "AfterInches",
+      "value": 0
+    },
+    {
+      "name": "AfterFractions",
+      "value": 1
+    }
+  ]
+}

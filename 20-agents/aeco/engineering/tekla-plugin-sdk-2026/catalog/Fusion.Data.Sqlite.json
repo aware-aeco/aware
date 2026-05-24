@@ -1,0 +1,128 @@
+{
+  "name": "Sqlite",
+  "namespace": "Fusion.Data",
+  "kind": "class",
+  "summary": "Sqlite class in Fusion.Data.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Data.Sqlite",
+  "constructors": [
+    {
+      "name": "Sqlite(Fusion.Data.Sqlite)",
+      "signature": "Sqlite(Fusion.Data.Sqlite connection)",
+      "summary": "Constructs a new Sqlite.",
+      "params": [
+        {
+          "name": "connection",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.%23ctor%28Fusion.Data.Sqlite%29"
+    },
+    {
+      "name": "Sqlite(string)",
+      "signature": "Sqlite(string path)",
+      "summary": "Constructs a new Sqlite.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.%23ctor%28System.String%29"
+    },
+    {
+      "name": "Sqlite(string, System.TimeSpan)",
+      "signature": "Sqlite(string path, System.TimeSpan timeout)",
+      "summary": "Constructs a new Sqlite.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "timeout",
+          "type": "System.TimeSpan",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.%23ctor%28System.String%2CSystem.TimeSpan%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Prepare",
+      "signature": "Fusion.Data.Sqlite.Statement Prepare(string sql)",
+      "summary": "Prepare method of Sqlite.",
+      "params": [
+        {
+          "name": "sql",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Sqlite.Statement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.Prepare%28System.String%29"
+    },
+    {
+      "name": "BeginTransaction",
+      "signature": "Fusion.Data.Sqlite.Transaction BeginTransaction()",
+      "summary": "BeginTransaction method of Sqlite.",
+      "params": [],
+      "returns": {
+        "type": "Fusion.Data.Sqlite.Transaction",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.BeginTransaction"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of Sqlite.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.Dispose"
+    },
+    {
+      "name": "Execute",
+      "signature": "void Execute(string sql)",
+      "summary": "Execute method of Sqlite.",
+      "params": [
+        {
+          "name": "sql",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Sqlite.Execute%28System.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

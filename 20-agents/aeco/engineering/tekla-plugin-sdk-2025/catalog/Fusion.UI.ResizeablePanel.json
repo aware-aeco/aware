@@ -1,0 +1,93 @@
+{
+  "name": "ResizeablePanel",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ResizeablePanel class in Fusion.UI.",
+  "base": "System.Windows.Controls.ContentControl",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ResizeablePanel",
+  "constructors": [
+    {
+      "name": "ResizeablePanel()",
+      "signature": "ResizeablePanel()",
+      "summary": "Constructs a new ResizeablePanel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ResizeablePanel.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "OnApplyTemplate",
+      "signature": "void OnApplyTemplate()",
+      "summary": "OnApplyTemplate method of ResizeablePanel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ResizeablePanel.OnApplyTemplate"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HideOnDoubleClick",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "HideOnDoubleClick property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.HideOnDoubleClick"
+    },
+    {
+      "name": "ResizeEdge",
+      "type": "System.Windows.Controls.Dock",
+      "getter": true,
+      "setter": true,
+      "summary": "ResizeEdge property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.ResizeEdge"
+    },
+    {
+      "name": "ResizeTabBackground",
+      "type": "System.Windows.Media.Brush",
+      "getter": true,
+      "setter": true,
+      "summary": "ResizeTabBackground property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.ResizeTabBackground"
+    },
+    {
+      "name": "ResizeTabFill",
+      "type": "System.Windows.Media.Brush",
+      "getter": true,
+      "setter": true,
+      "summary": "ResizeTabFill property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.ResizeTabFill"
+    },
+    {
+      "name": "ResizeTabHorizontalAlignment",
+      "type": "System.Windows.HorizontalAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "ResizeTabHorizontalAlignment property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.ResizeTabHorizontalAlignment"
+    },
+    {
+      "name": "ResizeTabMargin",
+      "type": "System.Windows.Thickness",
+      "getter": true,
+      "setter": true,
+      "summary": "ResizeTabMargin property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.ResizeTabMargin"
+    },
+    {
+      "name": "ResizeTabVerticalAlignment",
+      "type": "System.Windows.VerticalAlignment",
+      "getter": true,
+      "setter": true,
+      "summary": "ResizeTabVerticalAlignment property of ResizeablePanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ResizeablePanel.ResizeTabVerticalAlignment"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

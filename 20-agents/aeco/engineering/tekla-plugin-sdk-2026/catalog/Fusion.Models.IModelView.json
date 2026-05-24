@@ -1,0 +1,54 @@
+{
+  "name": "IModelView",
+  "namespace": "Fusion.Models",
+  "kind": "interface",
+  "summary": "IModelView interface in Fusion.Models.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.IModelView",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "EntityPickedCallback",
+      "type": "Fusion.Models.EntityPickedCallbackDelegate",
+      "getter": true,
+      "setter": true,
+      "summary": "EntityPickedCallback property of IModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.IModelView.EntityPickedCallback"
+    },
+    {
+      "name": "EntityPickingCallback",
+      "type": "Fusion.Models.EntityPickingCallbackDelegate",
+      "getter": true,
+      "setter": true,
+      "summary": "EntityPickingCallback property of IModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.IModelView.EntityPickingCallback"
+    },
+    {
+      "name": "EntityStates",
+      "type": "Fusion.Models.EntityStates",
+      "getter": true,
+      "setter": true,
+      "summary": "EntityStates property of IModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.IModelView.EntityStates"
+    },
+    {
+      "name": "IsPickingEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IsPickingEnabled property of IModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.IModelView.IsPickingEnabled"
+    },
+    {
+      "name": "Model",
+      "type": "Fusion.Models.Model",
+      "getter": true,
+      "setter": true,
+      "summary": "Model property of IModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.IModelView.Model"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

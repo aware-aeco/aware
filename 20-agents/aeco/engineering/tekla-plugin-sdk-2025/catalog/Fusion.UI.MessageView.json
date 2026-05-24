@@ -1,0 +1,74 @@
+{
+  "name": "MessageView",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "MessageView class in Fusion.UI.",
+  "base": "System.Windows.Controls.Control",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.MessageView",
+  "constructors": [
+    {
+      "name": "MessageView()",
+      "signature": "MessageView()",
+      "summary": "Constructs a new MessageView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.MessageView.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Buttons",
+      "type": "System.Collections.IEnumerable",
+      "getter": true,
+      "setter": true,
+      "summary": "Buttons property of MessageView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MessageView.Buttons"
+    },
+    {
+      "name": "CancelButton",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CancelButton property of MessageView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MessageView.CancelButton"
+    },
+    {
+      "name": "DefaultButton",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultButton property of MessageView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MessageView.DefaultButton"
+    },
+    {
+      "name": "Icon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Icon property of MessageView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MessageView.Icon"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Text property of MessageView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MessageView.Text"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Title property of MessageView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MessageView.Title"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

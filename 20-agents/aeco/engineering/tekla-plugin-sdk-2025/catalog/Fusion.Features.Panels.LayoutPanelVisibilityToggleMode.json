@@ -1,0 +1,26 @@
+{
+  "name": "LayoutPanelVisibilityToggleMode",
+  "namespace": "Fusion.Features.Panels",
+  "kind": "enum",
+  "summary": "LayoutPanelVisibilityToggleMode enum in Fusion.Features.Panels.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Features.Panels.LayoutPanelVisibilityToggleMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Disabled",
+      "value": 0
+    },
+    {
+      "name": "SelectedOnly",
+      "value": 1
+    },
+    {
+      "name": "AllLayoutPanels",
+      "value": 2
+    }
+  ]
+}

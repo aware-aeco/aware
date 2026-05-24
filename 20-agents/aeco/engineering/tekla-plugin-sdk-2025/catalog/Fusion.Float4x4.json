@@ -1,0 +1,299 @@
+{
+  "name": "Float4x4",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Float4x4 struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Float4x4\u003E",
+    "System.IEquatable\u003CFusion.Float4x4\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Float4x4",
+  "constructors": [
+    {
+      "name": "Float4x4(Fusion.Float4, Fusion.Float4, Fusion.Float4, Fusion.Float4)",
+      "signature": "Float4x4(Fusion.Float4 col1, Fusion.Float4 col2, Fusion.Float4 col3, Fusion.Float4 col4)",
+      "summary": "Constructs a new Float4x4.",
+      "params": [
+        {
+          "name": "col1",
+          "type": "Fusion.Float4",
+          "optional": false
+        },
+        {
+          "name": "col2",
+          "type": "Fusion.Float4",
+          "optional": false
+        },
+        {
+          "name": "col3",
+          "type": "Fusion.Float4",
+          "optional": false
+        },
+        {
+          "name": "col4",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.%23ctor%28Fusion.Float4%2CFusion.Float4%2CFusion.Float4%2CFusion.Float4%29"
+    },
+    {
+      "name": "Float4x4(float)",
+      "signature": "Float4x4(float diagonal)",
+      "summary": "Constructs a new Float4x4.",
+      "params": [
+        {
+          "name": "diagonal",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.%23ctor%28System.Single%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Float4x4 other)",
+      "summary": "Equals method of Float4x4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.Equals%28Fusion.Float4x4%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Float4x4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Float4x4 other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Float4x4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.Near%28Fusion.Float4x4%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Float4x4.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.GetHashCode"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Float4x4 op_Multiply(Fusion.Float4x4 a, Fusion.Float4x4 b)",
+      "summary": "op_Multiply method of Float4x4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.op_Multiply%28Fusion.Float4x4%2CFusion.Float4x4%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Float4x4 a, Fusion.Float4x4 b)",
+      "summary": "op_Equality method of Float4x4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.op_Equality%28Fusion.Float4x4%2CFusion.Float4x4%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Float4x4 a, Fusion.Float4x4 b)",
+      "summary": "op_Inequality method of Float4x4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.op_Inequality%28Fusion.Float4x4%2CFusion.Float4x4%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Float4x4.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float4x4.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Column1",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Column1 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Column1"
+    },
+    {
+      "name": "Column2",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Column2 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Column2"
+    },
+    {
+      "name": "Column3",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Column3 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Column3"
+    },
+    {
+      "name": "Column4",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Column4 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Column4"
+    },
+    {
+      "name": "Item",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Item%28System.Int32%29"
+    },
+    {
+      "name": "Row1",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Row1 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Row1"
+    },
+    {
+      "name": "Row2",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Row2 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Row2"
+    },
+    {
+      "name": "Row3",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Row3 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Row3"
+    },
+    {
+      "name": "Row4",
+      "type": "Fusion.Float4",
+      "getter": true,
+      "setter": false,
+      "summary": "Row4 property of Float4x4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float4x4.Row4"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

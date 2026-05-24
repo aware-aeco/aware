@@ -1,0 +1,22 @@
+{
+  "name": "OnParseFailure",
+  "namespace": "Fusion.UI",
+  "kind": "enum",
+  "summary": "OnParseFailure enum in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.OnParseFailure",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "UseZero",
+      "value": 0
+    },
+    {
+      "name": "UsePreviousValue",
+      "value": 1
+    }
+  ]
+}

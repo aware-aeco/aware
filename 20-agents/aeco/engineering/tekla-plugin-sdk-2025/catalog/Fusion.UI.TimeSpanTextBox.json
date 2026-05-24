@@ -1,0 +1,25 @@
+{
+  "name": "TimeSpanTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "TimeSpanTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CSystem.TimeSpan, Fusion.Formatting.TimeSpanFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.TimeSpanTextBox",
+  "constructors": [
+    {
+      "name": "TimeSpanTextBox()",
+      "signature": "TimeSpanTextBox()",
+      "summary": "Constructs a new TimeSpanTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TimeSpanTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

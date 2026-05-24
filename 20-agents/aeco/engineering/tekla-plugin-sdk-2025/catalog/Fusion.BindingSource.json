@@ -1,0 +1,69 @@
+{
+  "name": "BindingSource",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "BindingSource class in Fusion.",
+  "interfaces": [
+    "System.ComponentModel.INotifyPropertyChanged"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.BindingSource",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RaisePropertyChanged",
+      "signature": "void RaisePropertyChanged(string propertyName = null)",
+      "summary": "RaisePropertyChanged method of BindingSource.",
+      "params": [
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BindingSource.RaisePropertyChanged%28System.String%29"
+    },
+    {
+      "name": "RaisePropertyChanged",
+      "signature": "void RaisePropertyChanged(string propertyName1, string propertyName2, string[] propertyNames)",
+      "summary": "RaisePropertyChanged method of BindingSource.",
+      "params": [
+        {
+          "name": "propertyName1",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyName2",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "propertyNames",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BindingSource.RaisePropertyChanged%28System.String%2CSystem.String%2CSystem.String%5B%5D%29"
+    }
+  ],
+  "properties": [],
+  "events": [
+    {
+      "name": "PropertyChanged",
+      "delegate": "System.ComponentModel.PropertyChangedEventHandler",
+      "signature": "event System.ComponentModel.PropertyChangedEventHandler PropertyChanged",
+      "summary": "PropertyChanged event of BindingSource.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.BindingSource.PropertyChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

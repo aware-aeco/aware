@@ -1,0 +1,213 @@
+{
+  "name": "VolumeFlowFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "VolumeFlowFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003CFusion.VolumeFlow, Fusion.VolumeFlowUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.VolumeFlowFormatter",
+  "constructors": [
+    {
+      "name": "VolumeFlowFormatter()",
+      "signature": "VolumeFlowFormatter()",
+      "summary": "Constructs a new VolumeFlowFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.%23ctor"
+    },
+    {
+      "name": "VolumeFlowFormatter(Fusion.VolumeFlowUnit)",
+      "signature": "VolumeFlowFormatter(Fusion.VolumeFlowUnit unit)",
+      "summary": "Constructs a new VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.VolumeFlowUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.%23ctor%28Fusion.VolumeFlowUnit%29"
+    },
+    {
+      "name": "VolumeFlowFormatter(Fusion.VolumeFlowUnit, Fusion.VolumeFlowUnit)",
+      "signature": "VolumeFlowFormatter(Fusion.VolumeFlowUnit unit, Fusion.VolumeFlowUnit formatUnit)",
+      "summary": "Constructs a new VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.VolumeFlowUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.VolumeFlowUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.%23ctor%28Fusion.VolumeFlowUnit%2CFusion.VolumeFlowUnit%29"
+    },
+    {
+      "name": "VolumeFlowFormatter(Fusion.VolumeFlowUnit, Fusion.VolumeFlowUnit, string, System.IFormatProvider)",
+      "signature": "VolumeFlowFormatter(Fusion.VolumeFlowUnit unit, Fusion.VolumeFlowUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.VolumeFlowUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.VolumeFlowUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.%23ctor%28Fusion.VolumeFlowUnit%2CFusion.VolumeFlowUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "VolumeFlowFormatter(Fusion.VolumeFlowUnit, string, System.IFormatProvider)",
+      "signature": "VolumeFlowFormatter(Fusion.VolumeFlowUnit unit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.VolumeFlowUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.%23ctor%28Fusion.VolumeFlowUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out Fusion.VolumeFlow value)",
+      "summary": "TryParse method of VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.VolumeFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CFusion.VolumeFlow%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.VolumeFlowFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.VolumeFlowFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.VolumeFlowFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.VolumeFlowFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.VolumeFlowFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(Fusion.VolumeFlow value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of VolumeFlowFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.VolumeFlow",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.VolumeFlowFormatter.ToString%28Fusion.VolumeFlow%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

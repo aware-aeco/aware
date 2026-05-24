@@ -1,0 +1,762 @@
+{
+  "name": "Area",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Area struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Area\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Area\u003E",
+    "System.IEquatable\u003CFusion.Area\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Area",
+  "constructors": [
+    {
+      "name": "Area(double)",
+      "signature": "Area(double squareMillimeters)",
+      "summary": "Constructs a new Area.",
+      "params": [
+        {
+          "name": "squareMillimeters",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Area other)",
+      "summary": "Equals method of Area.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Equals%28Fusion.Area%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Area.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Area other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Area.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Near%28Fusion.Area%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.AreaUnit areaUnit)",
+      "summary": "To method of Area.",
+      "params": [
+        {
+          "name": "areaUnit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.To%28Fusion.AreaUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Area other)",
+      "summary": "CompareTo method of Area.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.CompareTo%28Fusion.Area%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Area.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Area.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Area Abs(Fusion.Area area)",
+      "summary": "Abs method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Abs%28Fusion.Area%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.Area From(double area, Fusion.AreaUnit areaUnit)",
+      "summary": "From method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "areaUnit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.From%28System.Double%2CFusion.AreaUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Area Max(Fusion.Area a, Fusion.Area b)",
+      "summary": "Max method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Max%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Area Min(Fusion.Area a, Fusion.Area b)",
+      "summary": "Min method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Min%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Area Round(Fusion.Area area, Fusion.Area precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Round%28Fusion.Area%2CFusion.Area%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Area op_Addition(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_Addition method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Addition%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Area op_Division(Fusion.Area a, double b)",
+      "summary": "op_Division method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Division%28Fusion.Area%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Area op_Modulus(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_Modulus method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Modulus%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Area op_Multiply(Fusion.Area a, double b)",
+      "summary": "op_Multiply method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Multiply%28Fusion.Area%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Area op_Multiply(double a, Fusion.Area b)",
+      "summary": "op_Multiply method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Multiply%28System.Double%2CFusion.Area%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Area op_Subtraction(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_Subtraction method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Subtraction%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Area op_UnaryNegation(Fusion.Area a)",
+      "summary": "op_UnaryNegation method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_UnaryNegation%28Fusion.Area%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Area area)",
+      "summary": "IsInfinity method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.IsInfinity%28Fusion.Area%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Area area)",
+      "summary": "IsNaN method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.IsNaN%28Fusion.Area%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Area area)",
+      "summary": "IsNegativeInfinity method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.IsNegativeInfinity%28Fusion.Area%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Area area)",
+      "summary": "IsPositiveInfinity method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.IsPositiveInfinity%28Fusion.Area%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_Equality method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Equality%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_GreaterThan method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_GreaterThan%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_GreaterThanOrEqual method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_GreaterThanOrEqual%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_Inequality method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Inequality%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_LessThan method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_LessThan%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_LessThanOrEqual method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_LessThanOrEqual%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.Area a, Fusion.Area b)",
+      "summary": "op_Division method of Area.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.op_Division%28Fusion.Area%2CFusion.Area%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Area area)",
+      "summary": "Sign method of Area.",
+      "params": [
+        {
+          "name": "area",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.Sign%28Fusion.Area%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Area.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Area.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Area.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SquareMillimeters",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "SquareMillimeters property of Area.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Area.SquareMillimeters"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

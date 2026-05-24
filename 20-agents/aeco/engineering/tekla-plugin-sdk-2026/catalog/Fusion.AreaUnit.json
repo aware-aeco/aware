@@ -1,0 +1,38 @@
+{
+  "name": "AreaUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "AreaUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.AreaUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SquareMillimeter",
+      "value": 0
+    },
+    {
+      "name": "SquareCentimeter",
+      "value": 1
+    },
+    {
+      "name": "SquareMeter",
+      "value": 2
+    },
+    {
+      "name": "SquareInch",
+      "value": 3
+    },
+    {
+      "name": "SquareFoot",
+      "value": 4
+    },
+    {
+      "name": "SquareYard",
+      "value": 5
+    }
+  ]
+}

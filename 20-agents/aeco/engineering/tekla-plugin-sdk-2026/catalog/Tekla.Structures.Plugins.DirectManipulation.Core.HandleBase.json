@@ -1,0 +1,157 @@
+{
+  "name": "HandleBase",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core",
+  "kind": "class",
+  "summary": "Represents a (potentially) draggable handle",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.HandleBase",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Disposes the handle. This can be used to remove a handle from the screen.",
+      "remarks": "The object becomes unusable after calling dispose, and it is unsafe to use the properties of the handle.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.Dispose"
+    },
+    {
+      "name": "SetFreeTolerationBehavior",
+      "signature": "void SetFreeTolerationBehavior()",
+      "summary": "Sets the toleration behavior to be free toleration.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.SetFreeTolerationBehavior"
+    },
+    {
+      "name": "SetLineTolerationBehavior",
+      "signature": "void SetLineTolerationBehavior(Tekla.Structures.Geometry3d.Line tolerationLine)",
+      "summary": "Sets the toleration behavior to be restricted to the tolerationLine.",
+      "params": [
+        {
+          "name": "tolerationLine",
+          "type": "Tekla.Structures.Geometry3d.Line",
+          "doc": "The line to define the toleration line.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.SetLineTolerationBehavior%28Tekla.Structures.Geometry3d.Line%29"
+    },
+    {
+      "name": "SetPlaneTolerationBehavior",
+      "signature": "void SetPlaneTolerationBehavior(Tekla.Structures.Geometry3d.GeometricPlane tolerationPlane)",
+      "summary": "Sets the toleration behavior to be restricted to the plane defined by the tolerationPlane.",
+      "params": [
+        {
+          "name": "tolerationPlane",
+          "type": "Tekla.Structures.Geometry3d.GeometricPlane",
+          "doc": "The plane to define the toleration plane.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.SetPlaneTolerationBehavior%28Tekla.Structures.Geometry3d.GeometricPlane%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "IsDragOngoing",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the handle is being dragged.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.IsDragOngoing"
+    },
+    {
+      "name": "IsHighlighted",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the handle is highlighted.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.IsHighlighted"
+    },
+    {
+      "name": "IsInvalid",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the handle is invalid (which may change its appearance).",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.IsInvalid"
+    },
+    {
+      "name": "IsSelected",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether the handle is selected.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.IsSelected"
+    },
+    {
+      "name": "IsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets a value indicating whether the handle is visible.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.IsVisible"
+    },
+    {
+      "name": "Tag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value that contains additional info for the handle. As a user, this may be set to transport information related to the context of the handle.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.Tag"
+    }
+  ],
+  "events": [
+    {
+      "name": "DragEnded",
+      "delegate": "System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs\u003E DragEnded",
+      "summary": "Occurs when dragging ends.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.DragEnded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DragOngoing",
+      "delegate": "System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs\u003E DragOngoing",
+      "summary": "Occurs while dragging continues at periodic intervals.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.DragOngoing",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "DragStarted",
+      "delegate": "System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.DragEventArgs\u003E DragStarted",
+      "summary": "Occurs when dragging starts.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.DragStarted",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "SelectedChanged",
+      "delegate": "System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.SelectionEventArgs\u003E",
+      "signature": "event System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Handles.SelectionEventArgs\u003E SelectedChanged",
+      "summary": "Occurs when the value of the Selected property has changed.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Core.HandleBase.SelectedChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,52 @@
+{
+  "name": "FileType",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "FileType class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.FileType",
+  "constructors": [
+    {
+      "name": "FileType(string, string[])",
+      "signature": "FileType(string description, string[] extensions)",
+      "summary": "Constructs a new FileType.",
+      "params": [
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "extensions",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FileType.%23ctor%28System.String%2CSystem.String%5B%5D%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Description",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Description property of FileType.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.FileType.Description"
+    },
+    {
+      "name": "Extensions",
+      "type": "string[]",
+      "getter": true,
+      "setter": false,
+      "summary": "Extensions property of FileType.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.FileType.Extensions"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,94 @@
+{
+  "name": "BufferedTraceListener",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "BufferedTraceListener class in Fusion.",
+  "base": "System.Diagnostics.TraceListener",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.BufferedTraceListener",
+  "constructors": [
+    {
+      "name": "BufferedTraceListener()",
+      "signature": "BufferedTraceListener()",
+      "summary": "Constructs a new BufferedTraceListener.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BufferedTraceListener.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Take",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E Take(int count)",
+      "summary": "Take method of BufferedTraceListener.",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BufferedTraceListener.Take%28System.Int32%29"
+    },
+    {
+      "name": "Write",
+      "signature": "void Write(string message)",
+      "summary": "Write method of BufferedTraceListener.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BufferedTraceListener.Write%28System.String%29"
+    },
+    {
+      "name": "WriteLine",
+      "signature": "void WriteLine(string message)",
+      "summary": "WriteLine method of BufferedTraceListener.",
+      "params": [
+        {
+          "name": "message",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.BufferedTraceListener.WriteLine%28System.String%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BufferSize",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "BufferSize property of BufferedTraceListener.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.BufferedTraceListener.BufferSize"
+    },
+    {
+      "name": "IsThreadSafe",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsThreadSafe property of BufferedTraceListener.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.BufferedTraceListener.IsThreadSafe"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

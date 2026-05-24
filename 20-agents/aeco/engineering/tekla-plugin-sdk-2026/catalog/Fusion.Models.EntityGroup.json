@@ -1,0 +1,114 @@
+{
+  "name": "EntityGroup",
+  "namespace": "Fusion.Models",
+  "kind": "class",
+  "summary": "EntityGroup class in Fusion.Models.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Models.EntityGroup\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.EntityGroup",
+  "constructors": [
+    {
+      "name": "EntityGroup(System.Guid)",
+      "signature": "EntityGroup(System.Guid identifier)",
+      "summary": "Constructs a new EntityGroup.",
+      "params": [
+        {
+          "name": "identifier",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityGroup.%23ctor%28System.Guid%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Models.EntityGroup other)",
+      "summary": "Equals method of EntityGroup.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Models.EntityGroup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityGroup.Equals%28Fusion.Models.EntityGroup%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of EntityGroup.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityGroup.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of EntityGroup.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityGroup.GetHashCode"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of EntityGroup.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityGroup.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Entities",
+      "type": "System.Collections.Generic.IEnumerable\u003CFusion.Models.Entity\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Entities property of EntityGroup.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.EntityGroup.Entities"
+    },
+    {
+      "name": "Identifier",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifier property of EntityGroup.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.EntityGroup.Identifier"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,77 @@
+{
+  "name": "Progress",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "Progress class in Fusion.",
+  "base": "Fusion.ProgressBase",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Progress",
+  "constructors": [
+    {
+      "name": "Progress()",
+      "signature": "Progress()",
+      "summary": "Constructs a new Progress.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Progress.%23ctor"
+    },
+    {
+      "name": "Progress(System.Threading.CancellationTokenSource)",
+      "signature": "Progress(System.Threading.CancellationTokenSource parentCancellationTokenSource)",
+      "summary": "Constructs a new Progress.",
+      "params": [
+        {
+          "name": "parentCancellationTokenSource",
+          "type": "System.Threading.CancellationTokenSource",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Progress.%23ctor%28System.Threading.CancellationTokenSource%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Complete",
+      "signature": "void Complete()",
+      "summary": "Complete method of Progress.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Progress.Complete"
+    },
+    {
+      "name": "Failed",
+      "signature": "void Failed(System.Exception exception)",
+      "summary": "Failed method of Progress.",
+      "params": [
+        {
+          "name": "exception",
+          "type": "System.Exception",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Progress.Failed%28System.Exception%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Completed",
+      "type": "System.Threading.Tasks.Task",
+      "getter": true,
+      "setter": false,
+      "summary": "Completed property of Progress.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Progress.Completed"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

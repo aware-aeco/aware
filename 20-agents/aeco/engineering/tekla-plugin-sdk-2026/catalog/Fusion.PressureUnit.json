@@ -1,0 +1,90 @@
+{
+  "name": "PressureUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "PressureUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PressureUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "NewtonPerSquareMeter",
+      "value": 0
+    },
+    {
+      "name": "NewtonPerSquareCentimeter",
+      "value": 1
+    },
+    {
+      "name": "NewtonPerSquareMillimeter",
+      "value": 2
+    },
+    {
+      "name": "KilogramPerSquareMeter",
+      "value": 3
+    },
+    {
+      "name": "KilogramPerSquareCentimeter",
+      "value": 4
+    },
+    {
+      "name": "KilogramPerSquareMillimeter",
+      "value": 5
+    },
+    {
+      "name": "TonnePerSquareMeter",
+      "value": 6
+    },
+    {
+      "name": "TonnePerSquareCentimeter",
+      "value": 7
+    },
+    {
+      "name": "TonnePerSquareMillimeter",
+      "value": 8
+    },
+    {
+      "name": "DecaNewtonPerSquareMeter",
+      "value": 9
+    },
+    {
+      "name": "DecaNewtonPerSquareCentimeter",
+      "value": 10
+    },
+    {
+      "name": "DecaNewtonPerSquareMillimeter",
+      "value": 11
+    },
+    {
+      "name": "KiloNewtonPerSquareMeter",
+      "value": 12
+    },
+    {
+      "name": "KiloNewtonPerSquareCentimeter",
+      "value": 13
+    },
+    {
+      "name": "KiloNewtonPerSquareMillimeter",
+      "value": 14
+    },
+    {
+      "name": "PoundForcePerSquareInch",
+      "value": 15
+    },
+    {
+      "name": "PoundForcePerSquareFoot",
+      "value": 16
+    },
+    {
+      "name": "KiloPoundForcePerSquareInch",
+      "value": 17
+    },
+    {
+      "name": "KiloPoundForcePerSquareFoot",
+      "value": 18
+    }
+  ]
+}

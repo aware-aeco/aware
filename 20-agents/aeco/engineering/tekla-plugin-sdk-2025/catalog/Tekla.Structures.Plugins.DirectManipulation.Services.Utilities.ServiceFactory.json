@@ -1,0 +1,98 @@
+{
+  "name": "ServiceFactory",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Utilities",
+  "kind": "static-class",
+  "summary": "The ServiceFactory class provides utility factory methods for the API.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Utilities.ServiceFactory",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateHighlighter",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Highlighter CreateHighlighter(Tekla.Structures.Plugins.DirectManipulation.Internal.Features.DirectManipulationApiFeatureBase feature)",
+      "summary": "Creates a highlighter.",
+      "params": [
+        {
+          "name": "feature",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Internal.Features.DirectManipulationApiFeatureBase",
+          "doc": "The feature.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Highlighter",
+        "doc": "A Highlighter to highlight objects in the model."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ServiceFactory.CreateHighlighter%28Tekla.Structures.Plugins.DirectManipulation.Internal.Features.DirectManipulationApiFeatureBase%29"
+    },
+    {
+      "name": "CreatePickingTool",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.PickingTool CreatePickingTool(Tekla.Structures.Plugins.DirectManipulation.Internal.Features.ComponentCreationFeatureBase feature, Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange inputRange, Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputTypes inputTypes)",
+      "summary": "Creates a picking tool.",
+      "params": [
+        {
+          "name": "feature",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Internal.Features.ComponentCreationFeatureBase",
+          "doc": "The feature.",
+          "optional": false
+        },
+        {
+          "name": "inputRange",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+          "doc": "The input range.",
+          "optional": false
+        },
+        {
+          "name": "inputTypes",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputTypes",
+          "doc": "The input types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.PickingTool",
+        "doc": "A picking tool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ServiceFactory.CreatePickingTool%28Tekla.Structures.Plugins.DirectManipulation.Internal.Features.ComponentCreationFeatureBase%2CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange%2CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputTypes%29"
+    },
+    {
+      "name": "CreatePickingTool",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.PickingTool CreatePickingTool(Tekla.Structures.Plugins.DirectManipulation.Internal.Features.CustomPartCreationFeatureBase feature, Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange inputRange, Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputTypes inputTypes)",
+      "summary": "Creates a picking tool.",
+      "params": [
+        {
+          "name": "feature",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Internal.Features.CustomPartCreationFeatureBase",
+          "doc": "The feature.",
+          "optional": false
+        },
+        {
+          "name": "inputRange",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+          "doc": "The input range.",
+          "optional": false
+        },
+        {
+          "name": "inputTypes",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputTypes",
+          "doc": "The input types.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.PickingTool",
+        "doc": "A picking tool."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ServiceFactory.CreatePickingTool%28Tekla.Structures.Plugins.DirectManipulation.Internal.Features.CustomPartCreationFeatureBase%2CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange%2CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputTypes%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

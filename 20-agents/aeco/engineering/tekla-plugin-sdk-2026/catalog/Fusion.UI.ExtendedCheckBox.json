@@ -1,0 +1,74 @@
+{
+  "name": "ExtendedCheckBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ExtendedCheckBox class in Fusion.UI.",
+  "base": "System.Windows.Controls.CheckBox",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ExtendedCheckBox",
+  "constructors": [
+    {
+      "name": "ExtendedCheckBox()",
+      "signature": "ExtendedCheckBox()",
+      "summary": "Constructs a new ExtendedCheckBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ExtendedCheckBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CheckedCommand",
+      "type": "System.Windows.Input.ICommand",
+      "getter": true,
+      "setter": true,
+      "summary": "CheckedCommand property of ExtendedCheckBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ExtendedCheckBox.CheckedCommand"
+    },
+    {
+      "name": "CheckedCommandParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "CheckedCommandParameter property of ExtendedCheckBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ExtendedCheckBox.CheckedCommandParameter"
+    },
+    {
+      "name": "CheckedGeometry",
+      "type": "System.Windows.Media.Geometry",
+      "getter": true,
+      "setter": true,
+      "summary": "CheckedGeometry property of ExtendedCheckBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ExtendedCheckBox.CheckedGeometry"
+    },
+    {
+      "name": "UncheckedCommand",
+      "type": "System.Windows.Input.ICommand",
+      "getter": true,
+      "setter": true,
+      "summary": "UncheckedCommand property of ExtendedCheckBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ExtendedCheckBox.UncheckedCommand"
+    },
+    {
+      "name": "UncheckedCommandParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "UncheckedCommandParameter property of ExtendedCheckBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ExtendedCheckBox.UncheckedCommandParameter"
+    },
+    {
+      "name": "UncheckedGeometry",
+      "type": "System.Windows.Media.Geometry",
+      "getter": true,
+      "setter": true,
+      "summary": "UncheckedGeometry property of ExtendedCheckBox.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ExtendedCheckBox.UncheckedGeometry"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

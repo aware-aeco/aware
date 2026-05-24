@@ -1,0 +1,54 @@
+{
+  "name": "IHostUser",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IHostUser interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IHostUser",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Authentication",
+      "type": "Fusion.IUserAuthentication",
+      "getter": true,
+      "setter": false,
+      "summary": "Authentication property of IHostUser.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUser.Authentication"
+    },
+    {
+      "name": "Authorization",
+      "type": "Fusion.IUserAuthorization",
+      "getter": true,
+      "setter": false,
+      "summary": "Authorization property of IHostUser.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUser.Authorization"
+    },
+    {
+      "name": "Cookies",
+      "type": "System.Net.CookieContainer",
+      "getter": true,
+      "setter": false,
+      "summary": "Cookies property of IHostUser.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUser.Cookies"
+    },
+    {
+      "name": "Credentials",
+      "type": "System.Net.ICredentials",
+      "getter": true,
+      "setter": false,
+      "summary": "Credentials property of IHostUser.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUser.Credentials"
+    },
+    {
+      "name": "Profile",
+      "type": "Fusion.IUserProfile",
+      "getter": true,
+      "setter": false,
+      "summary": "Profile property of IHostUser.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUser.Profile"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

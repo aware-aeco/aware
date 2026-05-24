@@ -1,0 +1,86 @@
+{
+  "name": "AuthorizationResponse",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "AuthorizationResponse class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.AuthorizationResponse",
+  "constructors": [
+    {
+      "name": "AuthorizationResponse(Fusion.AuthorizationResult, Fusion.AuthorizationToken)",
+      "signature": "AuthorizationResponse(Fusion.AuthorizationResult result, Fusion.AuthorizationToken authorizationToken)",
+      "summary": "Constructs a new AuthorizationResponse.",
+      "params": [
+        {
+          "name": "result",
+          "type": "Fusion.AuthorizationResult",
+          "optional": false
+        },
+        {
+          "name": "authorizationToken",
+          "type": "Fusion.AuthorizationToken",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.AuthorizationResponse.%23ctor%28Fusion.AuthorizationResult%2CFusion.AuthorizationToken%29"
+    },
+    {
+      "name": "AuthorizationResponse(Fusion.AuthorizationResult, Fusion.AuthorizationToken, string)",
+      "signature": "AuthorizationResponse(Fusion.AuthorizationResult result, Fusion.AuthorizationToken authorizationToken, string responseText)",
+      "summary": "Constructs a new AuthorizationResponse.",
+      "params": [
+        {
+          "name": "result",
+          "type": "Fusion.AuthorizationResult",
+          "optional": false
+        },
+        {
+          "name": "authorizationToken",
+          "type": "Fusion.AuthorizationToken",
+          "optional": false
+        },
+        {
+          "name": "responseText",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.AuthorizationResponse.%23ctor%28Fusion.AuthorizationResult%2CFusion.AuthorizationToken%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ResponseText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ResponseText property of AuthorizationResponse.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationResponse.ResponseText"
+    },
+    {
+      "name": "Result",
+      "type": "Fusion.AuthorizationResult",
+      "getter": true,
+      "setter": false,
+      "summary": "Result property of AuthorizationResponse.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationResponse.Result"
+    },
+    {
+      "name": "Token",
+      "type": "Fusion.AuthorizationToken",
+      "getter": true,
+      "setter": false,
+      "summary": "Token property of AuthorizationResponse.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationResponse.Token"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

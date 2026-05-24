@@ -1,0 +1,185 @@
+{
+  "name": "Triangle",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Triangle struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Triangle\u003E",
+    "System.IEquatable\u003CFusion.Triangle\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Triangle",
+  "constructors": [
+    {
+      "name": "Triangle(Fusion.Float3, Fusion.Float3, Fusion.Float3)",
+      "signature": "Triangle(Fusion.Float3 v1, Fusion.Float3 v2, Fusion.Float3 v3)",
+      "summary": "Constructs a new Triangle.",
+      "params": [
+        {
+          "name": "v1",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "v2",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "v3",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.%23ctor%28Fusion.Float3%2CFusion.Float3%2CFusion.Float3%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Triangle other)",
+      "summary": "Equals method of Triangle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Triangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.Equals%28Fusion.Triangle%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Triangle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Triangle other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Triangle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Triangle",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.Near%28Fusion.Triangle%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Triangle.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.GetHashCode"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Triangle a, Fusion.Triangle b)",
+      "summary": "op_Equality method of Triangle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Triangle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Triangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.op_Equality%28Fusion.Triangle%2CFusion.Triangle%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Triangle a, Fusion.Triangle b)",
+      "summary": "op_Inequality method of Triangle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Triangle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Triangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Triangle.op_Inequality%28Fusion.Triangle%2CFusion.Triangle%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Center",
+      "type": "Fusion.Float3",
+      "getter": true,
+      "setter": false,
+      "summary": "Center property of Triangle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Triangle.Center"
+    },
+    {
+      "name": "Normal",
+      "type": "Fusion.Float3",
+      "getter": true,
+      "setter": false,
+      "summary": "Normal property of Triangle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Triangle.Normal"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

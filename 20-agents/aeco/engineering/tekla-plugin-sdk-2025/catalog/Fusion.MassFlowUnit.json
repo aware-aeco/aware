@@ -1,0 +1,26 @@
+{
+  "name": "MassFlowUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "MassFlowUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.MassFlowUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KilogramsPerSecond",
+      "value": 0
+    },
+    {
+      "name": "PoundsPerSecond",
+      "value": 1
+    },
+    {
+      "name": "KilogramsPerHour",
+      "value": 2
+    }
+  ]
+}

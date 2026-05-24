@@ -1,0 +1,362 @@
+{
+  "name": "QueryBuilder",
+  "namespace": "Fusion.Data.Query",
+  "kind": "class",
+  "summary": "QueryBuilder class in Fusion.Data.Query.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Data.Query.QueryBuilder",
+  "constructors": [
+    {
+      "name": "QueryBuilder()",
+      "signature": "QueryBuilder()",
+      "summary": "Constructs a new QueryBuilder.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "And",
+      "signature": "Fusion.Data.Query.QueryBuilder And(string expression)",
+      "summary": "And method of QueryBuilder.",
+      "params": [
+        {
+          "name": "expression",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.And%28System.String%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "Fusion.Data.Query.QueryBuilder Delete()",
+      "summary": "Delete method of QueryBuilder.",
+      "params": [],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Delete"
+    },
+    {
+      "name": "From",
+      "signature": "Fusion.Data.Query.QueryBuilder From(string table)",
+      "summary": "From method of QueryBuilder.",
+      "params": [
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.From%28System.String%29"
+    },
+    {
+      "name": "GroupBy",
+      "signature": "Fusion.Data.Query.QueryBuilder GroupBy(string[] columns)",
+      "summary": "GroupBy method of QueryBuilder.",
+      "params": [
+        {
+          "name": "columns",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.GroupBy%28System.String%5B%5D%29"
+    },
+    {
+      "name": "Having",
+      "signature": "Fusion.Data.Query.QueryBuilder Having(string expression)",
+      "summary": "Having method of QueryBuilder.",
+      "params": [
+        {
+          "name": "expression",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Having%28System.String%29"
+    },
+    {
+      "name": "Insert",
+      "signature": "Fusion.Data.Query.QueryBuilder Insert()",
+      "summary": "Insert method of QueryBuilder.",
+      "params": [],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Insert"
+    },
+    {
+      "name": "Into",
+      "signature": "Fusion.Data.Query.QueryBuilder Into(string table)",
+      "summary": "Into method of QueryBuilder.",
+      "params": [
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Into%28System.String%29"
+    },
+    {
+      "name": "Limit",
+      "signature": "Fusion.Data.Query.QueryBuilder Limit(int count, int offset = 0)",
+      "summary": "Limit method of QueryBuilder.",
+      "params": [
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Limit%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "OrIgnore",
+      "signature": "Fusion.Data.Query.QueryBuilder OrIgnore()",
+      "summary": "OrIgnore method of QueryBuilder.",
+      "params": [],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.OrIgnore"
+    },
+    {
+      "name": "OrReplace",
+      "signature": "Fusion.Data.Query.QueryBuilder OrReplace()",
+      "summary": "OrReplace method of QueryBuilder.",
+      "params": [],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.OrReplace"
+    },
+    {
+      "name": "OrderBy",
+      "signature": "Fusion.Data.Query.QueryBuilder OrderBy(string[] columns)",
+      "summary": "OrderBy method of QueryBuilder.",
+      "params": [
+        {
+          "name": "columns",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.OrderBy%28System.String%5B%5D%29"
+    },
+    {
+      "name": "Select",
+      "signature": "Fusion.Data.Query.QueryBuilder Select(string expression)",
+      "summary": "Select method of QueryBuilder.",
+      "params": [
+        {
+          "name": "expression",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Select%28System.String%29"
+    },
+    {
+      "name": "Select",
+      "signature": "Fusion.Data.Query.QueryBuilder Select\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E columns)",
+      "summary": "Select method of QueryBuilder.",
+      "params": [
+        {
+          "name": "columns",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Select%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%29"
+    },
+    {
+      "name": "Set",
+      "signature": "Fusion.Data.Query.QueryBuilder Set\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E columns)",
+      "summary": "Set method of QueryBuilder.",
+      "params": [
+        {
+          "name": "columns",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Set%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%29"
+    },
+    {
+      "name": "Update",
+      "signature": "Fusion.Data.Query.QueryBuilder Update(string table)",
+      "summary": "Update method of QueryBuilder.",
+      "params": [
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Update%28System.String%29"
+    },
+    {
+      "name": "Values",
+      "signature": "Fusion.Data.Query.QueryBuilder Values\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E columns)",
+      "summary": "Values method of QueryBuilder.",
+      "params": [
+        {
+          "name": "columns",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Values%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%29"
+    },
+    {
+      "name": "Where",
+      "signature": "Fusion.Data.Query.QueryBuilder Where(string expression)",
+      "summary": "Where method of QueryBuilder.",
+      "params": [
+        {
+          "name": "expression",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Where%28System.String%29"
+    },
+    {
+      "name": "Where",
+      "signature": "Fusion.Data.Query.QueryBuilder Where\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E columns)",
+      "summary": "Where method of QueryBuilder.",
+      "params": [
+        {
+          "name": "columns",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Data.Query.QueryBuilder",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.Where%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of QueryBuilder.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryBuilder.ToString"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

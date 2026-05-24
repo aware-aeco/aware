@@ -1,0 +1,26 @@
+{
+  "name": "ManipulatorBase",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core",
+  "kind": "class",
+  "summary": "The ManipulatorBase class is a base class used to wrap the manipulator concept for the DM API.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.ManipulatorBase",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of ManipulatorBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.ManipulatorBase.Dispose"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,139 @@
+{
+  "name": "Validator",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "Validator class in Fusion.UI.",
+  "base": "System.Windows.Controls.ValidationRule",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.Validator",
+  "constructors": [
+    {
+      "name": "Validator()",
+      "signature": "Validator()",
+      "summary": "Constructs a new Validator.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Validator.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Validate",
+      "signature": "System.Windows.Controls.ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)",
+      "summary": "Validate method of Validator.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "cultureInfo",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Controls.ValidationResult",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Validator.Validate%28System.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "GetErrorToolTip",
+      "signature": "static object GetErrorToolTip(System.Windows.Controls.AdornedElementPlaceholder element)",
+      "summary": "GetErrorToolTip method of Validator.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.AdornedElementPlaceholder",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Validator.GetErrorToolTip%28System.Windows.Controls.AdornedElementPlaceholder%29"
+    },
+    {
+      "name": "SetErrorToolTip",
+      "signature": "static void SetErrorToolTip(System.Windows.Controls.AdornedElementPlaceholder element, object value)",
+      "summary": "SetErrorToolTip method of Validator.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.AdornedElementPlaceholder",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Validator.SetErrorToolTip%28System.Windows.Controls.AdornedElementPlaceholder%2CSystem.Object%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Callback",
+      "type": "Fusion.UI.ValidatorCallback",
+      "getter": true,
+      "setter": true,
+      "summary": "Callback property of Validator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Validator.Callback"
+    },
+    {
+      "name": "ErrorMessageOrResourceKey",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ErrorMessageOrResourceKey property of Validator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Validator.ErrorMessageOrResourceKey"
+    },
+    {
+      "name": "IsDateTime",
+      "type": "Fusion.UI.ValidatorCallback",
+      "getter": true,
+      "setter": false,
+      "summary": "IsDateTime property of Validator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Validator.IsDateTime"
+    },
+    {
+      "name": "IsGreaterThanZero",
+      "type": "Fusion.UI.ValidatorCallback",
+      "getter": true,
+      "setter": false,
+      "summary": "IsGreaterThanZero property of Validator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Validator.IsGreaterThanZero"
+    },
+    {
+      "name": "IsNonEmptyString",
+      "type": "Fusion.UI.ValidatorCallback",
+      "getter": true,
+      "setter": false,
+      "summary": "IsNonEmptyString property of Validator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Validator.IsNonEmptyString"
+    },
+    {
+      "name": "IsNonNumericString",
+      "type": "Fusion.UI.ValidatorCallback",
+      "getter": true,
+      "setter": false,
+      "summary": "IsNonNumericString property of Validator.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Validator.IsNonNumericString"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

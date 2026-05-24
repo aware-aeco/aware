@@ -1,0 +1,26 @@
+{
+  "name": "VolumeFlowUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "VolumeFlowUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.VolumeFlowUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "CubicMetersPerSecond",
+      "value": 0
+    },
+    {
+      "name": "CubicFeetPerSecond",
+      "value": 1
+    },
+    {
+      "name": "LitresPerSecond",
+      "value": 2
+    }
+  ]
+}

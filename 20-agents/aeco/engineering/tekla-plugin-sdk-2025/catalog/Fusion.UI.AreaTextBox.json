@@ -1,0 +1,25 @@
+{
+  "name": "AreaTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "AreaTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CFusion.Area, Fusion.Formatting.AreaFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.AreaTextBox",
+  "constructors": [
+    {
+      "name": "AreaTextBox()",
+      "signature": "AreaTextBox()",
+      "summary": "Constructs a new AreaTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AreaTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

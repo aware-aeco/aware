@@ -1,0 +1,29 @@
+{
+  "name": "HandleEffectType",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles",
+  "kind": "enum",
+  "summary": "Defines what the effect of a handle is.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Geometry",
+      "value": 0,
+      "summary": "The handle modifies the geometry by changing input points."
+    },
+    {
+      "name": "Property",
+      "value": 1,
+      "summary": "The handle modifies any object properties, or the handle modifies both object properties and input points."
+    },
+    {
+      "name": "Addition",
+      "value": 2,
+      "summary": "The handle makes additions to the geometry when clicked."
+    }
+  ]
+}

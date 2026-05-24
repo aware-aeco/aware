@@ -1,0 +1,1125 @@
+{
+  "name": "Float2",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Float2 struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Float2\u003E",
+    "System.IEquatable\u003CFusion.Float2\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Float2",
+  "constructors": [
+    {
+      "name": "Float2(float)",
+      "signature": "Float2(float all)",
+      "summary": "Constructs a new Float2.",
+      "params": [
+        {
+          "name": "all",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.%23ctor%28System.Single%29"
+    },
+    {
+      "name": "Float2(float, float)",
+      "signature": "Float2(float x, float y)",
+      "summary": "Constructs a new Float2.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.%23ctor%28System.Single%2CSystem.Single%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Float2 other)",
+      "summary": "Equals method of Float2.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Equals%28Fusion.Float2%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Float2.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Float2 other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Float2.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Near%28Fusion.Float2%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Float2.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Float2 Abs(Fusion.Float2 value)",
+      "summary": "Abs method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Abs%28Fusion.Float2%29"
+    },
+    {
+      "name": "Ceiling",
+      "signature": "static Fusion.Float2 Ceiling(Fusion.Float2 value)",
+      "summary": "Ceiling method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Ceiling%28Fusion.Float2%29"
+    },
+    {
+      "name": "Floor",
+      "signature": "static Fusion.Float2 Floor(Fusion.Float2 value)",
+      "summary": "Floor method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Floor%28Fusion.Float2%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Float2 Max(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "Max method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Max%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Float2 Min(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "Min method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Min%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Float2 Pow(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "Pow method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Pow%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Float2 Pow(Fusion.Float2 a, float b)",
+      "summary": "Pow method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Pow%28Fusion.Float2%2CSystem.Single%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Float2 Pow(float a, Fusion.Float2 b)",
+      "summary": "Pow method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Pow%28System.Single%2CFusion.Float2%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Float2 Round(Fusion.Float2 value)",
+      "summary": "Round method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Round%28Fusion.Float2%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Float2 Round(Fusion.Float2 value, System.MidpointRounding midpointRounding)",
+      "summary": "Round method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "midpointRounding",
+          "type": "System.MidpointRounding",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Round%28Fusion.Float2%2CSystem.MidpointRounding%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Float2 Round(Fusion.Float2 value, int digits)",
+      "summary": "Round method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Round%28Fusion.Float2%2CSystem.Int32%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Float2 Round(Fusion.Float2 value, int digits, System.MidpointRounding midpointRounding)",
+      "summary": "Round method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "midpointRounding",
+          "type": "System.MidpointRounding",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Round%28Fusion.Float2%2CSystem.Int32%2CSystem.MidpointRounding%29"
+    },
+    {
+      "name": "Sqrt",
+      "signature": "static Fusion.Float2 Sqrt(Fusion.Float2 value)",
+      "summary": "Sqrt method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Sqrt%28Fusion.Float2%29"
+    },
+    {
+      "name": "Truncate",
+      "signature": "static Fusion.Float2 Truncate(Fusion.Float2 value)",
+      "summary": "Truncate method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Truncate%28Fusion.Float2%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Float2 op_Addition(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Addition method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Addition%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Float2 op_Addition(Fusion.Float2 a, float b)",
+      "summary": "op_Addition method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Addition%28Fusion.Float2%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Float2 op_Addition(float a, Fusion.Float2 b)",
+      "summary": "op_Addition method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Addition%28System.Single%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Float2 op_Division(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Division method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Division%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Float2 op_Division(Fusion.Float2 a, float b)",
+      "summary": "op_Division method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Division%28Fusion.Float2%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Float2 op_Division(float a, Fusion.Float2 b)",
+      "summary": "op_Division method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Division%28System.Single%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Float2 op_Explicit(Fusion.Double2 v)",
+      "summary": "op_Explicit method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Explicit%28Fusion.Double2%29~Fusion.Float2"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Float2 op_Implicit(Fusion.Half2 v)",
+      "summary": "op_Implicit method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Implicit%28Fusion.Half2%29~Fusion.Float2"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Float2 op_Implicit(Fusion.Int2 v)",
+      "summary": "op_Implicit method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Implicit%28Fusion.Int2%29~Fusion.Float2"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Float2 op_Implicit(Fusion.Short2 v)",
+      "summary": "op_Implicit method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Implicit%28Fusion.Short2%29~Fusion.Float2"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Float2 op_Implicit(Fusion.UShort2 v)",
+      "summary": "op_Implicit method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Implicit%28Fusion.UShort2%29~Fusion.Float2"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Float2 op_Modulus(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Modulus method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Modulus%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Float2 op_Modulus(Fusion.Float2 a, float b)",
+      "summary": "op_Modulus method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Modulus%28Fusion.Float2%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Float2 op_Modulus(float a, Fusion.Float2 b)",
+      "summary": "op_Modulus method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Modulus%28System.Single%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Float2 op_Multiply(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Multiply method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Multiply%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Float2 op_Multiply(Fusion.Float2 a, float b)",
+      "summary": "op_Multiply method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Multiply%28Fusion.Float2%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Float2 op_Multiply(float a, Fusion.Float2 b)",
+      "summary": "op_Multiply method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Multiply%28System.Single%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Float2 op_Subtraction(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Subtraction method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Subtraction%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Float2 op_Subtraction(Fusion.Float2 a, float b)",
+      "summary": "op_Subtraction method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Subtraction%28Fusion.Float2%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Float2 op_Subtraction(float a, Fusion.Float2 b)",
+      "summary": "op_Subtraction method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Subtraction%28System.Single%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Float2 op_UnaryNegation(Fusion.Float2 v)",
+      "summary": "op_UnaryNegation method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_UnaryNegation%28Fusion.Float2%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Float2 op_UnaryPlus(Fusion.Float2 v)",
+      "summary": "op_UnaryPlus method of Float2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_UnaryPlus%28Fusion.Float2%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int2 Sign(Fusion.Float2 value)",
+      "summary": "Sign method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.Sign%28Fusion.Float2%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Float2 value)",
+      "summary": "IsInfinity method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.IsInfinity%28Fusion.Float2%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Float2 value)",
+      "summary": "IsNaN method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.IsNaN%28Fusion.Float2%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Float2 value)",
+      "summary": "IsNegativeInfinity method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.IsNegativeInfinity%28Fusion.Float2%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Float2 value)",
+      "summary": "IsPositiveInfinity method of Float2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.IsPositiveInfinity%28Fusion.Float2%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Equality method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Equality%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "op_Inequality method of Float2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.op_Inequality%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Float2.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Float2.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Float2.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "float",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Float2.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Float2.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

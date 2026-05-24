@@ -1,0 +1,62 @@
+{
+  "name": "EntityStates",
+  "namespace": "Fusion.Models",
+  "kind": "class",
+  "summary": "EntityStates class in Fusion.Models.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.EntityStates",
+  "constructors": [
+    {
+      "name": "EntityStates()",
+      "signature": "EntityStates()",
+      "summary": "Constructs a new EntityStates.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityStates.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Clear method of EntityStates.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityStates.Clear"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DefaultState",
+      "type": "Fusion.Models.EntityState",
+      "getter": true,
+      "setter": true,
+      "summary": "DefaultState property of EntityStates.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.EntityStates.DefaultState"
+    },
+    {
+      "name": "Item",
+      "type": "Fusion.Models.EntityState",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of EntityStates.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.EntityStates.Item%28Fusion.Models.Entity%29"
+    }
+  ],
+  "events": [
+    {
+      "name": "EntityStatesChanged",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler EntityStatesChanged",
+      "summary": "EntityStatesChanged event of EntityStates.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.Models.EntityStates.EntityStatesChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

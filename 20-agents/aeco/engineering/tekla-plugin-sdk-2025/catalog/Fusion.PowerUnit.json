@@ -1,0 +1,22 @@
+{
+  "name": "PowerUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "PowerUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PowerUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Watts",
+      "value": 0
+    },
+    {
+      "name": "Kilowatts",
+      "value": 1
+    }
+  ]
+}

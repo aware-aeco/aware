@@ -1,0 +1,14 @@
+{
+  "name": "HitPolygon",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking",
+  "kind": "class",
+  "summary": "The HitPolygon class represents the tolerated Polygon face.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.HitObject\u003CTekla.Structures.Model.Polygon\u003E",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.HitPolygon",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

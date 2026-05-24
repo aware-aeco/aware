@@ -1,0 +1,762 @@
+{
+  "name": "MassFlow",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "MassFlow struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.MassFlow\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.MassFlow\u003E",
+    "System.IEquatable\u003CFusion.MassFlow\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.MassFlow",
+  "constructors": [
+    {
+      "name": "MassFlow(double)",
+      "signature": "MassFlow(double kilogramsPerSecond)",
+      "summary": "Constructs a new MassFlow.",
+      "params": [
+        {
+          "name": "kilogramsPerSecond",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.MassFlow other)",
+      "summary": "Equals method of MassFlow.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Equals%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of MassFlow.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.MassFlow other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of MassFlow.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Near%28Fusion.MassFlow%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.MassFlowUnit massFlowUnit)",
+      "summary": "To method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlowUnit",
+          "type": "Fusion.MassFlowUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.To%28Fusion.MassFlowUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.MassFlow other)",
+      "summary": "CompareTo method of MassFlow.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.CompareTo%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of MassFlow.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of MassFlow.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.MassFlow Abs(Fusion.MassFlow massFlow)",
+      "summary": "Abs method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Abs%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.MassFlow From(double massFlow, Fusion.MassFlowUnit massFlowUnit)",
+      "summary": "From method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "massFlowUnit",
+          "type": "Fusion.MassFlowUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.From%28System.Double%2CFusion.MassFlowUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.MassFlow Max(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "Max method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Max%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.MassFlow Min(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "Min method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Min%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.MassFlow Round(Fusion.MassFlow massFlow, Fusion.MassFlow precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Round%28Fusion.MassFlow%2CFusion.MassFlow%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.MassFlow op_Addition(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_Addition method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Addition%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.MassFlow op_Division(Fusion.MassFlow a, double b)",
+      "summary": "op_Division method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Division%28Fusion.MassFlow%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.MassFlow op_Modulus(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_Modulus method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Modulus%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.MassFlow op_Multiply(Fusion.MassFlow a, double b)",
+      "summary": "op_Multiply method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Multiply%28Fusion.MassFlow%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.MassFlow op_Multiply(double a, Fusion.MassFlow b)",
+      "summary": "op_Multiply method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Multiply%28System.Double%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.MassFlow op_Subtraction(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_Subtraction method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Subtraction%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.MassFlow op_UnaryNegation(Fusion.MassFlow a)",
+      "summary": "op_UnaryNegation method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.MassFlow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_UnaryNegation%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.MassFlow massFlow)",
+      "summary": "IsInfinity method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.IsInfinity%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.MassFlow massFlow)",
+      "summary": "IsNaN method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.IsNaN%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.MassFlow massFlow)",
+      "summary": "IsNegativeInfinity method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.IsNegativeInfinity%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.MassFlow massFlow)",
+      "summary": "IsPositiveInfinity method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.IsPositiveInfinity%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_Equality method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Equality%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_GreaterThan method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_GreaterThan%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_GreaterThanOrEqual method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_GreaterThanOrEqual%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_Inequality method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Inequality%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_LessThan method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_LessThan%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_LessThanOrEqual method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_LessThanOrEqual%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.MassFlow a, Fusion.MassFlow b)",
+      "summary": "op_Division method of MassFlow.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.op_Division%28Fusion.MassFlow%2CFusion.MassFlow%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.MassFlow massFlow)",
+      "summary": "Sign method of MassFlow.",
+      "params": [
+        {
+          "name": "massFlow",
+          "type": "Fusion.MassFlow",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.Sign%28Fusion.MassFlow%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of MassFlow.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of MassFlow.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.MassFlow.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "KilogramsPerSecond",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "KilogramsPerSecond property of MassFlow.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.MassFlow.KilogramsPerSecond"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

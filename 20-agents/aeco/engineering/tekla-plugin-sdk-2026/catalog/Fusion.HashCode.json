@@ -1,0 +1,144 @@
+{
+  "name": "HashCode",
+  "namespace": "Fusion",
+  "kind": "static-class",
+  "summary": "HashCode static class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.HashCode",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetHashCode",
+      "signature": "static int GetHashCode(int hash, int[] hashes)",
+      "summary": "GetHashCode method of HashCode.",
+      "params": [
+        {
+          "name": "hash",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hashes",
+          "type": "int[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HashCode.GetHashCode%28System.Int32%2CSystem.Int32%5B%5D%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "static int GetHashCode(int hash1, int hash2)",
+      "summary": "GetHashCode method of HashCode.",
+      "params": [
+        {
+          "name": "hash1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hash2",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HashCode.GetHashCode%28System.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "static int GetHashCode(int hash1, int hash2, int hash3)",
+      "summary": "GetHashCode method of HashCode.",
+      "params": [
+        {
+          "name": "hash1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hash2",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hash3",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HashCode.GetHashCode%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "static int GetHashCode(int hash1, int hash2, int hash3, int hash4)",
+      "summary": "GetHashCode method of HashCode.",
+      "params": [
+        {
+          "name": "hash1",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hash2",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hash3",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "hash4",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HashCode.GetHashCode%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "static int GetHashCode(object instance)",
+      "summary": "GetHashCode method of HashCode.",
+      "params": [
+        {
+          "name": "instance",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.HashCode.GetHashCode%28System.Object%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

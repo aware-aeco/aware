@@ -1,0 +1,63 @@
+{
+  "name": "DistanceTextManipulator",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation",
+  "kind": "class",
+  "summary": "The DistanceTextManipulator class defines a manipulator to display and manipulate distance value text.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.TextManipulatorBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.DistanceTextManipulator",
+  "constructors": [
+    {
+      "name": "DistanceTextManipulator(Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext, Tekla.Structures.Geometry3d.LineSegment, double)",
+      "signature": "DistanceTextManipulator(Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext manipulationContext, Tekla.Structures.Geometry3d.LineSegment placement, double initialValue)",
+      "summary": "Initializes a new instance of the DistanceTextManipulator class.",
+      "params": [
+        {
+          "name": "manipulationContext",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext",
+          "doc": "The manipulation context.",
+          "optional": false
+        },
+        {
+          "name": "placement",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The placement of the text manipulator.",
+          "optional": false
+        },
+        {
+          "name": "initialValue",
+          "type": "double",
+          "doc": "The initial value.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.DistanceTextManipulator.%23ctor%28Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext%2CTekla.Structures.Geometry3d.LineSegment%2CSystem.Double%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Value",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the value of the distance.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.DistanceTextManipulator.Value"
+    }
+  ],
+  "events": [
+    {
+      "name": "DistanceEntered",
+      "delegate": "System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.ValueEnteredEventArgs\u003Cdouble\u003E\u003E",
+      "signature": "event System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.ValueEnteredEventArgs\u003Cdouble\u003E\u003E DistanceEntered",
+      "summary": "Invoked when a distance has been entered.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.DistanceTextManipulator.DistanceEntered",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

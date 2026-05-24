@@ -1,0 +1,80 @@
+{
+  "name": "ConvertTreeViewItemDepthToLeftMargin",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertTreeViewItemDepthToLeftMargin class in Fusion.UI.",
+  "base": "Fusion.UI.ValueConverter\u003CSystem.Windows.Controls.TreeViewItem, System.Windows.Thickness\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertTreeViewItemDepthToLeftMargin",
+  "constructors": [
+    {
+      "name": "ConvertTreeViewItemDepthToLeftMargin()",
+      "signature": "ConvertTreeViewItemDepthToLeftMargin()",
+      "summary": "Constructs a new ConvertTreeViewItemDepthToLeftMargin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertTreeViewItemDepthToLeftMargin.%23ctor"
+    },
+    {
+      "name": "ConvertTreeViewItemDepthToLeftMargin(double)",
+      "signature": "ConvertTreeViewItemDepthToLeftMargin(double indent)",
+      "summary": "Constructs a new ConvertTreeViewItemDepthToLeftMargin.",
+      "params": [
+        {
+          "name": "indent",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertTreeViewItemDepthToLeftMargin.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "System.Windows.Thickness Convert(System.Windows.Controls.TreeViewItem value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertTreeViewItemDepthToLeftMargin.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Windows.Controls.TreeViewItem",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Thickness",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertTreeViewItemDepthToLeftMargin.Convert%28System.Windows.Controls.TreeViewItem%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Indent",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Indent property of ConvertTreeViewItemDepthToLeftMargin.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ConvertTreeViewItemDepthToLeftMargin.Indent"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,53 @@
+{
+  "name": "PublishedViewMetadataAttribute",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "PublishedViewMetadataAttribute class in Fusion.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PublishedViewMetadataAttribute",
+  "constructors": [
+    {
+      "name": "PublishedViewMetadataAttribute(object, object)",
+      "signature": "PublishedViewMetadataAttribute(object key, object value)",
+      "summary": "Constructs a new PublishedViewMetadataAttribute.",
+      "params": [
+        {
+          "name": "key",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedViewMetadataAttribute.%23ctor%28System.Object%2CSystem.Object%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Key",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Key property of PublishedViewMetadataAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewMetadataAttribute.Key"
+    },
+    {
+      "name": "Value",
+      "type": "object",
+      "getter": true,
+      "setter": false,
+      "summary": "Value property of PublishedViewMetadataAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewMetadataAttribute.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,281 @@
+{
+  "name": "Vector",
+  "namespace": "Fusion",
+  "kind": "static-class",
+  "summary": "Vector static class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Vector",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Normalize",
+      "signature": "static Fusion.Float2 Normalize(Fusion.Float2 vector)",
+      "summary": "Normalize method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Normalize%28Fusion.Float2%29"
+    },
+    {
+      "name": "Cross",
+      "signature": "static Fusion.Float3 Cross(Fusion.Float3 a, Fusion.Float3 b)",
+      "summary": "Cross method of Vector.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Cross%28Fusion.Float3%2CFusion.Float3%29"
+    },
+    {
+      "name": "Normalize",
+      "signature": "static Fusion.Float3 Normalize(Fusion.Float3 vector)",
+      "summary": "Normalize method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Normalize%28Fusion.Float3%29"
+    },
+    {
+      "name": "Normalize",
+      "signature": "static Fusion.Float4 Normalize(Fusion.Float4 vector)",
+      "summary": "Normalize method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Normalize%28Fusion.Float4%29"
+    },
+    {
+      "name": "Dot",
+      "signature": "static float Dot(Fusion.Float2 a, Fusion.Float2 b)",
+      "summary": "Dot method of Vector.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Dot%28Fusion.Float2%2CFusion.Float2%29"
+    },
+    {
+      "name": "Dot",
+      "signature": "static float Dot(Fusion.Float3 a, Fusion.Float3 b)",
+      "summary": "Dot method of Vector.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Dot%28Fusion.Float3%2CFusion.Float3%29"
+    },
+    {
+      "name": "Dot",
+      "signature": "static float Dot(Fusion.Float4 a, Fusion.Float4 b)",
+      "summary": "Dot method of Vector.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Float4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Dot%28Fusion.Float4%2CFusion.Float4%29"
+    },
+    {
+      "name": "Magnitude",
+      "signature": "static float Magnitude(Fusion.Float2 vector)",
+      "summary": "Magnitude method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Magnitude%28Fusion.Float2%29"
+    },
+    {
+      "name": "Magnitude",
+      "signature": "static float Magnitude(Fusion.Float3 vector)",
+      "summary": "Magnitude method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Magnitude%28Fusion.Float3%29"
+    },
+    {
+      "name": "Magnitude",
+      "signature": "static float Magnitude(Fusion.Float4 vector)",
+      "summary": "Magnitude method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.Magnitude%28Fusion.Float4%29"
+    },
+    {
+      "name": "MagnitudeSquared",
+      "signature": "static float MagnitudeSquared(Fusion.Float2 vector)",
+      "summary": "MagnitudeSquared method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.MagnitudeSquared%28Fusion.Float2%29"
+    },
+    {
+      "name": "MagnitudeSquared",
+      "signature": "static float MagnitudeSquared(Fusion.Float3 vector)",
+      "summary": "MagnitudeSquared method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.MagnitudeSquared%28Fusion.Float3%29"
+    },
+    {
+      "name": "MagnitudeSquared",
+      "signature": "static float MagnitudeSquared(Fusion.Float4 vector)",
+      "summary": "MagnitudeSquared method of Vector.",
+      "params": [
+        {
+          "name": "vector",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Vector.MagnitudeSquared%28Fusion.Float4%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

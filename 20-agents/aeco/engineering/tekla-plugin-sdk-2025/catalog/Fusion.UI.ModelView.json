@@ -1,0 +1,148 @@
+{
+  "name": "ModelView",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ModelView class in Fusion.UI.",
+  "base": "Fusion.Graphics.GPU.View",
+  "interfaces": [
+    "Fusion.Models.IModelView"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ModelView",
+  "constructors": [
+    {
+      "name": "ModelView()",
+      "signature": "ModelView()",
+      "summary": "Constructs a new ModelView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ModelView.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BufferCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "BufferCount property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.BufferCount"
+    },
+    {
+      "name": "BufferGroupCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "BufferGroupCount property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.BufferGroupCount"
+    },
+    {
+      "name": "Camera",
+      "type": "Fusion.Camera",
+      "getter": true,
+      "setter": true,
+      "summary": "Camera property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.Camera"
+    },
+    {
+      "name": "ClipPlane0",
+      "type": "Fusion.Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "ClipPlane0 property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.ClipPlane0"
+    },
+    {
+      "name": "ClipPlane1",
+      "type": "Fusion.Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "ClipPlane1 property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.ClipPlane1"
+    },
+    {
+      "name": "ClipPlane2",
+      "type": "Fusion.Plane",
+      "getter": true,
+      "setter": true,
+      "summary": "ClipPlane2 property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.ClipPlane2"
+    },
+    {
+      "name": "EntityPickedCallback",
+      "type": "Fusion.Models.EntityPickedCallbackDelegate",
+      "getter": true,
+      "setter": true,
+      "summary": "EntityPickedCallback property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.EntityPickedCallback"
+    },
+    {
+      "name": "EntityPickingCallback",
+      "type": "Fusion.Models.EntityPickingCallbackDelegate",
+      "getter": true,
+      "setter": true,
+      "summary": "EntityPickingCallback property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.EntityPickingCallback"
+    },
+    {
+      "name": "EntityStates",
+      "type": "Fusion.Models.EntityStates",
+      "getter": true,
+      "setter": true,
+      "summary": "EntityStates property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.EntityStates"
+    },
+    {
+      "name": "FaceCount",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "FaceCount property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.FaceCount"
+    },
+    {
+      "name": "IndexCount",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "IndexCount property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.IndexCount"
+    },
+    {
+      "name": "IsPickingEnabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IsPickingEnabled property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.IsPickingEnabled"
+    },
+    {
+      "name": "Model",
+      "type": "Fusion.Models.Model",
+      "getter": true,
+      "setter": true,
+      "summary": "Model property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.Model"
+    },
+    {
+      "name": "Size",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "Size property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.Size"
+    },
+    {
+      "name": "VertexCount",
+      "type": "long",
+      "getter": true,
+      "setter": false,
+      "summary": "VertexCount property of ModelView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ModelView.VertexCount"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

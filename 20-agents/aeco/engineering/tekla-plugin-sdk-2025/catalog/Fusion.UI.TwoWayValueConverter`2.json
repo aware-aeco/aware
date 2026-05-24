@@ -1,0 +1,94 @@
+{
+  "name": "TwoWayValueConverter\u00602",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "TwoWayValueConverter\u00602 class in Fusion.UI.",
+  "base": "System.Windows.Markup.MarkupExtension",
+  "interfaces": [
+    "System.Windows.Data.IValueConverter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.TwoWayValueConverter\u00602",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ConvertBack",
+      "signature": "TSource ConvertBack(TTarget value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "ConvertBack method of TwoWayValueConverter\u00602.",
+      "params": [
+        {
+          "name": "value",
+          "type": "TTarget",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TwoWayValueConverter%602.ConvertBack%28%601%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "Convert",
+      "signature": "TTarget Convert(TSource value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of TwoWayValueConverter\u00602.",
+      "params": [
+        {
+          "name": "value",
+          "type": "TSource",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TTarget",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TwoWayValueConverter%602.Convert%28%600%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "ProvideValue",
+      "signature": "object ProvideValue(System.IServiceProvider serviceProvider)",
+      "summary": "ProvideValue method of TwoWayValueConverter\u00602.",
+      "params": [
+        {
+          "name": "serviceProvider",
+          "type": "System.IServiceProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TwoWayValueConverter%602.ProvideValue%28System.IServiceProvider%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

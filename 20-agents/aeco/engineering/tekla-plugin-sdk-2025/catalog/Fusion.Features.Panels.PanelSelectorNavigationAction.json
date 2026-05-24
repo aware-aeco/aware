@@ -1,0 +1,22 @@
+{
+  "name": "PanelSelectorNavigationAction",
+  "namespace": "Fusion.Features.Panels",
+  "kind": "enum",
+  "summary": "PanelSelectorNavigationAction enum in Fusion.Features.Panels.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Features.Panels.PanelSelectorNavigationAction",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Replace",
+      "value": 0
+    },
+    {
+      "name": "ToggleVisibility",
+      "value": 1
+    }
+  ]
+}

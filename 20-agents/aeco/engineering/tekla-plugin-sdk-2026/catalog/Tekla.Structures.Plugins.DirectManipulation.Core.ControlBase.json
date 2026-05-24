@@ -1,0 +1,83 @@
+{
+  "name": "ControlBase",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core",
+  "kind": "class",
+  "summary": "The ControlBase class is an abstract base class for all UI controls provided by the API.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Dispose"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CustomProperties",
+      "type": "System.Collections.Generic.Dictionary\u003Cobject, object\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the custom properties of the control.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.CustomProperties"
+    },
+    {
+      "name": "Enabled",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the control can respond to user interaction.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Enabled"
+    },
+    {
+      "name": "Image",
+      "type": "System.Drawing.Image",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the image that is displayed on the item.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Image"
+    },
+    {
+      "name": "Tag",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the object that contains data about the item.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Tag"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text that is to be displayed on the item.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Text"
+    },
+    {
+      "name": "Tooltip",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the tooltip of the control.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Tooltip"
+    },
+    {
+      "name": "Visible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the control is displayed.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Core.ControlBase.Visible"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

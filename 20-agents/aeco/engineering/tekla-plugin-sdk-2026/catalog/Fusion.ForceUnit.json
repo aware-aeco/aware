@@ -1,0 +1,42 @@
+{
+  "name": "ForceUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "ForceUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ForceUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Newton",
+      "value": 0
+    },
+    {
+      "name": "PoundForce",
+      "value": 1
+    },
+    {
+      "name": "KiloPound",
+      "value": 2
+    },
+    {
+      "name": "KilogramForce",
+      "value": 3
+    },
+    {
+      "name": "TonneForce",
+      "value": 4
+    },
+    {
+      "name": "Kilonewton",
+      "value": 6
+    },
+    {
+      "name": "Decanewton",
+      "value": 7
+    }
+  ]
+}

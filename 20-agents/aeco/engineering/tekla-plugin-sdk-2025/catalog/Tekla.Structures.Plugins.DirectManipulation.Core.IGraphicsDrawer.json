@@ -1,0 +1,434 @@
+{
+  "name": "IGraphicsDrawer",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core",
+  "kind": "interface",
+  "summary": "The IGraphicsDrawer interfaces the graphics drawer.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Clear",
+      "signature": "void Clear()",
+      "summary": "Removes all graphics drawn by the current graphics from the views.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.Clear"
+    },
+    {
+      "name": "DrawArc",
+      "signature": "void DrawArc(Tekla.Structures.Geometry3d.Arc arc, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the curve of the given arc to the views.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Tekla.Structures.Geometry3d.Arc",
+          "doc": "The Arc defining the graphic.",
+          "optional": false
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawArc%28Tekla.Structures.Geometry3d.Arc%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawCircle",
+      "signature": "void DrawCircle(Tekla.Structures.Geometry3d.Point center, Tekla.Structures.Geometry3d.Vector normal, double radius, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the circle to the views.",
+      "params": [
+        {
+          "name": "center",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The center.",
+          "optional": false
+        },
+        {
+          "name": "normal",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The normal of the circle.",
+          "optional": false
+        },
+        {
+          "name": "radius",
+          "type": "double",
+          "doc": "The radius of the circle.",
+          "optional": false
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawCircle%28Tekla.Structures.Geometry3d.Point%2CTekla.Structures.Geometry3d.Vector%2CSystem.Double%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawCustomPart",
+      "signature": "void DrawCustomPart(string customPart, Tekla.Structures.Geometry3d.LineSegment direction, Tekla.Structures.Geometry3d.Vector offsetVector, double rotationInDegrees = 0, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the specified customPart at the given direction.",
+      "params": [
+        {
+          "name": "customPart",
+          "type": "string",
+          "doc": "The custom part.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The direction.",
+          "optional": false
+        },
+        {
+          "name": "offsetVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "A vector, that defines the offset of the drawn object from the relative origin.",
+          "optional": false
+        },
+        {
+          "name": "rotationInDegrees",
+          "type": "double",
+          "doc": "The rotation angle around the direction in degrees.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawCustomPart%28System.String%2CTekla.Structures.Geometry3d.LineSegment%2CTekla.Structures.Geometry3d.Vector%2CSystem.Double%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawDimension",
+      "signature": "void DrawDimension(Tekla.Structures.Geometry3d.LineSegment line, Tekla.Structures.Geometry3d.Vector graphicNormal = null, Tekla.Structures.Plugins.DirectManipulation.Services.DimensionEndPointSizeType sizeType = 0)",
+      "summary": "Draws a dimension line with direction arrows.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The line to define the dimension line.",
+          "optional": false
+        },
+        {
+          "name": "graphicNormal",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "The normal to define the arrow orientation.",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "sizeType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.DimensionEndPointSizeType",
+          "doc": "Type of the size of the dimension arrows.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawDimension%28Tekla.Structures.Geometry3d.LineSegment%2CTekla.Structures.Geometry3d.Vector%2CTekla.Structures.Plugins.DirectManipulation.Services.DimensionEndPointSizeType%29"
+    },
+    {
+      "name": "DrawExtrema",
+      "signature": "void DrawExtrema(Tekla.Structures.Geometry3d.AABB extrema, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the specified extrema.",
+      "params": [
+        {
+          "name": "extrema",
+          "type": "Tekla.Structures.Geometry3d.AABB",
+          "doc": "The extrema.",
+          "optional": false
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawExtrema%28Tekla.Structures.Geometry3d.AABB%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawExtrema",
+      "signature": "void DrawExtrema(Tekla.Structures.Geometry3d.LineSegment direction, double width, double height, Tekla.Structures.Geometry3d.Vector offsetVector, double rotationInDegrees = 0, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws an extrema box with given width, height and direction.",
+      "params": [
+        {
+          "name": "direction",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The direction.",
+          "optional": false
+        },
+        {
+          "name": "width",
+          "type": "double",
+          "doc": "The width.",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "double",
+          "doc": "The height.",
+          "optional": false
+        },
+        {
+          "name": "offsetVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "A vector, that defines the offset of the drawn object from the relative origin.",
+          "optional": false
+        },
+        {
+          "name": "rotationInDegrees",
+          "type": "double",
+          "doc": "The rotation angle around the direction in degrees.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawExtrema%28Tekla.Structures.Geometry3d.LineSegment%2CSystem.Double%2CSystem.Double%2CTekla.Structures.Geometry3d.Vector%2CSystem.Double%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawFace",
+      "signature": "void DrawFace(System.Collections.Generic.IEnumerable\u003CTekla.Structures.Geometry3d.Point\u003E contourPoints, Tekla.Structures.Plugins.DirectManipulation.Services.SurfaceType surfaceType = 0, bool doubleSided = true)",
+      "summary": "Draws the mesh composed of the given contourPoints.",
+      "params": [
+        {
+          "name": "contourPoints",
+          "type": "System.Collections.Generic.IEnumerable\u003CTekla.Structures.Geometry3d.Point\u003E",
+          "doc": "The contour points.",
+          "optional": false
+        },
+        {
+          "name": "surfaceType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.SurfaceType",
+          "doc": "Type of the surface.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "doubleSided",
+          "type": "bool",
+          "doc": "A value indicating whether the mesh is double-sided.",
+          "optional": true,
+          "default": "true"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawFace%28System.Collections.Generic.IEnumerable%7BTekla.Structures.Geometry3d.Point%7D%2CTekla.Structures.Plugins.DirectManipulation.Services.SurfaceType%2CSystem.Boolean%29"
+    },
+    {
+      "name": "DrawLine",
+      "signature": "void DrawLine(Tekla.Structures.Geometry3d.Point startPoint, Tekla.Structures.Geometry3d.Point endPoint, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the line with the given startPoint and endPoint.",
+      "params": [
+        {
+          "name": "startPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The start point.",
+          "optional": false
+        },
+        {
+          "name": "endPoint",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The end point.",
+          "optional": false
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawLine%28Tekla.Structures.Geometry3d.Point%2CTekla.Structures.Geometry3d.Point%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawLines",
+      "signature": "void DrawLines(System.Collections.Generic.IEnumerable\u003CTekla.Structures.Geometry3d.LineSegment\u003E polyline, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the given polyline.",
+      "params": [
+        {
+          "name": "polyline",
+          "type": "System.Collections.Generic.IEnumerable\u003CTekla.Structures.Geometry3d.LineSegment\u003E",
+          "doc": "The polyline.",
+          "optional": false
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawLines%28System.Collections.Generic.IEnumerable%7BTekla.Structures.Geometry3d.LineSegment%7D%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawProfile",
+      "signature": "void DrawProfile(string profile, Tekla.Structures.Geometry3d.LineSegment direction, Tekla.Structures.Geometry3d.Vector offsetVector, double rotationInDegrees = 0, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the specified profile at the given direction.",
+      "params": [
+        {
+          "name": "profile",
+          "type": "string",
+          "doc": "The profile.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The direction.",
+          "optional": false
+        },
+        {
+          "name": "offsetVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "A vector, that defines the offset of the drawn object from the relative origin.",
+          "optional": false
+        },
+        {
+          "name": "rotationInDegrees",
+          "type": "double",
+          "doc": "The rotation angle around the direction in degrees.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawProfile%28System.String%2CTekla.Structures.Geometry3d.LineSegment%2CTekla.Structures.Geometry3d.Vector%2CSystem.Double%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawShape",
+      "signature": "void DrawShape(string shape, Tekla.Structures.Geometry3d.LineSegment direction, Tekla.Structures.Geometry3d.Vector offsetVector, double rotationInDegrees = 0, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Draws the specified shape at the given direction.",
+      "params": [
+        {
+          "name": "shape",
+          "type": "string",
+          "doc": "The shape.",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The direction.",
+          "optional": false
+        },
+        {
+          "name": "offsetVector",
+          "type": "Tekla.Structures.Geometry3d.Vector",
+          "doc": "A vector, that defines the offset of the drawn object from the relative origin.",
+          "optional": false
+        },
+        {
+          "name": "rotationInDegrees",
+          "type": "double",
+          "doc": "The rotation angle around the direction in degrees.",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the curve.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawShape%28System.String%2CTekla.Structures.Geometry3d.LineSegment%2CTekla.Structures.Geometry3d.Vector%2CSystem.Double%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    },
+    {
+      "name": "DrawText",
+      "signature": "void DrawText(string text, Tekla.Structures.Geometry3d.Point location, Tekla.Structures.Plugins.DirectManipulation.Services.TextRepresentationTypes textTypes = 2)",
+      "summary": "Draws the given text at the location.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "doc": "The text.",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "The location.",
+          "optional": false
+        },
+        {
+          "name": "textTypes",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.TextRepresentationTypes",
+          "doc": "Type of the text.",
+          "optional": true,
+          "default": "2"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IGraphicsDrawer.DrawText%28System.String%2CTekla.Structures.Geometry3d.Point%2CTekla.Structures.Plugins.DirectManipulation.Services.TextRepresentationTypes%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

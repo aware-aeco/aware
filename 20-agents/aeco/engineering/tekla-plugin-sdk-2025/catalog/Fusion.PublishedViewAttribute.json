@@ -1,0 +1,56 @@
+{
+  "name": "PublishedViewAttribute",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "PublishedViewAttribute class in Fusion.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PublishedViewAttribute",
+  "constructors": [
+    {
+      "name": "PublishedViewAttribute(string)",
+      "signature": "PublishedViewAttribute(string viewName)",
+      "summary": "Constructs a new PublishedViewAttribute.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedViewAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Documentation",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Documentation property of PublishedViewAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewAttribute.Documentation"
+    },
+    {
+      "name": "ViewName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ViewName property of PublishedViewAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewAttribute.ViewName"
+    },
+    {
+      "name": "ViewType",
+      "type": "System.Type",
+      "getter": true,
+      "setter": true,
+      "summary": "ViewType property of PublishedViewAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedViewAttribute.ViewType"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

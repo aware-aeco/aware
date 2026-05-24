@@ -1,0 +1,38 @@
+{
+  "name": "LocalizationMode",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "LocalizationMode enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.LocalizationMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Normal",
+      "value": 0
+    },
+    {
+      "name": "Keys",
+      "value": 1
+    },
+    {
+      "name": "Brackets",
+      "value": 2
+    },
+    {
+      "name": "ShortString",
+      "value": 3
+    },
+    {
+      "name": "LongStrings",
+      "value": 4
+    },
+    {
+      "name": "UnicodeTest",
+      "value": 5
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "TemperatureUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "TemperatureUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.TemperatureUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Kelvin",
+      "value": 0
+    },
+    {
+      "name": "Celsius",
+      "value": 1
+    },
+    {
+      "name": "Fahrenheit",
+      "value": 2
+    }
+  ]
+}

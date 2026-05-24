@@ -1,0 +1,398 @@
+{
+  "name": "EntityType",
+  "namespace": "Fusion.Models",
+  "kind": "enum",
+  "summary": "EntityType enum in Fusion.Models.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.EntityType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Unknown",
+      "value": 0
+    },
+    {
+      "name": "Product",
+      "value": 1
+    },
+    {
+      "name": "Annotation",
+      "value": 2
+    },
+    {
+      "name": "Element",
+      "value": 3
+    },
+    {
+      "name": "BuildingElement",
+      "value": 4
+    },
+    {
+      "name": "Beam",
+      "value": 5
+    },
+    {
+      "name": "BuildingElementComponent",
+      "value": 6
+    },
+    {
+      "name": "BuildingElementPart",
+      "value": 7
+    },
+    {
+      "name": "ReinforcingElement",
+      "value": 8
+    },
+    {
+      "name": "ReinforcingBar",
+      "value": 9
+    },
+    {
+      "name": "ReinforcingMesh",
+      "value": 10
+    },
+    {
+      "name": "Tendon",
+      "value": 11
+    },
+    {
+      "name": "TendonAnchor",
+      "value": 12
+    },
+    {
+      "name": "BuildingElementProxy",
+      "value": 13
+    },
+    {
+      "name": "Column",
+      "value": 14
+    },
+    {
+      "name": "Covering",
+      "value": 15
+    },
+    {
+      "name": "CurtainWall",
+      "value": 16
+    },
+    {
+      "name": "Door",
+      "value": 17
+    },
+    {
+      "name": "Footing",
+      "value": 18
+    },
+    {
+      "name": "Member",
+      "value": 19
+    },
+    {
+      "name": "Pile",
+      "value": 20
+    },
+    {
+      "name": "Plate",
+      "value": 21
+    },
+    {
+      "name": "Railing",
+      "value": 22
+    },
+    {
+      "name": "Ramp",
+      "value": 23
+    },
+    {
+      "name": "RampFlight",
+      "value": 24
+    },
+    {
+      "name": "Roof",
+      "value": 25
+    },
+    {
+      "name": "Slab",
+      "value": 26
+    },
+    {
+      "name": "Stair",
+      "value": 27
+    },
+    {
+      "name": "StairFlight",
+      "value": 28
+    },
+    {
+      "name": "Wall",
+      "value": 29
+    },
+    {
+      "name": "WallStandardCase",
+      "value": 30
+    },
+    {
+      "name": "Window",
+      "value": 31
+    },
+    {
+      "name": "DistributionElement",
+      "value": 32
+    },
+    {
+      "name": "DistributionControlElement",
+      "value": 33
+    },
+    {
+      "name": "DistributionFlowElement",
+      "value": 34
+    },
+    {
+      "name": "DistributionChamberElement",
+      "value": 35
+    },
+    {
+      "name": "EnergyConversionDevice",
+      "value": 36
+    },
+    {
+      "name": "FlowController",
+      "value": 37
+    },
+    {
+      "name": "ElectricDistributionPoint",
+      "value": 38
+    },
+    {
+      "name": "FlowFitting",
+      "value": 39
+    },
+    {
+      "name": "FlowMovingDevice",
+      "value": 40
+    },
+    {
+      "name": "FlowSegment",
+      "value": 41
+    },
+    {
+      "name": "FlowStorageDevice",
+      "value": 42
+    },
+    {
+      "name": "FlowTerminal",
+      "value": 43
+    },
+    {
+      "name": "FlowTreatmentDevice",
+      "value": 44
+    },
+    {
+      "name": "ElectricalElement",
+      "value": 45
+    },
+    {
+      "name": "ElementAssembly",
+      "value": 46
+    },
+    {
+      "name": "ElementComponent",
+      "value": 47
+    },
+    {
+      "name": "DiscreteAccessory",
+      "value": 48
+    },
+    {
+      "name": "Fastener",
+      "value": 49
+    },
+    {
+      "name": "MechanicalFastener",
+      "value": 50
+    },
+    {
+      "name": "EquipmentElement",
+      "value": 51
+    },
+    {
+      "name": "FeatureElement",
+      "value": 52
+    },
+    {
+      "name": "FeatureElementAddition",
+      "value": 53
+    },
+    {
+      "name": "ProjectionElement",
+      "value": 54
+    },
+    {
+      "name": "FeatureElementSubtraction",
+      "value": 55
+    },
+    {
+      "name": "EdgeFeature",
+      "value": 56
+    },
+    {
+      "name": "ChamferEdgeFeature",
+      "value": 57
+    },
+    {
+      "name": "RoundedEdgeFeature",
+      "value": 58
+    },
+    {
+      "name": "OpeningElement",
+      "value": 59
+    },
+    {
+      "name": "FurnishingElement",
+      "value": 60
+    },
+    {
+      "name": "TransportElement",
+      "value": 61
+    },
+    {
+      "name": "VirtualElement",
+      "value": 62
+    },
+    {
+      "name": "Grid",
+      "value": 63
+    },
+    {
+      "name": "Port",
+      "value": 64
+    },
+    {
+      "name": "DistributionPort",
+      "value": 65
+    },
+    {
+      "name": "Proxy",
+      "value": 66
+    },
+    {
+      "name": "SpatialStructureElement",
+      "value": 67
+    },
+    {
+      "name": "Building",
+      "value": 68
+    },
+    {
+      "name": "BuildingStorey",
+      "value": 69
+    },
+    {
+      "name": "Site",
+      "value": 70
+    },
+    {
+      "name": "Space",
+      "value": 71
+    },
+    {
+      "name": "StructuralActivity",
+      "value": 72
+    },
+    {
+      "name": "StructuralAction",
+      "value": 73
+    },
+    {
+      "name": "StructuralLinearAction",
+      "value": 74
+    },
+    {
+      "name": "StructuralLinearActionVarying",
+      "value": 75
+    },
+    {
+      "name": "StructuralPlanarAction",
+      "value": 76
+    },
+    {
+      "name": "StructuralPlanarActionVarying",
+      "value": 77
+    },
+    {
+      "name": "StructuralPointAction",
+      "value": 78
+    },
+    {
+      "name": "StructuralReaction",
+      "value": 79
+    },
+    {
+      "name": "StructuralPointReaction",
+      "value": 80
+    },
+    {
+      "name": "StructuralItem",
+      "value": 81
+    },
+    {
+      "name": "StructuralConnection",
+      "value": 82
+    },
+    {
+      "name": "StructuralCurveConnection",
+      "value": 83
+    },
+    {
+      "name": "StructuralPointConnection",
+      "value": 84
+    },
+    {
+      "name": "StructuralSurfaceConnection",
+      "value": 85
+    },
+    {
+      "name": "StructuralMember",
+      "value": 86
+    },
+    {
+      "name": "StructuralCurveMember",
+      "value": 87
+    },
+    {
+      "name": "StructuralCurveMemberVarying",
+      "value": 88
+    },
+    {
+      "name": "StructuralSurfaceMember",
+      "value": 89
+    },
+    {
+      "name": "StructuralSurfaceMemberVarying",
+      "value": 90
+    },
+    {
+      "name": "Project",
+      "value": 91
+    },
+    {
+      "name": "Group",
+      "value": 92
+    },
+    {
+      "name": "System",
+      "value": 93
+    },
+    {
+      "name": "Zone",
+      "value": 94
+    },
+    {
+      "name": "ElectricalCircuit",
+      "value": 95
+    }
+  ]
+}

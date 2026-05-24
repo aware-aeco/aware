@@ -1,0 +1,762 @@
+{
+  "name": "RotationSpringConstant",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "RotationSpringConstant struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.RotationSpringConstant\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.RotationSpringConstant\u003E",
+    "System.IEquatable\u003CFusion.RotationSpringConstant\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.RotationSpringConstant",
+  "constructors": [
+    {
+      "name": "RotationSpringConstant(double)",
+      "signature": "RotationSpringConstant(double newtonMeterPerRadian)",
+      "summary": "Constructs a new RotationSpringConstant.",
+      "params": [
+        {
+          "name": "newtonMeterPerRadian",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.RotationSpringConstant obj)",
+      "summary": "Equals method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Equals%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object obj)",
+      "summary": "Equals method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.RotationSpringConstant other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Near%28Fusion.RotationSpringConstant%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.RotationSpringConstantUnit rotationSpringConstantUnit)",
+      "summary": "To method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstantUnit",
+          "type": "Fusion.RotationSpringConstantUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.To%28Fusion.RotationSpringConstantUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.RotationSpringConstant obj)",
+      "summary": "CompareTo method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.CompareTo%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object obj)",
+      "summary": "CompareTo method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "obj",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of RotationSpringConstant.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.RotationSpringConstant Abs(Fusion.RotationSpringConstant rotationSpringConstant)",
+      "summary": "Abs method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Abs%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.RotationSpringConstant From(double rotationSpringConstant, Fusion.RotationSpringConstantUnit rotationSpringConstantUnit)",
+      "summary": "From method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "rotationSpringConstantUnit",
+          "type": "Fusion.RotationSpringConstantUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.From%28System.Double%2CFusion.RotationSpringConstantUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.RotationSpringConstant Max(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "Max method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Max%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.RotationSpringConstant Min(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "Min method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Min%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.RotationSpringConstant Round(Fusion.RotationSpringConstant rotationSpringConstant, Fusion.RotationSpringConstant precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Round%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.RotationSpringConstant op_Addition(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Addition method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Addition%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.RotationSpringConstant op_Division(Fusion.RotationSpringConstant a, double b)",
+      "summary": "op_Division method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Division%28Fusion.RotationSpringConstant%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.RotationSpringConstant op_Modulus(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Modulus method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Modulus%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.RotationSpringConstant op_Multiply(Fusion.RotationSpringConstant a, double b)",
+      "summary": "op_Multiply method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Multiply%28Fusion.RotationSpringConstant%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.RotationSpringConstant op_Multiply(double a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Multiply method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Multiply%28System.Double%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.RotationSpringConstant op_Subtraction(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Subtraction method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Subtraction%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.RotationSpringConstant op_UnaryNegation(Fusion.RotationSpringConstant a)",
+      "summary": "op_UnaryNegation method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RotationSpringConstant",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_UnaryNegation%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.RotationSpringConstant rotationSpringConstant)",
+      "summary": "IsInfinity method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.IsInfinity%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.RotationSpringConstant rotationSpringConstant)",
+      "summary": "IsNaN method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.IsNaN%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.RotationSpringConstant rotationSpringConstant)",
+      "summary": "IsNegativeInfinity method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.IsNegativeInfinity%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.RotationSpringConstant rotationSpringConstant)",
+      "summary": "IsPositiveInfinity method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.IsPositiveInfinity%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Equality method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Equality%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_GreaterThan method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_GreaterThan%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_GreaterThanOrEqual method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_GreaterThanOrEqual%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Inequality method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Inequality%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_LessThan method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_LessThan%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_LessThanOrEqual method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_LessThanOrEqual%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.RotationSpringConstant a, Fusion.RotationSpringConstant b)",
+      "summary": "op_Division method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.op_Division%28Fusion.RotationSpringConstant%2CFusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.RotationSpringConstant rotationSpringConstant)",
+      "summary": "Sign method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "rotationSpringConstant",
+          "type": "Fusion.RotationSpringConstant",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.Sign%28Fusion.RotationSpringConstant%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of RotationSpringConstant.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of RotationSpringConstant.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RotationSpringConstant.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "NewtonMeterPerRadian",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "NewtonMeterPerRadian property of RotationSpringConstant.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.RotationSpringConstant.NewtonMeterPerRadian"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

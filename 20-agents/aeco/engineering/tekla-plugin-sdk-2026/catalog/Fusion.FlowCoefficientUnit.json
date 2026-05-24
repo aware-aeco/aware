@@ -1,0 +1,22 @@
+{
+  "name": "FlowCoefficientUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "FlowCoefficientUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.FlowCoefficientUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Kv",
+      "value": 0
+    },
+    {
+      "name": "Cv",
+      "value": 1
+    }
+  ]
+}

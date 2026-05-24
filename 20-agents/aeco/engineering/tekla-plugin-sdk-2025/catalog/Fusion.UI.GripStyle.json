@@ -1,0 +1,22 @@
+{
+  "name": "GripStyle",
+  "namespace": "Fusion.UI",
+  "kind": "enum",
+  "summary": "GripStyle enum in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.GripStyle",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Flat",
+      "value": 0
+    },
+    {
+      "name": "Beveled",
+      "value": 1
+    }
+  ]
+}

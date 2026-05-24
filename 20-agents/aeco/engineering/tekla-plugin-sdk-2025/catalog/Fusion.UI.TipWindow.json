@@ -1,0 +1,129 @@
+{
+  "name": "TipWindow",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "TipWindow class in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.TipWindow",
+  "constructors": [
+    {
+      "name": "TipWindow(System.Windows.UIElement, string, string, double, string)",
+      "signature": "TipWindow(System.Windows.UIElement placementTarget, string tipWindowMessageHeader, string tipWindowMessage, double timeToShowInSeconds, string sourceName)",
+      "summary": "Constructs a new TipWindow.",
+      "params": [
+        {
+          "name": "placementTarget",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "tipWindowMessageHeader",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "tipWindowMessage",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "timeToShowInSeconds",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "sourceName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TipWindow.%23ctor%28System.Windows.UIElement%2CSystem.String%2CSystem.String%2CSystem.Double%2CSystem.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "IsOpen",
+      "signature": "bool IsOpen()",
+      "summary": "IsOpen method of TipWindow.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TipWindow.IsOpen"
+    },
+    {
+      "name": "Close",
+      "signature": "void Close()",
+      "summary": "Close method of TipWindow.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TipWindow.Close"
+    },
+    {
+      "name": "StopShowingTime",
+      "signature": "void StopShowingTime()",
+      "summary": "StopShowingTime method of TipWindow.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TipWindow.StopShowingTime"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Popup",
+      "type": "System.Windows.Controls.Primitives.Popup",
+      "getter": true,
+      "setter": false,
+      "summary": "Popup property of TipWindow.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.TipWindow.Popup"
+    },
+    {
+      "name": "PopupBorder",
+      "type": "System.Windows.Controls.Border",
+      "getter": true,
+      "setter": false,
+      "summary": "PopupBorder property of TipWindow.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.TipWindow.PopupBorder"
+    }
+  ],
+  "events": [
+    {
+      "name": "TipWindowClicked",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler TipWindowClicked",
+      "summary": "TipWindowClicked event of TipWindow.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.UI.TipWindow.TipWindowClicked",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TipWindowClosed",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler TipWindowClosed",
+      "summary": "TipWindowClosed event of TipWindow.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.UI.TipWindow.TipWindowClosed",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "TipWindowShowTimeEnded",
+      "delegate": "System.EventHandler",
+      "signature": "event System.EventHandler TipWindowShowTimeEnded",
+      "summary": "TipWindowShowTimeEnded event of TipWindow.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.UI.TipWindow.TipWindowShowTimeEnded",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

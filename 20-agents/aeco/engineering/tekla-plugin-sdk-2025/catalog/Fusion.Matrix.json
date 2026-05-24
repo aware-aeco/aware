@@ -1,0 +1,384 @@
+{
+  "name": "Matrix",
+  "namespace": "Fusion",
+  "kind": "static-class",
+  "summary": "Matrix static class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Matrix",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Transform",
+      "signature": "static Fusion.Float4 Transform(Fusion.Float4x4 matrix, Fusion.Float4 vector)",
+      "summary": "Transform method of Matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        },
+        {
+          "name": "vector",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Transform%28Fusion.Float4x4%2CFusion.Float4%29"
+    },
+    {
+      "name": "Camera",
+      "signature": "static Fusion.Float4x4 Camera(Fusion.Float3 cameraPosition, Fusion.Float3 cameraUpVector, Fusion.Float3 cameraForwardVector)",
+      "summary": "Camera method of Matrix.",
+      "params": [
+        {
+          "name": "cameraPosition",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "cameraUpVector",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "cameraForwardVector",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Camera%28Fusion.Float3%2CFusion.Float3%2CFusion.Float3%29"
+    },
+    {
+      "name": "Invert",
+      "signature": "static Fusion.Float4x4 Invert(Fusion.Float4x4 matrix)",
+      "summary": "Invert method of Matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Invert%28Fusion.Float4x4%29"
+    },
+    {
+      "name": "InvertAffine",
+      "signature": "static Fusion.Float4x4 InvertAffine(Fusion.Float4x4 matrix)",
+      "summary": "InvertAffine method of Matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.InvertAffine%28Fusion.Float4x4%29"
+    },
+    {
+      "name": "LookAt",
+      "signature": "static Fusion.Float4x4 LookAt(Fusion.Float3 targetPosition, Fusion.Float3 cameraPosition, Fusion.Float3 cameraUpVector)",
+      "summary": "LookAt method of Matrix.",
+      "params": [
+        {
+          "name": "targetPosition",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "cameraPosition",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "cameraUpVector",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.LookAt%28Fusion.Float3%2CFusion.Float3%2CFusion.Float3%29"
+    },
+    {
+      "name": "Object",
+      "signature": "static Fusion.Float4x4 Object(Fusion.Float3 objectPosition, Fusion.Float3 objectUpVector, Fusion.Float3 objectForwardVector)",
+      "summary": "Object method of Matrix.",
+      "params": [
+        {
+          "name": "objectPosition",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "objectUpVector",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "objectForwardVector",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Object%28Fusion.Float3%2CFusion.Float3%2CFusion.Float3%29"
+    },
+    {
+      "name": "Projection",
+      "signature": "static Fusion.Float4x4 Projection(float width, float height, Fusion.Angle verticalViewAngle, float scale, float minimumDistance, float maximumDistance)",
+      "summary": "Projection method of Matrix.",
+      "params": [
+        {
+          "name": "width",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "height",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "verticalViewAngle",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "scale",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "minimumDistance",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "maximumDistance",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Projection%28System.Single%2CSystem.Single%2CFusion.Angle%2CSystem.Single%2CSystem.Single%2CSystem.Single%29"
+    },
+    {
+      "name": "Rotate",
+      "signature": "static Fusion.Float4x4 Rotate(Fusion.Angle angle, Fusion.Float3 axis)",
+      "summary": "Rotate method of Matrix.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "axis",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Rotate%28Fusion.Angle%2CFusion.Float3%29"
+    },
+    {
+      "name": "Rotate",
+      "signature": "static Fusion.Float4x4 Rotate(Fusion.Angle yaw, Fusion.Angle pitch, Fusion.Angle roll)",
+      "summary": "Rotate method of Matrix.",
+      "params": [
+        {
+          "name": "yaw",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "pitch",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "roll",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Rotate%28Fusion.Angle%2CFusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "RotateX",
+      "signature": "static Fusion.Float4x4 RotateX(Fusion.Angle angle)",
+      "summary": "RotateX method of Matrix.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.RotateX%28Fusion.Angle%29"
+    },
+    {
+      "name": "RotateY",
+      "signature": "static Fusion.Float4x4 RotateY(Fusion.Angle angle)",
+      "summary": "RotateY method of Matrix.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.RotateY%28Fusion.Angle%29"
+    },
+    {
+      "name": "RotateZ",
+      "signature": "static Fusion.Float4x4 RotateZ(Fusion.Angle angle)",
+      "summary": "RotateZ method of Matrix.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.RotateZ%28Fusion.Angle%29"
+    },
+    {
+      "name": "Translate",
+      "signature": "static Fusion.Float4x4 Translate(Fusion.Float3 translation)",
+      "summary": "Translate method of Matrix.",
+      "params": [
+        {
+          "name": "translation",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Translate%28Fusion.Float3%29"
+    },
+    {
+      "name": "Translate",
+      "signature": "static Fusion.Float4x4 Translate(float x, float y, float z)",
+      "summary": "Translate method of Matrix.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Translate%28System.Single%2CSystem.Single%2CSystem.Single%29"
+    },
+    {
+      "name": "Transpose",
+      "signature": "static Fusion.Float4x4 Transpose(Fusion.Float4x4 matrix)",
+      "summary": "Transpose method of Matrix.",
+      "params": [
+        {
+          "name": "matrix",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Matrix.Transpose%28Fusion.Float4x4%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

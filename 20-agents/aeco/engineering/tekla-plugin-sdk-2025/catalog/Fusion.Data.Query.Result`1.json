@@ -1,0 +1,45 @@
+{
+  "name": "Result\u00601",
+  "namespace": "Fusion.Data.Query",
+  "kind": "class",
+  "summary": "Result\u00601 class in Fusion.Data.Query.",
+  "base": "Fusion.Data.Query.Column",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Data.Query.Result\u00601",
+  "constructors": [
+    {
+      "name": "Result\u00601(string, System.Action\u003CFusion.Data.Sqlite.Statement, int, T\u003E)",
+      "signature": "Result\u00601(string name, System.Action\u003CFusion.Data.Sqlite.Statement, int, T\u003E bind)",
+      "summary": "Constructs a new Result\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "bind",
+          "type": "System.Action\u003CFusion.Data.Sqlite.Statement, int, T\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Result%601.%23ctor%28System.String%2CSystem.Action%7BFusion.Data.Sqlite.Statement%2CSystem.Int32%2C%600%7D%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Bind",
+      "type": "System.Action\u003CFusion.Data.Sqlite.Statement, int, T\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Bind property of Result\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Data.Query.Result%601.Bind"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

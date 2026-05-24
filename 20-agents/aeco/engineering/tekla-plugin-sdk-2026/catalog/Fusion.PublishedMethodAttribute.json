@@ -1,0 +1,58 @@
+{
+  "name": "PublishedMethodAttribute",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "PublishedMethodAttribute class in Fusion.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PublishedMethodAttribute",
+  "constructors": [
+    {
+      "name": "PublishedMethodAttribute()",
+      "signature": "PublishedMethodAttribute()",
+      "summary": "Constructs a new PublishedMethodAttribute.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedMethodAttribute.%23ctor"
+    },
+    {
+      "name": "PublishedMethodAttribute(Fusion.InvokeIn)",
+      "signature": "PublishedMethodAttribute(Fusion.InvokeIn invokeIn)",
+      "summary": "Constructs a new PublishedMethodAttribute.",
+      "params": [
+        {
+          "name": "invokeIn",
+          "type": "Fusion.InvokeIn",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PublishedMethodAttribute.%23ctor%28Fusion.InvokeIn%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Documentation",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Documentation property of PublishedMethodAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedMethodAttribute.Documentation"
+    },
+    {
+      "name": "InvokeIn",
+      "type": "Fusion.InvokeIn",
+      "getter": true,
+      "setter": false,
+      "summary": "InvokeIn property of PublishedMethodAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PublishedMethodAttribute.InvokeIn"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

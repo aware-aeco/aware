@@ -1,0 +1,15 @@
+{
+  "name": "ISession",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "ISession interface in Fusion.",
+  "interfaces": [
+    "Fusion.IKeyValueStore"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ISession",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

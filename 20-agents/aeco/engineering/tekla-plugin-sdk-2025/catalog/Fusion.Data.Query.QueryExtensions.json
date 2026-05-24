@@ -1,0 +1,732 @@
+{
+  "name": "QueryExtensions",
+  "namespace": "Fusion.Data.Query",
+  "kind": "static-class",
+  "summary": "QueryExtensions static class in Fusion.Data.Query.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Data.Query.QueryExtensions",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CT\u003E Select\u003CT\u003E(Fusion.Data.Sqlite database, string table, Fusion.Data.Query.Results\u003CT\u003E results, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "results",
+          "type": "Fusion.Data.Query.Results\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%601%28Fusion.Data.Sqlite%2CSystem.String%2CFusion.Data.Query.Results%7B%60%600%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, T10, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%6011%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%2C%60%608%2C%60%609%2C%60%6010%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, T9, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%6010%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%2C%60%608%2C%60%609%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, T5, T6, T7, T8, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, T8, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%609%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%2C%60%608%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, T5, T6, T7, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, T5, T6, T7, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, T7, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%608%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, T5, T6, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, T5, T6, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, T6, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%607%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, T5, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, T5, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, T5, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%606%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, T4, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, T4, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, T4, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%605%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, T3, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, T3, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, T3, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%604%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%2C%60%603%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, T2, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, T2, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, T2, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%603%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%2C%60%602%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Select",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CTResult\u003E Select\u003CT1, TResult\u003E(Fusion.Data.Sqlite database, string table, System.Func\u003CT1, TResult\u003E select, Fusion.Data.Query.Parameters where = null, string orderBy = null, int limit = 0, int offset = 0)",
+      "summary": "Select method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "select",
+          "type": "System.Func\u003CT1, TResult\u003E",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "orderBy",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        },
+        {
+          "name": "offset",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Select%60%602%28Fusion.Data.Sqlite%2CSystem.String%2CSystem.Func%7B%60%600%2C%60%601%7D%2CFusion.Data.Query.Parameters%2CSystem.String%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Delete",
+      "signature": "static void Delete(Fusion.Data.Sqlite database, string table, Fusion.Data.Query.Parameters where)",
+      "summary": "Delete method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Delete%28Fusion.Data.Sqlite%2CSystem.String%2CFusion.Data.Query.Parameters%29"
+    },
+    {
+      "name": "Insert",
+      "signature": "static void Insert(Fusion.Data.Sqlite database, string table, Fusion.Data.Query.Parameters columns)",
+      "summary": "Insert method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "columns",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Insert%28Fusion.Data.Sqlite%2CSystem.String%2CFusion.Data.Query.Parameters%29"
+    },
+    {
+      "name": "InsertOrIgnore",
+      "signature": "static void InsertOrIgnore(Fusion.Data.Sqlite database, string table, Fusion.Data.Query.Parameters columns)",
+      "summary": "InsertOrIgnore method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "columns",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.InsertOrIgnore%28Fusion.Data.Sqlite%2CSystem.String%2CFusion.Data.Query.Parameters%29"
+    },
+    {
+      "name": "InsertOrReplace",
+      "signature": "static void InsertOrReplace(Fusion.Data.Sqlite database, string table, Fusion.Data.Query.Parameters columns)",
+      "summary": "InsertOrReplace method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "columns",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.InsertOrReplace%28Fusion.Data.Sqlite%2CSystem.String%2CFusion.Data.Query.Parameters%29"
+    },
+    {
+      "name": "Update",
+      "signature": "static void Update(Fusion.Data.Sqlite database, string table, Fusion.Data.Query.Parameters columns, Fusion.Data.Query.Parameters where)",
+      "summary": "Update method of QueryExtensions.",
+      "params": [
+        {
+          "name": "database",
+          "type": "Fusion.Data.Sqlite",
+          "optional": false
+        },
+        {
+          "name": "table",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "columns",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "Fusion.Data.Query.Parameters",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.QueryExtensions.Update%28Fusion.Data.Sqlite%2CSystem.String%2CFusion.Data.Query.Parameters%2CFusion.Data.Query.Parameters%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,63 @@
+{
+  "name": "ToleratedObjectEventArgs",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking",
+  "kind": "class",
+  "summary": "The ToleratedObjectEventArgs class provides the event arguments for a picked object.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Faces",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.HitPolygon\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the faces.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs.Faces"
+    },
+    {
+      "name": "HitPoint",
+      "type": "Tekla.Structures.Geometry3d.Point",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the hit point.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs.HitPoint"
+    },
+    {
+      "name": "IsValid",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or set s a value indicating whether the new pick is valid.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs.IsValid"
+    },
+    {
+      "name": "Objects",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.HitObject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the objects.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs.Objects"
+    },
+    {
+      "name": "Segments",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.HitSegment\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the segments.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs.Segments"
+    },
+    {
+      "name": "VisibleObjects",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.HitObject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the visible objects.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.ToleratedObjectEventArgs.VisibleObjects"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}
