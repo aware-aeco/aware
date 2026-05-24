@@ -1,0 +1,86 @@
+{
+  "name": "AuthorizationAvailableResponse",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "AuthorizationAvailableResponse class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.AuthorizationAvailableResponse",
+  "constructors": [
+    {
+      "name": "AuthorizationAvailableResponse(string, Fusion.AuthorizationResult)",
+      "signature": "AuthorizationAvailableResponse(string action, Fusion.AuthorizationResult result)",
+      "summary": "Constructs a new AuthorizationAvailableResponse.",
+      "params": [
+        {
+          "name": "action",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Fusion.AuthorizationResult",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.AuthorizationAvailableResponse.%23ctor%28System.String%2CFusion.AuthorizationResult%29"
+    },
+    {
+      "name": "AuthorizationAvailableResponse(string, Fusion.AuthorizationResult, string)",
+      "signature": "AuthorizationAvailableResponse(string action, Fusion.AuthorizationResult result, string responseText)",
+      "summary": "Constructs a new AuthorizationAvailableResponse.",
+      "params": [
+        {
+          "name": "action",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "Fusion.AuthorizationResult",
+          "optional": false
+        },
+        {
+          "name": "responseText",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.AuthorizationAvailableResponse.%23ctor%28System.String%2CFusion.AuthorizationResult%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Action",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Action property of AuthorizationAvailableResponse.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationAvailableResponse.Action"
+    },
+    {
+      "name": "ResponseText",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ResponseText property of AuthorizationAvailableResponse.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationAvailableResponse.ResponseText"
+    },
+    {
+      "name": "Result",
+      "type": "Fusion.AuthorizationResult",
+      "getter": true,
+      "setter": false,
+      "summary": "Result property of AuthorizationAvailableResponse.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationAvailableResponse.Result"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

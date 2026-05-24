@@ -1,0 +1,48 @@
+{
+  "name": "Highlighter",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools",
+  "kind": "class",
+  "summary": "The Highlighter class is used to highlight objects in the model.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Highlighter",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ClearHighlights",
+      "signature": "void ClearHighlights()",
+      "summary": "Clears the highlights.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Highlighter.ClearHighlights"
+    },
+    {
+      "name": "HighlightPart",
+      "signature": "void HighlightPart(Tekla.Structures.Model.Part part, Tekla.Structures.Plugins.DirectManipulation.Services.LineType lineType = 0)",
+      "summary": "Highlights the part.",
+      "params": [
+        {
+          "name": "part",
+          "type": "Tekla.Structures.Model.Part",
+          "doc": "The part.",
+          "optional": false
+        },
+        {
+          "name": "lineType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+          "doc": "Type of the line.",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Highlighter.HighlightPart%28Tekla.Structures.Model.Part%2CTekla.Structures.Plugins.DirectManipulation.Services.LineType%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

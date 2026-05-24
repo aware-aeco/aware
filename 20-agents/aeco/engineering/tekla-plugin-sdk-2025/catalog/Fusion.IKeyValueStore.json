@@ -1,0 +1,38 @@
+{
+  "name": "IKeyValueStore",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IKeyValueStore interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IKeyValueStore",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Count property of IKeyValueStore.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IKeyValueStore.Count"
+    },
+    {
+      "name": "Item",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of IKeyValueStore.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IKeyValueStore.Item%28System.String%29"
+    },
+    {
+      "name": "Keys",
+      "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Keys property of IKeyValueStore.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IKeyValueStore.Keys"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

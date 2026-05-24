@@ -1,0 +1,31 @@
+{
+  "name": "ThemeResourcesAttribute",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ThemeResourcesAttribute class in Fusion.",
+  "base": "Fusion.ResourcesAttribute",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ThemeResourcesAttribute",
+  "constructors": [
+    {
+      "name": "ThemeResourcesAttribute(string)",
+      "signature": "ThemeResourcesAttribute(string resourcePath)",
+      "summary": "Constructs a new ThemeResourcesAttribute.",
+      "params": [
+        {
+          "name": "resourcePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThemeResourcesAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

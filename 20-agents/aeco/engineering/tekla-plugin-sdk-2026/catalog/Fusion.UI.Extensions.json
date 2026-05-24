@@ -1,0 +1,2494 @@
+{
+  "name": "Extensions",
+  "namespace": "Fusion.UI",
+  "kind": "static-class",
+  "summary": "Extensions static class in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.Extensions",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetSizeMode",
+      "signature": "static Fusion.UI.Extensions.SizeMode? GetSizeMode(System.Windows.DependencyObject element)",
+      "summary": "GetSizeMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UI.Extensions.SizeMode?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetSizeMode%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetVisualMode",
+      "signature": "static Fusion.UI.Extensions.VisualModes? GetVisualMode(System.Windows.DependencyObject element)",
+      "summary": "GetVisualMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UI.Extensions.VisualModes?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetVisualMode%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetBindableSelectedItems",
+      "signature": "static System.Collections.IList GetBindableSelectedItems(System.Windows.Controls.Primitives.MultiSelector element)",
+      "summary": "GetBindableSelectedItems method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.MultiSelector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.IList",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableSelectedItems%28System.Windows.Controls.Primitives.MultiSelector%29"
+    },
+    {
+      "name": "GetCharacterCasing",
+      "signature": "static System.Windows.Controls.CharacterCasing GetCharacterCasing(System.Windows.DependencyObject element)",
+      "summary": "GetCharacterCasing method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Controls.CharacterCasing",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetCharacterCasing%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDropDown",
+      "signature": "static System.Windows.Controls.Primitives.Popup GetDropDown(System.Windows.Controls.Primitives.ToggleButton element)",
+      "summary": "GetDropDown method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Controls.Primitives.Popup",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDropDown%28System.Windows.Controls.Primitives.ToggleButton%29"
+    },
+    {
+      "name": "GetParentToggleButton",
+      "signature": "static System.Windows.Controls.Primitives.ToggleButton GetParentToggleButton(System.Windows.Controls.Primitives.Popup popup)",
+      "summary": "GetParentToggleButton method of Extensions.",
+      "params": [
+        {
+          "name": "popup",
+          "type": "System.Windows.Controls.Primitives.Popup",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Controls.Primitives.ToggleButton",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetParentToggleButton%28System.Windows.Controls.Primitives.Popup%29"
+    },
+    {
+      "name": "GetComboBoxClosed",
+      "signature": "static System.Windows.Input.ICommand GetComboBoxClosed(System.Windows.Controls.ComboBox combobox)",
+      "summary": "GetComboBoxClosed method of Extensions.",
+      "params": [
+        {
+          "name": "combobox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.ICommand",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetComboBoxClosed%28System.Windows.Controls.ComboBox%29"
+    },
+    {
+      "name": "GetComboBoxOpened",
+      "signature": "static System.Windows.Input.ICommand GetComboBoxOpened(System.Windows.Controls.ComboBox combobox)",
+      "summary": "GetComboBoxOpened method of Extensions.",
+      "params": [
+        {
+          "name": "combobox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.ICommand",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetComboBoxOpened%28System.Windows.Controls.ComboBox%29"
+    },
+    {
+      "name": "GetRunOnEnterCommand",
+      "signature": "static System.Windows.Input.ICommand GetRunOnEnterCommand(System.Windows.DependencyObject element)",
+      "summary": "GetRunOnEnterCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.ICommand",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetRunOnEnterCommand%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetRunOnLostFocusCommand",
+      "signature": "static System.Windows.Input.ICommand GetRunOnLostFocusCommand(System.Windows.DependencyObject element)",
+      "summary": "GetRunOnLostFocusCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.ICommand",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetRunOnLostFocusCommand%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetSelectionChangedCommand",
+      "signature": "static System.Windows.Input.ICommand GetSelectionChangedCommand(System.Windows.UIElement element)",
+      "summary": "GetSelectionChangedCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.ICommand",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetSelectionChangedCommand%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetTitleGlyph",
+      "signature": "static System.Windows.Media.Geometry GetTitleGlyph(System.Windows.Controls.Control element)",
+      "summary": "GetTitleGlyph method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Media.Geometry",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetTitleGlyph%28System.Windows.Controls.Control%29"
+    },
+    {
+      "name": "GetDropDownPlacementTarget",
+      "signature": "static System.Windows.UIElement GetDropDownPlacementTarget(System.Windows.UIElement element)",
+      "summary": "GetDropDownPlacementTarget method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.UIElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDropDownPlacementTarget%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetTopmostPinVisibility",
+      "signature": "static System.Windows.Visibility GetTopmostPinVisibility(System.Windows.Window window)",
+      "summary": "GetTopmostPinVisibility method of Extensions.",
+      "params": [
+        {
+          "name": "window",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Visibility",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetTopmostPinVisibility%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetAutoScrolling",
+      "signature": "static bool GetAutoScrolling(System.Windows.DependencyObject element)",
+      "summary": "GetAutoScrolling method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetAutoScrolling%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetBindableIsActive",
+      "signature": "static bool GetBindableIsActive(System.Windows.Window element)",
+      "summary": "GetBindableIsActive method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsActive%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetBindableIsActiveEnabled",
+      "signature": "static bool GetBindableIsActiveEnabled(System.Windows.DependencyObject element)",
+      "summary": "GetBindableIsActiveEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsActiveEnabled%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetBindableIsCapsLockToggled",
+      "signature": "static bool GetBindableIsCapsLockToggled(System.Windows.UIElement element)",
+      "summary": "GetBindableIsCapsLockToggled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsCapsLockToggled%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetBindableIsCapsLockToggledEnabled",
+      "signature": "static bool GetBindableIsCapsLockToggledEnabled(System.Windows.UIElement element)",
+      "summary": "GetBindableIsCapsLockToggledEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsCapsLockToggledEnabled%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetBindableIsFocused",
+      "signature": "static bool GetBindableIsFocused(System.Windows.UIElement element)",
+      "summary": "GetBindableIsFocused method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsFocused%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetBindableIsFocusedEnabled",
+      "signature": "static bool GetBindableIsFocusedEnabled(System.Windows.UIElement element)",
+      "summary": "GetBindableIsFocusedEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsFocusedEnabled%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetBindableIsMouseOver",
+      "signature": "static bool GetBindableIsMouseOver(System.Windows.UIElement element)",
+      "summary": "GetBindableIsMouseOver method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsMouseOver%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetBindableIsMouseOverEnabled",
+      "signature": "static bool GetBindableIsMouseOverEnabled(System.Windows.UIElement element)",
+      "summary": "GetBindableIsMouseOverEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableIsMouseOverEnabled%28System.Windows.UIElement%29"
+    },
+    {
+      "name": "GetBindablePasswordEnabled",
+      "signature": "static bool GetBindablePasswordEnabled(System.Windows.Controls.PasswordBox element)",
+      "summary": "GetBindablePasswordEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.PasswordBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindablePasswordEnabled%28System.Windows.Controls.PasswordBox%29"
+    },
+    {
+      "name": "GetBindableSelectedItemsEnabled",
+      "signature": "static bool GetBindableSelectedItemsEnabled(System.Windows.Controls.Primitives.MultiSelector element)",
+      "summary": "GetBindableSelectedItemsEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.MultiSelector",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindableSelectedItemsEnabled%28System.Windows.Controls.Primitives.MultiSelector%29"
+    },
+    {
+      "name": "GetClosePopupOnClick",
+      "signature": "static bool GetClosePopupOnClick(System.Windows.Controls.Primitives.ButtonBase element)",
+      "summary": "GetClosePopupOnClick method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ButtonBase",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetClosePopupOnClick%28System.Windows.Controls.Primitives.ButtonBase%29"
+    },
+    {
+      "name": "GetCollapseInFullScreenMode",
+      "signature": "static bool GetCollapseInFullScreenMode(System.Windows.DependencyObject element)",
+      "summary": "GetCollapseInFullScreenMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetCollapseInFullScreenMode%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetComboBoxRestrictDropDownWidth",
+      "signature": "static bool GetComboBoxRestrictDropDownWidth(System.Windows.Controls.ComboBox combobox)",
+      "summary": "GetComboBoxRestrictDropDownWidth method of Extensions.",
+      "params": [
+        {
+          "name": "combobox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetComboBoxRestrictDropDownWidth%28System.Windows.Controls.ComboBox%29"
+    },
+    {
+      "name": "GetDragOnMouseLeftButtonDown",
+      "signature": "static bool GetDragOnMouseLeftButtonDown(System.Windows.Window element)",
+      "summary": "GetDragOnMouseLeftButtonDown method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDragOnMouseLeftButtonDown%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetEnableDropDownDirectionStyling",
+      "signature": "static bool GetEnableDropDownDirectionStyling(System.Windows.DependencyObject depObj)",
+      "summary": "GetEnableDropDownDirectionStyling method of Extensions.",
+      "params": [
+        {
+          "name": "depObj",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetEnableDropDownDirectionStyling%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetFitDropDownToItems",
+      "signature": "static bool GetFitDropDownToItems(System.Windows.Controls.ComboBox comboBox)",
+      "summary": "GetFitDropDownToItems method of Extensions.",
+      "params": [
+        {
+          "name": "comboBox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetFitDropDownToItems%28System.Windows.Controls.ComboBox%29"
+    },
+    {
+      "name": "GetFocusNextOnEnter",
+      "signature": "static bool GetFocusNextOnEnter(System.Windows.DependencyObject element)",
+      "summary": "GetFocusNextOnEnter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetFocusNextOnEnter%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetFocusOnLoad",
+      "signature": "static bool GetFocusOnLoad(System.Windows.DependencyObject element)",
+      "summary": "GetFocusOnLoad method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetFocusOnLoad%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetFullScreenMode",
+      "signature": "static bool GetFullScreenMode(System.Windows.DependencyObject element)",
+      "summary": "GetFullScreenMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetFullScreenMode%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetHorizontalScrollingEnabled",
+      "signature": "static bool GetHorizontalScrollingEnabled(System.Windows.DependencyObject element)",
+      "summary": "GetHorizontalScrollingEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetHorizontalScrollingEnabled%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetKeepWatermarkOnFocus",
+      "signature": "static bool GetKeepWatermarkOnFocus(System.Windows.Controls.Control element)",
+      "summary": "GetKeepWatermarkOnFocus method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetKeepWatermarkOnFocus%28System.Windows.Controls.Control%29"
+    },
+    {
+      "name": "GetRecalculateWindowBounds",
+      "signature": "static bool GetRecalculateWindowBounds(System.Windows.Window element)",
+      "summary": "GetRecalculateWindowBounds method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetRecalculateWindowBounds%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetShowWindowCloseButton",
+      "signature": "static bool GetShowWindowCloseButton(System.Windows.Window element)",
+      "summary": "GetShowWindowCloseButton method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetShowWindowCloseButton%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetShowWindowSizeButtons",
+      "signature": "static bool GetShowWindowSizeButtons(System.Windows.Window element)",
+      "summary": "GetShowWindowSizeButtons method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetShowWindowSizeButtons%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetSuppressErrors",
+      "signature": "static bool GetSuppressErrors(System.Windows.Controls.WebBrowser element)",
+      "summary": "GetSuppressErrors method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.WebBrowser",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetSuppressErrors%28System.Windows.Controls.WebBrowser%29"
+    },
+    {
+      "name": "GetSystemCommandsEnabled",
+      "signature": "static bool GetSystemCommandsEnabled(System.Windows.Window element)",
+      "summary": "GetSystemCommandsEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetSystemCommandsEnabled%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetTabletMode",
+      "signature": "static bool GetTabletMode(System.Windows.DependencyObject element)",
+      "summary": "GetTabletMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetTabletMode%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetUnfocusOnEnter",
+      "signature": "static bool GetUnfocusOnEnter(System.Windows.DependencyObject element)",
+      "summary": "GetUnfocusOnEnter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetUnfocusOnEnter%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDesiredHeight",
+      "signature": "static double GetDesiredHeight(System.Windows.DependencyObject element)",
+      "summary": "GetDesiredHeight method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDesiredHeight%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDesiredMaxHeight",
+      "signature": "static double GetDesiredMaxHeight(System.Windows.DependencyObject element)",
+      "summary": "GetDesiredMaxHeight method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDesiredMaxHeight%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDesiredMaxWidth",
+      "signature": "static double GetDesiredMaxWidth(System.Windows.DependencyObject element)",
+      "summary": "GetDesiredMaxWidth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDesiredMaxWidth%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDesiredMinHeight",
+      "signature": "static double GetDesiredMinHeight(System.Windows.DependencyObject element)",
+      "summary": "GetDesiredMinHeight method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDesiredMinHeight%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDesiredMinWidth",
+      "signature": "static double GetDesiredMinWidth(System.Windows.DependencyObject element)",
+      "summary": "GetDesiredMinWidth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDesiredMinWidth%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetDesiredWidth",
+      "signature": "static double GetDesiredWidth(System.Windows.DependencyObject element)",
+      "summary": "GetDesiredWidth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDesiredWidth%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetBadgeContent",
+      "signature": "static object GetBadgeContent(System.Windows.DependencyObject element)",
+      "summary": "GetBadgeContent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBadgeContent%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetCheckedToolTip",
+      "signature": "static object GetCheckedToolTip(System.Windows.Controls.Primitives.ToggleButton element)",
+      "summary": "GetCheckedToolTip method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetCheckedToolTip%28System.Windows.Controls.Primitives.ToggleButton%29"
+    },
+    {
+      "name": "GetDialogResult",
+      "signature": "static object GetDialogResult(System.Windows.Window element)",
+      "summary": "GetDialogResult method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDialogResult%28System.Windows.Window%29"
+    },
+    {
+      "name": "GetDisabledToolTip",
+      "signature": "static object GetDisabledToolTip(System.Windows.FrameworkElement element)",
+      "summary": "GetDisabledToolTip method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.FrameworkElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetDisabledToolTip%28System.Windows.FrameworkElement%29"
+    },
+    {
+      "name": "GetIndeterminateToolTip",
+      "signature": "static object GetIndeterminateToolTip(System.Windows.Controls.Primitives.ToggleButton element)",
+      "summary": "GetIndeterminateToolTip method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetIndeterminateToolTip%28System.Windows.Controls.Primitives.ToggleButton%29"
+    },
+    {
+      "name": "GetRunOnEnterCommandParameter",
+      "signature": "static object GetRunOnEnterCommandParameter(System.Windows.DependencyObject element)",
+      "summary": "GetRunOnEnterCommandParameter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetRunOnEnterCommandParameter%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetRunOnLostFocusCommandParameter",
+      "signature": "static object GetRunOnLostFocusCommandParameter(System.Windows.DependencyObject element)",
+      "summary": "GetRunOnLostFocusCommandParameter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetRunOnLostFocusCommandParameter%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetTitleContent",
+      "signature": "static object GetTitleContent(System.Windows.DependencyObject element)",
+      "summary": "GetTitleContent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetTitleContent%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetBindablePassword",
+      "signature": "static string GetBindablePassword(System.Windows.Controls.PasswordBox element)",
+      "summary": "GetBindablePassword method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.PasswordBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetBindablePassword%28System.Windows.Controls.PasswordBox%29"
+    },
+    {
+      "name": "GetHelpTopic",
+      "signature": "static string GetHelpTopic(System.Windows.DependencyObject element)",
+      "summary": "GetHelpTopic method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetHelpTopic%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetInputFilter",
+      "signature": "static string GetInputFilter(System.Windows.DependencyObject element)",
+      "summary": "GetInputFilter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetInputFilter%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "GetTitleText",
+      "signature": "static string GetTitleText(System.Windows.Controls.Control element)",
+      "summary": "GetTitleText method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetTitleText%28System.Windows.Controls.Control%29"
+    },
+    {
+      "name": "GetWatermark",
+      "signature": "static string GetWatermark(System.Windows.Controls.Control element)",
+      "summary": "GetWatermark method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.GetWatermark%28System.Windows.Controls.Control%29"
+    },
+    {
+      "name": "SetAutoScrolling",
+      "signature": "static void SetAutoScrolling(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetAutoScrolling method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetAutoScrolling%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBadgeContent",
+      "signature": "static void SetBadgeContent(System.Windows.DependencyObject element, object value)",
+      "summary": "SetBadgeContent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBadgeContent%28System.Windows.DependencyObject%2CSystem.Object%29"
+    },
+    {
+      "name": "SetBindableIsActive",
+      "signature": "static void SetBindableIsActive(System.Windows.Window element, bool value)",
+      "summary": "SetBindableIsActive method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsActive%28System.Windows.Window%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsActiveEnabled",
+      "signature": "static void SetBindableIsActiveEnabled(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetBindableIsActiveEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsActiveEnabled%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsCapsLockToggled",
+      "signature": "static void SetBindableIsCapsLockToggled(System.Windows.UIElement element, bool value)",
+      "summary": "SetBindableIsCapsLockToggled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsCapsLockToggled%28System.Windows.UIElement%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsCapsLockToggledEnabled",
+      "signature": "static void SetBindableIsCapsLockToggledEnabled(System.Windows.UIElement element, bool value)",
+      "summary": "SetBindableIsCapsLockToggledEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsCapsLockToggledEnabled%28System.Windows.UIElement%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsFocused",
+      "signature": "static void SetBindableIsFocused(System.Windows.UIElement element, bool value)",
+      "summary": "SetBindableIsFocused method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsFocused%28System.Windows.UIElement%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsFocusedEnabled",
+      "signature": "static void SetBindableIsFocusedEnabled(System.Windows.UIElement element, bool value)",
+      "summary": "SetBindableIsFocusedEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsFocusedEnabled%28System.Windows.UIElement%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsMouseOver",
+      "signature": "static void SetBindableIsMouseOver(System.Windows.UIElement element, bool value)",
+      "summary": "SetBindableIsMouseOver method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsMouseOver%28System.Windows.UIElement%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableIsMouseOverEnabled",
+      "signature": "static void SetBindableIsMouseOverEnabled(System.Windows.UIElement element, bool value)",
+      "summary": "SetBindableIsMouseOverEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableIsMouseOverEnabled%28System.Windows.UIElement%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindablePassword",
+      "signature": "static void SetBindablePassword(System.Windows.Controls.PasswordBox element, string value)",
+      "summary": "SetBindablePassword method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.PasswordBox",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindablePassword%28System.Windows.Controls.PasswordBox%2CSystem.String%29"
+    },
+    {
+      "name": "SetBindablePasswordEnabled",
+      "signature": "static void SetBindablePasswordEnabled(System.Windows.Controls.PasswordBox element, bool value)",
+      "summary": "SetBindablePasswordEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.PasswordBox",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindablePasswordEnabled%28System.Windows.Controls.PasswordBox%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetBindableSelectedItems",
+      "signature": "static void SetBindableSelectedItems(System.Windows.Controls.Primitives.MultiSelector element, System.Collections.IList value)",
+      "summary": "SetBindableSelectedItems method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.MultiSelector",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Collections.IList",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableSelectedItems%28System.Windows.Controls.Primitives.MultiSelector%2CSystem.Collections.IList%29"
+    },
+    {
+      "name": "SetBindableSelectedItemsEnabled",
+      "signature": "static void SetBindableSelectedItemsEnabled(System.Windows.Controls.Primitives.MultiSelector element, bool value)",
+      "summary": "SetBindableSelectedItemsEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.MultiSelector",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetBindableSelectedItemsEnabled%28System.Windows.Controls.Primitives.MultiSelector%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetCharacterCasing",
+      "signature": "static void SetCharacterCasing(System.Windows.DependencyObject element, System.Windows.Controls.CharacterCasing value)",
+      "summary": "SetCharacterCasing method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Controls.CharacterCasing",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetCharacterCasing%28System.Windows.DependencyObject%2CSystem.Windows.Controls.CharacterCasing%29"
+    },
+    {
+      "name": "SetCheckedToolTip",
+      "signature": "static void SetCheckedToolTip(System.Windows.Controls.Primitives.ToggleButton element, object value)",
+      "summary": "SetCheckedToolTip method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetCheckedToolTip%28System.Windows.Controls.Primitives.ToggleButton%2CSystem.Object%29"
+    },
+    {
+      "name": "SetClosePopupOnClick",
+      "signature": "static void SetClosePopupOnClick(System.Windows.Controls.Primitives.ButtonBase element, bool value)",
+      "summary": "SetClosePopupOnClick method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ButtonBase",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetClosePopupOnClick%28System.Windows.Controls.Primitives.ButtonBase%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetCollapseInFullScreenMode",
+      "signature": "static void SetCollapseInFullScreenMode(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetCollapseInFullScreenMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetCollapseInFullScreenMode%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetComboBoxClosed",
+      "signature": "static void SetComboBoxClosed(System.Windows.Controls.ComboBox combobox, System.Windows.Input.ICommand value)",
+      "summary": "SetComboBoxClosed method of Extensions.",
+      "params": [
+        {
+          "name": "combobox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Input.ICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetComboBoxClosed%28System.Windows.Controls.ComboBox%2CSystem.Windows.Input.ICommand%29"
+    },
+    {
+      "name": "SetComboBoxOpened",
+      "signature": "static void SetComboBoxOpened(System.Windows.Controls.ComboBox combobox, System.Windows.Input.ICommand value)",
+      "summary": "SetComboBoxOpened method of Extensions.",
+      "params": [
+        {
+          "name": "combobox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Input.ICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetComboBoxOpened%28System.Windows.Controls.ComboBox%2CSystem.Windows.Input.ICommand%29"
+    },
+    {
+      "name": "SetComboBoxRestrictDropDownWidth",
+      "signature": "static void SetComboBoxRestrictDropDownWidth(System.Windows.Controls.ComboBox combobox, bool value)",
+      "summary": "SetComboBoxRestrictDropDownWidth method of Extensions.",
+      "params": [
+        {
+          "name": "combobox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetComboBoxRestrictDropDownWidth%28System.Windows.Controls.ComboBox%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetDesiredHeight",
+      "signature": "static void SetDesiredHeight(System.Windows.DependencyObject element, double desiredHeight)",
+      "summary": "SetDesiredHeight method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "desiredHeight",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDesiredHeight%28System.Windows.DependencyObject%2CSystem.Double%29"
+    },
+    {
+      "name": "SetDesiredMaxHeight",
+      "signature": "static void SetDesiredMaxHeight(System.Windows.DependencyObject element, double desiredMaxHeight)",
+      "summary": "SetDesiredMaxHeight method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "desiredMaxHeight",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDesiredMaxHeight%28System.Windows.DependencyObject%2CSystem.Double%29"
+    },
+    {
+      "name": "SetDesiredMaxWidth",
+      "signature": "static void SetDesiredMaxWidth(System.Windows.DependencyObject element, double desiredMaxWidth)",
+      "summary": "SetDesiredMaxWidth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "desiredMaxWidth",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDesiredMaxWidth%28System.Windows.DependencyObject%2CSystem.Double%29"
+    },
+    {
+      "name": "SetDesiredMinHeight",
+      "signature": "static void SetDesiredMinHeight(System.Windows.DependencyObject element, double desiredMinHeight)",
+      "summary": "SetDesiredMinHeight method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "desiredMinHeight",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDesiredMinHeight%28System.Windows.DependencyObject%2CSystem.Double%29"
+    },
+    {
+      "name": "SetDesiredMinWidth",
+      "signature": "static void SetDesiredMinWidth(System.Windows.DependencyObject element, double desiredMinWidth)",
+      "summary": "SetDesiredMinWidth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "desiredMinWidth",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDesiredMinWidth%28System.Windows.DependencyObject%2CSystem.Double%29"
+    },
+    {
+      "name": "SetDesiredWidth",
+      "signature": "static void SetDesiredWidth(System.Windows.DependencyObject element, double desiredWidth)",
+      "summary": "SetDesiredWidth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "desiredWidth",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDesiredWidth%28System.Windows.DependencyObject%2CSystem.Double%29"
+    },
+    {
+      "name": "SetDialogResult",
+      "signature": "static void SetDialogResult(System.Windows.Window element, object value)",
+      "summary": "SetDialogResult method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDialogResult%28System.Windows.Window%2CSystem.Object%29"
+    },
+    {
+      "name": "SetDisabledToolTip",
+      "signature": "static void SetDisabledToolTip(System.Windows.FrameworkElement element, object value)",
+      "summary": "SetDisabledToolTip method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.FrameworkElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDisabledToolTip%28System.Windows.FrameworkElement%2CSystem.Object%29"
+    },
+    {
+      "name": "SetDragOnMouseLeftButtonDown",
+      "signature": "static void SetDragOnMouseLeftButtonDown(System.Windows.Window element, bool value)",
+      "summary": "SetDragOnMouseLeftButtonDown method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDragOnMouseLeftButtonDown%28System.Windows.Window%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetDropDown",
+      "signature": "static void SetDropDown(System.Windows.Controls.Primitives.ToggleButton element, System.Windows.Controls.Primitives.Popup value)",
+      "summary": "SetDropDown method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Controls.Primitives.Popup",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDropDown%28System.Windows.Controls.Primitives.ToggleButton%2CSystem.Windows.Controls.Primitives.Popup%29"
+    },
+    {
+      "name": "SetDropDownPlacementTarget",
+      "signature": "static void SetDropDownPlacementTarget(System.Windows.UIElement element, System.Windows.UIElement value)",
+      "summary": "SetDropDownPlacementTarget method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetDropDownPlacementTarget%28System.Windows.UIElement%2CSystem.Windows.UIElement%29"
+    },
+    {
+      "name": "SetEnableDropDownDirectionStyling",
+      "signature": "static void SetEnableDropDownDirectionStyling(System.Windows.DependencyObject depObj, bool value)",
+      "summary": "SetEnableDropDownDirectionStyling method of Extensions.",
+      "params": [
+        {
+          "name": "depObj",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetEnableDropDownDirectionStyling%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetFitDropDownToItems",
+      "signature": "static void SetFitDropDownToItems(System.Windows.Controls.ComboBox comboBox, bool fitDropDownToItems)",
+      "summary": "SetFitDropDownToItems method of Extensions.",
+      "params": [
+        {
+          "name": "comboBox",
+          "type": "System.Windows.Controls.ComboBox",
+          "optional": false
+        },
+        {
+          "name": "fitDropDownToItems",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetFitDropDownToItems%28System.Windows.Controls.ComboBox%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetFocusNextOnEnter",
+      "signature": "static void SetFocusNextOnEnter(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetFocusNextOnEnter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetFocusNextOnEnter%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetFocusOnLoad",
+      "signature": "static void SetFocusOnLoad(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetFocusOnLoad method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetFocusOnLoad%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetFullScreenMode",
+      "signature": "static void SetFullScreenMode(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetFullScreenMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetFullScreenMode%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetHelpTopic",
+      "signature": "static void SetHelpTopic(System.Windows.DependencyObject element, string value)",
+      "summary": "SetHelpTopic method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetHelpTopic%28System.Windows.DependencyObject%2CSystem.String%29"
+    },
+    {
+      "name": "SetHorizontalScrollingEnabled",
+      "signature": "static void SetHorizontalScrollingEnabled(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetHorizontalScrollingEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetHorizontalScrollingEnabled%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetIndeterminateToolTip",
+      "signature": "static void SetIndeterminateToolTip(System.Windows.Controls.Primitives.ToggleButton element, object value)",
+      "summary": "SetIndeterminateToolTip method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetIndeterminateToolTip%28System.Windows.Controls.Primitives.ToggleButton%2CSystem.Object%29"
+    },
+    {
+      "name": "SetInputFilter",
+      "signature": "static void SetInputFilter(System.Windows.DependencyObject element, string value)",
+      "summary": "SetInputFilter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetInputFilter%28System.Windows.DependencyObject%2CSystem.String%29"
+    },
+    {
+      "name": "SetKeepWatermarkOnFocus",
+      "signature": "static void SetKeepWatermarkOnFocus(System.Windows.Controls.Control element, bool value)",
+      "summary": "SetKeepWatermarkOnFocus method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetKeepWatermarkOnFocus%28System.Windows.Controls.Control%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetParentToggleButton",
+      "signature": "static void SetParentToggleButton(System.Windows.Controls.Primitives.Popup popup, System.Windows.Controls.Primitives.ToggleButton value)",
+      "summary": "SetParentToggleButton method of Extensions.",
+      "params": [
+        {
+          "name": "popup",
+          "type": "System.Windows.Controls.Primitives.Popup",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Controls.Primitives.ToggleButton",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetParentToggleButton%28System.Windows.Controls.Primitives.Popup%2CSystem.Windows.Controls.Primitives.ToggleButton%29"
+    },
+    {
+      "name": "SetRecalculateWindowBounds",
+      "signature": "static void SetRecalculateWindowBounds(System.Windows.Window element, bool value)",
+      "summary": "SetRecalculateWindowBounds method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetRecalculateWindowBounds%28System.Windows.Window%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetRunOnEnterCommand",
+      "signature": "static void SetRunOnEnterCommand(System.Windows.DependencyObject element, System.Windows.Input.ICommand value)",
+      "summary": "SetRunOnEnterCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Input.ICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetRunOnEnterCommand%28System.Windows.DependencyObject%2CSystem.Windows.Input.ICommand%29"
+    },
+    {
+      "name": "SetRunOnEnterCommandParameter",
+      "signature": "static void SetRunOnEnterCommandParameter(System.Windows.DependencyObject element, object value)",
+      "summary": "SetRunOnEnterCommandParameter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetRunOnEnterCommandParameter%28System.Windows.DependencyObject%2CSystem.Object%29"
+    },
+    {
+      "name": "SetRunOnLostFocusCommand",
+      "signature": "static void SetRunOnLostFocusCommand(System.Windows.DependencyObject element, System.Windows.Input.ICommand value)",
+      "summary": "SetRunOnLostFocusCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Input.ICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetRunOnLostFocusCommand%28System.Windows.DependencyObject%2CSystem.Windows.Input.ICommand%29"
+    },
+    {
+      "name": "SetRunOnLostFocusCommandParameter",
+      "signature": "static void SetRunOnLostFocusCommandParameter(System.Windows.DependencyObject element, object value)",
+      "summary": "SetRunOnLostFocusCommandParameter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetRunOnLostFocusCommandParameter%28System.Windows.DependencyObject%2CSystem.Object%29"
+    },
+    {
+      "name": "SetSelectionChangedCommand",
+      "signature": "static void SetSelectionChangedCommand(System.Windows.UIElement element, System.Windows.Input.ICommand value)",
+      "summary": "SetSelectionChangedCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Input.ICommand",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetSelectionChangedCommand%28System.Windows.UIElement%2CSystem.Windows.Input.ICommand%29"
+    },
+    {
+      "name": "SetShowWindowCloseButton",
+      "signature": "static void SetShowWindowCloseButton(System.Windows.Window element, bool value)",
+      "summary": "SetShowWindowCloseButton method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetShowWindowCloseButton%28System.Windows.Window%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetShowWindowSizeButtons",
+      "signature": "static void SetShowWindowSizeButtons(System.Windows.Window element, bool value)",
+      "summary": "SetShowWindowSizeButtons method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetShowWindowSizeButtons%28System.Windows.Window%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetSizeMode",
+      "signature": "static void SetSizeMode(System.Windows.DependencyObject element, Fusion.UI.Extensions.SizeMode? value)",
+      "summary": "SetSizeMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.UI.Extensions.SizeMode?",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetSizeMode%28System.Windows.DependencyObject%2CSystem.Nullable%7BFusion.UI.Extensions.SizeMode%7D%29"
+    },
+    {
+      "name": "SetSuppressErrors",
+      "signature": "static void SetSuppressErrors(System.Windows.Controls.WebBrowser element, bool value)",
+      "summary": "SetSuppressErrors method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.WebBrowser",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetSuppressErrors%28System.Windows.Controls.WebBrowser%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetSystemCommandsEnabled",
+      "signature": "static void SetSystemCommandsEnabled(System.Windows.Window element, bool value)",
+      "summary": "SetSystemCommandsEnabled method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetSystemCommandsEnabled%28System.Windows.Window%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetTabletMode",
+      "signature": "static void SetTabletMode(System.Windows.DependencyObject element, bool tabletMode)",
+      "summary": "SetTabletMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "tabletMode",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetTabletMode%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetTitleContent",
+      "signature": "static void SetTitleContent(System.Windows.DependencyObject element, object value)",
+      "summary": "SetTitleContent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetTitleContent%28System.Windows.DependencyObject%2CSystem.Object%29"
+    },
+    {
+      "name": "SetTitleGlyph",
+      "signature": "static void SetTitleGlyph(System.Windows.Controls.Control element, System.Windows.Media.Geometry value)",
+      "summary": "SetTitleGlyph method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Windows.Media.Geometry",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetTitleGlyph%28System.Windows.Controls.Control%2CSystem.Windows.Media.Geometry%29"
+    },
+    {
+      "name": "SetTitleText",
+      "signature": "static void SetTitleText(System.Windows.Controls.Control element, string value)",
+      "summary": "SetTitleText method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetTitleText%28System.Windows.Controls.Control%2CSystem.String%29"
+    },
+    {
+      "name": "SetTopmostPinVisibility",
+      "signature": "static void SetTopmostPinVisibility(System.Windows.Window window, System.Windows.Visibility visibility)",
+      "summary": "SetTopmostPinVisibility method of Extensions.",
+      "params": [
+        {
+          "name": "window",
+          "type": "System.Windows.Window",
+          "optional": false
+        },
+        {
+          "name": "visibility",
+          "type": "System.Windows.Visibility",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetTopmostPinVisibility%28System.Windows.Window%2CSystem.Windows.Visibility%29"
+    },
+    {
+      "name": "SetUnfocusOnEnter",
+      "signature": "static void SetUnfocusOnEnter(System.Windows.DependencyObject element, bool value)",
+      "summary": "SetUnfocusOnEnter method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetUnfocusOnEnter%28System.Windows.DependencyObject%2CSystem.Boolean%29"
+    },
+    {
+      "name": "SetVisualMode",
+      "signature": "static void SetVisualMode(System.Windows.DependencyObject element, Fusion.UI.Extensions.VisualModes? value)",
+      "summary": "SetVisualMode method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.UI.Extensions.VisualModes?",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetVisualMode%28System.Windows.DependencyObject%2CSystem.Nullable%7BFusion.UI.Extensions.VisualModes%7D%29"
+    },
+    {
+      "name": "SetWatermark",
+      "signature": "static void SetWatermark(System.Windows.Controls.Control element, string value)",
+      "summary": "SetWatermark method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Extensions.SetWatermark%28System.Windows.Controls.Control%2CSystem.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

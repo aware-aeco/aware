@@ -1,0 +1,1127 @@
+{
+  "name": "Half",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Half struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Half\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Half\u003E",
+    "System.IEquatable\u003CFusion.Half\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Half",
+  "constructors": [
+    {
+      "name": "Half(float)",
+      "signature": "Half(float value)",
+      "summary": "Constructs a new Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.%23ctor%28System.Single%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Half other)",
+      "summary": "Equals method of Half.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Equals%28Fusion.Half%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Half.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Half other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Half.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Near%28Fusion.Half%2CSystem.Int32%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Half other)",
+      "summary": "CompareTo method of Half.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.CompareTo%28Fusion.Half%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Half.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Half.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Half Abs(Fusion.Half value)",
+      "summary": "Abs method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Abs%28Fusion.Half%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Half Max(Fusion.Half a, Fusion.Half b)",
+      "summary": "Max method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Max%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Half Min(Fusion.Half a, Fusion.Half b)",
+      "summary": "Min method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Min%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Half op_Addition(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Addition method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Addition%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Decrement",
+      "signature": "static Fusion.Half op_Decrement(Fusion.Half v)",
+      "summary": "op_Decrement method of Half.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Decrement%28Fusion.Half%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Half op_Division(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Division method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Division%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half op_Explicit(decimal value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "decimal",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28System.Decimal%29~Fusion.Half"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half op_Explicit(double value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28System.Double%29~Fusion.Half"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half op_Explicit(float value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28System.Single%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(byte value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.Byte%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(int value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.Int32%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(long value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "long",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.Int64%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(sbyte value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "sbyte",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.SByte%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(short value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.Int16%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(uint value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "uint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.UInt32%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(ulong value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "ulong",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.UInt64%29~Fusion.Half"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Half op_Implicit(ushort value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "ushort",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28System.UInt16%29~Fusion.Half"
+    },
+    {
+      "name": "op_Increment",
+      "signature": "static Fusion.Half op_Increment(Fusion.Half v)",
+      "summary": "op_Increment method of Half.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Increment%28Fusion.Half%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Half op_Modulus(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Modulus method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Modulus%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Half op_Multiply(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Multiply method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Multiply%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Half op_Subtraction(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Subtraction method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Subtraction%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Half op_UnaryNegation(Fusion.Half v)",
+      "summary": "op_UnaryNegation method of Half.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_UnaryNegation%28Fusion.Half%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Half op_UnaryPlus(Fusion.Half v)",
+      "summary": "op_UnaryPlus method of Half.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_UnaryPlus%28Fusion.Half%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Half value)",
+      "summary": "IsInfinity method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.IsInfinity%28Fusion.Half%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Half value)",
+      "summary": "IsNaN method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.IsNaN%28Fusion.Half%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Half value)",
+      "summary": "IsNegativeInfinity method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.IsNegativeInfinity%28Fusion.Half%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Half value)",
+      "summary": "IsPositiveInfinity method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.IsPositiveInfinity%28Fusion.Half%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Equality method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Equality%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_GreaterThan method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_GreaterThan%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_GreaterThanOrEqual method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_GreaterThanOrEqual%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_Inequality method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Inequality%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_LessThan method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_LessThan%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Half a, Fusion.Half b)",
+      "summary": "op_LessThanOrEqual method of Half.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_LessThanOrEqual%28Fusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static byte op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "byte",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.Byte"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static char op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "char",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.Char"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static decimal op_Implicit(Fusion.Half value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "decimal",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28Fusion.Half%29~System.Decimal"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static double op_Implicit(Fusion.Half value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28Fusion.Half%29~System.Double"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static float op_Implicit(Fusion.Half value)",
+      "summary": "op_Implicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Implicit%28Fusion.Half%29~System.Single"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Half value)",
+      "summary": "Sign method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.Sign%28Fusion.Half%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static int op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.Int32"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static long op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "long",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.Int64"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static sbyte op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "sbyte",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.SByte"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static short op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "short",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.Int16"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static uint op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "uint",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.UInt32"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static ulong op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ulong",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.UInt64"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static ushort op_Explicit(Fusion.Half value)",
+      "summary": "op_Explicit method of Half.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "ushort",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.op_Explicit%28Fusion.Half%29~System.UInt16"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Half.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Half.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

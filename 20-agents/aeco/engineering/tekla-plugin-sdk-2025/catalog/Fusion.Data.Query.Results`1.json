@@ -1,0 +1,224 @@
+{
+  "name": "Results\u00601",
+  "namespace": "Fusion.Data.Query",
+  "kind": "class",
+  "summary": "Results\u00601 class in Fusion.Data.Query.",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CFusion.Data.Query.Result\u003CT\u003E\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Data.Query.Results\u00601",
+  "constructors": [
+    {
+      "name": "Results\u00601()",
+      "signature": "Results\u00601()",
+      "summary": "Constructs a new Results\u00601.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CFusion.Data.Query.Result\u003CT\u003E\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of Results\u00601.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CFusion.Data.Query.Result\u003CT\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.GetEnumerator"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, System.DateTime\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, System.DateTime\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.DateTime%7D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, System.TimeSpan\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, System.TimeSpan\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.TimeSpan%7D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, byte[]\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, byte[]\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.Byte%5B%5D%7D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, double\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, double\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.Double%7D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, int\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, int\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.Int32%7D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, long\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, long\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.Int64%7D%29"
+    },
+    {
+      "name": "Add",
+      "signature": "void Add(string name, System.Action\u003CT, string\u003E value)",
+      "summary": "Add method of Results\u00601.",
+      "params": [
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Action\u003CT, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Add%28System.String%2CSystem.Action%7B%600%2CSystem.String%7D%29"
+    },
+    {
+      "name": "Bind",
+      "signature": "void Bind(Fusion.Data.Sqlite.Statement statement, T result, int baseIndex = 0)",
+      "summary": "Bind method of Results\u00601.",
+      "params": [
+        {
+          "name": "statement",
+          "type": "Fusion.Data.Sqlite.Statement",
+          "optional": false
+        },
+        {
+          "name": "result",
+          "type": "T",
+          "optional": false
+        },
+        {
+          "name": "baseIndex",
+          "type": "int",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Data.Query.Results%601.Bind%28Fusion.Data.Sqlite.Statement%2C%600%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Count",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Count property of Results\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Data.Query.Results%601.Count"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

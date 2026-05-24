@@ -1,0 +1,175 @@
+{
+  "name": "IHandleManager",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Core",
+  "kind": "interface",
+  "summary": "This interface specifies factory methods to create handles.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Core.IHandleManager",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateArcHandle",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.ArcHandle CreateArcHandle(Tekla.Structures.Geometry3d.Arc arc, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType locationType, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType effectType)",
+      "summary": "Creates an arc handle.",
+      "params": [
+        {
+          "name": "arc",
+          "type": "Tekla.Structures.Geometry3d.Arc",
+          "doc": "The actual arc that the handle uses.",
+          "optional": false
+        },
+        {
+          "name": "locationType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType",
+          "doc": "Handle location type.",
+          "optional": false
+        },
+        {
+          "name": "effectType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType",
+          "doc": "Handle effect type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.ArcHandle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IHandleManager.CreateArcHandle%28Tekla.Structures.Geometry3d.Arc%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType%29"
+    },
+    {
+      "name": "CreateLineHandle",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.LineHandle CreateLineHandle(Tekla.Structures.Geometry3d.LineSegment line, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType locationType, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType effectType)",
+      "summary": "Creates a line handle.",
+      "params": [
+        {
+          "name": "line",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "Segment in space where the handle will be created.",
+          "optional": false
+        },
+        {
+          "name": "locationType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType",
+          "doc": "Handle location type.",
+          "optional": false
+        },
+        {
+          "name": "effectType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType",
+          "doc": "Handle effect type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.LineHandle",
+        "doc": "A newly created line handle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IHandleManager.CreateLineHandle%28Tekla.Structures.Geometry3d.LineSegment%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType%29"
+    },
+    {
+      "name": "CreatePointHandle",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PointHandle CreatePointHandle(Tekla.Structures.Geometry3d.Point location, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType locationType, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType effectType)",
+      "summary": "Creates a point handle.",
+      "params": [
+        {
+          "name": "location",
+          "type": "Tekla.Structures.Geometry3d.Point",
+          "doc": "Point in space where the handle will be created.",
+          "optional": false
+        },
+        {
+          "name": "locationType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType",
+          "doc": "Handle location type.",
+          "optional": false
+        },
+        {
+          "name": "effectType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType",
+          "doc": "Handle effect type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PointHandle",
+        "doc": "A newly created point handle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IHandleManager.CreatePointHandle%28Tekla.Structures.Geometry3d.Point%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType%29"
+    },
+    {
+      "name": "CreatePolycurveHandle",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PolycurveHandle CreatePolycurveHandle(Tekla.Structures.Geometry3d.Polycurve polycurve, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType locationType, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType effectType)",
+      "summary": "Creates a polycurve handle.",
+      "remarks": "It is advisable to use simpler handles when possible (for example, a LineHandle) since they\nare more lightweight.",
+      "params": [
+        {
+          "name": "polycurve",
+          "type": "Tekla.Structures.Geometry3d.Polycurve",
+          "doc": "Polycurve represented by the handle.",
+          "optional": false
+        },
+        {
+          "name": "locationType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType",
+          "doc": "Handle location type.",
+          "optional": false
+        },
+        {
+          "name": "effectType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType",
+          "doc": "Handle effect type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PolycurveHandle",
+        "doc": "A newly created polycurve handle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IHandleManager.CreatePolycurveHandle%28Tekla.Structures.Geometry3d.Polycurve%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType%29"
+    },
+    {
+      "name": "CreatePolygonalSurfaceHandle",
+      "signature": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PolygonalSurfaceHandle CreatePolygonalSurfaceHandle(System.Collections.Generic.IEnumerable\u003CTekla.Structures.Geometry3d.Point\u003E surfaceContour, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType locationType, Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType effectType)",
+      "summary": "Creates a polygonal surface handle.",
+      "params": [
+        {
+          "name": "surfaceContour",
+          "type": "System.Collections.Generic.IEnumerable\u003CTekla.Structures.Geometry3d.Point\u003E",
+          "doc": "Contour of the surface.",
+          "optional": false
+        },
+        {
+          "name": "locationType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType",
+          "doc": "Handle location type.",
+          "optional": false
+        },
+        {
+          "name": "effectType",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType",
+          "doc": "Handle effect type.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles.PolygonalSurfaceHandle",
+        "doc": "A newly created surface handle."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Core.IHandleManager.CreatePolygonalSurfaceHandle%28System.Collections.Generic.IEnumerable%7BTekla.Structures.Geometry3d.Point%7D%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType%2CTekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleEffectType%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

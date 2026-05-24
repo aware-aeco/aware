@@ -1,0 +1,1180 @@
+{
+  "name": "Half3",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Half3 struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Half3\u003E",
+    "System.IEquatable\u003CFusion.Half3\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Half3",
+  "constructors": [
+    {
+      "name": "Half3(Fusion.Half)",
+      "signature": "Half3(Fusion.Half all)",
+      "summary": "Constructs a new Half3.",
+      "params": [
+        {
+          "name": "all",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.%23ctor%28Fusion.Half%29"
+    },
+    {
+      "name": "Half3(Fusion.Half, Fusion.Half, Fusion.Half)",
+      "signature": "Half3(Fusion.Half x, Fusion.Half y, Fusion.Half z)",
+      "summary": "Constructs a new Half3.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.%23ctor%28Fusion.Half%2CFusion.Half%2CFusion.Half%29"
+    },
+    {
+      "name": "Half3(Fusion.Half, Fusion.Half2)",
+      "signature": "Half3(Fusion.Half x, Fusion.Half2 yz)",
+      "summary": "Constructs a new Half3.",
+      "params": [
+        {
+          "name": "x",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "yz",
+          "type": "Fusion.Half2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.%23ctor%28Fusion.Half%2CFusion.Half2%29"
+    },
+    {
+      "name": "Half3(Fusion.Half2, Fusion.Half)",
+      "signature": "Half3(Fusion.Half2 xy, Fusion.Half z)",
+      "summary": "Constructs a new Half3.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Half2",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.%23ctor%28Fusion.Half2%2CFusion.Half%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Half3 other)",
+      "summary": "Equals method of Half3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Equals%28Fusion.Half3%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Half3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Half3 other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Half3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Near%28Fusion.Half3%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Half3.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Half3 Abs(Fusion.Half3 value)",
+      "summary": "Abs method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Abs%28Fusion.Half3%29"
+    },
+    {
+      "name": "Ceiling",
+      "signature": "static Fusion.Half3 Ceiling(Fusion.Half3 value)",
+      "summary": "Ceiling method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Ceiling%28Fusion.Half3%29"
+    },
+    {
+      "name": "Floor",
+      "signature": "static Fusion.Half3 Floor(Fusion.Half3 value)",
+      "summary": "Floor method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Floor%28Fusion.Half3%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Half3 Max(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "Max method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Max%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Half3 Min(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "Min method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Min%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Half3 Pow(Fusion.Half a, Fusion.Half3 b)",
+      "summary": "Pow method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Pow%28Fusion.Half%2CFusion.Half3%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Half3 Pow(Fusion.Half3 a, Fusion.Half b)",
+      "summary": "Pow method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Pow%28Fusion.Half3%2CFusion.Half%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Half3 Pow(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "Pow method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Pow%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Half3 Round(Fusion.Half3 value)",
+      "summary": "Round method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Round%28Fusion.Half3%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Half3 Round(Fusion.Half3 value, System.MidpointRounding midpointRounding)",
+      "summary": "Round method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "midpointRounding",
+          "type": "System.MidpointRounding",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Round%28Fusion.Half3%2CSystem.MidpointRounding%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Half3 Round(Fusion.Half3 value, int digits)",
+      "summary": "Round method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Round%28Fusion.Half3%2CSystem.Int32%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Half3 Round(Fusion.Half3 value, int digits, System.MidpointRounding midpointRounding)",
+      "summary": "Round method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "midpointRounding",
+          "type": "System.MidpointRounding",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Round%28Fusion.Half3%2CSystem.Int32%2CSystem.MidpointRounding%29"
+    },
+    {
+      "name": "Sqrt",
+      "signature": "static Fusion.Half3 Sqrt(Fusion.Half3 value)",
+      "summary": "Sqrt method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Sqrt%28Fusion.Half3%29"
+    },
+    {
+      "name": "Truncate",
+      "signature": "static Fusion.Half3 Truncate(Fusion.Half3 value)",
+      "summary": "Truncate method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Truncate%28Fusion.Half3%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Half3 op_Addition(Fusion.Half a, Fusion.Half3 b)",
+      "summary": "op_Addition method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Addition%28Fusion.Half%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Half3 op_Addition(Fusion.Half3 a, Fusion.Half b)",
+      "summary": "op_Addition method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Addition%28Fusion.Half3%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Half3 op_Addition(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Addition method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Addition%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Half3 op_Division(Fusion.Half a, Fusion.Half3 b)",
+      "summary": "op_Division method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Division%28Fusion.Half%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Half3 op_Division(Fusion.Half3 a, Fusion.Half b)",
+      "summary": "op_Division method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Division%28Fusion.Half3%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Half3 op_Division(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Division method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Division%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half3 op_Explicit(Fusion.Double3 v)",
+      "summary": "op_Explicit method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Explicit%28Fusion.Double3%29~Fusion.Half3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half3 op_Explicit(Fusion.Float3 v)",
+      "summary": "op_Explicit method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Explicit%28Fusion.Float3%29~Fusion.Half3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half3 op_Explicit(Fusion.Int3 v)",
+      "summary": "op_Explicit method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Explicit%28Fusion.Int3%29~Fusion.Half3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half3 op_Explicit(Fusion.Short3 v)",
+      "summary": "op_Explicit method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Explicit%28Fusion.Short3%29~Fusion.Half3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Half3 op_Explicit(Fusion.UShort3 v)",
+      "summary": "op_Explicit method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Explicit%28Fusion.UShort3%29~Fusion.Half3"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Half3 op_Modulus(Fusion.Half a, Fusion.Half3 b)",
+      "summary": "op_Modulus method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Modulus%28Fusion.Half%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Half3 op_Modulus(Fusion.Half3 a, Fusion.Half b)",
+      "summary": "op_Modulus method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Modulus%28Fusion.Half3%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Half3 op_Modulus(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Modulus method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Modulus%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Half3 op_Multiply(Fusion.Half a, Fusion.Half3 b)",
+      "summary": "op_Multiply method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Multiply%28Fusion.Half%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Half3 op_Multiply(Fusion.Half3 a, Fusion.Half b)",
+      "summary": "op_Multiply method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Multiply%28Fusion.Half3%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Half3 op_Multiply(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Multiply method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Multiply%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Half3 op_Subtraction(Fusion.Half a, Fusion.Half3 b)",
+      "summary": "op_Subtraction method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Subtraction%28Fusion.Half%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Half3 op_Subtraction(Fusion.Half3 a, Fusion.Half b)",
+      "summary": "op_Subtraction method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Subtraction%28Fusion.Half3%2CFusion.Half%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Half3 op_Subtraction(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Subtraction method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Subtraction%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Half3 op_UnaryNegation(Fusion.Half3 v)",
+      "summary": "op_UnaryNegation method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_UnaryNegation%28Fusion.Half3%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Half3 op_UnaryPlus(Fusion.Half3 v)",
+      "summary": "op_UnaryPlus method of Half3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Half3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_UnaryPlus%28Fusion.Half3%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int3 Sign(Fusion.Half3 value)",
+      "summary": "Sign method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.Sign%28Fusion.Half3%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Half3 value)",
+      "summary": "IsInfinity method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.IsInfinity%28Fusion.Half3%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Half3 value)",
+      "summary": "IsNaN method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.IsNaN%28Fusion.Half3%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Half3 value)",
+      "summary": "IsNegativeInfinity method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.IsNegativeInfinity%28Fusion.Half3%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Half3 value)",
+      "summary": "IsPositiveInfinity method of Half3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.IsPositiveInfinity%28Fusion.Half3%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Equality method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Equality%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Half3 a, Fusion.Half3 b)",
+      "summary": "op_Inequality method of Half3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Half3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.op_Inequality%28Fusion.Half3%2CFusion.Half3%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Half3.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Half3.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Half3.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "Fusion.Half",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Half3.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Half3.Item%28System.Int32%29"
+    },
+    {
+      "name": "XY",
+      "type": "Fusion.Half2",
+      "getter": true,
+      "setter": false,
+      "summary": "XY property of Half3.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Half3.XY"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

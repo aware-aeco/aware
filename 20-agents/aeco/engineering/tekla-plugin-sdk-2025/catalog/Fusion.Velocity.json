@@ -1,0 +1,762 @@
+{
+  "name": "Velocity",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Velocity struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Velocity\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Velocity\u003E",
+    "System.IEquatable\u003CFusion.Velocity\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Velocity",
+  "constructors": [
+    {
+      "name": "Velocity(double)",
+      "signature": "Velocity(double metersPerSecond)",
+      "summary": "Constructs a new Velocity.",
+      "params": [
+        {
+          "name": "metersPerSecond",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Velocity other)",
+      "summary": "Equals method of Velocity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Equals%28Fusion.Velocity%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Velocity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Velocity other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Velocity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Near%28Fusion.Velocity%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.VelocityUnit velocityUnit)",
+      "summary": "To method of Velocity.",
+      "params": [
+        {
+          "name": "velocityUnit",
+          "type": "Fusion.VelocityUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.To%28Fusion.VelocityUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Velocity other)",
+      "summary": "CompareTo method of Velocity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.CompareTo%28Fusion.Velocity%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Velocity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Velocity.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Velocity Abs(Fusion.Velocity velocity)",
+      "summary": "Abs method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Abs%28Fusion.Velocity%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.Velocity From(double velocity, Fusion.VelocityUnit velocityUnit)",
+      "summary": "From method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "velocityUnit",
+          "type": "Fusion.VelocityUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.From%28System.Double%2CFusion.VelocityUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Velocity Max(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "Max method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Max%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Velocity Min(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "Min method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Min%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Velocity Round(Fusion.Velocity velocity, Fusion.Velocity precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Round%28Fusion.Velocity%2CFusion.Velocity%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Velocity op_Addition(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_Addition method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Addition%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Velocity op_Division(Fusion.Velocity a, double b)",
+      "summary": "op_Division method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Division%28Fusion.Velocity%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Velocity op_Modulus(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_Modulus method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Modulus%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Velocity op_Multiply(Fusion.Velocity a, double b)",
+      "summary": "op_Multiply method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Multiply%28Fusion.Velocity%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Velocity op_Multiply(double a, Fusion.Velocity b)",
+      "summary": "op_Multiply method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Multiply%28System.Double%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Velocity op_Subtraction(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_Subtraction method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Subtraction%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Velocity op_UnaryNegation(Fusion.Velocity a)",
+      "summary": "op_UnaryNegation method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Velocity",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_UnaryNegation%28Fusion.Velocity%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Velocity velocity)",
+      "summary": "IsInfinity method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.IsInfinity%28Fusion.Velocity%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Velocity velocity)",
+      "summary": "IsNaN method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.IsNaN%28Fusion.Velocity%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Velocity velocity)",
+      "summary": "IsNegativeInfinity method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.IsNegativeInfinity%28Fusion.Velocity%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Velocity velocity)",
+      "summary": "IsPositiveInfinity method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.IsPositiveInfinity%28Fusion.Velocity%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_Equality method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Equality%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_GreaterThan method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_GreaterThan%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_GreaterThanOrEqual method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_GreaterThanOrEqual%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_Inequality method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Inequality%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_LessThan method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_LessThan%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_LessThanOrEqual method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_LessThanOrEqual%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.Velocity a, Fusion.Velocity b)",
+      "summary": "op_Division method of Velocity.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Velocity",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.op_Division%28Fusion.Velocity%2CFusion.Velocity%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Velocity velocity)",
+      "summary": "Sign method of Velocity.",
+      "params": [
+        {
+          "name": "velocity",
+          "type": "Fusion.Velocity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.Sign%28Fusion.Velocity%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Velocity.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Velocity.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Velocity.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "MetersPerSecond",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "MetersPerSecond property of Velocity.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Velocity.MetersPerSecond"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "MomentUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "MomentUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.MomentUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KilogramMeter",
+      "value": 0
+    },
+    {
+      "name": "TonneMeter",
+      "value": 1
+    },
+    {
+      "name": "NewtonMeter",
+      "value": 2
+    },
+    {
+      "name": "DecanewtonMeter",
+      "value": 3
+    },
+    {
+      "name": "KilonewtonMeter",
+      "value": 4
+    },
+    {
+      "name": "PoundForceInch",
+      "value": 5
+    },
+    {
+      "name": "PoundForceFoot",
+      "value": 6
+    },
+    {
+      "name": "KiloPoundForceInch",
+      "value": 7
+    },
+    {
+      "name": "KiloPoundForceFoot",
+      "value": 8
+    }
+  ]
+}

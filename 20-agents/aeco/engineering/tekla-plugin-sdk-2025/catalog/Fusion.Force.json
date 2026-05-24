@@ -1,0 +1,762 @@
+{
+  "name": "Force",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Force struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Force\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Force\u003E",
+    "System.IEquatable\u003CFusion.Force\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Force",
+  "constructors": [
+    {
+      "name": "Force(double)",
+      "signature": "Force(double newtons)",
+      "summary": "Constructs a new Force.",
+      "params": [
+        {
+          "name": "newtons",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Force other)",
+      "summary": "Equals method of Force.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Equals%28Fusion.Force%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Force.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Force other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Force.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Near%28Fusion.Force%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.ForceUnit forceUnit)",
+      "summary": "To method of Force.",
+      "params": [
+        {
+          "name": "forceUnit",
+          "type": "Fusion.ForceUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.To%28Fusion.ForceUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Force other)",
+      "summary": "CompareTo method of Force.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.CompareTo%28Fusion.Force%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Force.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Force.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Force Abs(Fusion.Force force)",
+      "summary": "Abs method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Abs%28Fusion.Force%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.Force From(double force, Fusion.ForceUnit forceUnit)",
+      "summary": "From method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "forceUnit",
+          "type": "Fusion.ForceUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.From%28System.Double%2CFusion.ForceUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Force Max(Fusion.Force a, Fusion.Force b)",
+      "summary": "Max method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Max%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Force Min(Fusion.Force a, Fusion.Force b)",
+      "summary": "Min method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Min%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Force Round(Fusion.Force force, Fusion.Force precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Round%28Fusion.Force%2CFusion.Force%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Force op_Addition(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_Addition method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Addition%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Force op_Division(Fusion.Force a, double b)",
+      "summary": "op_Division method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Division%28Fusion.Force%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Force op_Modulus(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_Modulus method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Modulus%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Force op_Multiply(Fusion.Force a, double b)",
+      "summary": "op_Multiply method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Multiply%28Fusion.Force%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Force op_Multiply(double a, Fusion.Force b)",
+      "summary": "op_Multiply method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Multiply%28System.Double%2CFusion.Force%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Force op_Subtraction(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_Subtraction method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Subtraction%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Force op_UnaryNegation(Fusion.Force a)",
+      "summary": "op_UnaryNegation method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Force",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_UnaryNegation%28Fusion.Force%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Force force)",
+      "summary": "IsInfinity method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.IsInfinity%28Fusion.Force%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Force force)",
+      "summary": "IsNaN method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.IsNaN%28Fusion.Force%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Force force)",
+      "summary": "IsNegativeInfinity method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.IsNegativeInfinity%28Fusion.Force%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Force force)",
+      "summary": "IsPositiveInfinity method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.IsPositiveInfinity%28Fusion.Force%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_Equality method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Equality%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_GreaterThan method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_GreaterThan%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_GreaterThanOrEqual method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_GreaterThanOrEqual%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_Inequality method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Inequality%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_LessThan method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_LessThan%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_LessThanOrEqual method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_LessThanOrEqual%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.Force a, Fusion.Force b)",
+      "summary": "op_Division method of Force.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Force",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.op_Division%28Fusion.Force%2CFusion.Force%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Force force)",
+      "summary": "Sign method of Force.",
+      "params": [
+        {
+          "name": "force",
+          "type": "Fusion.Force",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.Sign%28Fusion.Force%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Force.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Force.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Force.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Newtons",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Newtons property of Force.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Force.Newtons"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,30 @@
+{
+  "name": "InvokeIn",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "InvokeIn enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.InvokeIn",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Default",
+      "value": 0
+    },
+    {
+      "name": "Background",
+      "value": 1
+    },
+    {
+      "name": "DomainLogic",
+      "value": 2
+    },
+    {
+      "name": "UI",
+      "value": 3
+    }
+  ]
+}

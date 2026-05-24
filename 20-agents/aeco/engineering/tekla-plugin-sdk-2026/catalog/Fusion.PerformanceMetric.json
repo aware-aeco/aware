@@ -1,0 +1,95 @@
+{
+  "name": "PerformanceMetric",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "PerformanceMetric class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PerformanceMetric",
+  "constructors": [
+    {
+      "name": "PerformanceMetric()",
+      "signature": "PerformanceMetric()",
+      "summary": "Constructs a new PerformanceMetric.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PerformanceMetric.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of PerformanceMetric.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.PerformanceMetric.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Average",
+      "type": "System.TimeSpan",
+      "getter": true,
+      "setter": false,
+      "summary": "Average property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Average"
+    },
+    {
+      "name": "Maximum",
+      "type": "System.TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Maximum property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Maximum"
+    },
+    {
+      "name": "Minimum",
+      "type": "System.TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Minimum property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Minimum"
+    },
+    {
+      "name": "Operation",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Operation property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Operation"
+    },
+    {
+      "name": "Samples",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Samples property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Samples"
+    },
+    {
+      "name": "Target",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Target property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Target"
+    },
+    {
+      "name": "Total",
+      "type": "System.TimeSpan",
+      "getter": true,
+      "setter": true,
+      "summary": "Total property of PerformanceMetric.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.PerformanceMetric.Total"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

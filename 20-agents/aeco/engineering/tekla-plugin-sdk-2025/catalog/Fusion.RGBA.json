@@ -1,0 +1,348 @@
+{
+  "name": "RGBA",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "RGBA struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.RGBA\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.RGBA",
+  "constructors": [
+    {
+      "name": "RGBA(Fusion.RGBA, byte)",
+      "signature": "RGBA(Fusion.RGBA rgb, byte a)",
+      "summary": "Constructs a new RGBA.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "Fusion.RGBA",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.%23ctor%28Fusion.RGBA%2CSystem.Byte%29"
+    },
+    {
+      "name": "RGBA(byte)",
+      "signature": "RGBA(byte all)",
+      "summary": "Constructs a new RGBA.",
+      "params": [
+        {
+          "name": "all",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.%23ctor%28System.Byte%29"
+    },
+    {
+      "name": "RGBA(byte, byte, byte)",
+      "signature": "RGBA(byte r, byte g, byte b)",
+      "summary": "Constructs a new RGBA.",
+      "params": [
+        {
+          "name": "r",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.%23ctor%28System.Byte%2CSystem.Byte%2CSystem.Byte%29"
+    },
+    {
+      "name": "RGBA(byte, byte, byte, byte)",
+      "signature": "RGBA(byte r, byte g, byte b, byte a)",
+      "summary": "Constructs a new RGBA.",
+      "params": [
+        {
+          "name": "r",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "g",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.%23ctor%28System.Byte%2CSystem.Byte%2CSystem.Byte%2CSystem.Byte%29"
+    },
+    {
+      "name": "RGBA(byte, byte)",
+      "signature": "RGBA(byte rgb, byte a)",
+      "summary": "Constructs a new RGBA.",
+      "params": [
+        {
+          "name": "rgb",
+          "type": "byte",
+          "optional": false
+        },
+        {
+          "name": "a",
+          "type": "byte",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.%23ctor%28System.Byte%2CSystem.Byte%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.RGBA other)",
+      "summary": "Equals method of RGBA.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.Equals%28Fusion.RGBA%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of RGBA.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of RGBA.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.GetHashCode"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.RGBA op_Explicit(Fusion.Double4 v)",
+      "summary": "op_Explicit method of RGBA.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Explicit%28Fusion.Double4%29~Fusion.RGBA"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.RGBA op_Explicit(Fusion.Float4 v)",
+      "summary": "op_Explicit method of RGBA.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Explicit%28Fusion.Float4%29~Fusion.RGBA"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.RGBA op_Explicit(Fusion.Int4 v)",
+      "summary": "op_Explicit method of RGBA.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Explicit%28Fusion.Int4%29~Fusion.RGBA"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.RGBA op_Explicit(Fusion.Short4 v)",
+      "summary": "op_Explicit method of RGBA.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Explicit%28Fusion.Short4%29~Fusion.RGBA"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.RGBA op_Explicit(Fusion.UShort4 v)",
+      "summary": "op_Explicit method of RGBA.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Explicit%28Fusion.UShort4%29~Fusion.RGBA"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.RGBA a, Fusion.RGBA b)",
+      "summary": "op_Equality method of RGBA.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RGBA",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Equality%28Fusion.RGBA%2CFusion.RGBA%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.RGBA a, Fusion.RGBA b)",
+      "summary": "op_Inequality method of RGBA.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.RGBA",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.op_Inequality%28Fusion.RGBA%2CFusion.RGBA%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of RGBA.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.RGBA.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "byte",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of RGBA.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.RGBA.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

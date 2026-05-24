@@ -1,0 +1,23 @@
+{
+  "name": "ViewModel",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ViewModel class in Fusion.",
+  "base": "Fusion.BindingSource",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ViewModel",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Host",
+      "type": "Fusion.IHost",
+      "getter": true,
+      "setter": true,
+      "summary": "Host property of ViewModel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ViewModel.Host"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

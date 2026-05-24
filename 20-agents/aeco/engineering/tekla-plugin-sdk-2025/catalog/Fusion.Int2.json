@@ -1,0 +1,779 @@
+{
+  "name": "Int2",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Int2 struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Int2\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Int2",
+  "constructors": [
+    {
+      "name": "Int2(int)",
+      "signature": "Int2(int all)",
+      "summary": "Constructs a new Int2.",
+      "params": [
+        {
+          "name": "all",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.%23ctor%28System.Int32%29"
+    },
+    {
+      "name": "Int2(int, int)",
+      "signature": "Int2(int x, int y)",
+      "summary": "Constructs a new Int2.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.%23ctor%28System.Int32%2CSystem.Int32%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Int2 other)",
+      "summary": "Equals method of Int2.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.Equals%28Fusion.Int2%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Int2.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Int2.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Int2 Abs(Fusion.Int2 value)",
+      "summary": "Abs method of Int2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.Abs%28Fusion.Int2%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Int2 Max(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "Max method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.Max%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Int2 Min(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "Min method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.Min%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int2 Sign(Fusion.Int2 value)",
+      "summary": "Sign method of Int2.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.Sign%28Fusion.Int2%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int2 op_Addition(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Addition method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Addition%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int2 op_Addition(Fusion.Int2 a, int b)",
+      "summary": "op_Addition method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Addition%28Fusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int2 op_Addition(int a, Fusion.Int2 b)",
+      "summary": "op_Addition method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Addition%28System.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int2 op_Division(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Division method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Division%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int2 op_Division(Fusion.Int2 a, int b)",
+      "summary": "op_Division method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Division%28Fusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int2 op_Division(int a, Fusion.Int2 b)",
+      "summary": "op_Division method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Division%28System.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int2 op_Explicit(Fusion.Double2 v)",
+      "summary": "op_Explicit method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Explicit%28Fusion.Double2%29~Fusion.Int2"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int2 op_Explicit(Fusion.Float2 v)",
+      "summary": "op_Explicit method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Explicit%28Fusion.Float2%29~Fusion.Int2"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int2 op_Explicit(Fusion.Half2 v)",
+      "summary": "op_Explicit method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Explicit%28Fusion.Half2%29~Fusion.Int2"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int2 op_Implicit(Fusion.Short2 v)",
+      "summary": "op_Implicit method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Implicit%28Fusion.Short2%29~Fusion.Int2"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int2 op_Implicit(Fusion.UShort2 v)",
+      "summary": "op_Implicit method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Implicit%28Fusion.UShort2%29~Fusion.Int2"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int2 op_Modulus(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Modulus method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Modulus%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int2 op_Modulus(Fusion.Int2 a, int b)",
+      "summary": "op_Modulus method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Modulus%28Fusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int2 op_Modulus(int a, Fusion.Int2 b)",
+      "summary": "op_Modulus method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Modulus%28System.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int2 op_Multiply(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Multiply method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Multiply%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int2 op_Multiply(Fusion.Int2 a, int b)",
+      "summary": "op_Multiply method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Multiply%28Fusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int2 op_Multiply(int a, Fusion.Int2 b)",
+      "summary": "op_Multiply method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Multiply%28System.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int2 op_Subtraction(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Subtraction method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Subtraction%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int2 op_Subtraction(Fusion.Int2 a, int b)",
+      "summary": "op_Subtraction method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Subtraction%28Fusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int2 op_Subtraction(int a, Fusion.Int2 b)",
+      "summary": "op_Subtraction method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Subtraction%28System.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Int2 op_UnaryNegation(Fusion.Int2 v)",
+      "summary": "op_UnaryNegation method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_UnaryNegation%28Fusion.Int2%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Int2 op_UnaryPlus(Fusion.Int2 v)",
+      "summary": "op_UnaryPlus method of Int2.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_UnaryPlus%28Fusion.Int2%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Equality method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Equality%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Int2 a, Fusion.Int2 b)",
+      "summary": "op_Inequality method of Int2.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.op_Inequality%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Int2.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Int2.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int2.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Int2.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Int2.Item%28System.Int32%29"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

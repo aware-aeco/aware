@@ -1,0 +1,140 @@
+{
+  "name": "Entity",
+  "namespace": "Fusion.Models",
+  "kind": "class",
+  "summary": "Entity class in Fusion.Models.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Models.Entity\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.Entity",
+  "constructors": [
+    {
+      "name": "Entity(System.Guid, Fusion.Models.EntityType, Fusion.Models.EntityGroup)",
+      "signature": "Entity(System.Guid identifier, Fusion.Models.EntityType entityType, Fusion.Models.EntityGroup entityGroup)",
+      "summary": "Constructs a new Entity.",
+      "params": [
+        {
+          "name": "identifier",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "entityType",
+          "type": "Fusion.Models.EntityType",
+          "optional": false
+        },
+        {
+          "name": "entityGroup",
+          "type": "Fusion.Models.EntityGroup",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Entity.%23ctor%28System.Guid%2CFusion.Models.EntityType%2CFusion.Models.EntityGroup%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Models.Entity other)",
+      "summary": "Equals method of Entity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Models.Entity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Entity.Equals%28Fusion.Models.Entity%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Entity.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Entity.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Entity.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Entity.GetHashCode"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Entity.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Entity.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "EntityGroup",
+      "type": "Fusion.Models.EntityGroup",
+      "getter": true,
+      "setter": false,
+      "summary": "EntityGroup property of Entity.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Entity.EntityGroup"
+    },
+    {
+      "name": "EntityType",
+      "type": "Fusion.Models.EntityType",
+      "getter": true,
+      "setter": false,
+      "summary": "EntityType property of Entity.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Entity.EntityType"
+    },
+    {
+      "name": "Geometries",
+      "type": "System.Collections.Generic.IEnumerable\u003CFusion.Models.Geometry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Geometries property of Entity.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Entity.Geometries"
+    },
+    {
+      "name": "Identifier",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifier property of Entity.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Entity.Identifier"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,965 @@
+{
+  "name": "Int4",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Int4 struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Int4\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Int4",
+  "constructors": [
+    {
+      "name": "Int4(Fusion.Int2, Fusion.Int2)",
+      "signature": "Int4(Fusion.Int2 xy, Fusion.Int2 zw)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "zw",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28Fusion.Int2%2CFusion.Int2%29"
+    },
+    {
+      "name": "Int4(Fusion.Int2, int, int)",
+      "signature": "Int4(Fusion.Int2 xy, int z, int w)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28Fusion.Int2%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Int4(Fusion.Int3, int)",
+      "signature": "Int4(Fusion.Int3 xyz, int w)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28Fusion.Int3%2CSystem.Int32%29"
+    },
+    {
+      "name": "Int4(int)",
+      "signature": "Int4(int all)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "all",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28System.Int32%29"
+    },
+    {
+      "name": "Int4(int, Fusion.Int2, int)",
+      "signature": "Int4(int x, Fusion.Int2 yz, int w)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "yz",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28System.Int32%2CFusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "Int4(int, Fusion.Int3)",
+      "signature": "Int4(int x, Fusion.Int3 yzw)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "yzw",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28System.Int32%2CFusion.Int3%29"
+    },
+    {
+      "name": "Int4(int, int, Fusion.Int2)",
+      "signature": "Int4(int x, int y, Fusion.Int2 zw)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "zw",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28System.Int32%2CSystem.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "Int4(int, int, int, int)",
+      "signature": "Int4(int x, int y, int z, int w)",
+      "summary": "Constructs a new Int4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.%23ctor%28System.Int32%2CSystem.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Int4 other)",
+      "summary": "Equals method of Int4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.Equals%28Fusion.Int4%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Int4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Int4.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Int4 Abs(Fusion.Int4 value)",
+      "summary": "Abs method of Int4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.Abs%28Fusion.Int4%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Int4 Max(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "Max method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.Max%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Int4 Min(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "Min method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.Min%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int4 Sign(Fusion.Int4 value)",
+      "summary": "Sign method of Int4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.Sign%28Fusion.Int4%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int4 op_Addition(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Addition method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Addition%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int4 op_Addition(Fusion.Int4 a, int b)",
+      "summary": "op_Addition method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Addition%28Fusion.Int4%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int4 op_Addition(int a, Fusion.Int4 b)",
+      "summary": "op_Addition method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Addition%28System.Int32%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int4 op_Division(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Division method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Division%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int4 op_Division(Fusion.Int4 a, int b)",
+      "summary": "op_Division method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Division%28Fusion.Int4%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int4 op_Division(int a, Fusion.Int4 b)",
+      "summary": "op_Division method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Division%28System.Int32%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int4 op_Explicit(Fusion.Double4 v)",
+      "summary": "op_Explicit method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Explicit%28Fusion.Double4%29~Fusion.Int4"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int4 op_Explicit(Fusion.Float4 v)",
+      "summary": "op_Explicit method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Explicit%28Fusion.Float4%29~Fusion.Int4"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int4 op_Explicit(Fusion.Half4 v)",
+      "summary": "op_Explicit method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Explicit%28Fusion.Half4%29~Fusion.Int4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int4 op_Implicit(Fusion.RGBA v)",
+      "summary": "op_Implicit method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Implicit%28Fusion.RGBA%29~Fusion.Int4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int4 op_Implicit(Fusion.Short4 v)",
+      "summary": "op_Implicit method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Implicit%28Fusion.Short4%29~Fusion.Int4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int4 op_Implicit(Fusion.UShort4 v)",
+      "summary": "op_Implicit method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Implicit%28Fusion.UShort4%29~Fusion.Int4"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int4 op_Modulus(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Modulus method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Modulus%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int4 op_Modulus(Fusion.Int4 a, int b)",
+      "summary": "op_Modulus method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Modulus%28Fusion.Int4%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int4 op_Modulus(int a, Fusion.Int4 b)",
+      "summary": "op_Modulus method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Modulus%28System.Int32%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int4 op_Multiply(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Multiply method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Multiply%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int4 op_Multiply(Fusion.Int4 a, int b)",
+      "summary": "op_Multiply method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Multiply%28Fusion.Int4%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int4 op_Multiply(int a, Fusion.Int4 b)",
+      "summary": "op_Multiply method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Multiply%28System.Int32%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int4 op_Subtraction(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Subtraction method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Subtraction%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int4 op_Subtraction(Fusion.Int4 a, int b)",
+      "summary": "op_Subtraction method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Subtraction%28Fusion.Int4%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int4 op_Subtraction(int a, Fusion.Int4 b)",
+      "summary": "op_Subtraction method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Subtraction%28System.Int32%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Int4 op_UnaryNegation(Fusion.Int4 v)",
+      "summary": "op_UnaryNegation method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_UnaryNegation%28Fusion.Int4%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Int4 op_UnaryPlus(Fusion.Int4 v)",
+      "summary": "op_UnaryPlus method of Int4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_UnaryPlus%28Fusion.Int4%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Equality method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Equality%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Int4 a, Fusion.Int4 b)",
+      "summary": "op_Inequality method of Int4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.op_Inequality%28Fusion.Int4%2CFusion.Int4%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Int4.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Int4.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int4.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Int4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Int4.Item%28System.Int32%29"
+    },
+    {
+      "name": "XY",
+      "type": "Fusion.Int2",
+      "getter": true,
+      "setter": false,
+      "summary": "XY property of Int4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Int4.XY"
+    },
+    {
+      "name": "XYZ",
+      "type": "Fusion.Int3",
+      "getter": true,
+      "setter": false,
+      "summary": "XYZ property of Int4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Int4.XYZ"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

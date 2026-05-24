@@ -1,0 +1,25 @@
+{
+  "name": "ForceTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ForceTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CFusion.Force, Fusion.Formatting.ForceFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ForceTextBox",
+  "constructors": [
+    {
+      "name": "ForceTextBox()",
+      "signature": "ForceTextBox()",
+      "summary": "Constructs a new ForceTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ForceTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

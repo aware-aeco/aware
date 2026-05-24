@@ -1,0 +1,133 @@
+{
+  "name": "Geometry",
+  "namespace": "Fusion.Models",
+  "kind": "class",
+  "summary": "Geometry class in Fusion.Models.",
+  "base": "Fusion.TriangleMesh",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Models.Geometry\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.Geometry",
+  "constructors": [
+    {
+      "name": "Geometry(Fusion.Models.Entity, Fusion.Models.Material, System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E, System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E)",
+      "signature": "Geometry(Fusion.Models.Entity entity, Fusion.Models.Material material, System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E points, System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E faces)",
+      "summary": "Constructs a new Geometry.",
+      "params": [
+        {
+          "name": "entity",
+          "type": "Fusion.Models.Entity",
+          "optional": false
+        },
+        {
+          "name": "material",
+          "type": "Fusion.Models.Material",
+          "optional": false
+        },
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E",
+          "optional": false
+        },
+        {
+          "name": "faces",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Geometry.%23ctor%28Fusion.Models.Entity%2CFusion.Models.Material%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.Float3%7D%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.UShort3%7D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Models.Geometry other)",
+      "summary": "Equals method of Geometry.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Models.Geometry",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Geometry.Equals%28Fusion.Models.Geometry%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Geometry.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Geometry.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Geometry.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Geometry.GetHashCode"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "Fusion.BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "BoundingBox property of Geometry.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Geometry.BoundingBox"
+    },
+    {
+      "name": "Entity",
+      "type": "Fusion.Models.Entity",
+      "getter": true,
+      "setter": false,
+      "summary": "Entity property of Geometry.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Geometry.Entity"
+    },
+    {
+      "name": "Material",
+      "type": "Fusion.Models.Material",
+      "getter": true,
+      "setter": false,
+      "summary": "Material property of Geometry.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Geometry.Material"
+    },
+    {
+      "name": "Normals",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Normals property of Geometry.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Geometry.Normals"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

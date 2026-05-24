@@ -1,0 +1,22 @@
+{
+  "name": "KinematicViscosityUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "KinematicViscosityUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.KinematicViscosityUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "SquareMetersPerSecond",
+      "value": 0
+    },
+    {
+      "name": "SquareFeetPerSecond",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "name": "TimeSpanToStringConverter",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "TimeSpanToStringConverter class in Fusion.UI.",
+  "interfaces": [
+    "System.Windows.Data.IValueConverter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.TimeSpanToStringConverter",
+  "constructors": [
+    {
+      "name": "TimeSpanToStringConverter()",
+      "signature": "TimeSpanToStringConverter()",
+      "summary": "Constructs a new TimeSpanToStringConverter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TimeSpanToStringConverter.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "object Convert(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of TimeSpanToStringConverter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "targetType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TimeSpanToStringConverter.Convert%28System.Object%2CSystem.Type%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "ConvertBack",
+      "signature": "object ConvertBack(object value, System.Type targetType, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "ConvertBack method of TimeSpanToStringConverter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "targetType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.TimeSpanToStringConverter.ConvertBack%28System.Object%2CSystem.Type%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

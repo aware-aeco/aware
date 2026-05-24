@@ -1,0 +1,26 @@
+{
+  "name": "Length4Units",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "Length4Units enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Length4Units",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Millimeter",
+      "value": 0
+    },
+    {
+      "name": "Centimeter",
+      "value": 1
+    },
+    {
+      "name": "Inch",
+      "value": 2
+    }
+  ]
+}

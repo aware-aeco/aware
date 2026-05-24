@@ -1,0 +1,47 @@
+{
+  "name": "FormattedTextBox\u00602",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "FormattedTextBox\u00602 class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.FormattedTextBox\u00602",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Formatter",
+      "type": "TFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "Formatter property of FormattedTextBox\u00602.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBox%602.Formatter"
+    },
+    {
+      "name": "Maximum",
+      "type": "TValue?",
+      "getter": true,
+      "setter": true,
+      "summary": "Maximum property of FormattedTextBox\u00602.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBox%602.Maximum"
+    },
+    {
+      "name": "Minimum",
+      "type": "TValue?",
+      "getter": true,
+      "setter": true,
+      "summary": "Minimum property of FormattedTextBox\u00602.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBox%602.Minimum"
+    },
+    {
+      "name": "Value",
+      "type": "TValue",
+      "getter": true,
+      "setter": true,
+      "summary": "Value property of FormattedTextBox\u00602.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBox%602.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

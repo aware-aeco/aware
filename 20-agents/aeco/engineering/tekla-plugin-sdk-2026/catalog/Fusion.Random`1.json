@@ -1,0 +1,81 @@
+{
+  "name": "Random\u00601",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "Random\u00601 class in Fusion.",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CTElement\u003E",
+    "System.Collections.IEnumerable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Random\u00601",
+  "constructors": [
+    {
+      "name": "Random\u00601(System.Collections.Generic.IList\u003CTElement\u003E)",
+      "signature": "Random\u00601(System.Collections.Generic.IList\u003CTElement\u003E elements)",
+      "summary": "Constructs a new Random\u00601.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "System.Collections.Generic.IList\u003CTElement\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Random%601.%23ctor%28System.Collections.Generic.IList%7B%600%7D%29"
+    },
+    {
+      "name": "Random\u00601(System.Collections.Generic.IList\u003CTElement\u003E, int)",
+      "signature": "Random\u00601(System.Collections.Generic.IList\u003CTElement\u003E elements, int seed)",
+      "summary": "Constructs a new Random\u00601.",
+      "params": [
+        {
+          "name": "elements",
+          "type": "System.Collections.Generic.IList\u003CTElement\u003E",
+          "optional": false
+        },
+        {
+          "name": "seed",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Random%601.%23ctor%28System.Collections.Generic.IList%7B%600%7D%2CSystem.Int32%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CTElement\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of Random\u00601.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CTElement\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Random%601.GetEnumerator"
+    },
+    {
+      "name": "Next",
+      "signature": "TElement Next()",
+      "summary": "Next method of Random\u00601.",
+      "params": [],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Random%601.Next"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

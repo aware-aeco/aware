@@ -1,0 +1,39 @@
+{
+  "name": "NavigationPage",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "NavigationPage class in Fusion.UI.",
+  "base": "System.Windows.Controls.UserControl",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.NavigationPage",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Animate",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Animate property of NavigationPage.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationPage.Animate"
+    },
+    {
+      "name": "HeaderGeometryKey",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "HeaderGeometryKey property of NavigationPage.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationPage.HeaderGeometryKey"
+    },
+    {
+      "name": "HeaderText",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "HeaderText property of NavigationPage.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.NavigationPage.HeaderText"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

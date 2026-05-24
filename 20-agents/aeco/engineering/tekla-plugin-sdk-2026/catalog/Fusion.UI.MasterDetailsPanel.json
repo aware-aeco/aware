@@ -1,0 +1,74 @@
+{
+  "name": "MasterDetailsPanel",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "MasterDetailsPanel class in Fusion.UI.",
+  "base": "System.Windows.Controls.HeaderedContentControl",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.MasterDetailsPanel",
+  "constructors": [
+    {
+      "name": "MasterDetailsPanel()",
+      "signature": "MasterDetailsPanel()",
+      "summary": "Constructs a new MasterDetailsPanel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.MasterDetailsPanel.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Details",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Details property of MasterDetailsPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MasterDetailsPanel.Details"
+    },
+    {
+      "name": "DetailsStringFormat",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DetailsStringFormat property of MasterDetailsPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MasterDetailsPanel.DetailsStringFormat"
+    },
+    {
+      "name": "DetailsTemplate",
+      "type": "System.Windows.DataTemplate",
+      "getter": true,
+      "setter": true,
+      "summary": "DetailsTemplate property of MasterDetailsPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MasterDetailsPanel.DetailsTemplate"
+    },
+    {
+      "name": "DetailsTemplateSelector",
+      "type": "System.Windows.Controls.DataTemplateSelector",
+      "getter": true,
+      "setter": true,
+      "summary": "DetailsTemplateSelector property of MasterDetailsPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MasterDetailsPanel.DetailsTemplateSelector"
+    },
+    {
+      "name": "DetailsVisible",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "DetailsVisible property of MasterDetailsPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MasterDetailsPanel.DetailsVisible"
+    },
+    {
+      "name": "HasDetails",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "HasDetails property of MasterDetailsPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.MasterDetailsPanel.HasDetails"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

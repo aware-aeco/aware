@@ -1,0 +1,26 @@
+{
+  "name": "RatioUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "RatioUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.RatioUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "Percent",
+      "value": 1
+    },
+    {
+      "name": "Permille",
+      "value": 2
+    }
+  ]
+}

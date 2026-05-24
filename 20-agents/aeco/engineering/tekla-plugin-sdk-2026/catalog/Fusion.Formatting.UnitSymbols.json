@@ -1,0 +1,1377 @@
+{
+  "name": "UnitSymbols",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "UnitSymbols class in Fusion.Formatting.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.UnitSymbols",
+  "constructors": [
+    {
+      "name": "UnitSymbols()",
+      "signature": "UnitSymbols()",
+      "summary": "Constructs a new UnitSymbols.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.UnitSymbols.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BtusPerFahrenheitPound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "BtusPerFahrenheitPound property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.BtusPerFahrenheitPound"
+    },
+    {
+      "name": "Celsius",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Celsius property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Celsius"
+    },
+    {
+      "name": "Centimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Centimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Centimeter"
+    },
+    {
+      "name": "CubicCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicCentimeter"
+    },
+    {
+      "name": "CubicFeetPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicFeetPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicFeetPerSecond"
+    },
+    {
+      "name": "CubicFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicFoot"
+    },
+    {
+      "name": "CubicInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicInch"
+    },
+    {
+      "name": "CubicMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicMeter"
+    },
+    {
+      "name": "CubicMetersPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicMetersPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicMetersPerSecond"
+    },
+    {
+      "name": "CubicMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicMillimeter"
+    },
+    {
+      "name": "CubicYard",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CubicYard property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.CubicYard"
+    },
+    {
+      "name": "Cv",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Cv property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Cv"
+    },
+    {
+      "name": "DecaNewtonMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonMeter"
+    },
+    {
+      "name": "DecaNewtonMeterPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonMeterPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonMeterPerDegree"
+    },
+    {
+      "name": "DecaNewtonMeterPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonMeterPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonMeterPerMeter"
+    },
+    {
+      "name": "DecaNewtonMeterPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonMeterPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonMeterPerRadian"
+    },
+    {
+      "name": "DecaNewtonPerCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonPerCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonPerCentimeter"
+    },
+    {
+      "name": "DecaNewtonPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonPerMeter"
+    },
+    {
+      "name": "DecaNewtonPerSquareCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonPerSquareCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonPerSquareCentimeter"
+    },
+    {
+      "name": "DecaNewtonPerSquareMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonPerSquareMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonPerSquareMeter"
+    },
+    {
+      "name": "DecaNewtonPerSquareMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonPerSquareMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonPerSquareMillimeter"
+    },
+    {
+      "name": "DecaNewtonPermillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DecaNewtonPermillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DecaNewtonPermillimeter"
+    },
+    {
+      "name": "Decanewton",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Decanewton property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Decanewton"
+    },
+    {
+      "name": "DegMinSec_Deg",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DegMinSec_Deg property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DegMinSec_Deg"
+    },
+    {
+      "name": "DegMinSec_Min",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DegMinSec_Min property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DegMinSec_Min"
+    },
+    {
+      "name": "DegMinSec_Sec",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "DegMinSec_Sec property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.DegMinSec_Sec"
+    },
+    {
+      "name": "Degree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Degree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Degree"
+    },
+    {
+      "name": "Fahrenheit",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Fahrenheit property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Fahrenheit"
+    },
+    {
+      "name": "FeetPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "FeetPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.FeetPerSecond"
+    },
+    {
+      "name": "Foot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Foot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Foot"
+    },
+    {
+      "name": "Gallon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gallon property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Gallon"
+    },
+    {
+      "name": "Gram",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gram property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Gram"
+    },
+    {
+      "name": "HectopascalsPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "HectopascalsPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.HectopascalsPerMeter"
+    },
+    {
+      "name": "Inch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Inch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Inch"
+    },
+    {
+      "name": "InchSymbolPlacement",
+      "type": "Fusion.Formatting.InchSymbolPlacement",
+      "getter": true,
+      "setter": true,
+      "summary": "InchSymbolPlacement property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.InchSymbolPlacement"
+    },
+    {
+      "name": "Infinity",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Infinity property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Infinity"
+    },
+    {
+      "name": "JoulesPerKelvinKilogram",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "JoulesPerKelvinKilogram property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.JoulesPerKelvinKilogram"
+    },
+    {
+      "name": "Kelvin",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Kelvin property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Kelvin"
+    },
+    {
+      "name": "KiloNewtonMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonMeter"
+    },
+    {
+      "name": "KiloNewtonMeterPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonMeterPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonMeterPerDegree"
+    },
+    {
+      "name": "KiloNewtonMeterPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonMeterPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonMeterPerMeter"
+    },
+    {
+      "name": "KiloNewtonMeterPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonMeterPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonMeterPerRadian"
+    },
+    {
+      "name": "KiloNewtonPerCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonPerCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonPerCentimeter"
+    },
+    {
+      "name": "KiloNewtonPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonPerMeter"
+    },
+    {
+      "name": "KiloNewtonPerMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonPerMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonPerMillimeter"
+    },
+    {
+      "name": "KiloNewtonPerSquareCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonPerSquareCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonPerSquareCentimeter"
+    },
+    {
+      "name": "KiloNewtonPerSquareMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonPerSquareMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonPerSquareMeter"
+    },
+    {
+      "name": "KiloNewtonPerSquareMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloNewtonPerSquareMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloNewtonPerSquareMillimeter"
+    },
+    {
+      "name": "KiloPound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPound property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPound"
+    },
+    {
+      "name": "KiloPoundFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundFoot"
+    },
+    {
+      "name": "KiloPoundFootPerFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundFootPerFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundFootPerFoot"
+    },
+    {
+      "name": "KiloPoundForceFootPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundForceFootPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundForceFootPerDegree"
+    },
+    {
+      "name": "KiloPoundForceFootPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundForceFootPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundForceFootPerRadian"
+    },
+    {
+      "name": "KiloPoundForceInchPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundForceInchPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundForceInchPerDegree"
+    },
+    {
+      "name": "KiloPoundForceInchPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundForceInchPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundForceInchPerRadian"
+    },
+    {
+      "name": "KiloPoundForcePerSquareFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundForcePerSquareFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundForcePerSquareFoot"
+    },
+    {
+      "name": "KiloPoundForcePerSquareInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundForcePerSquareInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundForcePerSquareInch"
+    },
+    {
+      "name": "KiloPoundInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundInch"
+    },
+    {
+      "name": "KiloPoundPerFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundPerFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundPerFoot"
+    },
+    {
+      "name": "KiloPoundPerInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KiloPoundPerInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KiloPoundPerInch"
+    },
+    {
+      "name": "Kilogram",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Kilogram property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Kilogram"
+    },
+    {
+      "name": "KilogramForce",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramForce property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramForce"
+    },
+    {
+      "name": "KilogramMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramMeter"
+    },
+    {
+      "name": "KilogramMeterPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramMeterPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramMeterPerDegree"
+    },
+    {
+      "name": "KilogramMeterPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramMeterPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramMeterPerMeter"
+    },
+    {
+      "name": "KilogramMeterPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramMeterPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramMeterPerRadian"
+    },
+    {
+      "name": "KilogramPerCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramPerCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramPerCentimeter"
+    },
+    {
+      "name": "KilogramPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramPerMeter"
+    },
+    {
+      "name": "KilogramPerMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramPerMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramPerMillimeter"
+    },
+    {
+      "name": "KilogramPerSquareCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramPerSquareCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramPerSquareCentimeter"
+    },
+    {
+      "name": "KilogramPerSquareMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramPerSquareMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramPerSquareMeter"
+    },
+    {
+      "name": "KilogramPerSquareMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramPerSquareMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramPerSquareMillimeter"
+    },
+    {
+      "name": "KilogramsPerCubicMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramsPerCubicMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramsPerCubicMeter"
+    },
+    {
+      "name": "KilogramsPerHour",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramsPerHour property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramsPerHour"
+    },
+    {
+      "name": "KilogramsPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramsPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramsPerSecond"
+    },
+    {
+      "name": "KilogramsPerSquareMeterSeconds",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilogramsPerSquareMeterSeconds property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilogramsPerSquareMeterSeconds"
+    },
+    {
+      "name": "KilojoulesPerKelvinKilogram",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilojoulesPerKelvinKilogram property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilojoulesPerKelvinKilogram"
+    },
+    {
+      "name": "Kilometer",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Kilometer property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Kilometer"
+    },
+    {
+      "name": "Kilonewton",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Kilonewton property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Kilonewton"
+    },
+    {
+      "name": "KilonewtonsPerCubicMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilonewtonsPerCubicMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilonewtonsPerCubicMeter"
+    },
+    {
+      "name": "KilopascalsPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "KilopascalsPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.KilopascalsPerMeter"
+    },
+    {
+      "name": "Kilowatts",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Kilowatts property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Kilowatts"
+    },
+    {
+      "name": "Kv",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Kv property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Kv"
+    },
+    {
+      "name": "Length4Centimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Length4Centimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Length4Centimeter"
+    },
+    {
+      "name": "Length4Inch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Length4Inch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Length4Inch"
+    },
+    {
+      "name": "Length4Millimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Length4Millimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Length4Millimeter"
+    },
+    {
+      "name": "Liter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Liter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Liter"
+    },
+    {
+      "name": "LitresPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "LitresPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.LitresPerSecond"
+    },
+    {
+      "name": "Meter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Meter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Meter"
+    },
+    {
+      "name": "MetersPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "MetersPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.MetersPerSecond"
+    },
+    {
+      "name": "Mile",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Mile property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Mile"
+    },
+    {
+      "name": "Milligram",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Milligram property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Milligram"
+    },
+    {
+      "name": "Millimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Millimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Millimeter"
+    },
+    {
+      "name": "NaN",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NaN property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NaN"
+    },
+    {
+      "name": "NegativeInfinity",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NegativeInfinity property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NegativeInfinity"
+    },
+    {
+      "name": "Newton",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Newton property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Newton"
+    },
+    {
+      "name": "NewtonMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonMeter"
+    },
+    {
+      "name": "NewtonMeterPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonMeterPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonMeterPerDegree"
+    },
+    {
+      "name": "NewtonMeterPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonMeterPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonMeterPerMeter"
+    },
+    {
+      "name": "NewtonMeterPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonMeterPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonMeterPerRadian"
+    },
+    {
+      "name": "NewtonPerCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonPerCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonPerCentimeter"
+    },
+    {
+      "name": "NewtonPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonPerMeter"
+    },
+    {
+      "name": "NewtonPerMillieter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonPerMillieter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonPerMillieter"
+    },
+    {
+      "name": "NewtonPerSquareCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonPerSquareCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonPerSquareCentimeter"
+    },
+    {
+      "name": "NewtonPerSquareMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonPerSquareMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonPerSquareMeter"
+    },
+    {
+      "name": "NewtonPerSquareMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonPerSquareMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonPerSquareMillimeter"
+    },
+    {
+      "name": "NewtonsPerCubicMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "NewtonsPerCubicMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.NewtonsPerCubicMeter"
+    },
+    {
+      "name": "Ounce",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Ounce property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Ounce"
+    },
+    {
+      "name": "PascalSeconds",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PascalSeconds property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PascalSeconds"
+    },
+    {
+      "name": "PascalsPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PascalsPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PascalsPerMeter"
+    },
+    {
+      "name": "PerCelsius",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PerCelsius property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PerCelsius"
+    },
+    {
+      "name": "PerFahrenheit",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PerFahrenheit property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PerFahrenheit"
+    },
+    {
+      "name": "PerKelvin",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PerKelvin property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PerKelvin"
+    },
+    {
+      "name": "Percent",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Percent property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Percent"
+    },
+    {
+      "name": "Permille",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Permille property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Permille"
+    },
+    {
+      "name": "PositiveInfinity",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PositiveInfinity property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PositiveInfinity"
+    },
+    {
+      "name": "Pound",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Pound property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Pound"
+    },
+    {
+      "name": "PoundFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundFoot"
+    },
+    {
+      "name": "PoundFootPerFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundFootPerFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundFootPerFoot"
+    },
+    {
+      "name": "PoundForce",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForce property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForce"
+    },
+    {
+      "name": "PoundForceFootPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForceFootPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForceFootPerDegree"
+    },
+    {
+      "name": "PoundForceFootPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForceFootPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForceFootPerRadian"
+    },
+    {
+      "name": "PoundForceInchPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForceInchPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForceInchPerDegree"
+    },
+    {
+      "name": "PoundForceInchPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForceInchPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForceInchPerRadian"
+    },
+    {
+      "name": "PoundForcePerCubicFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForcePerCubicFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForcePerCubicFoot"
+    },
+    {
+      "name": "PoundForcePerSquareFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForcePerSquareFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForcePerSquareFoot"
+    },
+    {
+      "name": "PoundForcePerSquareInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundForcePerSquareInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundForcePerSquareInch"
+    },
+    {
+      "name": "PoundInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundInch"
+    },
+    {
+      "name": "PoundPerFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundPerFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundPerFoot"
+    },
+    {
+      "name": "PoundPerInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundPerInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundPerInch"
+    },
+    {
+      "name": "PoundsPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundsPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundsPerSecond"
+    },
+    {
+      "name": "PoundsPerSquareFootSeconds",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundsPerSquareFootSeconds property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundsPerSquareFootSeconds"
+    },
+    {
+      "name": "PoundsPerSquareInchPerFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "PoundsPerSquareInchPerFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.PoundsPerSquareInchPerFoot"
+    },
+    {
+      "name": "Radian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Radian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Radian"
+    },
+    {
+      "name": "SeparatorBetweenFeetAndInches",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SeparatorBetweenFeetAndInches property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SeparatorBetweenFeetAndInches"
+    },
+    {
+      "name": "SeparatorBetweenInchesAndFractions",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SeparatorBetweenInchesAndFractions property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SeparatorBetweenInchesAndFractions"
+    },
+    {
+      "name": "SeparatorBetweenNumberAndUnitSymbol",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SeparatorBetweenNumberAndUnitSymbol property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SeparatorBetweenNumberAndUnitSymbol"
+    },
+    {
+      "name": "ShortTon",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "ShortTon property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.ShortTon"
+    },
+    {
+      "name": "SquareCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareCentimeter"
+    },
+    {
+      "name": "SquareFeetPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareFeetPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareFeetPerSecond"
+    },
+    {
+      "name": "SquareFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareFoot"
+    },
+    {
+      "name": "SquareInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareInch"
+    },
+    {
+      "name": "SquareMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareMeter"
+    },
+    {
+      "name": "SquareMetersPerSecond",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareMetersPerSecond property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareMetersPerSecond"
+    },
+    {
+      "name": "SquareMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareMillimeter"
+    },
+    {
+      "name": "SquareYard",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SquareYard property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.SquareYard"
+    },
+    {
+      "name": "TonMeterPerDegree",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonMeterPerDegree property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonMeterPerDegree"
+    },
+    {
+      "name": "TonMeterPerRadian",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonMeterPerRadian property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonMeterPerRadian"
+    },
+    {
+      "name": "Tonne",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Tonne property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Tonne"
+    },
+    {
+      "name": "TonneCapitalized",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonneCapitalized property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonneCapitalized"
+    },
+    {
+      "name": "TonneMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonneMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonneMeter"
+    },
+    {
+      "name": "TonneMeterPerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonneMeterPerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonneMeterPerMeter"
+    },
+    {
+      "name": "TonnePerCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonnePerCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonnePerCentimeter"
+    },
+    {
+      "name": "TonnePerMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonnePerMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonnePerMeter"
+    },
+    {
+      "name": "TonnePerMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonnePerMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonnePerMillimeter"
+    },
+    {
+      "name": "TonnePerSquareCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonnePerSquareCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonnePerSquareCentimeter"
+    },
+    {
+      "name": "TonnePerSquareMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonnePerSquareMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonnePerSquareMeter"
+    },
+    {
+      "name": "TonnePerSquareMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonnePerSquareMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonnePerSquareMillimeter"
+    },
+    {
+      "name": "TonsPerCubicMeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "TonsPerCubicMeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.TonsPerCubicMeter"
+    },
+    {
+      "name": "USSurveyFoot",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "USSurveyFoot property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.USSurveyFoot"
+    },
+    {
+      "name": "USSurveyInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "USSurveyInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.USSurveyInch"
+    },
+    {
+      "name": "USSurveyMile",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "USSurveyMile property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.USSurveyMile"
+    },
+    {
+      "name": "USSurveyYard",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "USSurveyYard property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.USSurveyYard"
+    },
+    {
+      "name": "WarpingCentimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "WarpingCentimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.WarpingCentimeter"
+    },
+    {
+      "name": "WarpingInch",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "WarpingInch property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.WarpingInch"
+    },
+    {
+      "name": "WarpingMillimeter",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "WarpingMillimeter property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.WarpingMillimeter"
+    },
+    {
+      "name": "Watts",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Watts property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Watts"
+    },
+    {
+      "name": "Yard",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Yard property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Yard"
+    },
+    {
+      "name": "Zero",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Zero property of UnitSymbols.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.UnitSymbols.Zero"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

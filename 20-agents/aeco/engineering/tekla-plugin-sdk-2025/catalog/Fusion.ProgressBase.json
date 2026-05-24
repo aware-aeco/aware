@@ -1,0 +1,305 @@
+{
+  "name": "ProgressBase",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ProgressBase class in Fusion.",
+  "base": "System.MarshalByRefObject",
+  "interfaces": [
+    "System.ComponentModel.INotifyPropertyChanged",
+    "System.IDisposable",
+    "System.IProgress\u003CFusion.ProgressBase.Update\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ProgressBase",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "CreateObjRef",
+      "signature": "System.Runtime.Remoting.ObjRef CreateObjRef(System.Type requestedType)",
+      "summary": "CreateObjRef method of ProgressBase.",
+      "params": [
+        {
+          "name": "requestedType",
+          "type": "System.Type",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Runtime.Remoting.ObjRef",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.CreateObjRef%28System.Type%29"
+    },
+    {
+      "name": "GetLifetimeService",
+      "signature": "object GetLifetimeService()",
+      "summary": "GetLifetimeService method of ProgressBase.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.GetLifetimeService"
+    },
+    {
+      "name": "InitializeLifetimeService",
+      "signature": "object InitializeLifetimeService()",
+      "summary": "InitializeLifetimeService method of ProgressBase.",
+      "params": [],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.InitializeLifetimeService"
+    },
+    {
+      "name": "Combine",
+      "signature": "static Fusion.ProgressBase.Update Combine(Fusion.ProgressBase.Update update, int operationIndex, int operationCount)",
+      "summary": "Combine method of ProgressBase.",
+      "params": [
+        {
+          "name": "update",
+          "type": "Fusion.ProgressBase.Update",
+          "optional": false
+        },
+        {
+          "name": "operationIndex",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "operationCount",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ProgressBase.Update",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Combine%28Fusion.ProgressBase.Update%2CSystem.Int32%2CSystem.Int32%29"
+    },
+    {
+      "name": "Combine",
+      "signature": "static Fusion.ProgressBase.Update Combine(string text, Fusion.ProgressBase.Update[] updates)",
+      "summary": "Combine method of ProgressBase.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "updates",
+          "type": "Fusion.ProgressBase.Update[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ProgressBase.Update",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Combine%28System.String%2CFusion.ProgressBase.Update%5B%5D%29"
+    },
+    {
+      "name": "Cancel",
+      "signature": "void Cancel()",
+      "summary": "Cancel method of ProgressBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Cancel"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of ProgressBase.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Dispose"
+    },
+    {
+      "name": "Report",
+      "signature": "void Report(Fusion.ProgressBase.Update update)",
+      "summary": "Report method of ProgressBase.",
+      "params": [
+        {
+          "name": "update",
+          "type": "Fusion.ProgressBase.Update",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Report%28Fusion.ProgressBase.Update%29"
+    },
+    {
+      "name": "Report",
+      "signature": "void Report(string text)",
+      "summary": "Report method of ProgressBase.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Report%28System.String%29"
+    },
+    {
+      "name": "Report",
+      "signature": "void Report(string text, bool cancelable)",
+      "summary": "Report method of ProgressBase.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "cancelable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Report%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Report",
+      "signature": "void Report(string text, double progressPercentage)",
+      "summary": "Report method of ProgressBase.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progressPercentage",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Report%28System.String%2CSystem.Double%29"
+    },
+    {
+      "name": "Report",
+      "signature": "void Report(string text, double progressPercentage, bool cancelable)",
+      "summary": "Report method of ProgressBase.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "progressPercentage",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "cancelable",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ProgressBase.Report%28System.String%2CSystem.Double%2CSystem.Boolean%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Cancelable",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Cancelable property of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ProgressBase.Cancelable"
+    },
+    {
+      "name": "CancellationToken",
+      "type": "System.Threading.CancellationToken",
+      "getter": true,
+      "setter": false,
+      "summary": "CancellationToken property of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ProgressBase.CancellationToken"
+    },
+    {
+      "name": "CancellationTokenSource",
+      "type": "System.Threading.CancellationTokenSource",
+      "getter": true,
+      "setter": false,
+      "summary": "CancellationTokenSource property of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ProgressBase.CancellationTokenSource"
+    },
+    {
+      "name": "IsCancellationRequested",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsCancellationRequested property of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ProgressBase.IsCancellationRequested"
+    },
+    {
+      "name": "ProgressPercentage",
+      "type": "double?",
+      "getter": true,
+      "setter": false,
+      "summary": "ProgressPercentage property of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ProgressBase.ProgressPercentage"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Text property of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ProgressBase.Text"
+    }
+  ],
+  "events": [
+    {
+      "name": "ProgressChanged",
+      "delegate": "System.EventHandler\u003CFusion.ProgressBase.Update\u003E",
+      "signature": "event System.EventHandler\u003CFusion.ProgressBase.Update\u003E ProgressChanged",
+      "summary": "ProgressChanged event of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.ProgressBase.ProgressChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    },
+    {
+      "name": "PropertyChanged",
+      "delegate": "System.ComponentModel.PropertyChangedEventHandler",
+      "signature": "event System.ComponentModel.PropertyChangedEventHandler PropertyChanged",
+      "summary": "PropertyChanged event of ProgressBase.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.ProgressBase.PropertyChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

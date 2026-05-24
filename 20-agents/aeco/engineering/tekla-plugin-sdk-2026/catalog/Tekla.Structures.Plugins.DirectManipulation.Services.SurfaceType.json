@@ -1,0 +1,24 @@
+{
+  "name": "SurfaceType",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services",
+  "kind": "enum",
+  "summary": "The SurfaceType enum defines what the surface represents.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.SurfaceType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GeometryPreview",
+      "value": 0,
+      "summary": "The surface is a representation of the final result after the modification. This could be for example one or more surfaces of the solid resulting from the modification."
+    },
+    {
+      "name": "Highlight",
+      "value": 1,
+      "summary": "The surface is highlighted in the model."
+    }
+  ]
+}

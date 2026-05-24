@@ -1,0 +1,55 @@
+{
+  "name": "ConvertStringToLower",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertStringToLower class in Fusion.UI.",
+  "base": "Fusion.UI.ValueConverter\u003Cstring, string\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertStringToLower",
+  "constructors": [
+    {
+      "name": "ConvertStringToLower()",
+      "signature": "ConvertStringToLower()",
+      "summary": "Constructs a new ConvertStringToLower.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertStringToLower.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "string Convert(string value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertStringToLower.",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertStringToLower.Convert%28System.String%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

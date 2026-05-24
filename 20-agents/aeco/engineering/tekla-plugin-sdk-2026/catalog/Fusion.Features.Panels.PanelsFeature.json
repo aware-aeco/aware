@@ -1,0 +1,404 @@
+{
+  "name": "PanelsFeature",
+  "namespace": "Fusion.Features.Panels",
+  "kind": "class",
+  "summary": "PanelsFeature class in Fusion.Features.Panels.",
+  "base": "Fusion.App.Feature",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Features.Panels.PanelsFeature",
+  "constructors": [
+    {
+      "name": "PanelsFeature()",
+      "signature": "PanelsFeature()",
+      "summary": "Constructs a new PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "CreatePanelSelector",
+      "signature": "Fusion.ViewModel CreatePanelSelector(object parameter)",
+      "summary": "CreatePanelSelector method of PanelsFeature.",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ViewModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.CreatePanelSelector%28System.Object%29"
+    },
+    {
+      "name": "CreatePanels",
+      "signature": "Fusion.ViewModel CreatePanels(object parameter)",
+      "summary": "CreatePanels method of PanelsFeature.",
+      "params": [
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ViewModel",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.CreatePanels%28System.Object%29"
+    },
+    {
+      "name": "Panels_GetVisible",
+      "signature": "System.Collections.Generic.IEnumerable\u003Cstring\u003E Panels_GetVisible()",
+      "summary": "Panels_GetVisible method of PanelsFeature.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003Cstring\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_GetVisible"
+    },
+    {
+      "name": "Panels_GetIsEnabled",
+      "signature": "bool Panels_GetIsEnabled(string viewName)",
+      "summary": "Panels_GetIsEnabled method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_GetIsEnabled%28System.String%29"
+    },
+    {
+      "name": "Panels_GetIsTabVisible",
+      "signature": "bool Panels_GetIsTabVisible(string viewName)",
+      "summary": "Panels_GetIsTabVisible method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_GetIsTabVisible%28System.String%29"
+    },
+    {
+      "name": "Panels_Hide",
+      "signature": "void Panels_Hide(string viewName)",
+      "summary": "Panels_Hide method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_Hide%28System.String%29"
+    },
+    {
+      "name": "Panels_HideAll",
+      "signature": "void Panels_HideAll()",
+      "summary": "Panels_HideAll method of PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_HideAll"
+    },
+    {
+      "name": "Panels_HideAllLocations",
+      "signature": "void Panels_HideAllLocations()",
+      "summary": "Panels_HideAllLocations method of PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_HideAllLocations"
+    },
+    {
+      "name": "Panels_HideAttached",
+      "signature": "void Panels_HideAttached()",
+      "summary": "Panels_HideAttached method of PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_HideAttached"
+    },
+    {
+      "name": "Panels_HideDetached",
+      "signature": "void Panels_HideDetached()",
+      "summary": "Panels_HideDetached method of PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_HideDetached"
+    },
+    {
+      "name": "Panels_HideLocation",
+      "signature": "void Panels_HideLocation(string location)",
+      "summary": "Panels_HideLocation method of PanelsFeature.",
+      "params": [
+        {
+          "name": "location",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_HideLocation%28System.String%29"
+    },
+    {
+      "name": "Panels_ResetLayout",
+      "signature": "void Panels_ResetLayout()",
+      "summary": "Panels_ResetLayout method of PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_ResetLayout"
+    },
+    {
+      "name": "Panels_ResetLayout",
+      "signature": "void Panels_ResetLayout(bool ignorePersistentState)",
+      "summary": "Panels_ResetLayout method of PanelsFeature.",
+      "params": [
+        {
+          "name": "ignorePersistentState",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_ResetLayout%28System.Boolean%29"
+    },
+    {
+      "name": "Panels_SetIsEnabled",
+      "signature": "void Panels_SetIsEnabled(string viewName, bool enabled)",
+      "summary": "Panels_SetIsEnabled method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "enabled",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_SetIsEnabled%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Panels_SetIsTabVisible",
+      "signature": "void Panels_SetIsTabVisible(string viewName, bool tabVisible)",
+      "summary": "Panels_SetIsTabVisible method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "tabVisible",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_SetIsTabVisible%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Panels_Show",
+      "signature": "void Panels_Show(string viewName, string location = null)",
+      "summary": "Panels_Show method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_Show%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "Panels_Show",
+      "signature": "void Panels_Show(string viewName, string location = null, bool showWithOthers = false)",
+      "summary": "Panels_Show method of PanelsFeature.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "showWithOthers",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_Show%28System.String%2CSystem.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "Panels_ShowAllLocations",
+      "signature": "void Panels_ShowAllLocations()",
+      "summary": "Panels_ShowAllLocations method of PanelsFeature.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_ShowAllLocations"
+    },
+    {
+      "name": "Panels_ShowLocation",
+      "signature": "void Panels_ShowLocation(string location)",
+      "summary": "Panels_ShowLocation method of PanelsFeature.",
+      "params": [
+        {
+          "name": "location",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Panels_ShowLocation%28System.String%29"
+    },
+    {
+      "name": "Stopping",
+      "signature": "void Stopping(System.ComponentModel.CancelEventArgs stopping)",
+      "summary": "Stopping method of PanelsFeature.",
+      "params": [
+        {
+          "name": "stopping",
+          "type": "System.ComponentModel.CancelEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Features.Panels.PanelsFeature.Stopping%28System.ComponentModel.CancelEventArgs%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FloatPanelsAfterDockingInit",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "FloatPanelsAfterDockingInit property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.FloatPanelsAfterDockingInit"
+    },
+    {
+      "name": "FloatPanelsOnStartUp",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "FloatPanelsOnStartUp property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.FloatPanelsOnStartUp"
+    },
+    {
+      "name": "HidePanelsOnStartUp",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "HidePanelsOnStartUp property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.HidePanelsOnStartUp"
+    },
+    {
+      "name": "PanelCloseAction",
+      "type": "Fusion.Features.Panels.PanelCloseAction",
+      "getter": true,
+      "setter": false,
+      "summary": "PanelCloseAction property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.PanelCloseAction"
+    },
+    {
+      "name": "PanelSelectorNavigationAction",
+      "type": "Fusion.Features.Panels.PanelSelectorNavigationAction",
+      "getter": true,
+      "setter": false,
+      "summary": "PanelSelectorNavigationAction property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.PanelSelectorNavigationAction"
+    },
+    {
+      "name": "PersistPanelLayout",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "PersistPanelLayout property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.PersistPanelLayout"
+    },
+    {
+      "name": "RespectVisiblePanels",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "RespectVisiblePanels property of PanelsFeature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.PanelsFeature.RespectVisiblePanels"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

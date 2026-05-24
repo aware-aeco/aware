@@ -1,0 +1,58 @@
+{
+  "name": "LoginView",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "LoginView class in Fusion.UI.",
+  "base": "System.Windows.Controls.Control",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.LoginView",
+  "constructors": [
+    {
+      "name": "LoginView()",
+      "signature": "LoginView()",
+      "summary": "Constructs a new LoginView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.LoginView.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Command",
+      "type": "System.Windows.Input.ICommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Command property of LoginView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.LoginView.Command"
+    },
+    {
+      "name": "CommandParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "CommandParameter property of LoginView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.LoginView.CommandParameter"
+    },
+    {
+      "name": "Password",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Password property of LoginView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.LoginView.Password"
+    },
+    {
+      "name": "UserName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "UserName property of LoginView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.LoginView.UserName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,101 @@
+{
+  "name": "IHostDiagnostics",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IHostDiagnostics interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IHostDiagnostics",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "MeasurePerformance",
+      "signature": "System.IDisposable MeasurePerformance(string format, object[] args)",
+      "summary": "MeasurePerformance method of IHostDiagnostics.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.IDisposable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostDiagnostics.MeasurePerformance%28System.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "Error",
+      "signature": "void Error(string format, object[] args)",
+      "summary": "Error method of IHostDiagnostics.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostDiagnostics.Error%28System.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "Information",
+      "signature": "void Information(string format, object[] args)",
+      "summary": "Information method of IHostDiagnostics.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostDiagnostics.Information%28System.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "Warning",
+      "signature": "void Warning(string format, object[] args)",
+      "summary": "Warning method of IHostDiagnostics.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "args",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostDiagnostics.Warning%28System.String%2CSystem.Object%5B%5D%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

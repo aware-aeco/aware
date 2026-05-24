@@ -1,0 +1,213 @@
+{
+  "name": "AreaFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "AreaFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003CFusion.Area, Fusion.AreaUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.AreaFormatter",
+  "constructors": [
+    {
+      "name": "AreaFormatter()",
+      "signature": "AreaFormatter()",
+      "summary": "Constructs a new AreaFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.%23ctor"
+    },
+    {
+      "name": "AreaFormatter(Fusion.AreaUnit)",
+      "signature": "AreaFormatter(Fusion.AreaUnit unit)",
+      "summary": "Constructs a new AreaFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.%23ctor%28Fusion.AreaUnit%29"
+    },
+    {
+      "name": "AreaFormatter(Fusion.AreaUnit, Fusion.AreaUnit)",
+      "signature": "AreaFormatter(Fusion.AreaUnit unit, Fusion.AreaUnit formatUnit)",
+      "summary": "Constructs a new AreaFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.%23ctor%28Fusion.AreaUnit%2CFusion.AreaUnit%29"
+    },
+    {
+      "name": "AreaFormatter(Fusion.AreaUnit, Fusion.AreaUnit, string, System.IFormatProvider)",
+      "signature": "AreaFormatter(Fusion.AreaUnit unit, Fusion.AreaUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new AreaFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.%23ctor%28Fusion.AreaUnit%2CFusion.AreaUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "AreaFormatter(Fusion.AreaUnit, string, System.IFormatProvider)",
+      "signature": "AreaFormatter(Fusion.AreaUnit unit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new AreaFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.AreaUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.%23ctor%28Fusion.AreaUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out Fusion.Area value)",
+      "summary": "TryParse method of AreaFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CFusion.Area%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.AreaFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of AreaFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.AreaFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.AreaFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of AreaFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.AreaFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.AreaFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(Fusion.Area value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of AreaFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Area",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.AreaFormatter.ToString%28Fusion.Area%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,24 @@
+{
+  "name": "IPopupController",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IPopupController interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IPopupController",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Close",
+      "signature": "void Close()",
+      "summary": "Close method of IPopupController.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IPopupController.Close"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

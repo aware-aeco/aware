@@ -1,0 +1,215 @@
+{
+  "name": "QuantityFormatter\u00602",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "QuantityFormatter\u00602 class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.Formatter\u003CTQuantity\u003E",
+  "interfaces": [
+    "Fusion.Formatting.IQuantityFormatter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.QuantityFormatter\u00602",
+  "constructors": [
+    {
+      "name": "QuantityFormatter\u00602(TQuantityUnit, TQuantityUnit, string, System.IFormatProvider)",
+      "signature": "QuantityFormatter\u00602(TQuantityUnit unit, TQuantityUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "TQuantityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "TQuantityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.%23ctor%28%601%2C%601%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out TQuantity value)",
+      "summary": "TryParse method of QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "TQuantity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2C%600%40%29"
+    },
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out object value)",
+      "summary": "TryParse method of QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CSystem.Object%40%29"
+    },
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, out TQuantity value)",
+      "summary": "TryParse method of QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "TQuantity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.TryParse%28System.String%2C%600%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(TQuantity value)",
+      "summary": "ToString method of QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "value",
+          "type": "TQuantity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.ToString%28%600%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(TQuantity value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "value",
+          "type": "TQuantity",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.ToString%28%600%2CFusion.Formatting.UnitSymbols%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(object value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of QuantityFormatter\u00602.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.QuantityFormatter%602.ToString%28System.Object%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FormatUnit",
+      "type": "TQuantityUnit",
+      "getter": true,
+      "setter": false,
+      "summary": "FormatUnit property of QuantityFormatter\u00602.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.QuantityFormatter%602.FormatUnit"
+    },
+    {
+      "name": "Unit",
+      "type": "TQuantityUnit",
+      "getter": true,
+      "setter": false,
+      "summary": "Unit property of QuantityFormatter\u00602.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Formatting.QuantityFormatter%602.Unit"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

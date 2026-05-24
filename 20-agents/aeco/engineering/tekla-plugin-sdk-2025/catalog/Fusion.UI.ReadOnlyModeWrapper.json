@@ -1,0 +1,42 @@
+{
+  "name": "ReadOnlyModeWrapper",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ReadOnlyModeWrapper class in Fusion.UI.",
+  "base": "System.Windows.Controls.ContentControl",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ReadOnlyModeWrapper",
+  "constructors": [
+    {
+      "name": "ReadOnlyModeWrapper()",
+      "signature": "ReadOnlyModeWrapper()",
+      "summary": "Constructs a new ReadOnlyModeWrapper.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ReadOnlyModeWrapper.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsReadOnly",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "IsReadOnly property of ReadOnlyModeWrapper.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ReadOnlyModeWrapper.IsReadOnly"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Text property of ReadOnlyModeWrapper.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ReadOnlyModeWrapper.Text"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

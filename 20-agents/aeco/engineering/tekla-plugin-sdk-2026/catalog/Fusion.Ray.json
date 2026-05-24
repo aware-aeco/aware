@@ -1,0 +1,292 @@
+{
+  "name": "Ray",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Ray struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Ray\u003E",
+    "System.IEquatable\u003CFusion.Ray\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Ray",
+  "constructors": [
+    {
+      "name": "Ray(Fusion.Float3, Fusion.Float3)",
+      "signature": "Ray(Fusion.Float3 origin, Fusion.Float3 direction)",
+      "summary": "Constructs a new Ray.",
+      "params": [
+        {
+          "name": "origin",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "direction",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.%23ctor%28Fusion.Float3%2CFusion.Float3%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Ray other)",
+      "summary": "Equals method of Ray.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Ray",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Equals%28Fusion.Ray%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Ray.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Ray other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Ray.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Ray",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Near%28Fusion.Ray%2CSystem.Int32%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "float? Intersects(Fusion.BoundingBox boundingBox)",
+      "summary": "Intersects method of Ray.",
+      "params": [
+        {
+          "name": "boundingBox",
+          "type": "Fusion.BoundingBox",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Intersects%28Fusion.BoundingBox%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "float? Intersects(Fusion.Triangle triangle)",
+      "summary": "Intersects method of Ray.",
+      "params": [
+        {
+          "name": "triangle",
+          "type": "Fusion.Triangle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Intersects%28Fusion.Triangle%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "float? Intersects(Fusion.TriangleMesh triangleMesh)",
+      "summary": "Intersects method of Ray.",
+      "params": [
+        {
+          "name": "triangleMesh",
+          "type": "Fusion.TriangleMesh",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Intersects%28Fusion.TriangleMesh%29"
+    },
+    {
+      "name": "Intersects",
+      "signature": "float? Intersects(Fusion.TriangleMesh triangleMesh, Fusion.Plane[] clipPlanes)",
+      "summary": "Intersects method of Ray.",
+      "params": [
+        {
+          "name": "triangleMesh",
+          "type": "Fusion.TriangleMesh",
+          "optional": false
+        },
+        {
+          "name": "clipPlanes",
+          "type": "Fusion.Plane[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.Intersects%28Fusion.TriangleMesh%2CFusion.Plane%5B%5D%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Ray.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.GetHashCode"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Float3 op_Multiply(Fusion.Ray a, float b)",
+      "summary": "op_Multiply method of Ray.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Ray",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.op_Multiply%28Fusion.Ray%2CSystem.Single%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Float3 op_Multiply(float a, Fusion.Ray b)",
+      "summary": "op_Multiply method of Ray.",
+      "params": [
+        {
+          "name": "a",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Ray",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.op_Multiply%28System.Single%2CFusion.Ray%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Ray a, Fusion.Ray b)",
+      "summary": "op_Equality method of Ray.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Ray",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Ray",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.op_Equality%28Fusion.Ray%2CFusion.Ray%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Ray a, Fusion.Ray b)",
+      "summary": "op_Inequality method of Ray.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Ray",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Ray",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Ray.op_Inequality%28Fusion.Ray%2CFusion.Ray%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

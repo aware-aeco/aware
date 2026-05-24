@@ -1,0 +1,26 @@
+{
+  "name": "WarpingUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "WarpingUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.WarpingUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Millimeter",
+      "value": 0
+    },
+    {
+      "name": "Centimeter",
+      "value": 1
+    },
+    {
+      "name": "Inch",
+      "value": 2
+    }
+  ]
+}

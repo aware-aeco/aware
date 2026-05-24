@@ -1,0 +1,31 @@
+{
+  "name": "Grip",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "Grip class in Fusion.UI.",
+  "base": "System.Windows.Controls.Control",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.Grip",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "BevelEffect",
+      "type": "System.Windows.Media.Effects.Effect",
+      "getter": true,
+      "setter": true,
+      "summary": "BevelEffect property of Grip.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Grip.BevelEffect"
+    },
+    {
+      "name": "GripStyle",
+      "type": "Fusion.UI.GripStyle",
+      "getter": true,
+      "setter": true,
+      "summary": "GripStyle property of Grip.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.Grip.GripStyle"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

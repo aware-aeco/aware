@@ -1,0 +1,137 @@
+{
+  "name": "InputRange",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking",
+  "kind": "class",
+  "summary": "The InputRange class defines the expected amount of model object inputs for the picker..",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AtLeast",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange AtLeast(uint inputAmount)",
+      "summary": "Factory method for specifying an input amount with a lower limit.",
+      "params": [
+        {
+          "name": "inputAmount",
+          "type": "uint",
+          "doc": "The input amount.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+        "doc": "An InputRange instance."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Throws a ArgumentException if inputAmount \u003E 99."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange.AtLeast%28System.UInt32%29"
+    },
+    {
+      "name": "AtMost",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange AtMost(uint inputAmount)",
+      "summary": "Factory method for specifying an input amount with an upper limit.",
+      "params": [
+        {
+          "name": "inputAmount",
+          "type": "uint",
+          "doc": "The input amount.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+        "doc": "An InputRange instance."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Throws a ArgumentException if inputAmount \u003E 99."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange.AtMost%28System.UInt32%29"
+    },
+    {
+      "name": "Exactly",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange Exactly(uint inputAmount)",
+      "summary": "Factory method for specifying an exact input amount.",
+      "params": [
+        {
+          "name": "inputAmount",
+          "type": "uint",
+          "doc": "The input amount.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+        "doc": "An InputRange instance."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Throws a ArgumentException if inputAmount \u003E 99."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange.Exactly%28System.UInt32%29"
+    },
+    {
+      "name": "InRangeOf",
+      "signature": "static Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange InRangeOf(uint minAmount, uint maxAmount)",
+      "summary": "Factory method for specifying input amount in a certain range.",
+      "params": [
+        {
+          "name": "minAmount",
+          "type": "uint",
+          "doc": "The minimum amount.",
+          "optional": false
+        },
+        {
+          "name": "maxAmount",
+          "type": "uint",
+          "doc": "The maximum amount.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange",
+        "doc": "An InputRange instance."
+      },
+      "throws": [
+        {
+          "type": "System.ArgumentException",
+          "when": "Throws a ArgumentException if minAmount \u003E maxAmount,\nor if maxAmount is \u003E 99."
+        }
+      ],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange.InRangeOf%28System.UInt32%2CSystem.UInt32%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Maximum",
+      "type": "uint",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the maximum input amount.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange.Maximum"
+    },
+    {
+      "name": "Minimum",
+      "type": "uint",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the minimum input amount.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputRange.Minimum"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

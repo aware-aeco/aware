@@ -1,0 +1,762 @@
+{
+  "name": "FlowCoefficient",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "FlowCoefficient struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.FlowCoefficient\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.FlowCoefficient\u003E",
+    "System.IEquatable\u003CFusion.FlowCoefficient\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.FlowCoefficient",
+  "constructors": [
+    {
+      "name": "FlowCoefficient(double)",
+      "signature": "FlowCoefficient(double kv)",
+      "summary": "Constructs a new FlowCoefficient.",
+      "params": [
+        {
+          "name": "kv",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.FlowCoefficient other)",
+      "summary": "Equals method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Equals%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.FlowCoefficient other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Near%28Fusion.FlowCoefficient%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.FlowCoefficientUnit flowCoefficientUnit)",
+      "summary": "To method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficientUnit",
+          "type": "Fusion.FlowCoefficientUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.To%28Fusion.FlowCoefficientUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.FlowCoefficient other)",
+      "summary": "CompareTo method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.CompareTo%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of FlowCoefficient.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.FlowCoefficient Abs(Fusion.FlowCoefficient flowCoefficient)",
+      "summary": "Abs method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Abs%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.FlowCoefficient From(double flowCoefficient, Fusion.FlowCoefficientUnit flowCoefficientUnit)",
+      "summary": "From method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "flowCoefficientUnit",
+          "type": "Fusion.FlowCoefficientUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.From%28System.Double%2CFusion.FlowCoefficientUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.FlowCoefficient Max(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "Max method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Max%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.FlowCoefficient Min(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "Min method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Min%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.FlowCoefficient Round(Fusion.FlowCoefficient flowCoefficient, Fusion.FlowCoefficient precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Round%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.FlowCoefficient op_Addition(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_Addition method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Addition%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.FlowCoefficient op_Division(Fusion.FlowCoefficient a, double b)",
+      "summary": "op_Division method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Division%28Fusion.FlowCoefficient%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.FlowCoefficient op_Modulus(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_Modulus method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Modulus%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.FlowCoefficient op_Multiply(Fusion.FlowCoefficient a, double b)",
+      "summary": "op_Multiply method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Multiply%28Fusion.FlowCoefficient%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.FlowCoefficient op_Multiply(double a, Fusion.FlowCoefficient b)",
+      "summary": "op_Multiply method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Multiply%28System.Double%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.FlowCoefficient op_Subtraction(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_Subtraction method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Subtraction%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.FlowCoefficient op_UnaryNegation(Fusion.FlowCoefficient a)",
+      "summary": "op_UnaryNegation method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FlowCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_UnaryNegation%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.FlowCoefficient flowCoefficient)",
+      "summary": "IsInfinity method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.IsInfinity%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.FlowCoefficient flowCoefficient)",
+      "summary": "IsNaN method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.IsNaN%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.FlowCoefficient flowCoefficient)",
+      "summary": "IsNegativeInfinity method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.IsNegativeInfinity%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.FlowCoefficient flowCoefficient)",
+      "summary": "IsPositiveInfinity method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.IsPositiveInfinity%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_Equality method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Equality%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_GreaterThan method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_GreaterThan%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_GreaterThanOrEqual method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_GreaterThanOrEqual%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_Inequality method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Inequality%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_LessThan method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_LessThan%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_LessThanOrEqual method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_LessThanOrEqual%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.FlowCoefficient a, Fusion.FlowCoefficient b)",
+      "summary": "op_Division method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.op_Division%28Fusion.FlowCoefficient%2CFusion.FlowCoefficient%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.FlowCoefficient flowCoefficient)",
+      "summary": "Sign method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "flowCoefficient",
+          "type": "Fusion.FlowCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.Sign%28Fusion.FlowCoefficient%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of FlowCoefficient.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of FlowCoefficient.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.FlowCoefficient.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kv",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Kv property of FlowCoefficient.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.FlowCoefficient.Kv"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

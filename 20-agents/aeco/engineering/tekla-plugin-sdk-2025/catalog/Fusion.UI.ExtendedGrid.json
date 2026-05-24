@@ -1,0 +1,25 @@
+{
+  "name": "ExtendedGrid",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ExtendedGrid class in Fusion.UI.",
+  "base": "System.Windows.Controls.Grid",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ExtendedGrid",
+  "constructors": [
+    {
+      "name": "ExtendedGrid()",
+      "signature": "ExtendedGrid()",
+      "summary": "Constructs a new ExtendedGrid.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ExtendedGrid.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

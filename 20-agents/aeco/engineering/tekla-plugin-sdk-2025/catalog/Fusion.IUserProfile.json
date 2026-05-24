@@ -1,0 +1,91 @@
+{
+  "name": "IUserProfile",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IUserProfile interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IUserProfile",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetProfiles",
+      "signature": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IDictionary\u003Cstring, System.Collections.Generic.IDictionary\u003Cstring, string\u003E\u003E\u003E GetProfiles(Fusion.AuthenticationToken authenticationToken, string[] properties)",
+      "summary": "GetProfiles method of IUserProfile.",
+      "params": [
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IDictionary\u003Cstring, System.Collections.Generic.IDictionary\u003Cstring, string\u003E\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserProfile.GetProfiles%28Fusion.AuthenticationToken%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "GetProfile",
+      "signature": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IDictionary\u003Cstring, string\u003E\u003E GetProfile(Fusion.AuthenticationToken authenticationToken, string principal, string[] properties)",
+      "summary": "GetProfile method of IUserProfile.",
+      "params": [
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        },
+        {
+          "name": "principal",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "properties",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IDictionary\u003Cstring, string\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserProfile.GetProfile%28Fusion.AuthenticationToken%2CSystem.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "GetProfileLink",
+      "signature": "System.Threading.Tasks.Task\u003CSystem.Uri\u003E GetProfileLink(Fusion.AuthenticationToken authenticationToken, string principal)",
+      "summary": "GetProfileLink method of IUserProfile.",
+      "params": [
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        },
+        {
+          "name": "principal",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CSystem.Uri\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserProfile.GetProfileLink%28Fusion.AuthenticationToken%2CSystem.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

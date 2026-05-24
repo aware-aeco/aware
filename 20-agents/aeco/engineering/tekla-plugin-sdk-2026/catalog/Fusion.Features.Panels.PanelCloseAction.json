@@ -1,0 +1,22 @@
+{
+  "name": "PanelCloseAction",
+  "namespace": "Fusion.Features.Panels",
+  "kind": "enum",
+  "summary": "PanelCloseAction enum in Fusion.Features.Panels.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Features.Panels.PanelCloseAction",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Close",
+      "value": 0
+    },
+    {
+      "name": "CloseAndDock",
+      "value": 1
+    }
+  ]
+}

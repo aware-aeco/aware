@@ -1,0 +1,30 @@
+{
+  "name": "AuthorizationResult",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "AuthorizationResult enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.AuthorizationResult",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Success",
+      "value": 0
+    },
+    {
+      "name": "Timeout",
+      "value": 1
+    },
+    {
+      "name": "AccessDenied",
+      "value": 2
+    },
+    {
+      "name": "AccessExpired",
+      "value": 3
+    }
+  ]
+}

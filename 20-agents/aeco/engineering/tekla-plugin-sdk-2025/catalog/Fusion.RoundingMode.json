@@ -1,0 +1,26 @@
+{
+  "name": "RoundingMode",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "RoundingMode enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.RoundingMode",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Nearest",
+      "value": 0
+    },
+    {
+      "name": "Up",
+      "value": 1
+    },
+    {
+      "name": "Down",
+      "value": 2
+    }
+  ]
+}

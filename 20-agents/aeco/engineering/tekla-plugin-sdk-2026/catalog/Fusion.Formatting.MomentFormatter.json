@@ -1,0 +1,213 @@
+{
+  "name": "MomentFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "MomentFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003CFusion.Moment, Fusion.MomentUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.MomentFormatter",
+  "constructors": [
+    {
+      "name": "MomentFormatter()",
+      "signature": "MomentFormatter()",
+      "summary": "Constructs a new MomentFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.%23ctor"
+    },
+    {
+      "name": "MomentFormatter(Fusion.MomentUnit)",
+      "signature": "MomentFormatter(Fusion.MomentUnit unit)",
+      "summary": "Constructs a new MomentFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MomentUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.%23ctor%28Fusion.MomentUnit%29"
+    },
+    {
+      "name": "MomentFormatter(Fusion.MomentUnit, Fusion.MomentUnit)",
+      "signature": "MomentFormatter(Fusion.MomentUnit unit, Fusion.MomentUnit formatUnit)",
+      "summary": "Constructs a new MomentFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MomentUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.MomentUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.%23ctor%28Fusion.MomentUnit%2CFusion.MomentUnit%29"
+    },
+    {
+      "name": "MomentFormatter(Fusion.MomentUnit, Fusion.MomentUnit, string, System.IFormatProvider)",
+      "signature": "MomentFormatter(Fusion.MomentUnit unit, Fusion.MomentUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new MomentFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MomentUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.MomentUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.%23ctor%28Fusion.MomentUnit%2CFusion.MomentUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "MomentFormatter(Fusion.MomentUnit, string, System.IFormatProvider)",
+      "signature": "MomentFormatter(Fusion.MomentUnit unit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new MomentFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MomentUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.%23ctor%28Fusion.MomentUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out Fusion.Moment value)",
+      "summary": "TryParse method of MomentFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Moment",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CFusion.Moment%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MomentFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of MomentFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MomentFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MomentFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of MomentFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MomentFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.MomentFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(Fusion.Moment value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of MomentFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Moment",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MomentFormatter.ToString%28Fusion.Moment%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

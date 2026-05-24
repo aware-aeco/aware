@@ -1,0 +1,213 @@
+{
+  "name": "LinearDensityFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "LinearDensityFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003CFusion.LinearDensity, Fusion.LinearDensity.LinearDensityUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.LinearDensityFormatter",
+  "constructors": [
+    {
+      "name": "LinearDensityFormatter()",
+      "signature": "LinearDensityFormatter()",
+      "summary": "Constructs a new LinearDensityFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.%23ctor"
+    },
+    {
+      "name": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit)",
+      "signature": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit unit)",
+      "summary": "Constructs a new LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.LinearDensity.LinearDensityUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.%23ctor%28Fusion.LinearDensity.LinearDensityUnit%29"
+    },
+    {
+      "name": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit, Fusion.LinearDensity.LinearDensityUnit)",
+      "signature": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit unit, Fusion.LinearDensity.LinearDensityUnit formatUnit)",
+      "summary": "Constructs a new LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.LinearDensity.LinearDensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.LinearDensity.LinearDensityUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.%23ctor%28Fusion.LinearDensity.LinearDensityUnit%2CFusion.LinearDensity.LinearDensityUnit%29"
+    },
+    {
+      "name": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit, Fusion.LinearDensity.LinearDensityUnit, string, System.IFormatProvider)",
+      "signature": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit unit, Fusion.LinearDensity.LinearDensityUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.LinearDensity.LinearDensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.LinearDensity.LinearDensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.%23ctor%28Fusion.LinearDensity.LinearDensityUnit%2CFusion.LinearDensity.LinearDensityUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit, string, System.IFormatProvider)",
+      "signature": "LinearDensityFormatter(Fusion.LinearDensity.LinearDensityUnit unit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.LinearDensity.LinearDensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.%23ctor%28Fusion.LinearDensity.LinearDensityUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out Fusion.LinearDensity value)",
+      "summary": "TryParse method of LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.LinearDensity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CFusion.LinearDensity%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.LinearDensityFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.LinearDensityFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.LinearDensityFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.LinearDensityFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.LinearDensityFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(Fusion.LinearDensity value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of LinearDensityFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.LinearDensity",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.LinearDensityFormatter.ToString%28Fusion.LinearDensity%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,250 @@
+{
+  "name": "IHost",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IHost interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IHost",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Invoke",
+      "signature": "System.Threading.Tasks.Task Invoke\u003CTPublishedMethodDelegate\u003E(System.Action\u003CTPublishedMethodDelegate\u003E invokeMethod)",
+      "summary": "Invoke method of IHost.",
+      "params": [
+        {
+          "name": "invokeMethod",
+          "type": "System.Action\u003CTPublishedMethodDelegate\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.Invoke%60%601%28System.Action%7B%60%600%7D%29"
+    },
+    {
+      "name": "Invoke",
+      "signature": "System.Threading.Tasks.Task Invoke\u003CTPublishedMethodDelegate\u003E(System.Func\u003CTPublishedMethodDelegate, System.Threading.Tasks.Task\u003E invokeMethod)",
+      "summary": "Invoke method of IHost.",
+      "params": [
+        {
+          "name": "invokeMethod",
+          "type": "System.Func\u003CTPublishedMethodDelegate, System.Threading.Tasks.Task\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.Invoke%60%601%28System.Func%7B%60%600%2CSystem.Threading.Tasks.Task%7D%29"
+    },
+    {
+      "name": "InvokeDomainLogic",
+      "signature": "System.Threading.Tasks.Task InvokeDomainLogic(System.Action action)",
+      "summary": "InvokeDomainLogic method of IHost.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.InvokeDomainLogic%28System.Action%29"
+    },
+    {
+      "name": "InvokeDomainLogic",
+      "signature": "System.Threading.Tasks.Task\u003CT\u003E InvokeDomainLogic\u003CT\u003E(System.Func\u003CT\u003E action)",
+      "summary": "InvokeDomainLogic method of IHost.",
+      "params": [
+        {
+          "name": "action",
+          "type": "System.Func\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.InvokeDomainLogic%60%601%28System.Func%7B%60%600%7D%29"
+    },
+    {
+      "name": "Invoke",
+      "signature": "System.Threading.Tasks.Task\u003CTResult\u003E Invoke\u003CTPublishedMethodDelegate, TResult\u003E(System.Func\u003CTPublishedMethodDelegate, System.Threading.Tasks.Task\u003CTResult\u003E\u003E invokeMethod)",
+      "summary": "Invoke method of IHost.",
+      "params": [
+        {
+          "name": "invokeMethod",
+          "type": "System.Func\u003CTPublishedMethodDelegate, System.Threading.Tasks.Task\u003CTResult\u003E\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.Invoke%60%602%28System.Func%7B%60%600%2CSystem.Threading.Tasks.Task%7B%60%601%7D%7D%29"
+    },
+    {
+      "name": "Invoke",
+      "signature": "System.Threading.Tasks.Task\u003CTResult\u003E Invoke\u003CTPublishedMethodDelegate, TResult\u003E(System.Func\u003CTPublishedMethodDelegate, TResult\u003E invokeMethod)",
+      "summary": "Invoke method of IHost.",
+      "params": [
+        {
+          "name": "invokeMethod",
+          "type": "System.Func\u003CTPublishedMethodDelegate, TResult\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CTResult\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.Invoke%60%602%28System.Func%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "Restart",
+      "signature": "void Restart()",
+      "summary": "Restart method of IHost.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.Restart"
+    },
+    {
+      "name": "Shutdown",
+      "signature": "void Shutdown()",
+      "summary": "Shutdown method of IHost.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.Shutdown"
+    },
+    {
+      "name": "StartExternalProgram",
+      "signature": "void StartExternalProgram(string path, string[] extraCommandLineArguments)",
+      "summary": "StartExternalProgram method of IHost.",
+      "params": [
+        {
+          "name": "path",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "extraCommandLineArguments",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.StartExternalProgram%28System.String%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "StartExternalService",
+      "signature": "void StartExternalService(Fusion.RemoteObject service)",
+      "summary": "StartExternalService method of IHost.",
+      "params": [
+        {
+          "name": "service",
+          "type": "Fusion.RemoteObject",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHost.StartExternalService%28Fusion.RemoteObject%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "DataFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "DataFolder property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.DataFolder"
+    },
+    {
+      "name": "Diagnostics",
+      "type": "Fusion.IHostDiagnostics",
+      "getter": true,
+      "setter": false,
+      "summary": "Diagnostics property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.Diagnostics"
+    },
+    {
+      "name": "Recovery",
+      "type": "Fusion.IRecovery",
+      "getter": true,
+      "setter": false,
+      "summary": "Recovery property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.Recovery"
+    },
+    {
+      "name": "Session",
+      "type": "Fusion.ISession",
+      "getter": true,
+      "setter": false,
+      "summary": "Session property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.Session"
+    },
+    {
+      "name": "Settings",
+      "type": "Fusion.ISettings",
+      "getter": true,
+      "setter": false,
+      "summary": "Settings property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.Settings"
+    },
+    {
+      "name": "TempFolder",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "TempFolder property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.TempFolder"
+    },
+    {
+      "name": "UI",
+      "type": "Fusion.IHostUI",
+      "getter": true,
+      "setter": false,
+      "summary": "UI property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.UI"
+    },
+    {
+      "name": "User",
+      "type": "Fusion.IHostUser",
+      "getter": true,
+      "setter": false,
+      "summary": "User property of IHost.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHost.User"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

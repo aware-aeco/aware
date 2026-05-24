@@ -1,0 +1,52 @@
+{
+  "name": "Command\u00601",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "Command\u00601 class in Fusion.",
+  "base": "Fusion.Command",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Command\u00601",
+  "constructors": [
+    {
+      "name": "Command\u00601(System.Action\u003CT\u003E)",
+      "signature": "Command\u00601(System.Action\u003CT\u003E execute)",
+      "summary": "Constructs a new Command\u00601.",
+      "params": [
+        {
+          "name": "execute",
+          "type": "System.Action\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Command%601.%23ctor%28System.Action%7B%600%7D%29"
+    },
+    {
+      "name": "Command\u00601(System.Action\u003CT\u003E, System.Func\u003CT, bool\u003E)",
+      "signature": "Command\u00601(System.Action\u003CT\u003E execute, System.Func\u003CT, bool\u003E canExecute)",
+      "summary": "Constructs a new Command\u00601.",
+      "params": [
+        {
+          "name": "execute",
+          "type": "System.Action\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "canExecute",
+          "type": "System.Func\u003CT, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Command%601.%23ctor%28System.Action%7B%600%7D%2CSystem.Func%7B%600%2CSystem.Boolean%7D%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

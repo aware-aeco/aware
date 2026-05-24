@@ -1,0 +1,946 @@
+{
+  "name": "Angle",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Angle struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Angle\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Angle\u003E",
+    "System.IEquatable\u003CFusion.Angle\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Angle",
+  "constructors": [
+    {
+      "name": "Angle(double)",
+      "signature": "Angle(double degrees)",
+      "summary": "Constructs a new Angle.",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Angle other)",
+      "summary": "Equals method of Angle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Equals%28Fusion.Angle%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Angle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Angle other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Angle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Near%28Fusion.Angle%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.AngleUnit unit)",
+      "summary": "To method of Angle.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.AngleUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.To%28Fusion.AngleUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Angle other)",
+      "summary": "CompareTo method of Angle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.CompareTo%28Fusion.Angle%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Angle.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Angle.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Angle Abs(Fusion.Angle value)",
+      "summary": "Abs method of Angle.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Abs%28Fusion.Angle%29"
+    },
+    {
+      "name": "Acos",
+      "signature": "static Fusion.Angle Acos(double cos)",
+      "summary": "Acos method of Angle.",
+      "params": [
+        {
+          "name": "cos",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Acos%28System.Double%29"
+    },
+    {
+      "name": "Asin",
+      "signature": "static Fusion.Angle Asin(double sin)",
+      "summary": "Asin method of Angle.",
+      "params": [
+        {
+          "name": "sin",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Asin%28System.Double%29"
+    },
+    {
+      "name": "Atan",
+      "signature": "static Fusion.Angle Atan(double tan)",
+      "summary": "Atan method of Angle.",
+      "params": [
+        {
+          "name": "tan",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Atan%28System.Double%29"
+    },
+    {
+      "name": "Atan",
+      "signature": "static Fusion.Angle Atan(double y, double x)",
+      "summary": "Atan method of Angle.",
+      "params": [
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Atan%28System.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "FromRadians",
+      "signature": "static Fusion.Angle FromRadians(double radians)",
+      "summary": "FromRadians method of Angle.",
+      "params": [
+        {
+          "name": "radians",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.FromRadians%28System.Double%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Angle Max(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "Max method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Max%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Angle Min(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "Min method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Min%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Angle Round(Fusion.Angle angle, Fusion.Angle precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of Angle.",
+      "params": [
+        {
+          "name": "angle",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Round%28Fusion.Angle%2CFusion.Angle%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Angle op_Addition(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_Addition method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Addition%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Angle op_Division(Fusion.Angle a, double b)",
+      "summary": "op_Division method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Division%28Fusion.Angle%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Angle op_Implicit(double degrees)",
+      "summary": "op_Implicit method of Angle.",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Implicit%28System.Double%29~Fusion.Angle"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Angle op_Modulus(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_Modulus method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Modulus%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Angle op_Multiply(Fusion.Angle a, double b)",
+      "summary": "op_Multiply method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Multiply%28Fusion.Angle%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Angle op_Multiply(double a, Fusion.Angle b)",
+      "summary": "op_Multiply method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Multiply%28System.Double%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Angle op_Subtraction(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_Subtraction method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Subtraction%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Angle op_UnaryNegation(Fusion.Angle v)",
+      "summary": "op_UnaryNegation method of Angle.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_UnaryNegation%28Fusion.Angle%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Angle op_UnaryPlus(Fusion.Angle v)",
+      "summary": "op_UnaryPlus method of Angle.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_UnaryPlus%28Fusion.Angle%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Angle value)",
+      "summary": "IsInfinity method of Angle.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.IsInfinity%28Fusion.Angle%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Angle value)",
+      "summary": "IsNaN method of Angle.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.IsNaN%28Fusion.Angle%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Angle value)",
+      "summary": "IsNegativeInfinity method of Angle.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.IsNegativeInfinity%28Fusion.Angle%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Angle value)",
+      "summary": "IsPositiveInfinity method of Angle.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.IsPositiveInfinity%28Fusion.Angle%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_Equality method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Equality%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_GreaterThan method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_GreaterThan%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_GreaterThanOrEqual method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_GreaterThanOrEqual%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_Inequality method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Inequality%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_LessThan method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_LessThan%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_LessThanOrEqual method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_LessThanOrEqual%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "ToDegrees",
+      "signature": "static double ToDegrees(double radians)",
+      "summary": "ToDegrees method of Angle.",
+      "params": [
+        {
+          "name": "radians",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.ToDegrees%28System.Double%29"
+    },
+    {
+      "name": "ToRadians",
+      "signature": "static double ToRadians(double degrees)",
+      "summary": "ToRadians method of Angle.",
+      "params": [
+        {
+          "name": "degrees",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.ToRadians%28System.Double%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.Angle a, Fusion.Angle b)",
+      "summary": "op_Division method of Angle.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Angle",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.op_Division%28Fusion.Angle%2CFusion.Angle%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Angle value)",
+      "summary": "Sign method of Angle.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.Sign%28Fusion.Angle%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Angle.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Angle.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Angle.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Cos",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Cos property of Angle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Angle.Cos"
+    },
+    {
+      "name": "Degrees",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Degrees property of Angle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Angle.Degrees"
+    },
+    {
+      "name": "Radians",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Radians property of Angle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Angle.Radians"
+    },
+    {
+      "name": "Sin",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Sin property of Angle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Angle.Sin"
+    },
+    {
+      "name": "Tan",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Tan property of Angle.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Angle.Tan"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

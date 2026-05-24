@@ -1,0 +1,33 @@
+{
+  "name": "CheckBoxControl",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls",
+  "kind": "class",
+  "summary": "The CheckBoxControl class represents a check box.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Controls.CheckBoxControl",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "IsChecked",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value indicating whether this control is currently in a checked state.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Controls.CheckBoxControl.IsChecked"
+    }
+  ],
+  "events": [
+    {
+      "name": "StateChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E StateChanged",
+      "summary": "Event to be called when the state of the control has changed.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Services.Controls.CheckBoxControl.StateChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,146 @@
+{
+  "name": "ComponentExtensions",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Utilities",
+  "kind": "static-class",
+  "summary": "The ComponentExtensions class adds extension methods to the Component type.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "GetAppliedAttributes",
+      "signature": "static System.Collections.Generic.Dictionary\u003Cstring, object\u003E GetAppliedAttributes(Tekla.Structures.Model.Component component)",
+      "summary": "Gets the applied attributes of the component.",
+      "params": [
+        {
+          "name": "component",
+          "type": "Tekla.Structures.Model.Component",
+          "doc": "The component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+        "doc": "The Dictionary\u00602 of applied attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions.GetAppliedAttributes%28Tekla.Structures.Model.Component%29"
+    },
+    {
+      "name": "GetAppliedAttributes",
+      "signature": "static System.Collections.Generic.Dictionary\u003Cstring, object\u003E GetAppliedAttributes(Tekla.Structures.Model.CustomPart customPart)",
+      "summary": "Gets the applied attributes of the custom part.",
+      "params": [
+        {
+          "name": "customPart",
+          "type": "Tekla.Structures.Model.CustomPart",
+          "doc": "The custom part.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+        "doc": "The Dictionary\u00602 of applied attributes."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions.GetAppliedAttributes%28Tekla.Structures.Model.CustomPart%29"
+    },
+    {
+      "name": "GetInputPoints",
+      "signature": "static System.Collections.Generic.List\u003CTekla.Structures.Geometry3d.Point\u003E GetInputPoints(Tekla.Structures.Model.Component component)",
+      "summary": "Gets the current input points from the component.",
+      "params": [
+        {
+          "name": "component",
+          "type": "Tekla.Structures.Model.Component",
+          "doc": "The component.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CTekla.Structures.Geometry3d.Point\u003E",
+        "doc": "A List\u00601 that contains the input points as of type Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions.GetInputPoints%28Tekla.Structures.Model.Component%29"
+    },
+    {
+      "name": "GetInputPoints",
+      "signature": "static System.Collections.Generic.List\u003CTekla.Structures.Geometry3d.Point\u003E GetInputPoints(Tekla.Structures.Model.CustomPart component)",
+      "summary": "Gets the current input points from the custom part.",
+      "params": [
+        {
+          "name": "component",
+          "type": "Tekla.Structures.Model.CustomPart",
+          "doc": "The custom part.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.List\u003CTekla.Structures.Geometry3d.Point\u003E",
+        "doc": "A List\u00601 that contains the input points as of type Point."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions.GetInputPoints%28Tekla.Structures.Model.CustomPart%29"
+    },
+    {
+      "name": "SetAppliedAttributes",
+      "signature": "static bool SetAppliedAttributes(Tekla.Structures.Model.Component component, System.Collections.Generic.Dictionary\u003Cstring, object\u003E attributes)",
+      "summary": "Sets the applied attributes of the component.",
+      "params": [
+        {
+          "name": "component",
+          "type": "Tekla.Structures.Model.Component",
+          "doc": "The component.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+          "doc": "The attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "A Boolean to indicate whether the setting succeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions.SetAppliedAttributes%28Tekla.Structures.Model.Component%2CSystem.Collections.Generic.Dictionary%7BSystem.String%2CSystem.Object%7D%29"
+    },
+    {
+      "name": "SetAppliedAttributes",
+      "signature": "static bool SetAppliedAttributes(Tekla.Structures.Model.CustomPart customPart, System.Collections.Generic.Dictionary\u003Cstring, object\u003E attributes)",
+      "summary": "Sets the applied attributes of the custom part.",
+      "params": [
+        {
+          "name": "customPart",
+          "type": "Tekla.Structures.Model.CustomPart",
+          "doc": "The custom part.",
+          "optional": false
+        },
+        {
+          "name": "attributes",
+          "type": "System.Collections.Generic.Dictionary\u003Cstring, object\u003E",
+          "doc": "The attributes.",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": "A Boolean to indicate whether the setting succeded."
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Utilities.ComponentExtensions.SetAppliedAttributes%28Tekla.Structures.Model.CustomPart%2CSystem.Collections.Generic.Dictionary%7BSystem.String%2CSystem.Object%7D%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,39 @@
+{
+  "name": "INear\u00601",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "INear\u00601 interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.INear\u00601",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Near",
+      "signature": "bool Near(T other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of INear\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "T",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.INear%601.Near%28%600%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

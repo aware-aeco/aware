@@ -1,0 +1,55 @@
+{
+  "name": "ConvertDoublesToMin",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertDoublesToMin class in Fusion.UI.",
+  "base": "Fusion.UI.MultiValueConverter\u003Cdouble?, double?\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertDoublesToMin",
+  "constructors": [
+    {
+      "name": "ConvertDoublesToMin()",
+      "signature": "ConvertDoublesToMin()",
+      "summary": "Constructs a new ConvertDoublesToMin.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertDoublesToMin.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "double? Convert(double?[] values, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertDoublesToMin.",
+      "params": [
+        {
+          "name": "values",
+          "type": "double?[]",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertDoublesToMin.Convert%28System.Nullable%7BSystem.Double%7D%5B%5D%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

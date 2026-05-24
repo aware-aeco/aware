@@ -1,0 +1,84 @@
+{
+  "name": "ConvertBooleanToInverseVisibility",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertBooleanToInverseVisibility class in Fusion.UI.",
+  "base": "Fusion.UI.TwoWayValueConverter\u003Cbool?, System.Windows.Visibility\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertBooleanToInverseVisibility",
+  "constructors": [
+    {
+      "name": "ConvertBooleanToInverseVisibility()",
+      "signature": "ConvertBooleanToInverseVisibility()",
+      "summary": "Constructs a new ConvertBooleanToInverseVisibility.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertBooleanToInverseVisibility.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "System.Windows.Visibility Convert(bool? value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertBooleanToInverseVisibility.",
+      "params": [
+        {
+          "name": "value",
+          "type": "bool?",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Visibility",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertBooleanToInverseVisibility.Convert%28System.Nullable%7BSystem.Boolean%7D%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "ConvertBack",
+      "signature": "bool? ConvertBack(System.Windows.Visibility value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "ConvertBack method of ConvertBooleanToInverseVisibility.",
+      "params": [
+        {
+          "name": "value",
+          "type": "System.Windows.Visibility",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertBooleanToInverseVisibility.ConvertBack%28System.Windows.Visibility%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

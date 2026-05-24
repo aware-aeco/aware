@@ -1,0 +1,34 @@
+{
+  "name": "BorderGrip",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "BorderGrip class in Fusion.UI.",
+  "base": "Fusion.UI.Grip",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.BorderGrip",
+  "constructors": [
+    {
+      "name": "BorderGrip()",
+      "signature": "BorderGrip()",
+      "summary": "Constructs a new BorderGrip.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.BorderGrip.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "CornerRadius",
+      "type": "System.Windows.CornerRadius",
+      "getter": true,
+      "setter": true,
+      "summary": "CornerRadius property of BorderGrip.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.BorderGrip.CornerRadius"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

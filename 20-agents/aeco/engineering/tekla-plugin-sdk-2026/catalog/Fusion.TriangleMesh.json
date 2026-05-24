@@ -1,0 +1,121 @@
+{
+  "name": "TriangleMesh",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "TriangleMesh class in Fusion.",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CFusion.Triangle\u003E",
+    "System.Collections.IEnumerable",
+    "System.IEquatable\u003CFusion.TriangleMesh\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.TriangleMesh",
+  "constructors": [
+    {
+      "name": "TriangleMesh(System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E, System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E)",
+      "signature": "TriangleMesh(System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E points, System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E faces)",
+      "summary": "Constructs a new TriangleMesh.",
+      "params": [
+        {
+          "name": "points",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E",
+          "optional": false
+        },
+        {
+          "name": "faces",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.TriangleMesh.%23ctor%28System.Collections.Generic.IReadOnlyList%7BFusion.Float3%7D%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.UShort3%7D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CFusion.Triangle\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of TriangleMesh.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CFusion.Triangle\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.TriangleMesh.GetEnumerator"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.TriangleMesh other)",
+      "summary": "Equals method of TriangleMesh.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.TriangleMesh",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.TriangleMesh.Equals%28Fusion.TriangleMesh%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of TriangleMesh.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.TriangleMesh.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of TriangleMesh.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.TriangleMesh.GetHashCode"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Faces",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.UShort3\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Faces property of TriangleMesh.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.TriangleMesh.Faces"
+    },
+    {
+      "name": "Points",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Float3\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Points property of TriangleMesh.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.TriangleMesh.Points"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,834 @@
+{
+  "name": "Short3",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Short3 struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Short3\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Short3",
+  "constructors": [
+    {
+      "name": "Short3(Fusion.Short2, short)",
+      "signature": "Short3(Fusion.Short2 xy, short z)",
+      "summary": "Constructs a new Short3.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Short2",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.%23ctor%28Fusion.Short2%2CSystem.Int16%29"
+    },
+    {
+      "name": "Short3(short)",
+      "signature": "Short3(short all)",
+      "summary": "Constructs a new Short3.",
+      "params": [
+        {
+          "name": "all",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.%23ctor%28System.Int16%29"
+    },
+    {
+      "name": "Short3(short, Fusion.Short2)",
+      "signature": "Short3(short x, Fusion.Short2 yz)",
+      "summary": "Constructs a new Short3.",
+      "params": [
+        {
+          "name": "x",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "yz",
+          "type": "Fusion.Short2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.%23ctor%28System.Int16%2CFusion.Short2%29"
+    },
+    {
+      "name": "Short3(short, short, short)",
+      "signature": "Short3(short x, short y, short z)",
+      "summary": "Constructs a new Short3.",
+      "params": [
+        {
+          "name": "x",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.%23ctor%28System.Int16%2CSystem.Int16%2CSystem.Int16%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Short3 other)",
+      "summary": "Equals method of Short3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.Equals%28Fusion.Short3%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Short3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Short3.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.GetHashCode"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int3 Sign(Fusion.Short3 value)",
+      "summary": "Sign method of Short3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.Sign%28Fusion.Short3%29"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Short3 Abs(Fusion.Short3 value)",
+      "summary": "Abs method of Short3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.Abs%28Fusion.Short3%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Short3 Max(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "Max method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.Max%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Short3 Min(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "Min method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.Min%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Short3 op_Addition(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Addition method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Addition%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Short3 op_Addition(Fusion.Short3 a, short b)",
+      "summary": "op_Addition method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Addition%28Fusion.Short3%2CSystem.Int16%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Short3 op_Addition(short a, Fusion.Short3 b)",
+      "summary": "op_Addition method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Addition%28System.Int16%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Short3 op_Division(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Division method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Division%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Short3 op_Division(Fusion.Short3 a, short b)",
+      "summary": "op_Division method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Division%28Fusion.Short3%2CSystem.Int16%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Short3 op_Division(short a, Fusion.Short3 b)",
+      "summary": "op_Division method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Division%28System.Int16%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Short3 op_Explicit(Fusion.Double3 v)",
+      "summary": "op_Explicit method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Explicit%28Fusion.Double3%29~Fusion.Short3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Short3 op_Explicit(Fusion.Float3 v)",
+      "summary": "op_Explicit method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Explicit%28Fusion.Float3%29~Fusion.Short3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Short3 op_Explicit(Fusion.Half3 v)",
+      "summary": "op_Explicit method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Explicit%28Fusion.Half3%29~Fusion.Short3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Short3 op_Explicit(Fusion.Int3 v)",
+      "summary": "op_Explicit method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Explicit%28Fusion.Int3%29~Fusion.Short3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Short3 op_Explicit(Fusion.UShort3 v)",
+      "summary": "op_Explicit method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Explicit%28Fusion.UShort3%29~Fusion.Short3"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Short3 op_Modulus(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Modulus method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Modulus%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Short3 op_Modulus(Fusion.Short3 a, short b)",
+      "summary": "op_Modulus method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Modulus%28Fusion.Short3%2CSystem.Int16%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Short3 op_Modulus(short a, Fusion.Short3 b)",
+      "summary": "op_Modulus method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Modulus%28System.Int16%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Short3 op_Multiply(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Multiply method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Multiply%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Short3 op_Multiply(Fusion.Short3 a, short b)",
+      "summary": "op_Multiply method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Multiply%28Fusion.Short3%2CSystem.Int16%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Short3 op_Multiply(short a, Fusion.Short3 b)",
+      "summary": "op_Multiply method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Multiply%28System.Int16%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Short3 op_Subtraction(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Subtraction method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Subtraction%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Short3 op_Subtraction(Fusion.Short3 a, short b)",
+      "summary": "op_Subtraction method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "short",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Subtraction%28Fusion.Short3%2CSystem.Int16%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Short3 op_Subtraction(short a, Fusion.Short3 b)",
+      "summary": "op_Subtraction method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "short",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Subtraction%28System.Int16%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Short3 op_UnaryNegation(Fusion.Short3 v)",
+      "summary": "op_UnaryNegation method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_UnaryNegation%28Fusion.Short3%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Short3 op_UnaryPlus(Fusion.Short3 v)",
+      "summary": "op_UnaryPlus method of Short3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_UnaryPlus%28Fusion.Short3%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Equality method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Equality%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Short3 a, Fusion.Short3 b)",
+      "summary": "op_Inequality method of Short3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Short3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.op_Inequality%28Fusion.Short3%2CFusion.Short3%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Short3.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Short3.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Short3.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "short",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Short3.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Short3.Item%28System.Int32%29"
+    },
+    {
+      "name": "XY",
+      "type": "Fusion.Short2",
+      "getter": true,
+      "setter": false,
+      "summary": "XY property of Short3.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Short3.XY"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

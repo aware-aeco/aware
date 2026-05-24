@@ -1,0 +1,57 @@
+{
+  "name": "IFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "interface",
+  "summary": "IFormatter interface in Fusion.Formatting.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.IFormatter",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, out object value)",
+      "summary": "TryParse method of IFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.IFormatter.TryParse%28System.String%2CSystem.Object%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(object value)",
+      "summary": "ToString method of IFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.IFormatter.ToString%28System.Object%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

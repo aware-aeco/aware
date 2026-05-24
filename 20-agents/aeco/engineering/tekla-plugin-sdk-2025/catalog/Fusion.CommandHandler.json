@@ -1,0 +1,99 @@
+{
+  "name": "CommandHandler",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "CommandHandler class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.CommandHandler",
+  "constructors": [
+    {
+      "name": "CommandHandler(Fusion.ViewModel)",
+      "signature": "CommandHandler(Fusion.ViewModel target)",
+      "summary": "Constructs a new CommandHandler.",
+      "params": [
+        {
+          "name": "target",
+          "type": "Fusion.ViewModel",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.CommandHandler.%23ctor%28Fusion.ViewModel%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetCommand",
+      "signature": "System.Windows.Input.ICommand GetCommand(string commandName)",
+      "summary": "GetCommand method of CommandHandler.",
+      "params": [
+        {
+          "name": "commandName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.ICommand",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.CommandHandler.GetCommand%28System.String%29"
+    },
+    {
+      "name": "GetCommandHandler",
+      "signature": "static Fusion.CommandHandler GetCommandHandler(System.Windows.DependencyObject element)",
+      "summary": "GetCommandHandler method of CommandHandler.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.CommandHandler",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.CommandHandler.GetCommandHandler%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "SetCommandHandler",
+      "signature": "static void SetCommandHandler(System.Windows.DependencyObject element, Fusion.CommandHandler commandHandler)",
+      "summary": "SetCommandHandler method of CommandHandler.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "commandHandler",
+          "type": "Fusion.CommandHandler",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.CommandHandler.SetCommandHandler%28System.Windows.DependencyObject%2CFusion.CommandHandler%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Target",
+      "type": "Fusion.ViewModel",
+      "getter": true,
+      "setter": false,
+      "summary": "Target property of CommandHandler.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.CommandHandler.Target"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

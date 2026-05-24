@@ -1,0 +1,55 @@
+{
+  "name": "ConvertObjectNotEqualsToBoolean",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertObjectNotEqualsToBoolean class in Fusion.UI.",
+  "base": "Fusion.UI.ValueConverter\u003Cobject, bool\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertObjectNotEqualsToBoolean",
+  "constructors": [
+    {
+      "name": "ConvertObjectNotEqualsToBoolean()",
+      "signature": "ConvertObjectNotEqualsToBoolean()",
+      "summary": "Constructs a new ConvertObjectNotEqualsToBoolean.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertObjectNotEqualsToBoolean.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "bool Convert(object value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertObjectNotEqualsToBoolean.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertObjectNotEqualsToBoolean.Convert%28System.Object%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,25 @@
+{
+  "name": "LengthTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "LengthTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CFusion.Length, Fusion.Formatting.LengthFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.LengthTextBox",
+  "constructors": [
+    {
+      "name": "LengthTextBox()",
+      "signature": "LengthTextBox()",
+      "summary": "Constructs a new LengthTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.LengthTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

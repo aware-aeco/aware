@@ -1,0 +1,22 @@
+{
+  "name": "VelocityUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "VelocityUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.VelocityUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "MetersPerSecond",
+      "value": 0
+    },
+    {
+      "name": "FeetPerSecond",
+      "value": 1
+    }
+  ]
+}

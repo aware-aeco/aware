@@ -1,0 +1,31 @@
+{
+  "name": "SelectionEventArgs",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles",
+  "kind": "class",
+  "summary": "Contains the event arguments for a drag event on a handle.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Handles.SelectionEventArgs",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "HitPosition",
+      "type": "Tekla.Structures.Geometry3d.Vector",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a point indicating the position of the handle.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.SelectionEventArgs.HitPosition"
+    },
+    {
+      "name": "State",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets a value of the selection state.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Handles.SelectionEventArgs.State"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

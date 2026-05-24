@@ -1,0 +1,1311 @@
+{
+  "name": "Double4",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Double4 struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Double4\u003E",
+    "System.IEquatable\u003CFusion.Double4\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Double4",
+  "constructors": [
+    {
+      "name": "Double4(Fusion.Double2, Fusion.Double2)",
+      "signature": "Double4(Fusion.Double2 xy, Fusion.Double2 zw)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Double2",
+          "optional": false
+        },
+        {
+          "name": "zw",
+          "type": "Fusion.Double2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28Fusion.Double2%2CFusion.Double2%29"
+    },
+    {
+      "name": "Double4(Fusion.Double2, double, double)",
+      "signature": "Double4(Fusion.Double2 xy, double z, double w)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Double2",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28Fusion.Double2%2CSystem.Double%2CSystem.Double%29"
+    },
+    {
+      "name": "Double4(Fusion.Double3, double)",
+      "signature": "Double4(Fusion.Double3 xyz, double w)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "xyz",
+          "type": "Fusion.Double3",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28Fusion.Double3%2CSystem.Double%29"
+    },
+    {
+      "name": "Double4(double)",
+      "signature": "Double4(double all)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "all",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28System.Double%29"
+    },
+    {
+      "name": "Double4(double, Fusion.Double2, double)",
+      "signature": "Double4(double x, Fusion.Double2 yz, double w)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "yz",
+          "type": "Fusion.Double2",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28System.Double%2CFusion.Double2%2CSystem.Double%29"
+    },
+    {
+      "name": "Double4(double, Fusion.Double3)",
+      "signature": "Double4(double x, Fusion.Double3 yzw)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "yzw",
+          "type": "Fusion.Double3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28System.Double%2CFusion.Double3%29"
+    },
+    {
+      "name": "Double4(double, double, Fusion.Double2)",
+      "signature": "Double4(double x, double y, Fusion.Double2 zw)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "zw",
+          "type": "Fusion.Double2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28System.Double%2CSystem.Double%2CFusion.Double2%29"
+    },
+    {
+      "name": "Double4(double, double, double, double)",
+      "signature": "Double4(double x, double y, double z, double w)",
+      "summary": "Constructs a new Double4.",
+      "params": [
+        {
+          "name": "x",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "w",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.%23ctor%28System.Double%2CSystem.Double%2CSystem.Double%2CSystem.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Double4 other)",
+      "summary": "Equals method of Double4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Equals%28Fusion.Double4%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Double4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Double4 other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Double4.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Near%28Fusion.Double4%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Double4.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Double4 Abs(Fusion.Double4 value)",
+      "summary": "Abs method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Abs%28Fusion.Double4%29"
+    },
+    {
+      "name": "Ceiling",
+      "signature": "static Fusion.Double4 Ceiling(Fusion.Double4 value)",
+      "summary": "Ceiling method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Ceiling%28Fusion.Double4%29"
+    },
+    {
+      "name": "Floor",
+      "signature": "static Fusion.Double4 Floor(Fusion.Double4 value)",
+      "summary": "Floor method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Floor%28Fusion.Double4%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Double4 Max(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "Max method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Max%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Double4 Min(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "Min method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Min%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Double4 Pow(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "Pow method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Pow%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Double4 Pow(Fusion.Double4 a, double b)",
+      "summary": "Pow method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Pow%28Fusion.Double4%2CSystem.Double%29"
+    },
+    {
+      "name": "Pow",
+      "signature": "static Fusion.Double4 Pow(double a, Fusion.Double4 b)",
+      "summary": "Pow method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Pow%28System.Double%2CFusion.Double4%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Double4 Round(Fusion.Double4 value)",
+      "summary": "Round method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Round%28Fusion.Double4%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Double4 Round(Fusion.Double4 value, System.MidpointRounding midpointRounding)",
+      "summary": "Round method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "midpointRounding",
+          "type": "System.MidpointRounding",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Round%28Fusion.Double4%2CSystem.MidpointRounding%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Double4 Round(Fusion.Double4 value, int digits)",
+      "summary": "Round method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Round%28Fusion.Double4%2CSystem.Int32%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Double4 Round(Fusion.Double4 value, int digits, System.MidpointRounding midpointRounding)",
+      "summary": "Round method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "digits",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "midpointRounding",
+          "type": "System.MidpointRounding",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Round%28Fusion.Double4%2CSystem.Int32%2CSystem.MidpointRounding%29"
+    },
+    {
+      "name": "Sqrt",
+      "signature": "static Fusion.Double4 Sqrt(Fusion.Double4 value)",
+      "summary": "Sqrt method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Sqrt%28Fusion.Double4%29"
+    },
+    {
+      "name": "Truncate",
+      "signature": "static Fusion.Double4 Truncate(Fusion.Double4 value)",
+      "summary": "Truncate method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Truncate%28Fusion.Double4%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Double4 op_Addition(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Addition method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Addition%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Double4 op_Addition(Fusion.Double4 a, double b)",
+      "summary": "op_Addition method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Addition%28Fusion.Double4%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Double4 op_Addition(double a, Fusion.Double4 b)",
+      "summary": "op_Addition method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Addition%28System.Double%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Double4 op_Division(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Division method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Division%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Double4 op_Division(Fusion.Double4 a, double b)",
+      "summary": "op_Division method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Division%28Fusion.Double4%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Double4 op_Division(double a, Fusion.Double4 b)",
+      "summary": "op_Division method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Division%28System.Double%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Double4 op_Implicit(Fusion.Float4 v)",
+      "summary": "op_Implicit method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Implicit%28Fusion.Float4%29~Fusion.Double4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Double4 op_Implicit(Fusion.Half4 v)",
+      "summary": "op_Implicit method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Implicit%28Fusion.Half4%29~Fusion.Double4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Double4 op_Implicit(Fusion.Int4 v)",
+      "summary": "op_Implicit method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Implicit%28Fusion.Int4%29~Fusion.Double4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Double4 op_Implicit(Fusion.RGBA v)",
+      "summary": "op_Implicit method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Implicit%28Fusion.RGBA%29~Fusion.Double4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Double4 op_Implicit(Fusion.Short4 v)",
+      "summary": "op_Implicit method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Implicit%28Fusion.Short4%29~Fusion.Double4"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Double4 op_Implicit(Fusion.UShort4 v)",
+      "summary": "op_Implicit method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Implicit%28Fusion.UShort4%29~Fusion.Double4"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Double4 op_Modulus(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Modulus method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Modulus%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Double4 op_Modulus(Fusion.Double4 a, double b)",
+      "summary": "op_Modulus method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Modulus%28Fusion.Double4%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Double4 op_Modulus(double a, Fusion.Double4 b)",
+      "summary": "op_Modulus method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Modulus%28System.Double%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Double4 op_Multiply(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Multiply method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Multiply%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Double4 op_Multiply(Fusion.Double4 a, double b)",
+      "summary": "op_Multiply method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Multiply%28Fusion.Double4%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Double4 op_Multiply(double a, Fusion.Double4 b)",
+      "summary": "op_Multiply method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Multiply%28System.Double%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Double4 op_Subtraction(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Subtraction method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Subtraction%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Double4 op_Subtraction(Fusion.Double4 a, double b)",
+      "summary": "op_Subtraction method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Subtraction%28Fusion.Double4%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Double4 op_Subtraction(double a, Fusion.Double4 b)",
+      "summary": "op_Subtraction method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Subtraction%28System.Double%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Double4 op_UnaryNegation(Fusion.Double4 v)",
+      "summary": "op_UnaryNegation method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_UnaryNegation%28Fusion.Double4%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Double4 op_UnaryPlus(Fusion.Double4 v)",
+      "summary": "op_UnaryPlus method of Double4.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_UnaryPlus%28Fusion.Double4%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int4 Sign(Fusion.Double4 value)",
+      "summary": "Sign method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.Sign%28Fusion.Double4%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Double4 value)",
+      "summary": "IsInfinity method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.IsInfinity%28Fusion.Double4%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Double4 value)",
+      "summary": "IsNaN method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.IsNaN%28Fusion.Double4%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Double4 value)",
+      "summary": "IsNegativeInfinity method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.IsNegativeInfinity%28Fusion.Double4%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Double4 value)",
+      "summary": "IsPositiveInfinity method of Double4.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.IsPositiveInfinity%28Fusion.Double4%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Equality method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Equality%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Double4 a, Fusion.Double4 b)",
+      "summary": "op_Inequality method of Double4.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Double4",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.op_Inequality%28Fusion.Double4%2CFusion.Double4%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Double4.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Double4.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Double4.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "double",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Double4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Double4.Item%28System.Int32%29"
+    },
+    {
+      "name": "XY",
+      "type": "Fusion.Double2",
+      "getter": true,
+      "setter": false,
+      "summary": "XY property of Double4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Double4.XY"
+    },
+    {
+      "name": "XYZ",
+      "type": "Fusion.Double3",
+      "getter": true,
+      "setter": false,
+      "summary": "XYZ property of Double4.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Double4.XYZ"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

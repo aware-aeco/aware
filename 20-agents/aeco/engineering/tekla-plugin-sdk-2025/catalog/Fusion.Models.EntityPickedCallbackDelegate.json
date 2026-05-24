@@ -1,0 +1,36 @@
+{
+  "name": "EntityPickedCallbackDelegate",
+  "namespace": "Fusion.Models",
+  "kind": "delegate",
+  "summary": "EntityPickedCallbackDelegate delegate in Fusion.Models.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.EntityPickedCallbackDelegate",
+  "constructors": [
+    {
+      "name": "EntityPickedCallbackDelegate(object, nint)",
+      "signature": "EntityPickedCallbackDelegate(object object, nint method)",
+      "summary": "Constructs a new EntityPickedCallbackDelegate.",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.EntityPickedCallbackDelegate.%23ctor%28System.Object%2CSystem.IntPtr%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "void Invoke(Fusion.Models.IModelView modelView, Fusion.Models.Entity entity)"
+}

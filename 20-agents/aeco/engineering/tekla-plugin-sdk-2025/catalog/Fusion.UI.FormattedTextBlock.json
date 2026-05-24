@@ -1,0 +1,188 @@
+{
+  "name": "FormattedTextBlock",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "FormattedTextBlock class in Fusion.UI.",
+  "base": "System.Windows.Controls.TextBlock",
+  "interfaces": [
+    "System.Windows.Data.IValueConverter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.FormattedTextBlock",
+  "constructors": [
+    {
+      "name": "FormattedTextBlock()",
+      "signature": "FormattedTextBlock()",
+      "summary": "Constructs a new FormattedTextBlock.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.FormattedTextBlock.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "AngleFormatter",
+      "type": "Fusion.Formatting.AngleFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "AngleFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.AngleFormatter"
+    },
+    {
+      "name": "AreaFormatter",
+      "type": "Fusion.Formatting.AreaFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "AreaFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.AreaFormatter"
+    },
+    {
+      "name": "DateTimeFormatter",
+      "type": "Fusion.Formatting.DateTimeFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "DateTimeFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.DateTimeFormatter"
+    },
+    {
+      "name": "DoubleFormatter",
+      "type": "Fusion.Formatting.DoubleFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "DoubleFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.DoubleFormatter"
+    },
+    {
+      "name": "Format",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Format property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Format"
+    },
+    {
+      "name": "Int32Formatter",
+      "type": "Fusion.Formatting.Int32Formatter",
+      "getter": true,
+      "setter": true,
+      "summary": "Int32Formatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Int32Formatter"
+    },
+    {
+      "name": "LengthFormatter",
+      "type": "Fusion.Formatting.LengthFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "LengthFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.LengthFormatter"
+    },
+    {
+      "name": "MassFormatter",
+      "type": "Fusion.Formatting.MassFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "MassFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.MassFormatter"
+    },
+    {
+      "name": "Symbols",
+      "type": "Fusion.Formatting.UnitSymbols",
+      "getter": true,
+      "setter": true,
+      "summary": "Symbols property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Symbols"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Text property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Text"
+    },
+    {
+      "name": "TimeSpanFormatter",
+      "type": "Fusion.Formatting.TimeSpanFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "TimeSpanFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.TimeSpanFormatter"
+    },
+    {
+      "name": "Value0",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value0 property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value0"
+    },
+    {
+      "name": "Value0Formatter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value0Formatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value0Formatter"
+    },
+    {
+      "name": "Value1",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value1 property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value1"
+    },
+    {
+      "name": "Value1Formatter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value1Formatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value1Formatter"
+    },
+    {
+      "name": "Value2",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value2 property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value2"
+    },
+    {
+      "name": "Value2Formatter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value2Formatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value2Formatter"
+    },
+    {
+      "name": "Value3",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value3 property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value3"
+    },
+    {
+      "name": "Value3Formatter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Value3Formatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.Value3Formatter"
+    },
+    {
+      "name": "VolumeFormatter",
+      "type": "Fusion.Formatting.VolumeFormatter",
+      "getter": true,
+      "setter": true,
+      "summary": "VolumeFormatter property of FormattedTextBlock.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.FormattedTextBlock.VolumeFormatter"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

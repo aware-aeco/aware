@@ -1,0 +1,762 @@
+{
+  "name": "Temperature",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Temperature struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Temperature\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.Temperature\u003E",
+    "System.IEquatable\u003CFusion.Temperature\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Temperature",
+  "constructors": [
+    {
+      "name": "Temperature(double)",
+      "signature": "Temperature(double kelvin)",
+      "summary": "Constructs a new Temperature.",
+      "params": [
+        {
+          "name": "kelvin",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Temperature other)",
+      "summary": "Equals method of Temperature.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Equals%28Fusion.Temperature%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Temperature.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Temperature other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Temperature.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Near%28Fusion.Temperature%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.TemperatureUnit temperatureUnit)",
+      "summary": "To method of Temperature.",
+      "params": [
+        {
+          "name": "temperatureUnit",
+          "type": "Fusion.TemperatureUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.To%28Fusion.TemperatureUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.Temperature other)",
+      "summary": "CompareTo method of Temperature.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.CompareTo%28Fusion.Temperature%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of Temperature.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Temperature.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Temperature Abs(Fusion.Temperature temperature)",
+      "summary": "Abs method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Abs%28Fusion.Temperature%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.Temperature From(double temperature, Fusion.TemperatureUnit temperatureUnit)",
+      "summary": "From method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "temperatureUnit",
+          "type": "Fusion.TemperatureUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.From%28System.Double%2CFusion.TemperatureUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Temperature Max(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "Max method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Max%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Temperature Min(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "Min method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Min%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.Temperature Round(Fusion.Temperature temperature, Fusion.Temperature precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Round%28Fusion.Temperature%2CFusion.Temperature%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Temperature op_Addition(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_Addition method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Addition%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Temperature op_Division(Fusion.Temperature a, double b)",
+      "summary": "op_Division method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Division%28Fusion.Temperature%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Temperature op_Modulus(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_Modulus method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Modulus%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Temperature op_Multiply(Fusion.Temperature a, double b)",
+      "summary": "op_Multiply method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Multiply%28Fusion.Temperature%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Temperature op_Multiply(double a, Fusion.Temperature b)",
+      "summary": "op_Multiply method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Multiply%28System.Double%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Temperature op_Subtraction(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_Subtraction method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Subtraction%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Temperature op_UnaryNegation(Fusion.Temperature a)",
+      "summary": "op_UnaryNegation method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Temperature",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_UnaryNegation%28Fusion.Temperature%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.Temperature temperature)",
+      "summary": "IsInfinity method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.IsInfinity%28Fusion.Temperature%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.Temperature temperature)",
+      "summary": "IsNaN method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.IsNaN%28Fusion.Temperature%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.Temperature temperature)",
+      "summary": "IsNegativeInfinity method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.IsNegativeInfinity%28Fusion.Temperature%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.Temperature temperature)",
+      "summary": "IsPositiveInfinity method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.IsPositiveInfinity%28Fusion.Temperature%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_Equality method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Equality%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_GreaterThan method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_GreaterThan%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_GreaterThanOrEqual method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_GreaterThanOrEqual%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_Inequality method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Inequality%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_LessThan method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_LessThan%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_LessThanOrEqual method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_LessThanOrEqual%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.Temperature a, Fusion.Temperature b)",
+      "summary": "op_Division method of Temperature.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Temperature",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.op_Division%28Fusion.Temperature%2CFusion.Temperature%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.Temperature temperature)",
+      "summary": "Sign method of Temperature.",
+      "params": [
+        {
+          "name": "temperature",
+          "type": "Fusion.Temperature",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.Sign%28Fusion.Temperature%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Temperature.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Temperature.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Temperature.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Kelvin",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Kelvin property of Temperature.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Temperature.Kelvin"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,213 @@
+{
+  "name": "Plane",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Plane struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.Plane\u003E",
+    "System.IEquatable\u003CFusion.Plane\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Plane",
+  "constructors": [
+    {
+      "name": "Plane(Fusion.Float3, float)",
+      "signature": "Plane(Fusion.Float3 normal, float distance)",
+      "summary": "Constructs a new Plane.",
+      "params": [
+        {
+          "name": "normal",
+          "type": "Fusion.Float3",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.%23ctor%28Fusion.Float3%2CSystem.Single%29"
+    },
+    {
+      "name": "Plane(float, float, float, float)",
+      "signature": "Plane(float x, float y, float z, float distance)",
+      "summary": "Constructs a new Plane.",
+      "params": [
+        {
+          "name": "x",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "distance",
+          "type": "float",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.%23ctor%28System.Single%2CSystem.Single%2CSystem.Single%2CSystem.Single%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Plane other)",
+      "summary": "Equals method of Plane.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.Equals%28Fusion.Plane%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Plane.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.Plane other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Plane.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Plane",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.Near%28Fusion.Plane%2CSystem.Int32%29"
+    },
+    {
+      "name": "DistanceTo",
+      "signature": "float DistanceTo(Fusion.Float3 point)",
+      "summary": "DistanceTo method of Plane.",
+      "params": [
+        {
+          "name": "point",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "float",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.DistanceTo%28Fusion.Float3%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Plane.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.GetHashCode"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Plane a, Fusion.Plane b)",
+      "summary": "op_Equality method of Plane.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Plane",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.op_Equality%28Fusion.Plane%2CFusion.Plane%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Plane a, Fusion.Plane b)",
+      "summary": "op_Inequality method of Plane.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Plane",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Plane",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Plane.op_Inequality%28Fusion.Plane%2CFusion.Plane%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,762 @@
+{
+  "name": "ThermalExpansionCoefficient",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "ThermalExpansionCoefficient struct in Fusion.",
+  "interfaces": [
+    "Fusion.INear\u003CFusion.ThermalExpansionCoefficient\u003E",
+    "System.IComparable",
+    "System.IComparable\u003CFusion.ThermalExpansionCoefficient\u003E",
+    "System.IEquatable\u003CFusion.ThermalExpansionCoefficient\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ThermalExpansionCoefficient",
+  "constructors": [
+    {
+      "name": "ThermalExpansionCoefficient(double)",
+      "signature": "ThermalExpansionCoefficient(double perKelvin)",
+      "summary": "Constructs a new ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "perKelvin",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.%23ctor%28System.Double%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.ThermalExpansionCoefficient other)",
+      "summary": "Equals method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Equals%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Equals%28System.Object%29"
+    },
+    {
+      "name": "Near",
+      "signature": "bool Near(Fusion.ThermalExpansionCoefficient other, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Near%28Fusion.ThermalExpansionCoefficient%2CSystem.Int32%29"
+    },
+    {
+      "name": "To",
+      "signature": "double To(Fusion.ThermalExpansionCoefficientUnit temperatureUnit)",
+      "summary": "To method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "temperatureUnit",
+          "type": "Fusion.ThermalExpansionCoefficientUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.To%28Fusion.ThermalExpansionCoefficientUnit%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(Fusion.ThermalExpansionCoefficient other)",
+      "summary": "CompareTo method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.CompareTo%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "CompareTo",
+      "signature": "int CompareTo(object other)",
+      "summary": "CompareTo method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.CompareTo%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of ThermalExpansionCoefficient.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.ThermalExpansionCoefficient Abs(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient)",
+      "summary": "Abs method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Abs%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "From",
+      "signature": "static Fusion.ThermalExpansionCoefficient From(double thermalExpansionCoefficient, Fusion.ThermalExpansionCoefficientUnit temperatureUnit)",
+      "summary": "From method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "temperatureUnit",
+          "type": "Fusion.ThermalExpansionCoefficientUnit",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.From%28System.Double%2CFusion.ThermalExpansionCoefficientUnit%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.ThermalExpansionCoefficient Max(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "Max method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Max%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.ThermalExpansionCoefficient Min(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "Min method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Min%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "Round",
+      "signature": "static Fusion.ThermalExpansionCoefficient Round(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient, Fusion.ThermalExpansionCoefficient precision, Fusion.RoundingMode roundingMode)",
+      "summary": "Round method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "precision",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "roundingMode",
+          "type": "Fusion.RoundingMode",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Round%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%2CFusion.RoundingMode%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_Addition(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Addition method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Addition%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_Division(Fusion.ThermalExpansionCoefficient a, double b)",
+      "summary": "op_Division method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Division%28Fusion.ThermalExpansionCoefficient%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_Modulus(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Modulus method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Modulus%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_Multiply(Fusion.ThermalExpansionCoefficient a, double b)",
+      "summary": "op_Multiply method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Multiply%28Fusion.ThermalExpansionCoefficient%2CSystem.Double%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_Multiply(double a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Multiply method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Multiply%28System.Double%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_Subtraction(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Subtraction method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Subtraction%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.ThermalExpansionCoefficient op_UnaryNegation(Fusion.ThermalExpansionCoefficient a)",
+      "summary": "op_UnaryNegation method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ThermalExpansionCoefficient",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_UnaryNegation%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "IsInfinity",
+      "signature": "static bool IsInfinity(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient)",
+      "summary": "IsInfinity method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.IsInfinity%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "IsNaN",
+      "signature": "static bool IsNaN(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient)",
+      "summary": "IsNaN method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.IsNaN%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "IsNegativeInfinity",
+      "signature": "static bool IsNegativeInfinity(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient)",
+      "summary": "IsNegativeInfinity method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.IsNegativeInfinity%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "IsPositiveInfinity",
+      "signature": "static bool IsPositiveInfinity(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient)",
+      "summary": "IsPositiveInfinity method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.IsPositiveInfinity%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Equality method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Equality%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_GreaterThan",
+      "signature": "static bool op_GreaterThan(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_GreaterThan method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_GreaterThan%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_GreaterThanOrEqual",
+      "signature": "static bool op_GreaterThanOrEqual(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_GreaterThanOrEqual method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_GreaterThanOrEqual%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Inequality method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Inequality%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_LessThan",
+      "signature": "static bool op_LessThan(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_LessThan method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_LessThan%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_LessThanOrEqual",
+      "signature": "static bool op_LessThanOrEqual(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_LessThanOrEqual method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_LessThanOrEqual%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static double op_Division(Fusion.ThermalExpansionCoefficient a, Fusion.ThermalExpansionCoefficient b)",
+      "summary": "op_Division method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.op_Division%28Fusion.ThermalExpansionCoefficient%2CFusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static int Sign(Fusion.ThermalExpansionCoefficient thermalExpansionCoefficient)",
+      "summary": "Sign method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "thermalExpansionCoefficient",
+          "type": "Fusion.ThermalExpansionCoefficient",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.Sign%28Fusion.ThermalExpansionCoefficient%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of ThermalExpansionCoefficient.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of ThermalExpansionCoefficient.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThermalExpansionCoefficient.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "PerKelvin",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "PerKelvin property of ThermalExpansionCoefficient.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ThermalExpansionCoefficient.PerKelvin"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

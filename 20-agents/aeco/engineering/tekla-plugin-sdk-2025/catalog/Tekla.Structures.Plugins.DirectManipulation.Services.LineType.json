@@ -1,0 +1,29 @@
+{
+  "name": "LineType",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services",
+  "kind": "enum",
+  "summary": "The LineType enum defines what a line or curve represents. This will affect the line color and width.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.LineType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "GeometryPreview",
+      "value": 0,
+      "summary": "The line is a representation of the final result after the modification. This could be for example an edge or a mid-line of a solid resulting from the modification."
+    },
+    {
+      "name": "Error",
+      "value": 1,
+      "summary": "The line represents an error."
+    },
+    {
+      "name": "Highlight",
+      "value": 2,
+      "summary": "The line is highlighted in the model."
+    }
+  ]
+}

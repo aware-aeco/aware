@@ -1,0 +1,3412 @@
+{
+  "name": "Extensions",
+  "namespace": "Fusion",
+  "kind": "static-class",
+  "summary": "Extensions static class in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Extensions",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ReadAngle",
+      "signature": "static Fusion.Angle ReadAngle(System.IO.BinaryReader reader)",
+      "summary": "ReadAngle method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Angle",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadAngle%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadArea",
+      "signature": "static Fusion.Area ReadArea(System.IO.BinaryReader reader)",
+      "summary": "ReadArea method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Area",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadArea%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadDouble2",
+      "signature": "static Fusion.Double2 ReadDouble2(System.IO.BinaryReader reader)",
+      "summary": "ReadDouble2 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadDouble2%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadDouble3",
+      "signature": "static Fusion.Double3 ReadDouble3(System.IO.BinaryReader reader)",
+      "summary": "ReadDouble3 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadDouble3%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadDouble4",
+      "signature": "static Fusion.Double4 ReadDouble4(System.IO.BinaryReader reader)",
+      "summary": "ReadDouble4 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Double4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadDouble4%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadFloat2",
+      "signature": "static Fusion.Float2 ReadFloat2(System.IO.BinaryReader reader)",
+      "summary": "ReadFloat2 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadFloat2%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadFloat3",
+      "signature": "static Fusion.Float3 ReadFloat3(System.IO.BinaryReader reader)",
+      "summary": "ReadFloat3 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadFloat3%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadFloat4",
+      "signature": "static Fusion.Float4 ReadFloat4(System.IO.BinaryReader reader)",
+      "summary": "ReadFloat4 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadFloat4%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadFloat4x4",
+      "signature": "static Fusion.Float4x4 ReadFloat4x4(System.IO.BinaryReader reader)",
+      "summary": "ReadFloat4x4 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Float4x4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadFloat4x4%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadFourCC",
+      "signature": "static Fusion.FourCC ReadFourCC(System.IO.BinaryReader reader)",
+      "summary": "ReadFourCC method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.FourCC",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadFourCC%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadInt2",
+      "signature": "static Fusion.Int2 ReadInt2(System.IO.BinaryReader reader)",
+      "summary": "ReadInt2 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadInt2%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadInt3",
+      "signature": "static Fusion.Int3 ReadInt3(System.IO.BinaryReader reader)",
+      "summary": "ReadInt3 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadInt3%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadInt4",
+      "signature": "static Fusion.Int4 ReadInt4(System.IO.BinaryReader reader)",
+      "summary": "ReadInt4 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadInt4%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadLength",
+      "signature": "static Fusion.Length ReadLength(System.IO.BinaryReader reader)",
+      "summary": "ReadLength method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Length",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadLength%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadMass",
+      "signature": "static Fusion.Mass ReadMass(System.IO.BinaryReader reader)",
+      "summary": "ReadMass method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Mass",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadMass%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadRGBA",
+      "signature": "static Fusion.RGBA ReadRGBA(System.IO.BinaryReader reader)",
+      "summary": "ReadRGBA method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.RGBA",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadRGBA%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "AsReadOnly",
+      "signature": "static Fusion.ReadOnlySet\u003CT\u003E AsReadOnly\u003CT\u003E(System.Collections.Generic.ISet\u003CT\u003E instance)",
+      "summary": "AsReadOnly method of Extensions.",
+      "params": [
+        {
+          "name": "instance",
+          "type": "System.Collections.Generic.ISet\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.ReadOnlySet\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.AsReadOnly%60%601%28System.Collections.Generic.ISet%7B%60%600%7D%29"
+    },
+    {
+      "name": "ReadShort2",
+      "signature": "static Fusion.Short2 ReadShort2(System.IO.BinaryReader reader)",
+      "summary": "ReadShort2 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadShort2%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadShort3",
+      "signature": "static Fusion.Short3 ReadShort3(System.IO.BinaryReader reader)",
+      "summary": "ReadShort3 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadShort3%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadShort4",
+      "signature": "static Fusion.Short4 ReadShort4(System.IO.BinaryReader reader)",
+      "summary": "ReadShort4 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Short4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadShort4%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadUShort2",
+      "signature": "static Fusion.UShort2 ReadUShort2(System.IO.BinaryReader reader)",
+      "summary": "ReadUShort2 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UShort2",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadUShort2%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadUShort3",
+      "signature": "static Fusion.UShort3 ReadUShort3(System.IO.BinaryReader reader)",
+      "summary": "ReadUShort3 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UShort3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadUShort3%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadUShort4",
+      "signature": "static Fusion.UShort4 ReadUShort4(System.IO.BinaryReader reader)",
+      "summary": "ReadUShort4 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.UShort4",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadUShort4%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ReadVolume",
+      "signature": "static Fusion.Volume ReadVolume(System.IO.BinaryReader reader)",
+      "summary": "ReadVolume method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Volume",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadVolume%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ToBitArray",
+      "signature": "static System.Collections.BitArray ToBitArray(byte[] array)",
+      "summary": "ToBitArray method of Extensions.",
+      "params": [
+        {
+          "name": "array",
+          "type": "byte[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.BitArray",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ToBitArray%28System.Byte%5B%5D%29"
+    },
+    {
+      "name": "ToHashSet",
+      "signature": "static System.Collections.Generic.HashSet\u003CT\u003E ToHashSet\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E source)",
+      "summary": "ToHashSet method of Extensions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.HashSet\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ToHashSet%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%29"
+    },
+    {
+      "name": "ToHashSet",
+      "signature": "static System.Collections.Generic.HashSet\u003CT\u003E ToHashSet\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E source, System.Collections.Generic.IEqualityComparer\u003CT\u003E comparer)",
+      "summary": "ToHashSet method of Extensions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IEqualityComparer\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.HashSet\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ToHashSet%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%2CSystem.Collections.Generic.IEqualityComparer%7B%60%600%7D%29"
+    },
+    {
+      "name": "WithValue",
+      "signature": "static System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E WithValue\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, System.Action\u003CTValue\u003E withValue)",
+      "summary": "WithValue method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "withValue",
+          "type": "System.Action\u003CTValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.WithValue%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2CSystem.Action%7B%60%601%7D%29"
+    },
+    {
+      "name": "GetCookies",
+      "signature": "static System.Collections.Generic.IEnumerable\u003CSystem.Net.Cookie\u003E GetCookies(System.Net.CookieContainer cookieContainer)",
+      "summary": "GetCookies method of Extensions.",
+      "params": [
+        {
+          "name": "cookieContainer",
+          "type": "System.Net.CookieContainer",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerable\u003CSystem.Net.Cookie\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetCookies%28System.Net.CookieContainer%29"
+    },
+    {
+      "name": "AsReadOnly",
+      "signature": "static System.Collections.ObjectModel.ReadOnlyCollection\u003CT\u003E AsReadOnly\u003CT\u003E(System.Collections.Generic.IList\u003CT\u003E collection)",
+      "summary": "AsReadOnly method of Extensions.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.IList\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ReadOnlyCollection\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.AsReadOnly%60%601%28System.Collections.Generic.IList%7B%60%600%7D%29"
+    },
+    {
+      "name": "AsReadOnly",
+      "signature": "static System.Collections.ObjectModel.ReadOnlyDictionary\u003CTKey, TValue\u003E AsReadOnly\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E instance)",
+      "summary": "AsReadOnly method of Extensions.",
+      "params": [
+        {
+          "name": "instance",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ReadOnlyDictionary\u003CTKey, TValue\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.AsReadOnly%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "AsReadOnly",
+      "signature": "static System.Collections.ObjectModel.ReadOnlyObservableCollection\u003CT\u003E AsReadOnly\u003CT\u003E(System.Collections.ObjectModel.ObservableCollection\u003CT\u003E collection)",
+      "summary": "AsReadOnly method of Extensions.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.ObjectModel.ObservableCollection\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.ObjectModel.ReadOnlyObservableCollection\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.AsReadOnly%60%601%28System.Collections.ObjectModel.ObservableCollection%7B%60%600%7D%29"
+    },
+    {
+      "name": "ToBitmap",
+      "signature": "static System.Drawing.Bitmap ToBitmap(byte[] array)",
+      "summary": "ToBitmap method of Extensions.",
+      "params": [
+        {
+          "name": "array",
+          "type": "byte[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Drawing.Bitmap",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ToBitmap%28System.Byte%5B%5D%29"
+    },
+    {
+      "name": "PreserveStackTrace",
+      "signature": "static System.Exception PreserveStackTrace(System.Exception exception)",
+      "summary": "PreserveStackTrace method of Extensions.",
+      "params": [
+        {
+          "name": "exception",
+          "type": "System.Exception",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Exception",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.PreserveStackTrace%28System.Exception%29"
+    },
+    {
+      "name": "ReadGuid",
+      "signature": "static System.Guid ReadGuid(System.IO.BinaryReader reader)",
+      "summary": "ReadGuid method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Guid",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadGuid%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "FindParentPopup",
+      "signature": "static System.Windows.Controls.Primitives.Popup FindParentPopup(System.Windows.DependencyObject element)",
+      "summary": "FindParentPopup method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Controls.Primitives.Popup",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindParentPopup%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "FindLogicalParent",
+      "signature": "static System.Windows.DependencyObject FindLogicalParent(System.Windows.DependencyObject element)",
+      "summary": "FindLogicalParent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.DependencyObject",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindLogicalParent%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "FindParent",
+      "signature": "static System.Windows.DependencyObject FindParent(System.Windows.DependencyObject element)",
+      "summary": "FindParent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.DependencyObject",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindParent%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "OnCommand",
+      "signature": "static System.Windows.Input.CommandBinding OnCommand(System.Windows.UIElement element, System.Windows.Input.RoutedCommand command, System.Action\u003Cobject\u003E executed, System.Func\u003Cobject, bool\u003E canExecute = null)",
+      "summary": "OnCommand method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.UIElement",
+          "optional": false
+        },
+        {
+          "name": "command",
+          "type": "System.Windows.Input.RoutedCommand",
+          "optional": false
+        },
+        {
+          "name": "executed",
+          "type": "System.Action\u003Cobject\u003E",
+          "optional": false
+        },
+        {
+          "name": "canExecute",
+          "type": "System.Func\u003Cobject, bool\u003E",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Input.CommandBinding",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.OnCommand%28System.Windows.UIElement%2CSystem.Windows.Input.RoutedCommand%2CSystem.Action%7BSystem.Object%7D%2CSystem.Func%7BSystem.Object%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "GetMousePosition",
+      "signature": "static System.Windows.Point GetMousePosition(System.Windows.Media.Visual visual)",
+      "summary": "GetMousePosition method of Extensions.",
+      "params": [
+        {
+          "name": "visual",
+          "type": "System.Windows.Media.Visual",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetMousePosition%28System.Windows.Media.Visual%29"
+    },
+    {
+      "name": "GetMousePositionInScreenCoordinates",
+      "signature": "static System.Windows.Point GetMousePositionInScreenCoordinates(System.Windows.Media.Visual visual)",
+      "summary": "GetMousePositionInScreenCoordinates method of Extensions.",
+      "params": [
+        {
+          "name": "visual",
+          "type": "System.Windows.Media.Visual",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Point",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetMousePositionInScreenCoordinates%28System.Windows.Media.Visual%29"
+    },
+    {
+      "name": "GetResourceDictionary",
+      "signature": "static System.Windows.ResourceDictionary GetResourceDictionary(System.Reflection.Assembly assembly, string resourcePath)",
+      "summary": "GetResourceDictionary method of Extensions.",
+      "params": [
+        {
+          "name": "assembly",
+          "type": "System.Reflection.Assembly",
+          "optional": false
+        },
+        {
+          "name": "resourcePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.ResourceDictionary",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetResourceDictionary%28System.Reflection.Assembly%2CSystem.String%29"
+    },
+    {
+      "name": "GetPixelScaleFactors",
+      "signature": "static System.Windows.Size GetPixelScaleFactors(System.Windows.Media.Visual visual)",
+      "summary": "GetPixelScaleFactors method of Extensions.",
+      "params": [
+        {
+          "name": "visual",
+          "type": "System.Windows.Media.Visual",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Size",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetPixelScaleFactors%28System.Windows.Media.Visual%29"
+    },
+    {
+      "name": "FindWindow",
+      "signature": "static System.Windows.Window FindWindow(System.Windows.Application application, System.Func\u003CSystem.Windows.Window, bool\u003E where)",
+      "summary": "FindWindow method of Extensions.",
+      "params": [
+        {
+          "name": "application",
+          "type": "System.Windows.Application",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CSystem.Windows.Window, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Windows.Window",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindWindow%28System.Windows.Application%2CSystem.Func%7BSystem.Windows.Window%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "FindChild",
+      "signature": "static TElement FindChild\u003CTElement\u003E(System.Windows.Application application)",
+      "summary": "FindChild method of Extensions.",
+      "params": [
+        {
+          "name": "application",
+          "type": "System.Windows.Application",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindChild%60%601%28System.Windows.Application%29"
+    },
+    {
+      "name": "FindChild",
+      "signature": "static TElement FindChild\u003CTElement\u003E(System.Windows.Application application, System.Func\u003CTElement, bool\u003E where)",
+      "summary": "FindChild method of Extensions.",
+      "params": [
+        {
+          "name": "application",
+          "type": "System.Windows.Application",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CTElement, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindChild%60%601%28System.Windows.Application%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "FindChild",
+      "signature": "static TElement FindChild\u003CTElement\u003E(System.Windows.DependencyObject element)",
+      "summary": "FindChild method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindChild%60%601%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "FindChild",
+      "signature": "static TElement FindChild\u003CTElement\u003E(System.Windows.DependencyObject element, System.Func\u003CTElement, bool\u003E where)",
+      "summary": "FindChild method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CTElement, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindChild%60%601%28System.Windows.DependencyObject%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "FindLogicalParent",
+      "signature": "static TElement FindLogicalParent\u003CTElement\u003E(System.Windows.DependencyObject element)",
+      "summary": "FindLogicalParent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindLogicalParent%60%601%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "FindLogicalParent",
+      "signature": "static TElement FindLogicalParent\u003CTElement\u003E(System.Windows.DependencyObject element, System.Func\u003CTElement, bool\u003E where)",
+      "summary": "FindLogicalParent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CTElement, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindLogicalParent%60%601%28System.Windows.DependencyObject%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "FindName",
+      "signature": "static TElement FindName\u003CTElement\u003E(System.Windows.FrameworkElement element, string name)",
+      "summary": "FindName method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.FrameworkElement",
+          "optional": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindName%60%601%28System.Windows.FrameworkElement%2CSystem.String%29"
+    },
+    {
+      "name": "FindParent",
+      "signature": "static TElement FindParent\u003CTElement\u003E(System.Windows.DependencyObject element)",
+      "summary": "FindParent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindParent%60%601%28System.Windows.DependencyObject%29"
+    },
+    {
+      "name": "FindParent",
+      "signature": "static TElement FindParent\u003CTElement\u003E(System.Windows.DependencyObject element, System.Func\u003CTElement, bool\u003E where)",
+      "summary": "FindParent method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CTElement, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindParent%60%601%28System.Windows.DependencyObject%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "GetValue",
+      "signature": "static TElement GetValue\u003CTElement\u003E(System.Collections.Generic.IList\u003CTElement\u003E list, int index, System.Func\u003Cint, TElement\u003E valueFactory)",
+      "summary": "GetValue method of Extensions.",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IList\u003CTElement\u003E",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "valueFactory",
+          "type": "System.Func\u003Cint, TElement\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetValue%60%601%28System.Collections.Generic.IList%7B%60%600%7D%2CSystem.Int32%2CSystem.Func%7BSystem.Int32%2C%60%600%7D%29"
+    },
+    {
+      "name": "GetValueOrDefault",
+      "signature": "static TElement GetValueOrDefault\u003CTElement\u003E(System.Collections.Generic.IList\u003CTElement\u003E list, int index)",
+      "summary": "GetValueOrDefault method of Extensions.",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IList\u003CTElement\u003E",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetValueOrDefault%60%601%28System.Collections.Generic.IList%7B%60%600%7D%2CSystem.Int32%29"
+    },
+    {
+      "name": "GetValueOrDefault",
+      "signature": "static TElement GetValueOrDefault\u003CTElement\u003E(System.Collections.Generic.IList\u003CTElement\u003E list, int index, TElement defaultValue)",
+      "summary": "GetValueOrDefault method of Extensions.",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IList\u003CTElement\u003E",
+          "optional": false
+        },
+        {
+          "name": "index",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "TElement",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TElement",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetValueOrDefault%60%601%28System.Collections.Generic.IList%7B%60%600%7D%2CSystem.Int32%2C%60%600%29"
+    },
+    {
+      "name": "ParseAsEnum",
+      "signature": "static TEnum ParseAsEnum\u003CTEnum\u003E(string text, TEnum defaultValue, bool ignoreCase = false)",
+      "summary": "ParseAsEnum method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "TEnum",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "TEnum",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsEnum%60%601%28System.String%2C%60%600%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ParseAsEnum",
+      "signature": "static TEnum? ParseAsEnum\u003CTEnum\u003E(string text, bool ignoreCase = false)",
+      "summary": "ParseAsEnum method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "ignoreCase",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "TEnum?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsEnum%60%601%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "MaxBy",
+      "signature": "static TSource MaxBy\u003CTSource, TKey\u003E(System.Collections.Generic.IEnumerable\u003CTSource\u003E source, System.Func\u003CTSource, TKey\u003E selector)",
+      "summary": "MaxBy method of Extensions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CTSource\u003E",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTSource, TKey\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.MaxBy%60%602%28System.Collections.Generic.IEnumerable%7B%60%600%7D%2CSystem.Func%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "MaxBy",
+      "signature": "static TSource MaxBy\u003CTSource, TKey\u003E(System.Collections.Generic.IEnumerable\u003CTSource\u003E source, System.Func\u003CTSource, TKey\u003E selector, System.Collections.Generic.IComparer\u003CTKey\u003E comparer)",
+      "summary": "MaxBy method of Extensions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CTSource\u003E",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTSource, TKey\u003E",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IComparer\u003CTKey\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.MaxBy%60%602%28System.Collections.Generic.IEnumerable%7B%60%600%7D%2CSystem.Func%7B%60%600%2C%60%601%7D%2CSystem.Collections.Generic.IComparer%7B%60%601%7D%29"
+    },
+    {
+      "name": "MinBy",
+      "signature": "static TSource MinBy\u003CTSource, TKey\u003E(System.Collections.Generic.IEnumerable\u003CTSource\u003E source, System.Func\u003CTSource, TKey\u003E selector)",
+      "summary": "MinBy method of Extensions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CTSource\u003E",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTSource, TKey\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.MinBy%60%602%28System.Collections.Generic.IEnumerable%7B%60%600%7D%2CSystem.Func%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "MinBy",
+      "signature": "static TSource MinBy\u003CTSource, TKey\u003E(System.Collections.Generic.IEnumerable\u003CTSource\u003E source, System.Func\u003CTSource, TKey\u003E selector, System.Collections.Generic.IComparer\u003CTKey\u003E comparer)",
+      "summary": "MinBy method of Extensions.",
+      "params": [
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CTSource\u003E",
+          "optional": false
+        },
+        {
+          "name": "selector",
+          "type": "System.Func\u003CTSource, TKey\u003E",
+          "optional": false
+        },
+        {
+          "name": "comparer",
+          "type": "System.Collections.Generic.IComparer\u003CTKey\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TSource",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.MinBy%60%602%28System.Collections.Generic.IEnumerable%7B%60%600%7D%2CSystem.Func%7B%60%600%2C%60%601%7D%2CSystem.Collections.Generic.IComparer%7B%60%601%7D%29"
+    },
+    {
+      "name": "GetOrAdd",
+      "signature": "static TValue GetOrAdd\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, System.Func\u003CTKey, TValue\u003E valueFactory)",
+      "summary": "GetOrAdd method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "valueFactory",
+          "type": "System.Func\u003CTKey, TValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetOrAdd%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2CSystem.Func%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "GetValue",
+      "signature": "static TValue GetValue\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, System.Func\u003CTKey, TValue\u003E valueFactory)",
+      "summary": "GetValue method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "valueFactory",
+          "type": "System.Func\u003CTKey, TValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetValue%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2CSystem.Func%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "GetValueOrDefault",
+      "signature": "static TValue GetValueOrDefault\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key)",
+      "summary": "GetValueOrDefault method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetValueOrDefault%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%29"
+    },
+    {
+      "name": "GetValueOrDefault",
+      "signature": "static TValue GetValueOrDefault\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, TValue defaultValue)",
+      "summary": "GetValueOrDefault method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "TValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TValue",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetValueOrDefault%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2C%60%601%29"
+    },
+    {
+      "name": "FindWindow",
+      "signature": "static TWindow FindWindow\u003CTWindow\u003E(System.Windows.Application application, System.Func\u003CTWindow, bool\u003E where)",
+      "summary": "FindWindow method of Extensions.",
+      "params": [
+        {
+          "name": "application",
+          "type": "System.Windows.Application",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CTWindow, bool\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TWindow",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FindWindow%60%601%28System.Windows.Application%2CSystem.Func%7B%60%600%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "RemoveAll",
+      "signature": "static T[] RemoveAll\u003CT\u003E(System.Collections.Generic.ICollection\u003CT\u003E collection)",
+      "summary": "RemoveAll method of Extensions.",
+      "params": [
+        {
+          "name": "collection",
+          "type": "System.Collections.Generic.ICollection\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "T[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.RemoveAll%60%601%28System.Collections.Generic.ICollection%7B%60%600%7D%29"
+    },
+    {
+      "name": "InsertAfter",
+      "signature": "static bool InsertAfter\u003CT\u003E(System.Collections.Generic.IList\u003CT\u003E list, T item, T after)",
+      "summary": "InsertAfter method of Extensions.",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IList\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "T",
+          "optional": false
+        },
+        {
+          "name": "after",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.InsertAfter%60%601%28System.Collections.Generic.IList%7B%60%600%7D%2C%60%600%2C%60%600%29"
+    },
+    {
+      "name": "InsertBefore",
+      "signature": "static bool InsertBefore\u003CT\u003E(System.Collections.Generic.IList\u003CT\u003E list, T item, T before)",
+      "summary": "InsertBefore method of Extensions.",
+      "params": [
+        {
+          "name": "list",
+          "type": "System.Collections.Generic.IList\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "item",
+          "type": "T",
+          "optional": false
+        },
+        {
+          "name": "before",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.InsertBefore%60%601%28System.Collections.Generic.IList%7B%60%600%7D%2C%60%600%2C%60%600%29"
+    },
+    {
+      "name": "Match",
+      "signature": "static bool Match(System.Windows.Input.KeyEventArgs keyEventArgs, System.Windows.Input.Key key, System.Windows.Input.ModifierKeys modifierKeys = 0)",
+      "summary": "Match method of Extensions.",
+      "params": [
+        {
+          "name": "keyEventArgs",
+          "type": "System.Windows.Input.KeyEventArgs",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "System.Windows.Input.Key",
+          "optional": false
+        },
+        {
+          "name": "modifierKeys",
+          "type": "System.Windows.Input.ModifierKeys",
+          "optional": true,
+          "default": "0"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Match%28System.Windows.Input.KeyEventArgs%2CSystem.Windows.Input.Key%2CSystem.Windows.Input.ModifierKeys%29"
+    },
+    {
+      "name": "Near",
+      "signature": "static bool Near(double value1, double value2, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Extensions.",
+      "params": [
+        {
+          "name": "value1",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Near%28System.Double%2CSystem.Double%2CSystem.Int32%29"
+    },
+    {
+      "name": "Near",
+      "signature": "static bool Near(float value1, float value2, int allowedErrorInUnitsInLastPlace = 10)",
+      "summary": "Near method of Extensions.",
+      "params": [
+        {
+          "name": "value1",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "value2",
+          "type": "float",
+          "optional": false
+        },
+        {
+          "name": "allowedErrorInUnitsInLastPlace",
+          "type": "int",
+          "optional": true,
+          "default": "10"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Near%28System.Single%2CSystem.Single%2CSystem.Int32%29"
+    },
+    {
+      "name": "ParseAsBoolean",
+      "signature": "static bool ParseAsBoolean(string text, bool defaultValue)",
+      "summary": "ParseAsBoolean method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsBoolean%28System.String%2CSystem.Boolean%29"
+    },
+    {
+      "name": "RecursiveUpdate",
+      "signature": "static bool RecursiveUpdate(System.Windows.DependencyObject dependencyObject, System.Action recursiveUpdate)",
+      "summary": "RecursiveUpdate method of Extensions.",
+      "params": [
+        {
+          "name": "dependencyObject",
+          "type": "System.Windows.DependencyObject",
+          "optional": false
+        },
+        {
+          "name": "recursiveUpdate",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.RecursiveUpdate%28System.Windows.DependencyObject%2CSystem.Action%29"
+    },
+    {
+      "name": "TryAdd",
+      "signature": "static bool TryAdd\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, System.Func\u003CTKey, TValue\u003E valueFactory)",
+      "summary": "TryAdd method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "valueFactory",
+          "type": "System.Func\u003CTKey, TValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TryAdd%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2CSystem.Func%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "TryAdd",
+      "signature": "static bool TryAdd\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, TValue value)",
+      "summary": "TryAdd method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "TValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TryAdd%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2C%60%601%29"
+    },
+    {
+      "name": "TryRemove",
+      "signature": "static bool TryRemove\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, out TValue removedValue)",
+      "summary": "TryRemove method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "removedValue",
+          "type": "TValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TryRemove%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2C%60%601%40%29"
+    },
+    {
+      "name": "TryUpdate",
+      "signature": "static bool TryUpdate\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, System.Func\u003CTKey, TValue, TValue\u003E updateValue)",
+      "summary": "TryUpdate method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "updateValue",
+          "type": "System.Func\u003CTKey, TValue, TValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TryUpdate%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2CSystem.Func%7B%60%600%2C%60%601%2C%60%601%7D%29"
+    },
+    {
+      "name": "TryUpdate",
+      "signature": "static bool TryUpdate\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, TValue value)",
+      "summary": "TryUpdate method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "TValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TryUpdate%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2C%60%601%29"
+    },
+    {
+      "name": "TryUpdate",
+      "signature": "static bool TryUpdate\u003CTKey, TValue\u003E(System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E dictionary, TKey key, TValue value, out TValue replaced)",
+      "summary": "TryUpdate method of Extensions.",
+      "params": [
+        {
+          "name": "dictionary",
+          "type": "System.Collections.Generic.IDictionary\u003CTKey, TValue\u003E",
+          "optional": false
+        },
+        {
+          "name": "key",
+          "type": "TKey",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "TValue",
+          "optional": false
+        },
+        {
+          "name": "replaced",
+          "type": "TValue",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TryUpdate%60%602%28System.Collections.Generic.IDictionary%7B%60%600%2C%60%601%7D%2C%60%600%2C%60%601%2C%60%601%40%29"
+    },
+    {
+      "name": "ParseAsBoolean",
+      "signature": "static bool? ParseAsBoolean(string text)",
+      "summary": "ParseAsBoolean method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsBoolean%28System.String%29"
+    },
+    {
+      "name": "ToByteArray",
+      "signature": "static byte[] ToByteArray(System.Collections.BitArray bitArray)",
+      "summary": "ToByteArray method of Extensions.",
+      "params": [
+        {
+          "name": "bitArray",
+          "type": "System.Collections.BitArray",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "byte[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ToByteArray%28System.Collections.BitArray%29"
+    },
+    {
+      "name": "ToByteArray",
+      "signature": "static byte[] ToByteArray(System.Drawing.Bitmap bitmap)",
+      "summary": "ToByteArray method of Extensions.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "byte[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ToByteArray%28System.Drawing.Bitmap%29"
+    },
+    {
+      "name": "ParseAsDouble",
+      "signature": "static double ParseAsDouble(string text, double defaultValue, System.Globalization.NumberStyles numberStyle = 167, System.IFormatProvider formatProvider = null)",
+      "summary": "ParseAsDouble method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "numberStyle",
+          "type": "System.Globalization.NumberStyles",
+          "optional": true,
+          "default": "167"
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "double",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsDouble%28System.String%2CSystem.Double%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "ParseAsDouble",
+      "signature": "static double? ParseAsDouble(string text, System.Globalization.NumberStyles numberStyle = 167, System.IFormatProvider formatProvider = null)",
+      "summary": "ParseAsDouble method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "numberStyle",
+          "type": "System.Globalization.NumberStyles",
+          "optional": true,
+          "default": "167"
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "double?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsDouble%28System.String%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "GetDepth",
+      "signature": "static int GetDepth(System.Windows.Controls.TreeViewItem element)",
+      "summary": "GetDepth method of Extensions.",
+      "params": [
+        {
+          "name": "element",
+          "type": "System.Windows.Controls.TreeViewItem",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetDepth%28System.Windows.Controls.TreeViewItem%29"
+    },
+    {
+      "name": "ParseAsInt32",
+      "signature": "static int ParseAsInt32(string text, int defaultValue, System.Globalization.NumberStyles numberStyle = 7, System.IFormatProvider formatProvider = null)",
+      "summary": "ParseAsInt32 method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "numberStyle",
+          "type": "System.Globalization.NumberStyles",
+          "optional": true,
+          "default": "7"
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsInt32%28System.String%2CSystem.Int32%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "ReadPackedInt32",
+      "signature": "static int ReadPackedInt32(System.IO.BinaryReader reader)",
+      "summary": "ReadPackedInt32 method of Extensions.",
+      "params": [
+        {
+          "name": "reader",
+          "type": "System.IO.BinaryReader",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ReadPackedInt32%28System.IO.BinaryReader%29"
+    },
+    {
+      "name": "ParseAsInt32",
+      "signature": "static int? ParseAsInt32(string text, System.Globalization.NumberStyles numberStyle = 7, System.IFormatProvider formatProvider = null)",
+      "summary": "ParseAsInt32 method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "numberStyle",
+          "type": "System.Globalization.NumberStyles",
+          "optional": true,
+          "default": "7"
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "int?",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ParseAsInt32%28System.String%2CSystem.Globalization.NumberStyles%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "FormatInvariant",
+      "signature": "static string FormatInvariant(string format, object[] data)",
+      "summary": "FormatInvariant method of Extensions.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "data",
+          "type": "object[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.FormatInvariant%28System.String%2CSystem.Object%5B%5D%29"
+    },
+    {
+      "name": "GetMD5Hash",
+      "signature": "static string GetMD5Hash(System.Drawing.Bitmap bitmap)",
+      "summary": "GetMD5Hash method of Extensions.",
+      "params": [
+        {
+          "name": "bitmap",
+          "type": "System.Drawing.Bitmap",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetMD5Hash%28System.Drawing.Bitmap%29"
+    },
+    {
+      "name": "GetMD5Hash",
+      "signature": "static string GetMD5Hash(System.IO.Stream stream)",
+      "summary": "GetMD5Hash method of Extensions.",
+      "params": [
+        {
+          "name": "stream",
+          "type": "System.IO.Stream",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetMD5Hash%28System.IO.Stream%29"
+    },
+    {
+      "name": "GetMD5Hash",
+      "signature": "static string GetMD5Hash(byte[] array)",
+      "summary": "GetMD5Hash method of Extensions.",
+      "params": [
+        {
+          "name": "array",
+          "type": "byte[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetMD5Hash%28System.Byte%5B%5D%29"
+    },
+    {
+      "name": "GetMD5Hash",
+      "signature": "static string GetMD5Hash(string text)",
+      "summary": "GetMD5Hash method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetMD5Hash%28System.String%29"
+    },
+    {
+      "name": "GetSignature",
+      "signature": "static string GetSignature(System.Reflection.MethodInfo method, bool ignoreAccessModifier = false, bool ignoreStaticModifier = false)",
+      "summary": "GetSignature method of Extensions.",
+      "params": [
+        {
+          "name": "method",
+          "type": "System.Reflection.MethodInfo",
+          "optional": false
+        },
+        {
+          "name": "ignoreAccessModifier",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        },
+        {
+          "name": "ignoreStaticModifier",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetSignature%28System.Reflection.MethodInfo%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "GetSignature",
+      "signature": "static string GetSignature(System.Type delegateType, bool ignoreAccessModifier = false, bool ignoreStaticModifier = false)",
+      "summary": "GetSignature method of Extensions.",
+      "params": [
+        {
+          "name": "delegateType",
+          "type": "System.Type",
+          "optional": false
+        },
+        {
+          "name": "ignoreAccessModifier",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        },
+        {
+          "name": "ignoreStaticModifier",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GetSignature%28System.Type%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "TrimEnd",
+      "signature": "static string TrimEnd(string text, int characters)",
+      "summary": "TrimEnd method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "characters",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TrimEnd%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "TrimStart",
+      "signature": "static string TrimStart(string text, int characters)",
+      "summary": "TrimStart method of Extensions.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "characters",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TrimStart%28System.String%2CSystem.Int32%29"
+    },
+    {
+      "name": "Activate",
+      "signature": "static void Activate(System.Windows.Controls.Primitives.Popup popup)",
+      "summary": "Activate method of Extensions.",
+      "params": [
+        {
+          "name": "popup",
+          "type": "System.Windows.Controls.Primitives.Popup",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Activate%28System.Windows.Controls.Primitives.Popup%29"
+    },
+    {
+      "name": "AddRange",
+      "signature": "static void AddRange\u003CT\u003E(System.Collections.Generic.ICollection\u003CT\u003E target, System.Collections.Generic.IEnumerable\u003CT\u003E source)",
+      "summary": "AddRange method of Extensions.",
+      "params": [
+        {
+          "name": "target",
+          "type": "System.Collections.Generic.ICollection\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "source",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.AddRange%60%601%28System.Collections.Generic.ICollection%7B%60%600%7D%2CSystem.Collections.Generic.IEnumerable%7B%60%600%7D%29"
+    },
+    {
+      "name": "CopyToSession",
+      "signature": "static void CopyToSession(System.Net.CookieContainer cookieContainer, System.Func\u003CSystem.Net.Cookie, bool\u003E where = null)",
+      "summary": "CopyToSession method of Extensions.",
+      "params": [
+        {
+          "name": "cookieContainer",
+          "type": "System.Net.CookieContainer",
+          "optional": false
+        },
+        {
+          "name": "where",
+          "type": "System.Func\u003CSystem.Net.Cookie, bool\u003E",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.CopyToSession%28System.Net.CookieContainer%2CSystem.Func%7BSystem.Net.Cookie%2CSystem.Boolean%7D%29"
+    },
+    {
+      "name": "DisableShortcuts",
+      "signature": "static void DisableShortcuts(System.Windows.Window window)",
+      "summary": "DisableShortcuts method of Extensions.",
+      "params": [
+        {
+          "name": "window",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.DisableShortcuts%28System.Windows.Window%29"
+    },
+    {
+      "name": "Discard",
+      "signature": "static void Discard\u003CT\u003E(System.Collections.Generic.Stack\u003CT\u003E stack, int count)",
+      "summary": "Discard method of Extensions.",
+      "params": [
+        {
+          "name": "stack",
+          "type": "System.Collections.Generic.Stack\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Discard%60%601%28System.Collections.Generic.Stack%7B%60%600%7D%2CSystem.Int32%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E\u003E sequence, System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7, T8\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%608%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%2C%60%607%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2, T3, T4, T5, T6, T7\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5, T6, T7\u003E\u003E sequence, System.Action\u003CT1, T2, T3, T4, T5, T6, T7\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5, T6, T7\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6, T7\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%607%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2, T3, T4, T5, T6\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5, T6\u003E\u003E sequence, System.Action\u003CT1, T2, T3, T4, T5, T6\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5, T6\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5, T6\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%606%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2, T3, T4, T5\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5\u003E\u003E sequence, System.Action\u003CT1, T2, T3, T4, T5\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4, T5\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2, T3, T4, T5\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%605%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2, T3, T4\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4\u003E\u003E sequence, System.Action\u003CT1, T2, T3, T4\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3, T4\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2, T3, T4\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%604%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%2C%60%602%2C%60%603%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%2C%60%602%2C%60%603%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2, T3\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3\u003E\u003E sequence, System.Action\u003CT1, T2, T3\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2, T3\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2, T3\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%603%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%2C%60%602%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%2C%60%602%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1, T2\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2\u003E\u003E sequence, System.Action\u003CT1, T2\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1, T2\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1, T2\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%602%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%2C%60%601%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT1\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1\u003E\u003E sequence, System.Action\u003CT1\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Tuple\u003CT1\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT1\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%601%28System.Collections.Generic.IEnumerable%7BSystem.Tuple%7B%60%600%7D%7D%2CSystem.Action%7B%60%600%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CT\u003E(System.Collections.Generic.IEnumerable\u003CT\u003E sequence, System.Action\u003CT\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%601%28System.Collections.Generic.IEnumerable%7B%60%600%7D%2CSystem.Action%7B%60%600%7D%29"
+    },
+    {
+      "name": "ForEach",
+      "signature": "static void ForEach\u003CTKey, TValue\u003E(System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CTKey, TValue\u003E\u003E sequence, System.Action\u003CTKey, TValue\u003E action)",
+      "summary": "ForEach method of Extensions.",
+      "params": [
+        {
+          "name": "sequence",
+          "type": "System.Collections.Generic.IEnumerable\u003CSystem.Collections.Generic.KeyValuePair\u003CTKey, TValue\u003E\u003E",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action\u003CTKey, TValue\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.ForEach%60%602%28System.Collections.Generic.IEnumerable%7BSystem.Collections.Generic.KeyValuePair%7B%60%600%2C%60%601%7D%7D%2CSystem.Action%7B%60%600%2C%60%601%7D%29"
+    },
+    {
+      "name": "GlobalActivate",
+      "signature": "static void GlobalActivate(System.Windows.Window w)",
+      "summary": "GlobalActivate method of Extensions.",
+      "params": [
+        {
+          "name": "w",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.GlobalActivate%28System.Windows.Window%29"
+    },
+    {
+      "name": "Keep",
+      "signature": "static void Keep\u003CT\u003E(System.Collections.Generic.Stack\u003CT\u003E stack, int count)",
+      "summary": "Keep method of Extensions.",
+      "params": [
+        {
+          "name": "stack",
+          "type": "System.Collections.Generic.Stack\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "count",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Keep%60%601%28System.Collections.Generic.Stack%7B%60%600%7D%2CSystem.Int32%29"
+    },
+    {
+      "name": "Raise",
+      "signature": "static void Raise(System.Collections.Specialized.NotifyCollectionChangedEventHandler eventHandler, object sender)",
+      "summary": "Raise method of Extensions.",
+      "params": [
+        {
+          "name": "eventHandler",
+          "type": "System.Collections.Specialized.NotifyCollectionChangedEventHandler",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Raise%28System.Collections.Specialized.NotifyCollectionChangedEventHandler%2CSystem.Object%29"
+    },
+    {
+      "name": "Raise",
+      "signature": "static void Raise(System.ComponentModel.PropertyChangedEventHandler eventHandler, object sender, string propertyName)",
+      "summary": "Raise method of Extensions.",
+      "params": [
+        {
+          "name": "eventHandler",
+          "type": "System.ComponentModel.PropertyChangedEventHandler",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "propertyName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Raise%28System.ComponentModel.PropertyChangedEventHandler%2CSystem.Object%2CSystem.String%29"
+    },
+    {
+      "name": "Raise",
+      "signature": "static void Raise(System.EventHandler eventHandler, object sender)",
+      "summary": "Raise method of Extensions.",
+      "params": [
+        {
+          "name": "eventHandler",
+          "type": "System.EventHandler",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Raise%28System.EventHandler%2CSystem.Object%29"
+    },
+    {
+      "name": "Raise",
+      "signature": "static void Raise(System.EventHandler eventHandler, object sender, System.EventArgs eventArgs)",
+      "summary": "Raise method of Extensions.",
+      "params": [
+        {
+          "name": "eventHandler",
+          "type": "System.EventHandler",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "eventArgs",
+          "type": "System.EventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Raise%28System.EventHandler%2CSystem.Object%2CSystem.EventArgs%29"
+    },
+    {
+      "name": "Raise",
+      "signature": "static void Raise\u003CTEventArgs\u003E(System.EventHandler\u003CTEventArgs\u003E eventHandler, object sender, System.Func\u003CTEventArgs\u003E eventArgsFactory)",
+      "summary": "Raise method of Extensions.",
+      "params": [
+        {
+          "name": "eventHandler",
+          "type": "System.EventHandler\u003CTEventArgs\u003E",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "eventArgsFactory",
+          "type": "System.Func\u003CTEventArgs\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Raise%60%601%28System.EventHandler%7B%60%600%7D%2CSystem.Object%2CSystem.Func%7B%60%600%7D%29"
+    },
+    {
+      "name": "Raise",
+      "signature": "static void Raise\u003CTEventArgs\u003E(System.EventHandler\u003CTEventArgs\u003E eventHandler, object sender, TEventArgs eventArgs)",
+      "summary": "Raise method of Extensions.",
+      "params": [
+        {
+          "name": "eventHandler",
+          "type": "System.EventHandler\u003CTEventArgs\u003E",
+          "optional": false
+        },
+        {
+          "name": "sender",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "eventArgs",
+          "type": "TEventArgs",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Raise%60%601%28System.EventHandler%7B%60%600%7D%2CSystem.Object%2C%60%600%29"
+    },
+    {
+      "name": "SetFilter",
+      "signature": "static void SetFilter(Microsoft.Win32.FileDialog dialog, Fusion.FileType[] fileTypes)",
+      "summary": "SetFilter method of Extensions.",
+      "params": [
+        {
+          "name": "dialog",
+          "type": "Microsoft.Win32.FileDialog",
+          "optional": false
+        },
+        {
+          "name": "fileTypes",
+          "type": "Fusion.FileType[]",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.SetFilter%28Microsoft.Win32.FileDialog%2CFusion.FileType%5B%5D%29"
+    },
+    {
+      "name": "SimulateClick",
+      "signature": "static void SimulateClick(System.Windows.Controls.Primitives.ButtonBase button)",
+      "summary": "SimulateClick method of Extensions.",
+      "params": [
+        {
+          "name": "button",
+          "type": "System.Windows.Controls.Primitives.ButtonBase",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.SimulateClick%28System.Windows.Controls.Primitives.ButtonBase%29"
+    },
+    {
+      "name": "SizeToContentWorkaround",
+      "signature": "static void SizeToContentWorkaround(System.Windows.Window window)",
+      "summary": "SizeToContentWorkaround method of Extensions.",
+      "params": [
+        {
+          "name": "window",
+          "type": "System.Windows.Window",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.SizeToContentWorkaround%28System.Windows.Window%29"
+    },
+    {
+      "name": "SuppressScriptErrors",
+      "signature": "static void SuppressScriptErrors(System.Windows.Controls.WebBrowser webBrowser, bool suppress)",
+      "summary": "SuppressScriptErrors method of Extensions.",
+      "params": [
+        {
+          "name": "webBrowser",
+          "type": "System.Windows.Controls.WebBrowser",
+          "optional": false
+        },
+        {
+          "name": "suppress",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.SuppressScriptErrors%28System.Windows.Controls.WebBrowser%2CSystem.Boolean%29"
+    },
+    {
+      "name": "TemplatedPart",
+      "signature": "static void TemplatedPart\u003CTPart\u003E(System.Windows.Controls.Control control, string partName, System.Action\u003CTPart\u003E withPart)",
+      "summary": "TemplatedPart method of Extensions.",
+      "params": [
+        {
+          "name": "control",
+          "type": "System.Windows.Controls.Control",
+          "optional": false
+        },
+        {
+          "name": "partName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "withPart",
+          "type": "System.Action\u003CTPart\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.TemplatedPart%60%601%28System.Windows.Controls.Control%2CSystem.String%2CSystem.Action%7B%60%600%7D%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Angle value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Angle",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Angle%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Area value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Area",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Area%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Double2 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Double2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Double2%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Double3 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Double3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Double3%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Double4 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Double4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Double4%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Float2 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Float2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Float2%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Float3 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Float3%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Float4 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Float4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Float4%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Float4x4 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Float4x4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Float4x4%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.FourCC value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.FourCC",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.FourCC%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Int2 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Int2%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Int3 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Int3%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Int4 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Int4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Int4%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Length value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Length",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Length%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Mass value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Mass%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.RGBA value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.RGBA",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.RGBA%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Short2 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Short2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Short2%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Short3 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Short3%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Short4 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Short4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Short4%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.UShort2 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.UShort2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.UShort2%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.UShort3 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.UShort3",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.UShort3%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.UShort4 value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.UShort4",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.UShort4%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, Fusion.Volume value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Volume",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CFusion.Volume%29"
+    },
+    {
+      "name": "Write",
+      "signature": "static void Write(System.IO.BinaryWriter writer, System.Guid value)",
+      "summary": "Write method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "System.Guid",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.Write%28System.IO.BinaryWriter%2CSystem.Guid%29"
+    },
+    {
+      "name": "WritePackedInt32",
+      "signature": "static void WritePackedInt32(System.IO.BinaryWriter writer, int value)",
+      "summary": "WritePackedInt32 method of Extensions.",
+      "params": [
+        {
+          "name": "writer",
+          "type": "System.IO.BinaryWriter",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Extensions.WritePackedInt32%28System.IO.BinaryWriter%2CSystem.Int32%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

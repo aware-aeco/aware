@@ -1,0 +1,90 @@
+{
+  "name": "ProgressView",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ProgressView class in Fusion.UI.",
+  "base": "System.Windows.Controls.Control",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ProgressView",
+  "constructors": [
+    {
+      "name": "ProgressView()",
+      "signature": "ProgressView()",
+      "summary": "Constructs a new ProgressView.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ProgressView.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Cancelable",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Cancelable property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.Cancelable"
+    },
+    {
+      "name": "Command",
+      "type": "System.Windows.Input.ICommand",
+      "getter": true,
+      "setter": true,
+      "summary": "Command property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.Command"
+    },
+    {
+      "name": "CommandParameter",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "CommandParameter property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.CommandParameter"
+    },
+    {
+      "name": "IsIndeterminate",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "IsIndeterminate property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.IsIndeterminate"
+    },
+    {
+      "name": "Progress",
+      "type": "Fusion.ProgressBase",
+      "getter": true,
+      "setter": true,
+      "summary": "Progress property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.Progress"
+    },
+    {
+      "name": "ProgressPercentage",
+      "type": "double?",
+      "getter": true,
+      "setter": true,
+      "summary": "ProgressPercentage property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.ProgressPercentage"
+    },
+    {
+      "name": "Text",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Text property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.Text"
+    },
+    {
+      "name": "Value",
+      "type": "double",
+      "getter": true,
+      "setter": false,
+      "summary": "Value property of ProgressView.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.ProgressView.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

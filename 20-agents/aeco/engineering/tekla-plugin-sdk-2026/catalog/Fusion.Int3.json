@@ -1,0 +1,834 @@
+{
+  "name": "Int3",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Int3 struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Int3\u003E",
+    "System.IFormattable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Int3",
+  "constructors": [
+    {
+      "name": "Int3(Fusion.Int2, int)",
+      "signature": "Int3(Fusion.Int2 xy, int z)",
+      "summary": "Constructs a new Int3.",
+      "params": [
+        {
+          "name": "xy",
+          "type": "Fusion.Int2",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.%23ctor%28Fusion.Int2%2CSystem.Int32%29"
+    },
+    {
+      "name": "Int3(int)",
+      "signature": "Int3(int all)",
+      "summary": "Constructs a new Int3.",
+      "params": [
+        {
+          "name": "all",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.%23ctor%28System.Int32%29"
+    },
+    {
+      "name": "Int3(int, Fusion.Int2)",
+      "signature": "Int3(int x, Fusion.Int2 yz)",
+      "summary": "Constructs a new Int3.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "yz",
+          "type": "Fusion.Int2",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.%23ctor%28System.Int32%2CFusion.Int2%29"
+    },
+    {
+      "name": "Int3(int, int, int)",
+      "signature": "Int3(int x, int y, int z)",
+      "summary": "Constructs a new Int3.",
+      "params": [
+        {
+          "name": "x",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "y",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "z",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.%23ctor%28System.Int32%2CSystem.Int32%2CSystem.Int32%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Int3 other)",
+      "summary": "Equals method of Int3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.Equals%28Fusion.Int3%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Int3.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Int3.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.GetHashCode"
+    },
+    {
+      "name": "Abs",
+      "signature": "static Fusion.Int3 Abs(Fusion.Int3 value)",
+      "summary": "Abs method of Int3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.Abs%28Fusion.Int3%29"
+    },
+    {
+      "name": "Max",
+      "signature": "static Fusion.Int3 Max(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "Max method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.Max%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "Min",
+      "signature": "static Fusion.Int3 Min(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "Min method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.Min%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "Sign",
+      "signature": "static Fusion.Int3 Sign(Fusion.Int3 value)",
+      "summary": "Sign method of Int3.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.Sign%28Fusion.Int3%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int3 op_Addition(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Addition method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Addition%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int3 op_Addition(Fusion.Int3 a, int b)",
+      "summary": "op_Addition method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Addition%28Fusion.Int3%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Int3 op_Addition(int a, Fusion.Int3 b)",
+      "summary": "op_Addition method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Addition%28System.Int32%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int3 op_Division(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Division method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Division%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int3 op_Division(Fusion.Int3 a, int b)",
+      "summary": "op_Division method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Division%28Fusion.Int3%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Division",
+      "signature": "static Fusion.Int3 op_Division(int a, Fusion.Int3 b)",
+      "summary": "op_Division method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Division%28System.Int32%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int3 op_Explicit(Fusion.Double3 v)",
+      "summary": "op_Explicit method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Double3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Explicit%28Fusion.Double3%29~Fusion.Int3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int3 op_Explicit(Fusion.Float3 v)",
+      "summary": "op_Explicit method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Float3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Explicit%28Fusion.Float3%29~Fusion.Int3"
+    },
+    {
+      "name": "op_Explicit",
+      "signature": "static Fusion.Int3 op_Explicit(Fusion.Half3 v)",
+      "summary": "op_Explicit method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Half3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Explicit%28Fusion.Half3%29~Fusion.Int3"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int3 op_Implicit(Fusion.Short3 v)",
+      "summary": "op_Implicit method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Short3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Implicit%28Fusion.Short3%29~Fusion.Int3"
+    },
+    {
+      "name": "op_Implicit",
+      "signature": "static Fusion.Int3 op_Implicit(Fusion.UShort3 v)",
+      "summary": "op_Implicit method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.UShort3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Implicit%28Fusion.UShort3%29~Fusion.Int3"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int3 op_Modulus(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Modulus method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Modulus%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int3 op_Modulus(Fusion.Int3 a, int b)",
+      "summary": "op_Modulus method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Modulus%28Fusion.Int3%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Modulus",
+      "signature": "static Fusion.Int3 op_Modulus(int a, Fusion.Int3 b)",
+      "summary": "op_Modulus method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Modulus%28System.Int32%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int3 op_Multiply(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Multiply method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Multiply%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int3 op_Multiply(Fusion.Int3 a, int b)",
+      "summary": "op_Multiply method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Multiply%28Fusion.Int3%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Multiply",
+      "signature": "static Fusion.Int3 op_Multiply(int a, Fusion.Int3 b)",
+      "summary": "op_Multiply method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Multiply%28System.Int32%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int3 op_Subtraction(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Subtraction method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Subtraction%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int3 op_Subtraction(Fusion.Int3 a, int b)",
+      "summary": "op_Subtraction method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "int",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Subtraction%28Fusion.Int3%2CSystem.Int32%29"
+    },
+    {
+      "name": "op_Subtraction",
+      "signature": "static Fusion.Int3 op_Subtraction(int a, Fusion.Int3 b)",
+      "summary": "op_Subtraction method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "int",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Subtraction%28System.Int32%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_UnaryNegation",
+      "signature": "static Fusion.Int3 op_UnaryNegation(Fusion.Int3 v)",
+      "summary": "op_UnaryNegation method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_UnaryNegation%28Fusion.Int3%29"
+    },
+    {
+      "name": "op_UnaryPlus",
+      "signature": "static Fusion.Int3 op_UnaryPlus(Fusion.Int3 v)",
+      "summary": "op_UnaryPlus method of Int3.",
+      "params": [
+        {
+          "name": "v",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Int3",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_UnaryPlus%28Fusion.Int3%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Equality method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Equality%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Int3 a, Fusion.Int3 b)",
+      "summary": "op_Inequality method of Int3.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Int3",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Int3",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.op_Inequality%28Fusion.Int3%2CFusion.Int3%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Int3.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.ToString"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(string format, System.IFormatProvider formatProvider)",
+      "summary": "ToString method of Int3.",
+      "params": [
+        {
+          "name": "format",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Int3.ToString%28System.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Item",
+      "type": "int",
+      "getter": true,
+      "setter": true,
+      "summary": "Item property of Int3.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Int3.Item%28System.Int32%29"
+    },
+    {
+      "name": "XY",
+      "type": "Fusion.Int2",
+      "getter": true,
+      "setter": false,
+      "summary": "XY property of Int3.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Int3.XY"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

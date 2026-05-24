@@ -1,0 +1,154 @@
+{
+  "name": "IUserAuthorization",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IUserAuthorization interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IUserAuthorization",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RequestRenew",
+      "signature": "System.Threading.Tasks.Task\u003CFusion.AuthorizationResponse\u003E RequestRenew(Fusion.AuthorizationToken authorizationToken, System.TimeSpan duration, Fusion.AuthenticationToken authenticationToken)",
+      "summary": "RequestRenew method of IUserAuthorization.",
+      "params": [
+        {
+          "name": "authorizationToken",
+          "type": "Fusion.AuthorizationToken",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.TimeSpan",
+          "optional": false
+        },
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CFusion.AuthorizationResponse\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserAuthorization.RequestRenew%28Fusion.AuthorizationToken%2CSystem.TimeSpan%2CFusion.AuthenticationToken%29"
+    },
+    {
+      "name": "RequestToken",
+      "signature": "System.Threading.Tasks.Task\u003CFusion.AuthorizationResponse\u003E RequestToken(Fusion.AuthenticationToken authenticationToken, System.TimeSpan duration, string action)",
+      "summary": "RequestToken method of IUserAuthorization.",
+      "params": [
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.TimeSpan",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CFusion.AuthorizationResponse\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserAuthorization.RequestToken%28Fusion.AuthenticationToken%2CSystem.TimeSpan%2CSystem.String%29"
+    },
+    {
+      "name": "IsAuthorizationAvailable",
+      "signature": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationAvailableResponse\u003E\u003E IsAuthorizationAvailable(Fusion.AuthenticationToken authenticationToken, string[] actions)",
+      "summary": "IsAuthorizationAvailable method of IUserAuthorization.",
+      "params": [
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        },
+        {
+          "name": "actions",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationAvailableResponse\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserAuthorization.IsAuthorizationAvailable%28Fusion.AuthenticationToken%2CSystem.String%5B%5D%29"
+    },
+    {
+      "name": "RequestRenewTokens",
+      "signature": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationResponse\u003E\u003E RequestRenewTokens(System.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationToken\u003E authorizationTokens, System.TimeSpan duration, Fusion.AuthenticationToken authenticationToken)",
+      "summary": "RequestRenewTokens method of IUserAuthorization.",
+      "params": [
+        {
+          "name": "authorizationTokens",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationToken\u003E",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.TimeSpan",
+          "optional": false
+        },
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationResponse\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserAuthorization.RequestRenewTokens%28System.Collections.Generic.IReadOnlyList%7BFusion.AuthorizationToken%7D%2CSystem.TimeSpan%2CFusion.AuthenticationToken%29"
+    },
+    {
+      "name": "RequestTokens",
+      "signature": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationResponse\u003E\u003E RequestTokens(Fusion.AuthenticationToken authenticationToken, System.TimeSpan duration, string[] actions)",
+      "summary": "RequestTokens method of IUserAuthorization.",
+      "params": [
+        {
+          "name": "authenticationToken",
+          "type": "Fusion.AuthenticationToken",
+          "optional": false
+        },
+        {
+          "name": "duration",
+          "type": "System.TimeSpan",
+          "optional": false
+        },
+        {
+          "name": "actions",
+          "type": "string[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Threading.Tasks.Task\u003CSystem.Collections.Generic.IReadOnlyList\u003CFusion.AuthorizationResponse\u003E\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IUserAuthorization.RequestTokens%28Fusion.AuthenticationToken%2CSystem.TimeSpan%2CSystem.String%5B%5D%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

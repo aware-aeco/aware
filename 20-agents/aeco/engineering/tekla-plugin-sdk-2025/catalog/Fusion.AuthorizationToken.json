@@ -1,0 +1,63 @@
+{
+  "name": "AuthorizationToken",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "AuthorizationToken class in Fusion.",
+  "base": "Fusion.AccessControlToken",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.AuthorizationToken",
+  "constructors": [
+    {
+      "name": "AuthorizationToken(string, System.DateTime?, System.DateTime?, string)",
+      "signature": "AuthorizationToken(string principal, System.DateTime? expires, System.DateTime? renewableUntil, string action)",
+      "summary": "Constructs a new AuthorizationToken.",
+      "params": [
+        {
+          "name": "principal",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "expires",
+          "type": "System.DateTime?",
+          "optional": false
+        },
+        {
+          "name": "renewableUntil",
+          "type": "System.DateTime?",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.AuthorizationToken.%23ctor%28System.String%2CSystem.Nullable%7BSystem.DateTime%7D%2CSystem.Nullable%7BSystem.DateTime%7D%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Action",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Action property of AuthorizationToken.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationToken.Action"
+    },
+    {
+      "name": "RenewableUntil",
+      "type": "System.DateTime?",
+      "getter": true,
+      "setter": false,
+      "summary": "RenewableUntil property of AuthorizationToken.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.AuthorizationToken.RenewableUntil"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,49 @@
+{
+  "name": "TextRepresentationTypes",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services",
+  "kind": "enum",
+  "summary": "The TextRepresentationTypes enum defines what a text represents. This affects the text color, size and formatting in a way that is then consistent in the GUI.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.TextRepresentationTypes",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Label",
+      "value": 1,
+      "summary": "The text represents a label for an object."
+    },
+    {
+      "name": "Measurement",
+      "value": 2,
+      "summary": "The text represents a measurement."
+    },
+    {
+      "name": "Angle",
+      "value": 4,
+      "summary": "The text represents an angle."
+    },
+    {
+      "name": "Message",
+      "value": 8,
+      "summary": "The text is a message for the user."
+    },
+    {
+      "name": "Warning",
+      "value": 16,
+      "summary": "The text is a warning to the user."
+    },
+    {
+      "name": "Debug",
+      "value": 32,
+      "summary": "The text is intended for debug purposes."
+    },
+    {
+      "name": "Interactive",
+      "value": 64,
+      "summary": "The text is interactive."
+    }
+  ]
+}

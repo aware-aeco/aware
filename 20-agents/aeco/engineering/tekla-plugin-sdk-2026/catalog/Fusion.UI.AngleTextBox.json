@@ -1,0 +1,25 @@
+{
+  "name": "AngleTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "AngleTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CFusion.Angle, Fusion.Formatting.AngleFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.AngleTextBox",
+  "constructors": [
+    {
+      "name": "AngleTextBox()",
+      "signature": "AngleTextBox()",
+      "summary": "Constructs a new AngleTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.AngleTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

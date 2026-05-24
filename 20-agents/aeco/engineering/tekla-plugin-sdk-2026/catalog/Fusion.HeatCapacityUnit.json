@@ -1,0 +1,26 @@
+{
+  "name": "HeatCapacityUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "HeatCapacityUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.HeatCapacityUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "JoulesPerKelvinKilogram",
+      "value": 0
+    },
+    {
+      "name": "BtusPerFahrenheitPound",
+      "value": 1
+    },
+    {
+      "name": "KilojoulesPerKelvinKilogram",
+      "value": 2
+    }
+  ]
+}

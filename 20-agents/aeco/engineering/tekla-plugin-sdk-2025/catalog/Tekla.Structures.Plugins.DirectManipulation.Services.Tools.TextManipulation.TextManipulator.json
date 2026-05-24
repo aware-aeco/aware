@@ -1,0 +1,63 @@
+{
+  "name": "TextManipulator",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation",
+  "kind": "class",
+  "summary": "The TextManipulator class defines a manipulator to display and manipulate any text.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.TextManipulatorBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.TextManipulator",
+  "constructors": [
+    {
+      "name": "TextManipulator(Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext, Tekla.Structures.Geometry3d.LineSegment, string)",
+      "signature": "TextManipulator(Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext manipulationContext, Tekla.Structures.Geometry3d.LineSegment placement, string initialText)",
+      "summary": "Initializes a new instance of the TextManipulator class.",
+      "params": [
+        {
+          "name": "manipulationContext",
+          "type": "Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext",
+          "doc": "The manipulation context.",
+          "optional": false
+        },
+        {
+          "name": "placement",
+          "type": "Tekla.Structures.Geometry3d.LineSegment",
+          "doc": "The placement of the text manipulator.",
+          "optional": false
+        },
+        {
+          "name": "initialText",
+          "type": "string",
+          "doc": "The initial text to display.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.TextManipulator.%23ctor%28Tekla.Structures.Plugins.DirectManipulation.Core.ManipulationContext%2CTekla.Structures.Geometry3d.LineSegment%2CSystem.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "TextValue",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the text value.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.TextManipulator.TextValue"
+    }
+  ],
+  "events": [
+    {
+      "name": "TextEntered",
+      "delegate": "System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.ValueEnteredEventArgs\u003Cstring\u003E\u003E",
+      "signature": "event System.EventHandler\u003CTekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.ValueEnteredEventArgs\u003Cstring\u003E\u003E TextEntered",
+      "summary": "Invoked when a text has been entered.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.TextManipulation.TextManipulator.TextEntered",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

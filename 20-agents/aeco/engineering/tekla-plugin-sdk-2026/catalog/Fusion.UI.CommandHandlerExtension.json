@@ -1,0 +1,72 @@
+{
+  "name": "CommandHandlerExtension",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "CommandHandlerExtension class in Fusion.UI.",
+  "base": "System.Windows.Markup.MarkupExtension",
+  "interfaces": [
+    "System.Windows.Data.IMultiValueConverter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.CommandHandlerExtension",
+  "constructors": [
+    {
+      "name": "CommandHandlerExtension()",
+      "signature": "CommandHandlerExtension()",
+      "summary": "Constructs a new CommandHandlerExtension.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.CommandHandlerExtension.%23ctor"
+    },
+    {
+      "name": "CommandHandlerExtension(string)",
+      "signature": "CommandHandlerExtension(string commandName)",
+      "summary": "Constructs a new CommandHandlerExtension.",
+      "params": [
+        {
+          "name": "commandName",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.CommandHandlerExtension.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ProvideValue",
+      "signature": "object ProvideValue(System.IServiceProvider serviceProvider)",
+      "summary": "ProvideValue method of CommandHandlerExtension.",
+      "params": [
+        {
+          "name": "serviceProvider",
+          "type": "System.IServiceProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.CommandHandlerExtension.ProvideValue%28System.IServiceProvider%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "CommandName",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "CommandName property of CommandHandlerExtension.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.CommandHandlerExtension.CommandName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,59 @@
+{
+  "name": "DropDownListControl",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls",
+  "kind": "class",
+  "summary": "The DropDownListControl class represents a control that allows the user to select a single item from a list that is displayed when the user clicks the control.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "AddItem",
+      "signature": "void AddItem(object item)",
+      "summary": "Adds an item to the list of items to choose from.",
+      "params": [
+        {
+          "name": "item",
+          "type": "object",
+          "doc": "The item.",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl.AddItem%28System.Object%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "System.Collections.Generic.IList\u003Cobject\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the items.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl.Items"
+    },
+    {
+      "name": "SelectedItem",
+      "type": "object",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets the selected item.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl.SelectedItem"
+    }
+  ],
+  "events": [
+    {
+      "name": "StateChanged",
+      "delegate": "System.EventHandler\u003CSystem.EventArgs\u003E",
+      "signature": "event System.EventHandler\u003CSystem.EventArgs\u003E StateChanged",
+      "summary": "Event to be called when the state of the control has changed.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#E%3ATekla.Structures.Plugins.DirectManipulation.Services.Controls.DropDownListControl.StateChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

@@ -1,0 +1,79 @@
+{
+  "name": "ItemsSource\u00601",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ItemsSource\u00601 class in Fusion.",
+  "base": "Fusion.BindingSource",
+  "interfaces": [
+    "System.Collections.Generic.IEnumerable\u003CT\u003E",
+    "System.Collections.IEnumerable",
+    "System.Collections.Specialized.INotifyCollectionChanged"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ItemsSource\u00601",
+  "constructors": [
+    {
+      "name": "ItemsSource\u00601(System.Collections.Generic.IEnumerable\u003CT\u003E)",
+      "signature": "ItemsSource\u00601(System.Collections.Generic.IEnumerable\u003CT\u003E itemsSource = null)",
+      "summary": "Constructs a new ItemsSource\u00601.",
+      "params": [
+        {
+          "name": "itemsSource",
+          "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ItemsSource%601.%23ctor%28System.Collections.Generic.IEnumerable%7B%600%7D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "GetEnumerator",
+      "signature": "System.Collections.Generic.IEnumerator\u003CT\u003E GetEnumerator()",
+      "summary": "GetEnumerator method of ItemsSource\u00601.",
+      "params": [],
+      "returns": {
+        "type": "System.Collections.Generic.IEnumerator\u003CT\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ItemsSource%601.GetEnumerator"
+    },
+    {
+      "name": "Refresh",
+      "signature": "void Refresh()",
+      "summary": "Refresh method of ItemsSource\u00601.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ItemsSource%601.Refresh"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Items",
+      "type": "System.Collections.Generic.IEnumerable\u003CT\u003E",
+      "getter": true,
+      "setter": true,
+      "summary": "Items property of ItemsSource\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ItemsSource%601.Items"
+    }
+  ],
+  "events": [
+    {
+      "name": "CollectionChanged",
+      "delegate": "System.Collections.Specialized.NotifyCollectionChangedEventHandler",
+      "signature": "event System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged",
+      "summary": "CollectionChanged event of ItemsSource\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#E%3AFusion.ItemsSource%601.CollectionChanged",
+      "handler_thread": "unknown",
+      "interacts_with": []
+    }
+  ],
+  "enum_values": []
+}

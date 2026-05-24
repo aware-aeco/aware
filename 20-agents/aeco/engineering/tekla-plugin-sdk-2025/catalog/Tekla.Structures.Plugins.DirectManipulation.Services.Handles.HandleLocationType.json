@@ -1,0 +1,50 @@
+{
+  "name": "HandleLocationType",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Handles",
+  "kind": "enum",
+  "summary": "Defines a handle by where it is located.",
+  "remarks": "The choice of location type may affect the appearance of the handle.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Handles.HandleLocationType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "InputPoint",
+      "value": 0,
+      "summary": "The handle is located on top of an object\u0027s input point."
+    },
+    {
+      "name": "MidPoint",
+      "value": 1,
+      "summary": "The handle is located at the exact midpoint of an edge or face."
+    },
+    {
+      "name": "EndPoint",
+      "value": 2,
+      "summary": "The handle is located at one end of an open shape."
+    },
+    {
+      "name": "PointExtension",
+      "value": 3,
+      "summary": "The handle extends the clickable area of a point."
+    },
+    {
+      "name": "Other",
+      "value": 4,
+      "summary": "The handle is located at another location."
+    },
+    {
+      "name": "First",
+      "value": 5,
+      "summary": "The handle is the first defining an open shape."
+    },
+    {
+      "name": "Last",
+      "value": 6,
+      "summary": "The handle is the last defining an open shape."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "LabelControl",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Controls",
+  "kind": "class",
+  "summary": "The LabelControl class represents a control that can be used to display label content.",
+  "base": "Tekla.Structures.Plugins.DirectManipulation.Core.ControlBase",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Controls.LabelControl",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

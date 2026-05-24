@@ -1,0 +1,119 @@
+{
+  "name": "Material",
+  "namespace": "Fusion.Models",
+  "kind": "class",
+  "summary": "Material class in Fusion.Models.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Models.Material\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.Material",
+  "constructors": [
+    {
+      "name": "Material(Fusion.RGBA, bool, bool)",
+      "signature": "Material(Fusion.RGBA color, bool doubleSided, bool enableLighting)",
+      "summary": "Constructs a new Material.",
+      "params": [
+        {
+          "name": "color",
+          "type": "Fusion.RGBA",
+          "optional": false
+        },
+        {
+          "name": "doubleSided",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "enableLighting",
+          "type": "bool",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Material.%23ctor%28Fusion.RGBA%2CSystem.Boolean%2CSystem.Boolean%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Models.Material other)",
+      "summary": "Equals method of Material.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Models.Material",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Material.Equals%28Fusion.Models.Material%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Material.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Material.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Material.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Material.GetHashCode"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Color",
+      "type": "Fusion.RGBA",
+      "getter": true,
+      "setter": false,
+      "summary": "Color property of Material.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Material.Color"
+    },
+    {
+      "name": "DoubleSided",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "DoubleSided property of Material.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Material.DoubleSided"
+    },
+    {
+      "name": "EnableLighting",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "EnableLighting property of Material.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Material.EnableLighting"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ResourcesAttribute",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ResourcesAttribute class in Fusion.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ResourcesAttribute",
+  "constructors": [
+    {
+      "name": "ResourcesAttribute(string)",
+      "signature": "ResourcesAttribute(string resourcePath)",
+      "summary": "Constructs a new ResourcesAttribute.",
+      "params": [
+        {
+          "name": "resourcePath",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ResourcesAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Culture",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Culture property of ResourcesAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ResourcesAttribute.Culture"
+    },
+    {
+      "name": "ResourcePath",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ResourcePath property of ResourcesAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ResourcesAttribute.ResourcePath"
+    },
+    {
+      "name": "Theme",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Theme property of ResourcesAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ResourcesAttribute.Theme"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

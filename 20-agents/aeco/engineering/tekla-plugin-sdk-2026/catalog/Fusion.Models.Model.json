@@ -1,0 +1,248 @@
+{
+  "name": "Model",
+  "namespace": "Fusion.Models",
+  "kind": "class",
+  "summary": "Model class in Fusion.Models.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Models.Model\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Models.Model",
+  "constructors": [
+    {
+      "name": "Model(System.Guid, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.EntityGroup\u003E, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Entity\u003E, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Material\u003E, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Geometry\u003E)",
+      "signature": "Model(System.Guid identifier, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.EntityGroup\u003E entityGroups, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Entity\u003E entities, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Material\u003E materials, System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Geometry\u003E geometries)",
+      "summary": "Constructs a new Model.",
+      "params": [
+        {
+          "name": "identifier",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "entityGroups",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.EntityGroup\u003E",
+          "optional": false
+        },
+        {
+          "name": "entities",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Entity\u003E",
+          "optional": false
+        },
+        {
+          "name": "materials",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Material\u003E",
+          "optional": false
+        },
+        {
+          "name": "geometries",
+          "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Geometry\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.%23ctor%28System.Guid%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.Models.EntityGroup%7D%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.Models.Entity%7D%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.Models.Material%7D%2CSystem.Collections.Generic.IReadOnlyList%7BFusion.Models.Geometry%7D%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Models.Model other)",
+      "summary": "Equals method of Model.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Models.Model",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.Equals%28Fusion.Models.Model%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Model.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Model.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.GetHashCode"
+    },
+    {
+      "name": "FromRawbim",
+      "signature": "static Fusion.Models.Model FromRawbim(System.Guid identifier, System.IO.Stream source, System.Threading.CancellationToken cancellationToken = null)",
+      "summary": "FromRawbim method of Model.",
+      "params": [
+        {
+          "name": "identifier",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "source",
+          "type": "System.IO.Stream",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Models.Model",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.FromRawbim%28System.Guid%2CSystem.IO.Stream%2CSystem.Threading.CancellationToken%29"
+    },
+    {
+      "name": "FromStream",
+      "signature": "static Fusion.Models.Model FromStream(System.Guid identifier, System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = null)",
+      "summary": "FromStream method of Model.",
+      "params": [
+        {
+          "name": "identifier",
+          "type": "System.Guid",
+          "optional": false
+        },
+        {
+          "name": "stream",
+          "type": "System.IO.Stream",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Models.Model",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.FromStream%28System.Guid%2CSystem.IO.Stream%2CSystem.Threading.CancellationToken%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Model.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.ToString"
+    },
+    {
+      "name": "ToStream",
+      "signature": "void ToStream(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = null)",
+      "summary": "ToStream method of Model.",
+      "params": [
+        {
+          "name": "stream",
+          "type": "System.IO.Stream",
+          "optional": false
+        },
+        {
+          "name": "cancellationToken",
+          "type": "System.Threading.CancellationToken",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Models.Model.ToStream%28System.IO.Stream%2CSystem.Threading.CancellationToken%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "BoundingBox",
+      "type": "Fusion.BoundingBox",
+      "getter": true,
+      "setter": false,
+      "summary": "BoundingBox property of Model.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Model.BoundingBox"
+    },
+    {
+      "name": "Entities",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Entity\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Entities property of Model.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Model.Entities"
+    },
+    {
+      "name": "EntityGroups",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.EntityGroup\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "EntityGroups property of Model.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Model.EntityGroups"
+    },
+    {
+      "name": "Geometries",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Geometry\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Geometries property of Model.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Model.Geometries"
+    },
+    {
+      "name": "Identifier",
+      "type": "System.Guid",
+      "getter": true,
+      "setter": false,
+      "summary": "Identifier property of Model.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Model.Identifier"
+    },
+    {
+      "name": "Materials",
+      "type": "System.Collections.Generic.IReadOnlyList\u003CFusion.Models.Material\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "Materials property of Model.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Models.Model.Materials"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

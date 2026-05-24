@@ -1,0 +1,25 @@
+{
+  "name": "Int32TextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "Int32TextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003Cint, Fusion.Formatting.Int32Formatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.Int32TextBox",
+  "constructors": [
+    {
+      "name": "Int32TextBox()",
+      "signature": "Int32TextBox()",
+      "summary": "Constructs a new Int32TextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.Int32TextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

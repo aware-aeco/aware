@@ -1,0 +1,30 @@
+{
+  "name": "PressureLossUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "PressureLossUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.PressureLossUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "KilopascalsPerMeter",
+      "value": 0
+    },
+    {
+      "name": "PoundsPerSquareInchPerFoot",
+      "value": 1
+    },
+    {
+      "name": "PascalsPerMeter",
+      "value": 2
+    },
+    {
+      "name": "HectopascalsPerMeter",
+      "value": 3
+    }
+  ]
+}

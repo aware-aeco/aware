@@ -1,0 +1,26 @@
+{
+  "name": "DynamicViscosityUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "DynamicViscosityUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.DynamicViscosityUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PascalSeconds",
+      "value": 0
+    },
+    {
+      "name": "KilogramsPerSquareMeterSeconds",
+      "value": 1
+    },
+    {
+      "name": "PoundsPerSquareFootSeconds",
+      "value": 2
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "ValidatorCallback",
+  "namespace": "Fusion.UI",
+  "kind": "delegate",
+  "summary": "ValidatorCallback delegate in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ValidatorCallback",
+  "constructors": [
+    {
+      "name": "ValidatorCallback(object, nint)",
+      "signature": "ValidatorCallback(object object, nint method)",
+      "summary": "Constructs a new ValidatorCallback.",
+      "params": [
+        {
+          "name": "object",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ValidatorCallback.%23ctor%28System.Object%2CSystem.IntPtr%29"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [],
+  "delegate_signature": "bool Invoke(object value, System.Globalization.CultureInfo cultureInfo)"
+}

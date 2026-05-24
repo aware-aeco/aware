@@ -1,0 +1,30 @@
+{
+  "name": "IHelpProvider",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IHelpProvider interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IHelpProvider",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "RequestHelp",
+      "signature": "void RequestHelp(string topic)",
+      "summary": "RequestHelp method of IHelpProvider.",
+      "params": [
+        {
+          "name": "topic",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHelpProvider.RequestHelp%28System.String%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

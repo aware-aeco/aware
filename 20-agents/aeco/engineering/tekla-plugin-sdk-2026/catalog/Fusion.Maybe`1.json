@@ -1,0 +1,258 @@
+{
+  "name": "Maybe\u00601",
+  "namespace": "Fusion",
+  "kind": "struct",
+  "summary": "Maybe\u00601 struct in Fusion.",
+  "interfaces": [
+    "System.IEquatable\u003CFusion.Maybe\u003CT\u003E\u003E"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Maybe\u00601",
+  "constructors": [
+    {
+      "name": "Maybe\u00601(T)",
+      "signature": "Maybe\u00601(T value)",
+      "summary": "Constructs a new Maybe\u00601.",
+      "params": [
+        {
+          "name": "value",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.%23ctor%28%600%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Equals",
+      "signature": "bool Equals(Fusion.Maybe\u003CT\u003E other)",
+      "summary": "Equals method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.Equals%28Fusion.Maybe%7B%600%7D%29"
+    },
+    {
+      "name": "Equals",
+      "signature": "bool Equals(object other)",
+      "summary": "Equals method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "other",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.Equals%28System.Object%29"
+    },
+    {
+      "name": "GetHashCode",
+      "signature": "int GetHashCode()",
+      "summary": "GetHashCode method of Maybe\u00601.",
+      "params": [],
+      "returns": {
+        "type": "int",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.GetHashCode"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Maybe\u003CT\u003E a, Fusion.Maybe\u003CT\u003E b)",
+      "summary": "op_Equality method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.op_Equality%28Fusion.Maybe%7B%600%7D%2CFusion.Maybe%7B%600%7D%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(Fusion.Maybe\u003CT\u003E a, T b)",
+      "summary": "op_Equality method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.op_Equality%28Fusion.Maybe%7B%600%7D%2C%600%29"
+    },
+    {
+      "name": "op_Equality",
+      "signature": "static bool op_Equality(T a, Fusion.Maybe\u003CT\u003E b)",
+      "summary": "op_Equality method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "a",
+          "type": "T",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.op_Equality%28%600%2CFusion.Maybe%7B%600%7D%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Maybe\u003CT\u003E a, Fusion.Maybe\u003CT\u003E b)",
+      "summary": "op_Inequality method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.op_Inequality%28Fusion.Maybe%7B%600%7D%2CFusion.Maybe%7B%600%7D%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(Fusion.Maybe\u003CT\u003E a, T b)",
+      "summary": "op_Inequality method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "T",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.op_Inequality%28Fusion.Maybe%7B%600%7D%2C%600%29"
+    },
+    {
+      "name": "op_Inequality",
+      "signature": "static bool op_Inequality(T a, Fusion.Maybe\u003CT\u003E b)",
+      "summary": "op_Inequality method of Maybe\u00601.",
+      "params": [
+        {
+          "name": "a",
+          "type": "T",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "Fusion.Maybe\u003CT\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.op_Inequality%28%600%2CFusion.Maybe%7B%600%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString()",
+      "summary": "ToString method of Maybe\u00601.",
+      "params": [],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Maybe%601.ToString"
+    }
+  ],
+  "properties": [
+    {
+      "name": "HasValue",
+      "type": "bool",
+      "getter": true,
+      "setter": false,
+      "summary": "HasValue property of Maybe\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Maybe%601.HasValue"
+    },
+    {
+      "name": "Value",
+      "type": "T",
+      "getter": true,
+      "setter": false,
+      "summary": "Value property of Maybe\u00601.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Maybe%601.Value"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,46 @@
+{
+  "name": "IContentPanel",
+  "namespace": "Fusion.Features.Panels",
+  "kind": "interface",
+  "summary": "IContentPanel interface in Fusion.Features.Panels.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Features.Panels.IContentPanel",
+  "constructors": [],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Availability",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "Availability property of IContentPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.IContentPanel.Availability"
+    },
+    {
+      "name": "HeaderGeometryKey",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "HeaderGeometryKey property of IContentPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.IContentPanel.HeaderGeometryKey"
+    },
+    {
+      "name": "HeaderTextKey",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "HeaderTextKey property of IContentPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.IContentPanel.HeaderTextKey"
+    },
+    {
+      "name": "ViewName",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ViewName property of IContentPanel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.Features.Panels.IContentPanel.ViewName"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

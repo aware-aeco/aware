@@ -1,0 +1,147 @@
+{
+  "name": "DensityFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "DensityFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003Cdouble, Fusion.DensityUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.DensityFormatter",
+  "constructors": [
+    {
+      "name": "DensityFormatter()",
+      "signature": "DensityFormatter()",
+      "summary": "Constructs a new DensityFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DensityFormatter.%23ctor"
+    },
+    {
+      "name": "DensityFormatter(Fusion.DensityUnit)",
+      "signature": "DensityFormatter(Fusion.DensityUnit unit)",
+      "summary": "Constructs a new DensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DensityUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DensityFormatter.%23ctor%28Fusion.DensityUnit%29"
+    },
+    {
+      "name": "DensityFormatter(Fusion.DensityUnit, Fusion.DensityUnit)",
+      "signature": "DensityFormatter(Fusion.DensityUnit unit, Fusion.DensityUnit formatUnit)",
+      "summary": "Constructs a new DensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.DensityUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DensityFormatter.%23ctor%28Fusion.DensityUnit%2CFusion.DensityUnit%29"
+    },
+    {
+      "name": "DensityFormatter(Fusion.DensityUnit, Fusion.DensityUnit, string, System.IFormatProvider)",
+      "signature": "DensityFormatter(Fusion.DensityUnit unit, Fusion.DensityUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new DensityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.DensityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DensityFormatter.%23ctor%28Fusion.DensityUnit%2CFusion.DensityUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out double value)",
+      "summary": "TryParse method of DensityFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DensityFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CSystem.Double%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(double value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of DensityFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "double",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DensityFormatter.ToString%28System.Double%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

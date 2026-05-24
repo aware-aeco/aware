@@ -1,0 +1,57 @@
+{
+  "name": "PolygonRequirements",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools",
+  "kind": "class",
+  "summary": "The PolygonRequirements class defines the requirements for valid polygon behavior.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.PolygonRequirements",
+  "constructors": [
+    {
+      "name": "PolygonRequirements()",
+      "signature": "PolygonRequirements()",
+      "summary": "Constructs a new PolygonRequirements.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.PolygonRequirements.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "Closed",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the polygon must be considered as a closed loop.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.PolygonRequirements.Closed"
+    },
+    {
+      "name": "MaximumVertexCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the maximum number of vertices in the polygon.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.PolygonRequirements.MaximumVertexCount"
+    },
+    {
+      "name": "MinimumVertexCount",
+      "type": "int",
+      "getter": true,
+      "setter": false,
+      "summary": "Gets the minimum number of vertices in the polygon.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.PolygonRequirements.MinimumVertexCount"
+    },
+    {
+      "name": "Planar",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the polygon must be planar.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.PolygonRequirements.Planar"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

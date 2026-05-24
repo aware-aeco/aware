@@ -1,0 +1,47 @@
+{
+  "name": "NavigationViewModel",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "NavigationViewModel class in Fusion.",
+  "base": "Fusion.ViewModel",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.NavigationViewModel",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "NavigatingBack",
+      "signature": "bool NavigatingBack()",
+      "summary": "NavigatingBack method of NavigationViewModel.",
+      "params": [],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.NavigationViewModel.NavigatingBack"
+    },
+    {
+      "name": "NavigatingHere",
+      "signature": "void NavigatingHere()",
+      "summary": "NavigatingHere method of NavigationViewModel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.NavigationViewModel.NavigatingHere"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Navigation",
+      "type": "Fusion.INavigationController",
+      "getter": true,
+      "setter": true,
+      "summary": "Navigation property of NavigationViewModel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.NavigationViewModel.Navigation"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,213 @@
+{
+  "name": "DynamicViscosityFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "DynamicViscosityFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003CFusion.DynamicViscosity, Fusion.DynamicViscosityUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.DynamicViscosityFormatter",
+  "constructors": [
+    {
+      "name": "DynamicViscosityFormatter()",
+      "signature": "DynamicViscosityFormatter()",
+      "summary": "Constructs a new DynamicViscosityFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.%23ctor"
+    },
+    {
+      "name": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit)",
+      "signature": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit unit)",
+      "summary": "Constructs a new DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DynamicViscosityUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.%23ctor%28Fusion.DynamicViscosityUnit%29"
+    },
+    {
+      "name": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit, Fusion.DynamicViscosityUnit)",
+      "signature": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit unit, Fusion.DynamicViscosityUnit formatUnit)",
+      "summary": "Constructs a new DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DynamicViscosityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.DynamicViscosityUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.%23ctor%28Fusion.DynamicViscosityUnit%2CFusion.DynamicViscosityUnit%29"
+    },
+    {
+      "name": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit, Fusion.DynamicViscosityUnit, string, System.IFormatProvider)",
+      "signature": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit unit, Fusion.DynamicViscosityUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DynamicViscosityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.DynamicViscosityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.%23ctor%28Fusion.DynamicViscosityUnit%2CFusion.DynamicViscosityUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit, string, System.IFormatProvider)",
+      "signature": "DynamicViscosityFormatter(Fusion.DynamicViscosityUnit unit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.DynamicViscosityUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.%23ctor%28Fusion.DynamicViscosityUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out Fusion.DynamicViscosity value)",
+      "summary": "TryParse method of DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.DynamicViscosity",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CFusion.DynamicViscosity%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.DynamicViscosityFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.DynamicViscosityFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.DynamicViscosityFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.DynamicViscosityFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.DynamicViscosityFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(Fusion.DynamicViscosity value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of DynamicViscosityFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.DynamicViscosity",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.DynamicViscosityFormatter.ToString%28Fusion.DynamicViscosity%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

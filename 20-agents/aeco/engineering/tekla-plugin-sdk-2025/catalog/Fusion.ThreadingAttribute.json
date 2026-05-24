@@ -1,0 +1,40 @@
+{
+  "name": "ThreadingAttribute",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "ThreadingAttribute class in Fusion.",
+  "base": "System.Attribute",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ThreadingAttribute",
+  "constructors": [
+    {
+      "name": "ThreadingAttribute(string)",
+      "signature": "ThreadingAttribute(string threadingInformation)",
+      "summary": "Constructs a new ThreadingAttribute.",
+      "params": [
+        {
+          "name": "threadingInformation",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.ThreadingAttribute.%23ctor%28System.String%29"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ThreadingInformation",
+      "type": "string",
+      "getter": true,
+      "setter": false,
+      "summary": "ThreadingInformation property of ThreadingAttribute.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.ThreadingAttribute.ThreadingInformation"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

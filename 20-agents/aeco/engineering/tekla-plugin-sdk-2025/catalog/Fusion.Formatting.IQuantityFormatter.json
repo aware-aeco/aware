@@ -1,0 +1,67 @@
+{
+  "name": "IQuantityFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "interface",
+  "summary": "IQuantityFormatter interface in Fusion.Formatting.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.IQuantityFormatter",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out object value)",
+      "summary": "TryParse method of IQuantityFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.IQuantityFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CSystem.Object%40%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(object value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of IQuantityFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.IQuantityFormatter.ToString%28System.Object%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

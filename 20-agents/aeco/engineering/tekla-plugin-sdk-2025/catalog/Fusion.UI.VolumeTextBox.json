@@ -1,0 +1,25 @@
+{
+  "name": "VolumeTextBox",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "VolumeTextBox class in Fusion.UI.",
+  "base": "Fusion.UI.FormattedTextBox\u003CFusion.Volume, Fusion.Formatting.VolumeFormatter\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.VolumeTextBox",
+  "constructors": [
+    {
+      "name": "VolumeTextBox()",
+      "signature": "VolumeTextBox()",
+      "summary": "Constructs a new VolumeTextBox.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.VolumeTextBox.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

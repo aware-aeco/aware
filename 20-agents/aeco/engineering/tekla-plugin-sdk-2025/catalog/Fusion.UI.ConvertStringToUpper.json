@@ -1,0 +1,55 @@
+{
+  "name": "ConvertStringToUpper",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "ConvertStringToUpper class in Fusion.UI.",
+  "base": "Fusion.UI.ValueConverter\u003Cstring, string\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.ConvertStringToUpper",
+  "constructors": [
+    {
+      "name": "ConvertStringToUpper()",
+      "signature": "ConvertStringToUpper()",
+      "summary": "Constructs a new ConvertStringToUpper.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertStringToUpper.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "string Convert(string value, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of ConvertStringToUpper.",
+      "params": [
+        {
+          "name": "value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.ConvertStringToUpper.Convert%28System.String%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

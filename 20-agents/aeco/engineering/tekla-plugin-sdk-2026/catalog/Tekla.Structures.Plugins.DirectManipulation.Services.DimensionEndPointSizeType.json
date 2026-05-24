@@ -1,0 +1,44 @@
+{
+  "name": "DimensionEndPointSizeType",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services",
+  "kind": "enum",
+  "summary": "The DimensionEndPointSizeType enum defines the dimension end point size types. The size can be dynamic or fixed.",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.DimensionEndPointSizeType",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "Dynamic",
+      "value": 0,
+      "summary": "The size is based on the dimension value of the associated measurement graphic."
+    },
+    {
+      "name": "FixedExtraSmall",
+      "value": 1,
+      "summary": "The size is extra small. The size does not depend on the dimension value."
+    },
+    {
+      "name": "FixedSmall",
+      "value": 2,
+      "summary": "The size is small. The size does not depend on the dimension value."
+    },
+    {
+      "name": "FixedMedium",
+      "value": 3,
+      "summary": "The size is medium. The size does not depend on the dimension value."
+    },
+    {
+      "name": "FixedLarge",
+      "value": 4,
+      "summary": "The size is large. The size does not depend on the dimension value."
+    },
+    {
+      "name": "FixedExtraLarge",
+      "value": 5,
+      "summary": "The size is extra large. The size does not depend on the dimension value."
+    }
+  ]
+}

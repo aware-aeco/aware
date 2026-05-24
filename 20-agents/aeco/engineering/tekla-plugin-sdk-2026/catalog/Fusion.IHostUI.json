@@ -1,0 +1,701 @@
+{
+  "name": "IHostUI",
+  "namespace": "Fusion",
+  "kind": "interface",
+  "summary": "IHostUI interface in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.IHostUI",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "ShowWindow",
+      "signature": "Fusion.IWindowController ShowWindow(string viewName, object parameter)",
+      "summary": "ShowWindow method of IHostUI.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.IWindowController",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowWindow%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "ShowWindowWithStartupLocation",
+      "signature": "Fusion.IWindowController ShowWindowWithStartupLocation(string viewName, object parameter, System.Windows.WindowStartupLocation windowStartupLocation)",
+      "summary": "ShowWindowWithStartupLocation method of IHostUI.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "windowStartupLocation",
+          "type": "System.Windows.WindowStartupLocation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.IWindowController",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowWindowWithStartupLocation%28System.String%2CSystem.Object%2CSystem.Windows.WindowStartupLocation%29"
+    },
+    {
+      "name": "ShowCredentialDialog",
+      "signature": "Fusion.SessionCredential ShowCredentialDialog(string text, string caption)",
+      "summary": "ShowCredentialDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.SessionCredential",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowCredentialDialog%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "ShowProgressDialog",
+      "signature": "bool ShowProgressDialog(System.Action\u003CFusion.Progress\u003E backgroundOperation)",
+      "summary": "ShowProgressDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "backgroundOperation",
+          "type": "System.Action\u003CFusion.Progress\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowProgressDialog%28System.Action%7BFusion.Progress%7D%29"
+    },
+    {
+      "name": "GetResource",
+      "signature": "object GetResource(object resourceKey)",
+      "summary": "GetResource method of IHostUI.",
+      "params": [
+        {
+          "name": "resourceKey",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.GetResource%28System.Object%29"
+    },
+    {
+      "name": "ShowDialog",
+      "signature": "object ShowDialog(string viewName, object parameter)",
+      "summary": "ShowDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowDialog%28System.String%2CSystem.Object%29"
+    },
+    {
+      "name": "ShowDialogWithStartupLocation",
+      "signature": "object ShowDialogWithStartupLocation(string viewName, object parameter, System.Windows.WindowStartupLocation windowStartupLocation)",
+      "summary": "ShowDialogWithStartupLocation method of IHostUI.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "windowStartupLocation",
+          "type": "System.Windows.WindowStartupLocation",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowDialogWithStartupLocation%28System.String%2CSystem.Object%2CSystem.Windows.WindowStartupLocation%29"
+    },
+    {
+      "name": "ShowDialogWithStartupLocationAndOwner",
+      "signature": "object ShowDialogWithStartupLocationAndOwner(string viewName, object parameter, System.Windows.WindowStartupLocation windowStartupLocation, nint dialogOwner)",
+      "summary": "ShowDialogWithStartupLocationAndOwner method of IHostUI.",
+      "params": [
+        {
+          "name": "viewName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "windowStartupLocation",
+          "type": "System.Windows.WindowStartupLocation",
+          "optional": false
+        },
+        {
+          "name": "dialogOwner",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowDialogWithStartupLocationAndOwner%28System.String%2CSystem.Object%2CSystem.Windows.WindowStartupLocation%2CSystem.IntPtr%29"
+    },
+    {
+      "name": "GetLocalizedText",
+      "signature": "string GetLocalizedText(string resourceKey)",
+      "summary": "GetLocalizedText method of IHostUI.",
+      "params": [
+        {
+          "name": "resourceKey",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.GetLocalizedText%28System.String%29"
+    },
+    {
+      "name": "ShowFolderPickerDialog",
+      "signature": "string ShowFolderPickerDialog(string caption, string initialFolder)",
+      "summary": "ShowFolderPickerDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFolder",
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowFolderPickerDialog%28System.String%2CSystem.String%29"
+    },
+    {
+      "name": "ShowMessageDialog",
+      "signature": "string ShowMessageDialog(string text, string caption = null, string icon = null, string[] buttons = null, string defaultButton = null, string cancelButton = null)",
+      "summary": "ShowMessageDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "buttons",
+          "type": "string[]",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "defaultButton",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "cancelButton",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowMessageDialog%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%5B%5D%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "ShowMessageDialogWithOnTop",
+      "signature": "string ShowMessageDialogWithOnTop(string text, string caption = null, string icon = null, string[] buttons = null, string defaultButton = null, string cancelButton = null, bool modal = true, bool onTop = false)",
+      "summary": "ShowMessageDialogWithOnTop method of IHostUI.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "buttons",
+          "type": "string[]",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "defaultButton",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "cancelButton",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "modal",
+          "type": "bool",
+          "optional": true,
+          "default": "true"
+        },
+        {
+          "name": "onTop",
+          "type": "bool",
+          "optional": true,
+          "default": "false"
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowMessageDialogWithOnTop%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%5B%5D%2CSystem.String%2CSystem.String%2CSystem.Boolean%2CSystem.Boolean%29"
+    },
+    {
+      "name": "ShowMessageDialogWithStartupLocationAndOwner",
+      "signature": "string ShowMessageDialogWithStartupLocationAndOwner(string text, string caption, string icon, string[] buttons, string defaultButton, string cancelButton, System.Windows.WindowStartupLocation windowStartupLocation, nint dialogOwner)",
+      "summary": "ShowMessageDialogWithStartupLocationAndOwner method of IHostUI.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "buttons",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "defaultButton",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "cancelButton",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "windowStartupLocation",
+          "type": "System.Windows.WindowStartupLocation",
+          "optional": false
+        },
+        {
+          "name": "dialogOwner",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowMessageDialogWithStartupLocationAndOwner%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%5B%5D%2CSystem.String%2CSystem.String%2CSystem.Windows.WindowStartupLocation%2CSystem.IntPtr%29"
+    },
+    {
+      "name": "ShowSaveFilePickerDialog",
+      "signature": "string ShowSaveFilePickerDialog(string caption, string initialFileName, string initialFolder, string[] customPlaces, Fusion.FileType[] fileTypes)",
+      "summary": "ShowSaveFilePickerDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFolder",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "customPlaces",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "fileTypes",
+          "type": "Fusion.FileType[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowSaveFilePickerDialog%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%5B%5D%2CFusion.FileType%5B%5D%29"
+    },
+    {
+      "name": "ShowSaveFilePickerDialog",
+      "signature": "string ShowSaveFilePickerDialog(string caption, string initialFolder, string[] customPlaces, Fusion.FileType[] fileTypes)",
+      "summary": "ShowSaveFilePickerDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFolder",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "customPlaces",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "fileTypes",
+          "type": "Fusion.FileType[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowSaveFilePickerDialog%28System.String%2CSystem.String%2CSystem.String%5B%5D%2CFusion.FileType%5B%5D%29"
+    },
+    {
+      "name": "ShowOpenFilePickerDialog",
+      "signature": "string[] ShowOpenFilePickerDialog(string caption, string initialFileName, string initialFolder, string[] customPlaces, bool allowMultiple, Fusion.FileType[] fileTypes)",
+      "summary": "ShowOpenFilePickerDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFileName",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFolder",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "customPlaces",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "allowMultiple",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "fileTypes",
+          "type": "Fusion.FileType[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowOpenFilePickerDialog%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%5B%5D%2CSystem.Boolean%2CFusion.FileType%5B%5D%29"
+    },
+    {
+      "name": "ShowOpenFilePickerDialog",
+      "signature": "string[] ShowOpenFilePickerDialog(string caption, string initialFolder, string[] customPlaces, bool allowMultiple, Fusion.FileType[] fileTypes)",
+      "summary": "ShowOpenFilePickerDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "initialFolder",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "customPlaces",
+          "type": "string[]",
+          "optional": false
+        },
+        {
+          "name": "allowMultiple",
+          "type": "bool",
+          "optional": false
+        },
+        {
+          "name": "fileTypes",
+          "type": "Fusion.FileType[]",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string[]",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowOpenFilePickerDialog%28System.String%2CSystem.String%2CSystem.String%5B%5D%2CSystem.Boolean%2CFusion.FileType%5B%5D%29"
+    },
+    {
+      "name": "OpenBackgroundMessageDialog",
+      "signature": "void OpenBackgroundMessageDialog(string text, string caption = null, string icon = null, string button = null)",
+      "summary": "OpenBackgroundMessageDialog method of IHostUI.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        },
+        {
+          "name": "button",
+          "type": "string",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.OpenBackgroundMessageDialog%28System.String%2CSystem.String%2CSystem.String%2CSystem.String%29"
+    },
+    {
+      "name": "RegisterCommandObserver",
+      "signature": "void RegisterCommandObserver(Fusion.ICommandObserver commandObserver)",
+      "summary": "RegisterCommandObserver method of IHostUI.",
+      "params": [
+        {
+          "name": "commandObserver",
+          "type": "Fusion.ICommandObserver",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.RegisterCommandObserver%28Fusion.ICommandObserver%29"
+    },
+    {
+      "name": "RegisterKeyboardShortcut",
+      "signature": "void RegisterKeyboardShortcut(string gesture, System.Action action)",
+      "summary": "RegisterKeyboardShortcut method of IHostUI.",
+      "params": [
+        {
+          "name": "gesture",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "action",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.RegisterKeyboardShortcut%28System.String%2CSystem.Action%29"
+    },
+    {
+      "name": "ShowDiagnosticWindow",
+      "signature": "void ShowDiagnosticWindow()",
+      "summary": "ShowDiagnosticWindow method of IHostUI.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.IHostUI.ShowDiagnosticWindow"
+    }
+  ],
+  "properties": [
+    {
+      "name": "FullScreenMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "FullScreenMode property of IHostUI.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUI.FullScreenMode"
+    },
+    {
+      "name": "Help",
+      "type": "Fusion.IHelpProvider",
+      "getter": true,
+      "setter": true,
+      "summary": "Help property of IHostUI.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUI.Help"
+    },
+    {
+      "name": "PublishedViews",
+      "type": "System.Collections.Generic.IEnumerable\u003CFusion.PublishedViewInfo\u003E",
+      "getter": true,
+      "setter": false,
+      "summary": "PublishedViews property of IHostUI.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUI.PublishedViews"
+    },
+    {
+      "name": "Resources",
+      "type": "System.Collections.IDictionary",
+      "getter": true,
+      "setter": false,
+      "summary": "Resources property of IHostUI.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUI.Resources"
+    },
+    {
+      "name": "TabletMode",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "TabletMode property of IHostUI.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.IHostUI.TabletMode"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

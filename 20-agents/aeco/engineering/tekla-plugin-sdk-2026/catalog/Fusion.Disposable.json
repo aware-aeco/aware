@@ -1,0 +1,67 @@
+{
+  "name": "Disposable",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "Disposable class in Fusion.",
+  "interfaces": [
+    "System.IDisposable"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Disposable",
+  "constructors": [
+    {
+      "name": "Disposable(System.Action)",
+      "signature": "Disposable(System.Action disposed)",
+      "summary": "Constructs a new Disposable.",
+      "params": [
+        {
+          "name": "disposed",
+          "type": "System.Action",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Disposable.%23ctor%28System.Action%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "op_Addition",
+      "signature": "static Fusion.Disposable op_Addition(Fusion.Disposable a, System.IDisposable b)",
+      "summary": "op_Addition method of Disposable.",
+      "params": [
+        {
+          "name": "a",
+          "type": "Fusion.Disposable",
+          "optional": false
+        },
+        {
+          "name": "b",
+          "type": "System.IDisposable",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "Fusion.Disposable",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Disposable.op_Addition%28Fusion.Disposable%2CSystem.IDisposable%29"
+    },
+    {
+      "name": "Dispose",
+      "signature": "void Dispose()",
+      "summary": "Dispose method of Disposable.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Disposable.Dispose"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,81 @@
+{
+  "name": "OpenFolderDialog",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "OpenFolderDialog class in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.OpenFolderDialog",
+  "constructors": [
+    {
+      "name": "OpenFolderDialog()",
+      "signature": "OpenFolderDialog()",
+      "summary": "Constructs a new OpenFolderDialog.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.OpenFolderDialog.%23ctor"
+    }
+  ],
+  "methods": [
+    {
+      "name": "ShowDialog",
+      "signature": "bool ShowDialog(System.Windows.Window ownerWindow = null)",
+      "summary": "ShowDialog method of OpenFolderDialog.",
+      "params": [
+        {
+          "name": "ownerWindow",
+          "type": "System.Windows.Window",
+          "optional": true,
+          "default": "null"
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.OpenFolderDialog.ShowDialog%28System.Windows.Window%29"
+    },
+    {
+      "name": "ShowDialog",
+      "signature": "bool ShowDialog(nint ownerWindow)",
+      "summary": "ShowDialog method of OpenFolderDialog.",
+      "params": [
+        {
+          "name": "ownerWindow",
+          "type": "nint",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.OpenFolderDialog.ShowDialog%28System.IntPtr%29"
+    }
+  ],
+  "properties": [
+    {
+      "name": "SelectedFolder",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "SelectedFolder property of OpenFolderDialog.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.OpenFolderDialog.SelectedFolder"
+    },
+    {
+      "name": "Title",
+      "type": "string",
+      "getter": true,
+      "setter": true,
+      "summary": "Title property of OpenFolderDialog.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.UI.OpenFolderDialog.Title"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

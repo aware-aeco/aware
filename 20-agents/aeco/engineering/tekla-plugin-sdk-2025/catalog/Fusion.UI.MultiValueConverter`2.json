@@ -1,0 +1,65 @@
+{
+  "name": "MultiValueConverter\u00602",
+  "namespace": "Fusion.UI",
+  "kind": "class",
+  "summary": "MultiValueConverter\u00602 class in Fusion.UI.",
+  "base": "System.Windows.Markup.MarkupExtension",
+  "interfaces": [
+    "System.Windows.Data.IMultiValueConverter"
+  ],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.MultiValueConverter\u00602",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "Convert",
+      "signature": "TTarget Convert(TSource[] values, object parameter, System.Globalization.CultureInfo culture)",
+      "summary": "Convert method of MultiValueConverter\u00602.",
+      "params": [
+        {
+          "name": "values",
+          "type": "TSource[]",
+          "optional": false
+        },
+        {
+          "name": "parameter",
+          "type": "object",
+          "optional": false
+        },
+        {
+          "name": "culture",
+          "type": "System.Globalization.CultureInfo",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "TTarget",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.MultiValueConverter%602.Convert%28%600%5B%5D%2CSystem.Object%2CSystem.Globalization.CultureInfo%29"
+    },
+    {
+      "name": "ProvideValue",
+      "signature": "object ProvideValue(System.IServiceProvider serviceProvider)",
+      "summary": "ProvideValue method of MultiValueConverter\u00602.",
+      "params": [
+        {
+          "name": "serviceProvider",
+          "type": "System.IServiceProvider",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "object",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.UI.MultiValueConverter%602.ProvideValue%28System.IServiceProvider%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}

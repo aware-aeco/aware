@@ -1,0 +1,44 @@
+{
+  "name": "WindowViewModel",
+  "namespace": "Fusion",
+  "kind": "class",
+  "summary": "WindowViewModel class in Fusion.",
+  "base": "Fusion.ViewModel",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.WindowViewModel",
+  "constructors": [],
+  "methods": [
+    {
+      "name": "WindowClosed",
+      "signature": "void WindowClosed()",
+      "summary": "WindowClosed method of WindowViewModel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.WindowViewModel.WindowClosed"
+    },
+    {
+      "name": "WindowOpened",
+      "signature": "void WindowOpened()",
+      "summary": "WindowOpened method of WindowViewModel.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.WindowViewModel.WindowOpened"
+    }
+  ],
+  "properties": [
+    {
+      "name": "Window",
+      "type": "Fusion.IWindowController",
+      "getter": true,
+      "setter": true,
+      "summary": "Window property of WindowViewModel.",
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#P%3AFusion.WindowViewModel.Window"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ThermalExpansionCoefficientUnit",
+  "namespace": "Fusion",
+  "kind": "enum",
+  "summary": "ThermalExpansionCoefficientUnit enum in Fusion.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.ThermalExpansionCoefficientUnit",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "PerKelvin",
+      "value": 0
+    },
+    {
+      "name": "PerCelsius",
+      "value": 1
+    },
+    {
+      "name": "PerFahrenheit",
+      "value": 2
+    }
+  ]
+}

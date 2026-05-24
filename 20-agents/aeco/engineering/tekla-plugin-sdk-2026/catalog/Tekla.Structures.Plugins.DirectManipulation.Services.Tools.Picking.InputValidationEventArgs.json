@@ -1,0 +1,35 @@
+{
+  "name": "InputValidationEventArgs",
+  "namespace": "Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking",
+  "kind": "class",
+  "summary": "The InputValidationEventArgs class provides the event argument for pick ending events.",
+  "base": "System.EventArgs",
+  "interfaces": [],
+  "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#T:Tekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputValidationEventArgs",
+  "constructors": [
+    {
+      "name": "InputValidationEventArgs()",
+      "signature": "InputValidationEventArgs()",
+      "summary": "Constructs a new InputValidationEventArgs.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#M%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputValidationEventArgs.%23ctor"
+    }
+  ],
+  "methods": [],
+  "properties": [
+    {
+      "name": "ContinueSession",
+      "type": "bool",
+      "getter": true,
+      "setter": true,
+      "summary": "Gets or sets a value indicating whether the picking session should continue even though the picking is done.",
+      "remarks": "The effect of this flag (forcing the continuation of the picking session) is only valid if the picking\nsession is not interrupted, i.e. the session is finishing by a request from the user, and not by an\ninterrupt event.",
+      "doc_url": "https://developer.tekla.com/documentation/direct-manipulation-api-plugins#P%3ATekla.Structures.Plugins.DirectManipulation.Services.Tools.Picking.InputValidationEventArgs.ContinueSession"
+    }
+  ],
+  "events": [],
+  "enum_values": []
+}

@@ -1,0 +1,26 @@
+{
+  "name": "NavigationSlideDirection",
+  "namespace": "Fusion.UI",
+  "kind": "enum",
+  "summary": "NavigationSlideDirection enum in Fusion.UI.",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.UI.NavigationSlideDirection",
+  "constructors": [],
+  "methods": [],
+  "properties": [],
+  "events": [],
+  "enum_values": [
+    {
+      "name": "None",
+      "value": 0
+    },
+    {
+      "name": "LeftToRight",
+      "value": 1
+    },
+    {
+      "name": "RightToLeft",
+      "value": 2
+    }
+  ]
+}

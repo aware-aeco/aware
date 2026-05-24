@@ -1,0 +1,213 @@
+{
+  "name": "MassFormatter",
+  "namespace": "Fusion.Formatting",
+  "kind": "class",
+  "summary": "MassFormatter class in Fusion.Formatting.",
+  "base": "Fusion.Formatting.QuantityFormatter\u003CFusion.Mass, Fusion.MassUnit\u003E",
+  "interfaces": [],
+  "doc_url": "https://www.nuget.org/packages/TeklaFusion#T:Fusion.Formatting.MassFormatter",
+  "constructors": [
+    {
+      "name": "MassFormatter()",
+      "signature": "MassFormatter()",
+      "summary": "Constructs a new MassFormatter.",
+      "params": [],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.%23ctor"
+    },
+    {
+      "name": "MassFormatter(Fusion.MassUnit)",
+      "signature": "MassFormatter(Fusion.MassUnit unit)",
+      "summary": "Constructs a new MassFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.%23ctor%28Fusion.MassUnit%29"
+    },
+    {
+      "name": "MassFormatter(Fusion.MassUnit, Fusion.MassUnit)",
+      "signature": "MassFormatter(Fusion.MassUnit unit, Fusion.MassUnit formatUnit)",
+      "summary": "Constructs a new MassFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.%23ctor%28Fusion.MassUnit%2CFusion.MassUnit%29"
+    },
+    {
+      "name": "MassFormatter(Fusion.MassUnit, Fusion.MassUnit, string, System.IFormatProvider)",
+      "signature": "MassFormatter(Fusion.MassUnit unit, Fusion.MassUnit formatUnit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new MassFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        },
+        {
+          "name": "formatUnit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.%23ctor%28Fusion.MassUnit%2CFusion.MassUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    },
+    {
+      "name": "MassFormatter(Fusion.MassUnit, string, System.IFormatProvider)",
+      "signature": "MassFormatter(Fusion.MassUnit unit, string formatString, System.IFormatProvider formatProvider)",
+      "summary": "Constructs a new MassFormatter.",
+      "params": [
+        {
+          "name": "unit",
+          "type": "Fusion.MassUnit",
+          "optional": false
+        },
+        {
+          "name": "formatString",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "formatProvider",
+          "type": "System.IFormatProvider",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.%23ctor%28Fusion.MassUnit%2CSystem.String%2CSystem.IFormatProvider%29"
+    }
+  ],
+  "methods": [
+    {
+      "name": "TryParse",
+      "signature": "bool TryParse(string text, Fusion.Formatting.UnitSymbols symbols, out Fusion.Mass value)",
+      "summary": "TryParse method of MassFormatter.",
+      "params": [
+        {
+          "name": "text",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        },
+        {
+          "name": "value",
+          "type": "Fusion.Mass",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "bool",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.TryParse%28System.String%2CFusion.Formatting.UnitSymbols%2CFusion.Mass%40%29"
+    },
+    {
+      "name": "ReadSettings",
+      "signature": "static System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MassFormatter\u003E ReadSettings(System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "ReadSettings method of MassFormatter.",
+      "params": [
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MassFormatter\u003E",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.ReadSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "WriteSettings",
+      "signature": "static void WriteSettings(System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MassFormatter\u003E formatters, System.Collections.Generic.IDictionary\u003Cstring, string\u003E settings)",
+      "summary": "WriteSettings method of MassFormatter.",
+      "params": [
+        {
+          "name": "formatters",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, Fusion.Formatting.MassFormatter\u003E",
+          "optional": false
+        },
+        {
+          "name": "settings",
+          "type": "System.Collections.Generic.IDictionary\u003Cstring, string\u003E",
+          "optional": false
+        }
+      ],
+      "returns": null,
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.WriteSettings%28System.Collections.Generic.IDictionary%7BSystem.String%2CFusion.Formatting.MassFormatter%7D%2CSystem.Collections.Generic.IDictionary%7BSystem.String%2CSystem.String%7D%29"
+    },
+    {
+      "name": "ToString",
+      "signature": "string ToString(Fusion.Mass value, Fusion.Formatting.UnitSymbols symbols)",
+      "summary": "ToString method of MassFormatter.",
+      "params": [
+        {
+          "name": "value",
+          "type": "Fusion.Mass",
+          "optional": false
+        },
+        {
+          "name": "symbols",
+          "type": "Fusion.Formatting.UnitSymbols",
+          "optional": false
+        }
+      ],
+      "returns": {
+        "type": "string",
+        "doc": ""
+      },
+      "throws": [],
+      "events_related": [],
+      "doc_url": "https://www.nuget.org/packages/TeklaFusion#M%3AFusion.Formatting.MassFormatter.ToString%28Fusion.Mass%2CFusion.Formatting.UnitSymbols%29"
+    }
+  ],
+  "properties": [],
+  "events": [],
+  "enum_values": []
+}
