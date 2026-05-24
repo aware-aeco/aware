@@ -124,19 +124,43 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     let install_dir = bridge_install_dir(ctx);
     println!("Host bridges  (install dir: {})", install_dir.display());
     println!();
+    let version = env!("CARGO_PKG_VERSION");
     for b in BRIDGES {
-        let path = find_bridge(b, &install_dir);
-        if let Some(p) = &path {
-            println!("  \u{2713} {:<12}  {}", b.id, p.display());
-        } else {
-            println!(
-                "  \u{2717} {:<12}  not found — run: aware sidecar install {}",
-                b.id, b.id
-            );
+        match find_bridge_in_dir(b, &install_dir) {
+            Some(p) if bridge_is_current(b, &install_dir, version) => {
+                println!("  \u{2713} {:<12}  {}", b.id, p.display());
+            }
+            Some(p) => {
+                // Present in the managed dir but from a different CLI version.
+                println!(
+                    "  \u{21bb} {:<12}  {}  (other version — run: aware sidecar install {})",
+                    b.id,
+                    p.display(),
+                    b.id
+                );
+            }
+            None => {
+                // Not in the managed dir — a legacy copy on PATH still spawns, but
+                // it's outside ~/.aware/bridges and will be wiped on the next npm
+                // upgrade (#148), so prompt migration rather than a clean check.
+                if let Some(legacy) = which_binary(b.binary) {
+                    println!(
+                        "  \u{26a0} {:<12}  {}  (legacy/on PATH — run: aware sidecar install {} to persist it)",
+                        b.id,
+                        legacy.display(),
+                        b.id
+                    );
+                } else {
+                    println!(
+                        "  \u{2717} {:<12}  not found — run: aware sidecar install {}",
+                        b.id, b.id
+                    );
+                }
+            }
         }
         println!("               {}", b.description);
-        if let Some(note) = b.note {
-            println!("               \u{26a0} {note}");
+        if let Some(msg) = note_message(b, &install_dir) {
+            println!("               \u{26a0} {msg}");
         }
         println!();
     }
