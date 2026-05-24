@@ -130,6 +130,25 @@ impl AgentInvoker for MockInvoker {
     }
 }
 
+/// Resolve an agent's `transport.cli.binary` to the path to spawn.
+///
+/// Known host bridges live in `~/.aware/bridges/` — a persistent directory that
+/// is NOT on PATH (#148), so they must be resolved to an absolute path. Any other
+/// name (a real PATH command, or a legacy bridge still sitting next to `aware`)
+/// falls through to the bare name, which the OS resolves via PATH.
+fn resolve_cli_binary(binary: &str, bridges_dir: &std::path::Path) -> std::path::PathBuf {
+    crate::commands::sidecar::find_bridge_by_binary(binary, bridges_dir)
+        .unwrap_or_else(|| std::path::PathBuf::from(binary))
+}
+
+/// The persistent bridges directory (`<AWARE_HOME>/bridges`), derived from the
+/// same env-driven source the rest of the CLI uses.
+fn bridges_dir() -> std::path::PathBuf {
+    crate::paths::Paths::from_env()
+        .map(|p| p.aware_home.join("bridges"))
+        .unwrap_or_default()
+}
+
 /// Production invoker: spawn the agent's CLI transport binary,
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
@@ -151,8 +170,27 @@ impl AgentInvoker for CliInvoker {
                 AwareError::Validation(format!("agent {agent} has no cli transport"))
             })?;
         let binary = &cli.binary;
+        // Host bridges live in ~/.aware/bridges (off PATH); resolve to an absolute
+        // path. Non-bridge binaries fall back to bare-name PATH resolution.
+        let bridges = bridges_dir();
+        let program = resolve_cli_binary(binary, &bridges);
+        // A managed bridge installed by a different CLI version may speak an older
+        // protocol. We warn (rather than refuse) so compatible bridges keep working
+        // and a CLI patch bump doesn't force a redownload; a truly incompatible
+        // bridge will fail the run with a clear protocol error.
+        if crate::commands::sidecar::managed_bridge_is_stale(
+            binary,
+            &bridges,
+            env!("CARGO_PKG_VERSION"),
+        ) {
+            let id = binary.strip_prefix("aware-").unwrap_or(binary);
+            eprintln!(
+                "aware: warning: {binary} was installed by a different aware version; \
+                 run `aware sidecar install {id}` to refresh if this run fails"
+            );
+        }
 
-        let mut child = tokio::process::Command::new(binary)
+        let mut child = tokio::process::Command::new(&program)
             .arg(command)
             .arg("--json-stdin")
             .stdin(std::process::Stdio::piped())
@@ -742,6 +780,30 @@ impl AgentInvoker for DispatchInvoker {
 #[cfg(test)]
 mod cli_invoker_tests {
     use super::*;
+
+    #[test]
+    fn resolve_cli_binary_uses_installed_bridge_path() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(tmp.path().join("aware-tekla.exe"), b"fake").unwrap();
+        let p = resolve_cli_binary("aware-tekla", tmp.path());
+        assert!(p.is_absolute(), "expected absolute bridge path, got {p:?}");
+        assert!(p.to_string_lossy().contains("aware-tekla"));
+    }
+
+    #[test]
+    fn resolve_cli_binary_bridge_not_installed_falls_back_to_bare_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        // Known bridge name but not present → bare name (legacy PATH / on-PATH).
+        let p = resolve_cli_binary("aware-tekla", tmp.path());
+        assert_eq!(p, std::path::PathBuf::from("aware-tekla"));
+    }
+
+    #[test]
+    fn resolve_cli_binary_non_bridge_uses_bare_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        let p = resolve_cli_binary("ripgrep", tmp.path());
+        assert_eq!(p, std::path::PathBuf::from("ripgrep"));
+    }
 
     #[tokio::test]
     async fn missing_binary_returns_clear_network_error() {
