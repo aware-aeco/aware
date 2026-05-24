@@ -27,9 +27,10 @@ struct DeviceEndpoints {
 }
 
 fn device_endpoints_for(cfg: &IntegrationConfig, tenant: Option<&str>) -> DeviceEndpoints {
-    match cfg.id {
+    match cfg.id.as_str() {
         "microsoft-365" => {
-            let t = tenant.unwrap_or("common");
+            // CLI `--tenant` wins; otherwise honor a BYO profile tenant; else `common`.
+            let t = tenant.or_else(|| cfg.tenant()).unwrap_or("common");
             DeviceEndpoints {
                 device_authorization_url: format!(
                     "https://login.microsoftonline.com/{t}/oauth2/v2.0/devicecode"
@@ -48,11 +49,11 @@ fn device_endpoints_for(cfg: &IntegrationConfig, tenant: Option<&str>) -> Device
             // PKCE token URL here means the device-code flow will fail
             // gracefully with a clear "not supported" error.
             device_authorization_url: String::new(),
-            token_url: cfg.token_url.to_string(),
+            token_url: cfg.token_url().to_string(),
         },
         _ => DeviceEndpoints {
             device_authorization_url: String::new(),
-            token_url: cfg.token_url.to_string(),
+            token_url: cfg.token_url().to_string(),
         },
     }
 }
@@ -82,9 +83,8 @@ pub fn run_device_code_flow(
     }
 
     let scopes: Vec<String> = cfg
-        .default_scopes
-        .iter()
-        .map(|s| s.to_string())
+        .scopes()
+        .into_iter()
         .chain(extra_scopes.iter().cloned())
         .collect();
     let scope_str = scopes.join(" ");

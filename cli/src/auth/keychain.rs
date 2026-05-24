@@ -52,6 +52,15 @@ fn account_name(integration: &str, alias: Option<&str>) -> String {
     }
 }
 
+/// Keychain account for a BYO OAuth client secret. Distinct `oauth-app.` prefix
+/// keeps it from colliding with the access/refresh token slot (#146).
+fn app_account_name(integration: &str, alias: Option<&str>) -> String {
+    match alias {
+        Some(a) => format!("oauth-app.{integration}.{a}"),
+        None => format!("oauth-app.{integration}"),
+    }
+}
+
 /// Path of the file fallback for a given account.
 /// `account` is the value returned by `account_name()`.
 fn cred_file_path(aware_home: &Path, account: &str) -> PathBuf {
@@ -140,6 +149,88 @@ pub fn delete_token(
     }
 
     keyring_result
+}
+
+// ── BYO OAuth app-secret API (Tier 2, #146) ──────────────────────────────────
+
+/// Store a BYO OAuth client secret in the OS keychain. Falls back to a
+/// credentials file (same path scheme as tokens) when the keychain write fails.
+pub fn store_app_secret(
+    integration: &str,
+    alias: Option<&str>,
+    secret: &str,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
+    let account = app_account_name(integration, alias);
+    let entry = keyring::Entry::new(SERVICE_NAME, &account)
+        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    match entry.set_password(secret) {
+        Ok(()) => Ok(()),
+        Err(e) => {
+            eprintln!(
+                "aware: keyring write failed ({e}); \
+                 falling back to ~/.aware/credentials file"
+            );
+            write_app_secret_file(aware_home, &account, secret)
+        }
+    }
+}
+
+/// Load a BYO client secret: keychain first, then file fallback. `Ok(None)` when unset.
+pub fn load_app_secret(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<Option<String>, AwareError> {
+    let account = app_account_name(integration, alias);
+    let entry = keyring::Entry::new(SERVICE_NAME, &account)
+        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    match entry.get_password() {
+        Ok(s) => Ok(Some(s)),
+        Err(keyring::Error::NoEntry) => read_app_secret_file(aware_home, &account),
+        Err(e) => Err(AwareError::PermissionDenied(format!("keyring read: {e}"))),
+    }
+}
+
+/// Remove a stored BYO client secret from the keychain and file fallback (idempotent).
+pub fn delete_app_secret(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &Path,
+) -> Result<(), AwareError> {
+    let account = app_account_name(integration, alias);
+    let entry = keyring::Entry::new(SERVICE_NAME, &account)
+        .map_err(|e| AwareError::Internal(format!("keyring entry: {e}")))?;
+    let keyring_result = match entry.delete_credential() {
+        Ok(()) => Ok(()),
+        Err(keyring::Error::NoEntry) => Ok(()),
+        Err(e) => Err(AwareError::PermissionDenied(format!("keyring delete: {e}"))),
+    };
+    let file = cred_file_path(aware_home, &account);
+    if file.is_file() {
+        let _ = std::fs::remove_file(&file);
+    }
+    keyring_result
+}
+
+fn write_app_secret_file(aware_home: &Path, account: &str, secret: &str) -> Result<(), AwareError> {
+    let path = cred_file_path(aware_home, account);
+    if let Some(parent) = path.parent() {
+        std::fs::create_dir_all(parent)
+            .map_err(|e| AwareError::Internal(format!("create credentials dir: {e}")))?;
+    }
+    write_restricted(&path, secret.as_bytes())
+        .map_err(|e| AwareError::PermissionDenied(format!("app-secret file write: {e}")))
+}
+
+fn read_app_secret_file(aware_home: &Path, account: &str) -> Result<Option<String>, AwareError> {
+    let path = cred_file_path(aware_home, account);
+    if !path.is_file() {
+        return Ok(None);
+    }
+    let s = std::fs::read_to_string(&path)
+        .map_err(|e| AwareError::Internal(format!("app-secret file read: {e}")))?;
+    Ok(Some(s.trim().to_string()))
 }
 
 // ── File fallback helpers ────────────────────────────────────────────────────
@@ -292,6 +383,37 @@ mod tests {
             .unwrap();
         assert_eq!(loaded.access_token, "manual_tk");
         assert_eq!(loaded.source, TokenSource::Paste);
+    }
+
+    #[test]
+    fn app_account_name_with_alias() {
+        assert_eq!(
+            app_account_name("microsoft-365", None),
+            "oauth-app.microsoft-365"
+        );
+        assert_eq!(
+            app_account_name("google-workspace", Some("staging")),
+            "oauth-app.google-workspace.staging"
+        );
+    }
+
+    #[test]
+    fn app_secret_file_fallback_round_trip() {
+        let tmp = tempfile::tempdir().unwrap();
+        let account = app_account_name("google-workspace", None);
+        write_app_secret_file(tmp.path(), &account, "s3cr3t").unwrap();
+        let got = read_app_secret_file(tmp.path(), &account).unwrap();
+        assert_eq!(got.as_deref(), Some("s3cr3t"));
+    }
+
+    #[test]
+    fn app_secret_absent_is_none() {
+        let tmp = tempfile::tempdir().unwrap();
+        assert!(
+            read_app_secret_file(tmp.path(), "oauth-app.nope")
+                .unwrap()
+                .is_none()
+        );
     }
 
     #[test]

@@ -27,18 +27,14 @@ pub fn run_pkce_flow(
     let state = random_token(16);
 
     // 4. Build auth URL
-    let mut all_scopes: Vec<String> = config
-        .default_scopes
-        .iter()
-        .map(|s| s.to_string())
-        .collect();
+    let mut all_scopes: Vec<String> = config.scopes();
     for s in extra_scopes {
         all_scopes.push(s.clone());
     }
     let scope_param = all_scopes.join(" ");
     let auth_url = format!(
         "{base}?response_type=code&client_id={cid}&redirect_uri={ru}&scope={sc}&code_challenge={ch}&code_challenge_method=S256&state={st}",
-        base = config.auth_url,
+        base = config.auth_url(),
         cid = urlencode(&config.client_id()),
         ru = urlencode(&redirect_uri),
         sc = urlencode(&scope_param),
@@ -111,7 +107,7 @@ pub fn run_pkce_flow(
         .map(|(k, v)| format!("{}={}", urlencode(k), urlencode(v)))
         .collect::<Vec<_>>()
         .join("&");
-    let resp = ureq::post(config.token_url)
+    let resp = ureq::post(config.token_url())
         .set("Content-Type", "application/x-www-form-urlencoded")
         .send_string(&body)
         .map_err(|e| AwareError::Network(format!("token exchange: {e}")))?;
