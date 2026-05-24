@@ -223,30 +223,18 @@ pub fn load_app_secret(
     alias: Option<&str>,
     aware_home: &Path,
 ) -> Result<Option<String>, AwareError> {
-    // Try the alias-specific slot, then fall back to the default (no-alias) slot.
-    // This mirrors `profile::load_profile`'s alias→default fallback, so an aliased
-    // account that inherits the default profile's client_id also inherits the
-    // single app secret stored once via `aware connect <int> --set-app-secret`.
-    if let Some(a) = alias
-        && let Some(s) =
-            load_app_secret_for_account(&app_account_name(integration, Some(a)), aware_home)?
-    {
-        return Ok(Some(s));
-    }
-    load_app_secret_for_account(&app_account_name(integration, None), aware_home)
-}
-
-fn load_app_secret_for_account(
-    account: &str,
-    aware_home: &Path,
-) -> Result<Option<String>, AwareError> {
+    // Exact-account lookup. The caller (`config::with_profile`) decides whether to
+    // pass the alias or the default scope, so that the secret slot matches the
+    // resolved profile's client_id and a stale secret is never paired with the
+    // wrong app.
+    let account = app_account_name(integration, alias);
     if !keyring_enabled() {
-        return read_app_secret_file(aware_home, account);
+        return read_app_secret_file(aware_home, &account);
     }
-    match keyring::Entry::new(SERVICE_NAME, account).and_then(|e| e.get_password()) {
+    match keyring::Entry::new(SERVICE_NAME, &account).and_then(|e| e.get_password()) {
         Ok(s) => Ok(Some(s)),
         // NoEntry or any keyring-unavailable error → check the file fallback.
-        Err(_) => read_app_secret_file(aware_home, account),
+        Err(_) => read_app_secret_file(aware_home, &account),
     }
 }
 
@@ -479,9 +467,10 @@ mod tests {
     }
 
     #[test]
-    fn app_secret_alias_falls_back_to_default_slot() {
-        // Secret stored once without an alias; an aliased lookup with no
-        // alias-specific secret must inherit the default (mirrors profile fallback).
+    fn load_app_secret_is_exact_account_no_cross_fallback() {
+        // Secret stored only at the default slot must NOT be returned for an
+        // alias lookup — the alias→default policy lives in config::with_profile,
+        // keyed to the resolved profile scope, not in this exact-account lookup.
         let tmp = tempfile::tempdir().unwrap();
         write_app_secret_file(
             tmp.path(),
@@ -489,27 +478,16 @@ mod tests {
             "default-secret",
         )
         .unwrap();
-        let got = load_app_secret("google-workspace", Some("personal"), tmp.path()).unwrap();
-        assert_eq!(got.as_deref(), Some("default-secret"));
-    }
-
-    #[test]
-    fn app_secret_alias_specific_wins_over_default() {
-        let tmp = tempfile::tempdir().unwrap();
-        write_app_secret_file(
-            tmp.path(),
-            &app_account_name("google-workspace", None),
-            "default-secret",
-        )
-        .unwrap();
-        write_app_secret_file(
-            tmp.path(),
-            &app_account_name("google-workspace", Some("personal")),
-            "alias-secret",
-        )
-        .unwrap();
-        let got = load_app_secret("google-workspace", Some("personal"), tmp.path()).unwrap();
-        assert_eq!(got.as_deref(), Some("alias-secret"));
+        assert_eq!(
+            load_app_secret("google-workspace", Some("personal"), tmp.path()).unwrap(),
+            None
+        );
+        assert_eq!(
+            load_app_secret("google-workspace", None, tmp.path())
+                .unwrap()
+                .as_deref(),
+            Some("default-secret")
+        );
     }
 
     #[test]

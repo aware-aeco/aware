@@ -168,7 +168,19 @@ impl IntegrationConfig {
         alias: Option<&str>,
     ) -> Result<Self, AwareError> {
         let profile = crate::auth::profile::load_profile(aware_home, &self.id, alias)?;
-        let app_secret = crate::auth::keychain::load_app_secret(&self.id, alias, aware_home)?;
+        // The app secret pairs with the resolved profile's client_id. Use the
+        // alias-specific secret slot only when an alias-specific profile file
+        // actually exists; otherwise the alias inherited the default profile, so
+        // read the default secret slot too. This mirrors load_profile's
+        // alias→default fallback and never pairs a secret with the wrong app.
+        let secret_alias =
+            if crate::auth::profile::alias_profile_exists(aware_home, &self.id, alias) {
+                alias
+            } else {
+                None
+            };
+        let app_secret =
+            crate::auth::keychain::load_app_secret(&self.id, secret_alias, aware_home)?;
 
         if self.id == "microsoft-365"
             && let Some(p) = &profile
@@ -414,6 +426,57 @@ mod tests {
         assert_eq!(cfg.app_source_label(), "first-party");
         // Scope override still applies even though the app stays first-party.
         assert_eq!(cfg.scopes(), vec!["openid".to_string()]);
+    }
+
+    #[test]
+    fn alias_inherits_default_secret_when_no_alias_profile() {
+        // No alias-specific profile → alias inherits the default profile's
+        // client_id, so it must also read the default secret slot. (#146 review)
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("google-workspace.yaml"), "client_id: org-client\n").unwrap();
+        crate::auth::keychain::store_app_secret(
+            "google-workspace",
+            None,
+            "default-secret",
+            tmp.path(),
+        )
+        .unwrap();
+        let cfg = for_integration("google-workspace")
+            .unwrap()
+            .with_profile(tmp.path(), Some("personal"))
+            .unwrap();
+        assert_eq!(cfg.client_id(), "org-client");
+        assert_eq!(cfg.client_secret().as_deref(), Some("default-secret"));
+    }
+
+    #[test]
+    fn alias_specific_profile_does_not_borrow_default_secret() {
+        // Alias has its OWN client_id but no alias secret → must NOT pair with the
+        // default app's secret; resolves to None until its own secret is stored.
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("google-workspace.yaml"), "client_id: org-client\n").unwrap();
+        std::fs::write(
+            dir.join("google-workspace.personal.yaml"),
+            "client_id: personal-client\n",
+        )
+        .unwrap();
+        crate::auth::keychain::store_app_secret(
+            "google-workspace",
+            None,
+            "default-secret",
+            tmp.path(),
+        )
+        .unwrap();
+        let cfg = for_integration("google-workspace")
+            .unwrap()
+            .with_profile(tmp.path(), Some("personal"))
+            .unwrap();
+        assert_eq!(cfg.client_id(), "personal-client");
+        assert_eq!(cfg.client_secret(), None);
     }
 
     #[test]

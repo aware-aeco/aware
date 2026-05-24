@@ -61,6 +61,20 @@ pub fn load_profile(
     Ok(Some(profile))
 }
 
+/// Whether an alias-specific profile file (`<integration>.<alias>.yaml`) exists,
+/// as opposed to the alias inheriting the default `<integration>.yaml`. The app
+/// secret slot is keyed to the same scope so it always matches the resolved
+/// profile's client_id.
+pub fn alias_profile_exists(aware_home: &Path, integration: &str, alias: Option<&str>) -> bool {
+    match alias {
+        Some(a) => aware_home
+            .join("oauth")
+            .join(format!("{integration}.{a}.yaml"))
+            .is_file(),
+        None => false,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -137,6 +151,26 @@ mod tests {
             .unwrap()
             .unwrap();
         assert_eq!(p.client_id.as_deref(), Some("org-app-bom"));
+    }
+
+    #[test]
+    fn alias_profile_exists_detects_alias_file() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("google-workspace.yaml"), "client_id: base\n").unwrap();
+        assert!(!alias_profile_exists(tmp.path(), "google-workspace", None));
+        assert!(!alias_profile_exists(
+            tmp.path(),
+            "google-workspace",
+            Some("personal")
+        ));
+        std::fs::write(dir.join("google-workspace.personal.yaml"), "client_id: p\n").unwrap();
+        assert!(alias_profile_exists(
+            tmp.path(),
+            "google-workspace",
+            Some("personal")
+        ));
     }
 
     #[test]
