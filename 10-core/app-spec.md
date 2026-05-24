@@ -154,13 +154,18 @@ For tiny operations (filters, maps, reshapes) that don't deserve a dedicated age
 ```yaml
 - id: filter-welded
   inline:
-    kind: predicate                # predicate | map | shape
+    kind: predicate                # predicate (runnable today); map | shape reserved
     description: Keep only welded assemblies
     code: |
       e => e.AssemblyType == AssemblyType.Welded
 ```
 
 Inline glue lives in the app file. It is visible in the topology and inspectable in the canvas — **no hidden logic.**
+
+> **Runtime support:** only `kind: predicate` executes today. `map` and `shape` are
+> reserved for a future release; `aware app validate` / `compile` reject them up
+> front (rather than failing at `run`) so an app never locks against an unrunnable
+> inline kind (#160).
 
 ### Atom references (v0.20)
 
