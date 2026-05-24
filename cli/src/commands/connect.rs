@@ -404,16 +404,18 @@ pub fn print_credential_status_text(
                     );
                 } else {
                     println!(
-                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
+                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh [app: {app}]"
                     );
                 }
             }
         },
         Ok(None) => {
-            println!("  \u{2717} {integration:<22} missing  run: aware connect {integration}");
+            println!(
+                "  \u{2717} {integration:<22} missing  run: aware connect {integration} [app: {app}]"
+            );
         }
         Err(_) => {
-            println!("  ? {integration:<22} (keyring unavailable)");
+            println!("  ? {integration:<22} (keyring unavailable) [app: {app}]");
         }
     }
 }

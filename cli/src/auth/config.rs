@@ -182,7 +182,15 @@ impl IntegrationConfig {
             }
         }
 
-        let source = if profile.is_some() {
+        // The active app is defined by which client_id is in play, NOT by mere
+        // profile presence: a profile that only customizes scopes/tenant/endpoints
+        // (no client_id) still authenticates as the bundled first-party app, so its
+        // secret must resolve first-party (env ▸ bundled), not be suppressed.
+        let profile_sets_client_id = profile
+            .as_ref()
+            .and_then(|p| p.client_id.as_ref())
+            .is_some();
+        let source = if profile_sets_client_id {
             AppSource::ByoProfile
         } else if std::env::var(self.client_id_env).is_ok() {
             AppSource::ByoEnv
@@ -387,6 +395,24 @@ mod tests {
             .unwrap()
             .with_profile(tmp.path(), None)
             .unwrap();
+        assert_eq!(cfg.scopes(), vec!["openid".to_string()]);
+    }
+
+    #[test]
+    fn profile_without_client_id_stays_first_party() {
+        // A profile that customizes only scopes (no client_id) still uses the
+        // bundled first-party client — so it must resolve as first-party, otherwise
+        // its (bundled) secret would be wrongly suppressed. (#146 review)
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("google-workspace.yaml"), "scopes:\n  - openid\n").unwrap();
+        let cfg = for_integration("google-workspace")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        assert_eq!(cfg.app_source_label(), "first-party");
+        // Scope override still applies even though the app stays first-party.
         assert_eq!(cfg.scopes(), vec!["openid".to_string()]);
     }
 
