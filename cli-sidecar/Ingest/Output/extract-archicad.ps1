@@ -13,7 +13,7 @@ param(
 
 $Repo = "C:\Users\bimst\source\repos\aware"
 $OutIr = Join-Path $Repo "cli-sidecar\Ingest\Output\archicad-$Version.ir.json"
-$Exe = Join-Path $Repo "cli-sidecar\bin\Release\net9.0\win-x64\publish\aware-sidecar.exe"
+$Exe = Join-Path $Repo "cli-sidecar\bin\Release\net10.0\win-x64\publish\aware-sidecar.exe"
 $VMajor = $Version.Split('.')[0]
 $LogErr = Join-Path $Repo "cli-sidecar\Ingest\Output\archicad-$VMajor-extraction.log"
 $LogOut = Join-Path $Repo "cli-sidecar\Ingest\Output\archicad-$VMajor-stdout.log"

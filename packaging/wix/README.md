@@ -48,7 +48,7 @@ $version = "0.8.0-dev"
 $stage = "aware-$version-win-x64"
 mkdir $stage
 copy cli\target\release\aware.exe $stage\
-copy cli-sidecar\bin\Release\net9.0\win-x64\publish\aware-sidecar.exe $stage\
+copy cli-sidecar\bin\Release\net10.0\win-x64\publish\aware-sidecar.exe $stage\
 copy LICENSE $stage\
 copy cli\README.md $stage\README.md
 "$version" | Out-File -Encoding ASCII $stage\VERSION
