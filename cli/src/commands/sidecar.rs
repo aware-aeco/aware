@@ -255,6 +255,19 @@ fn bridge_is_current(bridge: &Bridge, install_dir: &std::path::Path, version: &s
         && installed_bridge_version(install_dir, bridge.binary).as_deref() == Some(version)
 }
 
+/// Whether a managed-dir bridge for `binary` exists but was installed by a
+/// *different* CLI version (or has no version marker) — i.e. it should be
+/// refreshed via `aware sidecar install`. `false` for a PATH-only/legacy copy,
+/// an absent bridge, or an unknown binary name. Consulted at spawn time so the
+/// runtime can warn before running a potentially mismatched sidecar.
+pub fn managed_bridge_is_stale(binary: &str, install_dir: &std::path::Path, version: &str) -> bool {
+    let Some(b) = BRIDGES.iter().find(|b| b.binary == binary) else {
+        return false;
+    };
+    find_bridge_in_dir(b, install_dir).is_some()
+        && installed_bridge_version(install_dir, b.binary).as_deref() != Some(version)
+}
+
 /// Print a bridge's post-install note, resolving `{dir}` to the (off-PATH)
 /// install directory so the host-registration command is actually runnable.
 fn print_note(bridge: &Bridge, install_dir: &std::path::Path) {
@@ -534,6 +547,26 @@ mod tests {
         // Marker matches → current.
         std::fs::write(version_marker_path(tmp.path(), "aware-tekla"), "0.43.0\n").unwrap();
         assert!(bridge_is_current(bridge, tmp.path(), "0.43.0"));
+    }
+
+    #[test]
+    fn managed_bridge_is_stale_detects_version_drift() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path();
+        let v = "0.43.0";
+        // Absent → not stale (missing, not stale).
+        assert!(!managed_bridge_is_stale("aware-tekla", dir, v));
+        // Present, no marker → stale (unknown version).
+        std::fs::write(dir.join("aware-tekla.exe"), b"fake").unwrap();
+        assert!(managed_bridge_is_stale("aware-tekla", dir, v));
+        // Marker for a different version → stale.
+        std::fs::write(version_marker_path(dir, "aware-tekla"), "0.42.0").unwrap();
+        assert!(managed_bridge_is_stale("aware-tekla", dir, v));
+        // Marker matches → not stale.
+        std::fs::write(version_marker_path(dir, "aware-tekla"), v).unwrap();
+        assert!(!managed_bridge_is_stale("aware-tekla", dir, v));
+        // Unknown binary → not stale.
+        assert!(!managed_bridge_is_stale("ripgrep", dir, v));
     }
 
     #[test]

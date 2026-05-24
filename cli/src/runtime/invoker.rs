@@ -172,7 +172,23 @@ impl AgentInvoker for CliInvoker {
         let binary = &cli.binary;
         // Host bridges live in ~/.aware/bridges (off PATH); resolve to an absolute
         // path. Non-bridge binaries fall back to bare-name PATH resolution.
-        let program = resolve_cli_binary(binary, &bridges_dir());
+        let bridges = bridges_dir();
+        let program = resolve_cli_binary(binary, &bridges);
+        // A managed bridge installed by a different CLI version may speak an older
+        // protocol. We warn (rather than refuse) so compatible bridges keep working
+        // and a CLI patch bump doesn't force a redownload; a truly incompatible
+        // bridge will fail the run with a clear protocol error.
+        if crate::commands::sidecar::managed_bridge_is_stale(
+            binary,
+            &bridges,
+            env!("CARGO_PKG_VERSION"),
+        ) {
+            let id = binary.strip_prefix("aware-").unwrap_or(binary);
+            eprintln!(
+                "aware: warning: {binary} was installed by a different aware version; \
+                 run `aware sidecar install {id}` to refresh if this run fails"
+            );
+        }
 
         let mut child = tokio::process::Command::new(&program)
             .arg(command)
