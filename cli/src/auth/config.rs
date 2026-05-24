@@ -311,6 +311,14 @@ impl IntegrationConfig {
         self.overlay.source
     }
 
+    /// Whether the resolved client is the bundled first-party app (no BYO
+    /// profile/env client_id). Used to gate behaviors that only the bundled app
+    /// can't do — e.g. the bundled Google Desktop client can't do device-code,
+    /// but a BYO Google client may. (#151)
+    pub fn is_first_party(&self) -> bool {
+        self.overlay.source == AppSource::FirstParty
+    }
+
     pub fn app_source_label(&self) -> &'static str {
         self.overlay.source.label()
     }

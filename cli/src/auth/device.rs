@@ -51,20 +51,29 @@ fn device_endpoints_for(cfg: &IntegrationConfig, tenant: Option<&str>) -> Device
         // For the remaining providers there is no tenant substitution, so
         // `token_url()` already yields the resolved value (profile override ▸
         // bundled). A profile `device_authorization_url` override is honored too.
-        "google-workspace" => DeviceEndpoints {
-            // The bundled Google client is a Desktop/loopback client; Google's
+        "google-workspace" => {
+            // The *bundled* Google client is a Desktop/loopback client; Google's
             // device-authorization flow requires a separate "TV & Limited Input"
-            // client type, so hitting `/device/code` with the bundled client just
-            // 401s. Default to no device endpoint → the caller reports it
-            // unsupported and points at --oauth (which works), instead of leaking a
-            // raw 401 (#151). A BYO profile that sets a device-capable endpoint
-            // opts back in.
-            device_authorization_url: cfg
+            // client, so the bundled client just 401s on `/device/code`. For it we
+            // report device-code unsupported and point at --oauth, instead of
+            // leaking a raw 401 (#151). A BYO client (profile/env) may be
+            // device-capable, so it gets an explicit override or Google's standard
+            // device endpoint.
+            let device_authorization_url = cfg
                 .device_authorization_url_override()
-                .unwrap_or_default()
-                .to_string(),
-            token_url: cfg.token_url().to_string(),
-        },
+                .map(String::from)
+                .unwrap_or_else(|| {
+                    if cfg.is_first_party() {
+                        String::new()
+                    } else {
+                        "https://oauth2.googleapis.com/device/code".to_string()
+                    }
+                });
+            DeviceEndpoints {
+                device_authorization_url,
+                token_url: cfg.token_url().to_string(),
+            }
+        }
         "trimble-connect" => DeviceEndpoints {
             // Trimble Identity supports OAuth device-code per the docs, but the
             // endpoint URL isn't published as a stable identifier — the standard
@@ -359,6 +368,26 @@ mod tests {
         let cfg = config::for_integration("google-workspace").unwrap();
         let e = device_endpoints_for(&cfg, None);
         assert!(e.device_authorization_url.is_empty());
+    }
+
+    #[test]
+    fn google_byo_client_uses_standard_device_endpoint() {
+        // A BYO Google client (profile client_id, no explicit device endpoint) is
+        // not the bundled Desktop client, so it gets Google's standard device
+        // endpoint rather than being disabled. (#151 review)
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("google-workspace.yaml"), "client_id: org-google\n").unwrap();
+        let cfg = config::for_integration("google-workspace")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        let e = device_endpoints_for(&cfg, None);
+        assert_eq!(
+            e.device_authorization_url,
+            "https://oauth2.googleapis.com/device/code"
+        );
     }
 
     #[test]
