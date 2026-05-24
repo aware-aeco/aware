@@ -57,6 +57,13 @@ pub struct ConnectArgs {
     /// Machine-readable when combined with global `--json`. (#140)
     #[arg(long)]
     pub list: bool,
+
+    /// Store a bring-your-own (BYO) OAuth client secret for this integration in
+    /// the OS keychain, then exit. The secret is read from stdin (never argv, to
+    /// keep it out of shell history):
+    /// `echo $SECRET | aware connect google-workspace --set-app-secret`. (#146)
+    #[arg(long = "set-app-secret")]
+    pub set_app_secret: bool,
 }
 
 #[derive(Args, Debug)]
@@ -81,7 +88,18 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
 
     // `integration` is guaranteed Some by clap's `required_unless_present = "list"`.
     let integration = args.integration.as_deref().unwrap();
-    let cfg = crate::auth::config::for_integration(integration)?;
+
+    // --set-app-secret: stash a BYO OAuth client secret (read from stdin) in the
+    // keychain and exit. (#146)
+    if args.set_app_secret {
+        return run_set_app_secret(integration, args.r#as.as_deref(), ctx);
+    }
+
+    // Validate the integration up front. The BYO OAuth profile is loaded only on
+    // the OAuth paths (--oauth / --device-code) below — token-import paths
+    // (--from-file, --from-env, paste) must not be blocked by a malformed or
+    // unreadable OAuth profile, since they don't use OAuth config at all.
+    crate::auth::config::for_integration(integration)?;
 
     if args.refresh {
         let token = crate::auth::refresh::ensure_fresh(
@@ -132,6 +150,8 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     // and errors need to be caught to emit a structured failure rather than
     // propagating through main's eprintln path.
     if args.device_code {
+        let cfg = crate::auth::config::for_integration(integration)?
+            .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?;
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         let result = crate::auth::device::run_device_code_flow(
             &cfg,
@@ -199,6 +219,9 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
     } else if args.from_env {
         load_token_from_env(integration)?
     } else if args.oauth {
+        let cfg = crate::auth::config::for_integration(integration)?
+            .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?
+            .with_tenant(args.tenant.as_deref());
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?
     } else {
@@ -217,6 +240,70 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         "\u{2713} stored {} {} (OS keychain or ~/.aware/credentials fallback)",
         integration, kind
     );
+    Ok(())
+}
+
+// ── run_set_app_secret (BYO, #146) ──────────────────────────────────────────
+
+/// Read a BYO OAuth client secret from stdin and store it in the OS keychain
+/// under the `oauth-app.<integration>[.<alias>]` slot. Never echoed; never
+/// written to the profile YAML.
+fn run_set_app_secret(
+    integration: &str,
+    alias: Option<&str>,
+    ctx: &Context,
+) -> Result<(), AwareError> {
+    // Validate the integration is one we support before storing anything.
+    crate::auth::config::for_integration(integration)?;
+
+    let mut secret = String::new();
+    std::io::Read::read_to_string(&mut std::io::stdin(), &mut secret)
+        .map_err(|e| AwareError::Validation(format!("reading secret from stdin: {e}")))?;
+    let secret = secret.trim();
+    if secret.is_empty() {
+        return Err(AwareError::Validation(
+            "no secret on stdin (pipe it: echo $SECRET | aware connect <integration> --set-app-secret)".into(),
+        ));
+    }
+
+    // Store under the SAME alias/default scope that `with_profile` will read: the
+    // alias-specific slot only when an alias-specific profile exists, else the
+    // default slot. Otherwise `--as <alias> --set-app-secret` would write a slot
+    // the OAuth flow never reads (the alias inherits the default profile).
+    let alias_has_profile =
+        crate::auth::profile::alias_profile_exists(&ctx.paths.aware_home, integration, alias);
+    let secret_alias = if alias_has_profile { alias } else { None };
+    let stored_default_for_alias = alias.is_some() && !alias_has_profile;
+
+    crate::auth::keychain::store_app_secret(
+        integration,
+        secret_alias,
+        secret,
+        &ctx.paths.aware_home,
+    )?;
+
+    if ctx.json {
+        println!(
+            "{}",
+            serde_json::json!({
+                "status": "stored",
+                "integration": integration,
+                "secret": "app",
+                "scope": if secret_alias.is_some() { "alias" } else { "default" },
+            })
+        );
+    } else {
+        println!(
+            "\u{2713} stored BYO client secret for {integration} (OS keychain or ~/.aware/credentials fallback)"
+        );
+        if stored_default_for_alias {
+            println!(
+                "  \u{00b7} no alias-specific profile for --as {}; stored for the default app \
+                 (shared by aliases that inherit the default profile)",
+                alias.unwrap()
+            );
+        }
+    }
     Ok(())
 }
 
@@ -263,6 +350,20 @@ fn run_list(ctx: &Context) -> Result<(), AwareError> {
 
 // ── Shared credential-status helpers (used by doctor.rs too) ─────────────────
 
+/// Resolve which OAuth app is active for an integration: `first-party`,
+/// `byo-profile`, or `byo-env`. Best-effort — falls back to `first-party`. (#146)
+pub fn active_app_label(
+    integration: &str,
+    alias: Option<&str>,
+    aware_home: &std::path::Path,
+) -> &'static str {
+    crate::auth::config::for_integration(integration)
+        .ok()
+        .and_then(|c| c.with_profile(aware_home, alias).ok())
+        .map(|c| c.app_source_label())
+        .unwrap_or("first-party")
+}
+
 /// Build the JSON object for one integration's credential status.
 pub fn credential_status_json(
     integration: &str,
@@ -270,6 +371,7 @@ pub fn credential_status_json(
     aware_home: &std::path::Path,
     now: i64,
 ) -> serde_json::Value {
+    let app = active_app_label(integration, alias, aware_home);
     match crate::auth::keychain::load_token(integration, alias, aware_home) {
         Ok(Some(token)) => {
             let (status, source, expires_in) = match token.source {
@@ -288,6 +390,7 @@ pub fn credential_status_json(
                 "status": status,
                 "source": source,
                 "expires_in_secs": expires_in,
+                "app": app,
             })
         }
         Ok(None) => serde_json::json!({
@@ -295,12 +398,14 @@ pub fn credential_status_json(
             "status": "missing",
             "source": null,
             "expires_in_secs": null,
+            "app": app,
         }),
         Err(_) => serde_json::json!({
             "integration": integration,
             "status": "keyring_unavailable",
             "source": null,
             "expires_in_secs": null,
+            "app": app,
         }),
     }
 }
@@ -312,28 +417,35 @@ pub fn print_credential_status_text(
     aware_home: &std::path::Path,
     now: i64,
 ) {
+    let app = active_app_label(integration, alias, aware_home);
     match crate::auth::keychain::load_token(integration, alias, aware_home) {
         Ok(Some(token)) => match token.source {
             TokenSource::Paste => {
-                println!("  \u{2713} {integration:<22} valid    paste token (user-managed)");
+                println!(
+                    "  \u{2713} {integration:<22} valid    paste token (user-managed) [app: {app}]"
+                );
             }
             TokenSource::Oauth => {
                 let remaining = token.expires_at - now;
                 if remaining > 0 {
                     let mins = remaining / 60;
-                    println!("  \u{2713} {integration:<22} valid    OAuth, expires in {mins}m");
+                    println!(
+                        "  \u{2713} {integration:<22} valid    OAuth, expires in {mins}m [app: {app}]"
+                    );
                 } else {
                     println!(
-                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh"
+                        "  \u{00b7} {integration:<22} expired  run: aware connect {integration} --refresh [app: {app}]"
                     );
                 }
             }
         },
         Ok(None) => {
-            println!("  \u{2717} {integration:<22} missing  run: aware connect {integration}");
+            println!(
+                "  \u{2717} {integration:<22} missing  run: aware connect {integration} [app: {app}]"
+            );
         }
         Err(_) => {
-            println!("  ? {integration:<22} (keyring unavailable)");
+            println!("  ? {integration:<22} (keyring unavailable) [app: {app}]");
         }
     }
 }
@@ -510,6 +622,23 @@ mod tests {
         let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
         assert_eq!(v["status"], "missing");
         assert_eq!(v["source"], serde_json::Value::Null);
+    }
+
+    #[test]
+    fn credential_status_json_includes_app_source() {
+        let tmp = tempfile::tempdir().unwrap();
+        let v = credential_status_json("microsoft-365", None, tmp.path(), 0);
+        assert_eq!(v["app"], "first-party");
+    }
+
+    #[test]
+    fn credential_status_json_reports_byo_profile() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(dir.join("microsoft-365.yaml"), "client_id: org-app\n").unwrap();
+        let v = credential_status_json("microsoft-365", None, tmp.path(), 0);
+        assert_eq!(v["app"], "byo-profile");
     }
 
     #[test]

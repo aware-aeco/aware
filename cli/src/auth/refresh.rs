@@ -32,7 +32,7 @@ pub fn ensure_fresh(
             "{integration}: no refresh_token; re-run aware connect"
         ))
     })?;
-    let cfg = config::for_integration(integration)?;
+    let cfg = config::for_integration(integration)?.with_profile(aware_home, alias)?;
 
     let mut body_params = vec![
         ("grant_type", "refresh_token".to_string()),
@@ -49,7 +49,7 @@ pub fn ensure_fresh(
         .collect::<Vec<_>>()
         .join("&");
 
-    let resp = ureq::post(cfg.token_url)
+    let resp = ureq::post(cfg.token_url())
         .set("Content-Type", "application/x-www-form-urlencoded")
         .send_string(&body)
         .map_err(|e| AwareError::Network(format!("refresh: {e}")))?;

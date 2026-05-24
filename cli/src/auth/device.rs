@@ -27,32 +27,55 @@ struct DeviceEndpoints {
 }
 
 fn device_endpoints_for(cfg: &IntegrationConfig, tenant: Option<&str>) -> DeviceEndpoints {
-    match cfg.id {
+    match cfg.id.as_str() {
         "microsoft-365" => {
-            let t = tenant.unwrap_or("common");
+            // CLI `--tenant` wins; otherwise honor a BYO profile tenant; else `common`.
+            let t = tenant.or_else(|| cfg.tenant()).unwrap_or("common");
+            // An explicit profile endpoint override (e.g. sovereign cloud / proxy)
+            // wins over the tenant-built public-cloud URL.
             DeviceEndpoints {
-                device_authorization_url: format!(
-                    "https://login.microsoftonline.com/{t}/oauth2/v2.0/devicecode"
-                ),
-                token_url: format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/token"),
+                device_authorization_url: cfg
+                    .device_authorization_url_override()
+                    .map(String::from)
+                    .unwrap_or_else(|| {
+                        format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/devicecode")
+                    }),
+                token_url: cfg
+                    .token_url_override()
+                    .map(String::from)
+                    .unwrap_or_else(|| {
+                        format!("https://login.microsoftonline.com/{t}/oauth2/v2.0/token")
+                    }),
             }
         }
+        // For the remaining providers there is no tenant substitution, so
+        // `token_url()` already yields the resolved value (profile override ▸
+        // bundled). A profile `device_authorization_url` override is honored too.
         "google-workspace" => DeviceEndpoints {
-            device_authorization_url: "https://oauth2.googleapis.com/device/code".to_string(),
-            token_url: "https://oauth2.googleapis.com/token".to_string(),
+            device_authorization_url: cfg
+                .device_authorization_url_override()
+                .unwrap_or("https://oauth2.googleapis.com/device/code")
+                .to_string(),
+            token_url: cfg.token_url().to_string(),
         },
         "trimble-connect" => DeviceEndpoints {
-            // Trimble Identity supports OAuth device-code per the docs, but
-            // the endpoint URL isn't published as a stable identifier — the
-            // standard PKCE path remains the supported one. Returning the
-            // PKCE token URL here means the device-code flow will fail
-            // gracefully with a clear "not supported" error.
-            device_authorization_url: String::new(),
-            token_url: cfg.token_url.to_string(),
+            // Trimble Identity supports OAuth device-code per the docs, but the
+            // endpoint URL isn't published as a stable identifier — the standard
+            // PKCE path remains the supported one. An empty device URL makes the
+            // caller error with a clear "not supported" message; a BYO profile
+            // that sets `device_authorization_url` opts back into device-code.
+            device_authorization_url: cfg
+                .device_authorization_url_override()
+                .unwrap_or_default()
+                .to_string(),
+            token_url: cfg.token_url().to_string(),
         },
         _ => DeviceEndpoints {
-            device_authorization_url: String::new(),
-            token_url: cfg.token_url.to_string(),
+            device_authorization_url: cfg
+                .device_authorization_url_override()
+                .unwrap_or_default()
+                .to_string(),
+            token_url: cfg.token_url().to_string(),
         },
     }
 }
@@ -82,9 +105,8 @@ pub fn run_device_code_flow(
     }
 
     let scopes: Vec<String> = cfg
-        .default_scopes
-        .iter()
-        .map(|s| s.to_string())
+        .scopes()
+        .into_iter()
         .chain(extra_scopes.iter().cloned())
         .collect();
     let scope_str = scopes.join(" ");
@@ -295,10 +317,65 @@ mod tests {
     }
 
     #[test]
+    fn microsoft_device_honors_explicit_profile_endpoint_override() {
+        // A BYO profile with explicit sovereign-cloud endpoints must be honored by
+        // the device-code flow, not rebuilt as a public-cloud tenant URL (#146 review).
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("microsoft-365.yaml"),
+            "client_id: x\n\
+             token_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/token\n\
+             device_authorization_url: https://login.microsoftonline.us/contoso/oauth2/v2.0/devicecode\n",
+        )
+        .unwrap();
+        let cfg = config::for_integration("microsoft-365")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        let e = device_endpoints_for(&cfg, None);
+        assert_eq!(
+            e.token_url,
+            "https://login.microsoftonline.us/contoso/oauth2/v2.0/token"
+        );
+        assert_eq!(
+            e.device_authorization_url,
+            "https://login.microsoftonline.us/contoso/oauth2/v2.0/devicecode"
+        );
+    }
+
+    #[test]
     fn google_has_fixed_endpoints() {
         let cfg = config::for_integration("google-workspace").unwrap();
         let e = device_endpoints_for(&cfg, None);
         assert_eq!(e.device_authorization_url, "https://oauth2.googleapis.com/device/code");
+    }
+
+    #[test]
+    fn google_device_honors_explicit_profile_endpoint_override() {
+        // A Google BYO profile that points device-code at a proxy/alternate
+        // endpoint must be honored, not posted to Google's public URLs (#146 review).
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path().join("oauth");
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("google-workspace.yaml"),
+            "client_id: x\n\
+             token_url: https://proxy.example.com/token\n\
+             device_authorization_url: https://proxy.example.com/device/code\n",
+        )
+        .unwrap();
+        let cfg = config::for_integration("google-workspace")
+            .unwrap()
+            .with_profile(tmp.path(), None)
+            .unwrap();
+        let e = device_endpoints_for(&cfg, None);
+        assert_eq!(
+            e.device_authorization_url,
+            "https://proxy.example.com/device/code"
+        );
+        assert_eq!(e.token_url, "https://proxy.example.com/token");
     }
 
     #[test]
