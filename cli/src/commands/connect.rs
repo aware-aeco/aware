@@ -222,6 +222,15 @@ pub fn run_connect(args: ConnectArgs, ctx: &Context) -> Result<(), AwareError> {
         let cfg = crate::auth::config::for_integration(integration)?
             .with_profile(&ctx.paths.aware_home, args.r#as.as_deref())?
             .with_tenant(args.tenant.as_deref());
+        // No real bundled app (still the placeholder client_id) and no BYO override
+        // → fail fast instead of sending a placeholder to the provider, which just
+        // returns "Unregistered client" (#153).
+        if cfg.is_placeholder_client() {
+            return Err(AwareError::Validation(format!(
+                "{integration} has no bundled OAuth app yet — register your own and configure a \
+                 BYO profile at ~/.aware/oauth/{integration}.yaml (see 10-core/oauth-registration.md, #146)"
+            )));
+        }
         let extra_scopes = parse_scopes(args.scopes.as_deref());
         crate::auth::pkce::run_pkce_flow(&cfg, &extra_scopes)?
     } else {

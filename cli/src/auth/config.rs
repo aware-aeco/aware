@@ -311,8 +311,24 @@ impl IntegrationConfig {
         self.overlay.source
     }
 
+    /// Whether the resolved client is the bundled first-party app (no BYO
+    /// profile/env client_id). Used to gate behaviors that only the bundled app
+    /// can't do — e.g. the bundled Google Desktop client can't do device-code,
+    /// but a BYO Google client may. (#151)
+    pub fn is_first_party(&self) -> bool {
+        self.overlay.source == AppSource::FirstParty
+    }
+
     pub fn app_source_label(&self) -> &'static str {
         self.overlay.source.label()
+    }
+
+    /// Whether the resolved client id is still a bundled placeholder — i.e. no
+    /// real first-party app is registered for this integration and no BYO override
+    /// (profile/env) supplied one. Provider OAuth flows can't work with it, so the
+    /// caller should point the user at a BYO profile (#146).
+    pub fn is_placeholder_client(&self) -> bool {
+        self.client_id().starts_with("AWARE_AECO_PLACEHOLDER")
     }
 
     /// Resolve the client id: profile ▸ env var ▸ bundled default.
@@ -391,6 +407,31 @@ mod tests {
         let m = for_integration("microsoft-365").unwrap();
         assert!(m.client_secret_env.is_none());
         assert!(m.client_secret().is_none());
+    }
+
+    #[test]
+    fn trimble_client_is_placeholder_until_registered() {
+        // Trimble has no bundled app yet (#153); M365/Google got real apps in #145.
+        // Guard against a BYO env override that would resolve a real client_id.
+        if std::env::var("AWARE_OAUTH_TRIMBLE_CLIENT_ID").is_err() {
+            assert!(
+                for_integration("trimble-connect")
+                    .unwrap()
+                    .is_placeholder_client()
+            );
+        }
+        assert!(
+            !for_integration("microsoft-365")
+                .unwrap()
+                .is_placeholder_client()
+        );
+        if std::env::var("AWARE_OAUTH_GOOGLE_CLIENT_ID").is_err() {
+            assert!(
+                !for_integration("google-workspace")
+                    .unwrap()
+                    .is_placeholder_client()
+            );
+        }
     }
 
     #[test]
