@@ -1,11 +1,25 @@
 ---
 name: tekla-headless-startup-and-shutdown
-description: This skill should be used when writing test harnesses, install verifiers, or any automation that needs to start or stop Tekla Structures programmatically without human interaction with the sign-in / setup / model-picker dialogs. Encodes the full set of `TeklaStructures.exe` command-line parameters from Trimble's official 2026 docs, the `Bypass.ini` schema, the empirically-determined ~30s Open-API-readiness wait, the polling pattern, and clean / forced shutdown semantics. Critical for the AWARE test matrix automation and any CI that exercises real Tekla instances.
+description: This skill should be used when writing test harnesses, install verifiers, or any automation that needs to start or stop Tekla Structures programmatically without human interaction with the sign-in / setup / model-picker dialogs. Encodes the full set of `TeklaStructures.exe` command-line parameters from Trimble's official 2026 docs, the `Bypass.ini` schema, the empirically-determined ~30s Open-API-readiness wait, the polling pattern, and clean / forced shutdown semantics. Critical for the AWARE test matrix automation and any CI that exercises real Tekla instances. Also distinguishes this GUI-bypass approach from GENUINE headless (Tekla.Structures.Service.TeklaStructuresService — no UI process; Flex-licensed; confirmed 2026, NuGet-published but example-unverified on 2025) — see the version-specific tekla-structures-headless-service skills.
 ---
 
 # Tekla headless startup + shutdown
 
-Tekla Structures has **no headless / server / Docker build** — but it CAN be launched without manual interaction by pre-supplying every dialog answer via a `Bypass.ini` file. This is the foundation of any automated test harness that exercises real Tekla.
+There are **two ways to run Tekla without manual interaction** — pick the right one:
+
+| Approach | What it is | Trade-off |
+|---|---|---|
+| **A · GUI-bypass** (this doc) | Launch the full `TeklaStructures.exe` non-interactively by pre-supplying every dialog answer via a `Bypass.ini`, then poll ~30s for Open API readiness. The UI window still opens. | Works on any license tier; UI is available. NOT truly headless — a desktop window exists. |
+| **B · Genuine headless service** | `Tekla.Structures.Service.TeklaStructuresService` loads the model in-process with **no UI window at all**. | Truly headless (servers/CI). **Flex license only.** See version caveat below. |
+
+> **Correction (2026-05-24):** earlier revisions of this skill claimed Tekla has "no headless build." That is **wrong as of the `Tekla.Structures.Service` API** — Approach B is genuine headless. The statement held only for the old GUI-bypass world.
+
+### Approach B version caveat — confirmed 2026, *expected* 2025
+
+- **Confirmed** by official example: **2021** and **2026** ([HeadlessTeklaStructuresExample](https://github.com/TrimbleSolutionsCorporation/HeadlessTeklaStructuresExample) ships only `HeadlessExample.2021` + `HeadlessExample.2026`).
+- The `Tekla.Structures.Service` NuGet **does publish a `2025.0.0` build** (and every year 2021→2026), so the API is shipped for 2025 and *should* work — but there is **no official 2025 example**, so treat 2025 as unverified-by-example until smoke-tested. Full reference + lifecycle: [tekla-2026 headless-service](../../tekla-2026/skills/tekla-structures-headless-service.md) / [tekla-2025 headless-service](../../tekla-2025/skills/tekla-structures-headless-service.md).
+
+The rest of this doc covers **Approach A (GUI-bypass)** — the foundation of any test harness that needs the full UI or runs on a non-Flex license.
 
 ## Canonical launch command
 

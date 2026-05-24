@@ -21061,6 +21061,7 @@ skills:
   - tekla-structures-datatype.md
   - tekla-structures-dialog.md
   - tekla-structures-dialog-uicontrols.md
+  - tekla-structures-fusion-ui.md              # hand-authored: TeklaFusion WPF framework (not in scrape tree) — see skill header
   - tekla-structures-drawing.md
   - tekla-structures-drawing-automation.md
   - tekla-structures-drawing-operations.md
@@ -21081,4 +21082,6 @@ skills:
   - tekla-structures-model-ui.md
   - tekla-structures-model-welding.md
   - tekla-structures-plugins.md
+  - tekla-structures-direct-manipulation.md   # hand-authored: DM API (not in scrape tree) — see skill header
+  - tekla-structures-headless-service.md       # hand-authored: TeklaStructuresService genuine headless (not in scrape tree) — see skill header
   - tekla-structures-solid.md
