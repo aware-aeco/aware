@@ -266,7 +266,21 @@ fn run_set_app_secret(
         ));
     }
 
-    crate::auth::keychain::store_app_secret(integration, alias, secret, &ctx.paths.aware_home)?;
+    // Store under the SAME alias/default scope that `with_profile` will read: the
+    // alias-specific slot only when an alias-specific profile exists, else the
+    // default slot. Otherwise `--as <alias> --set-app-secret` would write a slot
+    // the OAuth flow never reads (the alias inherits the default profile).
+    let alias_has_profile =
+        crate::auth::profile::alias_profile_exists(&ctx.paths.aware_home, integration, alias);
+    let secret_alias = if alias_has_profile { alias } else { None };
+    let stored_default_for_alias = alias.is_some() && !alias_has_profile;
+
+    crate::auth::keychain::store_app_secret(
+        integration,
+        secret_alias,
+        secret,
+        &ctx.paths.aware_home,
+    )?;
 
     if ctx.json {
         println!(
@@ -275,12 +289,20 @@ fn run_set_app_secret(
                 "status": "stored",
                 "integration": integration,
                 "secret": "app",
+                "scope": if secret_alias.is_some() { "alias" } else { "default" },
             })
         );
     } else {
         println!(
             "\u{2713} stored BYO client secret for {integration} (OS keychain or ~/.aware/credentials fallback)"
         );
+        if stored_default_for_alias {
+            println!(
+                "  \u{00b7} no alias-specific profile for --as {}; stored for the default app \
+                 (shared by aliases that inherit the default profile)",
+                alias.unwrap()
+            );
+        }
     }
     Ok(())
 }
