@@ -53,14 +53,14 @@ const BRIDGES: &[Bridge] = &[
         binary: "aware-sketchup",
         asset_kind: AssetKind::Zip,
         description: "SketchUp 2026 (net10, single-file + Ruby bridge assets)",
-        note: Some("Run `aware-sketchup --install-bridge` after install to load the Ruby plugin"),
+        note: Some("Load the Ruby plugin: run `\"{dir}/aware-sketchup.exe\" --install-bridge`"),
     },
     Bridge {
         id: "revit",
         binary: "aware-revit",
         asset_kind: AssetKind::Zip,
         description: "Revit 2026 (net8 sidecar + IExternalApplication add-in)",
-        note: Some("Run `install-addin.ps1` after install to register the Revit add-in"),
+        note: Some("Register the Revit add-in: run `pwsh \"{dir}/install-addin.ps1\"`"),
     },
 ];
 
@@ -151,19 +151,24 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
     std::fs::create_dir_all(&install_dir).map_err(|e| {
         AwareError::Internal(format!("create {}: {e}", install_dir.display()))
     })?;
+    let version = env!("CARGO_PKG_VERSION");
 
-    // Already installed in the persistent dir? (A legacy on-PATH copy must NOT
-    // satisfy this — otherwise the bridge never migrates and the next npm upgrade
-    // wipes it. #148)
-    if let Some(p) = find_bridge_in_dir(bridge, &install_dir) {
-        println!("\u{2713} {} already installed at {}", bridge.binary, p.display());
-        if let Some(note) = bridge.note {
-            println!("\u{26a0} {note}");
-        }
+    // Already installed in the persistent dir AND matching this CLI version? Skip.
+    // Two reasons we check the version, not just presence:
+    //  - A legacy on-PATH copy must NOT satisfy this (we check the dir only), or
+    //    the bridge never migrates and the next npm upgrade wipes it (#148).
+    //  - Release assets are versioned per CLI release, so a bridge left over from
+    //    an older `aware` must be refreshed after upgrade rather than reused stale.
+    if bridge_is_current(bridge, &install_dir, version) {
+        println!(
+            "\u{2713} {} already installed (v{version}) in {}",
+            bridge.binary,
+            install_dir.display()
+        );
+        print_note(bridge, &install_dir);
         return Ok(());
     }
 
-    let version = env!("CARGO_PKG_VERSION");
     let asset_name = format!(
         "{}-{}-win-x64.{}",
         bridge.binary,
@@ -196,10 +201,50 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
         }
     }
 
-    if let Some(note) = bridge.note {
-        println!("\u{26a0} {note}");
-    }
+    // Stamp the installed version so a later CLI upgrade refreshes the bridge.
+    std::fs::write(version_marker_path(&install_dir, bridge.binary), version).map_err(|e| {
+        AwareError::Internal(format!("write version marker for {}: {e}", bridge.binary))
+    })?;
+
+    print_note(bridge, &install_dir);
     Ok(())
+}
+
+/// Path of the `<binary>.version` marker recording which CLI release installed
+/// the bridge currently in `install_dir`.
+fn version_marker_path(install_dir: &std::path::Path, binary: &str) -> PathBuf {
+    install_dir.join(format!("{binary}.version"))
+}
+
+/// The CLI version recorded for an installed bridge, if any.
+fn installed_bridge_version(install_dir: &std::path::Path, binary: &str) -> Option<String> {
+    std::fs::read_to_string(version_marker_path(install_dir, binary))
+        .ok()
+        .map(|s| s.trim().to_string())
+}
+
+/// Whether the bridge is present in the managed dir AND was installed by this
+/// CLI version. A missing or mismatched marker counts as not-current, so install
+/// re-downloads the matching release asset.
+fn bridge_is_current(bridge: &Bridge, install_dir: &std::path::Path, version: &str) -> bool {
+    find_bridge_in_dir(bridge, install_dir).is_some()
+        && installed_bridge_version(install_dir, bridge.binary).as_deref() == Some(version)
+}
+
+/// Print a bridge's post-install note, resolving `{dir}` to the (off-PATH)
+/// install directory so the host-registration command is actually runnable.
+fn print_note(bridge: &Bridge, install_dir: &std::path::Path) {
+    if let Some(msg) = note_message(bridge, install_dir) {
+        println!("\u{26a0} {msg}");
+    }
+}
+
+/// Build the resolved post-install note text, substituting `{dir}` with the
+/// install directory. `None` for bridges without a note.
+fn note_message(bridge: &Bridge, install_dir: &std::path::Path) -> Option<String> {
+    bridge
+        .note
+        .map(|n| n.replace("{dir}", &install_dir.display().to_string()))
 }
 
 // ── uninstall ─────────────────────────────────────────────────────────────────
@@ -214,6 +259,8 @@ fn uninstall(ctx: &Context, host: &str) -> Result<(), AwareError> {
 
     std::fs::remove_file(&path)
         .map_err(|e| AwareError::Internal(format!("remove {}: {e}", path.display())))?;
+    // Best-effort: drop the version marker too so it doesn't linger.
+    let _ = std::fs::remove_file(version_marker_path(&install_dir, bridge.binary));
     println!("\u{2713} Removed {}", path.display());
     Ok(())
 }
@@ -446,6 +493,35 @@ mod tests {
         assert!(find_bridge_in_dir(bridge, tmp.path()).is_none());
         std::fs::write(tmp.path().join("aware-tekla.exe"), b"fake").unwrap();
         assert!(find_bridge_in_dir(bridge, tmp.path()).is_some());
+    }
+
+    #[test]
+    fn bridge_is_current_requires_matching_version_marker() {
+        let tmp = tempfile::tempdir().unwrap();
+        let bridge = lookup_bridge("tekla").unwrap();
+        // Absent → not current.
+        assert!(!bridge_is_current(bridge, tmp.path(), "0.43.0"));
+        // Present but no version marker (stale/unknown) → not current.
+        std::fs::write(tmp.path().join("aware-tekla.exe"), b"fake").unwrap();
+        assert!(!bridge_is_current(bridge, tmp.path(), "0.43.0"));
+        // Marker for a different version → not current (refresh on upgrade).
+        std::fs::write(version_marker_path(tmp.path(), "aware-tekla"), "0.42.0").unwrap();
+        assert!(!bridge_is_current(bridge, tmp.path(), "0.43.0"));
+        // Marker matches → current.
+        std::fs::write(version_marker_path(tmp.path(), "aware-tekla"), "0.43.0\n").unwrap();
+        assert!(bridge_is_current(bridge, tmp.path(), "0.43.0"));
+    }
+
+    #[test]
+    fn note_message_resolves_install_dir_for_off_path_bridges() {
+        let dir = std::path::Path::new("/home/u/.aware/bridges");
+        let sketchup = lookup_bridge("sketchup").unwrap();
+        let msg = note_message(sketchup, dir).unwrap();
+        assert!(msg.contains("/home/u/.aware/bridges"));
+        assert!(msg.contains("aware-sketchup.exe"));
+        assert!(!msg.contains("{dir}"));
+        // tekla has no note.
+        assert!(note_message(lookup_bridge("tekla").unwrap(), dir).is_none());
     }
 
     #[test]
