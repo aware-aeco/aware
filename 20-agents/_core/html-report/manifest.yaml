@@ -12,6 +12,12 @@ description: |
 
 stateful: false
 
+# Not yet runnable: the `aware-html-report` transport binary isn't shipped or
+# installable. Apps referencing it are rejected at validate/compile rather than
+# failing at run with "program not found" (#161). Flip to `available` once the
+# binary ships.
+status: planned
+
 vendor:   aware
 license:  Apache-2.0
 homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/html-report

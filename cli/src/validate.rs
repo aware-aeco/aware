@@ -239,6 +239,47 @@ pub fn validate_app_safety(
     out
 }
 
+/// Reject nodes that reference an agent the runtime can't dispatch to — one
+/// declared `status: planned` (no shipped/installable transport binary). Fails at
+/// validate/compile rather than at run with "program not found" (#161). Recurses
+/// into `for-each` `do:` bodies. Agents not in the catalogue are skipped here
+/// (lockfile resolution / run handle the missing-agent case).
+#[allow(dead_code)] // wired by `aware app validate` + `compile_to_disk` + `app run`
+pub fn validate_app_agents(
+    app: &App,
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+) -> Vec<ValidationIssue> {
+    let mut out = Vec::new();
+    check_node_agents(&app.nodes, agents, &mut out);
+    out
+}
+
+fn check_node_agents(
+    nodes: &[crate::manifest::app::Node],
+    agents: &[crate::manifest::loader::DiscoveredAgent],
+    out: &mut Vec<ValidationIssue>,
+) {
+    use crate::manifest::agent::AgentStatus;
+    for n in nodes {
+        if let Some(agent_id) = &n.agent
+            && let Some(d) = agents.iter().find(|d| d.manifest.agent == *agent_id)
+            && d.manifest.status == AgentStatus::Planned
+        {
+            out.push(ValidationIssue::error(
+                "E_APP_AGENT_UNAVAILABLE",
+                format!(
+                    "node {:?} references agent {:?}, which is declared but not yet runnable \
+                     (no shipped/installable transport binary)",
+                    n.id, agent_id
+                ),
+            ));
+        }
+        if let Some(body) = &n.do_ {
+            check_node_agents(body, agents, out);
+        }
+    }
+}
+
 #[allow(dead_code)] // called by validate_app above
 fn has_cycle<'a>(
     node: &'a str,
@@ -295,6 +336,49 @@ mod tests {
         let a = load_app("30-apps/_examples/welded-to-tc.flo");
         let issues = validate_app(&a);
         assert!(!has_errors(&issues), "issues: {issues:?}");
+    }
+
+    fn agent_with_status(status_line: &str) -> crate::manifest::loader::DiscoveredAgent {
+        let yaml = format!(
+            "agent: html-report\nversion: 0.1.0\ndescription: x\nstateful: false\n{status_line}\
+             license: MIT\ntransport:\n  cli:\n    binary: aware-html-report\ncommands:\n  \
+             render:\n    lifecycle: single\n    description: x\n"
+        );
+        crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(&yaml).unwrap(),
+            root: std::path::PathBuf::from("."),
+        }
+    }
+
+    #[test]
+    fn rejects_node_referencing_planned_agent() {
+        let agents = vec![agent_with_status("status: planned\n")];
+        let app: App = serde_yaml::from_str(
+            "app: uses-planned\nversion: 0.0.1\ndescription: |\n  uses planned agent\n\
+             requires: []\nnodes:\n  - id: report\n    agent: html-report\n    command: render\n",
+        )
+        .unwrap();
+        let issues = validate_app_agents(&app, &agents);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn available_agent_passes_agent_validation() {
+        // No `status:` → defaults to available → no E_APP_AGENT_UNAVAILABLE.
+        let agents = vec![agent_with_status("")];
+        let app: App = serde_yaml::from_str(
+            "app: uses-avail\nversion: 0.0.1\ndescription: |\n  uses available agent\n\
+             requires: []\nnodes:\n  - id: report\n    agent: html-report\n    command: render\n",
+        )
+        .unwrap();
+        let issues = validate_app_agents(&app, &agents);
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
+            "issues: {issues:?}"
+        );
     }
 
     #[test]

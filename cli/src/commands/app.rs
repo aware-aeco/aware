@@ -186,6 +186,13 @@ async fn run(
                 "write-mode node(s) missing `safety:` block".into(),
             ));
         }
+        // Refuse a real run that dispatches to a not-yet-runnable agent, with a
+        // clear reason instead of a downstream "program not found" (#161).
+        let agent_issues = crate::validate::validate_app_agents(&app, &agents);
+        if let Some(err) = agent_issues.first() {
+            eprintln!("error: {}", err.message);
+            return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
     }
 
     // Parse `--input key=value` overrides into the app's input map.
@@ -591,6 +598,7 @@ fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError>
     // be validating an app before installing its agents).
     if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
         issues.extend(crate::validate::validate_app_safety(&app, &agents));
+        issues.extend(crate::validate::validate_app_agents(&app, &agents));
     }
 
     if issues.is_empty() {

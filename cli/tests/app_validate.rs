@@ -46,3 +46,34 @@ requires: []
         .code(3)
         .stdout(predicate::str::contains("E_APP_CYCLE"));
 }
+
+#[test]
+fn app_referencing_planned_agent_rejected_by_validate() {
+    // An agent declared `status: planned` (no shipped transport binary) must make
+    // apps referencing it fail validate, not fail at run with "program not found" (#161).
+    let home = tempfile::tempdir().unwrap();
+    let agent_dir = home.path().join("agents").join("html-report");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        "agent: html-report\nversion: 0.1.0\ndescription: x\nstateful: false\nstatus: planned\n\
+         license: MIT\ntransport:\n  cli:\n    binary: aware-html-report\ncommands:\n  render:\n    lifecycle: single\n    description: x\n",
+    )
+    .unwrap();
+
+    let appdir = tempfile::tempdir().unwrap();
+    std::fs::write(
+        appdir.path().join("report.flo"),
+        "app: uses-planned\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: report\n    agent: html-report\n    command: render\n",
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", home.path())
+        .args(["app", "validate"])
+        .arg(appdir.path())
+        .assert()
+        .failure()
+        .stdout(predicate::str::contains("E_APP_AGENT_UNAVAILABLE"));
+}
