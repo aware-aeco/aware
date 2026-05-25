@@ -381,6 +381,10 @@ pub fn credential_status_json(
     now: i64,
 ) -> serde_json::Value {
     let app = active_app_label(integration, alias, aware_home);
+    // Which interactive flow(s) a UI should use for this integration (#158).
+    let (flows, recommended_flow) = crate::auth::config::for_integration(integration)
+        .map(|c| (c.supported_flows().to_vec(), c.recommended_flow()))
+        .unwrap_or_default();
     match crate::auth::keychain::load_token(integration, alias, aware_home) {
         Ok(Some(token)) => {
             let (status, source, expires_in) = match token.source {
@@ -400,6 +404,8 @@ pub fn credential_status_json(
                 "source": source,
                 "expires_in_secs": expires_in,
                 "app": app,
+                "flows": flows,
+                "recommended_flow": recommended_flow,
             })
         }
         Ok(None) => serde_json::json!({
@@ -408,6 +414,8 @@ pub fn credential_status_json(
             "source": null,
             "expires_in_secs": null,
             "app": app,
+            "flows": flows,
+            "recommended_flow": recommended_flow,
         }),
         Err(_) => serde_json::json!({
             "integration": integration,
@@ -415,6 +423,8 @@ pub fn credential_status_json(
             "source": null,
             "expires_in_secs": null,
             "app": app,
+            "flows": flows,
+            "recommended_flow": recommended_flow,
         }),
     }
 }
@@ -427,6 +437,12 @@ pub fn print_credential_status_text(
     now: i64,
 ) {
     let app = active_app_label(integration, alias, aware_home);
+    // Suggest the integration's recommended flow in the "missing" hint (#158).
+    let recommended_flag = crate::auth::config::for_integration(integration)
+        .ok()
+        .and_then(|c| c.recommended_flow())
+        .map(|f| format!(" --{f}"))
+        .unwrap_or_default();
     match crate::auth::keychain::load_token(integration, alias, aware_home) {
         Ok(Some(token)) => match token.source {
             TokenSource::Paste => {
@@ -450,7 +466,7 @@ pub fn print_credential_status_text(
         },
         Ok(None) => {
             println!(
-                "  \u{2717} {integration:<22} missing  run: aware connect {integration} [app: {app}]"
+                "  \u{2717} {integration:<22} missing  run: aware connect {integration}{recommended_flag} [app: {app}]"
             );
         }
         Err(_) => {

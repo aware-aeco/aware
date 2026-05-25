@@ -19,9 +19,9 @@ pub fn run_pkce_flow(
     // 1. PKCE pair
     let (verifier, challenge) = make_pkce_pair();
 
-    // 2. Localhost callback server
-    let (server, port) = bind_callback_server()?;
-    let redirect_uri = format!("http://localhost:{port}/callback");
+    // 2. Localhost callback server. A BYO profile may pin the redirect_uri /
+    // listener port to match a provider with a fixed registered callback (#159).
+    let (server, redirect_uri) = bind_loopback(config)?;
 
     // 3. CSRF state
     let state = random_token(16);
@@ -76,11 +76,14 @@ pub fn run_pkce_flow(
         ));
     }
 
-    // 7. Respond to browser
-    let html = "<html><body><h1>\u{2713} Authenticated</h1><p>You can close this tab.</p>\
+    // 7. Respond to browser. Must declare UTF-8 — the page contains a non-ASCII
+    // glyph (✓); without `charset=utf-8` the browser falls back to Windows-1252
+    // and renders mojibake (#157).
+    let html = "<html><head><meta charset=\"utf-8\"></head>\
+                <body><h1>\u{2713} Authenticated</h1><p>You can close this tab.</p>\
                 <script>setTimeout(()=>window.close(),500)</script></body></html>";
     let response = tiny_http::Response::from_string(html).with_header(
-        "Content-Type: text/html"
+        "Content-Type: text/html; charset=utf-8"
             .parse::<tiny_http::Header>()
             .unwrap(),
     );
@@ -199,9 +202,72 @@ fn bind_callback_server() -> Result<(tiny_http::Server, u16), AwareError> {
     ))
 }
 
+/// Bind the loopback callback listener and return it plus the `redirect_uri` to
+/// advertise to the provider.
+///
+/// A BYO profile may pin both, for providers whose registered callback is a fixed
+/// value that doesn't match the default `http://localhost:7421/callback` (#159):
+/// - `callback_port` (or the port parsed from `redirect_uri`) → bind that exact
+///   port; otherwise scan the default 7421–7430 range.
+/// - `redirect_uri` override → advertise it verbatim; otherwise derive it from the
+///   bound port.
+fn bind_loopback(config: &IntegrationConfig) -> Result<(tiny_http::Server, String), AwareError> {
+    let redirect_override = config.redirect_uri_override().map(str::to_string);
+    // Explicit port: profile `callback_port`, else the port implied by a
+    // `redirect_uri` override (e.g. http://localhost → 80).
+    let explicit_port = config
+        .callback_port()
+        .or_else(|| redirect_override.as_deref().and_then(port_from_url));
+
+    let (server, port) = match explicit_port {
+        Some(p) => {
+            let server = tiny_http::Server::http(format!("127.0.0.1:{p}")).map_err(|e| {
+                let hint = if p < 1024 {
+                    " (ports below 1024 require elevation — register a high-port callback and set callback_port to match)"
+                } else {
+                    ""
+                };
+                AwareError::Network(format!("could not bind loopback callback port {p}: {e}{hint}"))
+            })?;
+            (server, p)
+        }
+        None => bind_callback_server()?,
+    };
+
+    let redirect_uri =
+        redirect_override.unwrap_or_else(|| format!("http://localhost:{port}/callback"));
+    Ok((server, redirect_uri))
+}
+
+/// Parse the (possibly default) port from an `http(s)://host[:port]` URL.
+fn port_from_url(s: &str) -> Option<u16> {
+    let u = url::Url::parse(s).ok()?;
+    u.port_or_known_default()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn port_from_url_uses_known_defaults() {
+        assert_eq!(port_from_url("http://localhost"), Some(80));
+        assert_eq!(port_from_url("http://localhost:8080/callback"), Some(8080));
+        assert_eq!(port_from_url("https://example.com"), Some(443));
+        assert_eq!(port_from_url("not a url"), None);
+    }
+
+    #[test]
+    fn bind_loopback_default_scans_range_and_derives_redirect() {
+        // No profile → scans 7421–7430 and derives the default redirect_uri.
+        let cfg = crate::auth::config::for_integration("google-workspace").unwrap();
+        let (_server, redirect) = bind_loopback(&cfg).unwrap();
+        assert!(
+            redirect.starts_with("http://localhost:74"),
+            "got {redirect}"
+        );
+        assert!(redirect.ends_with("/callback"));
+    }
 
     #[test]
     fn pkce_pair_has_valid_shape() {

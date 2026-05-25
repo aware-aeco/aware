@@ -3,6 +3,35 @@
 use assert_cmd::Command;
 use predicates::prelude::*;
 
+/// `connect --list --json` advertises each integration's supported/recommended
+/// auth flow so a UI can route without hardcoding per-provider knowledge (#158).
+#[test]
+fn list_json_advertises_auth_flows() {
+    let tmp = tempfile::tempdir().unwrap();
+    let out = Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .env("AWARE_DISABLE_KEYRING", "1")
+        .args(["--json", "connect", "--list"])
+        .assert()
+        .success()
+        .get_output()
+        .stdout
+        .clone();
+    let v: serde_json::Value = serde_json::from_slice(&out).unwrap();
+    let by = |id: &str| {
+        v.as_array()
+            .unwrap()
+            .iter()
+            .find(|e| e["integration"] == id)
+            .unwrap()
+            .clone()
+    };
+    assert_eq!(by("microsoft-365")["recommended_flow"], "device-code");
+    assert_eq!(by("google-workspace")["recommended_flow"], "oauth");
+    assert_eq!(by("microsoft-365")["flows"][0], "device-code");
+}
+
 /// `trimble-connect --oauth` has no bundled app (placeholder client_id), so it
 /// must fail fast with a BYO hint rather than sending the placeholder to Trimble
 /// ("Unregistered client"). (#153)
