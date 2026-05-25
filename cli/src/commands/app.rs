@@ -760,6 +760,22 @@ fn compile_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> 
             path.display()
         ))
     })?;
+    // Gate compile on structural validation so an app never locks against a
+    // construct the runtime can't execute (e.g. inline kind shape/map). Without
+    // this, `compile` happily produced a lock that only failed at `run` (#160).
+    let app = crate::manifest::loader::load_app(&source)?;
+    let issues = crate::validate::validate_app(&app);
+    if crate::validate::has_errors(&issues) {
+        for i in issues
+            .iter()
+            .filter(|i| i.severity == crate::validate::Severity::Error)
+        {
+            eprintln!("\u{2717} [{}] {}", i.code, i.message);
+        }
+        return Err(AwareError::Validation(
+            "app failed validation; not compiled".into(),
+        ));
+    }
     let lock_path = crate::app_lock::compile_to_disk(&source, &ctx.paths)?;
     println!(
         "\u{2713} compiled {} \u{2192} {}",
