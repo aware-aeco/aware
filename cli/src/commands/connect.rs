@@ -647,6 +647,10 @@ mod tests {
         let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
         assert_eq!(v["status"], "missing");
         assert_eq!(v["source"], serde_json::Value::Null);
+        // The #158 discoverability contract a UI consumes: flows present even on
+        // the missing branch, recommended_flow = first supported flow.
+        assert_eq!(v["flows"], serde_json::json!(["oauth"]));
+        assert_eq!(v["recommended_flow"], "oauth");
     }
 
     #[test]
@@ -654,6 +658,10 @@ mod tests {
         let tmp = tempfile::tempdir().unwrap();
         let v = credential_status_json("microsoft-365", None, tmp.path(), 0);
         assert_eq!(v["app"], "first-party");
+        // M365's bundled public client has no loopback redirect, so device-code
+        // is the routed flow a UI must use (#158).
+        assert_eq!(v["flows"], serde_json::json!(["device-code"]));
+        assert_eq!(v["recommended_flow"], "device-code");
     }
 
     #[test]
@@ -690,5 +698,8 @@ mod tests {
         let v = credential_status_json("trimble-connect", None, tmp.path(), 0);
         assert_eq!(v["status"], "valid");
         assert_eq!(v["source"], "paste");
+        // Lock the #158 fields on the present-token branch too, not just missing.
+        assert_eq!(v["flows"], serde_json::json!(["oauth"]));
+        assert_eq!(v["recommended_flow"], "oauth");
     }
 }
