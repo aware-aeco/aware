@@ -532,6 +532,18 @@ pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBu
         )));
     }
     let agents = discover_agents(paths)?;
+    // Refuse to lock an app that references a not-yet-runnable agent (e.g.
+    // html-report, whose transport binary isn't shipped) — fail here, not at run
+    // with "program not found" (#161).
+    if let Some(err) = crate::validate::validate_app_agents(&app, &agents)
+        .into_iter()
+        .find(|i| i.severity == crate::validate::Severity::Error)
+    {
+        return Err(AwareError::Validation(format!(
+            "app failed validation: [{}] {}",
+            err.code, err.message
+        )));
+    }
     let lock = compile(&app, &agents, source)?;
     write_lockfile(&lock, source)
 }

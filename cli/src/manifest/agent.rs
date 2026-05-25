@@ -41,6 +41,13 @@ pub struct Agent {
     pub display_name: Option<String>,
     pub description: String,
     pub stateful: bool,
+    /// Runnability of the agent's transport. `available` (default) means the
+    /// transport binary ships / is installable; `planned` means the agent is
+    /// declared but not yet runnable (no shipped/installable binary), so apps
+    /// referencing it are rejected at validate/compile rather than failing at run
+    /// with "program not found" (#161).
+    #[serde(default)]
+    pub status: AgentStatus,
     pub vendor: Option<String>,
     pub license: String,
     #[allow(dead_code)]
@@ -71,6 +78,18 @@ pub struct Agent {
     pub commands: BTreeMap<String, Command>,
     #[serde(default)]
     pub skills: Vec<String>,
+}
+
+/// Whether an agent's transport is runnable today.
+#[derive(Debug, Deserialize, Clone, Copy, Default, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
+pub enum AgentStatus {
+    /// Transport binary ships or is installable — the agent can be dispatched to.
+    #[default]
+    Available,
+    /// Declared but not yet runnable (no shipped/installable transport binary).
+    /// Apps referencing it fail validation/compile rather than at run time (#161).
+    Planned,
 }
 
 /// Declarative authentication for a REST-transport agent.
