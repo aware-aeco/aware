@@ -511,7 +511,7 @@ impl Orchestrator {
         // the host transport (#117-2). Write nodes emit `would-write:`; under
         // `--simulate` read nodes are stubbed with a schema-shaped placeholder.
         let out = if self.dry_run || self.simulate {
-            let mode = self.lookup_command_mode(agent_id, command);
+            let mode = self.lookup_command_mode(agent_id, command, node.mode);
             if mode == crate::manifest::agent::Mode::Write {
                 let safety_block = node
                     .safety
@@ -595,19 +595,26 @@ impl Orchestrator {
     }
 
     /// Resolve the read/write mode of a command by loading the agent's
-    /// manifest. Falls back to `Mode::Write` for unknown agents/commands in
-    /// dry-run contexts — i.e. err on the side of caution: an unknown
-    /// command is treated as write-mode, so dry-run will short-circuit it
-    /// rather than calling an unknown transport.
-    fn lookup_command_mode(&self, agent_id: &str, command: &str) -> crate::manifest::agent::Mode {
+    /// manifest. When the command can't be inferred from the manifest (unknown
+    /// command such as `exec`, or uninstalled agent), an author-declared
+    /// node-level `mode:` resolves the ambiguity — mirroring the lockfile
+    /// compiler (#165). Absent any declaration, falls back to `Mode::Write` so
+    /// dry-run short-circuits the node rather than calling an unknown transport.
+    fn lookup_command_mode(
+        &self,
+        agent_id: &str,
+        command: &str,
+        declared: Option<crate::manifest::agent::Mode>,
+    ) -> crate::manifest::agent::Mode {
         let mp = self.agents_dir.join(agent_id).join("manifest.yaml");
         match crate::manifest::loader::load_agent(&mp) {
             Ok(agent) => agent
                 .commands
                 .get(command)
                 .map(|c| agent.mode_of(command, c))
+                .or(declared)
                 .unwrap_or(crate::manifest::agent::Mode::Write),
-            Err(_) => crate::manifest::agent::Mode::Write,
+            Err(_) => declared.unwrap_or(crate::manifest::agent::Mode::Write),
         }
     }
 
@@ -670,7 +677,7 @@ impl Orchestrator {
             // ALSO stubbed (schema-shaped placeholder, no host sidecar) so the
             // whole composition can be validated without a live app.
             if self.dry_run || self.simulate {
-                let mode = self.lookup_command_mode(agent_id, command);
+                let mode = self.lookup_command_mode(agent_id, command, node.mode);
                 if mode == crate::manifest::agent::Mode::Write {
                     let safety_block = node
                         .safety
@@ -1386,6 +1393,80 @@ commands:
         } else {
             panic!("run did not end cleanly");
         }
+    }
+
+    #[tokio::test]
+    async fn dry_run_honors_author_declared_read_mode_on_unknown_command() {
+        // #165: an `exec` node (command absent from the agent manifest, so its
+        // mode is unknowable) that declares `mode: read` must be treated as a
+        // read under dry-run — NOT short-circuited as a write. A write would
+        // emit `WouldWrite` and skip the invoker; a read falls through to the
+        // (mocked) invoker. This keeps the runtime consistent with the lock,
+        // which already records `mode: read` for the same node.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: execmode
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        // Invoker returns a value for tekla/exec; if the node were wrongly
+        // treated as a write, this would never be called.
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "tekla",
+            "exec",
+            serde_json::json!({ "ok": true }),
+        ));
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        // Manifest WITHOUT an `exec` command — the runtime cannot infer mode.
+        let agent_dir = tmp.path().join("aware").join("agents").join("tekla");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: tekla
+version: 0.0.1
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  sheet.list:
+    lifecycle: single
+    category: curated
+    description: lists sheets
+"#,
+        )
+        .unwrap();
+
+        orch.dry_run = true;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "probe")),
+            "declared mode: read exec node must NOT be treated as a write: {events:?}"
+        );
+        let output = events.iter().find_map(|e| match e {
+            RunEvent::NodeOutput { node, data, .. } if node == "probe" => Some(data.clone()),
+            _ => None,
+        });
+        assert_eq!(
+            output,
+            Some(serde_json::json!({ "ok": true })),
+            "read-mode exec node must invoke (and emit) rather than short-circuit"
+        );
     }
 
     #[tokio::test]
