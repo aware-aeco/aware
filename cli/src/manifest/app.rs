@@ -7,6 +7,8 @@
 use serde::{Deserialize, Serialize};
 use serde_yaml::Value;
 
+pub use super::agent::Mode;
+
 #[derive(Debug, Deserialize)]
 pub struct App {
     pub app: String,
@@ -96,6 +98,12 @@ pub struct Node {
     pub id: String,
     pub agent: Option<String>,
     pub command: Option<String>,
+    /// Author-declared read/write intent. Honored by the compiler when the
+    /// command cannot be inferred from the agent manifest (e.g. `exec`, or
+    /// agent not yet installed). When present and the command is unknown,
+    /// this resolves the ambiguity instead of defaulting to write-mode.
+    #[serde(default)]
+    pub mode: Option<Mode>,
     pub inline: Option<Inline>,
     pub row: Option<u32>,
     pub col: Option<u32>,
@@ -143,6 +151,7 @@ pub struct Node {
     /// `panel:` — multi-voice review on write-mode nodes (v0.25).
     /// N voices in N domain hats must agree before the write commits.
     /// See `10-core/app-spec.md § Panel review`.
+    #[allow(dead_code)]
     #[serde(default)]
     pub panel: Option<PanelBlock>,
 
