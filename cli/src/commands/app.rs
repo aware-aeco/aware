@@ -760,6 +760,8 @@ fn compile_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> 
             path.display()
         ))
     })?;
+    // compile_to_disk validates before locking, so an unrunnable construct (e.g.
+    // an inline kind the runtime rejects) fails here rather than at run (#160).
     let lock_path = crate::app_lock::compile_to_disk(&source, &ctx.paths)?;
     println!(
         "\u{2713} compiled {} \u{2192} {}",
