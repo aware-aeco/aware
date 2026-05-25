@@ -345,22 +345,59 @@ fn compile_node(
                     .and_then(|v| serde_yaml::to_value(v).ok());
                 (mode_str.to_string(), out, Vec::new())
             } else {
-                (
+                // Command not in manifest — cannot infer mode. If the author
+                // declared an explicit node-level `mode:`, honor it; otherwise
+                // default to write-mode for safety (exec runs arbitrary code).
+                match node.mode {
+                    Some(Mode::Read) => (
+                        "read".to_string(),
+                        None,
+                        vec![format!(
+                            "agent {aid} installed but command {cmd_name} not found; using author-declared mode: read"
+                        )],
+                    ),
+                    Some(Mode::Write) => (
+                        "write".to_string(),
+                        None,
+                        vec![format!(
+                            "agent {aid} installed but command {cmd_name} not found; using author-declared mode: write"
+                        )],
+                    ),
+                    None => (
+                        "write".to_string(),
+                        None,
+                        vec![format!(
+                            "agent {aid} installed but command {cmd_name} not found; defaulting to write-mode for safety"
+                        )],
+                    ),
+                }
+            }
+        } else {
+            // Agent not installed — same logic: honor explicit declaration,
+            // fall back to write-mode only when the author expressed no intent.
+            match node.mode {
+                Some(Mode::Read) => (
+                    "read".to_string(),
+                    None,
+                    vec![format!(
+                        "agent {aid} not installed; using author-declared mode: read"
+                    )],
+                ),
+                Some(Mode::Write) => (
                     "write".to_string(),
                     None,
                     vec![format!(
-                        "agent {aid} installed but command {cmd_name} not found; defaulting to write-mode for safety"
+                        "agent {aid} not installed; using author-declared mode: write"
                     )],
-                )
+                ),
+                None => (
+                    "write".to_string(),
+                    None,
+                    vec![format!(
+                        "agent {aid} not installed; defaulting to write-mode for safety"
+                    )],
+                ),
             }
-        } else {
-            (
-                "write".to_string(),
-                None,
-                vec![format!(
-                    "agent {aid} not installed; defaulting to write-mode for safety"
-                )],
-            )
         }
     } else if kind == "inline" || kind == "assert" || kind == "compare" || kind == "snapshot" {
         ("read".to_string(), None, Vec::new())
@@ -1475,6 +1512,131 @@ requires: []
             !sink.notes.iter().any(|n| n.contains("nope")),
             "ref check flagged the overridden config: ref instead of the merged inputs: value: {:?}",
             sink.notes
+        );
+    }
+
+    #[test]
+    fn compile_honors_author_declared_mode_on_unknown_command() {
+        // An author-declared `mode: read` on a node whose command is not found
+        // in the agent manifest (e.g. `exec`) must be honored — not silently
+        // overridden to write-mode (#165).
+        use crate::manifest::loader::DiscoveredAgent;
+        let agent_yaml = r#"
+agent: tekla
+version: 0.1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  sheet.list:
+    lifecycle: single
+    category: curated
+    description: lists sheets
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("exec-mode.flo");
+        // `exec` is not in the agent manifest above — the compiler cannot infer
+        // mode from the manifest. The author-declared `mode: read` must win.
+        std::fs::write(
+            &src,
+            r#"app: exec-mode-repro
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+    config:
+      code: return new { ok = true };
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
+
+        assert_eq!(
+            probe.mode, "read",
+            "author-declared mode: read must be honored on exec node; got: {}",
+            probe.mode
+        );
+        assert!(
+            !probe.notes.iter().any(|n| n.contains("defaulting")),
+            "must not claim we defaulted when author declared a mode; notes: {:?}",
+            probe.notes
+        );
+        assert!(
+            probe.notes.iter().any(|n| n.contains("author-declared")),
+            "note must mention that the author-declared mode was used; notes: {:?}",
+            probe.notes
+        );
+    }
+
+    #[test]
+    fn compile_defaults_write_mode_on_unknown_command_without_declaration() {
+        // When no `mode:` is declared on a node with an unknown command, the
+        // original safe default (write-mode) must still apply (#165 regression guard).
+        use crate::manifest::loader::DiscoveredAgent;
+        let agent_yaml = r#"
+agent: tekla
+version: 0.1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  sheet.list:
+    lifecycle: single
+    category: curated
+    description: lists sheets
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("exec-no-mode.flo");
+        std::fs::write(
+            &src,
+            r#"app: exec-no-mode
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    config:
+      code: return new { ok = true };
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
+
+        assert_eq!(
+            probe.mode, "write",
+            "must still default to write-mode when no mode is declared; got: {}",
+            probe.mode
+        );
+        assert!(
+            probe.notes.iter().any(|n| n.contains("defaulting")),
+            "must include the defaulting-to-write note; notes: {:?}",
+            probe.notes
         );
     }
 }
