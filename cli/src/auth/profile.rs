@@ -30,6 +30,14 @@ pub struct OAuthAppProfile {
     /// Explicit RFC 8628 device-authorization endpoint override (sovereign cloud
     /// / proxy). Only consulted by the device-code flow.
     pub device_authorization_url: Option<String>,
+    /// Loopback `redirect_uri` to send in the `--oauth` (PKCE) flow, for providers
+    /// whose registered callback is a fixed value (e.g. Trimble's `http://localhost`)
+    /// that doesn't match the default `http://localhost:7421/callback`. (#159)
+    pub redirect_uri: Option<String>,
+    /// Port the local loopback listener binds to, to match `redirect_uri`. If
+    /// omitted, derived from `redirect_uri` (80 for a port-less `http://localhost`),
+    /// else the default 7421–7430 scan. Ports below 1024 need elevation. (#159)
+    pub callback_port: Option<u16>,
 }
 
 /// Load the BYO profile for `integration`, preferring an alias-specific file

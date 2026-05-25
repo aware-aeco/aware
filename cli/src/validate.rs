@@ -186,17 +186,39 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
         }
     }
 
-    for n in &app.nodes {
-        if let Some(inline) = &n.inline
-            && inline.description.trim().is_empty()
-        {
-            out.push(ValidationIssue::error(
-                "E_APP_INLINE_NO_DESC",
-                format!("inline node {:?} missing description", n.id),
-            ));
+    check_inline_nodes(&app.nodes, &mut out);
+    out
+}
+
+/// Recursively validate inline-glue nodes, descending into `for-each` `do:` bodies
+/// (which the compiler flattens and the runtime executes), so unsupported inline
+/// kinds are caught wherever they appear, not just at the top level (#160).
+fn check_inline_nodes(nodes: &[crate::manifest::app::Node], out: &mut Vec<ValidationIssue>) {
+    for n in nodes {
+        if let Some(inline) = &n.inline {
+            if inline.description.trim().is_empty() {
+                out.push(ValidationIssue::error(
+                    "E_APP_INLINE_NO_DESC",
+                    format!("inline node {:?} missing description", n.id),
+                ));
+            }
+            // The runtime executes only `predicate` inline glue today (see
+            // orchestrator). Reject other kinds so an unrunnable app fails at
+            // validate/compile — not after the author validated + locked it.
+            if inline.kind != "predicate" {
+                out.push(ValidationIssue::error(
+                    "E_APP_INLINE_KIND",
+                    format!(
+                        "inline node {:?}: kind {:?} is not runnable yet (only 'predicate' is supported)",
+                        n.id, inline.kind
+                    ),
+                ));
+            }
+        }
+        if let Some(body) = &n.do_ {
+            check_inline_nodes(body, out);
         }
     }
-    out
 }
 
 /// Validate the safety contract for write-mode nodes against the installed
@@ -377,6 +399,80 @@ mod tests {
         let issues = validate_app_agents(&app, &agents);
         assert!(
             !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn rejects_unrunnable_inline_kind_at_validate() {
+        // kind: shape passes parse but the runtime only runs `predicate`; validate
+        // must reject it so the failure surfaces before compile/lock (#160).
+        let yaml = r#"
+app: inline-shape
+version: 0.0.1
+description: |
+  Inline shape node.
+requires: []
+nodes:
+  - id: passthrough
+    inline:
+      kind: shape
+      description: reshape a value
+      code: "() => ({ ok: true })"
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(has_errors(&issues), "issues: {issues:?}");
+        assert!(issues.iter().any(|i| i.code == "E_APP_INLINE_KIND"));
+    }
+
+    #[test]
+    fn rejects_unrunnable_inline_kind_nested_in_for_each_body() {
+        // A shape node inside a for-each `do:` body is flattened + run, so it must
+        // be rejected at validate too — not just top-level nodes (#160 review).
+        let yaml = r#"
+app: inline-shape-body
+version: 0.0.1
+description: |
+  for-each with an inline shape in its body.
+requires: []
+nodes:
+  - id: loop
+    for-each: '{{ items }}'
+    do:
+      - id: reshape
+        inline:
+          kind: shape
+          description: reshape each item
+          code: "() => ({ ok: true })"
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_INLINE_KIND"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn predicate_inline_kind_passes_validate() {
+        let yaml = r#"
+app: inline-pred
+version: 0.0.1
+description: |
+  Inline predicate node.
+requires: []
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: gate on type
+      code: 'e.type == "Welded"'
+"#;
+        let app: App = serde_yaml::from_str(yaml).unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_INLINE_KIND"),
             "issues: {issues:?}"
         );
     }

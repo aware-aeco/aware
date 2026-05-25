@@ -517,6 +517,20 @@ pub fn find_app_source(path: &Path) -> Option<std::path::PathBuf> {
 /// End-to-end: load + compile + write. Called by `aware app compile`.
 pub fn compile_to_disk(source: &Path, paths: &Paths) -> Result<std::path::PathBuf, AwareError> {
     let app = crate::manifest::loader::load_app(source)?;
+    // Refuse to produce a lock for an app the runtime can't execute (e.g. an
+    // inline kind the orchestrator rejects). Gating here covers every
+    // lock-producing path — `app compile`, `app inspect`, … — so an unrunnable
+    // construct fails before locking, not at run (#160).
+    let issues = crate::validate::validate_app(&app);
+    if let Some(err) = issues
+        .iter()
+        .find(|i| i.severity == crate::validate::Severity::Error)
+    {
+        return Err(AwareError::Validation(format!(
+            "app failed validation: [{}] {}",
+            err.code, err.message
+        )));
+    }
     let agents = discover_agents(paths)?;
     // Refuse to lock an app that references a not-yet-runnable agent (e.g.
     // html-report, whose transport binary isn't shipped) — fail here, not at run
