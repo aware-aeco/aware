@@ -174,24 +174,34 @@ async fn run(
     // nodes are missing `safety:` blocks. Skipped in --dry-run (a dry-run
     // is precisely how you'd test an app's safety contract before adding
     // the blocks). See `10-core/app-spec.md § Safety contract`.
-    if !dry_run {
+    // Pre-flight checks need the agent catalogue. `--simulate` stubs every node
+    // and contacts no binary, so it skips both checks; a plain `--dry-run` still
+    // dispatches read-mode nodes, so it gets the planned-agent check.
+    if !simulate {
         let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
-        let safety_issues = crate::validate::validate_app_safety(&app, &agents);
-        if !safety_issues.is_empty() {
-            eprintln!("error: app failed safety pre-flight (use --dry-run to preview):");
-            for issue in &safety_issues {
-                eprintln!("  \u{2717} [{}] {}", issue.code, issue.message);
-            }
-            return Err(AwareError::Validation(
-                "write-mode node(s) missing `safety:` block".into(),
-            ));
-        }
-        // Refuse a real run that dispatches to a not-yet-runnable agent, with a
-        // clear reason instead of a downstream "program not found" (#161).
-        let agent_issues = crate::validate::validate_app_agents(&app, &agents);
-        if let Some(err) = agent_issues.first() {
+
+        // Planned-agent check: a plain `--dry-run` still dispatches to live read-mode
+        // binaries (only `--simulate`, excluded above, stubs everything), so refuse a
+        // not-yet-runnable agent with a clear reason instead of a downstream
+        // "program not found" (#161).
+        if let Some(err) = crate::validate::validate_app_agents(&app, &agents).first() {
             eprintln!("error: {}", err.message);
             return Err(AwareError::Validation(format!("[{}]", err.code)));
+        }
+
+        // Safety pre-flight only gates real runs (dry-run is precisely how you test
+        // an app's safety contract before adding the blocks).
+        if !dry_run {
+            let safety_issues = crate::validate::validate_app_safety(&app, &agents);
+            if !safety_issues.is_empty() {
+                eprintln!("error: app failed safety pre-flight (use --dry-run to preview):");
+                for issue in &safety_issues {
+                    eprintln!("  \u{2717} [{}] {}", issue.code, issue.message);
+                }
+                return Err(AwareError::Validation(
+                    "write-mode node(s) missing `safety:` block".into(),
+                ));
+            }
         }
     }
 
@@ -520,6 +530,9 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
     let mut issues = crate::validate::validate_app(&src_app);
     if let Ok(agents) = crate::manifest::loader::discover_agents(&ctx.paths) {
         issues.extend(crate::validate::validate_app_safety(&src_app, &agents));
+        // Don't install an app that references a not-yet-runnable agent — install
+        // must enforce the same contract as validate/compile (#161).
+        issues.extend(crate::validate::validate_app_agents(&src_app, &agents));
     }
     if crate::validate::has_errors(&issues) {
         for i in &issues {
