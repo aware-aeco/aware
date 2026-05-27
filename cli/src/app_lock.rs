@@ -334,16 +334,24 @@ fn compile_node(
         let cmd_name = node.command.as_deref().unwrap_or("");
         if let Some(d) = agents.iter().find(|d| d.manifest.agent == *aid) {
             if let Some(cmd) = d.manifest.commands.get(cmd_name) {
-                let m = d.manifest.mode_of(cmd_name, cmd);
-                let mode_str = match m {
-                    Mode::Read => "read",
-                    Mode::Write => "write",
-                };
+                // Resolve mode against the manifest. For a `mode-overridable`
+                // command (caller-determined behavior, e.g. `exec`) an explicit
+                // node-level `mode:` wins; otherwise the manifest is
+                // authoritative. (#165)
+                let resolved = d.manifest.effective_mode(cmd_name, cmd, node.mode);
                 let out = cmd
                     .outputs
                     .as_ref()
                     .and_then(|v| serde_yaml::to_value(v).ok());
-                (mode_str.to_string(), out, Vec::new())
+                let notes = if resolved.overridden {
+                    vec![format!(
+                        "command {cmd_name} is mode-overridable; using author-declared mode: {}",
+                        resolved.mode.as_str()
+                    )]
+                } else {
+                    Vec::new()
+                };
+                (resolved.mode.as_str().to_string(), out, notes)
             } else {
                 // Command not in manifest — cannot infer mode. If the author
                 // declared an explicit node-level `mode:`, honor it; otherwise
@@ -1636,6 +1644,138 @@ requires: []
         assert!(
             probe.notes.iter().any(|n| n.contains("defaulting")),
             "must include the defaulting-to-write note; notes: {:?}",
+            probe.notes
+        );
+    }
+
+    #[test]
+    fn compile_honors_mode_read_on_mode_overridable_command() {
+        // The real #165 repro: `exec` IS declared in the manifest with a
+        // conservative `mode: write` default, but flagged `mode-overridable`.
+        // An explicit node-level `mode: read` must win — the lock records
+        // `read`, with an informational (non-"defaulting") note.
+        use crate::manifest::loader::DiscoveredAgent;
+        let agent_yaml = r#"
+agent: tekla
+version: 0.1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  exec:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: true
+    description: runs arbitrary C#
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("exec-read.flo");
+        std::fs::write(
+            &src,
+            r#"app: exec-read
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+    config:
+      code: return new { ok = true };
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
+
+        assert_eq!(
+            probe.mode, "read",
+            "explicit mode: read must win on a mode-overridable command; got: {}",
+            probe.mode
+        );
+        assert!(
+            !probe.notes.iter().any(|n| n.contains("defaulting")),
+            "must not emit a defaulting note when the author declared the mode; notes: {:?}",
+            probe.notes
+        );
+        assert!(
+            probe
+                .notes
+                .iter()
+                .any(|n| n.contains("mode-overridable") && n.contains("mode: read")),
+            "note must explain the override; notes: {:?}",
+            probe.notes
+        );
+    }
+
+    #[test]
+    fn compile_defaults_write_on_mode_overridable_command_without_declaration() {
+        // An un-annotated node on a mode-overridable `exec` keeps the
+        // conservative `mode: write` default (so the safety contract still
+        // applies), with no override note.
+        use crate::manifest::loader::DiscoveredAgent;
+        let agent_yaml = r#"
+agent: tekla
+version: 0.1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  exec:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: true
+    description: runs arbitrary C#
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("exec-default.flo");
+        std::fs::write(
+            &src,
+            r#"app: exec-default
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    config:
+      code: return new { ok = true };
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let probe = lock.nodes.iter().find(|n| n.id == "probe").unwrap();
+
+        assert_eq!(
+            probe.mode, "write",
+            "un-annotated node on mode-overridable exec must default to write; got: {}",
+            probe.mode
+        );
+        assert!(
+            probe.notes.is_empty(),
+            "manifest-authoritative default needs no note; notes: {:?}",
             probe.notes
         );
     }

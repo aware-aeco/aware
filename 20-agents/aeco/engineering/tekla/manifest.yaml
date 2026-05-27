@@ -164,7 +164,8 @@ commands:
   exec:
     lifecycle: single
     category: curated
-    mode: write
+    mode: write              # conservative default — exec runs arbitrary C#
+    mode-overridable: true   # ...but an app node may declare mode: read for a read-only script (#165)
     description: |
       Compile + run an arbitrary C# script against the active Tekla model
       via Roslyn scripting. The bridge between the v0.30 catalog (data) and

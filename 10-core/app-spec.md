@@ -694,6 +694,29 @@ A node is *write-mode* if either:
 
 Pure-read nodes (e.g. `sheet.list`, `view.capture-bitmap`, `element.by-parameter-value`) do not need `safety:`.
 
+#### Node-level `mode:` and caller-determined commands (`mode-overridable`)
+
+For most commands the manifest's `mode:` is **authoritative** — the agent author knows whether `revision.bump` writes (it does) and whether `sheet.list` reads (it does). A node may restate it, but a node-level `mode:` that **conflicts** with the manifest is rejected (`E_APP_NODE_MODE_NOT_OVERRIDABLE`) rather than silently dropped — an app author cannot relabel a genuinely-writing command as read to dodge the safety contract.
+
+One class of command is different: those that run **caller-supplied logic** whose read/write behavior the agent cannot know in advance. The canonical example is Tekla's `exec`, which compiles and runs an arbitrary C# script. The agent author marks such a command **`mode-overridable: true`** in the manifest and gives it a conservative `mode: write` default. Then:
+
+- A node that invokes the command **without** a node-level `mode:` is treated as **write** (the safe default) — it still needs a `safety:` block.
+- A node that declares an explicit **`mode: read`** asserts *this particular script writes nothing*; the compiler honors it, records `mode: read` in the `.lock`, and the node needs no `safety:` block. (A node declaring `mode: write` likewise wins.)
+
+```yaml
+# A read-only Tekla exec node — model is read, nothing is written.
+- id: bom
+  agent: tekla
+  command: exec          # exec is mode-overridable; default would be write
+  mode: read             # author asserts this script only reads → no safety: needed
+  config:
+    version: "2025.0"
+    code: |
+      return Model.GetModelObjectSelector()... ;  // read-only
+```
+
+The author taking responsibility for an `exec` script's mode is the only authority that exists — no manifest can inspect an arbitrary script. This resolves issue #165: a read-only host-`exec` app is no longer mislabeled write-mode or forced to declare a bogus `safety:` block.
+
 ### The block
 
 ```yaml

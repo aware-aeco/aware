@@ -248,7 +248,32 @@ pub fn validate_app_safety(
         let Some(cmd) = agent.manifest.commands.get(cmd_name.as_str()) else {
             continue;
         };
-        if agent.manifest.mode_of(cmd_name, cmd) == Mode::Write && node.safety.is_none() {
+
+        // A node-level `mode:` is only meaningful on a `mode-overridable`
+        // command (one whose read/write behavior is caller-determined, e.g.
+        // `exec`). On any other command the manifest mode is authoritative, so
+        // a *conflicting* node-level declaration would be silently dropped —
+        // exactly the footgun #165 is about. Reject it loudly instead.
+        if !cmd.mode_overridable
+            && let Some(declared) = node.mode
+            && declared != agent.manifest.mode_of(cmd_name, cmd)
+        {
+            out.push(ValidationIssue::error(
+                "E_APP_NODE_MODE_NOT_OVERRIDABLE",
+                format!(
+                    "node {:?} declares `mode: {}` but command {}.{} is not `mode-overridable`; its manifest mode ({}) is authoritative. Remove the node-level `mode:` (or have the agent declare the command `mode-overridable` if its mode is caller-determined).",
+                    node.id,
+                    declared.as_str(),
+                    agent_id,
+                    cmd_name,
+                    agent.manifest.mode_of(cmd_name, cmd).as_str(),
+                ),
+            ));
+            continue;
+        }
+
+        let effective = agent.manifest.effective_mode(cmd_name, cmd, node.mode);
+        if effective.mode == Mode::Write && node.safety.is_none() {
             out.push(ValidationIssue::error(
                 "E_APP_WRITE_WITHOUT_SAFETY",
                 format!(
@@ -765,6 +790,177 @@ nodes:
   - id: n
     agent: x
     command: thing.insert
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert!(issues.is_empty(), "unexpected issues: {issues:?}");
+    }
+
+    #[test]
+    fn safety_check_passes_read_override_on_mode_overridable_exec() {
+        // The #165 install repro: `exec` is declared write-mode but
+        // `mode-overridable`. A node-level `mode: read` makes it read-mode, so
+        // no `safety:` block is required and install is NOT refused.
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  exec:
+    lifecycle: single
+    mode: write
+    mode-overridable: true
+    description: runs arbitrary C#
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: exec-mode-repro
+version: 0.0.1
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+    config:
+      code: return new { ok = true };
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert!(
+            issues.is_empty(),
+            "read-only exec must install without safety: ; issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn safety_check_still_requires_safety_on_unannotated_mode_overridable_exec() {
+        // Without a node-level mode, mode-overridable exec keeps its
+        // conservative write default — safety: is still required.
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  exec:
+    lifecycle: single
+    mode: write
+    mode-overridable: true
+    description: runs arbitrary C#
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: exec-unannotated
+version: 0.0.1
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    config:
+      code: Model.CommitChanges();
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert_eq!(issues.len(), 1);
+        assert_eq!(issues[0].code, "E_APP_WRITE_WITHOUT_SAFETY");
+    }
+
+    #[test]
+    fn safety_check_rejects_conflicting_node_mode_on_non_overridable_command() {
+        // A node-level `mode: read` on a genuinely-writing, non-overridable
+        // command must be rejected loudly — never silently dropped (#165).
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  uda-set:
+    lifecycle: single
+    mode: write
+    description: writes a UDA
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: sneaky-write
+version: 0.0.1
+description: x
+nodes:
+  - id: n
+    agent: tekla
+    command: uda-set
+    mode: read
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_safety(&app, &[agent]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_NODE_MODE_NOT_OVERRIDABLE"),
+            "conflicting node mode on non-overridable command must be rejected; issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn safety_check_allows_redundant_matching_node_mode_on_non_overridable_command() {
+        // Restating the manifest mode (no conflict) is redundant but allowed —
+        // it must not error, and the safety gate still applies normally.
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  bolt-list:
+    lifecycle: single
+    mode: read
+    description: reads a bolt schedule
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: redundant-mode
+version: 0.0.1
+description: x
+nodes:
+  - id: n
+    agent: tekla
+    command: bolt-list
+    mode: read
 connections: []
 requires: []
 "#,
