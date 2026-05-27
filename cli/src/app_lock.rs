@@ -99,10 +99,61 @@ pub struct CompiledNode {
     #[serde(rename = "output-schema")]
     pub output_schema: Option<serde_yaml::Value>,
 
-    /// Free-form notes captured at compile time (e.g. "agent not
-    /// installed — schema deferred to first install").
+    /// Notes captured at compile time, each carrying a machine-readable
+    /// `kind` (info / warn / error) so consumers can render by severity
+    /// without string-matching the prose (#170). Serialized as a list of
+    /// `{ kind, text }` maps.
     #[serde(skip_serializing_if = "Vec::is_empty")]
-    pub notes: Vec<String>,
+    pub notes: Vec<CompileNote>,
+}
+
+/// Severity of a compile-time [`CompileNote`]. Consumers (the CLI, the lock
+/// audit, floless.app) render by `kind` — `info` quiet/collapsible, `warn` /
+/// `error` prominent — and stay correct across note-wording changes (#170).
+#[derive(Debug, Serialize, Clone, Copy, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum NoteKind {
+    /// Benign provenance / FYI — e.g. "the compiler trusted the node-level
+    /// `mode:` for a command whose mode it can't infer" (the `exec` case, #165).
+    Info,
+    /// Something the author should look at — e.g. a silent write-mode
+    /// fallback, an uninstalled agent, or a dangling input reference.
+    Warn,
+    /// A condition that should block the run.
+    Error,
+}
+
+/// A single compile-time note: a severity [`kind`](NoteKind) plus its prose.
+#[derive(Debug, Serialize, Clone, PartialEq, Eq)]
+pub struct CompileNote {
+    pub kind: NoteKind,
+    pub text: String,
+}
+
+impl CompileNote {
+    /// Benign provenance / FYI note (`kind: info`).
+    pub fn info(text: impl Into<String>) -> Self {
+        Self {
+            kind: NoteKind::Info,
+            text: text.into(),
+        }
+    }
+
+    /// Actionable warning (`kind: warn`).
+    pub fn warn(text: impl Into<String>) -> Self {
+        Self {
+            kind: NoteKind::Warn,
+            text: text.into(),
+        }
+    }
+
+    /// Run-blocking error (`kind: error`).
+    pub fn error(text: impl Into<String>) -> Self {
+        Self {
+            kind: NoteKind::Error,
+            text: text.into(),
+        }
+    }
 }
 
 /// Compile a parsed app + the installed agent catalogue into a lockfile.
@@ -219,9 +270,9 @@ pub fn compile(
                 } else {
                     fields.iter().cloned().collect::<Vec<_>>().join(", ")
                 };
-                nodes[i].notes.push(format!(
+                nodes[i].notes.push(CompileNote::warn(format!(
                     "input references {{{{ {nid}.{field} }}}} but node {nid:?} has no output field {field:?} (available: {available})"
-                ));
+                )));
             }
         }
     }
@@ -343,67 +394,71 @@ fn compile_node(
                     .outputs
                     .as_ref()
                     .and_then(|v| serde_yaml::to_value(v).ok());
+                // Benign provenance: the compiler trusted the node-level
+                // `mode:` for a command whose mode it can't infer (#165). Info.
                 let notes = if resolved.overridden {
-                    vec![format!(
+                    vec![CompileNote::info(format!(
                         "command {cmd_name} is mode-overridable; using author-declared mode: {}",
                         resolved.mode.as_str()
-                    )]
+                    ))]
                 } else {
                     Vec::new()
                 };
                 (resolved.mode.as_str().to_string(), out, notes)
             } else {
                 // Command not in manifest — cannot infer mode. If the author
-                // declared an explicit node-level `mode:`, honor it; otherwise
-                // default to write-mode for safety (exec runs arbitrary code).
+                // declared an explicit node-level `mode:`, honor it (info);
+                // otherwise default to write-mode for safety (warn — a silent
+                // write-mode fallback is worth surfacing).
                 match node.mode {
                     Some(Mode::Read) => (
                         "read".to_string(),
                         None,
-                        vec![format!(
+                        vec![CompileNote::info(format!(
                             "agent {aid} installed but command {cmd_name} not found; using author-declared mode: read"
-                        )],
+                        ))],
                     ),
                     Some(Mode::Write) => (
                         "write".to_string(),
                         None,
-                        vec![format!(
+                        vec![CompileNote::info(format!(
                             "agent {aid} installed but command {cmd_name} not found; using author-declared mode: write"
-                        )],
+                        ))],
                     ),
                     None => (
                         "write".to_string(),
                         None,
-                        vec![format!(
+                        vec![CompileNote::warn(format!(
                             "agent {aid} installed but command {cmd_name} not found; defaulting to write-mode for safety"
-                        )],
+                        ))],
                     ),
                 }
             }
         } else {
-            // Agent not installed — same logic: honor explicit declaration,
-            // fall back to write-mode only when the author expressed no intent.
+            // Agent not installed — the missing agent is the salient,
+            // actionable fact (schema can't be resolved), so these are warnings
+            // regardless of whether the author also declared a mode (#170).
             match node.mode {
                 Some(Mode::Read) => (
                     "read".to_string(),
                     None,
-                    vec![format!(
+                    vec![CompileNote::warn(format!(
                         "agent {aid} not installed; using author-declared mode: read"
-                    )],
+                    ))],
                 ),
                 Some(Mode::Write) => (
                     "write".to_string(),
                     None,
-                    vec![format!(
+                    vec![CompileNote::warn(format!(
                         "agent {aid} not installed; using author-declared mode: write"
-                    )],
+                    ))],
                 ),
                 None => (
                     "write".to_string(),
                     None,
-                    vec![format!(
+                    vec![CompileNote::warn(format!(
                         "agent {aid} not installed; defaulting to write-mode for safety"
-                    )],
+                    ))],
                 ),
             }
         }
@@ -723,12 +778,12 @@ requires: []
         let lock = compile(&app, &agents, &src).unwrap();
         let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
         assert!(
-            sink.notes.iter().any(|n| n.contains("src.nope")),
+            sink.notes.iter().any(|n| n.text.contains("src.nope")),
             "expected a note for the bad reference; notes: {:?}",
             sink.notes
         );
         assert!(
-            !sink.notes.iter().any(|n| n.contains("{{ src.path }}")),
+            !sink.notes.iter().any(|n| n.text.contains("{{ src.path }}")),
             "valid reference must NOT be flagged; notes: {:?}",
             sink.notes
         );
@@ -845,12 +900,15 @@ requires: []
             .expect("inner do: node 'sync.upsert' missing from lock");
         // Ref-check descended into the do: body (bad ref flagged, good one not).
         assert!(
-            upsert.notes.iter().any(|n| n.contains("src.nope")),
+            upsert.notes.iter().any(|n| n.text.contains("src.nope")),
             "bad ref inside do: not flagged; notes: {:?}",
             upsert.notes
         );
         assert!(
-            !upsert.notes.iter().any(|n| n.contains("{{ src.path }}")),
+            !upsert
+                .notes
+                .iter()
+                .any(|n| n.text.contains("{{ src.path }}")),
             "valid ref inside do: must not be flagged; notes: {:?}",
             upsert.notes
         );
@@ -859,7 +917,7 @@ requires: []
         // ref is treated as an unknown prefix (skipped), not blessed or flagged.
         let after = lock.nodes.iter().find(|n| n.id == "after").unwrap();
         assert!(
-            !after.notes.iter().any(|n| n.contains("upsert")),
+            !after.notes.iter().any(|n| n.text.contains("upsert")),
             "body-local id leaked into global scope (should not resolve): {:?}",
             after.notes
         );
@@ -932,7 +990,7 @@ requires: []
         // which has `rows` — not the body dup, which doesn't. So: no note.
         let lp = lock.nodes.iter().find(|n| n.id == "loop").unwrap();
         assert!(
-            !lp.notes.iter().any(|n| n.contains("rows")),
+            !lp.notes.iter().any(|n| n.text.contains("rows")),
             "top-level dup schema overwritten by the do:-body dup: {:?}",
             lp.notes
         );
@@ -1013,7 +1071,7 @@ requires: []
         let lock = compile(&app, &agents, &src).unwrap();
         let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
         assert!(
-            !consumer.notes.iter().any(|n| n.contains("rfis")),
+            !consumer.notes.iter().any(|n| n.text.contains("rfis")),
             "body ref to shadowing sibling wrongly validated against top-level: {:?}",
             consumer.notes
         );
@@ -1084,7 +1142,7 @@ requires: []
         // top-level `{{ item.bar }}` on `loop` is a real ref that resolves.
         let consumer = lock.nodes.iter().find(|n| n.id == "loop.consumer").unwrap();
         assert!(
-            !consumer.notes.iter().any(|n| n.contains("item")),
+            !consumer.notes.iter().any(|n| n.text.contains("item")),
             "body `item` per-iteration ref wrongly validated against top-level node: {:?}",
             consumer.notes
         );
@@ -1248,12 +1306,12 @@ requires: []
             worker
                 .notes
                 .iter()
-                .any(|n| n.contains("item") && n.contains("foo")),
+                .any(|n| n.text.contains("item") && n.text.contains("foo")),
             "sweep body `item` ref should be checked against top-level node: {:?}",
             worker.notes
         );
         assert!(
-            !worker.notes.iter().any(|n| n.contains("\"var\"")),
+            !worker.notes.iter().any(|n| n.text.contains("\"var\"")),
             "literal sweep prefix `var` wrongly validated against top-level `var` node: {:?}",
             worker.notes
         );
@@ -1344,12 +1402,12 @@ requires: []
             .find(|n| n.id == "outer.study.worker")
             .unwrap();
         assert!(
-            !worker.notes.iter().any(|n| n.contains("item")),
+            !worker.notes.iter().any(|n| n.text.contains("item")),
             "outer for-each `item` var lost in nested sweep body: {:?}",
             worker.notes
         );
         assert!(
-            !worker.notes.iter().any(|n| n.contains("\"var\"")),
+            !worker.notes.iter().any(|n| n.text.contains("\"var\"")),
             "inner sweep prefix `var` wrongly validated as a node ref: {:?}",
             worker.notes
         );
@@ -1450,7 +1508,7 @@ requires: []
             .find(|n| n.id == "outer.study.worker")
             .unwrap();
         assert!(
-            !worker.notes.iter().any(|n| n.contains("rfis")),
+            !worker.notes.iter().any(|n| n.text.contains("rfis")),
             "nested ref resolved to top-level `rfis` instead of the enclosing body-local one: {:?}",
             worker.notes
         );
@@ -1517,7 +1575,7 @@ requires: []
         let lock = compile(&app, &agents, &src).unwrap();
         let sink = lock.nodes.iter().find(|n| n.id == "sink").unwrap();
         assert!(
-            !sink.notes.iter().any(|n| n.contains("nope")),
+            !sink.notes.iter().any(|n| n.text.contains("nope")),
             "ref check flagged the overridden config: ref instead of the merged inputs: value: {:?}",
             sink.notes
         );
@@ -1579,12 +1637,15 @@ requires: []
             probe.mode
         );
         assert!(
-            !probe.notes.iter().any(|n| n.contains("defaulting")),
+            !probe.notes.iter().any(|n| n.text.contains("defaulting")),
             "must not claim we defaulted when author declared a mode; notes: {:?}",
             probe.notes
         );
         assert!(
-            probe.notes.iter().any(|n| n.contains("author-declared")),
+            probe
+                .notes
+                .iter()
+                .any(|n| n.text.contains("author-declared")),
             "note must mention that the author-declared mode was used; notes: {:?}",
             probe.notes
         );
@@ -1641,10 +1702,17 @@ requires: []
             "must still default to write-mode when no mode is declared; got: {}",
             probe.mode
         );
-        assert!(
-            probe.notes.iter().any(|n| n.contains("defaulting")),
-            "must include the defaulting-to-write note; notes: {:?}",
-            probe.notes
+        let defaulting_note = probe
+            .notes
+            .iter()
+            .find(|n| n.text.contains("defaulting"))
+            .expect("must include the defaulting-to-write note");
+        // #170: a silent write-mode fallback is actionable — must be `warn`.
+        assert_eq!(
+            defaulting_note.kind,
+            NoteKind::Warn,
+            "defaulting-to-write note must be warn, got {:?}",
+            defaulting_note.kind
         );
     }
 
@@ -1705,17 +1773,22 @@ requires: []
             probe.mode
         );
         assert!(
-            !probe.notes.iter().any(|n| n.contains("defaulting")),
+            !probe.notes.iter().any(|n| n.text.contains("defaulting")),
             "must not emit a defaulting note when the author declared the mode; notes: {:?}",
             probe.notes
         );
-        assert!(
-            probe
-                .notes
-                .iter()
-                .any(|n| n.contains("mode-overridable") && n.contains("mode: read")),
-            "note must explain the override; notes: {:?}",
-            probe.notes
+        let override_note = probe
+            .notes
+            .iter()
+            .find(|n| n.text.contains("mode-overridable") && n.text.contains("mode: read"))
+            .expect("note must explain the override");
+        // #170: the override note is benign provenance — must be `info` so
+        // consumers don't render it as a warning.
+        assert_eq!(
+            override_note.kind,
+            NoteKind::Info,
+            "author-declared-mode provenance note must be info, got {:?}",
+            override_note.kind
         );
     }
 
@@ -1777,6 +1850,70 @@ requires: []
             probe.notes.is_empty(),
             "manifest-authoritative default needs no note; notes: {:?}",
             probe.notes
+        );
+    }
+
+    #[test]
+    fn compile_note_serializes_as_kind_and_text() {
+        // #170: the lock contract is `notes: [{ kind, text }]` with a
+        // lowercase `kind`. Consumers (floless.app, the lock audit) rely on
+        // this shape to render by severity without parsing prose.
+        use crate::manifest::loader::DiscoveredAgent;
+        let agent_yaml = r#"
+agent: tekla
+version: 0.1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  exec:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: true
+    description: runs arbitrary C#
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("exec-read.flo");
+        std::fs::write(
+            &src,
+            r#"app: exec-read
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+    config:
+      code: return new { ok = true };
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let yaml = serde_yaml::to_string(&lock).unwrap();
+
+        // The note must serialize as a `{ kind, text }` map with a lowercase
+        // kind — not a bare string.
+        assert!(
+            yaml.contains("kind: info"),
+            "note must serialize with a lowercase `kind:`; yaml:\n{yaml}"
+        );
+        assert!(
+            yaml.contains("text: 'command exec is mode-overridable")
+                || yaml.contains("text: \"command exec is mode-overridable")
+                || yaml.contains("text: command exec is mode-overridable"),
+            "note must serialize its prose under `text:`; yaml:\n{yaml}"
         );
     }
 }
