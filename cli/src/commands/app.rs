@@ -682,7 +682,10 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
         let Some(cmd) = d.manifest.commands.get(cmd_name.as_str()) else {
             continue;
         };
-        let mode = d.manifest.mode_of(cmd_name, cmd);
+        // Honor an explicit node-level `mode:` on `mode-overridable` commands
+        // (e.g. `exec`) so explain/glass-box classifies a read-only exec node
+        // as a read, matching the validator + lockfile compiler (#165).
+        let mode = d.manifest.effective_mode(cmd_name, cmd, node.mode).mode;
         let desc = cmd
             .description
             .lines()

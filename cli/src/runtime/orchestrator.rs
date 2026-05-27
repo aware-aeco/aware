@@ -611,7 +611,11 @@ impl Orchestrator {
             Ok(agent) => agent
                 .commands
                 .get(command)
-                .map(|c| agent.mode_of(command, c))
+                // Command found: resolve via `effective_mode` so an explicit
+                // node-level `mode:` wins on `mode-overridable` commands (e.g.
+                // `exec`), matching the validator + lockfile compiler (#165).
+                .map(|c| agent.effective_mode(command, c, declared).mode)
+                // Command absent (unknowable mode): honor the author declaration.
                 .or(declared)
                 .unwrap_or(crate::manifest::agent::Mode::Write),
             Err(_) => declared.unwrap_or(crate::manifest::agent::Mode::Write),
@@ -1466,6 +1470,78 @@ commands:
             output,
             Some(serde_json::json!({ "ok": true })),
             "read-mode exec node must invoke (and emit) rather than short-circuit"
+        );
+    }
+
+    #[tokio::test]
+    async fn dry_run_honors_read_override_on_mode_overridable_command() {
+        // #165 (Codex follow-up): `exec` IS present in the manifest with a
+        // conservative `mode: write`, but flagged `mode-overridable`. A node
+        // declaring `mode: read` must be treated as a read under dry-run — not
+        // short-circuited as `WouldWrite` — matching the lock + validator.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: execmode
+version: 0.1.0
+description: x
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new().with_single(
+            "tekla",
+            "exec",
+            serde_json::json!({ "ok": true }),
+        ));
+        let (mut orch, tmp, log_path) = make_orchestrator(app, inv).await;
+
+        // Manifest WITH `exec` declared write + mode-overridable.
+        let agent_dir = tmp.path().join("aware").join("agents").join("tekla");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: tekla
+version: 0.0.1
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: this-binary-does-not-exist } }
+commands:
+  exec:
+    lifecycle: single
+    category: curated
+    mode: write
+    mode-overridable: true
+    description: runs arbitrary C#
+"#,
+        )
+        .unwrap();
+
+        orch.dry_run = true;
+        orch.run_one_shot().await.unwrap();
+
+        let events = read_run_events(&log_path).await.unwrap();
+        assert!(
+            !events
+                .iter()
+                .any(|e| matches!(e, RunEvent::WouldWrite { node, .. } if node == "probe")),
+            "mode: read override on mode-overridable exec must NOT be a write: {events:?}"
+        );
+        let output = events.iter().find_map(|e| match e {
+            RunEvent::NodeOutput { node, data, .. } if node == "probe" => Some(data.clone()),
+            _ => None,
+        });
+        assert_eq!(
+            output,
+            Some(serde_json::json!({ "ok": true })),
+            "read-override exec node must invoke (and emit) rather than short-circuit"
         );
     }
 
