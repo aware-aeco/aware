@@ -153,10 +153,7 @@ fn update_all(ctx: &Context) -> Result<(), AwareError> {
         println!("(no agents installed)");
         return Ok(());
     }
-    let ids: Vec<String> = installed
-        .iter()
-        .map(|d| d.manifest.agent.clone())
-        .collect();
+    let ids: Vec<String> = installed.iter().map(|d| d.manifest.agent.clone()).collect();
     println!("updating {} installed agents...", ids.len());
     let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
 
@@ -370,7 +367,10 @@ mod publish_tests {
         let middle = out.find("\"middle\"").unwrap();
         // Original order is kept (zebra, then alpha) and the new agent is appended last —
         // NOT re-sorted alphabetically.
-        assert!(zebra < alpha, "existing order preserved (zebra before alpha)");
+        assert!(
+            zebra < alpha,
+            "existing order preserved (zebra before alpha)"
+        );
         assert!(alpha < middle, "new agent appended after existing ones");
     }
 }

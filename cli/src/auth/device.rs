@@ -156,10 +156,7 @@ pub fn run_device_code_flow(
         .or_else(|| parsed.get("verification_url"))
         .and_then(|v| v.as_str())
         .ok_or_else(|| AwareError::Validation("response missing verification_uri/url".into()))?;
-    let interval = parsed
-        .get("interval")
-        .and_then(|v| v.as_u64())
-        .unwrap_or(5);
+    let interval = parsed.get("interval").and_then(|v| v.as_u64()).unwrap_or(5);
     let expires_in = parsed
         .get("expires_in")
         .and_then(|v| v.as_u64())
@@ -218,9 +215,7 @@ pub fn run_device_code_flow(
             Ok(r) => r,
             Err(ureq::Error::Status(_code, r)) => r,
             Err(e) => {
-                return Err(AwareError::Network(format!(
-                    "device-code token poll: {e}"
-                )));
+                return Err(AwareError::Network(format!("device-code token poll: {e}")));
             }
         };
         let body = read_body(resp)?;
@@ -328,7 +323,10 @@ mod tests {
     fn microsoft_endpoints_use_tenant_when_supplied() {
         let cfg = config::for_integration("microsoft-365").unwrap();
         let e = device_endpoints_for(&cfg, Some("acme.onmicrosoft.com"));
-        assert!(e.device_authorization_url.contains("/acme.onmicrosoft.com/"));
+        assert!(
+            e.device_authorization_url
+                .contains("/acme.onmicrosoft.com/")
+        );
         assert!(e.token_url.contains("/acme.onmicrosoft.com/"));
     }
 

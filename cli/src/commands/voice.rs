@@ -63,10 +63,7 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
             if !scope_entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
                 continue;
             }
-            let scope = scope_entry
-                .file_name()
-                .to_string_lossy()
-                .into_owned();
+            let scope = scope_entry.file_name().to_string_lossy().into_owned();
             if let Ok(packs) = std::fs::read_dir(scope_entry.path()) {
                 for pack_entry in packs.flatten() {
                     if !pack_entry.file_type().map(|t| t.is_dir()).unwrap_or(false) {
@@ -247,11 +244,7 @@ fn copy_dir_recursive(src: &std::path::Path, dst: &std::path::Path) -> Result<()
             copy_dir_recursive(&from, &to)?;
         } else {
             std::fs::copy(&from, &to).map_err(|e| {
-                AwareError::Internal(format!(
-                    "copy {} -> {}: {e}",
-                    from.display(),
-                    to.display()
-                ))
+                AwareError::Internal(format!("copy {} -> {}: {e}", from.display(), to.display()))
             })?;
         }
     }

@@ -73,12 +73,7 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
         ["trimble-connect", "microsoft-365", "google-workspace"]
             .iter()
             .map(|integration| {
-                crate::commands::connect::credential_status_json(
-                    integration,
-                    None,
-                    aware_home,
-                    now,
-                )
+                crate::commands::connect::credential_status_json(integration, None, aware_home, now)
             })
             .collect();
 
@@ -87,8 +82,8 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
     let bridge_ids = ["tekla", "rhino", "sketchup", "revit"];
     let host_bridges: Vec<serde_json::Value> = bridge_ids
         .iter()
-        .map(|id| {
-            match crate::commands::sidecar::find_bridge_by_id(id, &install_dir) {
+        .map(
+            |id| match crate::commands::sidecar::find_bridge_by_id(id, &install_dir) {
                 Some(p) => serde_json::json!({
                     "id": id,
                     "installed": true,
@@ -99,8 +94,8 @@ fn run_json(ctx: &Context) -> Result<(), AwareError> {
                     "installed": false,
                     "path": null,
                 }),
-            }
-        })
+            },
+        )
         .collect();
 
     let output = serde_json::json!({
@@ -257,9 +252,7 @@ fn run_text(ctx: &Context) -> Result<(), AwareError> {
             }
             None => {
                 any_missing = true;
-                println!(
-                    "  \u{2717} aware-{id:<10}  not found — run: aware sidecar install {id}"
-                );
+                println!("  \u{2717} aware-{id:<10}  not found — run: aware sidecar install {id}");
             }
         }
     }

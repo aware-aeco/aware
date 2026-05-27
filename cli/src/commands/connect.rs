@@ -515,9 +515,7 @@ fn load_token_from_file(
             .and_then(|x| x.as_str())
             .or_else(|| v.get("token").and_then(|x| x.as_str()))
             .ok_or_else(|| {
-                AwareError::Validation(
-                    "token JSON has neither access_token nor token field".into(),
-                )
+                AwareError::Validation("token JSON has neither access_token nor token field".into())
             })?
             .to_string();
         Ok(StoredToken {

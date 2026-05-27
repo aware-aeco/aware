@@ -55,7 +55,10 @@ fn default_sig_path(receipt: &std::path::Path) -> PathBuf {
 }
 
 fn verify(_ctx: &Context, args: &VerifyArgs) -> Result<(), AwareError> {
-    let sig_path = args.sig.clone().unwrap_or_else(|| default_sig_path(&args.receipt));
+    let sig_path = args
+        .sig
+        .clone()
+        .unwrap_or_else(|| default_sig_path(&args.receipt));
     crate::receipt::verify_receipt(&args.receipt, &sig_path)?;
     println!("\u{2713} signature verifies");
     println!("  receipt: {}", args.receipt.display());
