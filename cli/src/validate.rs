@@ -249,29 +249,12 @@ pub fn validate_app_safety(
             continue;
         };
 
-        // A node-level `mode:` is only meaningful on a `mode-overridable`
-        // command (one whose read/write behavior is caller-determined, e.g.
-        // `exec`). On any other command the manifest mode is authoritative, so
-        // a *conflicting* node-level declaration would be silently dropped —
-        // exactly the footgun #165 is about. Reject it loudly instead.
-        if !cmd.mode_overridable
-            && let Some(declared) = node.mode
-            && declared != agent.manifest.mode_of(cmd_name, cmd)
-        {
-            out.push(ValidationIssue::error(
-                "E_APP_NODE_MODE_NOT_OVERRIDABLE",
-                format!(
-                    "node {:?} declares `mode: {}` but command {}.{} is not `mode-overridable`; its manifest mode ({}) is authoritative. Remove the node-level `mode:` (or have the agent declare the command `mode-overridable` if its mode is caller-determined).",
-                    node.id,
-                    declared.as_str(),
-                    agent_id,
-                    cmd_name,
-                    agent.manifest.mode_of(cmd_name, cmd).as_str(),
-                ),
-            ));
-            continue;
-        }
-
+        // Note: a node-level `mode:` that *conflicts* with a non-overridable
+        // command is rejected by `validate_app_agents` (#165) — the agent-aware
+        // validator that runs on every lock-producing + run path. Here we only
+        // resolve the effective mode for the write-mode safety gate; on a
+        // mode-overridable command an explicit `mode: read` legitimately makes
+        // the node read-mode (so no `safety:` block is required).
         let effective = agent.manifest.effective_mode(cmd_name, cmd, node.mode);
         if effective.mode == Mode::Write && node.safety.is_none() {
             out.push(ValidationIssue::error(
@@ -310,16 +293,44 @@ fn check_node_agents(
     for n in nodes {
         if let Some(agent_id) = &n.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *agent_id)
-            && d.manifest.status == AgentStatus::Planned
         {
-            out.push(ValidationIssue::error(
-                "E_APP_AGENT_UNAVAILABLE",
-                format!(
-                    "node {:?} references agent {:?}, which is declared but not yet runnable \
-                     (no shipped/installable transport binary)",
-                    n.id, agent_id
-                ),
-            ));
+            if d.manifest.status == AgentStatus::Planned {
+                out.push(ValidationIssue::error(
+                    "E_APP_AGENT_UNAVAILABLE",
+                    format!(
+                        "node {:?} references agent {:?}, which is declared but not yet runnable \
+                         (no shipped/installable transport binary)",
+                        n.id, agent_id
+                    ),
+                ));
+            }
+
+            // #165: a node-level `mode:` is only meaningful on a
+            // `mode-overridable` command (caller-determined behavior, e.g.
+            // `exec`). On any other command the manifest mode is authoritative,
+            // so a *conflicting* node-level declaration would be silently
+            // dropped. Reject it here — in the agent-aware validator that runs
+            // on every lock-producing + run path (install, compile, inspect,
+            // validate, run, dry-run), not just safety pre-flight — so the
+            // authoring field is never quietly ignored on any surface.
+            if let Some(cmd_name) = &n.command
+                && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
+                && !cmd.mode_overridable
+                && let Some(declared) = n.mode
+                && declared != d.manifest.mode_of(cmd_name, cmd)
+            {
+                out.push(ValidationIssue::error(
+                    "E_APP_NODE_MODE_NOT_OVERRIDABLE",
+                    format!(
+                        "node {:?} declares `mode: {}` but command {}.{} is not `mode-overridable`; its manifest mode ({}) is authoritative. Remove the node-level `mode:` (or have the agent declare the command `mode-overridable` if its mode is caller-determined).",
+                        n.id,
+                        declared.as_str(),
+                        agent_id,
+                        cmd_name,
+                        d.manifest.mode_of(cmd_name, cmd).as_str(),
+                    ),
+                ));
+            }
         }
         if let Some(body) = &n.do_ {
             check_node_agents(body, agents, out);
@@ -889,9 +900,12 @@ requires: []
     }
 
     #[test]
-    fn safety_check_rejects_conflicting_node_mode_on_non_overridable_command() {
+    fn agents_check_rejects_conflicting_node_mode_on_non_overridable_command() {
         // A node-level `mode: read` on a genuinely-writing, non-overridable
         // command must be rejected loudly — never silently dropped (#165).
+        // The check lives in `validate_app_agents` so it fires on every
+        // agent-aware path (install, compile, inspect, validate, run, dry-run),
+        // not just safety pre-flight.
         let agent = discovered(
             r#"
 agent: tekla
@@ -923,7 +937,7 @@ requires: []
         )
         .unwrap();
 
-        let issues = validate_app_safety(&app, &[agent]);
+        let issues = validate_app_agents(&app, &[agent]);
         assert!(
             issues
                 .iter()
@@ -933,9 +947,56 @@ requires: []
     }
 
     #[test]
-    fn safety_check_allows_redundant_matching_node_mode_on_non_overridable_command() {
+    fn agents_check_rejects_conflicting_node_mode_in_nested_body() {
+        // The conflict check recurses into `for-each`/`sweep` `do:` bodies —
+        // a nested node cannot smuggle a dropped `mode:` past validation.
+        let agent = discovered(
+            r#"
+agent: tekla
+version: 1.0
+description: x
+stateful: true
+license: MIT
+transport: { cli: { binary: aware-tekla } }
+commands:
+  uda-set:
+    lifecycle: single
+    mode: write
+    description: writes a UDA
+"#,
+        );
+        let app: App = serde_yaml::from_str(
+            r#"
+app: nested-sneaky
+version: 0.0.1
+description: x
+nodes:
+  - id: loop
+    for-each: '{{ inputs.items }}'
+    do:
+      - id: inner
+        agent: tekla
+        command: uda-set
+        mode: read
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let issues = validate_app_agents(&app, &[agent]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_NODE_MODE_NOT_OVERRIDABLE"),
+            "nested conflicting node mode must be rejected; issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn agents_check_allows_redundant_matching_node_mode_on_non_overridable_command() {
         // Restating the manifest mode (no conflict) is redundant but allowed —
-        // it must not error, and the safety gate still applies normally.
+        // it must not error in either the agent-aware or safety validators.
         let agent = discovered(
             r#"
 agent: tekla
@@ -967,7 +1028,13 @@ requires: []
         )
         .unwrap();
 
-        let issues = validate_app_safety(&app, &[agent]);
-        assert!(issues.is_empty(), "unexpected issues: {issues:?}");
+        assert!(
+            validate_app_agents(&app, std::slice::from_ref(&agent)).is_empty(),
+            "redundant matching mode must not error in validate_app_agents"
+        );
+        assert!(
+            validate_app_safety(&app, &[agent]).is_empty(),
+            "redundant matching read mode must not error in validate_app_safety"
+        );
     }
 }
