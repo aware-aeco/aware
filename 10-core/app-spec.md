@@ -472,6 +472,29 @@ nodes:
       issued-by:     'P.Lisowski'
 ```
 
+### Compile notes (`kind` / `text`)
+
+Each compiled node may carry a `notes:` list. Every note is a `{ kind, text }` map — **not** a bare string — so consumers render by severity without parsing prose:
+
+```yaml
+nodes:
+  - id: probe
+    agent: tekla
+    command: exec
+    mode: read
+    notes:
+      - kind: info        # info | warn | error
+        text: "command exec is mode-overridable; using author-declared mode: read"
+```
+
+| `kind` | Meaning | Examples |
+|---|---|---|
+| `info` | Benign provenance / FYI — not actionable. | `"… using author-declared mode: <m>"`, `"command <c> is mode-overridable; using author-declared mode: <m>"` (the `exec` case, #165). |
+| `warn` | The author should look at this. | `"… command <c> not found; defaulting to write-mode for safety"` (silent write-mode fallback), `"agent <a> not installed; …"`, `"input references {{ x.y }} but node x has no output field y …"`. |
+| `error` | A condition that should block the run. | (reserved) |
+
+**AWARE owns the semantics** (what a note means / how severe — it's the determinism authority that produces the lock); **consumers own presentation** (info quiet/collapsible, warn/error prominent). Because severity is machine-readable, the CLI, the lock audit, and front doors like floless.app stay correct across note-wording changes — they must key on `kind`, never on the `text` prose, which is free to change between releases (#170).
+
 ### CLI
 
 | Command | What it does |
