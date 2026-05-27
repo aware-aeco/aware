@@ -515,7 +515,7 @@ commands: {}
         // All tekla commands are explicitly `category: curated` (23 total).
         assert_eq!(a.curated_count(), 23);
         assert_eq!(a.reflected_count(), 0);
-        for (_name, cmd) in &a.commands {
+        for cmd in a.commands.values() {
             assert_eq!(cmd.category, Some(Category::Curated));
         }
     }

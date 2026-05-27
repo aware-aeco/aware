@@ -172,9 +172,8 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
 fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
     let bridge = lookup_bridge(host)?;
     let install_dir = bridge_install_dir(ctx);
-    std::fs::create_dir_all(&install_dir).map_err(|e| {
-        AwareError::Internal(format!("create {}: {e}", install_dir.display()))
-    })?;
+    std::fs::create_dir_all(&install_dir)
+        .map_err(|e| AwareError::Internal(format!("create {}: {e}", install_dir.display())))?;
     let version = env!("CARGO_PKG_VERSION");
 
     // Already installed in the persistent dir AND matching this CLI version? Skip.
@@ -199,9 +198,8 @@ fn install(ctx: &Context, host: &str) -> Result<(), AwareError> {
         version,
         bridge.asset_kind.ext()
     );
-    let url = format!(
-        "https://github.com/aware-aeco/aware/releases/download/v{version}/{asset_name}"
-    );
+    let url =
+        format!("https://github.com/aware-aeco/aware/releases/download/v{version}/{asset_name}");
 
     println!("Downloading {} from:", bridge.binary);
     println!("  {url}");
@@ -375,16 +373,13 @@ fn which_binary(name: &str) -> Option<PathBuf> {
 }
 
 fn lookup_bridge(host: &str) -> Result<&'static Bridge, AwareError> {
-    BRIDGES
-        .iter()
-        .find(|b| b.id == host)
-        .ok_or_else(|| {
-            let ids: Vec<_> = BRIDGES.iter().map(|b| b.id).collect();
-            AwareError::Validation(format!(
-                "unknown host '{host}' — known bridges: {}",
-                ids.join(", ")
-            ))
-        })
+    BRIDGES.iter().find(|b| b.id == host).ok_or_else(|| {
+        let ids: Vec<_> = BRIDGES.iter().map(|b| b.id).collect();
+        AwareError::Validation(format!(
+            "unknown host '{host}' — known bridges: {}",
+            ids.join(", ")
+        ))
+    })
 }
 
 /// Simple HTTP GET returning bytes. Uses `ureq` (already a Cargo dependency).
@@ -411,8 +406,8 @@ fn http_get_bytes(url: &str) -> Result<Vec<u8>, AwareError> {
 fn extract_zip(bytes: &[u8], dest_dir: &std::path::Path, _binary: &str) -> Result<(), AwareError> {
     use std::io::Read as _;
     let cursor = std::io::Cursor::new(bytes);
-    let mut archive = zip::ZipArchive::new(cursor)
-        .map_err(|e| AwareError::Internal(format!("open zip: {e}")))?;
+    let mut archive =
+        zip::ZipArchive::new(cursor).map_err(|e| AwareError::Internal(format!("open zip: {e}")))?;
 
     // Detect common prefix (strip one leading path component if all entries share one).
     let prefix: Option<String> = {
@@ -456,9 +451,8 @@ fn extract_zip(bytes: &[u8], dest_dir: &std::path::Path, _binary: &str) -> Resul
 
         let dest_path = dest_dir.join(stripped.replace('/', std::path::MAIN_SEPARATOR_STR));
         if let Some(parent) = dest_path.parent() {
-            std::fs::create_dir_all(parent).map_err(|e| {
-                AwareError::Internal(format!("mkdir {}: {e}", parent.display()))
-            })?;
+            std::fs::create_dir_all(parent)
+                .map_err(|e| AwareError::Internal(format!("mkdir {}: {e}", parent.display())))?;
         }
 
         let mut out = std::fs::File::create(&dest_path)

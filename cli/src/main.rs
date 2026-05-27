@@ -15,7 +15,6 @@ mod app_lock;
 mod auth;
 mod builder;
 mod commands;
-mod receipt;
 mod context;
 mod envelope;
 mod error;
@@ -24,6 +23,7 @@ mod lockfile;
 mod manifest;
 mod paths;
 mod plugins;
+mod receipt;
 mod registry;
 mod render;
 mod runtime;
@@ -83,8 +83,10 @@ enum Command {
 
     /// Generate an agent from a source (DLLs, NuGet, OpenAPI, CLI, …).
     Build {
+        // Boxed: `BuildCommand` is much larger than the other variants, so
+        // boxing it keeps `Command`'s size down (clippy::large_enum_variant).
         #[command(subcommand)]
-        action: commands::build::BuildCommand,
+        action: Box<commands::build::BuildCommand>,
     },
 
     /// Manage host-coverage IR files and reviews (v0.30).
@@ -168,7 +170,7 @@ async fn main() -> anyhow::Result<()> {
         Command::Connect(args) => commands::connect::run_connect(args, &ctx),
         Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),
         Command::Skill { action } => commands::skill::dispatch(action, &ctx),
-        Command::Build { action } => commands::build::dispatch(action, &ctx),
+        Command::Build { action } => commands::build::dispatch(*action, &ctx),
         Command::Coverage { action } => commands::coverage::dispatch(action, &ctx),
         Command::Doctor => commands::doctor::run(&ctx),
         Command::Plugins { action } => commands::plugins::dispatch(action, &ctx),

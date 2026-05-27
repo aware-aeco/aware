@@ -57,10 +57,9 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
             if let (Some(stem), Some(ext)) = (
                 p.file_stem().and_then(|s| s.to_str()),
                 p.extension().and_then(|s| s.to_str()),
-            ) {
-                if ext == "pub" || ext == "sec" {
-                    operators.insert(stem.to_string());
-                }
+            ) && (ext == "pub" || ext == "sec")
+            {
+                operators.insert(stem.to_string());
             }
         }
     }

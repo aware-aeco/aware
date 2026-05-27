@@ -71,10 +71,7 @@ pub fn generate_keypair(keys_dir: &Path, operator_id: &str) -> Result<KeyPaths, 
         let _ = std::fs::set_permissions(&sec_path, std::fs::Permissions::from_mode(0o600));
     }
 
-    Ok(KeyPaths {
-        sec_path,
-        pub_path,
-    })
+    Ok(KeyPaths { sec_path, pub_path })
 }
 
 #[derive(Debug)]
@@ -87,7 +84,7 @@ pub struct KeyPaths {
 pub fn load_signing_key(sec_path: &Path) -> Result<SigningKey, AwareError> {
     let raw = std::fs::read_to_string(sec_path)
         .map_err(|e| AwareError::NotFound(format!("{}: {e}", sec_path.display())))?;
-    let parts: Vec<&str> = raw.trim().split_whitespace().collect();
+    let parts: Vec<&str> = raw.split_whitespace().collect();
     if parts.len() != 2 || parts[0] != "ed25519-secret-key-v1" {
         return Err(AwareError::Validation(format!(
             "{} is not a valid ed25519-secret-key-v1 file",
@@ -108,7 +105,7 @@ pub fn load_signing_key(sec_path: &Path) -> Result<SigningKey, AwareError> {
 pub fn load_verifying_key(pub_path: &Path) -> Result<VerifyingKey, AwareError> {
     let raw = std::fs::read_to_string(pub_path)
         .map_err(|e| AwareError::NotFound(format!("{}: {e}", pub_path.display())))?;
-    let parts: Vec<&str> = raw.trim().split_whitespace().collect();
+    let parts: Vec<&str> = raw.split_whitespace().collect();
     if parts.len() != 2 || parts[0] != "ed25519-public-key-v1" {
         return Err(AwareError::Validation(format!(
             "{} is not a valid ed25519-public-key-v1 file",
@@ -122,7 +119,8 @@ pub fn load_verifying_key(pub_path: &Path) -> Result<VerifyingKey, AwareError> {
         .as_slice()
         .try_into()
         .map_err(|_| AwareError::Validation("public key must be 32 bytes".into()))?;
-    VerifyingKey::from_bytes(&arr).map_err(|e| AwareError::Validation(format!("verifying key: {e}")))
+    VerifyingKey::from_bytes(&arr)
+        .map_err(|e| AwareError::Validation(format!("verifying key: {e}")))
 }
 
 // ---- Receipt signing / verification ----
@@ -140,12 +138,15 @@ pub fn sign_receipt(receipt_path: &Path, signing_key: &SigningKey) -> Result<Pat
     let sig_path = receipt_path.with_extension(
         format!(
             "{}.sig",
-            receipt_path.extension().and_then(|e| e.to_str()).unwrap_or("")
+            receipt_path
+                .extension()
+                .and_then(|e| e.to_str())
+                .unwrap_or("")
         )
-        .trim_start_matches('.')
-        .to_string(),
+        .trim_start_matches('.'),
     );
-    let pub_b64 = base64::engine::general_purpose::STANDARD.encode(signing_key.verifying_key().to_bytes());
+    let pub_b64 =
+        base64::engine::general_purpose::STANDARD.encode(signing_key.verifying_key().to_bytes());
     let body = format!(
         "ed25519-signature-v1\nover-sha256-of: {}\nsignature: {sig_b64}\npublic-key: {pub_b64}\n",
         receipt_path
@@ -177,10 +178,10 @@ pub fn verify_receipt(receipt_path: &Path, sig_path: &Path) -> Result<(), AwareE
             pub_b64 = Some(rest.trim());
         }
     }
-    let sig_b64 = sig_b64
-        .ok_or_else(|| AwareError::Validation(".sig missing `signature:` line".into()))?;
-    let pub_b64 = pub_b64
-        .ok_or_else(|| AwareError::Validation(".sig missing `public-key:` line".into()))?;
+    let sig_b64 =
+        sig_b64.ok_or_else(|| AwareError::Validation(".sig missing `signature:` line".into()))?;
+    let pub_b64 =
+        pub_b64.ok_or_else(|| AwareError::Validation(".sig missing `public-key:` line".into()))?;
 
     let sig_bytes = base64::engine::general_purpose::STANDARD
         .decode(sig_b64)

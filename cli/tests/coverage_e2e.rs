@@ -17,9 +17,8 @@ fn phase_a_e2e_generates_three_artefact_types() {
     }
 
     let tmp = tempfile::tempdir().unwrap();
-    let ir_fixture = std::path::PathBuf::from(
-        "../cli-sidecar/Ingest/Generator/Tests/fixtures/minimal.ir.json",
-    );
+    let ir_fixture =
+        std::path::PathBuf::from("../cli-sidecar/Ingest/Generator/Tests/fixtures/minimal.ir.json");
     assert!(
         ir_fixture.exists(),
         "fixture must exist at {}",
@@ -94,7 +93,10 @@ fn phase_a_e2e_generates_three_artefact_types() {
         "skills/example-api.md not produced"
     );
     assert!(
-        output.join("catalog").join("Example.Api.Foo.json").is_file(),
+        output
+            .join("catalog")
+            .join("Example.Api.Foo.json")
+            .is_file(),
         "catalog/Example.Api.Foo.json not produced"
     );
 
