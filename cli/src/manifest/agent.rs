@@ -208,6 +208,17 @@ pub struct Command {
     /// per the convention in `10-core/app-spec.md § Safety contract`.
     #[serde(default)]
     pub mode: Option<Mode>,
+    /// Whether the effective read/write mode is *caller-determined* rather than
+    /// fixed by the manifest. Set `true` for commands that run caller-supplied
+    /// logic whose read/write behavior the agent cannot know — e.g. `exec`,
+    /// which compiles and runs an arbitrary C# script. For such a command the
+    /// manifest `mode:` is a conservative *default* (so an un-annotated node
+    /// still falls under the safety contract), but an explicit node-level
+    /// `mode:` in the app overrides it. For all other commands the manifest
+    /// `mode:` is authoritative and a conflicting node-level `mode:` is rejected
+    /// at validate-time (see `10-core/app-spec.md § Safety contract`). (#165)
+    #[serde(rename = "mode-overridable", default)]
+    pub mode_overridable: bool,
 }
 
 /// Read/write mode for a command — drives the safety-contract enforcement.
@@ -216,6 +227,28 @@ pub struct Command {
 pub enum Mode {
     Read,
     Write,
+}
+
+impl Mode {
+    /// Lowercase string form (`"read"` / `"write"`) — matches the YAML
+    /// representation and the value recorded in the `.lock`.
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Mode::Read => "read",
+            Mode::Write => "write",
+        }
+    }
+}
+
+/// Result of resolving a node's effective read/write mode against the command
+/// it invokes — see [`Agent::effective_mode`]. `overridden` records whether an
+/// explicit node-level `mode:` took precedence over the manifest because the
+/// command is `mode-overridable` (e.g. `exec`), so callers can emit an accurate
+/// compile note. (#165)
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct EffectiveMode {
+    pub mode: Mode,
+    pub overridden: bool,
 }
 
 #[derive(Debug, Deserialize, PartialEq, Eq, Clone, Copy)]
@@ -303,6 +336,33 @@ impl Agent {
             Mode::Write
         } else {
             Mode::Read
+        }
+    }
+
+    /// Resolve the effective read/write mode for a *node* invoking `cmd`.
+    ///
+    /// For a `mode-overridable` command — one whose behavior is caller-determined
+    /// because it runs caller-supplied logic (e.g. `exec`) — an explicit
+    /// node-level `mode:` wins over the manifest, and `overridden` is `true`.
+    /// For every other command the manifest [`mode_of`](Self::mode_of) is
+    /// authoritative; a node-level `mode:` does not change the result here (the
+    /// validator rejects a *conflicting* declaration on a non-overridable
+    /// command rather than silently dropping it). (#165)
+    pub fn effective_mode(
+        &self,
+        name: &str,
+        cmd: &Command,
+        node_mode: Option<Mode>,
+    ) -> EffectiveMode {
+        match (cmd.mode_overridable, node_mode) {
+            (true, Some(m)) => EffectiveMode {
+                mode: m,
+                overridden: true,
+            },
+            _ => EffectiveMode {
+                mode: self.mode_of(name, cmd),
+                overridden: false,
+            },
         }
     }
 
