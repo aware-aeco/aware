@@ -268,19 +268,25 @@ impl AgentInvoker for CliInvoker {
         args: Value,
     ) -> Result<StreamingHandle, AwareError> {
         let (mut child, binary) = self.spawn_cli(agent, command)?;
+        let label = format!("{agent}/{command}");
 
-        // Deliver the rendered command args once over stdin, then close it. A
-        // streaming source reads its config (e.g. a `filter`) here, then emits
-        // events on stdout until stopped. Delivery is best-effort: a watcher that
-        // never reads stdin is still valid, so a broken pipe here is not fatal —
-        // the event stream itself is the source of truth.
+        // Deliver the rendered command args once over stdin, then close it — on a
+        // separate task so startup never blocks. A streaming source reads its
+        // config (e.g. a `filter`) here, then emits events until stopped; but a
+        // watcher that never reads stdin is also valid, and a large rendered
+        // config could otherwise fill the stdin pipe and deadlock `write_all`
+        // before the stdout pump is even running. Delivery is best-effort — the
+        // event stream itself is the source of truth.
         if let Some(mut stdin) = child.stdin.take() {
-            use tokio::io::AsyncWriteExt;
             let args_text = serde_json::to_string(&args).unwrap_or_else(|_| "{}".into());
-            if let Err(e) = stdin.write_all(args_text.as_bytes()).await {
-                eprintln!("aware: warning: {binary}/{command} stdin write failed: {e}");
-            }
-            let _ = stdin.shutdown().await;
+            let label_in = label.clone();
+            tokio::spawn(async move {
+                use tokio::io::AsyncWriteExt;
+                if let Err(e) = stdin.write_all(args_text.as_bytes()).await {
+                    eprintln!("aware: warning: {label_in} stdin write failed: {e}");
+                }
+                let _ = stdin.shutdown().await;
+            });
         }
 
         let stdout = child.stdout.take().ok_or_else(|| {
@@ -303,7 +309,6 @@ impl AgentInvoker for CliInvoker {
 
         let (tx, rx) = mpsc::channel::<Result<Value, AwareError>>(64);
         let (stop_tx, stop_rx) = oneshot::channel::<()>();
-        let label = format!("{agent}/{command}");
 
         // Drive the child's stdout on a background task. The returned handle's
         // `stop` cancels it; events arrive on `rx` until the stream ends.
