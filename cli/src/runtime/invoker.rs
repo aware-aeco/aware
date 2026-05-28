@@ -295,16 +295,30 @@ impl AgentInvoker for CliInvoker {
 
         // Drain stderr concurrently so a chatty child can't fill the OS pipe
         // buffer and deadlock — blocked on a stderr write, it would stop
-        // producing stdout and the run would hang. The captured text labels a
-        // non-zero exit.
+        // producing stdout and the run would hang. Only the tail is retained
+        // (bounded, so an hours-long watcher can't grow memory without bound);
+        // it labels a non-zero exit.
         let stderr = child.stderr.take();
         let stderr_drain = tokio::spawn(async move {
-            let mut buf = String::new();
+            // Keep only the last few KiB — enough to explain a crash.
+            const TAIL_CAP: usize = 8 * 1024;
+            let mut tail: Vec<u8> = Vec::new();
             if let Some(mut err) = stderr {
                 use tokio::io::AsyncReadExt;
-                let _ = err.read_to_string(&mut buf).await;
+                let mut chunk = [0u8; 4096];
+                loop {
+                    match err.read(&mut chunk).await {
+                        Ok(0) | Err(_) => break,
+                        Ok(n) => {
+                            tail.extend_from_slice(&chunk[..n]);
+                            if tail.len() > TAIL_CAP {
+                                tail.drain(..tail.len() - TAIL_CAP);
+                            }
+                        }
+                    }
+                }
             }
-            buf
+            String::from_utf8_lossy(&tail).into_owned()
         });
 
         let (tx, rx) = mpsc::channel::<Result<Value, AwareError>>(64);
