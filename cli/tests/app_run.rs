@@ -442,21 +442,12 @@ fn copy_dir(src: &std::path::Path, dst: &std::path::Path) -> std::io::Result<()>
 /// binary (#172), not just a mock.
 #[test]
 fn streaming_watcher_app_runs_end_to_end_via_invoke_stream() {
-    // The streaming sidecar is a tiny Rust helper compiled on the fly. Skip
-    // gracefully if rustc isn't on PATH (mirrors the dotnet-sidecar test's skip).
-    let Some(rustc) = which_on_path(if cfg!(windows) { "rustc.exe" } else { "rustc" }) else {
-        eprintln!("[skip] rustc not found on PATH; cannot build the streaming sidecar helper");
-        return;
-    };
-
     let tmp = tempfile::tempdir().unwrap();
-    let aware = tmp.path().join("aware");
-
-    // 1. Compile a streamer that drains stdin (where the CLI delivers the
-    //    rendered args) then emits three JSONL events and exits.
-    let src = tmp.path().join("streamer.rs");
-    std::fs::write(
-        &src,
+    // A streamer that drains stdin (where the CLI delivers the rendered args)
+    // then emits three JSONL events and exits 0.
+    let Some(bin) = compile_helper(
+        tmp.path(),
+        "streamer",
         r#"use std::io::{Read, Write};
 fn main() {
     let mut buf = String::new();
@@ -469,31 +460,85 @@ fn main() {
     }
 }
 "#,
-    )
-    .unwrap();
-    let bin = tmp.path().join(if cfg!(windows) {
-        "streamer.exe"
-    } else {
-        "streamer"
-    });
-    let status = std::process::Command::new(&rustc)
-        .arg(&src)
-        .arg("-o")
-        .arg(&bin)
-        .status()
-        .expect("failed to invoke rustc");
-    assert!(
-        status.success(),
-        "rustc failed to build the streamer helper"
-    );
-    assert!(
-        bin.is_file(),
-        "streamer binary not produced at {}",
-        bin.display()
-    );
+    ) else {
+        eprintln!("[skip] rustc not found on PATH; cannot build the streaming sidecar helper");
+        return;
+    };
 
-    // 2. Install a stateful watch agent whose cli binary is the streamer
-    //    (absolute path → spawned directly, bypassing bridge resolution).
+    let aware = tmp.path().join("aware");
+    install_watcher_app(&aware, &bin);
+
+    // A real (non-simulated) run: the long-running path consumes the stream and
+    // completes when the source closes.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(30))
+        .args(["app", "run", "watchapp"])
+        .assert()
+        .success();
+
+    // The streamed events landed in the provenance trace.
+    let trace = find_first_jsonl(&aware.join("logs/watchapp")).expect("no jsonl trace written");
+    let body = std::fs::read_to_string(&trace).unwrap();
+    assert!(
+        body.contains("\"mark\":\"A\""),
+        "trace missing first event:\n{body}"
+    );
+    assert!(
+        body.contains("\"mark\":\"C\""),
+        "trace missing last event:\n{body}"
+    );
+}
+
+/// End-to-end: a streaming source that exits non-zero must fail the run (exit
+/// non-zero) and record a node error — a crashed watcher cannot be reported as a
+/// successful run (#172).
+#[test]
+fn streaming_watcher_exit_failure_fails_the_run() {
+    let tmp = tempfile::tempdir().unwrap();
+    // Emit one event, complain on stderr, then exit non-zero.
+    let Some(bin) = compile_helper(
+        tmp.path(),
+        "crasher",
+        r#"use std::io::{Read, Write};
+fn main() {
+    let mut buf = String::new();
+    let _ = std::io::stdin().read_to_string(&mut buf);
+    let _ = writeln!(std::io::stdout(), "{{\"mark\":\"A\"}}");
+    let _ = std::io::stdout().flush();
+    let _ = writeln!(std::io::stderr(), "watcher: lost connection to host");
+    std::process::exit(3);
+}
+"#,
+    ) else {
+        eprintln!("[skip] rustc not found on PATH; cannot build the streaming sidecar helper");
+        return;
+    };
+
+    let aware = tmp.path().join("aware");
+    install_watcher_app(&aware, &bin);
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(30))
+        .args(["app", "run", "watchapp"])
+        .assert()
+        .failure();
+
+    // The trace records the source failure as a node error.
+    let trace = find_first_jsonl(&aware.join("logs/watchapp")).expect("no jsonl trace written");
+    let body = std::fs::read_to_string(&trace).unwrap();
+    assert!(
+        body.contains("node-error"),
+        "trace missing node-error for the crashed watcher:\n{body}"
+    );
+}
+
+/// Install a stateful `watch` agent (cli binary = `bin`, absolute path → spawned
+/// directly, bypassing bridge resolution) and an app whose source node is it.
+fn install_watcher_app(aware: &std::path::Path, bin: &std::path::Path) {
     let agent_dir = aware.join("agents/stub-watcher");
     std::fs::create_dir_all(&agent_dir).unwrap();
     let bin_yaml = bin.to_string_lossy().replace('\\', "/");
@@ -523,7 +568,6 @@ commands:
     )
     .unwrap();
 
-    // 3. Install an app whose source node is the watcher.
     let app_dir = aware.join("apps/watchapp");
     std::fs::create_dir_all(&app_dir).unwrap();
     std::fs::write(
@@ -540,28 +584,32 @@ requires: []
 "#,
     )
     .unwrap();
+}
 
-    // 4. A real (non-simulated) run: the long-running path consumes the stream
-    //    and completes when the source closes.
-    Command::cargo_bin("aware")
-        .unwrap()
-        .env("AWARE_HOME", &aware)
-        .timeout(std::time::Duration::from_secs(30))
-        .args(["app", "run", "watchapp"])
-        .assert()
-        .success();
-
-    // 5. The streamed events landed in the provenance trace.
-    let trace = find_first_jsonl(&aware.join("logs/watchapp")).expect("no jsonl trace written");
-    let body = std::fs::read_to_string(&trace).unwrap();
+/// Compile a single-file Rust helper into `dir`, returning its path — or `None`
+/// if rustc isn't on PATH (the caller skips, mirroring the dotnet-sidecar test).
+fn compile_helper(dir: &std::path::Path, name: &str, body: &str) -> Option<std::path::PathBuf> {
+    let rustc = which_on_path(if cfg!(windows) { "rustc.exe" } else { "rustc" })?;
+    let src = dir.join(format!("{name}.rs"));
+    std::fs::write(&src, body).unwrap();
+    let bin = dir.join(if cfg!(windows) {
+        format!("{name}.exe")
+    } else {
+        name.to_string()
+    });
+    let status = std::process::Command::new(&rustc)
+        .arg(&src)
+        .arg("-o")
+        .arg(&bin)
+        .status()
+        .expect("failed to invoke rustc");
+    assert!(status.success(), "rustc failed to build the {name} helper");
     assert!(
-        body.contains("\"mark\":\"A\""),
-        "trace missing first event:\n{body}"
+        bin.is_file(),
+        "{name} binary not produced at {}",
+        bin.display()
     );
-    assert!(
-        body.contains("\"mark\":\"C\""),
-        "trace missing last event:\n{body}"
-    );
+    Some(bin)
 }
 
 /// Minimal `which`: the first PATH entry containing `name`.

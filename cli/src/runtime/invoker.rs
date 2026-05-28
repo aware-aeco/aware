@@ -286,7 +286,20 @@ impl AgentInvoker for CliInvoker {
         let stdout = child.stdout.take().ok_or_else(|| {
             AwareError::Internal(format!("{binary}/{command}: child stdout unavailable"))
         })?;
-        let mut stderr = child.stderr.take();
+
+        // Drain stderr concurrently so a chatty child can't fill the OS pipe
+        // buffer and deadlock — blocked on a stderr write, it would stop
+        // producing stdout and the run would hang. The captured text labels a
+        // non-zero exit.
+        let stderr = child.stderr.take();
+        let stderr_drain = tokio::spawn(async move {
+            let mut buf = String::new();
+            if let Some(mut err) = stderr {
+                use tokio::io::AsyncReadExt;
+                let _ = err.read_to_string(&mut buf).await;
+            }
+            buf
+        });
 
         let (tx, rx) = mpsc::channel::<Result<Value, AwareError>>(64);
         let (stop_tx, stop_rx) = oneshot::channel::<()>();
@@ -302,19 +315,18 @@ impl AgentInvoker for CliInvoker {
                 StreamEnd::Stopped | StreamEnd::ReceiverGone | StreamEnd::ReadError => {
                     let _ = child.start_kill();
                     let _ = child.wait().await;
+                    stderr_drain.abort();
                 }
                 // Natural EOF: reap, and surface a non-zero exit as a terminal
-                // stream error (best-effort — the orchestrator drops `Err`s, but
-                // it keeps the trace honest for any other consumer).
+                // stream error so the run doesn't report success for a watcher
+                // that crashed — `run_long_running` forwards this as a node error
+                // and fails the run.
                 StreamEnd::Eof => {
-                    if let Ok(status) = child.wait().await
+                    let status = child.wait().await;
+                    let detail = stderr_drain.await.unwrap_or_default();
+                    if let Ok(status) = status
                         && !status.success()
                     {
-                        let mut detail = String::new();
-                        if let Some(err) = stderr.as_mut() {
-                            use tokio::io::AsyncReadExt;
-                            let _ = err.read_to_string(&mut detail).await;
-                        }
                         let _ = tx
                             .send(Err(AwareError::Network(format!(
                                 "{label} exited {:?}: {}",
