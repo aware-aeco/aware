@@ -235,25 +235,7 @@ fn build_tekla_tarball_with_agent_id(path: &std::path::Path, agent_id: &str) {
         .parent()
         .unwrap()
         .to_path_buf();
-    let original =
-        std::fs::read_to_string(repo.join("20-agents/aeco/engineering/tekla/manifest.yaml"))
-            .unwrap();
-    // Rewrite the top-level `agent:` line (column-aligned in the source, so a
-    // literal-string replace won't do). `.lines()` also normalizes CRLF → LF.
-    let mut rewrote = false;
-    let manifest_text = original
-        .lines()
-        .map(|line| {
-            if line.starts_with("agent:") {
-                rewrote = true;
-                format!("agent: {agent_id}")
-            } else {
-                line.to_string()
-            }
-        })
-        .collect::<Vec<_>>()
-        .join("\n");
-    assert!(rewrote, "fixture: no top-level `agent:` line to rewrite");
+    let manifest_text = tekla_manifest_with_agent_id(agent_id);
 
     {
         let mut h = tar::Header::new_gnu();
@@ -289,6 +271,57 @@ fn build_tekla_tarball_with_agent_id(path: &std::path::Path, agent_id: &str) {
     let gz_writer = tar.into_inner().unwrap();
     let mut file = gz_writer.finish().unwrap();
     file.flush().unwrap();
+}
+
+/// Read the real tekla manifest and rewrite its top-level `agent:` id (which is
+/// column-aligned in the source, so a literal replace won't match). `.lines()`
+/// also normalizes CRLF → LF.
+fn tekla_manifest_with_agent_id(agent_id: &str) -> String {
+    let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .to_path_buf();
+    let original =
+        std::fs::read_to_string(repo.join("20-agents/aeco/engineering/tekla/manifest.yaml"))
+            .unwrap();
+    let mut rewrote = false;
+    let text = original
+        .lines()
+        .map(|line| {
+            if line.starts_with("agent:") {
+                rewrote = true;
+                format!("agent: {agent_id}")
+            } else {
+                line.to_string()
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+    assert!(rewrote, "fixture: no top-level `agent:` line to rewrite");
+    text
+}
+
+/// Write a local agent folder (manifest + skills) with a custom `agent:` id,
+/// suitable for `aware agent install <path>`.
+fn write_tekla_agent_dir(dir: &std::path::Path, agent_id: &str) {
+    let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .to_path_buf();
+    let manifest_text = tekla_manifest_with_agent_id(agent_id);
+    std::fs::create_dir_all(dir.join("skills")).unwrap();
+    std::fs::write(dir.join("manifest.yaml"), &manifest_text).unwrap();
+
+    let agent: serde_yaml::Value = serde_yaml::from_str(&manifest_text).unwrap();
+    let skills_src = repo.join("20-agents/aeco/engineering/tekla/skills");
+    for skill in agent["skills"].as_sequence().unwrap() {
+        let skill_name = skill.as_str().unwrap();
+        std::fs::copy(
+            skills_src.join(skill_name),
+            dir.join("skills").join(skill_name),
+        )
+        .unwrap();
+    }
 }
 
 /// Write a single-agent registry index with a custom key / version / tarball.
@@ -458,5 +491,51 @@ fn update_with_failed_repull_preserves_install() {
     assert!(
         aware.join("agents/tekla/manifest.yaml").is_file(),
         "#174: a failed re-pull must not delete the installed agent"
+    );
+}
+
+#[test]
+fn update_does_not_hijack_custom_agent_sharing_a_key_prefix() {
+    // #174 follow-up: a locally-installed agent whose id merely *looks* like
+    // `<registry-key>.<suffix>` (here `tekla.dev`) must NOT be resolved to the
+    // `tekla` registry entry and replaced. The base-name fallback only applies
+    // when the registry entry actually produces that exact install id.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    // Registry serves `tekla` (whose manifest id is plain `tekla`).
+    let tarball = tmp.path().join("tekla.tar.gz");
+    build_tekla_tarball(&tarball);
+    let idx_path = write_registry_fixture(tmp.path(), &tarball);
+    let idx_url = to_file_url(&idx_path);
+
+    // Install a CUSTOM local agent `tekla.dev` (not from the registry).
+    let custom_src = tmp.path().join("src/tekla.dev");
+    write_tekla_agent_dir(&custom_src, "tekla.dev");
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["agent", "install", custom_src.to_str().unwrap()])
+        .assert()
+        .success();
+    assert!(aware.join("agents/tekla.dev/manifest.yaml").is_file());
+
+    // Updating it must fail non-destructively — not pull `tekla` over it.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_REGISTRY", &idx_url)
+        .args(["agent", "update", "tekla.dev"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("not in registry"));
+
+    assert!(
+        aware.join("agents/tekla.dev/manifest.yaml").is_file(),
+        "#174: a custom agent must not be hijacked/deleted by suffix matching"
+    );
+    assert!(
+        !aware.join("agents/tekla").exists(),
+        "registry `tekla` must not have been installed over the custom agent"
     );
 }

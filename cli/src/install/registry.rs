@@ -126,6 +126,17 @@ pub fn update_agent_from_registry(
     }
     let new_name = agent.agent.clone();
 
+    // 4. Guard the suffix fallback. When `id` is not itself a registry key, the
+    //    key was inferred from a dotted suffix (`allplan-2024.0` → `allplan-2024`).
+    //    That inference only holds if the registry entry actually produces THIS
+    //    install id; otherwise `id` is an unrelated agent that merely looks like
+    //    `<key>.<suffix>` (e.g. a local `tekla.dev`), and replacing it would
+    //    hijack/delete it. Fail non-destructively instead — nothing on disk has
+    //    been touched yet (#174).
+    if !index.agents.contains_key(id) && new_name != id {
+        return Err(AwareError::NotFound(format!("agent {id} not in registry")));
+    }
+
     // ── past this point only local fs work remains ──────────────────────────
     let agents_dir = paths.agents_dir();
     std::fs::create_dir_all(&agents_dir)?;
