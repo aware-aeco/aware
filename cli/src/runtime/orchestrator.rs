@@ -265,8 +265,10 @@ impl Orchestrator {
                         Err(e) => {
                             // The source stream failed (the watcher process died
                             // non-zero / the pipe broke). Record it as a node error
-                            // and remember it so the run fails — but keep draining
-                            // any other sources so they shut down cleanly.
+                            // and fail the run. Break out rather than continue: with
+                            // multiple sources, a still-running sibling would keep
+                            // `event_rx` open forever and the run would hang. The
+                            // stop-senders loop below tears down any other sources.
                             self.emit(RunEvent::NodeError {
                                 ts: now_iso(),
                                 run_id: self.run_id.clone(),
@@ -274,8 +276,8 @@ impl Orchestrator {
                                 error: e.to_string(),
                             })
                             .await?;
-                            source_error.get_or_insert(e);
-                            continue;
+                            source_error = Some(e);
+                            break;
                         }
                     };
 
