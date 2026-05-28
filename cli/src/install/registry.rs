@@ -2,15 +2,17 @@
 //! fetching the tarball, extracting the agent's subdirectory, then handing
 //! off to `local::install_agent_from_path`.
 
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use flate2::read::GzDecoder;
 use tar::Archive;
 
 use crate::error::AwareError;
-use crate::install::local::install_agent_from_path;
+use crate::install::local::{copy_dir_recursive, install_agent_from_path};
+use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
 use crate::registry::Index;
+use crate::validate::{Severity, has_errors, validate_agent_on_disk};
 
 pub fn install_agent_from_registry(
     id: &str,
@@ -18,14 +20,31 @@ pub fn install_agent_from_registry(
     paths: &Paths,
     index: &Index,
 ) -> Result<String, AwareError> {
-    let (resolved_version, entry) = index.resolve(id, version_pin)?;
+    let (_scratch, subdir) = stage_agent_from_registry(id, version_pin, paths, index)?;
+    install_agent_from_path(&subdir, paths)
+}
+
+/// Resolve `<key>[@version]`, fetch the tarball (cache → `file://` → network),
+/// extract it and return the agent's source subdir (containing `manifest.yaml`).
+///
+/// Pure fetch + extract into a scratch dir — it never touches the install
+/// directory, so a failure here (network timeout, missing tarball, bad subdir)
+/// is side-effect-free. The returned `TempDir` owns the scratch space; callers
+/// must keep it alive until they have copied the agent out of `subdir`.
+fn stage_agent_from_registry(
+    key: &str,
+    version_pin: Option<&str>,
+    paths: &Paths,
+    index: &Index,
+) -> Result<(tempfile::TempDir, PathBuf), AwareError> {
+    let (resolved_version, entry) = index.resolve(key, version_pin)?;
 
     let scratch = tempfile::tempdir()?;
     let tarball_path = scratch.path().join("agent.tar.gz");
 
     let cache_dir = paths.cache_dir().join("agents");
     std::fs::create_dir_all(&cache_dir)?;
-    let cache_file = cache_dir.join(format!("{id}-{resolved_version}.tar.gz"));
+    let cache_file = cache_dir.join(format!("{key}-{resolved_version}.tar.gz"));
 
     if cache_file.is_file() {
         std::fs::copy(&cache_file, &tarball_path)?;
@@ -49,11 +68,97 @@ pub fn install_agent_from_registry(
     let subdir = extract_root.join(&entry.subdir);
     if !subdir.is_dir() {
         return Err(AwareError::Validation(format!(
-            "registry entry {id}@{resolved_version}: subdir {} not in tarball",
+            "registry entry {key}@{resolved_version}: subdir {} not in tarball",
             entry.subdir,
         )));
     }
-    install_agent_from_path(&subdir, paths)
+    Ok((scratch, subdir))
+}
+
+/// Atomically update an installed agent to the latest registry version.
+///
+/// `id` is the agent as it is installed (its `manifest.agent` / folder name) or
+/// any spec that resolves to the same registry entry. Fixes #174:
+///
+/// 1. **Base-name resolution** — the registry key is resolved from `id` first
+///    (installed `allplan-2024.0` → key `allplan-2024`), so `update` no longer
+///    looks the installed id up verbatim and fails with "not in registry".
+/// 2. **Atomic / non-destructive** — the new copy is fetched, extracted and
+///    validated in a scratch dir; the on-disk install is only replaced once all
+///    of that fallible work has succeeded. A failed re-pull (network timeout,
+///    agent dropped from the registry, invalid payload) leaves the existing
+///    install untouched instead of deleting it.
+/// 3. **Replace in place** — the previous folder and any stale folder already
+///    sitting at the new name are removed before the new copy is moved in, so an
+///    agent is never left installed under two names.
+pub fn update_agent_from_registry(
+    id: &str,
+    paths: &Paths,
+    index: &Index,
+) -> Result<String, AwareError> {
+    // 1. Resolve the registry key BEFORE touching disk. A spec that maps to no
+    //    registry entry fails here, leaving the install intact.
+    let key = index
+        .resolve_key(id)
+        .ok_or_else(|| AwareError::NotFound(format!("agent {id} not in registry")))?
+        .to_string();
+
+    // 2. Fetch + extract into scratch (the network-fallible work).
+    let (_scratch, subdir) = stage_agent_from_registry(&key, None, paths, index)?;
+
+    // 3. Validate the freshly fetched copy before it can replace a good install.
+    let manifest_path = subdir.join("manifest.yaml");
+    if !manifest_path.is_file() {
+        return Err(AwareError::Validation(format!(
+            "registry entry {key}: no manifest.yaml in payload"
+        )));
+    }
+    let agent = load_agent(&manifest_path)?;
+    let issues = validate_agent_on_disk(&agent, &subdir);
+    if has_errors(&issues) {
+        let summary = issues
+            .iter()
+            .filter(|i| i.severity == Severity::Error)
+            .map(|i| format!("[{}] {}", i.code, i.message))
+            .collect::<Vec<_>>()
+            .join("; ");
+        return Err(AwareError::Validation(summary));
+    }
+    let new_name = agent.agent.clone();
+
+    // ── past this point only local fs work remains ──────────────────────────
+    let agents_dir = paths.agents_dir();
+    std::fs::create_dir_all(&agents_dir)?;
+
+    // Stage the new copy on the same filesystem as the install but under the
+    // cache dir (NOT agents_dir) so a crash mid-update can never surface a
+    // half-written agent in `agent list`. The final rename is then atomic.
+    let staging = paths.cache_dir().join("update-staging").join(&new_name);
+    if let Some(parent) = staging.parent() {
+        std::fs::create_dir_all(parent)?;
+    }
+    if staging.exists() {
+        std::fs::remove_dir_all(&staging)?;
+    }
+    if let Err(e) = copy_dir_recursive(&subdir, &staging) {
+        let _ = std::fs::remove_dir_all(&staging);
+        return Err(e.into());
+    }
+
+    // Remove the prior install (the folder we updated from) and any stale folder
+    // already at the new name — collapses the duplicate-folder bug.
+    let prev_dir = agents_dir.join(id);
+    if prev_dir.exists() {
+        std::fs::remove_dir_all(&prev_dir)?;
+    }
+    let final_dir = agents_dir.join(&new_name);
+    if final_dir.exists() {
+        std::fs::remove_dir_all(&final_dir)?;
+    }
+
+    // Atomic move into place (same filesystem).
+    std::fs::rename(&staging, &final_dir)?;
+    Ok(new_name)
 }
 
 fn extract_tarball(tarball: &Path, dest: &Path) -> Result<(), AwareError> {

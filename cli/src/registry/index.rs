@@ -63,6 +63,31 @@ impl Index {
         };
         Ok((resolved_version, version_entry))
     }
+
+    /// Resolve an installed agent id to the registry key it was installed from.
+    ///
+    /// An installed agent's `manifest.agent` can carry a version-ish suffix the
+    /// registry key does not (e.g. key `allplan-2024` installs as
+    /// `allplan-2024.0`). `agent update` only knows the installed id, so it must
+    /// map back to the base-name before calling [`resolve`](Self::resolve).
+    ///
+    /// An exact key match wins; otherwise the *longest* key `k` for which `id`
+    /// is `k` followed by `.<suffix>` is returned. `None` means nothing matches,
+    /// letting callers fail *before* mutating the install — a bad id must never
+    /// delete an installed agent (#174).
+    pub fn resolve_key<'a>(&'a self, id: &str) -> Option<&'a str> {
+        if let Some((k, _)) = self.agents.get_key_value(id) {
+            return Some(k.as_str());
+        }
+        self.agents
+            .keys()
+            .filter(|k| {
+                id.strip_prefix(k.as_str())
+                    .is_some_and(|rest| rest.starts_with('.'))
+            })
+            .max_by_key(|k| k.len())
+            .map(String::as_str)
+    }
 }
 
 #[cfg(test)]
@@ -104,5 +129,43 @@ mod tests {
     fn missing_agent_is_not_found() {
         let idx = Index::parse(SAMPLE.as_bytes()).unwrap();
         assert!(idx.resolve("nope", None).is_err());
+    }
+
+    const KEYED: &str = r#"{
+        "version": "1.0",
+        "updated-at": "2026-05-16T00:00:00Z",
+        "agents": {
+            "tekla": { "versions": { "1": { "tarball": "t", "subdir": "s" } } },
+            "allplan-2024": { "versions": { "1": { "tarball": "t", "subdir": "s" } } },
+            "allplan-2025": { "versions": { "1": { "tarball": "t", "subdir": "s" } } }
+        },
+        "bundles": {}
+    }"#;
+
+    #[test]
+    fn resolve_key_exact_match_wins() {
+        let idx = Index::parse(KEYED.as_bytes()).unwrap();
+        assert_eq!(idx.resolve_key("tekla"), Some("tekla"));
+        assert_eq!(idx.resolve_key("allplan-2024"), Some("allplan-2024"));
+    }
+
+    #[test]
+    fn resolve_key_strips_version_suffix_to_base_name() {
+        // #174: installed `allplan-2024.0` must map back to registry key `allplan-2024`.
+        let idx = Index::parse(KEYED.as_bytes()).unwrap();
+        assert_eq!(idx.resolve_key("allplan-2024.0"), Some("allplan-2024"));
+        assert_eq!(idx.resolve_key("allplan-2025.0"), Some("allplan-2025"));
+        assert_eq!(idx.resolve_key("tekla.0"), Some("tekla"));
+    }
+
+    #[test]
+    fn resolve_key_none_when_no_match() {
+        let idx = Index::parse(KEYED.as_bytes()).unwrap();
+        // Unknown agent.
+        assert_eq!(idx.resolve_key("revit-2026.0"), None);
+        // A bare prefix that is not itself a key and not `<key>.<suffix>`.
+        assert_eq!(idx.resolve_key("allplan"), None);
+        // `<key>` followed by a non-dot char must not match (`allplan-2024x`).
+        assert_eq!(idx.resolve_key("allplan-2024x"), None);
     }
 }
