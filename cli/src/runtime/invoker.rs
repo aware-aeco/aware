@@ -155,42 +155,45 @@ pub struct CliInvoker {
     pub agents_dir: std::path::PathBuf,
 }
 
-#[async_trait]
-impl AgentInvoker for CliInvoker {
-    async fn invoke_single(
+impl CliInvoker {
+    /// Spawn the agent's CLI transport binary for `command`, with stdin / stdout
+    /// / stderr piped. Shared by `invoke_single` (request → one JSON response)
+    /// and `invoke_stream` (request → newline-delimited JSON event stream).
+    /// Returns the spawned child plus the resolved binary name (for labelling
+    /// errors raised after the spawn).
+    fn spawn_cli(
         &self,
         agent: &str,
         command: &str,
-        args: Value,
-    ) -> Result<Value, AwareError> {
+    ) -> Result<(tokio::process::Child, String), AwareError> {
         let manifest_path = self.agents_dir.join(agent).join("manifest.yaml");
         let m = crate::manifest::loader::load_agent(&manifest_path)?;
         let cli =
             m.transport.cli.as_ref().ok_or_else(|| {
                 AwareError::Validation(format!("agent {agent} has no cli transport"))
             })?;
-        let binary = &cli.binary;
+        let binary = cli.binary.clone();
         // Host bridges live in ~/.aware/bridges (off PATH); resolve to an absolute
         // path. Non-bridge binaries fall back to bare-name PATH resolution.
         let bridges = bridges_dir();
-        let program = resolve_cli_binary(binary, &bridges);
+        let program = resolve_cli_binary(&binary, &bridges);
         // A managed bridge installed by a different CLI version may speak an older
         // protocol. We warn (rather than refuse) so compatible bridges keep working
         // and a CLI patch bump doesn't force a redownload; a truly incompatible
         // bridge will fail the run with a clear protocol error.
         if crate::commands::sidecar::managed_bridge_is_stale(
-            binary,
+            &binary,
             &bridges,
             env!("CARGO_PKG_VERSION"),
         ) {
-            let id = binary.strip_prefix("aware-").unwrap_or(binary);
+            let id = binary.strip_prefix("aware-").unwrap_or(&binary);
             eprintln!(
                 "aware: warning: {binary} was installed by a different aware version; \
                  run `aware sidecar install {id}` to refresh if this run fails"
             );
         }
 
-        let mut child = tokio::process::Command::new(&program)
+        let child = tokio::process::Command::new(&program)
             .arg(command)
             .arg("--json-stdin")
             .stdin(std::process::Stdio::piped())
@@ -201,7 +204,7 @@ impl AgentInvoker for CliInvoker {
                 // When a host bridge binary is missing, surface an actionable hint.
                 let hint = if e.kind() == std::io::ErrorKind::NotFound {
                     // Strip the exe suffix on Windows to get the bare binary name.
-                    let bare = binary.strip_suffix(".exe").unwrap_or(binary);
+                    let bare = binary.strip_suffix(".exe").unwrap_or(&binary);
                     if let Some(id) = bare.strip_prefix("aware-") {
                         format!(
                             "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
@@ -214,6 +217,19 @@ impl AgentInvoker for CliInvoker {
                 };
                 AwareError::Network(format!("spawn {binary}: {e}{hint}"))
             })?;
+        Ok((child, binary))
+    }
+}
+
+#[async_trait]
+impl AgentInvoker for CliInvoker {
+    async fn invoke_single(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        let (mut child, _binary) = self.spawn_cli(agent, command)?;
 
         if let Some(mut stdin) = child.stdin.take() {
             use tokio::io::AsyncWriteExt;
@@ -247,15 +263,157 @@ impl AgentInvoker for CliInvoker {
 
     async fn invoke_stream(
         &self,
-        _agent: &str,
-        _command: &str,
-        _args: Value,
+        agent: &str,
+        command: &str,
+        args: Value,
     ) -> Result<StreamingHandle, AwareError> {
-        // v0.5 lands real agent binaries with streaming support. Until then,
-        // streaming via CLI transport is stubbed.
-        Err(AwareError::NotYetImplemented(
-            "CliInvoker::invoke_stream (waiting on agent binaries in v0.5)",
-        ))
+        let (mut child, binary) = self.spawn_cli(agent, command)?;
+        let label = format!("{agent}/{command}");
+
+        // Deliver the rendered command args once over stdin, then close it — on a
+        // separate task so startup never blocks. A streaming source reads its
+        // config (e.g. a `filter`) here, then emits events until stopped; but a
+        // watcher that never reads stdin is also valid, and a large rendered
+        // config could otherwise fill the stdin pipe and deadlock `write_all`
+        // before the stdout pump is even running. Delivery is best-effort — the
+        // event stream itself is the source of truth.
+        if let Some(mut stdin) = child.stdin.take() {
+            let args_text = serde_json::to_string(&args).unwrap_or_else(|_| "{}".into());
+            let label_in = label.clone();
+            tokio::spawn(async move {
+                use tokio::io::AsyncWriteExt;
+                if let Err(e) = stdin.write_all(args_text.as_bytes()).await {
+                    eprintln!("aware: warning: {label_in} stdin write failed: {e}");
+                }
+                let _ = stdin.shutdown().await;
+            });
+        }
+
+        let stdout = child.stdout.take().ok_or_else(|| {
+            AwareError::Internal(format!("{binary}/{command}: child stdout unavailable"))
+        })?;
+
+        // Drain stderr concurrently so a chatty child can't fill the OS pipe
+        // buffer and deadlock — blocked on a stderr write, it would stop
+        // producing stdout and the run would hang. Only the tail is retained
+        // (bounded, so an hours-long watcher can't grow memory without bound);
+        // it labels a non-zero exit.
+        let stderr = child.stderr.take();
+        let stderr_drain = tokio::spawn(async move {
+            // Keep only the last few KiB — enough to explain a crash.
+            const TAIL_CAP: usize = 8 * 1024;
+            let mut tail: Vec<u8> = Vec::new();
+            if let Some(mut err) = stderr {
+                use tokio::io::AsyncReadExt;
+                let mut chunk = [0u8; 4096];
+                loop {
+                    match err.read(&mut chunk).await {
+                        Ok(0) | Err(_) => break,
+                        Ok(n) => {
+                            tail.extend_from_slice(&chunk[..n]);
+                            if tail.len() > TAIL_CAP {
+                                tail.drain(..tail.len() - TAIL_CAP);
+                            }
+                        }
+                    }
+                }
+            }
+            String::from_utf8_lossy(&tail).into_owned()
+        });
+
+        let (tx, rx) = mpsc::channel::<Result<Value, AwareError>>(64);
+        let (stop_tx, stop_rx) = oneshot::channel::<()>();
+
+        // Drive the child's stdout on a background task. The returned handle's
+        // `stop` cancels it; events arrive on `rx` until the stream ends.
+        tokio::spawn(async move {
+            let mut child = child;
+            match pump_jsonl_stream(stdout, &tx, stop_rx).await {
+                // Cancellation or a downstream drop / read error: terminate the
+                // child so a long-running watcher doesn't outlive the run.
+                StreamEnd::Stopped | StreamEnd::ReceiverGone | StreamEnd::ReadError => {
+                    let _ = child.start_kill();
+                    let _ = child.wait().await;
+                    stderr_drain.abort();
+                }
+                // Natural EOF: reap, and surface a non-zero exit as a terminal
+                // stream error so the run doesn't report success for a watcher
+                // that crashed — `run_long_running` forwards this as a node error
+                // and fails the run.
+                StreamEnd::Eof => {
+                    let status = child.wait().await;
+                    let detail = stderr_drain.await.unwrap_or_default();
+                    if let Ok(status) = status
+                        && !status.success()
+                    {
+                        let _ = tx
+                            .send(Err(AwareError::Network(format!(
+                                "{label} exited {:?}: {}",
+                                status.code(),
+                                detail.trim()
+                            ))))
+                            .await;
+                    }
+                }
+            }
+        });
+
+        Ok(StreamingHandle { rx, stop: stop_tx })
+    }
+}
+
+/// How a streaming pump terminated — drives the spawner's cleanup decision.
+#[derive(Debug, PartialEq, Eq)]
+enum StreamEnd {
+    /// `stop` fired — caller should kill the child.
+    Stopped,
+    /// The child closed stdout — caller should reap and check the exit code.
+    Eof,
+    /// The receiver was dropped (no one is consuming) — caller should kill.
+    ReceiverGone,
+    /// A read error on stdout — caller should kill.
+    ReadError,
+}
+
+/// Read newline-delimited JSON from `reader`, forwarding each non-blank line as
+/// an event (`Ok(Value)`, or `Err` for a malformed line) into `tx`, until EOF or
+/// `stop` fires. Each stdout line is one event — the streaming analogue of the
+/// single-shot transport's one-JSON-document-per-call contract.
+async fn pump_jsonl_stream<R>(
+    reader: R,
+    tx: &mpsc::Sender<Result<Value, AwareError>>,
+    mut stop: oneshot::Receiver<()>,
+) -> StreamEnd
+where
+    R: tokio::io::AsyncRead + Unpin,
+{
+    use tokio::io::{AsyncBufReadExt, BufReader};
+    let mut lines = BufReader::new(reader).lines();
+    loop {
+        tokio::select! {
+            _ = &mut stop => return StreamEnd::Stopped,
+            next = lines.next_line() => match next {
+                Ok(Some(line)) => {
+                    let trimmed = line.trim();
+                    if trimmed.is_empty() {
+                        continue;
+                    }
+                    let event = serde_json::from_str::<Value>(trimmed).map_err(|e| {
+                        AwareError::Validation(format!("stream line not JSON: {e}"))
+                    });
+                    if tx.send(event).await.is_err() {
+                        return StreamEnd::ReceiverGone;
+                    }
+                }
+                Ok(None) => return StreamEnd::Eof,
+                Err(e) => {
+                    let _ = tx
+                        .send(Err(AwareError::Network(format!("stream read: {e}"))))
+                        .await;
+                    return StreamEnd::ReadError;
+                }
+            }
+        }
     }
 }
 
@@ -873,16 +1031,146 @@ commands:
     }
 
     #[tokio::test]
-    async fn stream_is_not_yet_implemented() {
+    async fn stream_missing_binary_returns_network_error() {
+        // A stateful watch agent whose cli binary doesn't exist: invoke_stream
+        // fails at spawn (same as invoke_single) rather than the old stub.
         let tmp = tempfile::tempdir().unwrap();
+        let agent_dir = tmp.path().join("phantom-watcher");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: phantom-watcher
+version: 0.1.0
+description: a non-existent watcher
+stateful: true
+license: MIT
+transport:
+  cli:
+    binary: this-watch-binary-definitely-does-not-exist-54321
+commands:
+  watch:
+    lifecycle: start
+    description: nope
+    outputs:
+      type: stream
+      schema:
+        mark: string
+"#,
+        )
+        .unwrap();
+
         let inv = CliInvoker {
             agents_dir: tmp.path().to_path_buf(),
         };
         let err = inv
-            .invoke_stream("anything", "anything", serde_json::json!({}))
+            .invoke_stream("phantom-watcher", "watch", serde_json::json!({}))
             .await
             .unwrap_err();
-        assert!(matches!(err, AwareError::NotYetImplemented(_)));
+        assert!(matches!(err, AwareError::Network(_)), "got: {err:?}");
+    }
+
+    #[tokio::test]
+    async fn stream_missing_transport_cli_returns_validation_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        let agent_dir = tmp.path().join("no-cli");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            r#"agent: no-cli
+version: 0.1.0
+description: x
+stateful: true
+license: MIT
+transport: {}
+commands:
+  watch:
+    lifecycle: start
+    description: nope
+"#,
+        )
+        .unwrap();
+
+        let inv = CliInvoker {
+            agents_dir: tmp.path().to_path_buf(),
+        };
+        let err = inv
+            .invoke_stream("no-cli", "watch", serde_json::json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+    }
+}
+
+#[cfg(test)]
+mod stream_pump_tests {
+    use super::*;
+    use serde_json::json;
+    use tokio::io::AsyncWriteExt;
+
+    #[tokio::test]
+    async fn pump_forwards_events_in_order_then_eof() {
+        let (mut w, r) = tokio::io::duplex(256);
+        let (tx, mut rx) = mpsc::channel(16);
+        let (_stop_tx, stop_rx) = oneshot::channel();
+        let pump = tokio::spawn(async move { pump_jsonl_stream(r, &tx, stop_rx).await });
+
+        w.write_all(b"{\"mark\":\"A\"}\n{\"mark\":\"B\"}\n")
+            .await
+            .unwrap();
+        w.shutdown().await.unwrap(); // EOF
+
+        assert_eq!(rx.recv().await.unwrap().unwrap()["mark"], "A");
+        assert_eq!(rx.recv().await.unwrap().unwrap()["mark"], "B");
+        assert_eq!(pump.await.unwrap(), StreamEnd::Eof);
+        // Channel closed once the pump returns and drops its borrow.
+        assert!(rx.recv().await.is_none());
+    }
+
+    #[tokio::test]
+    async fn pump_skips_blank_lines_and_flags_malformed() {
+        let (mut w, r) = tokio::io::duplex(256);
+        let (tx, mut rx) = mpsc::channel(16);
+        let (_stop_tx, stop_rx) = oneshot::channel();
+        let pump = tokio::spawn(async move { pump_jsonl_stream(r, &tx, stop_rx).await });
+
+        w.write_all(b"\n{\"n\":1}\nnot-json\n").await.unwrap();
+        w.shutdown().await.unwrap();
+
+        assert_eq!(rx.recv().await.unwrap().unwrap()["n"], json!(1));
+        assert!(matches!(
+            rx.recv().await.unwrap(),
+            Err(AwareError::Validation(_))
+        ));
+        assert_eq!(pump.await.unwrap(), StreamEnd::Eof);
+    }
+
+    #[tokio::test]
+    async fn pump_stops_on_signal_while_stream_open() {
+        // Writer never closes; only the stop signal can end the pump.
+        let (mut w, r) = tokio::io::duplex(256);
+        let (tx, mut rx) = mpsc::channel(16);
+        let (stop_tx, stop_rx) = oneshot::channel();
+        let pump = tokio::spawn(async move { pump_jsonl_stream(r, &tx, stop_rx).await });
+
+        w.write_all(b"{\"n\":1}\n").await.unwrap();
+        assert_eq!(rx.recv().await.unwrap().unwrap()["n"], json!(1));
+
+        stop_tx.send(()).unwrap();
+        assert_eq!(pump.await.unwrap(), StreamEnd::Stopped);
+        drop(w); // keep the writer alive until the pump has stopped
+    }
+
+    #[tokio::test]
+    async fn pump_reports_receiver_gone() {
+        let (mut w, r) = tokio::io::duplex(256);
+        let (tx, rx) = mpsc::channel::<Result<Value, AwareError>>(16);
+        let (_stop_tx, stop_rx) = oneshot::channel();
+        drop(rx); // no consumer
+        let pump = tokio::spawn(async move { pump_jsonl_stream(r, &tx, stop_rx).await });
+
+        w.write_all(b"{\"n\":1}\n").await.unwrap();
+        assert_eq!(pump.await.unwrap(), StreamEnd::ReceiverGone);
+        drop(w);
     }
 }
 

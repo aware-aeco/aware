@@ -175,7 +175,7 @@ impl Orchestrator {
 
         // 2. Start each source stream. Collect stop senders for graceful shutdown.
         //    Move each receiver into a forwarding tokio task that pushes into a shared channel.
-        let (event_tx, mut event_rx) = mpsc::channel::<(String, Value)>(64);
+        let (event_tx, mut event_rx) = mpsc::channel::<(String, Result<Value, AwareError>)>(64);
         let mut stop_senders: Vec<oneshot::Sender<()>> = Vec::new();
 
         for source_id in &source_ids {
@@ -206,13 +206,14 @@ impl Orchestrator {
                 // Stub the stream under `--simulate`: emit ONE schema-shaped
                 // placeholder event, then let the source close. Watcher
                 // compositions (`lifecycle: start`) thus validate end-to-end
-                // without `invoke_stream`, which isn't implemented yet (#117-2).
+                // without contacting a host sidecar (the real path goes through
+                // `invoke_stream`, exercised by a non-simulated run; #117-2, #172).
                 // The placeholder propagates through the downstream chain once.
                 let placeholder = self.synthesize_output(agent, command);
                 let tx = event_tx.clone();
                 let sid = source_id.clone();
                 tokio::spawn(async move {
-                    let _ = tx.send((sid, placeholder)).await;
+                    let _ = tx.send((sid, Ok(placeholder))).await;
                     // tx clone dropped here → contributes to channel closure.
                 });
             } else {
@@ -225,10 +226,10 @@ impl Orchestrator {
                 let sid = source_id.clone();
                 tokio::spawn(async move {
                     let mut rx = rx;
+                    // Forward both events and terminal errors; the main loop
+                    // decides how each affects the run (a stream `Err` fails it).
                     while let Some(res) = rx.recv().await {
-                        if let Ok(v) = res
-                            && tx.send((sid.clone(), v)).await.is_err()
-                        {
+                        if tx.send((sid.clone(), res)).await.is_err() {
                             break;
                         }
                     }
@@ -242,6 +243,9 @@ impl Orchestrator {
 
         // 3. Main event loop — drive until stop signal or all sources drain.
         let mut status = "ok";
+        // First terminal error from a source stream (e.g. a watcher process that
+        // exited non-zero). Recorded so the run reports failure instead of `ok`.
+        let mut source_error: Option<AwareError> = None;
         loop {
             tokio::select! {
                 changed = stop_rx.changed() => {
@@ -251,9 +255,30 @@ impl Orchestrator {
                     }
                 }
                 maybe_evt = event_rx.recv() => {
-                    let Some((source_id, event)) = maybe_evt else {
+                    let Some((source_id, result)) = maybe_evt else {
                         // All forwarding tasks have exited — streams naturally ended.
                         break;
+                    };
+
+                    let event = match result {
+                        Ok(event) => event,
+                        Err(e) => {
+                            // The source stream failed (the watcher process died
+                            // non-zero / the pipe broke). Record it as a node error
+                            // and fail the run. Break out rather than continue: with
+                            // multiple sources, a still-running sibling would keep
+                            // `event_rx` open forever and the run would hang. The
+                            // stop-senders loop below tears down any other sources.
+                            self.emit(RunEvent::NodeError {
+                                ts: now_iso(),
+                                run_id: self.run_id.clone(),
+                                node: source_id.clone(),
+                                error: e.to_string(),
+                            })
+                            .await?;
+                            source_error = Some(e);
+                            break;
+                        }
                     };
 
                     self.ctx.record_output(&source_id, event.clone());
@@ -280,6 +305,12 @@ impl Orchestrator {
             }
         }
 
+        // A source failure overrides the default `ok`, but an explicit interrupt
+        // (Ctrl+C / `aware app stop`) is reported as such.
+        if status != "interrupted" && source_error.is_some() {
+            status = "error";
+        }
+
         // 4. Send stop to all source streams (they may have already closed naturally).
         for stop in stop_senders {
             let _ = stop.send(());
@@ -298,6 +329,12 @@ impl Orchestrator {
             status: status.to_string(),
         })
         .await?;
+
+        // Surface a source-stream failure as a non-zero exit (the trace already
+        // carries the node error + an `error` RunEnd above).
+        if let Some(e) = source_error {
+            return Err(e);
+        }
         Ok(())
     }
 

@@ -14,7 +14,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 |---|---|---|
 | v0.1 foundation | ✅ shipped | all read-only commands real |
 | v0.2 install + validate | ✅ shipped | `agent`/`app install\|uninstall\|validate`, lockfile |
-| v0.3 runtime | ✅ single-shot | `app run\|stop\|logs`, orchestrator + provenance; streaming/stateful-agent transport (`invoke_stream`) still stubbed |
+| v0.3 runtime | ✅ shipped | `app run\|stop\|logs`, orchestrator + provenance; streaming/stateful-agent transport (`invoke_stream`) implemented — a `watch`/`lifecycle: start` cli source streams newline-delimited JSON events through the long-running path (#172) |
 | v0.4 auth + plugins | ✅ shipped | `connect`/`disconnect`, plugin generators |
 | v0.5 builders | ✅ shipped | `build --from-*`, `skill` group (`--from-com` is a Windows-only guard) |
 | v0.10 curation framework | ✅ shipped | `category:`, `tree\|search --curated` |
@@ -44,7 +44,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 4. **`aware agent publish`** — the one remaining CLI stub.
 5. **`aware connect` providers** — Autodesk/APS + Slack aren't wired into `aware connect` (only trimble-connect/microsoft-365/google-workspace); their agents' auth is token-out-of-band until added.
 6. **Agent dedup** — sketchup + navisworks each appear under both `architecture/` and `construction/`; many version-pairs. Needs a consolidation decision.
-7. **Runtime execution gaps** — `CliInvoker::invoke_stream` (streaming/stateful-agent transport) and the remaining v0.19 primitives return `NotYetImplemented`. Done at runtime: `assert:` (v0.19), `for-each` (#124), `compare` (#127). Remaining primitives: `sweep` / `approve` / `snapshot` / `model-lock`. Single-shot + for-each + compare apps run fully; these complete the runtime.
+7. **Runtime execution gaps** — the remaining v0.19 primitives return `NotYetImplemented`. Done at runtime: `assert:` (v0.19), `for-each` (#124), `compare` (#127), and the `invoke_stream` streaming/stateful-agent transport (#172 — a cli `watch` source streams JSONL events through the long-running path). Remaining primitives: `sweep` / `approve` / `snapshot` / `model-lock`. Single-shot, streaming, for-each + compare apps run fully; these primitives complete the runtime.
 8. **v1.0 gates** — external contributor agent, public install paths (winget/brew), a third-party registry app.
 
 ---
