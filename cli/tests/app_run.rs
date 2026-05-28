@@ -112,10 +112,11 @@ requires: []
 }
 
 #[test]
-fn simulate_runs_streaming_watcher_app_without_invoke_stream() {
+fn simulate_runs_streaming_watcher_app_without_a_bridge() {
     // The #117-2 scenario: a `lifecycle: start` watcher source routes to the
-    // long-running path. A real run fails (`invoke_stream` not implemented);
-    // `--simulate` must stub the stream and complete cleanly.
+    // long-running path. A real run fails because the watch bridge binary isn't
+    // installed (`invoke_stream` now spawns it; #172); `--simulate` must stub the
+    // stream and complete cleanly without contacting any host.
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");
 
@@ -163,8 +164,8 @@ requires: []
     )
     .unwrap();
 
-    // A real run takes the long-running path and fails: invoke_stream is not
-    // yet implemented (the exact #117-2 error).
+    // A real run takes the long-running path and fails: invoke_stream tries to
+    // spawn `this-watch-binary-does-not-exist`, which isn't on PATH (#172).
     Command::cargo_bin("aware")
         .unwrap()
         .env("AWARE_HOME", &aware)
@@ -432,4 +433,157 @@ fn copy_dir(src: &std::path::Path, dst: &std::path::Path) -> std::io::Result<()>
         }
     }
     Ok(())
+}
+
+/// End-to-end: a real subprocess emits a finite newline-delimited JSON event
+/// stream; the stateful `watch` source routes to the long-running path;
+/// `CliInvoker::invoke_stream` pumps the events; and the run ends cleanly when the
+/// stream closes — proving the streaming transport works through the real `aware`
+/// binary (#172), not just a mock.
+#[test]
+fn streaming_watcher_app_runs_end_to_end_via_invoke_stream() {
+    // The streaming sidecar is a tiny Rust helper compiled on the fly. Skip
+    // gracefully if rustc isn't on PATH (mirrors the dotnet-sidecar test's skip).
+    let Some(rustc) = which_on_path(if cfg!(windows) { "rustc.exe" } else { "rustc" }) else {
+        eprintln!("[skip] rustc not found on PATH; cannot build the streaming sidecar helper");
+        return;
+    };
+
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    // 1. Compile a streamer that drains stdin (where the CLI delivers the
+    //    rendered args) then emits three JSONL events and exits.
+    let src = tmp.path().join("streamer.rs");
+    std::fs::write(
+        &src,
+        r#"use std::io::{Read, Write};
+fn main() {
+    let mut buf = String::new();
+    let _ = std::io::stdin().read_to_string(&mut buf);
+    let out = std::io::stdout();
+    let mut o = out.lock();
+    for m in ["A", "B", "C"] {
+        let _ = writeln!(o, "{{\"mark\":\"{}\"}}", m);
+        let _ = o.flush();
+    }
+}
+"#,
+    )
+    .unwrap();
+    let bin = tmp.path().join(if cfg!(windows) {
+        "streamer.exe"
+    } else {
+        "streamer"
+    });
+    let status = std::process::Command::new(&rustc)
+        .arg(&src)
+        .arg("-o")
+        .arg(&bin)
+        .status()
+        .expect("failed to invoke rustc");
+    assert!(
+        status.success(),
+        "rustc failed to build the streamer helper"
+    );
+    assert!(
+        bin.is_file(),
+        "streamer binary not produced at {}",
+        bin.display()
+    );
+
+    // 2. Install a stateful watch agent whose cli binary is the streamer
+    //    (absolute path → spawned directly, bypassing bridge resolution).
+    let agent_dir = aware.join("agents/stub-watcher");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    let bin_yaml = bin.to_string_lossy().replace('\\', "/");
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        format!(
+            r#"agent: stub-watcher
+version: 0.0.1
+description: emits a finite stream of marks
+stateful: true
+license: MIT
+transport:
+  cli:
+    binary: {bin_yaml}
+commands:
+  watch:
+    lifecycle: start
+    category: curated
+    mode: read
+    description: stream of marks
+    outputs:
+      type: stream
+      schema:
+        mark: string
+"#
+        ),
+    )
+    .unwrap();
+
+    // 3. Install an app whose source node is the watcher.
+    let app_dir = aware.join("apps/watchapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("watchapp.flo"),
+        r#"app: watchapp
+version: 0.0.1
+description: x
+nodes:
+  - id: watch
+    agent: stub-watcher
+    command: watch
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    // 4. A real (non-simulated) run: the long-running path consumes the stream
+    //    and completes when the source closes.
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(30))
+        .args(["app", "run", "watchapp"])
+        .assert()
+        .success();
+
+    // 5. The streamed events landed in the provenance trace.
+    let trace = find_first_jsonl(&aware.join("logs/watchapp")).expect("no jsonl trace written");
+    let body = std::fs::read_to_string(&trace).unwrap();
+    assert!(
+        body.contains("\"mark\":\"A\""),
+        "trace missing first event:\n{body}"
+    );
+    assert!(
+        body.contains("\"mark\":\"C\""),
+        "trace missing last event:\n{body}"
+    );
+}
+
+/// Minimal `which`: the first PATH entry containing `name`.
+fn which_on_path(name: &str) -> Option<std::path::PathBuf> {
+    std::env::var_os("PATH").and_then(|paths| {
+        std::env::split_paths(&paths)
+            .map(|p| p.join(name))
+            .find(|p| p.is_file())
+    })
+}
+
+/// First `*.jsonl` file under `dir` (searched recursively).
+fn find_first_jsonl(dir: &std::path::Path) -> Option<std::path::PathBuf> {
+    for entry in std::fs::read_dir(dir).ok()?.flatten() {
+        let p = entry.path();
+        if p.is_dir() {
+            if let Some(found) = find_first_jsonl(&p) {
+                return Some(found);
+            }
+        } else if p.extension().and_then(|e| e.to_str()) == Some("jsonl") {
+            return Some(p);
+        }
+    }
+    None
 }

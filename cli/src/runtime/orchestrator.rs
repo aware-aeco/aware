@@ -206,7 +206,8 @@ impl Orchestrator {
                 // Stub the stream under `--simulate`: emit ONE schema-shaped
                 // placeholder event, then let the source close. Watcher
                 // compositions (`lifecycle: start`) thus validate end-to-end
-                // without `invoke_stream`, which isn't implemented yet (#117-2).
+                // without contacting a host sidecar (the real path goes through
+                // `invoke_stream`, exercised by a non-simulated run; #117-2, #172).
                 // The placeholder propagates through the downstream chain once.
                 let placeholder = self.synthesize_output(agent, command);
                 let tx = event_tx.clone();
