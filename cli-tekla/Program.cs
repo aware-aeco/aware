@@ -821,6 +821,13 @@ internal static class Program
 
     static JsonNode? TryGetGeometry(object modelObject)
     {
+        // NOTE on coordinates: Solid.MinimumPoint/MaximumPoint are returned in
+        // Tekla's CURRENT transformation plane, which equals world only when the
+        // user hasn't changed the work plane. We deliberately do NOT switch the
+        // session to the global plane to "normalize" here — that's a global,
+        // non-thread-safe mutation of the user's live Tekla session, unacceptable
+        // from a passive worker-thread watcher. The contract (manifest/watch.md)
+        // documents the box as current-plane accordingly.
         try
         {
             var getSolid = modelObject.GetType().GetMethod("GetSolid", Type.EmptyTypes);

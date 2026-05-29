@@ -151,7 +151,7 @@ commands:
         mark:     string             # NOTE: identity is Mark, never Name
         type:     string             # changed object's runtime type (Beam, Assembly, Weld, …)
         change:   string             # added | modified | removed
-        geometry: object             # best-effort world-space bounding box { min, max }
+        geometry: object             # best-effort bounding box { min, max } in the CURRENT transformation plane (= world when the work plane is global)
 
   insert:
     lifecycle: single

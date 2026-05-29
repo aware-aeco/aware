@@ -24,10 +24,12 @@ guid:     string        # ModelObject GUID (stable identity across edits)
 mark:     string        # NEVER use Name — see drawing-identity skill (null on a removed object)
 type:     string        # changed object's runtime type: Beam | Assembly | Weld | BoltArray | …
 change:   enum          # added | modified | removed
-geometry: object        # best-effort world-space bounding box { min:{x,y,z}, max:{x,y,z} } (see coordinate-systems skill)
+geometry: object        # best-effort bounding box { min:{x,y,z}, max:{x,y,z} } in the CURRENT transformation plane (see coordinate-systems skill)
 ```
 
 A removed object can't be re-read from the database, so its `mark`/`geometry` are `null` — only `guid`, `type`, and `change: removed` are populated.
+
+> **Coordinates:** `geometry` is reported in Tekla's **current transformation plane**, which equals world coordinates only when the user hasn't changed the work plane. The watcher does not switch the session to the global plane to normalize this — that would mutate the user's live session from a background thread. If a downstream node needs guaranteed world coordinates, account for the active work plane there.
 
 ## Composition examples
 
