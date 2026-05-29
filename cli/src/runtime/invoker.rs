@@ -929,7 +929,7 @@ impl DispatchInvoker {
         app_ctx: &AppTransportCtx,
         agent: &str,
         command: &str,
-        args: &Value,
+        args: &mut Value,
     ) -> Result<App, AwareError> {
         let manifest = crate::manifest::loader::load_agent(
             &self.agents_dir.join(agent).join("manifest.yaml"),
@@ -962,7 +962,8 @@ impl DispatchInvoker {
                 "app {backed_by} does not expose a command named {command:?}"
             ))
         })?;
-        // Type-check the caller's routed inputs against the declared contract.
+        // Coerce + type-check the caller's routed inputs against the declared
+        // contract (templating stringifies them; this restores declared types).
         crate::manifest::expose::validate_exposed_inputs(command, exposed, args)?;
         Ok(app)
     }
@@ -981,9 +982,9 @@ impl DispatchInvoker {
         app_ctx: &AppTransportCtx,
         agent: &str,
         command: &str,
-        args: Value,
+        mut args: Value,
     ) -> Result<Value, AwareError> {
-        let app = self.resolve_exposed(app_ctx, agent, command, &args)?;
+        let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(
@@ -1013,9 +1014,9 @@ impl DispatchInvoker {
         app_ctx: &AppTransportCtx,
         agent: &str,
         command: &str,
-        args: Value,
+        mut args: Value,
     ) -> Result<StreamingHandle, AwareError> {
-        let app = self.resolve_exposed(app_ctx, agent, command, &args)?;
+        let app = self.resolve_exposed(app_ctx, agent, command, &mut args)?;
         let backed_by = app.app.clone();
         let run_id = crate::runtime::provenance::run_id_now();
         let log_path = crate::runtime::provenance::log_path_for(

@@ -149,53 +149,122 @@ pub fn synthesize_agent_manifest(app: &App) -> Result<String, AwareError> {
     ))
 }
 
-/// Type-validate a caller's routed inputs against an exposed command's declared
-/// input types before they enter the nested app's `inputs:` map. Each declared
-/// input whose `type:` is a known scalar/structured type is checked against the
-/// provided value; an unknown declared type (e.g. `enum`) or an input the caller
-/// did not supply is left alone (the nested app may default it). Inputs the
-/// caller supplies beyond the declared set pass through unchecked.
+/// Coerce + type-validate a caller's routed inputs against an exposed command's
+/// declared input types, in place, before they enter the nested app's `inputs:`.
+///
+/// Templating stringifies whole-`{{ … }}` config leaves, so a routed numeric /
+/// boolean / structured value arrives here as a string (e.g. `count: "5"`,
+/// `rows: "[…]"`). For each declared input present, this parses such a string
+/// back into the declared type so the nested app receives a correctly-typed
+/// value — and rejects values that cannot satisfy the declared type
+/// (`expected integer, got 1.5`). An unknown declared type (e.g. `enum`) or an
+/// input the caller did not supply is left alone; inputs beyond the declared
+/// set pass through unchecked.
 pub fn validate_exposed_inputs(
     command: &str,
     exposed: &ExposedCommand,
-    args: &serde_json::Value,
+    args: &mut serde_json::Value,
 ) -> Result<(), AwareError> {
     let Some(declared) = exposed.inputs.as_mapping() else {
         return Ok(());
     };
-    let Some(provided) = args.as_object() else {
+    // Collect (name, declared_type) first so we can mutate `args` afterwards
+    // without holding a borrow of `exposed.inputs`.
+    let declared_types: Vec<(String, String)> = declared
+        .iter()
+        .filter_map(|(name, decl)| {
+            let name = name.as_str()?;
+            let ty = decl.get("type").and_then(|t| t.as_str())?;
+            Some((name.to_string(), ty.to_string()))
+        })
+        .collect();
+    let Some(provided) = args.as_object_mut() else {
         return Ok(());
     };
-    for (name, decl) in declared {
-        let Some(name) = name.as_str() else { continue };
-        let Some(declared_type) = decl.get("type").and_then(|t| t.as_str()) else {
+    for (name, declared_type) in declared_types {
+        let Some(value) = provided.get(&name) else {
             continue;
         };
-        let Some(value) = provided.get(name) else {
-            continue;
-        };
-        if !json_matches_type(value, declared_type) {
-            return Err(AwareError::Validation(format!(
-                "exposed command `{command}` input `{name}`: expected {declared_type}, got {}",
-                json_type_name(value)
-            )));
+        match coerce_to_declared(value, &declared_type) {
+            Some(coerced) => {
+                provided.insert(name, coerced);
+            }
+            None => {
+                return Err(AwareError::Validation(format!(
+                    "exposed command `{command}` input `{name}`: expected {declared_type}, got {}",
+                    json_type_name(value)
+                )));
+            }
         }
     }
     Ok(())
 }
 
-/// Whether a JSON value satisfies a declared input `type`. Unknown type names
-/// (e.g. `enum`, vendor-specific) are permissive — they return `true` so a
-/// reasonable value is never rejected on a type AWARE doesn't model.
-fn json_matches_type(value: &serde_json::Value, declared: &str) -> bool {
+/// Coerce a routed value into a declared input `type`, returning the value to
+/// store (possibly unchanged) or `None` if it cannot satisfy the type. Strings
+/// produced by templating are parsed into numbers / integers / booleans /
+/// objects / arrays as needed; `integer` rejects fractional values. Unknown
+/// declared types are permissive (accepted as-is).
+fn coerce_to_declared(value: &serde_json::Value, declared: &str) -> Option<serde_json::Value> {
+    use serde_json::Value;
     match declared {
-        "string" | "str" | "text" => value.is_string(),
-        "number" | "num" | "integer" | "int" | "float" | "double" => value.is_number(),
-        "boolean" | "bool" => value.is_boolean(),
-        "object" | "map" | "mapping" => value.is_object(),
-        "array" | "list" => value.is_array(),
-        _ => true,
+        "string" | "str" | "text" => match value {
+            Value::String(_) => Some(value.clone()),
+            // A scalar (e.g. a number routed into a string input) stringifies.
+            Value::Number(_) | Value::Bool(_) => Some(Value::String(value.to_string())),
+            _ => None,
+        },
+        "number" | "num" | "float" | "double" => match value {
+            Value::Number(_) => Some(value.clone()),
+            Value::String(s) => parse_number(s),
+            _ => None,
+        },
+        "integer" | "int" => match value {
+            Value::Number(n) if n.is_i64() || n.is_u64() => Some(value.clone()),
+            // Whole-valued floats (1.0) are integers; fractional (1.5) are not.
+            Value::Number(n) => n
+                .as_f64()
+                .filter(|f| f.fract() == 0.0 && f.is_finite())
+                .map(|f| Value::Number((f as i64).into())),
+            Value::String(s) => s.parse::<i64>().ok().map(|i| Value::Number(i.into())),
+            _ => None,
+        },
+        "boolean" | "bool" => match value {
+            Value::Bool(_) => Some(value.clone()),
+            Value::String(s) => s.parse::<bool>().ok().map(Value::Bool),
+            _ => None,
+        },
+        "object" | "map" | "mapping" => match value {
+            Value::Object(_) => Some(value.clone()),
+            Value::String(s) => serde_json::from_str::<Value>(s)
+                .ok()
+                .filter(Value::is_object),
+            _ => None,
+        },
+        "array" | "list" => match value {
+            Value::Array(_) => Some(value.clone()),
+            Value::String(s) => serde_json::from_str::<Value>(s)
+                .ok()
+                .filter(Value::is_array),
+            _ => None,
+        },
+        // Unknown declared type (e.g. `enum`): accept as-is.
+        _ => Some(value.clone()),
     }
+}
+
+/// Parse a string into a JSON number, preserving integer-ness where possible.
+fn parse_number(s: &str) -> Option<serde_json::Value> {
+    if let Ok(i) = s.parse::<i64>() {
+        return Some(serde_json::Value::Number(i.into()));
+    }
+    if let Ok(u) = s.parse::<u64>() {
+        return Some(serde_json::Value::Number(u.into()));
+    }
+    s.parse::<f64>()
+        .ok()
+        .and_then(serde_json::Number::from_f64)
+        .map(serde_json::Value::Number)
 }
 
 fn json_type_name(value: &serde_json::Value) -> &'static str {
@@ -315,10 +384,9 @@ requires: []
         let cmd = exposed(
             "lifecycle: single\ninputs:\n  count:\n    type: number\n  name:\n    type: string\n",
         );
-        // number declared, string provided → error.
-        let err =
-            validate_exposed_inputs("run", &cmd, &serde_json::json!({ "count": "not-a-number" }))
-                .unwrap_err();
+        // number declared, non-numeric string provided → error.
+        let mut args = serde_json::json!({ "count": "not-a-number" });
+        let err = validate_exposed_inputs("run", &cmd, &mut args).unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
     }
 
@@ -329,17 +397,51 @@ requires: []
         );
         // count matches; flavour is an unknown declared type (permissive);
         // name is not provided (left to the nested app). Extra `x` passes through.
-        validate_exposed_inputs(
-            "run",
-            &cmd,
-            &serde_json::json!({ "count": 5, "flavour": "vanilla", "x": true }),
-        )
-        .unwrap();
+        let mut args = serde_json::json!({ "count": 5, "flavour": "vanilla", "x": true });
+        validate_exposed_inputs("run", &cmd, &mut args).unwrap();
     }
 
     #[test]
     fn no_declared_inputs_accepts_anything() {
         let cmd = exposed("lifecycle: single\n");
-        validate_exposed_inputs("run", &cmd, &serde_json::json!({ "anything": [1, 2] })).unwrap();
+        let mut args = serde_json::json!({ "anything": [1, 2] });
+        validate_exposed_inputs("run", &cmd, &mut args).unwrap();
+    }
+
+    #[test]
+    fn stringified_routed_values_are_coerced_to_declared_types() {
+        // Templating renders whole-`{{ … }}` leaves to strings; coercion must
+        // restore the declared types so the nested app receives typed values.
+        let cmd = exposed(
+            "lifecycle: single\ninputs:\n  count:\n    type: number\n  flag:\n    type: boolean\n  \
+             rows:\n    type: array\n  meta:\n    type: object\n",
+        );
+        let mut args = serde_json::json!({
+            "count": "5",
+            "flag": "true",
+            "rows": "[1, 2, 3]",
+            "meta": "{\"a\": 1}",
+        });
+        validate_exposed_inputs("run", &cmd, &mut args).unwrap();
+        assert_eq!(args["count"], serde_json::json!(5));
+        assert_eq!(args["flag"], serde_json::json!(true));
+        assert_eq!(args["rows"], serde_json::json!([1, 2, 3]));
+        assert_eq!(args["meta"], serde_json::json!({ "a": 1 }));
+    }
+
+    #[test]
+    fn integer_rejects_fractional_values() {
+        let cmd = exposed("lifecycle: single\ninputs:\n  n:\n    type: integer\n");
+        // 1.5 is not an integer.
+        let mut frac = serde_json::json!({ "n": 1.5 });
+        assert!(validate_exposed_inputs("run", &cmd, &mut frac).is_err());
+        // A stringified whole number coerces to an integer.
+        let mut whole = serde_json::json!({ "n": "5" });
+        validate_exposed_inputs("run", &cmd, &mut whole).unwrap();
+        assert_eq!(whole["n"], serde_json::json!(5));
+        // A whole-valued float is accepted as the integer.
+        let mut floaty = serde_json::json!({ "n": 4.0 });
+        validate_exposed_inputs("run", &cmd, &mut floaty).unwrap();
+        assert_eq!(floaty["n"], serde_json::json!(4));
     }
 }
