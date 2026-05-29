@@ -139,8 +139,12 @@ commands:
         description: Also emit on OBJECT_DELETE (removed). Default drops deletions.
     outputs:
       type: stream
+      # The data stream carries one change event per line. Live trigger state
+      # (subscribed↔fired) is observable from the run's NodeStart/NodeOutput
+      # events, not in-band (an in-band control record would propagate downstream
+      # as a phantom change).
       schema:
-        signal:   string             # listening | status | fired (machine-readable trigger state)
+        signal:   string             # always "fired" on the data stream
         guid:     string
         mark:     string             # NOTE: identity is Mark, never Name
         type:     string             # changed object's runtime type (Beam, Assembly, Weld, …)

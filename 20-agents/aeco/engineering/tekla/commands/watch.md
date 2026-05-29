@@ -16,10 +16,10 @@ Stateful command. Starts a long-running subscription to `ModelObjectChanged` eve
 
 ## Outputs (stream)
 
-The first line is always a machine-readable **`signal`** so a thin UI can show live trigger state before anything fires:
+The data stream carries **one change event per line** — and only change events. The runtime forwards each emitted line to downstream nodes, so the watcher does **not** put control records (e.g. a "listening" marker) on the data stream; a phantom record there would fire connected nodes with no change payload. Live trigger state is instead observable from the run's events: `NodeStart` for the watch node means *subscribed/listening*, each `NodeOutput` means *fired*. The bridge also writes `listening` / `model-loaded` breadcrumbs to **stderr** for logs.
 
 ```yaml
-signal:   string        # listening (subscribed, nothing yet) | status (model loaded) | fired (a change)
+signal:   string        # always "fired" on the data stream
 guid:     string        # ModelObject GUID (stable identity across edits)
 mark:     string        # NEVER use Name — see drawing-identity skill (null on a removed object)
 type:     string        # changed object's runtime type: Beam | Assembly | Weld | BoltArray | …

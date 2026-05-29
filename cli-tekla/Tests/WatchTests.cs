@@ -75,64 +75,74 @@ public class WatchLogicTests
 
 /// <summary>
 /// End-to-end test of the <c>watch</c> verb's self-test mode through the real
-/// <see cref="Program.Watch"/> entry point: drives stdin/stdout exactly as the
-/// runtime's streaming transport does, and asserts the listening signal plus the
-/// filtered <c>fired</c> events. The analogue of #173's fake-streamer e2e, but
-/// exercising the actual bridge code instead of a stub binary — and Tekla-free.
+/// <see cref="Program.Watch"/> entry point: drives stdin/stdout/stderr exactly
+/// as the runtime's streaming transport does, and asserts that stdout carries
+/// ONLY <c>fired</c> data events (control records like <c>listening</c> go to
+/// stderr so they never propagate downstream). The analogue of #173's
+/// fake-streamer e2e, but exercising the actual bridge code instead of a stub
+/// binary — and Tekla-free.
 ///
-/// These redirect process-global Console.In/Out, so the collection disables
-/// parallelization to keep concurrent tests from clobbering the redirect.
+/// These redirect process-global Console.In/Out/Error, so the collection
+/// disables parallelization to keep concurrent tests from clobbering the redirect.
 /// </summary>
 [Collection("WatchConsole")]
 public class WatchSelfTestEndToEndTests
 {
-    static (JsonNode listening, JsonNode[] fired) RunWatch(string stdinJson)
+    static (JsonNode[] stdoutFired, JsonNode[] stderrDiag) RunWatch(string stdinJson)
     {
         var originalIn = Console.In;
         var originalOut = Console.Out;
+        var originalErr = Console.Error;
         try
         {
             Console.SetIn(new StringReader(stdinJson));
-            var sw = new StringWriter();
-            Console.SetOut(sw);
+            var outW = new StringWriter();
+            var errW = new StringWriter();
+            Console.SetOut(outW);
+            Console.SetError(errW);
 
             int rc = Program.Watch(new Program.ParsedArgs { JsonStdin = true });
             Assert.Equal(0, rc); // self-test exits cleanly, mirroring a finite real run
 
-            var lines = sw.ToString()
-                .Split('\n')
-                .Select(l => l.Trim())
-                .Where(l => l.Length > 0)
-                .Select(l => JsonNode.Parse(l)!)
-                .ToArray();
-            Assert.NotEmpty(lines);
-            var listening = lines[0];
-            Assert.Equal("listening", listening["signal"]!.GetValue<string>());
-            return (listening, lines.Skip(1).ToArray());
+            return (ParseLines(outW.ToString()), ParseLines(errW.ToString()));
         }
         finally
         {
             Console.SetIn(originalIn);
             Console.SetOut(originalOut);
+            Console.SetError(originalErr);
         }
     }
 
-    [Fact]
-    public void SelfTest_AllFilter_EmitsListeningThenMultipleFiredEvents()
-    {
-        var (listening, fired) = RunWatch(@"{""self_test"":true,""filter"":""all""}");
+    static JsonNode[] ParseLines(string text) => text
+        .Split('\n')
+        .Select(l => l.Trim())
+        .Where(l => l.Length > 0)
+        .Select(l => JsonNode.Parse(l)!)
+        .ToArray();
 
+    [Fact]
+    public void SelfTest_StdoutCarriesOnlyFiredEvents_ListeningGoesToStderr()
+    {
+        var (stdoutFired, stderrDiag) = RunWatch(@"{""self_test"":true,""filter"":""all""}");
+
+        // stdout: only `fired` data events (no control records that would
+        // propagate downstream as a phantom change).
+        Assert.True(stdoutFired.Length >= 4, $"expected several fired events, got {stdoutFired.Length}");
+        Assert.All(stdoutFired, e => Assert.Equal("fired", e["signal"]!.GetValue<string>()));
+        Assert.DoesNotContain(stdoutFired, e => e["signal"]!.GetValue<string>() == "listening");
+        // Deletes are dropped by default (include_deleted=false).
+        Assert.DoesNotContain(stdoutFired, e => e["change"]!.GetValue<string>() == "removed");
+
+        // stderr: the listening breadcrumb, carrying the resolved filter.
+        var listening = Assert.Single(stderrDiag, e => e["signal"]!.GetValue<string>() == "listening");
         Assert.Equal("all", listening["filter"]!.GetValue<string>());
-        Assert.True(fired.Length >= 4, $"expected several fired events, got {fired.Length}");
-        Assert.All(fired, e => Assert.Equal("fired", e["signal"]!.GetValue<string>()));
-        // Deletes are dropped by default (include_deleted=false), so no removed.
-        Assert.DoesNotContain(fired, e => e["change"]!.GetValue<string>() == "removed");
     }
 
     [Fact]
     public void SelfTest_WeldedFilter_EmitsOnlyWeldEvents()
     {
-        var (_, fired) = RunWatch(@"{""self_test"":true,""filter"":""welded""}");
+        var (fired, _) = RunWatch(@"{""self_test"":true,""filter"":""welded""}");
 
         Assert.NotEmpty(fired);
         Assert.All(fired, e =>
@@ -142,16 +152,17 @@ public class WatchSelfTestEndToEndTests
     [Fact]
     public void SelfTest_IncludeDeleted_EmitsRemovedEvents()
     {
-        var (_, fired) = RunWatch(@"{""self_test"":true,""filter"":""all"",""include_deleted"":true}");
+        var (fired, _) = RunWatch(@"{""self_test"":true,""filter"":""all"",""include_deleted"":true}");
         Assert.Contains(fired, e => e["change"]!.GetValue<string>() == "removed");
     }
 
     [Fact]
     public void SelfTest_DefaultsToAll_WhenNoFilterGiven()
     {
-        var (listening, fired) = RunWatch(@"{""self_test"":true}");
-        Assert.Equal("all", listening["filter"]!.GetValue<string>());
+        var (fired, stderrDiag) = RunWatch(@"{""self_test"":true}");
         Assert.NotEmpty(fired);
+        var listening = Assert.Single(stderrDiag, e => e["signal"]!.GetValue<string>() == "listening");
+        Assert.Equal("all", listening["filter"]!.GetValue<string>());
     }
 }
 

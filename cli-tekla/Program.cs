@@ -446,9 +446,11 @@ internal static class Program
     // `CliInvoker::invoke_stream` (#172/#173) consumes. Runs until the transport
     // kills the child (its `stop`) or Tekla itself exits.
     //
-    // The first stdout line is always a machine-readable `{"signal":"listening"}`
-    // so a thin UI can show live trigger state before any change fires (#143
-    // precedent); each subsequent change is `{"signal":"fired", …}`.
+    // stdout carries ONLY `{"signal":"fired", …}` change events — the runtime
+    // forwards every stdout line downstream as a data event, so control records
+    // must not go there. Live trigger state (listening↔fired) is observable from
+    // the run's NodeStart/NodeOutput events (#143 precedent); listening and
+    // model-load are emitted as stderr breadcrumbs (see WriteDiagnostic).
     //
     // Threading: Tekla raises `ModelObjectChanged` asynchronously on a worker
     // thread (see skills/event-threading.md and the Events catalog), so the
@@ -737,7 +739,7 @@ internal static class Program
 
     static void EmitListening(string filter)
     {
-        WriteJsonLine(new JsonObject
+        WriteDiagnostic(new JsonObject
         {
             ["signal"]       = "listening",
             ["host"]         = "tekla",
@@ -747,6 +749,8 @@ internal static class Program
         });
     }
 
+    // A `fired` change event on the stdout data stream — the runtime treats each
+    // stdout line as a data event and propagates it downstream.
     static void WriteJsonLine(JsonNode node)
     {
         // Worker-thread events can fire concurrently; serialize stdout writes.
@@ -754,6 +758,21 @@ internal static class Program
         {
             Console.Out.WriteLine(node.ToJsonString());
             Console.Out.Flush();
+        }
+    }
+
+    // A lifecycle breadcrumb on stderr — NOT the stdout data stream. The runtime
+    // forwards every stdout line downstream as a change event, so a control
+    // record there would fire connected nodes with no guid/mark/type/change
+    // before any real model change. Listening/model-load state is instead
+    // observable from the run's NodeStart/NodeOutput events (the UI-facing
+    // listening↔fired signal) plus these stderr breadcrumbs for logs.
+    static void WriteDiagnostic(JsonNode node)
+    {
+        lock (_watchConsoleLock)
+        {
+            Console.Error.WriteLine(node.ToJsonString());
+            Console.Error.Flush();
         }
     }
 
@@ -884,7 +903,8 @@ internal static class Program
 
     internal static void SignalModelLoad()
     {
-        WriteJsonLine(new JsonObject
+        // Lifecycle breadcrumb (stderr), not a data event — see WriteDiagnostic.
+        WriteDiagnostic(new JsonObject
         {
             ["signal"]       = "status",
             ["change"]       = "model-loaded",
