@@ -82,7 +82,7 @@ pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
     Ok(out)
 }
 
-fn find_app_manifest(root: &Path) -> Option<PathBuf> {
+pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
     // Preferred: <root>/<dir-name>.flo, then any *.flo, then any *.app.
     let dir_name = root.file_name()?.to_string_lossy().to_string();
     let canonical = root.join(format!("{dir_name}.flo"));

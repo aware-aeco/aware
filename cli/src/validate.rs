@@ -75,10 +75,11 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
     if agent.transport.cli.is_none()
         && agent.transport.mcp.is_none()
         && agent.transport.rest.is_none()
+        && agent.transport.app.is_none()
     {
         out.push(ValidationIssue::error(
             "E_AGENT_NO_TRANSPORT",
-            "agent must declare at least one transport (cli / mcp / rest)",
+            "agent must declare at least one transport (cli / mcp / rest / app)",
         ));
     }
     if agent.stateful {
@@ -136,6 +137,17 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
         out.push(ValidationIssue::error(
             "E_APP_NO_NODES",
             "app declares zero nodes",
+        ));
+    }
+
+    // An `exposes-as-agent: true` app must declare at least one exposed command —
+    // otherwise the synthesized agent has zero commands and is uncallable
+    // (app-spec § exposes-as-agent / exposed-commands).
+    if app.exposes_as_agent && app.exposed_commands.as_ref().is_none_or(|m| m.is_empty()) {
+        out.push(ValidationIssue::error(
+            "E_APP_EXPOSES_NO_COMMANDS",
+            "app sets `exposes-as-agent: true` but declares no `exposed-commands:` \
+             (the synthesized agent would have zero callable commands)",
         ));
     }
 
@@ -280,13 +292,14 @@ pub fn validate_app_agents(
     agents: &[crate::manifest::loader::DiscoveredAgent],
 ) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
-    check_node_agents(&app.nodes, agents, &mut out);
+    check_node_agents(&app.nodes, agents, app.exposes_as_agent, &mut out);
     out
 }
 
 fn check_node_agents(
     nodes: &[crate::manifest::app::Node],
     agents: &[crate::manifest::loader::DiscoveredAgent],
+    app_exposes: bool,
     out: &mut Vec<ValidationIssue>,
 ) {
     use crate::manifest::agent::AgentStatus;
@@ -300,6 +313,22 @@ fn check_node_agents(
                     format!(
                         "node {:?} references agent {:?}, which is declared but not yet runnable \
                          (no shipped/installable transport binary)",
+                        n.id, agent_id
+                    ),
+                ));
+            }
+
+            // v0 no-recursion rule: an `exposes-as-agent` app cannot itself
+            // compose another exposes-as-agent app (an app-backed synthesized
+            // agent). Caught here so it fails at install/validate/compile rather
+            // than only at dispatch (app-spec § exposes-as-agent constraints).
+            if app_exposes && d.manifest.transport.app.is_some() {
+                out.push(ValidationIssue::error(
+                    "E_APP_EXPOSED_COMPOSES_EXPOSED",
+                    format!(
+                        "node {:?} composes agent {:?}, which is itself an exposes-as-agent app; \
+                         an exposed app cannot compose another exposed app (v0 constraint, \
+                         app-spec § exposes-as-agent constraints)",
                         n.id, agent_id
                     ),
                 ));
@@ -333,7 +362,7 @@ fn check_node_agents(
             }
         }
         if let Some(body) = &n.do_ {
-            check_node_agents(body, agents, out);
+            check_node_agents(body, agents, app_exposes, out);
         }
     }
 }
@@ -1035,6 +1064,133 @@ requires: []
         assert!(
             validate_app_safety(&app, &[agent]).is_empty(),
             "redundant matching read mode must not error in validate_app_safety"
+        );
+    }
+
+    // ── #178: exposes-as-agent validation ──────────────────────────────────
+
+    #[test]
+    fn exposes_as_agent_without_commands_is_error() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: empty-expose
+version: 0.0.1
+description: x
+exposes-as-agent: true
+nodes:
+  - id: n
+    inline:
+      kind: predicate
+      description: pass
+      code: 'true'
+requires: []
+"#,
+        )
+        .unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_EXPOSES_NO_COMMANDS"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn exposes_as_agent_with_commands_passes() {
+        let app: App = serde_yaml::from_str(
+            r#"
+app: ok-expose
+version: 0.0.1
+description: x
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+nodes:
+  - id: n
+    inline:
+      kind: predicate
+      description: pass
+      code: 'true'
+requires: []
+"#,
+        )
+        .unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_EXPOSES_NO_COMMANDS"),
+            "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn exposed_app_composing_another_exposed_app_is_rejected() {
+        // `inner` is an app-backed (synthesized) agent — it declares an `app`
+        // transport. A `mid` app that is ITSELF exposes-as-agent and composes
+        // `inner` violates the v0 no-recursion rule.
+        let inner = discovered(
+            r#"
+agent: inner
+version: 1.0
+description: x
+stateful: false
+license: app-exposed
+transport:
+  app:
+    backed-by: inner
+commands:
+  run:
+    lifecycle: single
+    description: x
+"#,
+        );
+        let mid: App = serde_yaml::from_str(
+            r#"
+app: mid
+version: 0.0.1
+description: x
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+nodes:
+  - id: call-inner
+    agent: inner
+    command: run
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let issues = validate_app_agents(&mid, std::slice::from_ref(&inner));
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
+            "an exposed app composing another exposed app must be rejected; issues: {issues:?}"
+        );
+
+        // A NON-exposed app composing the same app-backed agent is allowed
+        // (one-level composition by a normal consumer).
+        let outer: App = serde_yaml::from_str(
+            r#"
+app: outer
+version: 0.0.1
+description: x
+nodes:
+  - id: call-inner
+    agent: inner
+    command: run
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let issues = validate_app_agents(&outer, &[inner]);
+        assert!(
+            !issues
+                .iter()
+                .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
+            "a normal consumer composing an exposed app must be allowed; issues: {issues:?}"
         );
     }
 }

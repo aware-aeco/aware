@@ -6,6 +6,7 @@
 #![allow(dead_code)]
 
 use std::collections::HashMap;
+use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
 use async_trait::async_trait;
@@ -13,6 +14,7 @@ use serde_json::Value;
 use tokio::sync::{mpsc, oneshot};
 
 use crate::error::AwareError;
+use crate::manifest::App;
 
 /// Map key: (agent-name, command-name).
 type CmdKey = (String, String);
@@ -861,19 +863,48 @@ fn shape_response(resp: ureq::Response) -> Value {
 
 /// The invoker the orchestrator uses in production. Routes each call to the
 /// right transport invoker by inspecting the agent's manifest: a `cli`
-/// transport spawns a subprocess; otherwise a `rest` transport makes an HTTP
-/// call. This lets one app graph mix host-backed (cli) and web-API (rest)
-/// agents.
+/// transport spawns a subprocess; a `rest` transport makes an HTTP call; an
+/// `app` transport (a synthesized agent backed by an `exposes-as-agent` app)
+/// runs that app's node chain. This lets one app graph mix host-backed (cli),
+/// web-API (rest), and app-backed agents.
 pub struct DispatchInvoker {
-    pub agents_dir: std::path::PathBuf,
+    pub agents_dir: PathBuf,
+    /// Set on the top-level invoker to enable app-backed-agent dispatch. `None`
+    /// on a nested invoker — that disables app dispatch, enforcing the v0 rule
+    /// that an exposed app cannot itself compose another exposes-as-agent app
+    /// (app-spec § exposes-as-agent constraints).
+    pub app_ctx: Option<AppTransportCtx>,
 }
 
-enum TransportKind {
-    Cli,
-    Rest,
+/// Filesystem + run context a `DispatchInvoker` needs to dispatch an app-backed
+/// agent (run an `exposes-as-agent` app as `agent: <app>`). `dry_run`/`simulate`
+/// are inherited from the calling run so a nested app honors the same safety
+/// posture.
+#[derive(Clone)]
+pub struct AppTransportCtx {
+    pub apps_dir: PathBuf,
+    pub logs_dir: PathBuf,
+    pub credentials_dir: PathBuf,
+    pub dry_run: bool,
+    pub simulate: bool,
 }
 
 impl DispatchInvoker {
+    /// Construct the top-level dispatch invoker, wiring app-backed-agent support
+    /// from the given paths + run posture.
+    pub fn new(paths: &crate::paths::Paths, dry_run: bool, simulate: bool) -> Self {
+        Self {
+            agents_dir: paths.agents_dir(),
+            app_ctx: Some(AppTransportCtx {
+                apps_dir: paths.apps_dir(),
+                logs_dir: paths.logs_dir(),
+                credentials_dir: paths.credentials_dir(),
+                dry_run,
+                simulate,
+            }),
+        }
+    }
+
     fn transport_kind(&self, agent: &str) -> Result<TransportKind, AwareError> {
         let m = crate::manifest::loader::load_agent(
             &self.agents_dir.join(agent).join("manifest.yaml"),
@@ -882,12 +913,178 @@ impl DispatchInvoker {
             Ok(TransportKind::Cli)
         } else if m.transport.rest.is_some() {
             Ok(TransportKind::Rest)
+        } else if m.transport.app.is_some() {
+            Ok(TransportKind::App)
         } else {
             Err(AwareError::Validation(format!(
-                "agent {agent} has no executable transport (need `cli` or `rest`)"
+                "agent {agent} has no executable transport (need `cli`, `rest`, or `app`)"
             )))
         }
     }
+
+    /// Resolve the backing app + validate the caller's routed inputs for an
+    /// app-backed agent. Shared by the one-shot and streaming dispatch paths.
+    fn resolve_exposed(
+        &self,
+        app_ctx: &AppTransportCtx,
+        agent: &str,
+        command: &str,
+        args: &Value,
+    ) -> Result<App, AwareError> {
+        let manifest = crate::manifest::loader::load_agent(
+            &self.agents_dir.join(agent).join("manifest.yaml"),
+        )?;
+        let backed_by = manifest
+            .transport
+            .app
+            .as_ref()
+            .map(|a| a.backed_by.clone())
+            .unwrap_or_else(|| agent.to_string());
+
+        let app_dir = app_ctx.apps_dir.join(&backed_by);
+        if !app_dir.is_dir() {
+            return Err(AwareError::NotFound(format!(
+                "app-backed agent {agent}: backing app {backed_by} is not installed"
+            )));
+        }
+        let manifest_path =
+            crate::manifest::loader::find_app_manifest(&app_dir).ok_or_else(|| {
+                AwareError::Validation(format!("backing app {backed_by} has no .flo/.app file"))
+            })?;
+        let app = crate::manifest::loader::load_app(&manifest_path)?;
+        if !app.exposes_as_agent {
+            return Err(AwareError::Validation(format!(
+                "app {backed_by} is not declared exposes-as-agent"
+            )));
+        }
+        let exposed = app.exposed_command(command).ok_or_else(|| {
+            AwareError::Validation(format!(
+                "app {backed_by} does not expose a command named {command:?}"
+            ))
+        })?;
+        // Type-check the caller's routed inputs against the declared contract.
+        crate::manifest::expose::validate_exposed_inputs(command, exposed, args)?;
+        Ok(app)
+    }
+
+    /// Build a leaf invoker for a nested app run — `app_ctx: None` forbids the
+    /// nested app from composing yet another exposes-as-agent app (v0 rule).
+    fn nested_leaf(&self) -> Arc<dyn AgentInvoker> {
+        Arc::new(DispatchInvoker {
+            agents_dir: self.agents_dir.clone(),
+            app_ctx: None,
+        })
+    }
+
+    async fn dispatch_app_single(
+        &self,
+        app_ctx: &AppTransportCtx,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        let app = self.resolve_exposed(app_ctx, agent, command, &args)?;
+        let backed_by = app.app.clone();
+        let run_id = crate::runtime::provenance::run_id_now();
+        let log_path = crate::runtime::provenance::log_path_for(
+            &app_ctx.logs_dir,
+            &backed_by,
+            "nested",
+            &run_id,
+        );
+        let provenance = crate::runtime::provenance::ProvenanceWriter::open(&log_path).await?;
+        crate::runtime::orchestrator::run_exposed_app_one_shot(
+            app,
+            args,
+            self.agents_dir.clone(),
+            self.nested_leaf(),
+            provenance,
+            run_id,
+            "nested".to_string(),
+            Some(app_ctx.credentials_dir.as_path()),
+            app_ctx.dry_run,
+            app_ctx.simulate,
+        )
+        .await
+    }
+
+    async fn dispatch_app_stream(
+        &self,
+        app_ctx: &AppTransportCtx,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        let app = self.resolve_exposed(app_ctx, agent, command, &args)?;
+        let backed_by = app.app.clone();
+        let run_id = crate::runtime::provenance::run_id_now();
+        let log_path = crate::runtime::provenance::log_path_for(
+            &app_ctx.logs_dir,
+            &backed_by,
+            "nested",
+            &run_id,
+        );
+        let provenance = crate::runtime::provenance::ProvenanceWriter::open(&log_path).await?;
+
+        let (event_tx, event_rx) = mpsc::channel::<Result<Value, AwareError>>(64);
+        let (stop_tx, stop_rx) = oneshot::channel::<()>();
+        let (nested_stop_tx, nested_stop_rx) = crate::runtime::lifecycle::stop_channel();
+
+        // Bridge the handle's stop (fired explicitly or on drop) to the nested
+        // orchestrator's stop watch, so a parent `aware app stop` / Ctrl+C tears
+        // the nested run down too.
+        tokio::spawn(async move {
+            let _ = stop_rx.await;
+            let _ = nested_stop_tx.send(true);
+        });
+
+        let agents_dir = self.agents_dir.clone();
+        let leaf = self.nested_leaf();
+        let creds = app_ctx.credentials_dir.clone();
+        let dry_run = app_ctx.dry_run;
+        let simulate = app_ctx.simulate;
+        tokio::spawn(async move {
+            let res = crate::runtime::orchestrator::run_exposed_app_stream(
+                app,
+                args,
+                agents_dir,
+                leaf,
+                provenance,
+                run_id,
+                "nested".to_string(),
+                Some(creds.as_path()),
+                dry_run,
+                simulate,
+                event_tx.clone(),
+                nested_stop_rx,
+            )
+            .await;
+            if let Err(e) = res {
+                let _ = event_tx.send(Err(e)).await;
+            }
+            // event_tx dropped here → the caller's stream closes.
+        });
+
+        Ok(StreamingHandle {
+            rx: event_rx,
+            stop: stop_tx,
+        })
+    }
+
+    /// Error returned when an app-backed agent is reached on a nested invoker
+    /// (the v0 no-recursion rule). Shared by both invoke paths.
+    fn nested_recursion_error(agent: &str) -> AwareError {
+        AwareError::Validation(format!(
+            "agent {agent} is an exposes-as-agent app, but an exposed app cannot itself \
+             compose another exposes-as-agent app (v0 constraint, app-spec § exposes-as-agent)"
+        ))
+    }
+}
+
+enum TransportKind {
+    Cli,
+    Rest,
+    App,
 }
 
 #[async_trait]
@@ -910,6 +1107,13 @@ impl AgentInvoker for DispatchInvoker {
                     .invoke_single(agent, command, args)
                     .await
             }
+            TransportKind::App => match &self.app_ctx {
+                Some(app_ctx) => {
+                    self.dispatch_app_single(app_ctx, agent, command, args)
+                        .await
+                }
+                None => Err(Self::nested_recursion_error(agent)),
+            },
         }
     }
 
@@ -931,6 +1135,13 @@ impl AgentInvoker for DispatchInvoker {
                     .invoke_stream(agent, command, args)
                     .await
             }
+            TransportKind::App => match &self.app_ctx {
+                Some(app_ctx) => {
+                    self.dispatch_app_stream(app_ctx, agent, command, args)
+                        .await
+                }
+                None => Err(Self::nested_recursion_error(agent)),
+            },
         }
     }
 }
@@ -1447,6 +1658,7 @@ commands:
         let tmp = http_agent_dir();
         let inv = DispatchInvoker {
             agents_dir: tmp.path().to_path_buf(),
+            app_ctx: None,
         };
         let out = inv
             .invoke_single(

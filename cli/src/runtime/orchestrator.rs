@@ -7,7 +7,7 @@
 #![allow(dead_code)]
 
 use std::collections::{HashMap, HashSet, VecDeque};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use serde_json::Value;
@@ -57,12 +57,28 @@ pub struct Orchestrator {
     /// installed. Implies `dry_run` semantics for write nodes (they still emit
     /// `would-write:`). See issue #103 finding #1.
     pub simulate: bool,
+    /// When set, terminal-node outputs (nodes with no outgoing connection) are
+    /// forwarded here as they are produced. Used when this orchestrator runs a
+    /// nested app exposed-as-agent on the long-running (streaming) path, so the
+    /// nested app's exposed outputs flow back to the calling app as a stream.
+    /// `None` for a normal top-level run. See `10-core/app-spec.md
+    /// § exposes-as-agent`.
+    pub exposed_tx: Option<mpsc::Sender<Result<Value, AwareError>>>,
 }
 
 impl Orchestrator {
     /// Run an all-stateless app in topo order. Returns on the last node's completion
     /// or on first error. Writes provenance throughout.
-    pub async fn run_one_shot(mut self) -> Result<(), AwareError> {
+    pub async fn run_one_shot(self) -> Result<(), AwareError> {
+        self.run_one_shot_collect().await.map(|_| ())
+    }
+
+    /// Like [`run_one_shot`](Self::run_one_shot) but returns the app's terminal
+    /// output — the output of the node(s) with no outgoing connection. A single
+    /// terminal node yields its value directly; multiple terminals yield a
+    /// `{ <node-id>: <output> }` object. This is what an `exposes-as-agent` app
+    /// hands back to a caller when invoked as an agent on the one-shot path.
+    pub async fn run_one_shot_collect(mut self) -> Result<Value, AwareError> {
         self.emit(RunEvent::RunStart {
             ts: now_iso(),
             run_id: self.run_id.clone(),
@@ -125,13 +141,15 @@ impl Orchestrator {
             }
         }
 
+        let terminal = collect_terminal_output(&self.app, &self.ctx);
+
         self.emit(RunEvent::RunEnd {
             ts: now_iso(),
             run_id: self.run_id.clone(),
             status: "ok".into(),
         })
         .await?;
-        Ok(())
+        Ok(terminal)
     }
 
     /// Run a long-running app: identify streaming source nodes, fan their events through
@@ -357,6 +375,16 @@ impl Orchestrator {
                 .filter(|c| c.from == from_id)
                 .map(|c| (c.to.clone(), c.input.clone()))
                 .collect();
+
+            // Terminal node (no outgoing edge): its output is part of what an
+            // `exposes-as-agent` app hands back to a caller. When this run is a
+            // nested exposed app on the streaming path, forward it out. No-op
+            // for a normal top-level run (`exposed_tx` is `None`).
+            if outgoing.is_empty()
+                && let Some(tx) = &self.exposed_tx
+            {
+                let _ = tx.send(Ok(current_event.clone())).await;
+            }
 
             for (next_id, input_slot) in outgoing {
                 let incoming_count = self
@@ -1098,6 +1126,140 @@ fn build_predecessors(app: &App) -> HashMap<String, Vec<String>> {
     preds
 }
 
+/// Whether a node is terminal — has no outgoing connection. A terminal node's
+/// output is part of what an `exposes-as-agent` app hands back to its caller.
+fn is_terminal_node(app: &App, node_id: &str) -> bool {
+    !app.connections.iter().any(|c| c.from == node_id)
+}
+
+/// The app's terminal output: the output(s) of node(s) with no outgoing
+/// connection, read from the run context. One terminal node yields its value
+/// directly; multiple yield a `{ <node-id>: <output> }` object; a terminal node
+/// that produced no output (e.g. gated) contributes `null`. An app with no
+/// nodes yields `null`.
+fn collect_terminal_output(app: &App, ctx: &RuntimeContext) -> Value {
+    let terminals: Vec<&str> = app
+        .nodes
+        .iter()
+        .map(|n| n.id.as_str())
+        .filter(|id| is_terminal_node(app, id))
+        .collect();
+    match terminals.as_slice() {
+        [] => Value::Null,
+        [only] => ctx.upstream.get(*only).cloned().unwrap_or(Value::Null),
+        many => {
+            let mut obj = serde_json::Map::new();
+            for id in many {
+                obj.insert(
+                    (*id).to_string(),
+                    ctx.upstream.get(*id).cloned().unwrap_or(Value::Null),
+                );
+            }
+            Value::Object(obj)
+        }
+    }
+}
+
+/// Build the runtime context for a nested app-exposed-as-agent run: the caller's
+/// routed `inputs`, the ambient `run.*` namespace, and any credentials found in
+/// `credentials_dir` (best-effort — missing creds are not fatal, matching the
+/// top-level run path).
+fn nested_runtime_context(
+    run_id: &str,
+    inputs: Value,
+    credentials_dir: Option<&Path>,
+) -> RuntimeContext {
+    let mut ctx = RuntimeContext {
+        inputs,
+        run: crate::runtime::context::run_context(run_id),
+        ..Default::default()
+    };
+    if let Some(creds) = credentials_dir
+        && creds.is_dir()
+        && let Ok(read) = std::fs::read_dir(creds)
+    {
+        for entry in read.flatten() {
+            if let Some(stem) = entry.path().file_stem().and_then(|s| s.to_str()) {
+                let _ = crate::runtime::context::load_secret(&mut ctx, creds, stem);
+            }
+        }
+    }
+    ctx
+}
+
+/// Run an exposed app one-shot (for a `single`-lifecycle exposed command) and
+/// return its terminal output. The caller's `inputs` become the nested app's
+/// `inputs:`; secrets load from `credentials_dir`; `dry_run`/`simulate` are
+/// inherited from the calling run. `invoker` dispatches the nested app's leaf
+/// agents. See `10-core/app-spec.md § exposes-as-agent`.
+#[allow(clippy::too_many_arguments)]
+pub async fn run_exposed_app_one_shot(
+    app: App,
+    inputs: Value,
+    agents_dir: PathBuf,
+    invoker: Arc<dyn AgentInvoker>,
+    provenance: ProvenanceWriter,
+    run_id: String,
+    instance: String,
+    credentials_dir: Option<&Path>,
+    dry_run: bool,
+    simulate: bool,
+) -> Result<Value, AwareError> {
+    let ctx = nested_runtime_context(&run_id, inputs.clone(), credentials_dir);
+    let orch = Orchestrator {
+        app,
+        agents_dir,
+        run_id,
+        instance,
+        invoker,
+        provenance,
+        ctx,
+        inputs,
+        fan_in: FanInState::default(),
+        dry_run,
+        simulate,
+        exposed_tx: None,
+    };
+    orch.run_one_shot_collect().await
+}
+
+/// Run an exposed app on the long-running (streaming) path for a
+/// `start`-lifecycle exposed command, forwarding the nested app's terminal-node
+/// outputs to `exposed_tx` as they are produced. Runs until `stop_rx` flips or
+/// the nested sources drain. See `10-core/app-spec.md § exposes-as-agent`.
+#[allow(clippy::too_many_arguments)]
+pub async fn run_exposed_app_stream(
+    app: App,
+    inputs: Value,
+    agents_dir: PathBuf,
+    invoker: Arc<dyn AgentInvoker>,
+    provenance: ProvenanceWriter,
+    run_id: String,
+    instance: String,
+    credentials_dir: Option<&Path>,
+    dry_run: bool,
+    simulate: bool,
+    exposed_tx: mpsc::Sender<Result<Value, AwareError>>,
+    stop_rx: StopReceiver,
+) -> Result<(), AwareError> {
+    let ctx = nested_runtime_context(&run_id, inputs.clone(), credentials_dir);
+    let orch = Orchestrator {
+        app,
+        agents_dir,
+        run_id,
+        instance,
+        invoker,
+        provenance,
+        ctx,
+        inputs,
+        fan_in: FanInState::default(),
+        dry_run,
+        simulate,
+        exposed_tx: Some(exposed_tx),
+    };
+    orch.run_long_running(stop_rx).await
+}
+
 /// Coerce a resolved `{{ … }}` value into a list of records for `compare`:
 /// an array is taken as-is, null (an unresolved ref) is an empty list, any
 /// other scalar/object iterates once over itself.
@@ -1318,6 +1480,7 @@ mod tests {
             fan_in: FanInState::default(),
             dry_run: false,
             simulate: false,
+            exposed_tx: None,
         };
         (orch, tmp, log_path)
     }
@@ -3182,5 +3345,136 @@ requires: []
             match_outputs, 1,
             "expected 1 match-build output; events: {events:?}"
         );
+    }
+
+    // ── #178: exposes-as-agent nested dispatch ─────────────────────────────
+
+    #[tokio::test]
+    async fn exposed_app_one_shot_returns_terminal_output_and_routes_inputs() {
+        // A 2-node inner app a→b. The exposed-as-agent one-shot dispatch runs it
+        // with the (mock) leaf invoker, routes the caller's inputs into the
+        // nested run, and returns the terminal node (b) output.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: inner
+version: 0.1.0
+description: x
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+    inputs:
+      phase:
+        type: string
+nodes:
+  - id: a
+    agent: ag-a
+    command: do-a
+  - id: b
+    agent: ag-b
+    command: do-b
+connections:
+  - from: a
+    to: b
+requires: []
+"#,
+        )
+        .unwrap();
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_single("ag-a", "do-a", serde_json::json!({ "v": 1 }))
+                .with_single("ag-b", "do-b", serde_json::json!({ "out": "final" })),
+        );
+        let tmp = tempfile::tempdir().unwrap();
+        let log = tmp.path().join("inner.jsonl");
+        let prov = ProvenanceWriter::open(&log).await.unwrap();
+        let out = run_exposed_app_one_shot(
+            app,
+            serde_json::json!({ "phase": "design" }),
+            tmp.path().join("agents"),
+            inv,
+            prov,
+            "r_nested".into(),
+            "nested".into(),
+            None,
+            false,
+            false,
+        )
+        .await
+        .unwrap();
+        // Terminal output is node b's output.
+        assert_eq!(out, serde_json::json!({ "out": "final" }));
+
+        // The caller's inputs reached the nested run's context (RunStart config).
+        let events = read_run_events(&log).await.unwrap();
+        let config = events.iter().find_map(|e| match e {
+            RunEvent::RunStart { config, .. } => Some(config.clone()),
+            _ => None,
+        });
+        assert_eq!(config, Some(serde_json::json!({ "phase": "design" })));
+    }
+
+    #[tokio::test]
+    async fn exposed_app_stream_taps_terminal_outputs() {
+        // src (watch) → sink. The sink is terminal; its per-event output is
+        // forwarded to the exposed-output channel as the nested app runs.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: inner-stream
+version: 0.1.0
+description: x
+exposes-as-agent: true
+exposed-commands:
+  start:
+    lifecycle: start
+nodes:
+  - id: src
+    agent: w
+    command: watch
+  - id: sink
+    agent: s
+    command: forward
+connections:
+  - from: src
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+        let inv = Arc::new(
+            MockInvoker::new()
+                .with_stream("w", "watch", vec![serde_json::json!({ "mark": "A" })])
+                .with_single("s", "forward", serde_json::json!({ "uploaded": "A" })),
+        );
+        let tmp = tempfile::tempdir().unwrap();
+        let prov = ProvenanceWriter::open(&tmp.path().join("s.jsonl"))
+            .await
+            .unwrap();
+        let (tx, mut rx) = mpsc::channel(8);
+        let (_stop_tx, stop_rx) = stop_channel();
+        let handle = tokio::spawn(run_exposed_app_stream(
+            app,
+            serde_json::json!({}),
+            tmp.path().join("agents"),
+            inv,
+            prov,
+            "r".into(),
+            "nested".into(),
+            None,
+            false,
+            false,
+            tx,
+            stop_rx,
+        ));
+        // The single source event propagates to the terminal sink, whose output
+        // is tapped and forwarded out.
+        let first = tokio::time::timeout(std::time::Duration::from_secs(5), rx.recv())
+            .await
+            .expect("timed out waiting for tapped exposed output");
+        assert_eq!(
+            first.unwrap().unwrap(),
+            serde_json::json!({ "uploaded": "A" })
+        );
+        handle.await.unwrap().unwrap();
     }
 }

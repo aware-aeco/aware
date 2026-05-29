@@ -865,10 +865,21 @@ exposed-commands:
 
 The orchestrator synthesizes an agent manifest from this block. To callers, the app looks exactly like a hand-written agent. (See [Agent Spec → "The callable contract"](./agent-spec.md#the-callable-contract).)
 
+### Runtime (what ships today)
+
+`aware app install` of an `exposes-as-agent: true` app **synthesizes a callable agent manifest** from `exposed-commands` and registers it under `~/.aware/agents/<app>/` — so the app appears in `aware agent list` and resolves as `agent: <app>` from any other app's `nodes:`. The synthesized agent declares an `app` transport naming the backing app; `aware app uninstall <app>` removes it again. (Local installs resolve by bare app id; the registry `@<ns>/<app>` form lands with registry-hosted apps.)
+
+When a node invokes an app-backed agent:
+
+- **Inputs are routed and type-validated.** The caller's per-command `config:` / `inputs:` become the nested app's `inputs:`. Each value is checked against the declared `exposed-commands.<cmd>.inputs.<name>.type` before the nested run starts; a type mismatch fails the call.
+- **`single`-lifecycle command** → the nested app runs one-shot and the output of its terminal node(s) is returned to the caller (one terminal → its value; several → `{ <node-id>: <output> }`).
+- **`start`-lifecycle command** → the nested app runs on the long-running path and its terminal-node outputs stream back to the caller per event.
+- **Safety posture is inherited.** A `--dry-run` / `--simulate` parent runs the nested app under the same mode. The exposed command presents `mode: read` at the boundary by default (declare `mode: write` on the exposed command to require callers to wrap the node in a `safety:` block). The nested app's own write nodes remain governed by their own `safety:` blocks, validated when the exposed app was installed.
+
 ### Constraints
 
 For v0:
-- An app exposing-as-agent **cannot itself compose** another exposed-as-agent app from the same machine. (Prevents accidental recursion.) Deeper hierarchies come post-v0.
+- An app exposing-as-agent **cannot itself compose** another exposed-as-agent app from the same machine. (Prevents accidental recursion.) This is rejected at install/validate (`E_APP_EXPOSED_COMPOSES_EXPOSED`) and again at dispatch. A normal (non-exposed) app may compose exposed apps one level deep. Deeper hierarchies come post-v0.
 - An exposed app's stateful internal agents are managed when the calling app starts/stops the exposed command.
 - An exposed app **does** inherit the union of its internal agents' `requires-permissions`. The caller approves the full union, not each internal agent separately.
 

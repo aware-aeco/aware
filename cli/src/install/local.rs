@@ -77,9 +77,52 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareE
             app.app
         )));
     }
+
+    // An `exposes-as-agent` app registers a synthesized agent under
+    // `agents/<app>/`. Refuse up front (before copying anything) if a real,
+    // non-app-backed agent already squats that name, so we never leave a
+    // half-installed app behind.
+    if app.exposes_as_agent {
+        let agent_dst = paths.agents_dir().join(&app.app);
+        if agent_dst.exists() && !is_app_backed_agent(&agent_dst, &app.app) {
+            return Err(AwareError::Conflict(format!(
+                "cannot expose app {0} as an agent: an agent named {0} is already installed",
+                app.app
+            )));
+        }
+    }
+
     std::fs::create_dir_all(paths.apps_dir())?;
     copy_dir_recursive(src, &dst)?;
+
+    if app.exposes_as_agent {
+        write_synthesized_agent(&app, paths)?;
+    }
+
     Ok(app.app)
+}
+
+/// Write the synthesized callable agent manifest for an `exposes-as-agent` app
+/// to `<agents_dir>/<app>/manifest.yaml`, so the app resolves and dispatches as
+/// an agent (`agent: <app>, command: <cmd>`). See [`crate::manifest::expose`].
+fn write_synthesized_agent(app: &crate::manifest::App, paths: &Paths) -> Result<(), AwareError> {
+    let yaml = crate::manifest::expose::synthesize_agent_manifest(app)?;
+    let agent_dir = paths.agents_dir().join(&app.app);
+    std::fs::create_dir_all(&agent_dir)?;
+    std::fs::write(agent_dir.join("manifest.yaml"), yaml)?;
+    Ok(())
+}
+
+/// True when `<agent_dir>/manifest.yaml` is a synthesized agent backed by the
+/// app `app_id` (declares an `app` transport pointing back at it). Used to tell
+/// a regenerable synth manifest apart from a real installed agent of the same
+/// name.
+pub(crate) fn is_app_backed_agent(agent_dir: &Path, app_id: &str) -> bool {
+    let manifest = agent_dir.join("manifest.yaml");
+    load_agent(&manifest)
+        .ok()
+        .and_then(|a| a.transport.app)
+        .is_some_and(|t| t.backed_by == app_id)
 }
 
 pub(crate) fn copy_dir_recursive(src: &Path, dst: &Path) -> std::io::Result<()> {
@@ -157,5 +200,81 @@ mod tests {
                 .join("apps/welded-to-tc/welded-to-tc.flo")
                 .is_file()
         );
+    }
+
+    #[test]
+    fn installing_exposes_as_agent_app_registers_a_synth_agent() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        let app_src = tmp.path().join("src/inner");
+        std::fs::create_dir_all(&app_src).unwrap();
+        std::fs::write(
+            app_src.join("inner.flo"),
+            r#"app: inner
+version: 0.2.0
+description: an exposed inner app
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+    inputs:
+      phase:
+        type: string
+nodes:
+  - id: gate
+    inline:
+      kind: predicate
+      description: always pass
+      code: 'true'
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let installed = install_app_from_path(&app_src, &paths).unwrap();
+        assert_eq!(installed, "inner");
+        // The synthesized agent manifest was registered and is app-backed.
+        let agent_manifest = tmp.path().join("agents/inner/manifest.yaml");
+        assert!(agent_manifest.is_file(), "synth agent manifest not written");
+        let agent = load_agent(&agent_manifest).unwrap();
+        assert_eq!(agent.agent, "inner");
+        assert_eq!(
+            agent.transport.app.unwrap().backed_by,
+            "inner",
+            "synth agent must declare an app transport backed by the app"
+        );
+    }
+
+    #[test]
+    fn install_refuses_to_clobber_a_real_agent_of_the_same_name() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = Paths {
+            aware_home: tmp.path().to_path_buf(),
+        };
+        // A real (cli) agent named `inner` already installed.
+        let agent_dir = paths.agents_dir().join("inner");
+        std::fs::create_dir_all(&agent_dir).unwrap();
+        std::fs::write(
+            agent_dir.join("manifest.yaml"),
+            "agent: inner\nversion: 1.0\ndescription: real\nstateful: false\nlicense: MIT\n\
+             transport: { cli: { binary: aware-inner } }\ncommands: { go: { lifecycle: single, description: x } }\n",
+        )
+        .unwrap();
+
+        let app_src = tmp.path().join("src/inner");
+        std::fs::create_dir_all(&app_src).unwrap();
+        std::fs::write(
+            app_src.join("inner.flo"),
+            "app: inner\nversion: 0.1.0\ndescription: x\nexposes-as-agent: true\n\
+             exposed-commands: { run: { lifecycle: single } }\nnodes: [{ id: n, inline: { kind: predicate, description: p, code: 'true' } }]\nrequires: []\n",
+        )
+        .unwrap();
+
+        let err = install_app_from_path(&app_src, &paths).unwrap_err();
+        assert!(matches!(err, AwareError::Conflict(_)), "got: {err:?}");
+        // The app must NOT have been partially installed.
+        assert!(!paths.apps_dir().join("inner").exists());
     }
 }

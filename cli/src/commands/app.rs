@@ -236,9 +236,7 @@ async fn run(
 
         let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
         let provenance = ProvenanceWriter::open(&log_path).await?;
-        let invoker = std::sync::Arc::new(DispatchInvoker {
-            agents_dir: ctx.paths.agents_dir(),
-        });
+        let invoker = std::sync::Arc::new(DispatchInvoker::new(&ctx.paths, dry_run, simulate));
 
         let mut rt_ctx = RuntimeContext {
             inputs: serde_json::Value::Object(inputs.clone()),
@@ -269,6 +267,7 @@ async fn run(
             fan_in: Default::default(),
             dry_run,
             simulate,
+            exposed_tx: None,
         };
 
         // Write pidfile.
@@ -308,9 +307,7 @@ async fn run(
     // One-shot path.
     let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, &instance, &run_id);
     let provenance = ProvenanceWriter::open(&log_path).await?;
-    let invoker = std::sync::Arc::new(DispatchInvoker {
-        agents_dir: ctx.paths.agents_dir(),
-    });
+    let invoker = std::sync::Arc::new(DispatchInvoker::new(&ctx.paths, dry_run, simulate));
 
     let mut rt_ctx = RuntimeContext {
         inputs: serde_json::Value::Object(inputs),
@@ -343,6 +340,7 @@ async fn run(
         fan_in: Default::default(),
         dry_run,
         simulate,
+        exposed_tx: None,
     };
 
     if simulate {
