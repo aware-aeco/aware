@@ -129,15 +129,29 @@ commands:
     inputs:
       filter:
         type: enum
-        values: [all, welded, bolted, assembly, drawing]
+        values: [all, welded, bolted, assembly]
         default: all
+        # Matches the changed object's kind: welded→Weld objects,
+        # bolted→Bolt* objects, assembly→Assembly. (Drawing changes are not
+        # surfaced by ModelObjectChanged — they need Tekla.Structures.Drawing
+        # events, a separate stream not yet wired here.)
+      include-deleted:
+        type: boolean
+        default: false
+        description: Also emit on OBJECT_DELETE (removed). Default drops deletions.
     outputs:
       type: stream
+      # The data stream carries one change event per line. Live trigger state
+      # (subscribed↔fired) is observable from the run's NodeStart/NodeOutput
+      # events, not in-band (an in-band control record would propagate downstream
+      # as a phantom change).
       schema:
+        signal:   string             # always "fired" on the data stream
         guid:     string
         mark:     string             # NOTE: identity is Mark, never Name
-        type:     string             # AssemblyType (Welded, Bolted, …)
-        geometry: object
+        type:     string             # changed object's runtime type (Beam, Assembly, Weld, …)
+        change:   string             # added | modified | removed
+        geometry: object             # best-effort bounding box { min, max } in the CURRENT transformation plane (= world when the work plane is global)
 
   insert:
     lifecycle: single

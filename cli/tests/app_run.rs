@@ -586,6 +586,135 @@ requires: []
     .unwrap();
 }
 
+/// End-to-end through the REAL `aware-tekla` bridge (#176): the tekla agent's
+/// `watch` command (`lifecycle: start`) routes to the long-running path;
+/// `CliInvoker::invoke_stream` spawns `aware-tekla watch --json-stdin`; the
+/// bridge's `watch` verb (in offline self-test mode, so no live Tekla is needed)
+/// emits a `listening` signal then filtered `fired` JSONL events; and the run
+/// ends cleanly when the synthetic stream closes. Proves the bridge half of the
+/// event-trigger path that #173 (transport) and this issue (bridge verb)
+/// together complete. Skips if dotnet/net48 is unavailable (Windows-only bridge),
+/// mirroring how the rustc-helper streaming tests skip without rustc.
+#[test]
+fn tekla_watch_bridge_streams_events_end_to_end() {
+    let Some(bridge) = build_tekla_bridge() else {
+        eprintln!("[skip] dotnet/net48 unavailable; cannot build the aware-tekla bridge");
+        return;
+    };
+
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    // Install a `tekla` agent whose cli transport points at the freshly built
+    // bridge (absolute path → spawned directly). Only the `watch` command is
+    // needed for this run.
+    let agent_dir = aware.join("agents/tekla");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    let bin_yaml = bridge.to_string_lossy().replace('\\', "/");
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        format!(
+            r#"agent: tekla
+version: 0.1.0
+description: Tekla Structures bridge (test install)
+stateful: true
+license: Apache-2.0
+transport:
+  cli:
+    binary: {bin_yaml}
+commands:
+  watch:
+    lifecycle: start
+    category: curated
+    description: Subscribe to ModelObjectChanged events on the active Tekla model.
+    inputs:
+      filter:
+        type: enum
+        values: [all, welded, bolted, assembly]
+        default: all
+    outputs:
+      type: stream
+      schema:
+        guid: string
+        mark: string
+        type: string
+        change: string
+"#
+        ),
+    )
+    .unwrap();
+
+    // A `tekla.watch` app. `self_test: true` in the node config flows through
+    // render_config → the bridge's stdin JSON, driving the offline synthetic
+    // stream (config passthrough preserves keys beyond declared inputs).
+    let app_dir = aware.join("apps/watchapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("watchapp.flo"),
+        r#"app: watchapp
+version: 0.0.1
+description: x
+nodes:
+  - id: watch
+    agent: tekla
+    command: watch
+    config:
+      filter: welded
+      self_test: true
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .timeout(std::time::Duration::from_secs(60))
+        .args(["app", "run", "watchapp"])
+        .assert()
+        .success();
+
+    // ≥1 event reached the provenance trace, and the `welded` filter was honored
+    // (only the synthetic Weld change passes).
+    let trace = find_first_jsonl(&aware.join("logs/watchapp")).expect("no jsonl trace written");
+    let body = std::fs::read_to_string(&trace).unwrap();
+    assert!(
+        body.contains("\"type\":\"Weld\"") || body.contains("\\\"type\\\":\\\"Weld\\\""),
+        "trace missing the filtered Weld event:\n{body}"
+    );
+}
+
+/// Build the real `aware-tekla.exe` (net48) via `dotnet build`, returning its
+/// path — or `None` if dotnet isn't on PATH or we're not on Windows (the bridge
+/// targets net48, which only builds reliably on Windows). The caller skips when
+/// `None`, mirroring `compile_helper`'s rustc gating.
+fn build_tekla_bridge() -> Option<std::path::PathBuf> {
+    if !cfg!(windows) {
+        return None;
+    }
+    let dotnet = which_on_path("dotnet.exe").or_else(|| which_on_path("dotnet"))?;
+    let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .to_path_buf();
+    let csproj = repo.join("cli-tekla/cli-tekla.csproj");
+    if !csproj.is_file() {
+        return None;
+    }
+    let status = std::process::Command::new(&dotnet)
+        .arg("build")
+        .arg(&csproj)
+        .args(["-c", "Debug", "--nologo", "-v", "quiet"])
+        .status()
+        .ok()?;
+    if !status.success() {
+        return None;
+    }
+    let exe = repo.join("cli-tekla/bin/Debug/net48/aware-tekla.exe");
+    exe.is_file().then_some(exe)
+}
+
 /// Compile a single-file Rust helper into `dir`, returning its path — or `None`
 /// if rustc isn't on PATH (the caller skips, mirroring the dotnet-sidecar test).
 fn compile_helper(dir: &std::path::Path, name: &str, body: &str) -> Option<std::path::PathBuf> {

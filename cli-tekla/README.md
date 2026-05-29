@@ -19,6 +19,7 @@ Cross-reference: same constraint likely applies to Revit + AutoCAD. See the memo
 | `launch` | Spawn a Tekla instance via Bypass.ini (headless startup pattern). |
 | `close` | Save (via Open API + ModelSave event wait) + clean shutdown. `force: true` for force-kill. |
 | `exec` | Compile + run an ad-hoc C# script against the active Tekla model via Roslyn-in-sidecar. |
+| `watch` | `lifecycle: start` — subscribe to `ModelObjectChanged` and stream newline-delimited JSON change events. Consumed by the runtime's streaming transport (`invoke_stream`, #172/#173). |
 
 ## Prerequisites
 
@@ -57,6 +58,11 @@ $awareTekla = "cli-tekla\bin\Release\net48\aware-tekla.exe"
 
 # Clean save + shutdown
 & $awareTekla close --version 2026.0
+
+# Watch model changes (streams JSONL until Tekla exits or the process is stopped)
+'{"filter":"welded"}' | & $awareTekla watch --json-stdin
+# Offline self-test (synthetic events, no live Tekla) — useful for wiring checks:
+'{"filter":"all","self_test":true}' | & $awareTekla watch --json-stdin
 ```
 
 ## Exec contract
