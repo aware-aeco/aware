@@ -558,11 +558,25 @@ impl Orchestrator {
         })?;
         let command = node.command.as_deref().unwrap_or("");
 
-        // Record the incoming event so templates can access it via `{{ inputs.<slot> }}`.
-        if let Value::Object(_) = current_event {
+        // Expose the incoming event's fields under `{{ inputs.<slot> }}` for the
+        // fan-in convenience pattern — but MERGED over the app-level inputs, not
+        // replacing them. The caller's routed config / run `--input` values (e.g.
+        // `{{ inputs.tc-project-id }}` in an exposed streaming app's downstream
+        // node) must survive event propagation; only keys the event actually
+        // carries are overlaid (#178 Codex review). Clear any prior overlay first
+        // so a non-object event falls back cleanly to the app inputs.
+        self.ctx.upstream.remove("inputs");
+        if let Value::Object(event_map) = current_event {
+            let mut merged = match &self.ctx.inputs {
+                Value::Object(base) => base.clone(),
+                _ => serde_json::Map::new(),
+            };
+            for (k, v) in event_map {
+                merged.insert(k.clone(), v.clone());
+            }
             self.ctx
                 .upstream
-                .insert("inputs".into(), current_event.clone());
+                .insert("inputs".into(), Value::Object(merged));
         }
         self.ctx.record_output(&node.id, current_event.clone());
 
@@ -3475,6 +3489,98 @@ requires: []
             first.unwrap().unwrap(),
             serde_json::json!({ "uploaded": "A" })
         );
+        handle.await.unwrap().unwrap();
+    }
+
+    /// Echoes its rendered args back as output — lets a test observe exactly what
+    /// templating resolved a node's config to.
+    struct EchoInvoker;
+
+    #[async_trait::async_trait]
+    impl crate::runtime::invoker::AgentInvoker for EchoInvoker {
+        async fn invoke_single(
+            &self,
+            _agent: &str,
+            _command: &str,
+            args: Value,
+        ) -> Result<Value, AwareError> {
+            Ok(args)
+        }
+        async fn invoke_stream(
+            &self,
+            _agent: &str,
+            _command: &str,
+            _args: Value,
+        ) -> Result<crate::runtime::invoker::StreamingHandle, AwareError> {
+            let (tx, rx) = mpsc::channel(1);
+            let (stop_tx, _stop_rx) = oneshot::channel();
+            tokio::spawn(async move {
+                let _ = tx.send(Ok(serde_json::json!({ "mark": "A" }))).await;
+            });
+            Ok(crate::runtime::invoker::StreamingHandle { rx, stop: stop_tx })
+        }
+    }
+
+    #[tokio::test]
+    async fn streaming_exposed_app_preserves_routed_inputs_for_downstream_nodes() {
+        // #178 (Codex re-review): a streaming exposed app's downstream node
+        // references both a caller-routed input (`{{ inputs.proj }}`) and an event
+        // field (`{{ inputs.mark }}`). The per-event overlay must MERGE over the
+        // app inputs, not replace them — so the routed config survives propagation.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: stream-inputs
+version: 0.1.0
+description: x
+exposes-as-agent: true
+exposed-commands:
+  start:
+    lifecycle: start
+nodes:
+  - id: src
+    agent: w
+    command: watch
+  - id: sink
+    agent: s
+    command: forward
+    config:
+      proj: '{{ inputs.proj }}'
+      evt: '{{ inputs.mark }}'
+connections:
+  - from: src
+    to: sink
+requires: []
+"#,
+        )
+        .unwrap();
+        let tmp = tempfile::tempdir().unwrap();
+        let prov = ProvenanceWriter::open(&tmp.path().join("s.jsonl"))
+            .await
+            .unwrap();
+        let (tx, mut rx) = mpsc::channel(8);
+        let (_stop_tx, stop_rx) = stop_channel();
+        let handle = tokio::spawn(run_exposed_app_stream(
+            app,
+            serde_json::json!({ "proj": "P-1" }),
+            tmp.path().join("agents"),
+            Arc::new(EchoInvoker),
+            prov,
+            "r".into(),
+            "nested".into(),
+            None,
+            false,
+            false,
+            tx,
+            stop_rx,
+        ));
+        let out = tokio::time::timeout(std::time::Duration::from_secs(5), rx.recv())
+            .await
+            .expect("timed out waiting for tapped output")
+            .unwrap()
+            .unwrap();
+        // App input survived the event overlay; event field is also accessible.
+        assert_eq!(out["proj"], serde_json::json!("P-1"));
+        assert_eq!(out["evt"], serde_json::json!("A"));
         handle.await.unwrap().unwrap();
     }
 }
