@@ -501,29 +501,32 @@ internal static class Program
         if (selfTest || Environment.GetEnvironmentVariable("AWARE_TEKLA_WATCH_SELFTEST") == "1")
             return RunWatchSelfTest(filter);
 
-        // Resolve the Tekla install: prefer the requested version, else the
-        // first running instance.
-        string? hostInstall = string.IsNullOrEmpty(version) ? null : DiscoverTeklaInstall(version!);
-        if (hostInstall is null)
+        // Target selection — mirror send-status/close: honor --pid / --version
+        // (the stdin `version` folds into --version), fail fast on no match, and
+        // refuse an ambiguous target rather than binding to an arbitrary running
+        // instance. A watch attaches to a single live model via the Open API
+        // connection, so >1 match is always ambiguous here (no --all fan-out).
+        if (string.IsNullOrEmpty(args.Version) && !string.IsNullOrEmpty(version))
+            args.Version = version;
+        var running = EnumerateRunningTeklas();
+        var targets = FilterTargets(running, args);
+        if (targets.Count == 0)
         {
-            var running = EnumerateRunningTeklas().FirstOrDefault();
-            if (running is not null)
-            {
-                // exePath is …/<version>/bin/TeklaStructures.exe — the install
-                // root is two levels up.
-                hostInstall = Path.GetDirectoryName(Path.GetDirectoryName(running.ExePath));
-                version ??= running.Version;
-            }
-        }
-        if (string.IsNullOrEmpty(hostInstall))
-        {
-            Console.Error.WriteLine(
-                "aware-tekla watch: no Tekla install found — start Tekla (with a model open) " +
-                "or pass `version`. (error.tekla-not-running)");
+            Console.Error.WriteLine(running.Count == 0
+                ? "aware-tekla watch: no Tekla instance running — start Tekla with a model open. (error.tekla-not-running)"
+                : $"aware-tekla watch: requested target not running (found: {string.Join(", ", running.Select(t => t.Version))}). (error.tekla-not-running)");
             return 1;
         }
+        if (targets.Count > 1)
+        {
+            Console.Error.WriteLine(
+                $"aware-tekla watch: ambiguous target ({targets.Count} Tekla instances match) — " +
+                "a watch subscribes to a single model. Narrow with --pid <N> or --version <X.Y>.");
+            return 4;
+        }
 
-        var binDir = Path.Combine(hostInstall!, "bin");
+        // exePath is …/<version>/bin/TeklaStructures.exe — its directory is bin/.
+        var binDir = Path.GetDirectoryName(targets[0].ExePath)!;
         WireResolver(binDir);
         var originalCwd = Environment.CurrentDirectory;
         Environment.CurrentDirectory = binDir;
