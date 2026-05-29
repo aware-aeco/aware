@@ -53,7 +53,7 @@ Worker-thread events can fire in rapid bursts (e.g. a bulk paste of 500 assembli
 - Debounce 100–250ms before emitting downstream.
 - Batch into a single emit with an array payload.
 
-The agent's `watch` command debounces by default. When subscribing directly without going through `watch`, apply debounce manually.
+The agent's `watch` command currently emits one event per change (no debounce). For bursty models, debounce or batch downstream — apply it in the consuming node rather than relying on the source.
 
 ## Cross-process variant
 

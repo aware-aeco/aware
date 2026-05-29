@@ -11,19 +11,23 @@ Stateful command. Starts a long-running subscription to `ModelObjectChanged` eve
 
 | Field | Type | Default | Description |
 |---|---|---|---|
-| `filter` | enum (`all` `welded` `bolted` `assembly` `drawing`) | `all` | Pre-filter what gets emitted. Reduces downstream traffic. |
-| `debounce-ms` | int | `200` | Coalesce bursts within this window (see [event-threading skill](../skills/event-threading.md)). |
-| `include-deleted` | bool | `false` | Emit on deletion as well as addition/modification. |
+| `filter` | enum (`all` `welded` `bolted` `assembly` `drawing`) | `all` | Pre-filter what gets emitted. Reduces downstream traffic. Matches the **changed object's kind**: `welded`→`Weld` objects, `bolted`→`Bolt*` objects (BoltArray/BoltGroup), `assembly`→`Assembly`, `drawing`→`Drawing`. |
+| `include-deleted` | bool | `false` | Emit on deletion (`OBJECT_DELETE`) as well as addition/modification. |
 
 ## Outputs (stream)
 
+The first line is always a machine-readable **`signal`** so a thin UI can show live trigger state before anything fires:
+
 ```yaml
+signal:   string        # listening (subscribed, nothing yet) | status (model loaded) | fired (a change)
 guid:     string        # ModelObject GUID (stable identity across edits)
-mark:     string        # NEVER use Name — see drawing-identity skill
-type:     string        # AssemblyType: Welded | Bolted | …
+mark:     string        # NEVER use Name — see drawing-identity skill (null on a removed object)
+type:     string        # changed object's runtime type: Beam | Assembly | Weld | BoltArray | …
 change:   enum          # added | modified | removed
-geometry: object        # bounding-box in world space (see coordinate-systems skill)
+geometry: object        # best-effort world-space bounding box { min:{x,y,z}, max:{x,y,z} } (see coordinate-systems skill)
 ```
+
+A removed object can't be re-read from the database, so its `mark`/`geometry` are `null` — only `guid`, `type`, and `change: removed` are populated.
 
 ## Composition examples
 

@@ -131,13 +131,21 @@ commands:
         type: enum
         values: [all, welded, bolted, assembly, drawing]
         default: all
+        # Matches the changed object's kind: welded→Weld objects,
+        # bolted→Bolt* objects, assembly→Assembly, drawing→Drawing.
+      include-deleted:
+        type: boolean
+        default: false
+        description: Also emit on OBJECT_DELETE (removed). Default drops deletions.
     outputs:
       type: stream
       schema:
+        signal:   string             # listening | status | fired (machine-readable trigger state)
         guid:     string
         mark:     string             # NOTE: identity is Mark, never Name
-        type:     string             # AssemblyType (Welded, Bolted, …)
-        geometry: object
+        type:     string             # changed object's runtime type (Beam, Assembly, Weld, …)
+        change:   string             # added | modified | removed
+        geometry: object             # best-effort world-space bounding box { min, max }
 
   insert:
     lifecycle: single

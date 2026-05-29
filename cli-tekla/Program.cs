@@ -132,6 +132,8 @@ internal static class Program
                 return Close(parsed);
             case "exec":
                 return Exec(parsed);
+            case "watch":
+                return Watch(parsed);
             default:
                 Console.Error.WriteLine($"aware-tekla: unknown verb '{verb}'. Try --help.");
                 return 2;
@@ -435,6 +437,463 @@ internal static class Program
             $"Tekla did not exit within 60s of Operation.{methodUsed ?? "(none-found)"}(). " +
             "Pass `force=true` if you accept losing any unsaved view state.");
     }
+
+    // ── watch ──────────────────────────────────────────────────────────────────
+    // A `lifecycle: start` long-running subscription to the Tekla model event
+    // stream. Connects to the live model, registers a `ModelObjectChanged`
+    // handler (plus `ModelLoad` / `TeklaStructuresExit`), and writes one
+    // newline-delimited JSON event per change to stdout — which the runtime's
+    // `CliInvoker::invoke_stream` (#172/#173) consumes. Runs until the transport
+    // kills the child (its `stop`) or Tekla itself exits.
+    //
+    // The first stdout line is always a machine-readable `{"signal":"listening"}`
+    // so a thin UI can show live trigger state before any change fires (#143
+    // precedent); each subsequent change is `{"signal":"fired", …}`.
+    //
+    // Threading: Tekla raises `ModelObjectChanged` asynchronously on a worker
+    // thread (see skills/event-threading.md and the Events catalog), so the
+    // handler can fire concurrently — every stdout write is serialized under
+    // `_watchConsoleLock`. The bridge is headless (no UI), so no WPF/WinForms
+    // dispatcher marshaling is needed; we just keep the process alive on the
+    // stop signal while the worker thread emits.
+    internal static int Watch(ParsedArgs args)
+    {
+        string filter = "all";
+        bool selfTest = false;
+        string? version = args.Version;
+        _watchIncludeDeleted = false;
+
+        if (args.JsonStdin)
+        {
+            string raw;
+            try { raw = Console.In.ReadToEnd(); }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"aware-tekla watch: stdin not readable: {e.Message}");
+                return 2;
+            }
+            raw = raw.TrimStart('﻿');
+            if (!string.IsNullOrWhiteSpace(raw))
+            {
+                JsonNode? input;
+                try { input = JsonNode.Parse(raw); }
+                catch (Exception e)
+                {
+                    Console.Error.WriteLine($"aware-tekla watch: stdin not JSON: {e.Message}");
+                    return 2;
+                }
+                filter = input?["filter"]?.GetValue<string>() ?? filter;
+                selfTest = ReadBool(input, "self_test") || ReadBool(input, "self-test");
+                _watchIncludeDeleted = ReadBool(input, "include_deleted") || ReadBool(input, "include-deleted");
+                version ??= input?["version"]?.GetValue<string>();
+            }
+        }
+
+        filter = (filter ?? "all").Trim().ToLowerInvariant();
+        _watchFilter = filter;
+
+        // Offline self-test path: exercise the full listening → filter → fired
+        // emit pipeline with synthetic changes, no live Tekla. This is what the
+        // bridge's own end-to-end check drives (the analogue of #173's fake
+        // streamer, but through the real watch code).
+        if (selfTest || Environment.GetEnvironmentVariable("AWARE_TEKLA_WATCH_SELFTEST") == "1")
+            return RunWatchSelfTest(filter);
+
+        // Resolve the Tekla install: prefer the requested version, else the
+        // first running instance.
+        string? hostInstall = string.IsNullOrEmpty(version) ? null : DiscoverTeklaInstall(version!);
+        if (hostInstall is null)
+        {
+            var running = EnumerateRunningTeklas().FirstOrDefault();
+            if (running is not null)
+            {
+                // exePath is …/<version>/bin/TeklaStructures.exe — the install
+                // root is two levels up.
+                hostInstall = Path.GetDirectoryName(Path.GetDirectoryName(running.ExePath));
+                version ??= running.Version;
+            }
+        }
+        if (string.IsNullOrEmpty(hostInstall))
+        {
+            Console.Error.WriteLine(
+                "aware-tekla watch: no Tekla install found — start Tekla (with a model open) " +
+                "or pass `version`. (error.tekla-not-running)");
+            return 1;
+        }
+
+        var binDir = Path.Combine(hostInstall!, "bin");
+        WireResolver(binDir);
+        var originalCwd = Environment.CurrentDirectory;
+        Environment.CurrentDirectory = binDir;
+        try
+        {
+            object model;
+            try { model = ConstructTeklaModel(binDir); }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(
+                    $"aware-tekla watch: could not load Tekla.Structures.Model: {e.Message} " +
+                    "(error.tekla-not-running)");
+                return 1;
+            }
+
+            var modelType = model.GetType();
+            var connected = (bool)(modelType.GetMethod("GetConnectionStatus")?.Invoke(model, null) ?? false);
+            if (!connected)
+            {
+                Console.Error.WriteLine(
+                    "aware-tekla watch: Tekla is running but the Open API connection couldn't attach. " +
+                    "Is a model open? (error.tekla-not-running)");
+                return 1;
+            }
+
+            return RunWatchLoop(modelType.Assembly, filter);
+        }
+        finally
+        {
+            Environment.CurrentDirectory = originalCwd;
+        }
+    }
+
+    // Register the model event handlers and block until Tekla exits (or the
+    // transport kills us). Kept NoInlining for the same JIT/AssemblyResolve
+    // ordering reason as the exec path.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static int RunWatchLoop(Assembly modelAsm, string filter)
+    {
+        var eventsType = modelAsm.GetType("Tekla.Structures.Model.Events")
+            ?? throw new InvalidOperationException("Tekla.Structures.Model.Events type not found");
+        var eventsInstance = Activator.CreateInstance(eventsType)
+            ?? throw new InvalidOperationException("Could not construct Tekla.Structures.Model.Events()");
+
+        _watchStopSignal = new System.Threading.ManualResetEventSlim(false);
+
+        var changedEvent = eventsType.GetEvent("ModelObjectChanged");
+        var loadEvent    = eventsType.GetEvent("ModelLoad");
+        var exitEvent    = eventsType.GetEvent("TeklaStructuresExit");
+
+        // ModelObjectChanged carries `List<ChangeData>` — forward arg0 to our
+        // typeless handler. Load/exit carry no payload we need, so reuse the
+        // arg-ignoring dynamic handler.
+        var changedHandler = BuildForwardingHandler(changedEvent, nameof(OnModelObjectChanged));
+        var loadHandler    = BuildDynamicHandler(loadEvent, nameof(SignalModelLoad));
+        var exitHandler    = BuildDynamicHandler(exitEvent, nameof(SignalWatchStop));
+
+        if (changedHandler is not null) changedEvent!.AddEventHandler(eventsInstance, changedHandler);
+        if (loadHandler is not null) loadEvent!.AddEventHandler(eventsInstance, loadHandler);
+        if (exitHandler is not null) exitEvent!.AddEventHandler(eventsInstance, exitHandler);
+        eventsType.GetMethod("Register")?.Invoke(eventsInstance, null);
+
+        EmitListening(filter);
+
+        try
+        {
+            // Block until TeklaStructuresExit sets the signal. The runtime's
+            // streaming transport stops a watcher by killing the child process
+            // (see cli/src/runtime/invoker.rs), so a hard kill is the common
+            // exit; reacting to Tekla's own exit lets us shut down cleanly when
+            // the host goes away instead of lingering as a zombie watcher.
+            _watchStopSignal.Wait();
+        }
+        finally
+        {
+            try
+            {
+                if (changedHandler is not null) changedEvent!.RemoveEventHandler(eventsInstance, changedHandler);
+                if (loadHandler is not null) loadEvent!.RemoveEventHandler(eventsInstance, loadHandler);
+                if (exitHandler is not null) exitEvent!.RemoveEventHandler(eventsInstance, exitHandler);
+                eventsType.GetMethod("UnRegister")?.Invoke(eventsInstance, null);
+            }
+            catch { /* best-effort cleanup — the host may already be gone */ }
+            _watchStopSignal = null;
+        }
+        return 0;
+    }
+
+    // Emit `listening`, then synthetic `fired` events covering the object kinds
+    // the filter discriminates, so the filter + emit path is verifiable without
+    // a live Tekla. Returns 0 (clean exit), mirroring a finite real run.
+    static int RunWatchSelfTest(string filter)
+    {
+        EmitListening(filter);
+        var synthetic = new (string Type, string Change)[]
+        {
+            ("Assembly", "added"),
+            ("Weld", "added"),
+            ("BoltArray", "added"),
+            ("Beam", "modified"),
+            ("Drawing", "modified"),
+            ("Beam", "removed"),
+        };
+        int n = 0;
+        foreach (var (type, change) in synthetic)
+        {
+            if (change == "removed" && !_watchIncludeDeleted) continue;
+            if (!WatchFilterMatches(filter, type)) continue;
+            var ev = BuildWatchEvent(
+                $"00000000-0000-0000-0000-{n:D12}",
+                $"{type.Substring(0, 1)}/{n + 1}",
+                type,
+                change,
+                null);
+            WriteJsonLine(ev);
+            n++;
+        }
+        return 0;
+    }
+
+    // The typeless ModelObjectChanged handler. `changes` is a
+    // `List<ChangeData>` (an IEnumerable); each item is a ChangeData with
+    // `Type` (ChangeTypeEnum) and `Object` (a ModelObject carrying identifier
+    // info only — Select() hydrates the rest). One bad change must never kill
+    // the stream, so each is wrapped.
+    internal static void OnModelObjectChanged(object? changes)
+    {
+        if (changes is not System.Collections.IEnumerable list) return;
+        foreach (var cd in list)
+        {
+            if (cd is null) continue;
+            try { EmitChange(cd); }
+            catch (Exception e)
+            {
+                lock (_watchConsoleLock)
+                    Console.Error.WriteLine($"aware-tekla watch: skipped a change: {e.Message}");
+            }
+        }
+    }
+
+    static void EmitChange(object changeData)
+    {
+        var t = changeData.GetType();
+        int changeTypeVal = Convert.ToInt32(t.GetProperty("Type")?.GetValue(changeData) ?? 1);
+        string change = MapChangeType(changeTypeVal);
+        if (change == "removed" && !_watchIncludeDeleted) return;
+
+        var mo = t.GetProperty("Object")?.GetValue(changeData);
+        if (mo is null) return;
+
+        // The .NET runtime type (Beam, Assembly, Weld, BoltArray, …) is the
+        // filter key — available without a DB round-trip.
+        string typeName = mo.GetType().Name;
+        if (!WatchFilterMatches(_watchFilter, typeName)) return;
+
+        string? guid = TryGetGuid(mo);
+        string? mark = null;
+        JsonNode? geometry = null;
+        // A removed object can't be Select()ed; emit identity only.
+        if (change != "removed")
+        {
+            TrySelect(mo);
+            mark = TryGetMark(mo);
+            geometry = TryGetGeometry(mo);
+        }
+
+        WriteJsonLine(BuildWatchEvent(guid, mark, typeName, change, geometry));
+    }
+
+    // Map Tekla's ChangeData.ChangeTypeEnum to the stream's `change` enum.
+    //   OBJECT_INSERT(0)→added  OBJECT_DELETE(2)→removed
+    //   OBJECT_MODIFY(1) / USERPROPERTY_CHANGED(3)→modified
+    internal static string MapChangeType(int changeTypeValue) => changeTypeValue switch
+    {
+        0 => "added",
+        2 => "removed",
+        _ => "modified",
+    };
+
+    // Map the manifest `filter` enum to a predicate on the changed object's
+    // runtime type. `welded`/`bolted` match weld/bolt objects (a welded
+    // connection fires a ModelObjectChanged for its Weld object); `assembly`
+    // matches Assembly objects; `drawing` matches drawing objects. An unknown
+    // filter passes everything rather than silently dropping the whole stream.
+    internal static bool WatchFilterMatches(string filter, string typeName)
+    {
+        switch ((filter ?? "all").Trim().ToLowerInvariant())
+        {
+            case "all":      return true;
+            case "assembly": return typeName.Equals("Assembly", StringComparison.OrdinalIgnoreCase);
+            case "welded":   return typeName.IndexOf("Weld", StringComparison.OrdinalIgnoreCase) >= 0;
+            case "bolted":   return typeName.IndexOf("Bolt", StringComparison.OrdinalIgnoreCase) >= 0;
+            case "drawing":  return typeName.IndexOf("Drawing", StringComparison.OrdinalIgnoreCase) >= 0;
+            default:         return true;
+        }
+    }
+
+    internal static JsonObject BuildWatchEvent(
+        string? guid, string? mark, string typeName, string change, JsonNode? geometry)
+    {
+        return new JsonObject
+        {
+            ["signal"]       = "fired",
+            ["guid"]         = guid,
+            ["mark"]         = mark,
+            ["type"]         = typeName,
+            ["change"]       = change,
+            ["geometry"]     = geometry,
+            ["host"]         = "tekla",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+    }
+
+    static void EmitListening(string filter)
+    {
+        WriteJsonLine(new JsonObject
+        {
+            ["signal"]       = "listening",
+            ["host"]         = "tekla",
+            ["verb"]         = "watch",
+            ["filter"]       = filter,
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        });
+    }
+
+    static void WriteJsonLine(JsonNode node)
+    {
+        // Worker-thread events can fire concurrently; serialize stdout writes.
+        lock (_watchConsoleLock)
+        {
+            Console.Out.WriteLine(node.ToJsonString());
+            Console.Out.Flush();
+        }
+    }
+
+    static bool ReadBool(JsonNode? input, string key)
+    {
+        try { return input?[key]?.GetValue<bool>() ?? false; }
+        catch { return false; }
+    }
+
+    static string? TryGetGuid(object modelObject)
+    {
+        try
+        {
+            var id = modelObject.GetType().GetProperty("Identifier")?.GetValue(modelObject);
+            var guid = id?.GetType().GetProperty("GUID")?.GetValue(id);
+            return guid?.ToString();
+        }
+        catch { return null; }
+    }
+
+    static void TrySelect(object modelObject)
+    {
+        try { modelObject.GetType().GetMethod("Select", Type.EmptyTypes)?.Invoke(modelObject, null); }
+        catch { /* deleted / unreadable — caller emits identity only */ }
+    }
+
+    static string? TryGetMark(object modelObject)
+    {
+        // identity is the position Mark — never Name (see drawing-identity skill).
+        foreach (var prop in new[] { "ASSEMBLY_POS", "PART_POS", "MARK" })
+        {
+            try
+            {
+                var m = modelObject.GetType().GetMethod(
+                    "GetReportProperty", new[] { typeof(string), typeof(string).MakeByRefType() });
+                if (m is null) return null;
+                object?[] callArgs = { prop, "" };
+                if (m.Invoke(modelObject, callArgs) is bool ok && ok
+                    && callArgs[1] is string s && !string.IsNullOrEmpty(s))
+                    return s;
+            }
+            catch { /* try the next property */ }
+        }
+        return null;
+    }
+
+    static JsonNode? TryGetGeometry(object modelObject)
+    {
+        try
+        {
+            var getSolid = modelObject.GetType().GetMethod("GetSolid", Type.EmptyTypes);
+            var solid = getSolid?.Invoke(modelObject, null);
+            if (solid is null) return null;
+            var min = solid.GetType().GetProperty("MinimumPoint")?.GetValue(solid);
+            var max = solid.GetType().GetProperty("MaximumPoint")?.GetValue(solid);
+            var minJson = PointToJson(min);
+            var maxJson = PointToJson(max);
+            if (minJson is null || maxJson is null) return null;
+            return new JsonObject { ["min"] = minJson, ["max"] = maxJson };
+        }
+        catch { return null; }
+    }
+
+    static JsonNode? PointToJson(object? point)
+    {
+        if (point is null) return null;
+        try
+        {
+            var t = point.GetType();
+            return new JsonObject
+            {
+                ["x"] = Convert.ToDouble(t.GetProperty("X")?.GetValue(point) ?? 0.0),
+                ["y"] = Convert.ToDouble(t.GetProperty("Y")?.GetValue(point) ?? 0.0),
+                ["z"] = Convert.ToDouble(t.GetProperty("Z")?.GetValue(point) ?? 0.0),
+            };
+        }
+        catch { return null; }
+    }
+
+    // Wire the AssemblyResolve probe (Net48Runtime first, then bin) so the .NET
+    // loader can find Tekla.Structures.* siblings at runtime. Idempotent via the
+    // shared `_resolverWired` guard.
+    static void WireResolver(string binDir)
+    {
+        if (_resolverWired) return;
+        var probePaths = new[] { Path.Combine(binDir, "Net48Runtime"), binDir };
+        AppDomain.CurrentDomain.AssemblyResolve += (sender, eventArgs) =>
+        {
+            try
+            {
+                var name = new AssemblyName(eventArgs.Name).Name;
+                if (string.IsNullOrEmpty(name)) return null;
+                foreach (var probe in probePaths)
+                {
+                    var candidate = Path.Combine(probe, $"{name}.dll");
+                    if (File.Exists(candidate)) return Assembly.LoadFrom(candidate);
+                }
+                return null;
+            }
+            catch { return null; }
+        };
+        _resolverWired = true;
+    }
+
+    // Build a delegate matching `eventInfo`'s single-argument signature that
+    // forwards arg0 to the named static `void(object)` method. Used for
+    // ModelObjectChanged, whose `List<ChangeData>` payload we process
+    // reflectively (the bridge has no compile-time Tekla reference). Returns
+    // null if the event is missing or isn't single-argument.
+    static Delegate? BuildForwardingHandler(EventInfo? eventInfo, string targetMethodName)
+    {
+        if (eventInfo?.EventHandlerType is null) return null;
+        var invokeSig = eventInfo.EventHandlerType.GetMethod("Invoke")!;
+        var paramTypes = invokeSig.GetParameters().Select(p => p.ParameterType).ToArray();
+        if (paramTypes.Length != 1) return null;
+        var dyn = new System.Reflection.Emit.DynamicMethod(
+            $"{eventInfo.Name}Forward", typeof(void), paramTypes, typeof(Program), true);
+        var il = dyn.GetILGenerator();
+        // The arg is a reference type (List<ChangeData>) assignable to object,
+        // so it can be passed straight to a `void(object)` target.
+        il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);
+        il.Emit(System.Reflection.Emit.OpCodes.Call,
+            typeof(Program).GetMethod(targetMethodName, BindingFlags.NonPublic | BindingFlags.Static)
+                ?? typeof(Program).GetMethod(targetMethodName, BindingFlags.Public | BindingFlags.Static)!);
+        il.Emit(System.Reflection.Emit.OpCodes.Ret);
+        return dyn.CreateDelegate(eventInfo.EventHandlerType);
+    }
+
+    internal static void SignalModelLoad()
+    {
+        WriteJsonLine(new JsonObject
+        {
+            ["signal"]       = "status",
+            ["change"]       = "model-loaded",
+            ["host"]         = "tekla",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        });
+    }
+
+    internal static void SignalWatchStop() => _watchStopSignal?.Set();
 
     // ── exec ─────────────────────────────────────────────────────────────────
     // Compile + run an ad-hoc C# script against the live Tekla model using
@@ -1080,11 +1539,20 @@ internal static class Program
               launch           Start a Tekla instance via Bypass.ini (headless)
               close            Save + clean-shutdown a Tekla instance (Open API + ModelSave event)
               exec             Compile + run an ad-hoc C# script against the active model
+              watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:
               --version <X.Y>   Target a specific Tekla version (e.g. 2026.0)
               --pid <N>         Target a specific Tekla PID
               --json-stdin      Read inputs as JSON from stdin
+
+            watch (stdin JSON):
+              { "filter": "all|welded|bolted|assembly|drawing",   // default all
+                "include_deleted": false,                          // emit OBJECT_DELETE too
+                "self_test": false }                               // synthetic events, no live Tekla
+              Emits {"signal":"listening"} first, then one {"signal":"fired", guid, mark,
+              type, change, geometry} line per matching change. Runs until Tekla exits or the
+              caller stops (kills) the process.
 
             Exit codes:
               0  success
@@ -1375,6 +1843,16 @@ internal static class Program
     }
 
     static bool _resolverWired;
+
+    // ── watch state ────────────────────────────────────────────────────────────
+    // Worker-thread events emit through `WriteJsonLine`, serialized on this lock.
+    static readonly object _watchConsoleLock = new object();
+    // Set by the TeklaStructuresExit handler to unblock RunWatchLoop.
+    static System.Threading.ManualResetEventSlim? _watchStopSignal;
+    // The active filter + delete policy, read by the worker-thread handler.
+    // Internal so the test assembly can drive OnModelObjectChanged directly.
+    internal static string _watchFilter = "all";
+    internal static bool _watchIncludeDeleted;
 
     // Static handle for ModelSave event signaling — Tekla's
     // Events.ModelSaveDelegate is `void(string modelPath)`, so the handler
