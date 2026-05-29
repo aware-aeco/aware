@@ -138,9 +138,9 @@ fn update(ctx: &Context, id: Option<&str>, all: bool) -> Result<(), AwareError> 
 
 fn update_one(ctx: &Context, id: &str) -> Result<(), AwareError> {
     let index = crate::registry::fetch::fetch_index(&ctx.paths.cache_dir())?;
-    // Best-effort: remove existing installation (ignore NotFound).
-    let _ = crate::install::uninstall_agent(id, &ctx.paths);
-    let installed = crate::install::install_agent_from_registry(id, None, &ctx.paths, &index)?;
+    // Atomic: resolve + fetch + validate before the on-disk install is touched,
+    // so a failed re-pull leaves the existing agent intact (#174).
+    let installed = crate::install::update_agent_from_registry(id, &ctx.paths, &index)?;
     println!("\u{2713} updated {installed}");
     let _ = auto_regenerate_plugins(ctx);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
@@ -160,8 +160,10 @@ fn update_all(ctx: &Context) -> Result<(), AwareError> {
     let mut ok = 0usize;
     let mut failed: Vec<(String, String)> = Vec::new();
     for id in &ids {
-        let _ = crate::install::uninstall_agent(id, &ctx.paths);
-        match crate::install::install_agent_from_registry(id, None, &ctx.paths, &index) {
+        // Atomic per-agent update: a failure leaves that agent's existing
+        // install untouched rather than deleting it (#174). One transient
+        // network error must not cost the user an installed agent.
+        match crate::install::update_agent_from_registry(id, &ctx.paths, &index) {
             Ok(spec) => {
                 println!("  \u{2713} {spec}");
                 ok += 1;
