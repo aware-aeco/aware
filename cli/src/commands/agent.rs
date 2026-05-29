@@ -481,6 +481,9 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
     if let Some(t) = &m.transport.cli {
         println!("transport:    cli ({})", t.binary);
     }
+    if let Some(t) = &m.transport.app {
+        println!("transport:    app (backed by app {})", t.backed_by);
+    }
     if m.status == crate::manifest::agent::AgentStatus::Planned {
         println!(
             "status:       \u{26a0} planned — not yet runnable (no shipped transport binary); \

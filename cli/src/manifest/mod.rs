@@ -11,6 +11,7 @@
 
 pub mod agent;
 pub mod app;
+pub mod expose;
 pub mod loader;
 
 pub use agent::Agent;

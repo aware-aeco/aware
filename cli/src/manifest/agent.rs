@@ -168,11 +168,24 @@ pub struct Transport {
     pub mcp: Option<Value>,
     #[allow(dead_code)]
     pub rest: Option<Value>,
+    /// `app` transport — present only on agent manifests synthesized from an
+    /// `exposes-as-agent: true` app (see [`crate::manifest::expose`]). Dispatch
+    /// runs the named backing app's node chain instead of spawning a binary.
+    #[serde(default)]
+    pub app: Option<TransportApp>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct TransportCli {
     pub binary: String,
+}
+
+/// The backing for an app-exposed-as-agent: names the installed app whose
+/// composition runs when this synthesized agent is invoked.
+#[derive(Debug, Deserialize, Clone)]
+pub struct TransportApp {
+    #[serde(rename = "backed-by")]
+    pub backed_by: String,
 }
 
 #[derive(Debug, Deserialize)]

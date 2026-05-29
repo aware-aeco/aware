@@ -4,10 +4,12 @@
 //! - `30-apps/_examples/welded-to-tc.flo`   — linear layout, 3 nodes, 2 connections
 //! - `30-apps/_examples/qa-drawings-to-tekla.flo` — DAG layout, 7 nodes, 6 connections
 
+use std::collections::BTreeMap;
+
 use serde::{Deserialize, Serialize};
 use serde_yaml::Value;
 
-pub use super::agent::Mode;
+pub use super::agent::{Lifecycle, Mode};
 
 #[derive(Debug, Deserialize)]
 pub struct App {
@@ -18,12 +20,18 @@ pub struct App {
     pub description: String,
     #[serde(rename = "exposes-as-agent", default)]
     pub exposes_as_agent: bool,
-    #[allow(dead_code)]
+    /// Commands the app surfaces when `exposes-as-agent: true`. Consumed at
+    /// install time to synthesize a callable agent manifest (see
+    /// [`crate::manifest::expose`]) and at runtime to type-validate a caller's
+    /// per-command inputs before routing them into the nested app's `inputs:`.
+    /// See `10-core/app-spec.md § exposes-as-agent`.
     #[serde(rename = "exposed-commands", default)]
-    pub exposed_commands: Option<Value>,
+    pub exposed_commands: Option<BTreeMap<String, ExposedCommand>>,
     #[serde(default)]
     pub requires: Vec<String>,
-    #[allow(dead_code)]
+    /// Author-declared permission union the app needs. When the app is
+    /// exposes-as-agent, this is carried onto the synthesized agent's `requires`
+    /// so callers inherit it (see [`crate::manifest::expose`]).
     #[serde(rename = "requires-permissions")]
     pub requires_permissions: Option<Value>,
     #[serde(default = "default_layout")]
@@ -44,6 +52,36 @@ pub struct App {
     /// See `10-core/agent-spec.md § Engineering envelope`.
     #[serde(default)]
     pub engineering: Option<EngineeringBinding>,
+}
+
+/// One command an `exposes-as-agent: true` app surfaces to callers.
+///
+/// Mirrors the callable shape of an agent command (`lifecycle`, `inputs`,
+/// `outputs`) so the synthesized agent manifest is byte-for-byte a normal
+/// agent to the orchestrator. `inputs` is kept as a free-form mapping (name →
+/// `{ type, description, … }`) — the declared `type` of each is read at
+/// dispatch time to validate the caller's routed inputs.
+#[derive(Debug, Deserialize, Clone)]
+pub struct ExposedCommand {
+    pub lifecycle: Lifecycle,
+    /// Human description surfaced on the synthesized agent command. Defaults to
+    /// a generated one when omitted.
+    #[serde(default)]
+    pub description: Option<String>,
+    /// Read/write mode presented at the app boundary. The app boundary is a
+    /// read-like "run and hand back outputs" call by default; an author may
+    /// declare `mode: write` to force callers to wrap the node in a `safety:`
+    /// block. The nested app's own write nodes remain governed by their own
+    /// safety blocks (validated when the exposed app was installed).
+    #[serde(default)]
+    pub mode: Option<Mode>,
+    /// Declared inputs (name → `{ type, description }`). Type-validated against
+    /// the caller's routed values at dispatch.
+    #[serde(default)]
+    pub inputs: Value,
+    /// Declared output schema, surfaced verbatim on the synthesized command.
+    #[serde(default)]
+    pub outputs: Option<Value>,
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone)]
@@ -401,6 +439,11 @@ impl App {
 
     pub fn node_count(&self) -> usize {
         self.nodes.len()
+    }
+
+    /// Look up a command this app exposes when `exposes-as-agent: true`.
+    pub fn exposed_command(&self, name: &str) -> Option<&ExposedCommand> {
+        self.exposed_commands.as_ref().and_then(|m| m.get(name))
     }
 
     pub fn connection_count(&self) -> usize {
