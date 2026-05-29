@@ -33,6 +33,12 @@ struct SynthManifest {
     stateful: bool,
     license: &'static str,
     transport: SynthTransport,
+    /// The backing app's declared permission union (`requires-permissions:`),
+    /// carried through so a caller's `aware app explain` surfaces the hosts /
+    /// software / secrets a node invoking the exposed app inherits (app-spec
+    /// § exposes-as-agent constraints: "the caller approves the full union").
+    #[serde(skip_serializing_if = "Option::is_none")]
+    requires: Option<Value>,
     commands: BTreeMap<String, SynthCommand>,
 }
 
@@ -130,6 +136,7 @@ pub fn synthesize_agent_manifest(app: &App) -> Result<String, AwareError> {
                 backed_by: app.app.clone(),
             },
         },
+        requires: app.requires_permissions.clone(),
         commands,
     };
 
@@ -236,6 +243,19 @@ mod tests {
         // app transport names the backing app.
         let app_transport = agent.transport.app.as_ref().expect("app transport present");
         assert_eq!(app_transport.backed_by, "welded-to-tc");
+        // The backing app's declared permission union is carried onto the
+        // synthesized agent so a caller's `aware app explain` surfaces it.
+        let requires = agent.requires.as_ref().expect("requires carried through");
+        assert!(
+            requires.network.iter().any(|h| h.contains("trimble")),
+            "network host should be inherited: {:?}",
+            requires.network
+        );
+        assert!(
+            requires.software.iter().any(|s| s.contains("tekla")),
+            "software requirement should be inherited: {:?}",
+            requires.software
+        );
         // The synthesized manifest passes agent validation.
         assert!(!crate::validate::has_errors(
             &crate::validate::validate_agent(&agent)

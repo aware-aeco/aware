@@ -29,7 +29,9 @@ pub struct App {
     pub exposed_commands: Option<BTreeMap<String, ExposedCommand>>,
     #[serde(default)]
     pub requires: Vec<String>,
-    #[allow(dead_code)]
+    /// Author-declared permission union the app needs. When the app is
+    /// exposes-as-agent, this is carried onto the synthesized agent's `requires`
+    /// so callers inherit it (see [`crate::manifest::expose`]).
     #[serde(rename = "requires-permissions")]
     pub requires_permissions: Option<Value>,
     #[serde(default = "default_layout")]

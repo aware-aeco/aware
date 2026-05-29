@@ -173,6 +173,33 @@ requires: []
 }
 
 #[test]
+fn exposed_app_referencing_itself_is_rejected_on_first_install() {
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+    let src = tmp.path().join("src");
+
+    // `selfie` is exposes-as-agent and composes its own id — caught at install
+    // even though its synthesized agent does not exist yet.
+    let selfie = r#"app: selfie
+version: 0.1.0
+description: a self-referential exposed app
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+nodes:
+  - id: loop-self
+    agent: selfie
+    command: run
+connections: []
+requires: []
+"#;
+    install_app(&aware, &write_app(&src, "selfie", selfie))
+        .failure()
+        .stderr(predicate::str::contains("E_APP_EXPOSED_COMPOSES_EXPOSED"));
+}
+
+#[test]
 fn uninstall_app_removes_synthesized_agent() {
     let tmp = tempfile::tempdir().unwrap();
     let aware = tmp.path().join("aware");

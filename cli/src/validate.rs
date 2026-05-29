@@ -292,7 +292,7 @@ pub fn validate_app_agents(
     agents: &[crate::manifest::loader::DiscoveredAgent],
 ) -> Vec<ValidationIssue> {
     let mut out = Vec::new();
-    check_node_agents(&app.nodes, agents, app.exposes_as_agent, &mut out);
+    check_node_agents(&app.nodes, agents, app.exposes_as_agent, &app.app, &mut out);
     out
 }
 
@@ -300,10 +300,30 @@ fn check_node_agents(
     nodes: &[crate::manifest::app::Node],
     agents: &[crate::manifest::loader::DiscoveredAgent],
     app_exposes: bool,
+    app_id: &str,
     out: &mut Vec<ValidationIssue>,
 ) {
     use crate::manifest::agent::AgentStatus;
     for n in nodes {
+        // v0 no-recursion rule (self-reference): an `exposes-as-agent` app that
+        // composes its own id recurses into itself. Catch it regardless of
+        // catalogue state — on first install the synthesized agent does not
+        // exist yet, so the discovered-agent check below would miss it.
+        if app_exposes
+            && let Some(agent_id) = &n.agent
+            && agent_id == app_id
+        {
+            out.push(ValidationIssue::error(
+                "E_APP_EXPOSED_COMPOSES_EXPOSED",
+                format!(
+                    "node {:?} composes agent {:?}, which is this app itself; an exposes-as-agent \
+                     app cannot compose itself (v0 constraint, app-spec § exposes-as-agent \
+                     constraints)",
+                    n.id, agent_id
+                ),
+            ));
+        }
+
         if let Some(agent_id) = &n.agent
             && let Some(d) = agents.iter().find(|d| d.manifest.agent == *agent_id)
         {
@@ -322,7 +342,9 @@ fn check_node_agents(
             // compose another exposes-as-agent app (an app-backed synthesized
             // agent). Caught here so it fails at install/validate/compile rather
             // than only at dispatch (app-spec § exposes-as-agent constraints).
-            if app_exposes && d.manifest.transport.app.is_some() {
+            // (The self-reference case above also covers first-install, before
+            // this app's own synthesized agent exists in the catalogue.)
+            if app_exposes && agent_id != app_id && d.manifest.transport.app.is_some() {
                 out.push(ValidationIssue::error(
                     "E_APP_EXPOSED_COMPOSES_EXPOSED",
                     format!(
@@ -362,7 +384,7 @@ fn check_node_agents(
             }
         }
         if let Some(body) = &n.do_ {
-            check_node_agents(body, agents, app_exposes, out);
+            check_node_agents(body, agents, app_exposes, app_id, out);
         }
     }
 }
@@ -1191,6 +1213,39 @@ requires: []
                 .iter()
                 .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
             "a normal consumer composing an exposed app must be allowed; issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn exposed_app_referencing_itself_is_rejected_even_on_first_install() {
+        // An exposes-as-agent app whose node references its OWN id recurses into
+        // itself. On first install the synthesized agent does not exist yet, so
+        // this must be caught from the app id alone — not only via the catalogue.
+        let selfie: App = serde_yaml::from_str(
+            r#"
+app: selfie
+version: 0.0.1
+description: x
+exposes-as-agent: true
+exposed-commands:
+  run:
+    lifecycle: single
+nodes:
+  - id: loop-self
+    agent: selfie
+    command: run
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        // Empty catalogue — the synth agent for `selfie` is not yet installed.
+        let issues = validate_app_agents(&selfie, &[]);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_EXPOSED_COMPOSES_EXPOSED"),
+            "self-referential exposed app must be rejected at first install; issues: {issues:?}"
         );
     }
 }
