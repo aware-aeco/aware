@@ -129,10 +129,12 @@ commands:
     inputs:
       filter:
         type: enum
-        values: [all, welded, bolted, assembly, drawing]
+        values: [all, welded, bolted, assembly]
         default: all
         # Matches the changed object's kind: welded→Weld objects,
-        # bolted→Bolt* objects, assembly→Assembly, drawing→Drawing.
+        # bolted→Bolt* objects, assembly→Assembly. (Drawing changes are not
+        # surfaced by ModelObjectChanged — they need Tekla.Structures.Drawing
+        # events, a separate stream not yet wired here.)
       include-deleted:
         type: boolean
         default: false

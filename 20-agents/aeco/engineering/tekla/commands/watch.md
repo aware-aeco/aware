@@ -11,7 +11,7 @@ Stateful command. Starts a long-running subscription to `ModelObjectChanged` eve
 
 | Field | Type | Default | Description |
 |---|---|---|---|
-| `filter` | enum (`all` `welded` `bolted` `assembly` `drawing`) | `all` | Pre-filter what gets emitted. Reduces downstream traffic. Matches the **changed object's kind**: `welded`→`Weld` objects, `bolted`→`Bolt*` objects (BoltArray/BoltGroup), `assembly`→`Assembly`, `drawing`→`Drawing`. |
+| `filter` | enum (`all` `welded` `bolted` `assembly`) | `all` | Pre-filter what gets emitted. Reduces downstream traffic. Matches the **changed object's kind**: `welded`→`Weld` objects, `bolted`→`Bolt*` objects (BoltArray/BoltGroup), `assembly`→`Assembly`. Drawing changes are not surfaced by `ModelObjectChanged` (they come from `Tekla.Structures.Drawing.Events`, a separate stream not yet wired), so there is no `drawing` filter. |
 | `include-deleted` | bool | `false` | Emit on deletion (`OBJECT_DELETE`) as well as addition/modification. |
 
 ## Outputs (stream)

@@ -34,13 +34,41 @@ public class WatchLogicTests
     [InlineData("bolted", "BoltArray", true)]
     [InlineData("bolted", "BoltGroup", true)]
     [InlineData("bolted", "Weld", false)]
-    [InlineData("drawing", "GADrawing", true)]
-    [InlineData("drawing", "Beam", false)]
     [InlineData("ALL", "Beam", true)]            // case-insensitive
     [InlineData("unknown-filter", "Beam", true)] // unknown → pass-through, not silent drop
     public void WatchFilterMatches_DiscriminatesByObjectKind(string filter, string typeName, bool expected)
     {
         Assert.Equal(expected, Program.WatchFilterMatches(filter, typeName));
+    }
+
+    // Regression for Codex P2: Tekla.Structures.Geometry3d.Point exposes X/Y/Z
+    // as public FIELDS, not properties — reading via GetProperty would yield a
+    // misleading all-zero box. A field-bearing fake locks in field reading.
+#pragma warning disable CS0649 // fields assigned via reflection target / object initializer
+    sealed class FakeFieldPoint
+    {
+        public double X;
+        public double Y;
+        public double Z;
+    }
+#pragma warning restore CS0649
+
+    [Fact]
+    public void PointToJson_ReadsPublicFields_NotJustProperties()
+    {
+        var pt = new FakeFieldPoint { X = 1.5, Y = -2.0, Z = 3.25 };
+        var json = Program.PointToJson(pt)!;
+        Assert.Equal(1.5, json["x"]!.GetValue<double>());
+        Assert.Equal(-2.0, json["y"]!.GetValue<double>());
+        Assert.Equal(3.25, json["z"]!.GetValue<double>());
+    }
+
+    [Fact]
+    public void PointToJson_ReturnsNull_WhenCoordsMissing()
+    {
+        // An object with no X/Y/Z yields null geometry, not a fake zero box.
+        Assert.Null(Program.PointToJson(new object()));
+        Assert.Null(Program.PointToJson(null));
     }
 
     [Fact]

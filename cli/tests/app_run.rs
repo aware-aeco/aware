@@ -630,7 +630,7 @@ commands:
     inputs:
       filter:
         type: enum
-        values: [all, welded, bolted, assembly, drawing]
+        values: [all, welded, bolted, assembly]
         default: all
     outputs:
       type: stream

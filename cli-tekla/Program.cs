@@ -624,7 +624,6 @@ internal static class Program
             ("Weld", "added"),
             ("BoltArray", "added"),
             ("Beam", "modified"),
-            ("Drawing", "modified"),
             ("Beam", "removed"),
         };
         int n = 0;
@@ -706,8 +705,10 @@ internal static class Program
     // Map the manifest `filter` enum to a predicate on the changed object's
     // runtime type. `welded`/`bolted` match weld/bolt objects (a welded
     // connection fires a ModelObjectChanged for its Weld object); `assembly`
-    // matches Assembly objects; `drawing` matches drawing objects. An unknown
-    // filter passes everything rather than silently dropping the whole stream.
+    // matches Assembly objects. Drawing changes are NOT surfaced by
+    // ModelObjectChanged (they come from Tekla.Structures.Drawing.Events), so a
+    // `drawing` filter is intentionally not offered here — see manifest. An
+    // unknown filter passes everything rather than silently dropping the stream.
     internal static bool WatchFilterMatches(string filter, string typeName)
     {
         switch ((filter ?? "all").Trim().ToLowerInvariant())
@@ -716,7 +717,6 @@ internal static class Program
             case "assembly": return typeName.Equals("Assembly", StringComparison.OrdinalIgnoreCase);
             case "welded":   return typeName.IndexOf("Weld", StringComparison.OrdinalIgnoreCase) >= 0;
             case "bolted":   return typeName.IndexOf("Bolt", StringComparison.OrdinalIgnoreCase) >= 0;
-            case "drawing":  return typeName.IndexOf("Drawing", StringComparison.OrdinalIgnoreCase) >= 0;
             default:         return true;
         }
     }
@@ -836,20 +836,33 @@ internal static class Program
         catch { return null; }
     }
 
-    static JsonNode? PointToJson(object? point)
+    internal static JsonNode? PointToJson(object? point)
     {
         if (point is null) return null;
         try
         {
-            var t = point.GetType();
-            return new JsonObject
-            {
-                ["x"] = Convert.ToDouble(t.GetProperty("X")?.GetValue(point) ?? 0.0),
-                ["y"] = Convert.ToDouble(t.GetProperty("Y")?.GetValue(point) ?? 0.0),
-                ["z"] = Convert.ToDouble(t.GetProperty("Z")?.GetValue(point) ?? 0.0),
-            };
+            var x = ReadCoord(point, "X");
+            var y = ReadCoord(point, "Y");
+            var z = ReadCoord(point, "Z");
+            // If any coordinate can't be read, return null rather than a
+            // misleading all-zero box.
+            if (x is null || y is null || z is null) return null;
+            return new JsonObject { ["x"] = x.Value, ["y"] = y.Value, ["z"] = z.Value };
         }
         catch { return null; }
+    }
+
+    // Tekla.Structures.Geometry3d.Point exposes X/Y/Z as public *fields*, not
+    // properties — read the field first, then fall back to a property for any
+    // wrapper that exposes them differently. Returns null when neither exists.
+    static double? ReadCoord(object point, string name)
+    {
+        var t = point.GetType();
+        var field = t.GetField(name);
+        if (field is not null) return Convert.ToDouble(field.GetValue(point) ?? 0.0);
+        var prop = t.GetProperty(name);
+        if (prop is not null) return Convert.ToDouble(prop.GetValue(point) ?? 0.0);
+        return null;
     }
 
     // Wire the AssemblyResolve probe (Net48Runtime first, then bin) so the .NET
@@ -1567,9 +1580,9 @@ internal static class Program
               --json-stdin      Read inputs as JSON from stdin
 
             watch (stdin JSON):
-              { "filter": "all|welded|bolted|assembly|drawing",   // default all
-                "include_deleted": false,                          // emit OBJECT_DELETE too
-                "self_test": false }                               // synthetic events, no live Tekla
+              { "filter": "all|welded|bolted|assembly",   // default all (model-object changes)
+                "include_deleted": false,                  // emit OBJECT_DELETE too
+                "self_test": false }                       // synthetic events, no live Tekla
               Emits {"signal":"listening"} first, then one {"signal":"fired", guid, mark,
               type, change, geometry} line per matching change. Runs until Tekla exits or the
               caller stops (kills) the process.
