@@ -38,6 +38,7 @@
   -->
   <ItemGroup>
     <Compile Remove="FixtureAssembly\**\*.cs" />
+    <Compile Remove="FixtureDataAssembly\**\*.cs" />
   </ItemGroup>
 
   <ItemGroup>

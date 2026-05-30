@@ -50,7 +50,20 @@ namespace AwareReader;
 public sealed record AssemblyRecord(
     string Name,
     string Version,
-    IReadOnlyList<TypeRecord> Types);
+    IReadOnlyList<TypeRecord> Types)
+{
+    /// <summary>AssemblyDescriptionAttribute value, when present (#180). Null otherwise.</summary>
+    public string? Description { get; init; }
+}
+
+/// <summary>
+/// The result of reflecting a SET of assemblies (#180): every assembly's type tree plus a
+/// combined <see cref="TypeIndex"/> mapping each type's full name to its record across the
+/// whole set, so a type referenced in one assembly resolves to its definition in another.
+/// </summary>
+public sealed record ReflectedSet(
+    IReadOnlyList<AssemblyRecord> Assemblies,
+    IReadOnlyDictionary<string, TypeRecord> TypeIndex);
 
 public sealed record TypeRecord(
     string Namespace,
@@ -199,7 +212,47 @@ public static class MetadataReflector
         // Stable sort by FullName so repeated runs yield identical IR.
         types.Sort((a, b) => string.CompareOrdinal(a.FullName, b.FullName));
 
-        return new AssemblyRecord(assemblyName, version, types);
+        // Assembly-level description (AssemblyDescriptionAttribute), if present — used by
+        // the synthesizer to describe a reflected agent.
+        var asmAttrs = AttributeReader.Read(mr, asmDef.GetCustomAttributes(), sigDecoder);
+        var description = asmAttrs
+            .FirstOrDefault(a => a.TypeName == "System.Reflection.AssemblyDescriptionAttribute")
+            ?.FixedArguments.FirstOrDefault()?.Value;
+
+        return new AssemblyRecord(assemblyName, version, types) { Description = description };
+    }
+
+    /// <summary>
+    /// Reflects a SET of assemblies into one <see cref="ReflectedSet"/> — each assembly's
+    /// type tree plus a combined full-name → <see cref="TypeRecord"/> index spanning the
+    /// whole set (first definition wins on a duplicate full name). Unreadable or
+    /// non-managed files are skipped with a stderr note rather than aborting the set, so a
+    /// product directory full of native DLLs reflects cleanly.
+    /// </summary>
+    public static ReflectedSet ReflectSet(IReadOnlyList<string> dllPaths)
+    {
+        var assemblies = new List<AssemblyRecord>();
+        var index = new Dictionary<string, TypeRecord>(StringComparer.Ordinal);
+
+        foreach (var path in dllPaths)
+        {
+            AssemblyRecord asm;
+            try
+            {
+                asm = Reflect(path);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"skip {path}: {ex.Message}");
+                continue;
+            }
+
+            assemblies.Add(asm);
+            foreach (var t in asm.Types)
+                index.TryAdd(t.FullName, t); // first definition wins on duplicate full names
+        }
+
+        return new ReflectedSet(assemblies, index);
     }
 
     static TypeRecord ReflectType(

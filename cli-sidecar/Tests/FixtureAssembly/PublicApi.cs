@@ -155,3 +155,27 @@ namespace FixtureAssembly.Attributed
     [DemoMarker("bytey", ByteKind = DemoByteKind.Big)]
     public class ByteMarked { }
 }
+
+// ── Tekla-style plug-in fixture for #180 (multi-assembly + recipe) ─────────────
+//
+// Models the issue's cross-assembly split: this plug-in derives from PluginBase and
+// takes its StructuresData contract (DemoData) as a constructor parameter — but both
+// PluginBase and DemoData live in a DIFFERENT assembly (FixtureDataAssembly). Resolving
+// the data type therefore requires the cross-assembly TypeIndex from MetadataReflector.ReflectSet.
+
+namespace FixtureAssembly.TeklaLike
+{
+    /// <summary>A model plug-in registered as "Demo Plugin"; its data contract is DemoData.</summary>
+    [Tekla.Structures.Plugins.Plugin("Demo Plugin")]
+    public class DemoPlugin : Tekla.Structures.Plugins.PluginBase
+    {
+        /// <summary>The classic Tekla pattern: the plug-in takes its StructuresData via ctor.</summary>
+        public DemoPlugin(FixtureData.DemoData data) { Data = data; }
+
+        /// <summary>The bound data contract.</summary>
+        public FixtureData.DemoData Data { get; }
+
+        /// <summary>Framework callback — not a useful end-user command on its own.</summary>
+        public override bool Run(System.Collections.Generic.List<object> input) => true;
+    }
+}
