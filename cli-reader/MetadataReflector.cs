@@ -45,7 +45,7 @@ using System.Reflection.Metadata;
 using System.Reflection.PortableExecutable;
 using System.Text;
 
-namespace AwareSidecar.Ingest.Extractors.Common;
+namespace AwareReader;
 
 public sealed record AssemblyRecord(
     string Name,
@@ -558,7 +558,7 @@ public static class MetadataReflector
         var prettyCtx = new GenericContext(typeGenericNames, methodGenericNames);
         string displayName = isCtor ? CtorDisplayName(typeFullName, paramRecords, prettyCtx) : name;
         string signature = BuildSignature(
-            name: isCtor ? XmlDocLoader.ShortName(typeFullName) : name,
+            name: isCtor ? DocId.ShortName(typeFullName) : name,
             isCtor: isCtor,
             isStatic: isStatic,
             returnType: sig.ReturnType,
@@ -585,7 +585,7 @@ public static class MetadataReflector
         // "Foo()" or "Foo(string title, ConfigOptions options)" — the catalog-friendly name
         // that disambiguates overloads. Mirrors the brief's "Constructor names carry overload
         // disambiguator" rule.
-        var shortType = XmlDocLoader.ShortName(typeFullName);
+        var shortType = DocId.ShortName(typeFullName);
         var sb = new StringBuilder();
         sb.Append(shortType);
         sb.Append('(');

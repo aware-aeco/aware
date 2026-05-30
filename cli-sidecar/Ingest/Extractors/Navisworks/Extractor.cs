@@ -58,6 +58,7 @@
 // no dynamic JSON, no compile-time-unknown TypeInfo registrations.
 
 using AwareSidecar.Ingest.Extractors.Common;
+using AwareReader;
 
 namespace AwareSidecar.Ingest.Extractors.Navisworks;
 

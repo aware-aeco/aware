@@ -15,6 +15,7 @@
 // AOT: pure managed code, identical story to Navisworks/MemberPageParser.cs.
 
 using AwareSidecar.Ingest.Extractors.Common;
+using AwareReader;
 
 namespace AwareSidecar.Ingest.Extractors.TeklaSdk;
 

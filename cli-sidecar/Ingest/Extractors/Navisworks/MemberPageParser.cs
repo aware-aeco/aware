@@ -32,6 +32,7 @@
 // best we can do without a live render).
 
 using AwareSidecar.Ingest.Extractors.Common;
+using AwareReader;
 
 namespace AwareSidecar.Ingest.Extractors.Navisworks;
 

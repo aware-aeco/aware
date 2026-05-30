@@ -1,6 +1,12 @@
 using System.Text.Json.Serialization;
 
-namespace AwareSidecar.Protocol;
+namespace AwareReader;
+
+// Moved from cli-sidecar/Protocol/Agent.cs (#180): the agent shape the build pipeline
+// emits is now produced by the shared AgentSynthesizer in this library, so it lives
+// alongside the IR + synthesizer rather than in the sidecar's protocol layer. The
+// sidecar's SidecarJsonContext still source-generates the JSON for these types via
+// `using AwareReader;`.
 
 public sealed class GeneratedAgent
 {

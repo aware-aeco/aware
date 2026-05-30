@@ -17,7 +17,7 @@ public class ComReflectorTests
         }
 
         // WScript.Shell is universally available on Windows
-        AwareSidecar.Protocol.GeneratedAgent agent;
+        AwareReader.GeneratedAgent agent;
         try
         {
             agent = ComReflector.Reflect("WScript.Shell", agentIdOverride: "wscript-shell");

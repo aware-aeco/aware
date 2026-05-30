@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    AwareReader — the shared "Reader" half of the aware build Reader/Recipe split (#180).
+    Holds the normalized API-surface IR (types/members/fields/attributes), the PE-metadata
+    reader, the IR -> GeneratedAgent synthesizer, and the recipe registry.
+
+    Consumed by BOTH the NativeAOT sidecar (cli-sidecar) and the JIT Roslyn reader
+    (cli-roslyn). Target net10.0 (the only two consumers are net10.0 exes; no netstandard
+    shim needed for the positional records). Must stay AOT/trim-clean for the sidecar:
+    IsAotCompatible=true surfaces trim/AOT analyzer warnings here, and TreatWarningsAsErrors
+    makes them build failures in this library too — so a regression can't slip through to
+    the sidecar's NativeAOT publish.
+
+    System.Reflection.Metadata (PEReader/MetadataReader) is in-box for net10.0 — no
+    PackageReference required (cli-sidecar uses it the same way).
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AwareReader</RootNamespace>
+    <AssemblyName>AwareReader</AssemblyName>
+    <IsAotCompatible>true</IsAotCompatible>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Expose internals (SigTypeProvider) to the test project. -->
+    <InternalsVisibleTo Include="AwareReader.Tests" />
+  </ItemGroup>
+
+</Project>
