@@ -77,9 +77,9 @@ public class SynthesizerTests
         var set = MetadataReflector.ReflectSet(FixtureSet());
         var agent = AgentSynthesizer.Synthesize(set);
         var names = agent.Commands.Select(c => c.Name).ToList();
-        // From FixtureAssembly (Greeter) and the cross-assembly plug-in's framework callback.
+        // From FixtureAssembly (Greeter, a plain non-plug-in type) — present across the set.
+        // (The Tekla recipe rewrites the plug-in's per-method commands; see TeklaRecipeTests.)
         Assert.Contains("greeter-greet", names);
-        Assert.Contains("demo-plugin-run", names);
         // Command names are unique and ordinal-sorted (determinism).
         Assert.Equal(names.Count, names.Distinct().Count());
         Assert.Equal(names.OrderBy(n => n, StringComparer.Ordinal).ToList(), names);

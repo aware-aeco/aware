@@ -178,4 +178,27 @@ namespace FixtureAssembly.TeklaLike
         /// <summary>Framework callback — not a useful end-user command on its own.</summary>
         public override bool Run(System.Collections.Generic.List<object> input) => true;
     }
+
+    /// <summary>Derives from PluginBase but lacks [Plugin] — must NOT be recognized as a plug-in.</summary>
+    public class DerivedNoAttr : Tekla.Structures.Plugins.PluginBase
+    {
+        public override bool Run(System.Collections.Generic.List<object> input) => true;
+    }
+
+    /// <summary>Carries [Plugin] but does NOT derive from PluginBase — must NOT be recognized.</summary>
+    [Tekla.Structures.Plugins.Plugin("Orphan")]
+    public class OrphanPlugin
+    {
+        public void DoThing() { }
+    }
+
+    /// <summary>An in-assembly intermediate base, to exercise the base-chain walk via the index.</summary>
+    public abstract class MidBase : Tekla.Structures.Plugins.PluginBase { }
+
+    /// <summary>Reaches PluginBase through MidBase — recognized via the base-chain walk.</summary>
+    [Tekla.Structures.Plugins.Plugin("Intermediate Plugin")]
+    public class IntermediatePlugin : MidBase
+    {
+        public override bool Run(System.Collections.Generic.List<object> input) => true;
+    }
 }

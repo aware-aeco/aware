@@ -263,7 +263,7 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
 }
 
 /// Quote a YAML scalar if it contains characters that would make it ambiguous (colons, special chars).
-fn quote_yaml_scalar(s: &str) -> String {
+pub(crate) fn quote_yaml_scalar(s: &str) -> String {
     // YAML "plain" scalars (no quotes) can't start with control characters
     // that have special meaning. Vendor docstrings sometimes do — e.g.
     // "**** This method is for proxies …" from RhinoCommon. Quote on any of

@@ -166,6 +166,14 @@ path = "tests/skill_cmds.rs"
 name = "sidecar_integration_test"
 path = "tests/sidecar_integration.rs"
 
+[[test]]
+# Source is tests/roslyn_integration.rs.
+# End-to-end test that spawns the aware-roslyn source reader and verifies the
+# --from-csharp chain (incl. the Tekla recipe on source). Skips gracefully if the
+# aware-roslyn binary is absent.
+name = "roslyn_integration_test"
+path = "tests/roslyn_integration.rs"
+
 [profile.release]
 lto           = "thin"
 codegen-units = 1

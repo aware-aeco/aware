@@ -24,6 +24,19 @@ public sealed class GeneratedCommand
     [JsonPropertyName("name")] public string Name { get; set; } = "";
     [JsonPropertyName("lifecycle")] public string Lifecycle { get; set; } = "single";
     [JsonPropertyName("description")] public string Description { get; set; } = "";
+    /// <summary>Explicit read/write mode (e.g. "write" for recipe insert commands). Null = infer from name.</summary>
+    [JsonPropertyName("mode")] public string? Mode { get; set; }
+    /// <summary>Declared inputs (recipe commands carry their parameter contract). Empty for plain commands.</summary>
+    [JsonPropertyName("inputs")] public GeneratedInput[] Inputs { get; set; } = Array.Empty<GeneratedInput>();
+}
+
+/// <summary>One declared command input. <c>Default</c> is a literal string (never boxed object) for AOT safety.</summary>
+public sealed class GeneratedInput
+{
+    [JsonPropertyName("name")] public string Name { get; set; } = "";
+    [JsonPropertyName("type")] public string Type { get; set; } = "";
+    [JsonPropertyName("optional")] public bool Optional { get; set; }
+    [JsonPropertyName("default")] public string? Default { get; set; }
 }
 
 public sealed class GeneratedSkill

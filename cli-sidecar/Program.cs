@@ -336,6 +336,7 @@ internal static class Program
 [JsonSerializable(typeof(ResponseData))]
 [JsonSerializable(typeof(GeneratedAgent))]
 [JsonSerializable(typeof(GeneratedCommand))]
+[JsonSerializable(typeof(GeneratedInput))]
 [JsonSerializable(typeof(GeneratedSkill))]
 [JsonSerializable(typeof(CoverageGenerateResult))]
 [JsonSerializable(typeof(CoverageValidateResult))]
