@@ -53,6 +53,14 @@ cli-sidecar/Tests/bin/
 cli-sidecar/Tests/obj/
 cli-sidecar/Tests/FixtureAssembly/bin/
 cli-sidecar/Tests/FixtureAssembly/obj/
+cli-sidecar/Tests/FixtureDataAssembly/bin/
+cli-sidecar/Tests/FixtureDataAssembly/obj/
 cli-sidecar/Ingest/Generator/Tests/bin/
 cli-sidecar/Ingest/Generator/Tests/obj/
+
+# cli-roslyn build output (#180 source reader)
+cli-roslyn/bin/
+cli-roslyn/obj/
+cli-roslyn/Tests/bin/
+cli-roslyn/Tests/obj/
 *.binlog

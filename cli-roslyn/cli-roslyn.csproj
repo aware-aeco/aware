@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    aware-roslyn — the SOURCE half of the #180 Reader/Recipe split. A non-AOT (JIT)
+    sidecar that reads C# *source* via Roslyn and emits the SAME AwareReader IR +
+    GeneratedAgent as the compiled-DLL path, so source and compiled inputs (and the Tekla
+    recipe) share one synthesizer. Roslyn cannot be hosted in the NativeAOT sidecar, so it
+    lives here and is invoked out-of-process by the Rust CLI exactly like aware-sidecar
+    (stdin/stdout JSON).
+
+    Published self-contained single-file per OS (see release.yml) so it needs no .NET
+    runtime on the user's machine, matching aware-sidecar's "just a binary" deployment.
+
+    Depends ONLY on Microsoft.CodeAnalysis.CSharp (no MSBuild): it compiles bare .cs files,
+    directories, or globs with framework references plus any caller-supplied reference-dir
+    DLLs. Pointing a reference dir at an SDK's bin (e.g. a Tekla install) resolves base types
+    and attributes, so the recipe fires on source. Project/solution graph loading via
+    MSBuildWorkspace is intentionally out of scope (it drags in the advisory-laden
+    Microsoft.Build package chain); it is tracked as a follow-up.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>AwareRoslyn</RootNamespace>
+    <AssemblyName>aware-roslyn</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Version>0.1.0</Version>
+    <!-- Keep the unit-test sources out of the exe build. -->
+    <DefaultItemExcludes>$(DefaultItemExcludes);Tests\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\cli-reader\AwareReader.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="aware-roslyn.Tests" />
+  </ItemGroup>
+
+</Project>

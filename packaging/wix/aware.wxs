@@ -9,6 +9,7 @@
   Install layout: C:\Program Files\AWARE\
     aware.exe
     aware-sidecar.exe
+    aware-roslyn.exe
     LICENSE
     README.md
     VERSION
@@ -56,6 +57,9 @@
       </Component>
       <Component Id="AwareSidecarExe" Bitness="always64">
         <File Source="$(var.StageDir)\aware-sidecar.exe" KeyPath="yes" />
+      </Component>
+      <Component Id="AwareRoslynExe" Bitness="always64">
+        <File Source="$(var.StageDir)\aware-roslyn.exe" KeyPath="yes" />
       </Component>
       <Component Id="ReadmeFile" Bitness="always64">
         <File Source="$(var.StageDir)\README.md" KeyPath="yes" />

@@ -67,6 +67,8 @@ aware
 │   ├── --from-cli <binary>
 │   ├── --from-headers <path>
 │   ├── --from-python <module>
+│   ├── --from-csharp <path>            C# source (.cs file/dir/glob) via aware-roslyn
+│   ├── --reference-dir <dir>          extra ref-DLL dir for --from-csharp (repeatable)
 │   ├── --decompile                     opt-in, license-checked
 │   ├── --tier-strategy <auto|all-1|all-2>
 │   └── --output <agent-id>
