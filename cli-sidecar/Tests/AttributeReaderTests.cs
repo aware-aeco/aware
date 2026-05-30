@@ -60,6 +60,19 @@ public class AttributeReaderTests
     }
 
     [Fact]
+    public void ByteBackedEnumNamedArgDecodes()
+    {
+        // Regression guard: a byte-backed enum arg must resolve its real underlying type
+        // (Byte), not a hardcoded Int32 — otherwise DecodeValue mis-reads the blob, throws,
+        // and silently drops EVERY argument on the attribute. DemoByteKind.Big == 200.
+        var t = Type("FixtureAssembly.Attributed.ByteMarked");
+        var marker = t.Attributes.First(
+            a => a.TypeName.EndsWith("DemoMarkerAttribute", StringComparison.Ordinal));
+        Assert.Equal("bytey", marker.FixedArguments.Single().Value);
+        Assert.Equal("200", marker.NamedArguments.First(n => n.Name == "ByteKind").Value);
+    }
+
+    [Fact]
     public void TypeofNamedArgDecodesToTypeName()
     {
         var t = Type("FixtureAssembly.Attributed.TypedMarker");

@@ -44,9 +44,22 @@ internal static class AttributeReader
             if (rec is not null) result.Add(rec);
         }
         // Deterministic order: attributes carry no source ordering guarantee in metadata.
-        result.Sort((a, b) => string.CompareOrdinal(a.TypeName, b.TypeName));
+        // List.Sort is not stable, so tie-break duplicate type names (a member can legally
+        // carry the same attribute type twice) on a rendered argument key — a total order.
+        result.Sort(static (a, b) =>
+        {
+            var c = string.CompareOrdinal(a.TypeName, b.TypeName);
+            return c != 0 ? c : string.CompareOrdinal(ArgKey(a), ArgKey(b));
+        });
         return result;
     }
+
+    // A collision-resistant, human-readable key over the rendered arguments. Count prefixes
+    // make distinct argument lists impossible to alias by concatenation; remaining ties are
+    // between effectively-identical attributes, where ordering is irrelevant.
+    private static string ArgKey(AttributeRecord a) =>
+        $"{a.FixedArguments.Count}:" + string.Join("|", a.FixedArguments.Select(x => x.Value))
+        + $";{a.NamedArguments.Count}:" + string.Join("|", a.NamedArguments.Select(x => x.Name + "=" + x.Value));
 
     private static AttributeRecord? TryRead(
         MetadataReader mr, CustomAttributeHandle handle, SigTypeProvider provider)

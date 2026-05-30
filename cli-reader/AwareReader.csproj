@@ -25,9 +25,4 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup>
-    <!-- Expose internals (SigTypeProvider) to the test project. -->
-    <InternalsVisibleTo Include="AwareReader.Tests" />
-  </ItemGroup>
-
 </Project>

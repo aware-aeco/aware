@@ -963,6 +963,10 @@ internal sealed class SigTypeProvider :
     ICustomAttributeTypeProvider<string>
 {
     readonly MetadataReader _mr;
+    // Memoises enum-underlying-type lookups (used by attribute-value decoding) so a large
+    // assembly with many enum-typed attribute args doesn't rescan TypeDefinitions per arg.
+    // Per-assembly lifetime — one provider per Reflect().
+    readonly Dictionary<string, PrimitiveTypeCode> _enumUnderlyingCache = new(StringComparer.Ordinal);
 
     public SigTypeProvider(MetadataReader mr) { _mr = mr; }
 
@@ -1090,13 +1094,72 @@ internal sealed class SigTypeProvider :
         return sb.ToString();
     }
 
-    // ICustomAttributeTypeProvider — minimal impls so MetadataReader code paths that
-    // accept either provider compile against this one. Not actually used by the
-    // extractor (we don't decode attribute values), but the interface is required by
-    // some overloads.
+    // ICustomAttributeTypeProvider — used by CustomAttribute.DecodeValue when the
+    // AttributeReader (#180) decodes attribute argument values.
     public string GetSystemType() => "System.Type";
     public bool IsSystemType(string type) => type == "System.Type";
     public string GetTypeFromSerializedName(string name) => name;
-    public PrimitiveTypeCode GetUnderlyingEnumType(string type) => PrimitiveTypeCode.Int32;
+
+    /// <summary>
+    /// Resolves an enum's real underlying integral type from this assembly's metadata so
+    /// <c>CustomAttribute.DecodeValue</c> reads the correct byte width. A hardcoded Int32
+    /// would mis-read byte/short/long-backed enum arguments and throw
+    /// <c>BadImageFormatException</c>, silently dropping every argument on that attribute.
+    /// Enums defined in another assembly aren't resolvable from this single-assembly
+    /// reader, so those fall back to Int32 (the overwhelmingly common case).
+    /// </summary>
+    public PrimitiveTypeCode GetUnderlyingEnumType(string type)
+    {
+        if (_enumUnderlyingCache.TryGetValue(type, out var cached)) return cached;
+        var resolved = ResolveUnderlyingEnumType(type);
+        _enumUnderlyingCache[type] = resolved;
+        return resolved;
+    }
+
+    PrimitiveTypeCode ResolveUnderlyingEnumType(string type)
+    {
+        foreach (var handle in _mr.TypeDefinitions)
+        {
+            var td = _mr.GetTypeDefinition(handle);
+            var ns = td.Namespace.IsNil ? "" : _mr.GetString(td.Namespace);
+            var name = _mr.GetString(td.Name);
+            var full = string.IsNullOrEmpty(ns) ? name : ns + "." + name;
+            if (!string.Equals(full, type, StringComparison.Ordinal)) continue;
+
+            // An enum's underlying type is the type of its single instance field (the
+            // special `value__`); the named members are static literal fields.
+            foreach (var fh in td.GetFields())
+            {
+                var fd = _mr.GetFieldDefinition(fh);
+                if ((fd.Attributes & FieldAttributes.Static) != 0) continue;
+                try
+                {
+                    var decoded = fd.DecodeSignature(
+                        this, new GenericContext(Array.Empty<string>(), Array.Empty<string>()));
+                    return MapUnderlying(decoded);
+                }
+                catch
+                {
+                    return PrimitiveTypeCode.Int32;
+                }
+            }
+            break;
+        }
+        return PrimitiveTypeCode.Int32;
+    }
+
+    static PrimitiveTypeCode MapUnderlying(string fqType) => fqType switch
+    {
+        "System.Byte" => PrimitiveTypeCode.Byte,
+        "System.SByte" => PrimitiveTypeCode.SByte,
+        "System.Int16" => PrimitiveTypeCode.Int16,
+        "System.UInt16" => PrimitiveTypeCode.UInt16,
+        "System.Int32" => PrimitiveTypeCode.Int32,
+        "System.UInt32" => PrimitiveTypeCode.UInt32,
+        "System.Int64" => PrimitiveTypeCode.Int64,
+        "System.UInt64" => PrimitiveTypeCode.UInt64,
+        "System.Char" => PrimitiveTypeCode.Char,
+        _ => PrimitiveTypeCode.Int32,
+    };
 }
 

@@ -113,6 +113,9 @@ namespace FixtureAssembly.Attributed
     /// <summary>Demo enum used as a named attribute-argument value.</summary>
     public enum DemoKind { Alpha = 0, Beta = 1 }
 
+    /// <summary>Byte-backed enum — exercises non-Int32 underlying-type resolution (#180).</summary>
+    public enum DemoByteKind : byte { Small = 1, Big = 200 }
+
     /// <summary>Marker attribute used to verify positional + named argument decoding.</summary>
     [System.AttributeUsage(System.AttributeTargets.All)]
     public sealed class DemoMarkerAttribute : System.Attribute
@@ -125,6 +128,8 @@ namespace FixtureAssembly.Attributed
         public int Order { get; set; }
         /// <summary>Named enum argument.</summary>
         public DemoKind Kind { get; set; }
+        /// <summary>Named byte-backed enum argument.</summary>
+        public DemoByteKind ByteKind { get; set; }
         /// <summary>Named typeof() argument.</summary>
         public System.Type? Target { get; set; }
     }
@@ -145,4 +150,8 @@ namespace FixtureAssembly.Attributed
     /// <summary>Exercises a typeof()-valued named attribute argument.</summary>
     [DemoMarker("typed", Target = typeof(MarkedWidget))]
     public class TypedMarker { }
+
+    /// <summary>Exercises a byte-backed enum named attribute argument (#180 review).</summary>
+    [DemoMarker("bytey", ByteKind = DemoByteKind.Big)]
+    public class ByteMarked { }
 }
