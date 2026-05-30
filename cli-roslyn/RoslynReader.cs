@@ -126,7 +126,16 @@ public static class RoslynReader
             types.Add(MapType(t, docs));
         }
         types.Sort((a, b) => string.CompareOrdinal(a.FullName, b.FullName));
-        return new AssemblyRecord(comp.AssemblyName ?? "source", "0.1.0", types);
+
+        // Parity with the compiled reader: surface the assembly version (→ sdk-target) and
+        // [assembly: AssemblyDescription] when the source declares them.
+        var version = comp.Assembly.Identity.Version?.ToString() ?? "0.1.0";
+        var description = comp.Assembly.GetAttributes()
+            .FirstOrDefault(a => a.AttributeClass?.ToDisplayString(Fqn)
+                == "System.Reflection.AssemblyDescriptionAttribute")
+            ?.ConstructorArguments.FirstOrDefault().Value as string;
+
+        return new AssemblyRecord(comp.AssemblyName ?? "source", version, types) { Description = description };
     }
 
     private static IEnumerable<INamedTypeSymbol> EnumerateNamespaceTypes(INamespaceSymbol ns)
@@ -202,6 +211,11 @@ public static class RoslynReader
         methods.Sort((a, b) => string.CompareOrdinal(a.Signature, b.Signature));
         properties.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
         events.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
+        // Match the compiled reader's field order: enums by underlying value, else by name.
+        if (kind == IrTypeKind.Enum)
+            fields.Sort((a, b) => EnumOrdinalKey(a.ConstantValue).CompareTo(EnumOrdinalKey(b.ConstantValue)));
+        else
+            fields.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
 
         return new TypeRecord(
             Namespace: ns,
@@ -254,7 +268,7 @@ public static class RoslynReader
             IsIn: p.RefKind == RefKind.In,
             IsOut: p.RefKind == RefKind.Out,
             IsOptional: p.IsOptional,
-            DefaultValueLiteral: p is { HasExplicitDefaultValue: true } ? FormatLiteral(p.ExplicitDefaultValue) : null);
+            DefaultValueLiteral: p is { HasExplicitDefaultValue: true } ? FormatConstLiteral(p.ExplicitDefaultValue) : null);
 
     private static PropertyRecord MapProperty(IPropertySymbol p) =>
         new(Name: p.Name,
@@ -275,7 +289,7 @@ public static class RoslynReader
             IsStatic: f.IsStatic,
             IsLiteral: f.IsConst,
             ConstantValue: f.ConstantValue,
-            EnumUnderlyingValueLiteral: f.IsConst ? FormatLiteral(f.ConstantValue) : null)
+            EnumUnderlyingValueLiteral: f.IsConst ? FormatConstLiteral(f.ConstantValue) : null)
         {
             Attributes = MapAttributes(f.GetAttributes()),
         };
@@ -303,16 +317,41 @@ public static class RoslynReader
     {
         TypedConstantKind.Array => "[" + string.Join(", ", tc.Values.Select(FormatTyped)) + "]",
         TypedConstantKind.Type => (tc.Value as ITypeSymbol)?.ToDisplayString(Fqn),
-        _ => FormatLiteral(tc.Value), // enums arrive as their underlying integer
+        _ => FormatAttrValue(tc.Value), // enums arrive as their underlying integer
     };
 
-    private static string? FormatLiteral(object? v) => v switch
+    // Attribute-argument values: UNquoted, matching AwareReader.AttributeReader.FormatValue.
+    private static string? FormatAttrValue(object? v) => v switch
     {
         null => null,
         string s => s,
         bool b => b ? "true" : "false",
         char c => c.ToString(),
         _ => Convert.ToString(v, System.Globalization.CultureInfo.InvariantCulture),
+    };
+
+    // Const / default-parameter literals: QUOTED, matching MetadataReflector.FormatConstantLiteral.
+    private static string? FormatConstLiteral(object? v) => v switch
+    {
+        null => "null",
+        string s => "\"" + s.Replace("\\", "\\\\").Replace("\"", "\\\"") + "\"",
+        bool b => b ? "true" : "false",
+        char c => "'" + c + "'",
+        _ => Convert.ToString(v, System.Globalization.CultureInfo.InvariantCulture),
+    };
+
+    // Sort key for enum members by underlying value (mirrors MetadataReflector's OrdinalKey).
+    private static long EnumOrdinalKey(object? constantValue) => constantValue switch
+    {
+        sbyte sb => sb,
+        byte b => b,
+        short sh => sh,
+        ushort us => us,
+        int i => i,
+        uint u => u,
+        long l => l,
+        ulong ul => unchecked((long)ul),
+        _ => 0,
     };
 
     private static void CollectDoc(ISymbol sym, Dictionary<string, string> docs)

@@ -10,8 +10,9 @@ namespace AwareRoslyn;
 /// <summary>
 /// aware-roslyn entry point. One JSON request in on stdin, one JSON response out on stdout
 /// (same envelope shape as aware-sidecar so the Rust CLI parses both identically). The only
-/// op is <c>reflect-csharp</c>: reflect C# source (.cs / .csproj / .sln) → AwareReader IR →
-/// AgentSynthesizer → GeneratedAgent.
+/// op is <c>reflect-csharp</c>: reflect C# source (a .cs file, directory, or glob) → AwareReader
+/// IR → AgentSynthesizer → GeneratedAgent. (.csproj/.sln graph loading is out of scope; such an
+/// input returns a clear, actionable error.)
 /// </summary>
 internal static class Program
 {
