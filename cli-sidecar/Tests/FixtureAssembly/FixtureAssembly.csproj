@@ -6,4 +6,10 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The Tekla-style plug-in below derives from PluginBase and takes a DemoData ctor
+         param, both defined in FixtureDataAssembly — modelling the cross-assembly split. -->
+    <ProjectReference Include="..\FixtureDataAssembly\FixtureDataAssembly.csproj" />
+  </ItemGroup>
 </Project>

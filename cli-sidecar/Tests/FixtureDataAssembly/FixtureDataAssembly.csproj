@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Second fixture assembly for #180. Models the "SDK + data contract" half of a
+    Tekla-style plugin split: the plugin class lives in FixtureAssembly while its
+    PluginBase, the [Plugin]/[StructuresField] attributes, and its StructuresData
+    contract live HERE — so cross-assembly reflection (MetadataReflector.ReflectSet
+    + TypeIndex) and the Tekla recipe are exercised against a real two-DLL graph,
+    with NO dependency on the proprietary Tekla assemblies.
+
+    Uses the REAL `Tekla.Structures.Plugins` namespace + type names so the recipe's
+    DEFAULT configuration is what gets tested.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+</Project>
