@@ -217,7 +217,7 @@ fn build_manifest_yaml(agent: &GeneratedAgent) -> Result<String, AwareError> {
                 quote_yaml_scalar(&desc_one_line)
             ));
             if let Some(mode) = &cmd.mode {
-                out.push_str(&format!("    mode: {mode}\n"));
+                out.push_str(&format!("    mode: {}\n", quote_yaml_scalar(mode)));
             }
             if let Some(method) = &cmd.method {
                 out.push_str(&format!("    method: {method}\n"));
