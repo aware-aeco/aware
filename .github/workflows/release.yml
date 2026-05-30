@@ -80,6 +80,16 @@ jobs:
       - name: Publish C# sidecar (NativeAOT)
         run: dotnet publish cli-sidecar -c Release -r ${{ matrix.rid }} -p:PublishAot=true
 
+      - name: Publish Roslyn source reader (self-contained single-file)
+        # aware-roslyn hosts Roslyn (which can't go in the NativeAOT sidecar). Self-contained
+        # single-file → one binary, no .NET runtime needed, discoverable next to aware/aware-sidecar.
+        run: >-
+          dotnet publish cli-roslyn -c Release -r ${{ matrix.rid }}
+          --self-contained
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true
+
       - name: Stage artifacts
         shell: bash
         run: |
@@ -92,6 +102,7 @@ jobs:
           mkdir -p "$stage"
           cp "cli/target/release/aware${{ matrix.ext }}" "$stage/"
           cp "cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/aware-sidecar${{ matrix.ext }}" "$stage/"
+          cp "cli-roslyn/bin/Release/net10.0/${{ matrix.rid }}/publish/aware-roslyn${{ matrix.ext }}" "$stage/"
           cp LICENSE "$stage/" 2>/dev/null || echo "(no LICENSE file)" > "$stage/LICENSE"
           cp cli/README.md "$stage/README.md"
           echo "$version" > "$stage/VERSION"

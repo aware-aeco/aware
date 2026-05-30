@@ -10,6 +10,7 @@ pub mod npm;
 pub mod nuget;
 pub mod openapi;
 pub mod python;
+pub mod roslyn;
 pub mod ruby;
 pub mod stubs;
 pub mod yard;

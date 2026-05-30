@@ -15,16 +15,35 @@ use serde::{Deserialize, Serialize};
 use crate::builder::{GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, now_iso};
 use crate::error::AwareError;
 
-/// Discover the sidecar binary location.
+/// Discover the C# reflection sidecar (`aware-sidecar`).
 pub fn discover() -> Result<PathBuf, AwareError> {
+    discover_named("AWARE_SIDECAR", "aware-sidecar")
+}
+
+/// Discover the Roslyn source reader (`aware-roslyn`).
+pub fn discover_roslyn() -> Result<PathBuf, AwareError> {
+    discover_named("AWARE_ROSLYN", "aware-roslyn")
+}
+
+/// Discover a sibling helper binary by env-var override → sibling of `aware` → PATH.
+///
+/// `env_var` is an explicit absolute-path override; `stem` is the binary's base name
+/// (the platform `.exe` suffix is appended on Windows).
+fn discover_named(env_var: &str, stem: &str) -> Result<PathBuf, AwareError> {
+    let bin_name = if cfg!(windows) {
+        format!("{stem}.exe")
+    } else {
+        stem.to_string()
+    };
+
     // 1. Explicit override via env var
-    if let Ok(p) = std::env::var("AWARE_SIDECAR") {
+    if let Ok(p) = std::env::var(env_var) {
         let path = PathBuf::from(&p);
         if path.is_file() {
             return Ok(path);
         }
         return Err(AwareError::NotFound(format!(
-            "AWARE_SIDECAR={p} but file not found"
+            "{env_var}={p} but file not found"
         )));
     }
 
@@ -32,37 +51,27 @@ pub fn discover() -> Result<PathBuf, AwareError> {
     if let Ok(current) = std::env::current_exe()
         && let Some(dir) = current.parent()
     {
-        let candidate = dir.join(if cfg!(windows) {
-            "aware-sidecar.exe"
-        } else {
-            "aware-sidecar"
-        });
+        let candidate = dir.join(&bin_name);
         if candidate.is_file() {
             return Ok(candidate);
         }
     }
 
     // 3. On PATH
-    let bin_name = if cfg!(windows) {
-        "aware-sidecar.exe"
-    } else {
-        "aware-sidecar"
-    };
     if let Ok(path_var) = std::env::var("PATH") {
         let sep = if cfg!(windows) { ';' } else { ':' };
         for entry in path_var.split(sep) {
-            let candidate = PathBuf::from(entry).join(bin_name);
+            let candidate = PathBuf::from(entry).join(&bin_name);
             if candidate.is_file() {
                 return Ok(candidate);
             }
         }
     }
 
-    Err(AwareError::NotFound(
-        "aware-sidecar binary not found. Install from \
-         https://github.com/aware-aeco/aware/releases or set AWARE_SIDECAR=<path>"
-            .to_string(),
-    ))
+    Err(AwareError::NotFound(format!(
+        "{stem} binary not found. Install from \
+         https://github.com/aware-aeco/aware/releases or set {env_var}=<path>"
+    )))
 }
 
 #[derive(Serialize)]
@@ -190,6 +199,26 @@ pub fn reflect_dlls(args: ReflectDllsArgs) -> Result<GeneratedAgent, AwareError>
     Ok(to_local_agent(agent, "dlls"))
 }
 
+/// Arguments for the Roslyn source reader's `reflect-csharp` verb.
+#[derive(Serialize)]
+pub struct ReflectCsharpArgs {
+    /// `.cs` files, directories, or globs to reflect.
+    pub paths: Vec<String>,
+    /// Extra directories of reference DLLs (e.g. an SDK bin) so base types/attributes resolve.
+    pub references: Vec<String>,
+    pub agent_id: Option<String>,
+}
+
+/// Spawn `aware-roslyn`, send a reflect-csharp request, return the parsed agent.
+pub fn reflect_csharp(args: ReflectCsharpArgs) -> Result<GeneratedAgent, AwareError> {
+    let bin = discover_roslyn()?;
+    let data = invoke_raw_with(&bin, "reflect-csharp", &args)?;
+    let agent = data.agent.ok_or_else(|| {
+        AwareError::Validation("aware-roslyn reflect-csharp returned ok but no agent".into())
+    })?;
+    Ok(to_local_agent(agent, "csharp"))
+}
+
 /// Spawn the sidecar, send a decompile request, return the parsed agent.
 pub fn decompile(args: DecompileArgs) -> Result<GeneratedAgent, AwareError> {
     let agent = invoke("decompile", &args)?;
@@ -247,17 +276,27 @@ fn invoke<T: Serialize>(op: &str, args: &T) -> Result<SidecarAgent, AwareError> 
         .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no agent")))
 }
 
-/// Spawn the sidecar, send a request, return the raw `data` payload.
+/// Spawn the `aware-sidecar`, send a request, return the raw `data` payload.
 ///
 /// Lets callers pick whichever field of `ResponseData` matches their verb
 /// (`agent` for reflection verbs, `coverage` for coverage-generate, etc.).
 fn invoke_raw<T: Serialize>(op: &str, args: &T) -> Result<ResponseData, AwareError> {
     let bin = discover()?;
+    invoke_raw_with(&bin, op, args)
+}
+
+/// Spawn a specific helper binary (sidecar or roslyn), send one JSON request on stdin,
+/// and return the parsed `data` payload. Both tools share the request/response envelope.
+fn invoke_raw_with<T: Serialize>(
+    bin: &PathBuf,
+    op: &str,
+    args: &T,
+) -> Result<ResponseData, AwareError> {
     let request = Envelope { op, args };
     let body = serde_json::to_string(&request)
         .map_err(|e| AwareError::Internal(format!("serialize request: {e}")))?;
 
-    let mut child = Command::new(&bin)
+    let mut child = Command::new(bin)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())

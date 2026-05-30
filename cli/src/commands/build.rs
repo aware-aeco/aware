@@ -43,6 +43,13 @@ pub struct BuildAgentArgs {
     /// (v0.8.1) npm package spec: <pkg>@<version>. Reflects from TypeScript .d.ts files.
     #[arg(long = "from-npm")]
     pub from_npm: Option<String>,
+    /// (v0.53) C# source: a .cs file, directory, or glob. Reflected via the aware-roslyn reader.
+    #[arg(long = "from-csharp")]
+    pub from_csharp: Option<String>,
+    /// (v0.53) Extra reference-DLL directory for --from-csharp (repeatable); e.g. an SDK's
+    /// bin so base types and attributes resolve (lets the recipe fire on source).
+    #[arg(long = "reference-dir")]
+    pub reference_dir: Vec<String>,
     /// (v0.30) Build an agent from a host-coverage IR file.
     #[arg(long = "from-coverage")]
     pub from_coverage: Option<std::path::PathBuf>,
@@ -120,9 +127,11 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
         builder::yard::build_from_url_or_dir(s, id_override)?
     } else if let Some(s) = &args.from_npm {
         builder::npm::build_from_npm(s, id_override)?
+    } else if let Some(s) = &args.from_csharp {
+        builder::roslyn::build_from_csharp(s, &args.reference_dir, id_override)?
     } else {
         return Err(AwareError::Validation(
-            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard, --from-npm, --from-coverage".into()
+            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard, --from-npm, --from-csharp, --from-coverage".into()
         ));
     };
 
