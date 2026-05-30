@@ -69,7 +69,11 @@ public sealed record TypeRecord(
     IReadOnlyList<PropertyRecord> Properties,
     IReadOnlyList<EventRecord> Events,
     IReadOnlyList<FieldRecord> Fields,
-    string? DelegateInvokeSignature);
+    string? DelegateInvokeSignature)
+{
+    /// <summary>Custom attributes applied to this type (#180). Empty when none.</summary>
+    public IReadOnlyList<AttributeRecord> Attributes { get; init; } = Array.Empty<AttributeRecord>();
+}
 
 public enum TypeKind
 {
@@ -92,7 +96,11 @@ public sealed record MethodRecord(
     bool IsOperator,
     string ReturnType,
     IReadOnlyList<ParameterRecord> Parameters,
-    IReadOnlyList<string> GenericParameters);
+    IReadOnlyList<string> GenericParameters)
+{
+    /// <summary>Custom attributes applied to this method (#180). Empty when none.</summary>
+    public IReadOnlyList<AttributeRecord> Attributes { get; init; } = Array.Empty<AttributeRecord>();
+}
 
 public sealed record ParameterRecord(
     string Name,
@@ -110,7 +118,11 @@ public sealed record PropertyRecord(
     bool HasGetter,
     bool HasSetter,
     bool IsStatic,
-    IReadOnlyList<ParameterRecord> IndexParameters);
+    IReadOnlyList<ParameterRecord> IndexParameters)
+{
+    /// <summary>Custom attributes applied to this property (#180). Empty when none.</summary>
+    public IReadOnlyList<AttributeRecord> Attributes { get; init; } = Array.Empty<AttributeRecord>();
+}
 
 public sealed record EventRecord(
     string Name,
@@ -124,7 +136,11 @@ public sealed record FieldRecord(
     bool IsStatic,
     bool IsLiteral,
     object? ConstantValue,
-    string? EnumUnderlyingValueLiteral);
+    string? EnumUnderlyingValueLiteral)
+{
+    /// <summary>Custom attributes applied to this field (#180). Empty when none.</summary>
+    public IReadOnlyList<AttributeRecord> Attributes { get; init; } = Array.Empty<AttributeRecord>();
+}
 
 public static class MetadataReflector
 {
@@ -353,7 +369,10 @@ public static class MetadataReflector
                 HasGetter: hasPublicGetter,
                 HasSetter: hasPublicSetter,
                 IsStatic: isStatic,
-                IndexParameters: indexParams));
+                IndexParameters: indexParams)
+            {
+                Attributes = AttributeReader.Read(mr, prop.GetCustomAttributes(), sigDecoder),
+            });
         }
         properties.Sort((a, b) => string.CompareOrdinal(a.Name, b.Name));
 
@@ -420,7 +439,10 @@ public static class MetadataReflector
                 IsStatic: isStatic,
                 IsLiteral: isLiteral,
                 ConstantValue: constValue,
-                EnumUnderlyingValueLiteral: underlyingLit));
+                EnumUnderlyingValueLiteral: underlyingLit)
+            {
+                Attributes = AttributeReader.Read(mr, fd.GetCustomAttributes(), sigDecoder),
+            });
         }
         // Preserve enum value declaration order — sort by underlying value when an enum,
         // otherwise alphabetic.
@@ -465,7 +487,10 @@ public static class MetadataReflector
             Properties: properties,
             Events: events,
             Fields: fields,
-            DelegateInvokeSignature: delegateInvokeSignature);
+            DelegateInvokeSignature: delegateInvokeSignature)
+        {
+            Attributes = AttributeReader.Read(mr, td.GetCustomAttributes(), sigDecoder),
+        };
     }
 
     static MethodRecord ReflectMethod(
@@ -577,7 +602,10 @@ public static class MetadataReflector
             IsOperator: isOperator,
             ReturnType: sig.ReturnType,
             Parameters: paramRecords,
-            GenericParameters: methodGenericNames);
+            GenericParameters: methodGenericNames)
+        {
+            Attributes = AttributeReader.Read(mr, md.GetCustomAttributes(), sigDecoder),
+        };
     }
 
     static string CtorDisplayName(string typeFullName, IReadOnlyList<ParameterRecord> ps, GenericContext? ctx = null)
