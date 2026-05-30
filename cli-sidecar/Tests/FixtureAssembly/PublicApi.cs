@@ -101,3 +101,57 @@ namespace FixtureAssembly.NavisworksLike
         public void Dispose() { }
     }
 }
+
+// ── Fixtures for #180 custom-attribute decoding ───────────────────────────────
+//
+// Exercises type / method / field custom-attribute extraction: positional + named
+// arguments, enum- and typeof()-valued arguments, and a cross-assembly (BCL)
+// attribute whose constructor is a MemberReference rather than a MethodDefinition.
+
+namespace FixtureAssembly.Attributed
+{
+    /// <summary>Demo enum used as a named attribute-argument value.</summary>
+    public enum DemoKind { Alpha = 0, Beta = 1 }
+
+    /// <summary>Byte-backed enum — exercises non-Int32 underlying-type resolution (#180).</summary>
+    public enum DemoByteKind : byte { Small = 1, Big = 200 }
+
+    /// <summary>Marker attribute used to verify positional + named argument decoding.</summary>
+    [System.AttributeUsage(System.AttributeTargets.All)]
+    public sealed class DemoMarkerAttribute : System.Attribute
+    {
+        /// <summary>Creates a marker with the given positional name.</summary>
+        public DemoMarkerAttribute(string name) { Name = name; }
+        /// <summary>The positional name.</summary>
+        public string Name { get; }
+        /// <summary>Named integer argument.</summary>
+        public int Order { get; set; }
+        /// <summary>Named enum argument.</summary>
+        public DemoKind Kind { get; set; }
+        /// <summary>Named byte-backed enum argument.</summary>
+        public DemoByteKind ByteKind { get; set; }
+        /// <summary>Named typeof() argument.</summary>
+        public System.Type? Target { get; set; }
+    }
+
+    /// <summary>A demo type whose type/method/field carry custom attributes.</summary>
+    [DemoMarker("widget", Order = 3)]
+    [System.ComponentModel.Description("a marked widget")]
+    public class MarkedWidget
+    {
+        /// <summary>A field carrying a field-level attribute.</summary>
+        [DemoMarker("field-marker")] public double Size;
+
+        /// <summary>A method carrying a method-level attribute with an enum named arg.</summary>
+        [DemoMarker("method-marker", Order = 7, Kind = DemoKind.Beta)]
+        public void Configure(int value) { }
+    }
+
+    /// <summary>Exercises a typeof()-valued named attribute argument.</summary>
+    [DemoMarker("typed", Target = typeof(MarkedWidget))]
+    public class TypedMarker { }
+
+    /// <summary>Exercises a byte-backed enum named attribute argument (#180 review).</summary>
+    [DemoMarker("bytey", ByteKind = DemoByteKind.Big)]
+    public class ByteMarked { }
+}

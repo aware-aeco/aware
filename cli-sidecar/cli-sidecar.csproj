@@ -75,6 +75,17 @@
     <PackageReference Include="JsonSchema.Net" Version="7.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!--
+      AwareReader: the shared "Reader" half of the build Reader/Recipe split (#180).
+      Holds the normalized IR (types/members/fields/attributes), the PE-metadata reader
+      (MetadataReflector, moved here from Ingest/Extractors/Common), the IR -> GeneratedAgent
+      synthesizer, and the recipe registry. Pure data transforms over System.Reflection.Metadata,
+      AOT/trim-clean — safe inside this NativeAOT binary.
+    -->
+    <ProjectReference Include="..\cli-reader\AwareReader.csproj" />
+  </ItemGroup>
+
   <!--
     Embed the two host-coverage schemas into the sidecar assembly so the
     `coverage-validate` verb can resolve them without the caller needing to know

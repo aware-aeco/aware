@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Text.Json;
 using AwareSidecar.Protocol;
+using AwareReader;
 
 namespace AwareSidecar.Headers;
 

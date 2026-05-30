@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.IO.Compression;
 using AwareSidecar.Protocol;
+using AwareReader;
 
 namespace AwareSidecar.Decompile;
 

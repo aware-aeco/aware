@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AwareSidecar.Protocol;
+using AwareReader;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("cli-sidecar.Tests")]
 

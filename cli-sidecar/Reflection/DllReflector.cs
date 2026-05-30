@@ -4,6 +4,7 @@ using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using AwareSidecar.Protocol;
+using AwareReader;
 
 namespace AwareSidecar.Reflection;
 

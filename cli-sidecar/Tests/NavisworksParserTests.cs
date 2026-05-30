@@ -14,6 +14,7 @@ using System.Xml.Linq;
 using AwareSidecar.Ingest;
 using AwareSidecar.Ingest.Extractors.Common;
 using AwareSidecar.Ingest.Extractors.Navisworks;
+using AwareReader;
 using Xunit;
 
 namespace AwareSidecar.Ingest.Tests;

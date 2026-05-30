@@ -15,6 +15,7 @@
 // AOT story to MetadataReflector.cs and XmlDocLoader.cs.
 
 using AwareSidecar.Ingest.Extractors.Common;
+using AwareReader;
 
 namespace AwareSidecar.Ingest.Extractors.Navisworks;
 

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Versioning;
 using Microsoft.Win32;
 using AwareSidecar.Protocol;
+using AwareReader;
 
 namespace AwareSidecar.Com;
 
