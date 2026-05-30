@@ -12,7 +12,9 @@ use std::process::{Command, Stdio};
 
 use serde::{Deserialize, Serialize};
 
-use crate::builder::{GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, now_iso};
+use crate::builder::{
+    GeneratedAgent, GeneratedCommand, GeneratedSkill, Provenance, now_iso, quote_yaml_scalar,
+};
 use crate::error::AwareError;
 
 /// Discover the C# reflection sidecar (`aware-sidecar`).
@@ -119,6 +121,23 @@ struct SidecarCommand {
     name: String,
     lifecycle: String,
     description: String,
+    /// Explicit read/write mode (recipe commands set `write`); `None` → infer from name.
+    #[serde(default)]
+    mode: Option<String>,
+    /// Declared inputs (recipe commands carry their parameter contract); empty for plain commands.
+    #[serde(default)]
+    inputs: Vec<SidecarInput>,
+}
+
+#[derive(Deserialize, Debug)]
+struct SidecarInput {
+    name: String,
+    #[serde(rename = "type")]
+    ty: String,
+    #[serde(default)]
+    optional: bool,
+    #[serde(default)]
+    default: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]
@@ -337,6 +356,27 @@ fn invoke_raw_with<T: Serialize>(
         .ok_or_else(|| AwareError::Validation(format!("sidecar {op} returned ok but no data")))
 }
 
+/// Render structured command inputs into the manifest's `inputs:` YAML body (the same
+/// `name:\n  type: …\n  required: …` shape the OpenAPI builder emits). Names, types and
+/// defaults are YAML-quoted so untrusted plug-in field names can't break the manifest.
+fn render_inputs_yaml(inputs: &[SidecarInput]) -> String {
+    let mut out = String::new();
+    for i in inputs {
+        out.push_str(&format!(
+            "{}:\n  type: {}\n",
+            quote_yaml_scalar(&i.name),
+            quote_yaml_scalar(&i.ty),
+        ));
+        if !i.optional {
+            out.push_str("  required: true\n");
+        }
+        if let Some(d) = &i.default {
+            out.push_str(&format!("  default: {}\n", quote_yaml_scalar(d)));
+        }
+    }
+    out
+}
+
 fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
     use std::collections::BTreeMap;
     let mut commands = BTreeMap::new();
@@ -346,8 +386,9 @@ fn to_local_agent(s: SidecarAgent, source_kind: &str) -> GeneratedAgent {
             GeneratedCommand {
                 lifecycle: c.lifecycle,
                 description: c.description,
-                inputs_yaml: String::new(),
+                inputs_yaml: render_inputs_yaml(&c.inputs),
                 outputs_yaml: String::new(),
+                mode: c.mode,
                 ..Default::default()
             },
         );

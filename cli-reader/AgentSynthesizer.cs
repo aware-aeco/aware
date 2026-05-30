@@ -1,4 +1,5 @@
 using System.Text;
+using AwareReader.Recipes;
 
 namespace AwareReader;
 
@@ -78,7 +79,7 @@ public static class AgentSynthesizer
             skills.Add(BuildNamespaceSkill(id, ns, safeNs, filename, typeList, options.DocSummaries));
         }
 
-        return new GeneratedAgent
+        var agent = new GeneratedAgent
         {
             Id = id,
             // The reflected SDK/package version (surfaced as the agent's sdk-target downstream).
@@ -90,6 +91,11 @@ public static class AgentSynthesizer
             Commands = commands.Values.ToArray(),
             Skills = skills.OrderBy(s => s.Filename, StringComparer.Ordinal).ToArray(),
         };
+
+        // Recipe pass: recognise ecosystem idioms (e.g. Tekla model plug-ins) and rewrite the
+        // default per-method projection into idiomatic commands. Runs identically for compiled
+        // (sidecar) and source (roslyn) inputs since both produce the same ReflectedSet.
+        return RecipeRegistry.Detect(set)?.Apply(set, agent) ?? agent;
     }
 
     private static GeneratedSkill BuildNamespaceSkill(

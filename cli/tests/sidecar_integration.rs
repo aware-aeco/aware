@@ -77,6 +77,70 @@ fn sidecar_e2e_reflects_fixture_dll_into_agent() {
     );
 }
 
+/// The Tekla recipe end-to-end (#180): reflecting the plug-in assembly + its data assembly
+/// together yields a single `insert-demo-plugin` write command with the cross-assembly
+/// `[StructuresField]` inputs, and the useless `demo-plugin-run` is gone.
+#[test]
+fn sidecar_e2e_tekla_recipe_emits_insert_command() {
+    let Some(sidecar) = sidecar_binary() else {
+        eprintln!("[skip] sidecar binary not found");
+        return;
+    };
+    let Some(fixture) = fixture_dll() else {
+        eprintln!("[skip] fixture DLL not found");
+        return;
+    };
+    let data = fixture.with_file_name("FixtureDataAssembly.dll");
+    if !data.is_file() {
+        eprintln!("[skip] FixtureDataAssembly.dll not found next to FixtureAssembly.dll");
+        return;
+    }
+
+    // Copy both DLLs into an isolated dir so --from-dlls reflects exactly the two-assembly graph.
+    let tmp = tempfile::tempdir().unwrap();
+    let bin = tmp.path().join("bin");
+    std::fs::create_dir_all(&bin).unwrap();
+    std::fs::copy(&fixture, bin.join("FixtureAssembly.dll")).unwrap();
+    std::fs::copy(&data, bin.join("FixtureDataAssembly.dll")).unwrap();
+    let aware = tmp.path().join("aware");
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .env("AWARE_SIDECAR", &sidecar)
+        .args(["build", "agent", "--from-dlls"])
+        .arg(&bin)
+        .args(["--output", "e2e-tekla"])
+        .assert()
+        .success();
+
+    let cmd_dir = aware.join("agents/e2e-tekla/commands");
+    assert!(
+        cmd_dir.join("insert-demo-plugin.md").is_file(),
+        "expected insert-demo-plugin command file"
+    );
+    assert!(
+        !cmd_dir.join("demo-plugin-run.md").is_file(),
+        "demo-plugin-run should have been replaced by the recipe"
+    );
+    let manifest = std::fs::read_to_string(aware.join("agents/e2e-tekla/manifest.yaml")).unwrap();
+    assert!(
+        manifest.contains("insert-demo-plugin"),
+        "manifest missing insert command:\n{manifest}"
+    );
+    assert!(
+        manifest.contains("mode: write"),
+        "insert command should be write mode:\n{manifest}"
+    );
+    // The cross-assembly StructuresField inputs landed in the manifest.
+    for field in ["length", "name", "count", "input-points"] {
+        assert!(
+            manifest.contains(field),
+            "manifest missing input '{field}':\n{manifest}"
+        );
+    }
+}
+
 #[test]
 fn sidecar_missing_binary_returns_not_found() {
     let tmp = tempfile::tempdir().unwrap();
