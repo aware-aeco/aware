@@ -29,7 +29,11 @@ pub struct Catalog {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CatalogAgent {
-    #[serde(rename = "display-name", skip_serializing_if = "Option::is_none", default)]
+    #[serde(
+        rename = "display-name",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub display_name: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none", default)]
     pub vendor: Option<String>,
@@ -43,11 +47,23 @@ pub struct CatalogVersion {
     pub description: String,
     pub status: String, // "available" | "planned"
     pub stateful: bool,
-    #[serde(rename = "sdk-target", skip_serializing_if = "Option::is_none", default)]
+    #[serde(
+        rename = "sdk-target",
+        skip_serializing_if = "Option::is_none",
+        default
+    )]
     pub sdk_target: Option<String>,
     pub transport: String, // "cli" | "app" | "rest" | "mcp" | "none"
+    /// TOTAL command count (curated + reflected). `commands` below lists only the
+    /// curated verbs — reflected (auto-generated leaf API) commands are summarized by
+    /// this count, not enumerated, to keep the catalog small (some agents reflect
+    /// 10k+ API methods). The full reflected surface is available via `describe`/grep
+    /// after install.
+    #[serde(default)]
+    pub command_count: usize,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub skills: Vec<String>,
+    /// CURATED commands only (the hand-authored workflow verbs).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub commands: Vec<CatalogCommand>,
 }
@@ -122,7 +138,12 @@ impl CatalogAgent {
                 .is_some_and(|m| m.to_lowercase().contains(&q));
             if name_m || method_m {
                 hits.push(Hit {
-                    kind: if method_m && !name_m { "method" } else { "command" }.to_string(),
+                    kind: if method_m && !name_m {
+                        "method"
+                    } else {
+                        "command"
+                    }
+                    .to_string(),
                     name: c.name.clone(),
                     description: c.description.clone(),
                 });
@@ -181,11 +202,14 @@ fn transport_str(t: &Transport) -> &'static str {
     }
 }
 
-/// Project a loaded agent manifest into a catalog version entry.
+/// Project a loaded agent manifest into a catalog version entry. Only CURATED
+/// commands are enumerated (the meaningful verbs); reflected commands are counted
+/// via `command_count` but not listed — they can number in the tens of thousands.
 fn version_from_agent(a: &Agent) -> CatalogVersion {
     let commands = a
         .commands
         .iter()
+        .filter(|(_, c): &(&String, &Command)| a.category_of(c) == Category::Curated)
         .map(|(name, c): (&String, &Command)| CatalogCommand {
             name: name.clone(),
             description: first_line(&c.description),
@@ -202,6 +226,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
         stateful: a.stateful,
         sdk_target: a.sdk_target.clone(),
         transport: transport_str(&a.transport).to_string(),
+        command_count: a.command_count(),
         // Skills are referenced by name; strip a `.md` suffix for display consistency.
         skills: a
             .skills
@@ -267,7 +292,12 @@ where
 /// substring terms). Returns `None` when nothing matches. `capability` mode
 /// scores ONLY command names/methods + skills (functionality search), ignoring
 /// id/name/keywords/description.
-pub fn score_agent(query: &str, id: &str, a: &CatalogAgent, capability: bool) -> Option<SearchMatch> {
+pub fn score_agent(
+    query: &str,
+    id: &str,
+    a: &CatalogAgent,
+    capability: bool,
+) -> Option<SearchMatch> {
     let q = query.to_lowercase();
     let terms: Vec<&str> = q.split_whitespace().filter(|t| !t.is_empty()).collect();
     if terms.is_empty() {
@@ -304,8 +334,7 @@ pub fn score_agent(query: &str, id: &str, a: &CatalogAgent, capability: bool) ->
 
     let cmd_weight = if capability { 10 } else { 4 };
     for c in &v.commands {
-        let name_or_method =
-            any(&c.name) || c.method.as_deref().is_some_and(any);
+        let name_or_method = any(&c.name) || c.method.as_deref().is_some_and(any);
         if name_or_method {
             score += cmd_weight;
             if !matched.iter().any(|m| m == "command") {
@@ -399,8 +428,14 @@ mod tests {
         });
         assert!(errs.is_empty());
         let a = cat.agents.get("tekla").unwrap();
-        assert!(a.versions.contains_key("2025.0.1"), "uses the index version key");
-        assert!(!a.versions.contains_key("9.9.9"), "NOT the manifest.version");
+        assert!(
+            a.versions.contains_key("2025.0.1"),
+            "uses the index version key"
+        );
+        assert!(
+            !a.versions.contains_key("9.9.9"),
+            "NOT the manifest.version"
+        );
     }
 
     #[test]
@@ -416,7 +451,11 @@ mod tests {
         assert!(cat.agents.contains_key("good"));
         assert!(!cat.agents.contains_key("bad"), "bad agent dropped");
         assert_eq!(errs.len(), 1);
-        assert!(errs[0].0.contains("bad"), "the failure is reported: {:?}", errs);
+        assert!(
+            errs[0].0.contains("bad"),
+            "the failure is reported: {:?}",
+            errs
+        );
     }
 
     fn sample_catalog() -> Catalog {
@@ -447,7 +486,11 @@ mod tests {
         let t = c.agents.get("tekla").unwrap();
         assert!(!t.capability_hits("run-macro").is_empty(), "command name");
         assert_eq!(t.capability_hits("GET")[0].kind, "method", "http method");
-        assert_eq!(t.capability_hits("connection")[0].kind, "skill", "skill substring");
+        assert_eq!(
+            t.capability_hits("connection")[0].kind,
+            "skill",
+            "skill substring"
+        );
         assert!(t.capability_hits("nonexistent").is_empty());
         assert!(t.capability_hits("").is_empty());
     }
@@ -458,9 +501,17 @@ mod tests {
         let t = c.agents.get("tekla").unwrap();
         let by_id = score_agent("tekla", "tekla", t, false).unwrap().score;
         let by_desc = score_agent("detailing", "tekla", t, false).unwrap().score;
-        let by_skill = score_agent("drawing-identity", "tekla", t, false).unwrap().score;
-        assert!(by_id > by_desc, "id {by_id} should outrank description {by_desc}");
-        assert!(by_desc > by_skill, "description {by_desc} should outrank skill {by_skill}");
+        let by_skill = score_agent("drawing-identity", "tekla", t, false)
+            .unwrap()
+            .score;
+        assert!(
+            by_id > by_desc,
+            "id {by_id} should outrank description {by_desc}"
+        );
+        assert!(
+            by_desc > by_skill,
+            "description {by_desc} should outrank skill {by_skill}"
+        );
         assert!(score_agent("zzzznomatch", "tekla", t, false).is_none());
     }
 

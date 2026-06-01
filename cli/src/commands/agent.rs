@@ -709,7 +709,7 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
                     display_name: a.display_name.as_deref(),
                     version: ver,
                     status: &v.status,
-                    commands: v.commands.len(),
+                    commands: v.command_count,
                     skills: v.skills.len(),
                     description: &v.description,
                 })
@@ -719,7 +719,15 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
         return Ok(());
     }
 
-    let mut t = Table::new(["ID", "NAME", "VERSION", "STATUS", "CMDS", "SKILLS", "DESCRIPTION"]);
+    let mut t = Table::new([
+        "ID",
+        "NAME",
+        "VERSION",
+        "STATUS",
+        "CMDS",
+        "SKILLS",
+        "DESCRIPTION",
+    ]);
     for (id, a) in &catalog.agents {
         if let Some((ver, v)) = a.latest() {
             t.row([
@@ -727,7 +735,7 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
                 a.display_name.clone().unwrap_or_default(),
                 ver.clone(),
                 v.status.clone(),
-                v.commands.len().to_string(),
+                v.command_count.to_string(),
                 v.skills.len().to_string(),
                 v.description.clone(),
             ]);
@@ -869,11 +877,7 @@ fn has_cmd(ctx: &Context, agent_id: &str, capability: &str) -> Result<(), AwareE
         println!("✗ {agent_id} does not expose '{capability}'.");
     }
 
-    if found {
-        Ok(())
-    } else {
-        flush_exit(1)
-    }
+    if found { Ok(()) } else { flush_exit(1) }
 }
 
 /// `aware agent reindex` — regenerate registry-catalog.json from the index × manifests.
@@ -924,7 +928,10 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         cat.agents.len()
     );
     if !errors.is_empty() {
-        eprintln!("⚠ {} agent(s) skipped (manifest load failed):", errors.len());
+        eprintln!(
+            "⚠ {} agent(s) skipped (manifest load failed):",
+            errors.len()
+        );
         for (id, e) in &errors {
             eprintln!("  ✗ {id}: {e}");
         }
@@ -937,7 +944,11 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
 }
 
 /// `aware agent describe <agent> --available` — describe a not-installed agent from the catalog.
-fn describe_from_catalog(ctx: &Context, agent_id: &str, started: Instant) -> Result<(), AwareError> {
+fn describe_from_catalog(
+    ctx: &Context,
+    agent_id: &str,
+    started: Instant,
+) -> Result<(), AwareError> {
     let Some(catalog) = load_catalog(ctx)? else {
         return Ok(());
     };
@@ -964,6 +975,8 @@ fn describe_from_catalog(ctx: &Context, agent_id: &str, started: Instant) -> Res
             #[serde(skip_serializing_if = "Option::is_none")]
             vendor: Option<&'a str>,
             transport: &'a str,
+            /// Total commands (curated + reflected); `commands` lists curated only.
+            command_count: usize,
             commands: &'a [catalog::CatalogCommand],
             skills: &'a [String],
         }
@@ -977,6 +990,7 @@ fn describe_from_catalog(ctx: &Context, agent_id: &str, started: Instant) -> Res
             stateful: v.stateful,
             vendor: agent.vendor.as_deref(),
             transport: &v.transport,
+            command_count: v.command_count,
             commands: &v.commands,
             skills: &v.skills,
         };
@@ -997,10 +1011,23 @@ fn describe_from_catalog(ctx: &Context, agent_id: &str, started: Instant) -> Res
     }
     println!("transport:    {}", v.transport);
     println!();
-    println!("commands ({}):", v.commands.len());
+    let reflected = v.command_count.saturating_sub(v.commands.len());
+    if reflected > 0 {
+        println!(
+            "commands ({} total · {} curated · {} reflected not listed — `aware agent install {agent_id}` then `describe` for the full surface):",
+            v.command_count,
+            v.commands.len(),
+            reflected
+        );
+    } else {
+        println!("commands ({}):", v.command_count);
+    }
     for c in &v.commands {
         let star = if c.category == "curated" { "★" } else { " " };
-        println!("  {star} {:<20} {:<8} {}", c.name, c.lifecycle, c.description);
+        println!(
+            "  {star} {:<20} {:<8} {}",
+            c.name, c.lifecycle, c.description
+        );
     }
     println!();
     println!("skills ({}):", v.skills.len());

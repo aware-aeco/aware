@@ -4,8 +4,8 @@ use std::path::Path;
 use std::time::{Duration, SystemTime};
 
 use crate::error::AwareError;
-use crate::registry::catalog::Catalog;
 use crate::registry::Index;
+use crate::registry::catalog::Catalog;
 
 /// Default location of the AWARE registry index. Override via `AWARE_REGISTRY`.
 pub const DEFAULT_REGISTRY_URL: &str =
@@ -74,10 +74,11 @@ fn fetch_catalog_body(source: &str) -> Result<Option<String>, AwareError> {
         };
     }
     match ureq::get(source).timeout(Duration::from_secs(20)).call() {
-        Ok(resp) => Ok(Some(
-            resp.into_string()
-                .map_err(|e| AwareError::Network(format!("read body: {e}")))?,
-        )),
+        Ok(resp) => {
+            Ok(Some(resp.into_string().map_err(|e| {
+                AwareError::Network(format!("read body: {e}"))
+            })?))
+        }
         Err(ureq::Error::Status(404, _)) => Ok(None),
         Err(e) => Err(AwareError::Network(format!("GET {source}: {e}"))),
     }
