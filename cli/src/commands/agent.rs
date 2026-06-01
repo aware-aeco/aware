@@ -12,7 +12,10 @@ use serde::Serialize;
 use crate::context::Context;
 use crate::envelope;
 use crate::error::AwareError;
+use crate::manifest::agent::Agent;
 use crate::manifest::loader::discover_agents;
+use crate::registry::catalog::{self, Catalog};
+use crate::registry::fetch::fetch_catalog;
 use crate::render::table::Table;
 
 #[derive(Subcommand, Debug)]
@@ -20,9 +23,15 @@ pub enum AgentCommand {
     /// Print a table of installed agents.
     List,
     /// Print an agent's manifest summary + skill index + command list.
+    ///
+    /// Reads the INSTALLED agent; pass `--available` (or describe an agent that
+    /// isn't installed) to read it from the registry catalog instead.
     Describe {
         /// Agent id (e.g. `tekla`, `trimble-connect`).
         agent: String,
+        /// Describe a not-yet-installed agent from the registry catalog.
+        #[arg(long)]
+        available: bool,
     },
     /// Print a skill's content.
     Skill {
@@ -56,12 +65,45 @@ pub enum AgentCommand {
     },
     /// Open a PR to the GitHub registry. (v0.2+)
     Publish { path: std::path::PathBuf },
+
+    /// Browse ALL available agents from the registry catalog (not just installed).
+    Catalog,
+    /// Search available agents by functionality — name, description, commands, skills.
+    Search {
+        /// Free-text query; whitespace-separated terms (case-insensitive substring).
+        query: String,
+        /// Bias matching to command names/methods only ("does an agent DO this?").
+        #[arg(long)]
+        capability: bool,
+    },
+    /// Check whether an agent exposes a capability (a command/method/skill).
+    ///
+    /// Scriptable checkpoint: prints the matching command(s)/skill(s) and exits 0
+    /// if found, non-zero if not. Reads the catalog, so it works for not-yet-
+    /// installed agents.
+    Has {
+        /// Agent id.
+        agent: String,
+        /// Capability to look for (a command name, HTTP method, or skill).
+        capability: String,
+    },
+    /// Regenerate `registry-catalog.json` from the index × on-disk manifests.
+    ///
+    /// Run inside an aware checkout (one containing `registry-index.json`). The
+    /// catalog is the searchable sidecar powering `catalog`/`search`/`has`/
+    /// `describe --available`.
+    Reindex {
+        /// Verify the on-disk catalog is current without writing it (CI). Exit
+        /// non-zero if stale.
+        #[arg(long)]
+        check: bool,
+    },
 }
 
 pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AgentCommand::List => list(ctx),
-        AgentCommand::Describe { agent } => describe(ctx, &agent),
+        AgentCommand::Describe { agent, available } => describe(ctx, &agent, available),
         AgentCommand::Skill { agent, skill } => skill_cmd(ctx, &agent, &skill),
         AgentCommand::Install { spec } => install(ctx, &spec),
         AgentCommand::Uninstall { agent } => {
@@ -74,6 +116,10 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
         AgentCommand::Update { agent, all } => update(ctx, agent.as_deref(), all),
         AgentCommand::Validate { path } => validate_cmd(ctx, &path),
         AgentCommand::Publish { path } => publish(ctx, &path),
+        AgentCommand::Catalog => catalog_cmd(ctx),
+        AgentCommand::Search { query, capability } => search_cmd(ctx, &query, capability),
+        AgentCommand::Has { agent, capability } => has_cmd(ctx, &agent, &capability),
+        AgentCommand::Reindex { check } => reindex(ctx, check),
     }
 }
 
@@ -393,14 +439,29 @@ struct AgentListData {
     agents: Vec<AgentListRow>,
 }
 
-fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
+fn describe(ctx: &Context, agent_id: &str, available: bool) -> Result<(), AwareError> {
     let started = Instant::now();
+    // `--available` reads the registry catalog (a not-yet-installed agent). Without it,
+    // `describe` is installed-only and keeps its not-found = exit-7 contract — but the
+    // error points at `--available` so a user who meant the catalog gets unstuck.
+    if available {
+        return describe_from_catalog(ctx, agent_id, started);
+    }
     let discovered = discover_agents(&ctx.paths)?;
     let d = discovered
         .into_iter()
         .find(|d| d.manifest.agent == agent_id)
-        .ok_or_else(|| AwareError::NotFound(format!("agent: {agent_id}")))?;
+        .ok_or_else(|| {
+            AwareError::NotFound(format!(
+                "agent '{agent_id}' is not installed — try \
+                 `aware agent describe {agent_id} --available` to view it in the registry catalog"
+            ))
+        })?;
+    describe_installed(ctx, &d.manifest, started)
+}
 
+/// Render an INSTALLED agent's manifest.
+fn describe_installed(ctx: &Context, m: &Agent, started: Instant) -> Result<(), AwareError> {
     if ctx.json {
         #[derive(Serialize)]
         struct CommandRow {
@@ -428,39 +489,37 @@ fn describe(ctx: &Context, agent_id: &str) -> Result<(), AwareError> {
             reflected_count: usize,
         }
 
-        let cmds: Vec<CommandRow> = d
-            .manifest
+        let cmds: Vec<CommandRow> = m
             .commands
             .iter()
             .map(|(n, c)| CommandRow {
                 name: n.clone(),
                 lifecycle: format!("{:?}", c.lifecycle).to_lowercase(),
-                category: format!("{:?}", d.manifest.category_of(c)).to_lowercase(),
+                category: format!("{:?}", m.category_of(c)).to_lowercase(),
                 description: c.description.clone(),
             })
             .collect();
 
         let data = DescribeData {
-            agent: &d.manifest.agent,
-            version: &d.manifest.version,
-            sdk_target: d.manifest.sdk_target.as_deref(),
-            display_name: d.manifest.display_name.as_deref(),
-            description: &d.manifest.description,
-            stateful: d.manifest.stateful,
-            license: &d.manifest.license,
-            vendor: d.manifest.vendor.as_deref(),
-            command_count: d.manifest.command_count(),
-            skill_count: d.manifest.skill_count(),
-            curated_count: d.manifest.curated_count(),
-            reflected_count: d.manifest.reflected_count(),
+            agent: &m.agent,
+            version: &m.version,
+            sdk_target: m.sdk_target.as_deref(),
+            display_name: m.display_name.as_deref(),
+            description: &m.description,
+            stateful: m.stateful,
+            license: &m.license,
+            vendor: m.vendor.as_deref(),
+            command_count: m.command_count(),
+            skill_count: m.skill_count(),
+            curated_count: m.curated_count(),
+            reflected_count: m.reflected_count(),
             commands: cmds,
-            skills: &d.manifest.skills,
+            skills: &m.skills,
         };
         envelope::print_ok("agent describe", data, started).ok();
         return Ok(());
     }
 
-    let m = &d.manifest;
     println!("agent:        {}", m.agent);
     println!("version:      {}", m.version);
     if let Some(sdk) = &m.sdk_target {
@@ -590,4 +649,463 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     }
     print!("{}", t.render());
     Ok(())
+}
+
+// ── Available-agent catalog (browse / search / capability / regenerate) ───────
+
+/// Flush stdout, then exit — so a piped checkpoint (`aware agent has …`) never
+/// drops its block-buffered output when exiting non-zero.
+fn flush_exit(code: i32) -> ! {
+    use std::io::Write;
+    let _ = std::io::stdout().flush();
+    std::process::exit(code);
+}
+
+/// Fetch the catalog; when this registry has no catalog yet, print clean guidance
+/// (a valid JSON envelope under `--json`) and return `Ok(None)` so the caller stops.
+fn load_catalog(ctx: &Context) -> Result<Option<Catalog>, AwareError> {
+    match fetch_catalog(&ctx.paths.cache_dir())? {
+        Some(c) => Ok(Some(c)),
+        None => {
+            if ctx.json {
+                // Keep --json output parseable even when the catalog is absent.
+                println!(
+                    "{}",
+                    serde_json::json!({
+                        "ok": false,
+                        "error": "no agent catalog available for this registry",
+                        "hint": "update AWARE (npm i -g @aware-aeco/cli@latest) or run `aware agent reindex`"
+                    })
+                );
+            } else {
+                println!(
+                    "No agent catalog is available for this registry yet.\n\
+                     Update AWARE (`npm i -g @aware-aeco/cli@latest`), or — inside an aware\n\
+                     checkout — run `aware agent reindex` to generate registry-catalog.json."
+                );
+            }
+            Ok(None)
+        }
+    }
+}
+
+/// `aware agent catalog` — every available agent (latest version) from the catalog.
+fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let Some(catalog) = load_catalog(ctx)? else {
+        return Ok(());
+    };
+
+    if ctx.json {
+        #[derive(Serialize)]
+        struct Row<'a> {
+            id: &'a str,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            display_name: Option<&'a str>,
+            version: &'a str,
+            status: &'a str,
+            commands: usize,
+            skills: usize,
+            description: &'a str,
+        }
+        #[derive(Serialize)]
+        struct Data<'a> {
+            agents: Vec<Row<'a>>,
+        }
+        let rows: Vec<Row> = catalog
+            .agents
+            .iter()
+            .filter_map(|(id, a)| {
+                a.latest().map(|(ver, v)| Row {
+                    id,
+                    display_name: a.display_name.as_deref(),
+                    version: ver,
+                    status: &v.status,
+                    commands: v.command_count,
+                    skills: v.skills.len(),
+                    description: &v.description,
+                })
+            })
+            .collect();
+        envelope::print_ok("agent catalog", Data { agents: rows }, started).ok();
+        return Ok(());
+    }
+
+    let mut t = Table::new([
+        "ID",
+        "NAME",
+        "VERSION",
+        "STATUS",
+        "CMDS",
+        "SKILLS",
+        "DESCRIPTION",
+    ]);
+    for (id, a) in &catalog.agents {
+        if let Some((ver, v)) = a.latest() {
+            t.row([
+                id.clone(),
+                a.display_name.clone().unwrap_or_default(),
+                ver.clone(),
+                v.status.clone(),
+                v.command_count.to_string(),
+                v.skills.len().to_string(),
+                v.description.clone(),
+            ]);
+        }
+    }
+    print!("{}", t.render());
+    println!(
+        "\n{} agents available · `aware agent describe <id> --available` for details, \
+         `aware agent install <id>` to install",
+        catalog.agents.len()
+    );
+    Ok(())
+}
+
+/// `aware agent search <query>` — rank available agents by functionality.
+fn search_cmd(ctx: &Context, query: &str, capability: bool) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let Some(catalog) = load_catalog(ctx)? else {
+        return Ok(());
+    };
+    let hits = catalog::search(&catalog, query, capability);
+
+    if ctx.json {
+        #[derive(Serialize)]
+        struct Data<'a> {
+            query: &'a str,
+            capability: bool,
+            results: &'a [catalog::SearchMatch],
+        }
+        envelope::print_ok(
+            "agent search",
+            Data {
+                query,
+                capability,
+                results: &hits,
+            },
+            started,
+        )
+        .ok();
+        return Ok(());
+    }
+
+    if hits.is_empty() {
+        println!("No available agents match \"{query}\".");
+        return Ok(());
+    }
+    println!(
+        "{} match{} for \"{query}\"{}:",
+        hits.len(),
+        if hits.len() == 1 { "" } else { "es" },
+        if capability { " (capability)" } else { "" }
+    );
+    for h in &hits {
+        let a = catalog.agents.get(&h.id);
+        let name = a.and_then(|a| a.display_name.as_deref()).unwrap_or("");
+        let desc = a
+            .and_then(|a| a.latest())
+            .map(|(_, v)| v.description.as_str())
+            .unwrap_or("");
+        if name.is_empty() {
+            println!("\n  {}", h.id);
+        } else {
+            println!("\n  {} — {name}", h.id);
+        }
+        if !desc.is_empty() {
+            println!("    {desc}");
+        }
+        println!("    matched: {}", h.matched.join(", "));
+        if let Some(s) = &h.snippet {
+            println!("    {s}");
+        }
+    }
+    println!("\nInstall one with `aware agent install <id>`.");
+    Ok(())
+}
+
+/// `aware agent has <agent> <capability>` — scriptable capability checkpoint.
+fn has_cmd(ctx: &Context, agent_id: &str, capability: &str) -> Result<(), AwareError> {
+    let started = Instant::now();
+    let Some(catalog) = load_catalog(ctx)? else {
+        flush_exit(2); // no catalog → can't answer
+    };
+    let Some(agent) = catalog.agents.get(agent_id) else {
+        if ctx.json {
+            #[derive(Serialize)]
+            struct D<'a> {
+                agent: &'a str,
+                found: bool,
+                error: &'a str,
+            }
+            envelope::print_ok(
+                "agent has",
+                D {
+                    agent: agent_id,
+                    found: false,
+                    error: "agent not in catalog",
+                },
+                started,
+            )
+            .ok();
+        } else {
+            println!("✗ '{agent_id}' is not in the registry catalog.");
+        }
+        flush_exit(1);
+    };
+
+    let hits = agent.capability_hits(capability);
+    let found = !hits.is_empty();
+
+    if ctx.json {
+        #[derive(Serialize)]
+        struct D<'a> {
+            agent: &'a str,
+            capability: &'a str,
+            found: bool,
+            hits: &'a [catalog::Hit],
+        }
+        envelope::print_ok(
+            "agent has",
+            D {
+                agent: agent_id,
+                capability,
+                found,
+                hits: &hits,
+            },
+            started,
+        )
+        .ok();
+    } else if found {
+        println!("✓ {agent_id} exposes '{capability}':");
+        for h in &hits {
+            if h.description.is_empty() {
+                println!("  [{}] {}", h.kind, h.name);
+            } else {
+                println!("  [{}] {} — {}", h.kind, h.name, h.description);
+            }
+        }
+    } else {
+        println!("✗ {agent_id} does not expose '{capability}'.");
+    }
+
+    if found { Ok(()) } else { flush_exit(1) }
+}
+
+/// `aware agent reindex` — regenerate registry-catalog.json from the index × manifests.
+fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
+    let _ = ctx;
+    let index_path = find_index_path().ok_or_else(|| {
+        AwareError::Validation(
+            "no registry-index.json found — run `aware agent reindex` inside an aware checkout"
+                .into(),
+        )
+    })?;
+    let repo_root = index_path
+        .parent()
+        .unwrap_or_else(|| std::path::Path::new("."))
+        .to_path_buf();
+    let index = crate::registry::Index::parse(std::fs::File::open(&index_path)?)?;
+
+    let (cat, errors) = catalog::build_catalog(&index, crate::builder::now_iso(), |subdir| {
+        let rel = subdir.strip_prefix("aware-main/").unwrap_or(subdir);
+        let manifest = repo_root.join(rel).join("manifest.yaml");
+        crate::manifest::loader::load_agent(&manifest)
+    });
+
+    // Refuse to emit (or pass --check on) a partial catalog: a manifest that fails to load is a
+    // real problem to fix, not something to silently drop from the published catalog.
+    if !errors.is_empty() {
+        eprintln!("⚠ {} agent(s) failed to load:", errors.len());
+        for (id, e) in &errors {
+            eprintln!("  ✗ {id}: {e}");
+        }
+        return Err(AwareError::Validation(format!(
+            "{} agent(s) failed to load — fix the manifest(s) and re-run",
+            errors.len()
+        )));
+    }
+
+    let mut out = serde_json::to_string_pretty(&cat)
+        .map_err(|e| AwareError::Validation(format!("serialize catalog: {e}")))?;
+    out.push('\n');
+    let catalog_path = repo_root.join("registry-catalog.json");
+
+    if check {
+        // Compare CONTENT, not bytes: ignore `updated-at` (a fresh timestamp every run) and
+        // whitespace/line-ending differences (git may rewrite LF↔CRLF on the committed file).
+        let current = std::fs::read_to_string(&catalog_path).unwrap_or_default();
+        if catalog_content_eq(&out, &current) {
+            println!(
+                "✓ registry-catalog.json is up to date ({} agents)",
+                cat.agents.len()
+            );
+            return Ok(());
+        }
+        return Err(AwareError::Validation(
+            "registry-catalog.json is stale — run `aware agent reindex` and commit the result"
+                .into(),
+        ));
+    }
+
+    std::fs::write(&catalog_path, &out)?;
+    println!(
+        "✓ wrote {} ({} agents)",
+        catalog_path.display(),
+        cat.agents.len()
+    );
+    Ok(())
+}
+
+/// Two serialized catalogs are "the same" iff they're equal as JSON once the
+/// volatile `updated-at` timestamp is dropped — so `reindex --check` ignores the
+/// per-run timestamp and JSON-insignificant whitespace / line-ending churn.
+fn catalog_content_eq(a: &str, b: &str) -> bool {
+    fn normalized(s: &str) -> Option<serde_json::Value> {
+        let mut v: serde_json::Value = serde_json::from_str(s).ok()?;
+        if let Some(obj) = v.as_object_mut() {
+            obj.remove("updated-at");
+        }
+        Some(v)
+    }
+    match (normalized(a), normalized(b)) {
+        (Some(x), Some(y)) => x == y,
+        _ => false, // an unparseable on-disk catalog counts as stale
+    }
+}
+
+/// `aware agent describe <agent> --available` — describe a not-installed agent from the catalog.
+fn describe_from_catalog(
+    ctx: &Context,
+    agent_id: &str,
+    started: Instant,
+) -> Result<(), AwareError> {
+    let Some(catalog) = load_catalog(ctx)? else {
+        return Ok(());
+    };
+    let agent = catalog.agents.get(agent_id).ok_or_else(|| {
+        AwareError::NotFound(format!(
+            "agent '{agent_id}' is not installed and not in the registry catalog"
+        ))
+    })?;
+    let (ver, v) = agent.latest().ok_or_else(|| {
+        AwareError::NotFound(format!("agent '{agent_id}' has no versions in the catalog"))
+    })?;
+
+    if ctx.json {
+        #[derive(Serialize)]
+        struct D<'a> {
+            agent: &'a str,
+            installed: bool,
+            version: &'a str,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            display_name: Option<&'a str>,
+            description: &'a str,
+            status: &'a str,
+            stateful: bool,
+            #[serde(skip_serializing_if = "Option::is_none")]
+            vendor: Option<&'a str>,
+            transport: &'a str,
+            /// Total commands (curated + reflected); `commands` lists curated only.
+            command_count: usize,
+            commands: &'a [catalog::CatalogCommand],
+            skills: &'a [String],
+        }
+        let data = D {
+            agent: agent_id,
+            installed: false,
+            version: ver,
+            display_name: agent.display_name.as_deref(),
+            description: &v.description,
+            status: &v.status,
+            stateful: v.stateful,
+            vendor: agent.vendor.as_deref(),
+            transport: &v.transport,
+            command_count: v.command_count,
+            commands: &v.commands,
+            skills: &v.skills,
+        };
+        envelope::print_ok("agent describe", data, started).ok();
+        return Ok(());
+    }
+
+    println!("agent:        {agent_id}  (from registry catalog — not installed)");
+    println!("version:      {ver}");
+    if let Some(dn) = &agent.display_name {
+        println!("display-name: {dn}");
+    }
+    println!("description:  {}", v.description);
+    println!("status:       {}", v.status);
+    println!("stateful:     {}", v.stateful);
+    if let Some(vd) = &agent.vendor {
+        println!("vendor:       {vd}");
+    }
+    println!("transport:    {}", v.transport);
+    println!();
+    let reflected = v.command_count.saturating_sub(v.commands.len());
+    if reflected > 0 {
+        println!(
+            "commands ({} total · {} curated · {} reflected not listed — `aware agent install {agent_id}` then `describe` for the full surface):",
+            v.command_count,
+            v.commands.len(),
+            reflected
+        );
+    } else {
+        println!("commands ({}):", v.command_count);
+    }
+    for c in &v.commands {
+        let star = if c.category == "curated" { "★" } else { " " };
+        println!(
+            "  {star} {:<20} {:<8} {}",
+            c.name, c.lifecycle, c.description
+        );
+    }
+    println!();
+    println!("skills ({}):", v.skills.len());
+    for s in &v.skills {
+        println!("  - {s}");
+    }
+    println!();
+    println!("Install with `aware agent install {agent_id}`.");
+    Ok(())
+}
+
+/// Walk up from the cwd for `registry-index.json`; return its path if found.
+fn find_index_path() -> Option<std::path::PathBuf> {
+    let mut dir: Option<std::path::PathBuf> = std::env::current_dir().ok();
+    while let Some(d) = dir {
+        let candidate = d.join("registry-index.json");
+        if candidate.is_file() {
+            return Some(candidate);
+        }
+        dir = d.parent().map(|p| p.to_path_buf());
+    }
+    None
+}
+
+#[cfg(test)]
+mod catalog_check_tests {
+    use super::catalog_content_eq;
+
+    #[test]
+    fn content_eq_ignores_timestamp_and_whitespace() {
+        let compact = r#"{"version":"1.0","updated-at":"2026-01-01T00:00:00Z","agents":{"x":{"versions":{}}}}"#;
+        // Same content, different timestamp + pretty whitespace + trailing newline (CRLF-ish churn).
+        let pretty = "{\n  \"version\": \"1.0\",\n  \"updated-at\": \"2026-06-01T12:34:56Z\",\n  \"agents\": { \"x\": { \"versions\": {} } }\n}\n";
+        assert!(
+            catalog_content_eq(compact, pretty),
+            "only updated-at/whitespace differ → up to date"
+        );
+    }
+
+    #[test]
+    fn content_eq_detects_real_drift() {
+        let a = r#"{"version":"1.0","updated-at":"t","agents":{"x":{"versions":{}}}}"#;
+        let b = r#"{"version":"1.0","updated-at":"t","agents":{"y":{"versions":{}}}}"#;
+        assert!(!catalog_content_eq(a, b), "different agents → stale");
+        assert!(
+            !catalog_content_eq(a, "not json"),
+            "unparseable on-disk catalog → stale"
+        );
+    }
 }

@@ -58,8 +58,9 @@ fn json_output_returns_envelope() {
     // The fixture mirrors every `manifest.yaml` under `20-agents/` (keyed by unique `agent:` id).
     // Count grew 57 (v0.28) → 63 (v0.29 vendor coverage) → 64 (the generic `http` agent, #101)
     //              → 65 (bcf-file + ifc-inspector curated to v0.2.0, PR #93)
-    //              → 67 (tekla plugin-SDK agents, PR #149).
-    // A strict equality keeps this honest — bump it whenever a new agent lands.
-    assert_eq!(agents.len(), 67);
+    //              → 67 (tekla plugin-SDK agents, PR #149)
+    //              → 66 (idea-statica-25.0/26.0 retired; registry 1:1 with tree, #187).
+    // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
+    assert_eq!(agents.len(), 66);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
 }
