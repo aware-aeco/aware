@@ -1,7 +1,7 @@
-agent:        allplan-2024.0
+agent:        allplan-2024
 version:      0.30.0
 sdk-target:   2024.0
-display-name: allplan-2024.0 (raw — 612 types, full coverage)
+display-name: allplan-2024 (raw — 612 types, full coverage)
 
 description: |
   Auto-generated from vendor docs (scrape: https://pythonparts.allplan.com/2024/sitemap.xml)

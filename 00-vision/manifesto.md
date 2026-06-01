@@ -13,11 +13,11 @@ The nine structural truths it rests on are in **[the decalog](./decalog.md)**. I
 ```bash
 $ npm install -g @aware-aeco/cli
   ✓ aware CLI installed
-  ✓ 11 AECO agents available via `aware agent install`
+  ✓ 66 AECO agents available via `aware agent install`
   ✓ aware-aeco plugin registered with: claude-code, codex
 
 $ claude-code
-  ✓ plugin: aware-aeco · 11 agents available
+  ✓ plugin: aware-aeco · 66 agents available
 
 > Watch this Tekla model. When a welded assembly appears,
 > upload its drawing to my Trimble Connect fab folder.
@@ -130,7 +130,7 @@ aware CLI                            ─ manages everything
 ## v0 scope
 
 - Apache 2.0 core CLI
-- ~12 first-party agents: `tekla`, `revit`, `autocad`, `trimble-connect`, `procore`, `slack`, `file`, `excel`, `email`, `sharepoint`, `think-node`, `aware-agent-builder`
+- <!--stat:agents_total-->66<!--/stat--> first-party agents across engineering · architecture · construction · visualization · cross-cutting (`tekla`, `revit`, `rhino`, `autocad`, `trimble-connect`, `procore`, `navisworks`, `idea-statica-26`, `microsoft-365`, `aware-agent-builder`, …) — full list in [`registry-index.json`](../registry-index.json)
 - Reference apps demonstrating composition patterns (linear, fan-in, fan-out)
 - Host plugin generators for claude-code, codex, opencode
 - GitHub-hosted registry (single source of truth, PR-based contributions)

@@ -17,7 +17,7 @@ existing `web-ifc` visualization agent.
 | Schema validation | ✓ | ✗ | ✓ |
 | Rule-based BEP checking | ✗ — use `solibri` | ✗ | ✓ |
 | 3D rendering | ✗ — use `web-ifc` | ✓ | ✓ (UI only) |
-| Clash detection | ✗ — use `navisworks-2026` | ✗ | ✓ |
+| Clash detection | ✗ — use `navisworks` | ✗ | ✓ |
 
 ## When to reach for `ifc-inspector` instead of `solibri`
 

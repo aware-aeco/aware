@@ -38,7 +38,7 @@ This is the load-bearing distinction. Schema validation proves the file is **wel
 | Is this a structurally valid IFC4 file? | `validate.schema` (this verb) |
 | Does every space have the Psets our BEP requires? | [`psets.find-missing`](../commands/psets.find-missing.md) |
 | Is this model georeferenced correctly? | [`georef.check`](../commands/georef.check.md) |
-| Do the walls clash with the ducts? | [`navisworks-2026`](../../navisworks-2026/) / [`solibri`](../../../architecture/solibri-26.4.1/) |
+| Do the walls clash with the ducts? | [`navisworks`](../../navisworks/) / [`solibri`](../../../architecture/solibri-26.4.1/) |
 | Does it satisfy our coordination rule set / classification? | [`solibri`](../../../architecture/solibri-26.4.1/) rule engine |
 | Is the wall thickness correct? | nobody — that's professional judgment |
 

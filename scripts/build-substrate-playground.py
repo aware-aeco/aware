@@ -129,7 +129,11 @@ def compute_edges(agents):
     return edges
 
 
-def main():
+def build_agents():
+    """Walk the tree → full agent records (incl. command lists, kept for edge
+    computation), in deterministic OS-independent order (sorted by id, since
+    rglob order is filesystem-dependent). Reused by scripts/sync_stats.py to
+    verify the committed playload without re-implementing the walk."""
     agents = []
     for manifest_path in AGENTS_ROOT.rglob("manifest.yaml"):
         parsed = parse_manifest(manifest_path)
@@ -139,13 +143,14 @@ def main():
         parsed["commandCount"] = len(parsed["commands"])
         parsed["color"] = VENDOR_COLORS.get(parsed["vendor"], "#6b7280")
         agents.append(parsed)
+    agents.sort(key=lambda a: a["id"])
+    return agents
 
-    print(f"discovered {len(agents)} agents")
-    edges = compute_edges(agents)
-    print(f"computed {len(edges)} edges (weight >= 3)")
 
-    # Strip commands list from payload — we only kept it for edge computation
-    payload_agents = [
+def strip_payload(agents):
+    """The exact list serialized into the page as `RAW_AGENTS` (commands list
+    dropped — only the count is shown)."""
+    return [
         {
             "id": a["id"],
             "displayName": a["displayName"],
@@ -157,6 +162,15 @@ def main():
         }
         for a in agents
     ]
+
+
+def main():
+    agents = build_agents()
+    print(f"discovered {len(agents)} agents")
+    edges = compute_edges(agents)
+    print(f"computed {len(edges)} edges (weight >= 3)")
+
+    payload_agents = strip_payload(agents)
 
     html = HTML_TEMPLATE.replace(
         "__AGENTS__", json.dumps(payload_agents)
@@ -559,7 +573,7 @@ function updatePrompt() {
 
   let text;
   if (parts.length === 0) {
-    text = `Show me how the AWARE substrate's 39 agents connect across all 5 verticals. Default threshold (5 shared command-name stems).`;
+    text = `Show me how the AWARE substrate's ${RAW_AGENTS.length} agents connect across all 5 verticals. Default threshold (5 shared command-name stems).`;
   } else {
     text = `Show me the AWARE substrate force-graph view restricted to ${parts.join('; ')}. Highlight which agents are tightly coupled by shared API surface — those are the candidates for cross-vendor composition in an aware app.`;
   }
