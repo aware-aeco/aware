@@ -64,3 +64,7 @@ cli-roslyn/obj/
 cli-roslyn/Tests/bin/
 cli-roslyn/Tests/obj/
 *.binlog
+
+# Python script bytecode (scripts/sync_stats.py, build-substrate-playground.py)
+__pycache__/
+*.pyc

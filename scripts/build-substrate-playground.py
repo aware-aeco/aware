@@ -140,6 +140,11 @@ def main():
         parsed["color"] = VENDOR_COLORS.get(parsed["vendor"], "#6b7280")
         agents.append(parsed)
 
+    # Deterministic, OS-independent order so the regenerated file is byte-stable
+    # across machines/CI (rglob order is filesystem-dependent). Required for the
+    # stats CI diff-check in .github/workflows/stats.yml.
+    agents.sort(key=lambda a: a["id"])
+
     print(f"discovered {len(agents)} agents")
     edges = compute_edges(agents)
     print(f"computed {len(edges)} edges (weight >= 3)")
