@@ -53,7 +53,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 
 **Goal:** a single binary that explores everything already in `~/.aware/`. No installs, no execution, no network. Pure exploration.
 
-**Why first:** validates the manifest + skill loaders against real fixtures (the 7 agents + 2 apps already in the repo). Lays the Rust scaffolding without touching async, network, or auth.
+**Why first:** validates the manifest + skill loaders against real fixtures (the 66 agents + 7 apps already in the repo). Lays the Rust scaffolding without touching async, network, or auth.
 
 **Commands**:
 - `aware --version`
@@ -144,7 +144,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 - Templating substitutes upstream outputs and secrets (via `~/.aware/credentials/`)
 - Provenance trace is replayable: `aware app logs <app> --replay <run-id>` shows what happened
 
-**Realistic effort:** 4–6 days. The runtime is the substantive engineering. Test it against the two reference apps before considering it done.
+**Realistic effort:** 4–6 days. The runtime is the substantive engineering. Test it against the reference apps in `30-apps/_examples/` before considering it done.
 
 ---
 

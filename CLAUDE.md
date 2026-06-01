@@ -1,6 +1,6 @@
 # AWARE — Project Instructions
 
-You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic substrate for AECO. The substrate is content-complete (manifesto, decalog, specs, 7 agents, 58 skills, 2 reference apps, 3 meta-primitives). The current focus is the **`aware` CLI** — the runtime binary that executes everything the substrate describes.
+You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic substrate for AECO. The substrate is content-complete (manifesto, decalog, specs, 66 agents, ~3,290 skills, 7 reference apps, 5 meta-primitives) and the `aware` CLI has shipped (v0.53.0). The current focus is the **`aware` CLI** — the runtime binary that executes everything the substrate describes.
 
 ## Read these first (in order)
 
@@ -130,9 +130,9 @@ All skill creation, modification, or porting routes through Anthropic's `skill-c
 
 The substrate is content-complete. Do not re-litigate decisions captured in the docs above unless you have a concrete new constraint.
 
-- 7 agents under `20-agents/` (engineering: tekla; construction: trimble-connect; cross-cutting: microsoft-365, google-workspace; meta: aware-agent-builder, aware-skill-builder; utility: html-report)
-- 58 skill files
-- 2 reference apps under `30-apps/_examples/`
+- 66 agents under `20-agents/` — 17 curated (tekla, trimble-connect, navisworks, microsoft-365, google-workspace, …) + 49 reflected (revit, rhino, autocad, idea-statica, …); full list in `registry-index.json`
+- ~3,290 skill files
+- 7 reference apps under `30-apps/_examples/`
 - Diagrams in `40-diagrams/` (Mermaid + Excalidraw)
 - Issue + PR templates under `.github/`
 
