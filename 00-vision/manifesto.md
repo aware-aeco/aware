@@ -130,7 +130,7 @@ aware CLI                            ─ manages everything
 ## v0 scope
 
 - Apache 2.0 core CLI
-- 66 first-party agents across engineering · architecture · construction · visualization · cross-cutting (`tekla`, `revit`, `rhino`, `autocad`, `trimble-connect`, `procore`, `navisworks`, `idea-statica-26`, `microsoft-365`, `aware-agent-builder`, …) — full list in [`registry-index.json`](../registry-index.json)
+- <!--stat:agents_total-->66<!--/stat--> first-party agents across engineering · architecture · construction · visualization · cross-cutting (`tekla`, `revit`, `rhino`, `autocad`, `trimble-connect`, `procore`, `navisworks`, `idea-statica-26`, `microsoft-365`, `aware-agent-builder`, …) — full list in [`registry-index.json`](../registry-index.json)
 - Reference apps demonstrating composition patterns (linear, fan-in, fan-out)
 - Host plugin generators for claude-code, codex, opencode
 - GitHub-hosted registry (single source of truth, PR-based contributions)
