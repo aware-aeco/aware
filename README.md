@@ -38,7 +38,7 @@ That's the whole thing. One sentence in your terminal, one plain-text file, one 
 aware-aeco/
 ├── 00-vision/              # decalog · manifesto · positioning
 ├── 10-core/                # agent-spec · app-spec · cli-spec · cli-roadmap · runtime contracts
-├── 20-agents/              # 68 agents · 17 curated + 51 reflected · all Apache 2.0
+├── 20-agents/              # 66 agents · 17 curated + 49 reflected · all Apache 2.0
 │   ├── _core/              #   5 meta-primitives: aware-agent-builder · aware-skill-builder ·
 │   │                       #   html-report · http · ui-inspector
 │   └── aeco/
