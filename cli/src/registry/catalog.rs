@@ -461,11 +461,11 @@ mod tests {
     fn sample_catalog() -> Catalog {
         let json = r#"{"version":"1.0","updated-at":"x","agents":{
           "tekla":{"display-name":"Tekla Structures","vendor":"trimble","keywords":["steel","structural"],
-            "versions":{"2025.0.1":{"description":"steel detailing and connections","status":"available","stateful":true,"transport":"cli",
+            "versions":{"2025.0.1":{"description":"steel detailing and connections","status":"available","stateful":true,"transport":"cli","command_count":25,
               "skills":["drawing-identity","connection-mapper"],
               "commands":[
                 {"name":"run-macro","description":"run a tekla macro","lifecycle":"single","category":"curated","mode":"write"},
-                {"name":"list-parts","description":"list parts","lifecycle":"single","category":"reflected","method":"GET"}
+                {"name":"list-parts","description":"list parts","lifecycle":"single","category":"curated","method":"GET"}
               ]}}}
         }}"#;
         Catalog::parse(json.as_bytes()).unwrap()

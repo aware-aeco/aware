@@ -662,16 +662,28 @@ fn flush_exit(code: i32) -> ! {
 }
 
 /// Fetch the catalog; when this registry has no catalog yet, print clean guidance
-/// and return `Ok(None)` so the caller stops without an error.
+/// (a valid JSON envelope under `--json`) and return `Ok(None)` so the caller stops.
 fn load_catalog(ctx: &Context) -> Result<Option<Catalog>, AwareError> {
     match fetch_catalog(&ctx.paths.cache_dir())? {
         Some(c) => Ok(Some(c)),
         None => {
-            println!(
-                "No agent catalog is available for this registry yet.\n\
-                 Update AWARE (`npm i -g @aware-aeco/cli@latest`), or — inside an aware\n\
-                 checkout — run `aware agent reindex` to generate registry-catalog.json."
-            );
+            if ctx.json {
+                // Keep --json output parseable even when the catalog is absent.
+                println!(
+                    "{}",
+                    serde_json::json!({
+                        "ok": false,
+                        "error": "no agent catalog available for this registry",
+                        "hint": "update AWARE (npm i -g @aware-aeco/cli@latest) or run `aware agent reindex`"
+                    })
+                );
+            } else {
+                println!(
+                    "No agent catalog is available for this registry yet.\n\
+                     Update AWARE (`npm i -g @aware-aeco/cli@latest`), or — inside an aware\n\
+                     checkout — run `aware agent reindex` to generate registry-catalog.json."
+                );
+            }
             Ok(None)
         }
     }
@@ -901,14 +913,29 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         crate::manifest::loader::load_agent(&manifest)
     });
 
+    // Refuse to emit (or pass --check on) a partial catalog: a manifest that fails to load is a
+    // real problem to fix, not something to silently drop from the published catalog.
+    if !errors.is_empty() {
+        eprintln!("⚠ {} agent(s) failed to load:", errors.len());
+        for (id, e) in &errors {
+            eprintln!("  ✗ {id}: {e}");
+        }
+        return Err(AwareError::Validation(format!(
+            "{} agent(s) failed to load — fix the manifest(s) and re-run",
+            errors.len()
+        )));
+    }
+
     let mut out = serde_json::to_string_pretty(&cat)
         .map_err(|e| AwareError::Validation(format!("serialize catalog: {e}")))?;
     out.push('\n');
     let catalog_path = repo_root.join("registry-catalog.json");
 
     if check {
+        // Compare CONTENT, not bytes: ignore `updated-at` (a fresh timestamp every run) and
+        // whitespace/line-ending differences (git may rewrite LF↔CRLF on the committed file).
         let current = std::fs::read_to_string(&catalog_path).unwrap_or_default();
-        if current == out {
+        if catalog_content_eq(&out, &current) {
             println!(
                 "✓ registry-catalog.json is up to date ({} agents)",
                 cat.agents.len()
@@ -927,20 +954,24 @@ fn reindex(ctx: &Context, check: bool) -> Result<(), AwareError> {
         catalog_path.display(),
         cat.agents.len()
     );
-    if !errors.is_empty() {
-        eprintln!(
-            "⚠ {} agent(s) skipped (manifest load failed):",
-            errors.len()
-        );
-        for (id, e) in &errors {
-            eprintln!("  ✗ {id}: {e}");
-        }
-        return Err(AwareError::Validation(format!(
-            "{} agent(s) failed to load",
-            errors.len()
-        )));
-    }
     Ok(())
+}
+
+/// Two serialized catalogs are "the same" iff they're equal as JSON once the
+/// volatile `updated-at` timestamp is dropped — so `reindex --check` ignores the
+/// per-run timestamp and JSON-insignificant whitespace / line-ending churn.
+fn catalog_content_eq(a: &str, b: &str) -> bool {
+    fn normalized(s: &str) -> Option<serde_json::Value> {
+        let mut v: serde_json::Value = serde_json::from_str(s).ok()?;
+        if let Some(obj) = v.as_object_mut() {
+            obj.remove("updated-at");
+        }
+        Some(v)
+    }
+    match (normalized(a), normalized(b)) {
+        (Some(x), Some(y)) => x == y,
+        _ => false, // an unparseable on-disk catalog counts as stale
+    }
 }
 
 /// `aware agent describe <agent> --available` — describe a not-installed agent from the catalog.
@@ -1050,4 +1081,31 @@ fn find_index_path() -> Option<std::path::PathBuf> {
         dir = d.parent().map(|p| p.to_path_buf());
     }
     None
+}
+
+#[cfg(test)]
+mod catalog_check_tests {
+    use super::catalog_content_eq;
+
+    #[test]
+    fn content_eq_ignores_timestamp_and_whitespace() {
+        let compact = r#"{"version":"1.0","updated-at":"2026-01-01T00:00:00Z","agents":{"x":{"versions":{}}}}"#;
+        // Same content, different timestamp + pretty whitespace + trailing newline (CRLF-ish churn).
+        let pretty = "{\n  \"version\": \"1.0\",\n  \"updated-at\": \"2026-06-01T12:34:56Z\",\n  \"agents\": { \"x\": { \"versions\": {} } }\n}\n";
+        assert!(
+            catalog_content_eq(compact, pretty),
+            "only updated-at/whitespace differ → up to date"
+        );
+    }
+
+    #[test]
+    fn content_eq_detects_real_drift() {
+        let a = r#"{"version":"1.0","updated-at":"t","agents":{"x":{"versions":{}}}}"#;
+        let b = r#"{"version":"1.0","updated-at":"t","agents":{"y":{"versions":{}}}}"#;
+        assert!(!catalog_content_eq(a, b), "different agents → stale");
+        assert!(
+            !catalog_content_eq(a, "not json"),
+            "unparseable on-disk catalog → stale"
+        );
+    }
 }
