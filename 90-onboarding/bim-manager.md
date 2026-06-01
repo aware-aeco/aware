@@ -106,6 +106,6 @@ So once you've installed it, it runs Monday 7am automatically. Trigger an ad-hoc
 
 ## Next
 
-- Add Navisworks clash digest by wiring in `navisworks-2026.clash.run-all` + `clash.export --format bcf` + `acc-docs.transmittals.create`
+- Add Navisworks clash digest by wiring in `navisworks.clash.run-all` + `clash.export --format bcf` + `acc-docs.transmittals.create`
 - Pair with [Bluebeam Studio markups](../30-apps/_examples/architect-sheet-status.flo) for redline tracking
 - Compose your own — describe the workflow in plain English to Claude Code or codex while `aware-aeco` is installed

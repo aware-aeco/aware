@@ -124,4 +124,4 @@ return {"out_path": out, "topic_count": len(topics), "bytes": len(resp.content)}
 
 - [solibri-rule-sets-and-checks](./solibri-rule-sets-and-checks.md) — what produces the BCF
 - [`bcf.export-checking-results` curated verb](../commands/bcf.export-checking-results.md) (forthcoming)
-- Compare to Navisworks's [bcf-roundtrip](../../../construction/navisworks-2026/skills/bcf-roundtrip.md)
+- Compare to Navisworks's [bcf-roundtrip](../../../construction/navisworks/skills/bcf-roundtrip.md)
