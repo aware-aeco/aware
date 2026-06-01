@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-01T12:21:27.919735500+00:00",
+  "updated-at": "2026-06-01T16:49:36.253578700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -260,7 +260,7 @@
       }
     },
     "allplan-2024": {
-      "display-name": "allplan-2024.0 (raw — 612 types, full coverage)",
+      "display-name": "allplan-2024 (raw — 612 types, full coverage)",
       "vendor": "nemetschek",
       "keywords": [
         "aeco",
@@ -384,7 +384,7 @@
       }
     },
     "allplan-2025": {
-      "display-name": "allplan-2025.0 (raw — 763 types, full coverage)",
+      "display-name": "allplan-2025 (raw — 763 types, full coverage)",
       "vendor": "nemetschek",
       "keywords": [
         "aeco",
@@ -1330,6 +1330,40 @@
         }
       }
     },
+    "bluebeam-v1": {
+      "display-name": "bluebeam-v1 (raw — 80 types, full coverage)",
+      "vendor": "bluebeam",
+      "keywords": [
+        "aeco",
+        "architecture",
+        "bluebeam",
+        "bluebeam",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "1.0.0": {
+          "description": "Auto-generated from vendor docs (scrape: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "v1",
+          "transport": "cli",
+          "command_count": 123,
+          "skills": [
+            "bluebeam-studioapi-jobs",
+            "bluebeam-studioapi-jobs-models",
+            "bluebeam-studioapi-misc",
+            "bluebeam-studioapi-misc-models",
+            "bluebeam-studioapi-projects",
+            "bluebeam-studioapi-projects-models",
+            "bluebeam-studioapi-sessions",
+            "bluebeam-studioapi-sessions-models"
+          ]
+        }
+      }
+    },
     "csi-api": {
       "display-name": "CSi API (SAP2000 / ETABS / SAFE / CSiBridge — raw)",
       "vendor": "computers-and-structures",
@@ -1422,6 +1456,107 @@
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"
+            }
+          ]
+        }
+      }
+    },
+    "dropbox": {
+      "display-name": "Dropbox",
+      "vendor": "dropbox",
+      "keywords": [
+        "aware",
+        "dropbox",
+        "file-storage",
+        "cde",
+        "cross-cutting",
+        "sharing",
+        "paper",
+        "business"
+      ],
+      "versions": {
+        "2.0.0": {
+          "description": "Cross-cutting file storage + sharing for AECO firms running Dropbox",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "v2",
+          "transport": "cli",
+          "command_count": 11,
+          "skills": [
+            "dropbox-vs-acc-vs-trimble",
+            "sharing-strategy"
+          ],
+          "commands": [
+            {
+              "name": "files.delete",
+              "description": "Soft-delete a file / folder (Dropbox retains for 30 days). Pair",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "files.download",
+              "description": "Download a Dropbox file to a local path. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "files.list",
+              "description": "List files + folders under a path. Returns one record per entry",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "files.move",
+              "description": "Move / rename a file or folder. The \"supersede Rev D → Rev E\"",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "files.upload",
+              "description": "Upload a local file to a Dropbox path. Uses session-upload for",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "paper.export",
+              "description": "Export a Paper document as Markdown / HTML / PDF / DOCX. Used",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "paper.list",
+              "description": "List Paper documents in the user's workspace. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "sharing.add-folder-member",
+              "description": "Add a member (email) to a shared folder with explicit access",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "sharing.create-link",
+              "description": "Create a shareable link to a file or folder. Returns the URL +",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "sharing.list-links",
+              "description": "List all shared links the user has created. Used by tender-pack",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "team.list-members",
+              "description": "List Dropbox Business team members. Read-only. Used by",
+              "lifecycle": "single",
+              "category": "curated"
             }
           ]
         }
@@ -3814,7 +3949,7 @@
         }
       }
     },
-    "navisworks-2026": {
+    "navisworks": {
       "display-name": "Autodesk Navisworks Manage 2026",
       "vendor": "autodesk",
       "keywords": [
@@ -3923,6 +4058,41 @@
               "lifecycle": "single",
               "category": "curated"
             }
+          ]
+        }
+      }
+    },
+    "navisworks-2026": {
+      "display-name": "navisworks-2026 (raw — 779 types, full coverage)",
+      "vendor": "autodesk",
+      "keywords": [
+        "aeco",
+        "architecture",
+        "navisworks",
+        "autodesk",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "2026.0.0": {
+          "description": "Auto-generated from vendor docs (nuget: https://www.nuget.org/api/v2/package/Chuongmep.Navis.Api.Autodesk.Navisworks.Api/2026.0.0, https://aps.autodesk.com/developer/overview/navisworks-api)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "2026.0",
+          "transport": "cli",
+          "command_count": 5170,
+          "skills": [
+            "autodesk-navisworks-api",
+            "autodesk-navisworks-api-applicationparts",
+            "autodesk-navisworks-api-bim360",
+            "autodesk-navisworks-api-data",
+            "autodesk-navisworks-api-documentparts",
+            "autodesk-navisworks-api-interop",
+            "autodesk-navisworks-api-interop-plugins",
+            "autodesk-navisworks-api-plugins",
+            "autodesk-navisworks-api-schema"
           ]
         }
       }
@@ -4821,6 +4991,71 @@
         }
       }
     },
+    "solibri-26.4.1": {
+      "display-name": "solibri-26.4.1 (raw — 16 types, full coverage)",
+      "vendor": "solibri",
+      "keywords": [
+        "aeco",
+        "architecture",
+        "solibri",
+        "solibri",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "26.4.1": {
+          "description": "Auto-generated from vendor docs (scrape: https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "26.4.1",
+          "transport": "cli",
+          "command_count": 31,
+          "skills": [
+            "solibri-rule-sets-and-checks",
+            "solibri-ifc-and-federation",
+            "solibri-bcf-export-import",
+            "solibri-rest-api",
+            "solibri-rest-model"
+          ],
+          "commands": [
+            {
+              "name": "bcf.export-checking-results",
+              "description": "Export the current set of Solibri checking results as a BCF 2.1 or",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "check.run-rule-set",
+              "description": "Execute a Solibri rule set against the loaded model(s) and return a",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "components.delete-by-guids",
+              "description": "Remove components from the current Solibri project by IFC GUID list.",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "model.import-ifc",
+              "description": "Load an IFC file into the current Solibri project as a federated",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "presentation.export-pdf",
+              "description": "Export a Solibri presentation as PDF for design-review attendance.",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        }
+      }
+    },
     "speckle-viewer": {
       "display-name": "Speckle Viewer (raw)",
       "vendor": "speckle",
@@ -5295,6 +5530,90 @@
         }
       }
     },
+    "tekla-plugin-sdk-2025": {
+      "display-name": "tekla-plugin-sdk-2025 (raw — 333 types, full coverage)",
+      "vendor": "trimble",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "tekla-plugin-sdk",
+        "trimble",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "2025.0.0": {
+          "description": "Auto-generated from vendor docs (nuget: https://developer.tekla.com/documentation/direct-manipulation-api-plugins, https://www.nuget.org/api/v2/package/Tekla.Structures.Plugins.DirectManipulation/2025.0.0, https://www.nuget.org/api/v2/package/TeklaFusion/4.1.10)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "2025.0",
+          "transport": "cli",
+          "command_count": 2275,
+          "skills": [
+            "fusion",
+            "fusion-data",
+            "fusion-data-query",
+            "fusion-features-panels",
+            "fusion-formatting",
+            "fusion-models",
+            "fusion-ui",
+            "tekla-structures-plugins-directmanipulation-core",
+            "tekla-structures-plugins-directmanipulation-core-features",
+            "tekla-structures-plugins-directmanipulation-services",
+            "tekla-structures-plugins-directmanipulation-services-controls",
+            "tekla-structures-plugins-directmanipulation-services-handles",
+            "tekla-structures-plugins-directmanipulation-services-tools",
+            "tekla-structures-plugins-directmanipulation-services-tools-picking",
+            "tekla-structures-plugins-directmanipulation-services-tools-textmanipulation",
+            "tekla-structures-plugins-directmanipulation-services-utilities"
+          ]
+        }
+      }
+    },
+    "tekla-plugin-sdk-2026": {
+      "display-name": "tekla-plugin-sdk-2026 (raw — 348 types, full coverage)",
+      "vendor": "trimble",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "tekla-plugin-sdk",
+        "trimble",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "2026.0.0": {
+          "description": "Auto-generated from vendor docs (nuget: https://developer.tekla.com/documentation/direct-manipulation-api-plugins, https://www.nuget.org/api/v2/package/Tekla.Structures.Plugins.DirectManipulation/2026.0.3, https://www.nuget.org/api/v2/package/TeklaFusion/4.1.36)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "2026.0",
+          "transport": "cli",
+          "command_count": 2462,
+          "skills": [
+            "fusion",
+            "fusion-data",
+            "fusion-data-query",
+            "fusion-features-panels",
+            "fusion-formatting",
+            "fusion-models",
+            "fusion-ui",
+            "tekla-structures-plugins-directmanipulation-core",
+            "tekla-structures-plugins-directmanipulation-core-features",
+            "tekla-structures-plugins-directmanipulation-services",
+            "tekla-structures-plugins-directmanipulation-services-controls",
+            "tekla-structures-plugins-directmanipulation-services-handles",
+            "tekla-structures-plugins-directmanipulation-services-tools",
+            "tekla-structures-plugins-directmanipulation-services-tools-picking",
+            "tekla-structures-plugins-directmanipulation-services-tools-textmanipulation",
+            "tekla-structures-plugins-directmanipulation-services-utilities"
+          ]
+        }
+      }
+    },
     "tekla-powerfab": {
       "display-name": "Tekla PowerFab",
       "vendor": "trimble",
@@ -5384,6 +5703,64 @@
               "lifecycle": "single",
               "category": "curated"
             }
+          ]
+        }
+      }
+    },
+    "tekla-tedds-25": {
+      "display-name": "tekla-tedds-25 (raw — 33 types, full coverage)",
+      "vendor": "trimble",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "tedds",
+        "trimble",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "25.0.0": {
+          "description": "Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-tedds/2025/41820)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "25.0",
+          "transport": "cli",
+          "command_count": 67,
+          "skills": [
+            "tekla-structural-expressoaddin",
+            "tekla-structural-interopassemblies-tedds",
+            "tekla-structural-interopassemblies-teddscalc"
+          ]
+        }
+      }
+    },
+    "tekla-tedds-26": {
+      "display-name": "tekla-tedds-26 (raw — 33 types, full coverage)",
+      "vendor": "trimble",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "tedds",
+        "trimble",
+        "generated",
+        "raw",
+        "v0.30",
+        "full-coverage"
+      ],
+      "versions": {
+        "26.0.0": {
+          "description": "Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-tedds/2026/64124)",
+          "status": "available",
+          "stateful": false,
+          "sdk-target": "26.0",
+          "transport": "cli",
+          "command_count": 67,
+          "skills": [
+            "tekla-structural-expressoaddin",
+            "tekla-structural-interopassemblies-tedds",
+            "tekla-structural-interopassemblies-teddscalc"
           ]
         }
       }
