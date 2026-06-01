@@ -226,54 +226,75 @@ def _regen_playground() -> None:
     )
 
 
-def run(write: bool) -> int:
-    stats = compute_stats()
+def collect_mismatches(stats: dict[str, str]) -> list[tuple]:
+    """Read-only: every managed stat currently out of sync. The playground is
+    verified against its full recomputed dataset, not just the agent count."""
     mismatches: list[tuple] = []
-    changed: list[str] = []
-
     for rel in MANAGED_FILES:
-        path = REPO / rel
-        text = _read(path)
-        new, mm = process_markers(text, stats, rel)
+        _, mm = process_markers(_read(REPO / rel), stats, rel)
         mismatches += mm
-        if write and new != text:
-            _write(path, new)
-            changed.append(rel)
-
     for rel, pattern, key in ANCHOR_RULES:
-        path = REPO / rel
-        text = _read(path)
-        new, mm = process_anchor(text, pattern, stats[key], key, rel)
+        _, mm = process_anchor(_read(REPO / rel), pattern, stats[key], key, rel)
         mismatches += mm
-        if write and new != text:
-            _write(path, new)
-            changed.append(rel)
-
-    # The playground inlines its own agent dataset. Verify the full parsed
-    # dataset (not only the count) by recomputing it from the tree, so a change
-    # to any agent's skills / commands / vendor / vertical is caught too.
-    # Compared as parsed JSON, so it's OS- and line-ending-agnostic. --write
-    # regenerates the file via the generator.
-    if write:
-        _regen_playground()
-        synced = ", ".join(dict.fromkeys(changed + [PLAYGROUND])) or "(none)"
-        print(f"sync_stats: synced docs + regenerated playground: {synced}")
-        return 0
-
     pg = _playground_mismatch()
     if pg is not None:
-        key, current, expected = pg
-        mismatches.append((PLAYGROUND, key, current, expected))
+        mismatches.append((PLAYGROUND, *pg))
+    return mismatches
 
+
+def apply_writes(stats: dict[str, str]) -> list[str]:
+    """Rewrite every fixable marker/anchor and regenerate the playground.
+    A drifted anchor or unknown marker key can't be auto-fixed here — those are
+    surfaced by the verification pass in run()."""
+    changed: list[str] = []
+    for rel in MANAGED_FILES:
+        text = _read(REPO / rel)
+        new, _ = process_markers(text, stats, rel)
+        if new != text:
+            _write(REPO / rel, new)
+            changed.append(rel)
+    for rel, pattern, key in ANCHOR_RULES:
+        text = _read(REPO / rel)
+        new, _ = process_anchor(text, pattern, stats[key], key, rel)
+        if new != text:
+            _write(REPO / rel, new)
+            changed.append(rel)
+    _regen_playground()
+    changed.append(PLAYGROUND)
+    return changed
+
+
+def _report(mismatches: list[tuple]) -> None:
+    for path, key, current, expected in mismatches:
+        print(f"  {path}: stat:{key} is '{current}' but should be '{expected}'")
+
+
+def run(write: bool) -> int:
+    stats = compute_stats()
+
+    if write:
+        changed = apply_writes(stats)
+        # Verify after writing: anything still mismatched couldn't be auto-fixed
+        # (drifted anchor context / unknown key), so --write must NOT report
+        # success and leave the next --check failing.
+        remaining = collect_mismatches(stats)
+        if remaining:
+            print("sync_stats: --write could not fully sync — manual edit needed:\n")
+            _report(remaining)
+            print("\n(A drifted anchor context or an unknown <!--stat:KEY--> can't be auto-fixed.)")
+            return 1
+        print(f"sync_stats: synced docs + regenerated playground: {', '.join(dict.fromkeys(changed))}")
+        return 0
+
+    mismatches = collect_mismatches(stats)
     if mismatches:
         print("sync_stats: STALE / mismatched stats:\n")
-        for path, key, current, expected in mismatches:
-            print(f"  {path}: stat:{key} is '{current}' but should be '{expected}'")
+        _report(mismatches)
         print("\nFix:  python scripts/sync_stats.py --write")
         return 1
 
     total = sum(len(MARKER_RE.findall(_read(REPO / rel))) for rel in MANAGED_FILES)
-    total += len(ANCHOR_RULES) + 1  # + the playground agent-count check
+    total += len(ANCHOR_RULES) + 1  # + the playground dataset check
     print(f"sync_stats: all {total} managed stats current ({len(stats)} keys).")
     return 0
 
