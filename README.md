@@ -2,7 +2,7 @@
 
 > **AWARE is what comes after software-as-product. Apps are text — files you can read in Notepad. AI is the runtime that executes them. Open source is what the format does automatically: there's nothing else to a "proprietary" app once it's plain English. No vendor, no installer, no walled garden. AECO is the wedge; the substrate is universal.**
 
-— [the statement](./00-vision/manifesto.md). The five structural truths it rests on are in [the decalog](./00-vision/decalog.md).
+— [the statement](./00-vision/manifesto.md). The nine structural truths it rests on are in [the decalog](./00-vision/decalog.md).
 
 ---
 
@@ -15,7 +15,7 @@ $ npm install -g @aware-aeco/cli                       # any OS — recommended
   #   iex (irm ... install.ps1)              # Windows PowerShell, no Node
 
 $ claude-code                    # or codex, or opencode
-  ✓ plugin: aware-aeco · 11 agents · 58 curated + 133 raw skills
+  ✓ plugin: aware-aeco · 65 agents · ~3,290 skills
 
 > Watch this Tekla model. When a welded assembly appears,
 > upload its drawing to my Trimble Connect fab folder.
@@ -28,105 +28,88 @@ $ aware app run welded-to-tc
 
 That's the whole thing. One sentence in your terminal, one plain-text file, one command to run.
 
-> `winget install aware-aeco` and `brew install aware-aeco` are queued. They need an MSI installer (Windows) and a Homebrew formula (Mac) plus a code-signing cert, all tracked as follow-up phases. The npm + curl-pipe + PowerShell paths above are what works today.
+> `winget install aware-aeco` and `brew install aware-aeco` are queued. They need an MSI installer (Windows — scaffolded in `packaging/wix/`) and a Homebrew formula (Mac) plus a code-signing cert, all tracked as follow-up phases. The npm + curl-pipe + PowerShell paths above are what works today.
 
 ---
 
-## What's in the repo (v0 snapshot)
+## What's in the repo
 
 ```
 aware-aeco/
 ├── 00-vision/              # decalog · manifesto · positioning
-├── 10-core/                # agent-spec · app-spec · runtime contract
-├── 20-agents/              # 7 agents · 58 skills · all Apache 2.0
-│   ├── _core/              #   meta-primitives
-│   │   ├── aware-agent-builder/      # any software → an agent
-│   │   ├── aware-skill-builder/      # author / port / modify / eval skills
-│   │   └── html-report/              # utility: render self-contained HTML output
+├── 10-core/                # agent-spec · app-spec · cli-spec · cli-roadmap · runtime contracts
+├── 20-agents/              # 68 agents · 17 curated + 51 reflected · all Apache 2.0
+│   ├── _core/              #   5 meta-primitives: aware-agent-builder · aware-skill-builder ·
+│   │                       #   html-report · http · ui-inspector
 │   └── aeco/
-│       ├── engineering/
-│       │   ├── tekla/                # 31 curated skills · stateful · .NET-mandated
-│       │   ├── tekla-2025/           # 2,999 cmds · NuGet ref/ reflection (Tekla.Structures.Model 2025.0.0)
-│       │   ├── tekla-2026/           # 3,179 cmds · NuGet ref/ reflection (Tekla.Structures.Model 2026.0.3)
-│       │   ├── csi-api/              # 4,282 cmds · NuGet reflection (CSiAPIv1-All 2.12.0 — SAP2000/ETABS/SAFE/CSiBridge)
-│       │   ├── idea-statica-25/      # 111 cmds · NuGet (IdeaStatiCa.OpenModel 25.1.5)
-│       │   ├── idea-statica-26/      # 116 cmds · NuGet (IdeaStatiCa.OpenModel 26.0.1)
-│       │   ├── tsd-25/               # 440 cmds · NuGet (TeklaStructuralDesigner.RemotingAPI 25.3.0)
-│       │   └── tsd-26/               # 440 cmds · NuGet (TeklaStructuralDesigner.RemotingAPI 26.0.1)
-│       ├── architecture/
-│       │   ├── allplan-2024/         # 1,162 cmds · NuGet (Allplan.BIF.Core 2024.0.1.35)
-│       │   ├── allplan-2025/         # 1,200 cmds · NuGet (Allplan.BIF.Core 2025.0.0.15)
-│       │   ├── autocad-2025/         # 4,398 cmds · NuGet (AutoCAD.NET 25.1.0)
-│       │   ├── autocad-2026/         # 4,413 cmds · NuGet (AutoCAD.NET 26.0.0)
-│       │   ├── dynamo-4-1-0/         # 1,713 cmds · NuGet (DynamoVisualProgramming.Core 4.1.0.4845)
-│       │   ├── dynamo-4-1-1/         # 1,713 cmds · NuGet (DynamoVisualProgramming.Core 4.1.1.4941)
-│       │   ├── revit-2025/           # 7,430 cmds · NuGet ref/ reflection (Autodesk.Revit.SDK 2025.0.2.419)
-│       │   ├── revit-2026/           # 7,647 cmds · NuGet ref/ reflection (Autodesk.Revit.SDK 2026.0.0.9999)
-│       │   ├── rhino-7/              # 5,859 cmds · NuGet ref/ reflection (RhinoCommon 7.38.x)
-│       │   ├── rhino-8/              # 6,954 cmds · NuGet ref/ reflection (RhinoCommon 8.31.x)
-│       │   ├── grasshopper-7/        # 4,506 cmds · NuGet ref/ reflection (Grasshopper 7.38.x)
-│       │   ├── grasshopper-8/        # 5,181 cmds · NuGet ref/ reflection (Grasshopper 8.31.x)
-│       │   ├── sketchup-2025/        # 1,684 cmds · YARD docs (SketchUp/ruby-api-docs SU2025.0.3)
-│       │   └── sketchup-2026/        # 1,713 cmds · YARD docs (SketchUp/ruby-api-docs SU2026.0)
-│       ├── visualization/
-│       │   ├── xeokit/               # 361 cmds · TypeScript .d.ts (@xeokit/xeokit-sdk@2.6.109)
-│       │   ├── three/                # 2,860 cmds · TypeScript .d.ts (@types/three@0.184.1)
-│       │   ├── thatopen-components/  # 337 cmds · TypeScript .d.ts (@thatopen/components@3.4.6 — modern IFC.js)
-│       │   ├── web-ifc/              # 120 cmds · TypeScript .d.ts (web-ifc@0.0.77 — WebAssembly IFC parser)
-│       │   ├── speckle-viewer/       # 942 cmds · TypeScript .d.ts (@speckle/viewer@2.28.0 — open AECO data viewer)
-│       │   ├── itwin-5-8/            # 4,553 cmds · TypeScript .d.ts (@itwin/core-frontend@5.8.5 — Bentley iTwin)
-│       │   └── itwin-5-9/            # 4,561 cmds · TypeScript .d.ts (@itwin/core-frontend@5.9.3 — Bentley iTwin)
-│       ├── construction/
-│       │   ├── trimble-connect/      # 7 skills · stateless · REST
-│       │   ├── slack/                # 172 cmds · OpenAPI reflection (Slack Web API)
-│       │   ├── acc-issues/           # 14 cmds · OpenAPI (ACC Issues — RFIs, observations, punch lists)
-│       │   ├── acc-account-admin/    # 30 cmds · OpenAPI (ACC Account Admin — projects, users)
-│       │   └── aps-data-management/  # 41 cmds · OpenAPI (BIM 360 / ACC Docs / Fusion file mgmt)
-│       └── cross-cutting/
-│           ├── microsoft-365/        # 4 skills · Graph REST
-│           └── google-workspace/     # 4 skills · Drive/Sheets/Calendar/Gmail
-├── 30-apps/                # reference apps
-│   └── _examples/
-│       ├── welded-to-tc.flo          # 3-node linear · canonical demo
-│       └── qa-drawings-to-tekla.flo  # 7-node DAG · fan-in + fan-out
+│       ├── engineering/    #   16 — tekla (curated) · tekla 25/26 · CSi · IDEA StatiCa 25/26 ·
+│       │                   #        TSD 25/26 · Tedds 25/26 · PowerFab · plugin-sdk 25/26 · …
+│       ├── architecture/   #   22 — revit 25/26 · autocad 25/26 · rhino 7/8 · grasshopper 7/8 ·
+│       │                   #        archicad 28/29 · allplan 24/25 · sketchup 25/26 · navisworks · dynamo · …
+│       ├── construction/   #   13 — trimble-connect · procore · ACC issues/docs/admin · APS ·
+│       │                   #        aconex · slack · solibri · bluebeam · BCF + IFC inspectors · …
+│       ├── visualization/  #    9 — xeokit · three.js · thatopen-components · web-ifc · speckle · iTwin 5.8/5.9 · …
+│       └── cross-cutting/  #    3 — microsoft-365 · google-workspace · dropbox
+├── 30-apps/_examples/      # 7 reference apps (.flo) — one per persona + canonical demos
 ├── 40-diagrams/            # Mermaid + Excalidraw views of the substrate
-└── 50-research/            # design notes, prior art, competitive analysis
+├── 50-research/            # design notes, prior art, competitive analysis
+├── 90-onboarding/          # first-hour walk-throughs, one per persona
+├── cli/                    # the `aware` CLI — Rust runtime · v0.53.0 (shipped)
+├── cli-tekla / -revit /    # desktop-host sidecars — stateful, in-process vendor APIs
+│   -rhino / -sketchup
+├── cli-roslyn / -reader /  # C# source reader (Roslyn) + shared IR reader + sidecar lib
+│   -sidecar
+├── cli-npm/                # @aware-aeco/cli — the npm wrapper (published)
+├── packaging/wix/          # Windows MSI installer (winget path — in progress)
+├── scripts/                # install.sh · install.ps1 · agent generators
+└── registry-index.json     # the registry — source of truth for installable agents
 ```
 
-### Stats
+### Stats — as of 2026-06-01 (regenerate from `registry-index.json` + the tree)
 
 | | Count |
 |---|---|
-| Curated agents | **7** (58 hand-written skills) |
-| Reflected agents | **32** (Tekla 25/26 + Revit 25/26 + Rhino 7/8 + Grasshopper 7/8 + SketchUp 25/26 + AutoCAD 25/26 + Allplan 24/25 + Dynamo 4.1.0/4.1.1 + IDEA StatiCa 25/26 + TSD 25/26 + CSi API + xeokit + three.js + thatopen-components + web-ifc + speckle-viewer + iTwin 5.8/5.9 + Slack + ACC Issues + ACC Account Admin + APS Data Management — 3,293 raw skills · 81,251 commands · auto-generated by `aware build agent --from-nuget` (NuGet ref/), `--from-yard` (YARD HTML), `--from-npm` (TypeScript .d.ts), `--from-openapi` (REST spec)) |
-| Reference apps | **2** |
-| Meta-primitives | **3** (agent-builder, skill-builder, html-report) |
-| AECO verticals covered | **engineering · architecture · construction · visualization · cross-cutting** |
+| Agents | **68** in the tree · **65** registered & installable |
+| — curated (hand-written skills) | **17** |
+| — reflected (auto-generated: NuGet / npm / YARD / OpenAPI) | **51** |
+| Skills | **~3,290** |
+| API commands | **46,800+** command files · **12,500+** catalog entries |
+| Reference apps | **7** (`.flo`) |
+| Meta-primitives | **5** (agent-builder · skill-builder · html-report · http · ui-inspector) |
+| Disciplines | engineering · architecture · construction · visualization · cross-cutting |
+
+> Numbers grow as agents land. [`registry-index.json`](./registry-index.json) is the source of truth for what installs today; the tree carries a few more still maturing.
 
 ---
 
 ## Read these in order
 
-1. [`00-vision/decalog.md`](./00-vision/decalog.md) — the five structural truths (5 min read)
+1. [`00-vision/decalog.md`](./00-vision/decalog.md) — the nine structural truths (5 min read)
 2. [`00-vision/manifesto.md`](./00-vision/manifesto.md) — what AWARE is, why now, how it ships (10 min)
 3. [`10-core/agent-spec.md`](./10-core/agent-spec.md) — how to write an agent
 4. [`10-core/app-spec.md`](./10-core/app-spec.md) — how to write an app
-5. [`30-apps/_examples/`](./30-apps/_examples/) — two worked apps showing the format end-to-end
-6. [`20-agents/_core/aware-skill-builder/`](./20-agents/_core/aware-skill-builder/) — how to write or port a skill
-7. [`CONTRIBUTING.md`](./CONTRIBUTING.md) — three ways to contribute, all markdown PRs
+5. [`10-core/cli-spec.md`](./10-core/cli-spec.md) — what the CLI does
+6. [`30-apps/_examples/`](./30-apps/_examples/) — seven worked apps showing the format end-to-end
+7. [`20-agents/_core/aware-skill-builder/`](./20-agents/_core/aware-skill-builder/) — how to write or port a skill
+8. [`CONTRIBUTING.md`](./CONTRIBUTING.md) — three ways to contribute, all markdown PRs
 
 ---
 
 ## Status
 
-**Substrate v0: content-complete.** Decalog, manifesto, specs, 7 reference agents, 58 production skills, 2 reference apps, two meta-primitives, all hosted under Apache 2.0.
+**Substrate: content-complete. Runtime: shipped.**
 
-**What's still owed for v0.1:**
-- The `aware` CLI binary (the runtime that executes the spec). Spec is detailed enough that the implementation is straightforward — but a real engineering project.
-- Host-plugin generators for claude-code / codex / opencode.
-- Issue tracker, PR review process, contribution badges.
+The `aware` CLI is live at **v0.53.0** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
-Until the CLI ships, the repo is usable as **documentation + reference content**: contributors can read the substrate, port their own skills via the documented pipeline, write new agents, and compose apps in `.flo` format. The first agentic-CLI user who installs this gets a real productivity boost from the skills alone — the AI consults them when composing AECO code.
+- **68 agents** — 17 hand-written + 51 auto-generated from vendor SDKs — **65 registered** in [`registry-index.json`](./registry-index.json) and installable today (a few duplicates/variants are still being consolidated).
+- **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
+- **Desktop-host sidecars** for stateful, in-process vendor APIs: `cli-tekla`, `cli-revit`, `cli-rhino`, `cli-sketchup`.
+
+**In flight:**
+- First-class `winget` / `brew` installers (MSI scaffolding in `packaging/wix/`, Homebrew formula, code-signing cert).
+- Registering the agents still maturing on disk.
+
+Track the CLI surface in [`10-core/cli-spec.md`](./10-core/cli-spec.md) and the phased plan in [`10-core/cli-roadmap.md`](./10-core/cli-roadmap.md).
 
 ---
 
@@ -142,4 +125,8 @@ Commercial apps built on top of AWARE choose their own license. The substrate do
 
 ## Watch this repo
 
-The substrate's content is in. The runtime is next. Star the repo to be notified when the CLI ships.
+The substrate is in and the runtime shipped. New agents land continuously — [`registry-index.json`](./registry-index.json) is the live list. Star the repo, install the CLI, and compose something:
+
+```bash
+npm install -g @aware-aeco/cli
+```

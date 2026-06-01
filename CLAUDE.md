@@ -6,7 +6,7 @@ You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic su
 
 Every load-bearing decision in this repo gets checked against these. If a decision conflicts with one of them, the decision is wrong, not the rule.
 
-1. **[`00-vision/decalog.md`](./00-vision/decalog.md)** — 5 structural truths. The tiebreaker for any design dispute.
+1. **[`00-vision/decalog.md`](./00-vision/decalog.md)** — 9 structural truths. The tiebreaker for any design dispute.
 2. **[`00-vision/manifesto.md`](./00-vision/manifesto.md)** — what AWARE is, why, how it ships.
 3. **[`10-core/agent-spec.md`](./10-core/agent-spec.md)** — the agent contract.
 4. **[`10-core/app-spec.md`](./10-core/app-spec.md)** — the app composition format.
