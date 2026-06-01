@@ -145,15 +145,24 @@ def process_markers(text: str, stats: dict[str, str], path: str):
 
 
 def process_anchor(text: str, pattern: re.Pattern, expected: str, key: str, path: str):
-    """Return (new_text, mismatches) for one anchor-rule file. Pure."""
+    """Return (new_text, mismatches) for one anchor-rule file. Pure.
+
+    Each anchor must match exactly once. Zero matches means the surrounding
+    text drifted and this stat is silently no longer verified; more than one
+    means the anchor is ambiguous. Both are reported as mismatches so coverage
+    can never be lost without failing the check.
+    """
     mismatches = []
-
-    def repl(match: re.Match) -> str:
-        if match.group(1) != expected:
-            mismatches.append((path, key, match.group(1), expected))
-        return expected
-
-    return pattern.sub(repl, text), mismatches
+    matches = pattern.findall(text)
+    if len(matches) != 1:
+        mismatches.append(
+            (path, key, f"{len(matches)} anchor matches", "exactly 1 (anchor drifted)")
+        )
+        return text, mismatches
+    current = pattern.search(text).group(1)
+    if current != expected:
+        mismatches.append((path, key, current, expected))
+    return pattern.sub(lambda _m: expected, text), mismatches
 
 
 def _read(path: Path) -> str:
@@ -171,10 +180,39 @@ def _write(path: Path, text: str) -> None:
 PLAYGROUND = "40-diagrams/substrate-playground.html"
 
 
-def _playground_agent_count(path: Path) -> int:
-    """Number of agents inlined in the playground's RAW_AGENTS dataset."""
+def _committed_raw_agents(path: Path):
+    """Parse the RAW_AGENTS dataset currently inlined in the playground."""
     m = re.search(r"const RAW_AGENTS = (\[.*?\]);", _read(path), re.DOTALL)
-    return len(json.loads(m.group(1))) if m else -1
+    return json.loads(m.group(1)) if m else None
+
+
+def _expected_raw_agents():
+    """Recompute the playground dataset from the tree by reusing the
+    generator's own builders — so a change to any agent's skills, commands,
+    vendor, vertical, etc. is caught, not just a change in the agent count."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "_playground_gen", REPO / "scripts" / "build-substrate-playground.py"
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod.strip_payload(mod.build_agents())
+
+
+def _playground_mismatch():
+    """Return a (key, current, expected) tuple if the committed playground data
+    is stale, else None."""
+    committed = _committed_raw_agents(REPO / PLAYGROUND)
+    expected = _expected_raw_agents()
+    if committed == expected:
+        return None
+    if committed is None:
+        return ("playground_data", "unparseable", "regenerate")
+    if len(committed) != len(expected):
+        return ("playground_agents", str(len(committed)), str(len(expected)))
+    drifted = [e["id"] for c, e in zip(committed, expected) if c != e]
+    return ("playground_data", f"stale ({', '.join(drifted[:3])} …)", "regenerate")
 
 
 def _regen_playground() -> None:
@@ -211,23 +249,21 @@ def run(write: bool) -> int:
             _write(path, new)
             changed.append(rel)
 
-    # The playground inlines its own agent dataset; its size must equal
-    # agents_total. Compare the count (OS-independent) instead of byte-diffing
-    # the regenerated file, which would be fragile across line-ending /
-    # platform boundaries. --write regenerates it via its own generator.
-    expected_agents = int(stats["agents_total"].replace(",", ""))
-
+    # The playground inlines its own agent dataset. Verify the full parsed
+    # dataset (not only the count) by recomputing it from the tree, so a change
+    # to any agent's skills / commands / vendor / vertical is caught too.
+    # Compared as parsed JSON, so it's OS- and line-ending-agnostic. --write
+    # regenerates the file via the generator.
     if write:
         _regen_playground()
         synced = ", ".join(dict.fromkeys(changed + [PLAYGROUND])) or "(none)"
         print(f"sync_stats: synced docs + regenerated playground: {synced}")
         return 0
 
-    pg_count = _playground_agent_count(REPO / PLAYGROUND)
-    if pg_count != expected_agents:
-        mismatches.append(
-            (PLAYGROUND, "playground_agents", str(pg_count), str(expected_agents))
-        )
+    pg = _playground_mismatch()
+    if pg is not None:
+        key, current, expected = pg
+        mismatches.append((PLAYGROUND, key, current, expected))
 
     if mismatches:
         print("sync_stats: STALE / mismatched stats:\n")
@@ -283,6 +319,22 @@ def run_selftest() -> int:
             text = "Decalog<br/>5 structural truths"
             new, mm = process_anchor(text, pat, "9", "decalog_truths", "x")
             self.assertEqual(new, "Decalog<br/>9 structural truths")
+            self.assertEqual(len(mm), 1)
+
+        def test_anchor_zero_matches_flagged(self):
+            # surrounding text drifted → anchor no longer matches → must fail,
+            # never silently pass with lost coverage.
+            pat = re.compile(r"(?<=Decalog<br/>)(\d+)(?= structural truths)")
+            text = "the decalog has nine truths"
+            new, mm = process_anchor(text, pat, "9", "decalog_truths", "x")
+            self.assertEqual(new, text)
+            self.assertEqual(len(mm), 1)
+
+        def test_anchor_multiple_matches_flagged(self):
+            pat = re.compile(r"(\d+)(?= cats)")
+            text = "3 cats and 4 cats"
+            new, mm = process_anchor(text, pat, "9", "k", "x")
+            self.assertEqual(new, text)
             self.assertEqual(len(mm), 1)
 
         def test_compute_stats_shape(self):
