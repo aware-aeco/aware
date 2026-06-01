@@ -15,7 +15,7 @@ $ npm install -g @aware-aeco/cli                       # any OS — recommended
   #   iex (irm ... install.ps1)              # Windows PowerShell, no Node
 
 $ claude-code                    # or codex, or opencode
-  ✓ plugin: aware-aeco · 65 agents · ~3,290 skills
+  ✓ plugin: aware-aeco · 66 agents · ~3,290 skills
 
 > Watch this Tekla model. When a welded assembly appears,
 > upload its drawing to my Trimble Connect fab folder.
@@ -69,16 +69,16 @@ aware-aeco/
 
 | | Count |
 |---|---|
-| Agents | **68** in the tree · **65** registered & installable |
+| Agents | **66** — all registered & installable |
 | — curated (hand-written skills) | **17** |
-| — reflected (auto-generated: NuGet / npm / YARD / OpenAPI) | **51** |
+| — reflected (auto-generated: NuGet / npm / YARD / OpenAPI) | **49** |
 | Skills | **~3,290** |
 | API commands | **46,800+** command files · **12,500+** catalog entries |
 | Reference apps | **7** (`.flo`) |
 | Meta-primitives | **5** (agent-builder · skill-builder · html-report · http · ui-inspector) |
 | Disciplines | engineering · architecture · construction · visualization · cross-cutting |
 
-> Numbers grow as agents land. [`registry-index.json`](./registry-index.json) is the source of truth for what installs today; the tree carries a few more still maturing.
+> Numbers grow as agents land. [`registry-index.json`](./registry-index.json) is the source of truth — every agent in the tree is registered.
 
 ---
 
@@ -101,7 +101,7 @@ aware-aeco/
 
 The `aware` CLI is live at **v0.53.0** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
-- **68 agents** — 17 hand-written + 51 auto-generated from vendor SDKs — **65 registered** in [`registry-index.json`](./registry-index.json) and installable today (a few duplicates/variants are still being consolidated).
+- **66 agents** — 17 hand-written + 49 auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
 - **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
 - **Desktop-host sidecars** for stateful, in-process vendor APIs: `cli-tekla`, `cli-revit`, `cli-rhino`, `cli-sketchup`.
 
