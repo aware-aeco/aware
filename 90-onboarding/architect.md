@@ -53,7 +53,7 @@ This is the source-of-truth for "which projects am I PM on." The reference app w
 ## 40-55 min: install the reference app
 
 ```powershell
-aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/architect-sheet-status.flo
+aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/architect-sheet-status.app
 ```
 
 Edit inputs at top:

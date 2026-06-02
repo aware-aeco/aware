@@ -38,11 +38,11 @@ nodes:
       version: "2026.0"
 
   # ── Disabled until `aware connect microsoft-365` is run ──────────────
-  # - id: email-pawel
+  # - id: email-me
   #   agent: microsoft-365
   #   command: outlook.mail.send
   #   inputs:
-  #     to:       ["pawel@floless.io"]
+  #     to:       ["you@example.com"]
   #     subject:  "AWARE Hello World"
   #     body:     "{{ inputs.message }}"
   #

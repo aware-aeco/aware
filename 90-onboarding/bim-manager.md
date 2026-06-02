@@ -43,7 +43,7 @@ For the Revit agent, no `aware connect` needed — the transport binary talks to
 ## 25-40 min: install the reference app
 
 ```powershell
-aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/bim-monday-audit.flo
+aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/bim-monday-audit.app
 ```
 
 Inspect what it'll do:
@@ -56,7 +56,7 @@ You'll see: which agents are called, what reads happen, what writes happen, what
 
 ## 40-55 min: customise + dry-run
 
-Edit `~/.aware/apps/bim-monday-audit/bim-monday-audit.flo` and set the inputs at the top:
+Edit `~/.aware/apps/bim-monday-audit/bim-monday-audit.app` and set the inputs at the top:
 
 ```yaml
 inputs:
@@ -107,5 +107,5 @@ So once you've installed it, it runs Monday 7am automatically. Trigger an ad-hoc
 ## Next
 
 - Add Navisworks clash digest by wiring in `navisworks.clash.run-all` + `clash.export --format bcf` + `acc-docs.transmittals.create`
-- Pair with [Bluebeam Studio markups](../30-apps/_examples/architect-sheet-status.flo) for redline tracking
+- Pair with [Bluebeam Studio markups](../30-apps/_examples/architect-sheet-status.app) for redline tracking
 - Compose your own — describe the workflow in plain English to Claude Code or codex while `aware-aeco` is installed

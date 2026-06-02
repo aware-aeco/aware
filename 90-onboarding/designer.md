@@ -61,10 +61,10 @@ If your project's view names differ, edit the reference app:
 ## 35-50 min: install + customise
 
 ```powershell
-aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/designer-monday-shots.flo
+aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/designer-monday-shots.app
 ```
 
-Edit `~/.aware/apps/designer-monday-shots/designer-monday-shots.flo`:
+Edit `~/.aware/apps/designer-monday-shots/designer-monday-shots.app`:
 
 ```yaml
 inputs:

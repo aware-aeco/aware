@@ -65,7 +65,7 @@ mod tests {
         };
         let dir = paths.apps_dir().join("welded-to-tc");
         std::fs::create_dir_all(&dir).unwrap();
-        std::fs::write(dir.join("welded-to-tc.flo"), "app: welded-to-tc\n").unwrap();
+        std::fs::write(dir.join("welded-to-tc.app"), "app: welded-to-tc\n").unwrap();
         uninstall_app("welded-to-tc", &paths).unwrap();
         assert!(!dir.exists());
     }

@@ -442,7 +442,7 @@ mod tests {
 
     #[test]
     fn real_welded_to_tc_passes_validation() {
-        let a = load_app("30-apps/_examples/welded-to-tc.flo");
+        let a = load_app("30-apps/_examples/welded-to-tc.app");
         let issues = validate_app(&a);
         assert!(!has_errors(&issues), "issues: {issues:?}");
     }

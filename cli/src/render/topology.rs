@@ -120,7 +120,7 @@ mod tests {
 
     #[test]
     fn linear_topology_lists_nodes_in_flow_order() {
-        let app = load_fixture("30-apps/_examples/welded-to-tc.flo");
+        let app = load_fixture("30-apps/_examples/welded-to-tc.app");
         let s = format_topology(&app);
         let pos_watch = s.find("tekla-watch").unwrap();
         let pos_filter = s.find("filter-welded").unwrap();
@@ -134,7 +134,7 @@ mod tests {
 
     #[test]
     fn dag_topology_lists_nodes_and_connections() {
-        let app = load_fixture("30-apps/_examples/qa-drawings-to-tekla.flo");
+        let app = load_fixture("30-apps/_examples/qa-drawings-to-tekla.app");
         let s = format_topology(&app);
         assert!(s.contains("dag"));
         assert!(s.contains("match-build"));

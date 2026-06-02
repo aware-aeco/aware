@@ -6,19 +6,19 @@ Seven worked examples spanning every persona from the 2026-05-17 audit. Each app
 
 | App | Persona | Layout | What it demonstrates |
 |---|---|---|---|
-| [Welded → TC Uploader](./welded-to-tc.flo) | Detailer | linear (3 nodes) | The canonical 60-second-demo. Stateful trigger → inline glue → stateless sink. Idempotency by Mark. `exposes-as-agent: true`. |
-| [QA Drawings to Tekla](./qa-drawings-to-tekla.flo) | Detailer | DAG (7 nodes, 6 edges) | Two parallel triggers + fan-in + fan-out. Named connection labels. App-level skills. |
-| [Monday Model Audit](./bim-monday-audit.flo) | **BIM manager** (killer app) | DAG (6 nodes) | v0.19 `for-each` + v0.19 `schedule:` + v0.20 atom references + v0.11 `safety:` + v0.12 Teams card + Outlook attachment |
-| [Monday Concept Shots](./designer-monday-shots.flo) | **Designer** (killer app) | DAG (4 nodes) | v0.17 `rhino-8.view.capture` × 3 + v0.12 Teams post-with-screenshot. Replaces the Sunday-night "what did I change" panic. |
-| [Cross-project Sheet+RFI Ball-in-Court](./architect-sheet-status.flo) | **Architect** (killer app) | DAG (6 nodes) | v0.19 `schedule:` + `for-each` + v0.14 acc-issues + v0.15 bluebeam-studio. The "$400/month subscription to delete a 4hr/week task" app. |
-| [Peer-review Delta (TSD)](./engineer-peer-review-delta.flo) | **Engineer** (killer app) | DAG (6 nodes) | v0.19 `snapshot:` + `compare:` + v0.21 engineering envelope (`output-seal:`) + receipt JSON. Replaces 100 engineer-hours/year. |
-| [Issue Drawing Pack](./detailer-issue-pack.flo) | **Detailer** (killer app) | DAG (9 nodes) | v0.16 Tekla curated verbs + v0.16 peddinghaus-translator + v0.11 `safety:` + v0.12 Teams card. Wednesday-afternoon panic → 1 command. |
+| [Welded → TC Uploader](./welded-to-tc.app) | Detailer | linear (3 nodes) | The canonical 60-second-demo. Stateful trigger → inline glue → stateless sink. Idempotency by Mark. `exposes-as-agent: true`. |
+| [QA Drawings to Tekla](./qa-drawings-to-tekla.app) | Detailer | DAG (7 nodes, 6 edges) | Two parallel triggers + fan-in + fan-out. Named connection labels. App-level skills. |
+| [Monday Model Audit](./bim-monday-audit.app) | **BIM manager** (killer app) | DAG (6 nodes) | v0.19 `for-each` + v0.19 `schedule:` + v0.20 atom references + v0.11 `safety:` + v0.12 Teams card + Outlook attachment |
+| [Monday Concept Shots](./designer-monday-shots.app) | **Designer** (killer app) | DAG (4 nodes) | v0.17 `rhino-8.view.capture` × 3 + v0.12 Teams post-with-screenshot. Replaces the Sunday-night "what did I change" panic. |
+| [Cross-project Sheet+RFI Ball-in-Court](./architect-sheet-status.app) | **Architect** (killer app) | DAG (6 nodes) | v0.19 `schedule:` + `for-each` + v0.14 acc-issues + v0.15 bluebeam-studio. The "$400/month subscription to delete a 4hr/week task" app. |
+| [Peer-review Delta (TSD)](./engineer-peer-review-delta.app) | **Engineer** (killer app) | DAG (6 nodes) | v0.19 `snapshot:` + `compare:` + v0.21 engineering envelope (`output-seal:`) + receipt JSON. Replaces 100 engineer-hours/year. |
+| [Issue Drawing Pack](./detailer-issue-pack.app) | **Detailer** (killer app) | DAG (9 nodes) | v0.16 Tekla curated verbs + v0.16 peddinghaus-translator + v0.11 `safety:` + v0.12 Teams card. Wednesday-afternoon panic → 1 command. |
 
 ## How to run
 
 ```bash
 # Install
-aware app install ./bim-monday-audit.flo
+aware app install ./bim-monday-audit.app
 
 # Run (one-shot)
 aware app run bim-monday-audit -- \
@@ -28,7 +28,7 @@ aware app run bim-monday-audit -- \
   --report-dir '\\office\reports'
 
 # Or just install + let the schedule: cron trigger fire
-aware app install ./bim-monday-audit.flo
+aware app install ./bim-monday-audit.app
 # (Monday 7am: app runs automatically)
 ```
 

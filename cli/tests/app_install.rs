@@ -31,11 +31,11 @@ fn installs_app_with_lockfile() {
         .assert()
         .success();
 
-    // Build a one-file app dir with welded-to-tc.flo
+    // Build a one-file app dir with welded-to-tc.app
     let app_src = tmp.path().join("welded-to-tc-src");
     std::fs::create_dir_all(&app_src).unwrap();
-    let flo = repo.join("30-apps/_examples/welded-to-tc.flo");
-    std::fs::copy(&flo, app_src.join("welded-to-tc.flo")).unwrap();
+    let flo = repo.join("30-apps/_examples/welded-to-tc.app");
+    std::fs::copy(&flo, app_src.join("welded-to-tc.app")).unwrap();
 
     // Install the app
     Command::cargo_bin("aware")
