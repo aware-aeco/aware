@@ -6,7 +6,9 @@
 
 ---
 
-## 60-second install demo
+## 60-second demo
+
+AWARE is the open framework that turns any software into an **agent** — skills + commands your existing AI can compose into plain-text apps. There's no new app to learn: your terminal AI is the runtime.
 
 ```bash
 $ npm install -g @aware-aeco/cli                       # any OS — recommended
@@ -14,19 +16,25 @@ $ npm install -g @aware-aeco/cli                       # any OS — recommended
   #   curl ... install.sh | bash             # Linux / Mac, no Node
   #   iex (irm ... install.ps1)              # Windows PowerShell, no Node
 
-$ claude-code                    # or codex, or opencode
+$ aware agent install tekla trimble-connect    # any software → an agent (skills + commands)
+  ✓ tekla            · Tekla Open API, version-pinned
+  ✓ trimble-connect  · REST
+
+$ claude-code                    # or codex, or opencode — your AI is the runtime
   ✓ plugin: aware-aeco · 66 agents · 3,282 skills
 
-> Watch this Tekla model. When a welded assembly appears,
-> upload its drawing to my Trimble Connect fab folder.
+> From this Tekla model, export each welded assembly's drawing
+> to my Trimble Connect fab folder.
 
-  → composed [Tekla Watcher] → [Welded Filter] → [TC Uploader]
-  → wrote ~/.aware/apps/welded-to-tc.flo
+  → AWARE hands your AI the tekla + trimble-connect skills; it writes the
+    integration and saves it as a plain-text app — readable, forkable,
+    open source by being a file:
+  → ~/.aware/apps/welded-to-tc.flo
 
 $ aware app run welded-to-tc
 ```
 
-That's the whole thing. One sentence in your terminal, one plain-text file, one command to run.
+That's the whole thing: any software becomes an agent, your AI composes those agents, and the result is one plain-text file you run.
 
 > `winget install aware-aeco` and `brew install aware-aeco` are queued. They need an MSI installer (Windows — scaffolded in `packaging/wix/`) and a Homebrew formula (Mac) plus a code-signing cert, all tracked as follow-up phases. The npm + curl-pipe + PowerShell paths above are what works today.
 
@@ -54,7 +62,7 @@ aware-aeco/
 ├── 40-diagrams/            # Mermaid + Excalidraw views of the substrate
 ├── 50-research/            # design notes, prior art, competitive analysis
 ├── 90-onboarding/          # first-hour walk-throughs, one per persona
-├── cli/                    # the `aware` CLI — Rust runtime · v0.53.0 (shipped)
+├── cli/                    # the `aware` CLI — Rust runtime (shipped)
 ├── cli-tekla / -revit /    # desktop-host sidecars — stateful, in-process vendor APIs
 │   -rhino / -sketchup
 ├── cli-roslyn / -reader /  # C# source reader (Roslyn) + shared IR reader + sidecar lib
@@ -99,7 +107,7 @@ aware-aeco/
 
 **Substrate: content-complete. Runtime: shipped.**
 
-The `aware` CLI is live at **v0.53.0** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
+The `aware` CLI is live at **v<!--stat:cli_version-->0.54.0<!--/stat-->** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
 - **<!--stat:agents_total-->66<!--/stat--> agents** — <!--stat:agents_curated-->17<!--/stat--> hand-written + <!--stat:agents_reflected-->49<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
 - **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
@@ -118,8 +126,6 @@ Track the CLI surface in [`10-core/cli-spec.md`](./10-core/cli-spec.md) and the 
 [Apache 2.0](./LICENSE) — permissive, patent grant, no walled garden. Consistent with the decalog: AWARE's substrate is open by construction.
 
 Commercial apps built on top of AWARE choose their own license. The substrate does not impose one.
-
-[FloLess](https://floless.io) is one such commercial app — a visual canvas for AWARE apps. It is a separate project under its own license.
 
 ---
 
