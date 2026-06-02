@@ -29,8 +29,8 @@ $ claude-code                    # or codex, or opencode — your AI is the runt
 
   → AWARE hands your AI the tekla + trimble-connect skills; it writes the
     integration and saves it as a plain-text app — readable, forkable,
-    open source by being a file:
-  → ~/.aware/apps/welded-to-tc.flo
+    open source by construction:
+  → ~/.aware/apps/welded-to-tc/welded-to-tc.app
 
 $ aware app run welded-to-tc
 ```
@@ -59,7 +59,7 @@ aware-aeco/
 │       │                   #        aconex · slack · solibri · bluebeam · BCF + IFC inspectors · …
 │       ├── visualization/  #    9 — xeokit · three.js · thatopen-components · web-ifc · speckle · iTwin 5.8/5.9 · …
 │       └── cross-cutting/  #    3 — microsoft-365 · google-workspace · dropbox
-├── 30-apps/_examples/      # 7 reference apps (.flo) — one per persona + canonical demos
+├── 30-apps/_examples/      # 7 reference apps — one per persona + canonical demos
 ├── 40-diagrams/            # Mermaid + Excalidraw views of the substrate
 ├── 50-research/            # design notes, prior art, competitive analysis
 ├── 90-onboarding/          # first-hour walk-throughs, one per persona
