@@ -85,7 +85,7 @@ aware
 │   └── <agent-id>/                     # installed agent (manifest + skills + commands)
 ├── apps/
 │   └── <app-id>/                       # installed app
-│       ├── <app-id>.app
+│       ├── <app-id>.app                # the app source (extension-agnostic: .app / .flo / …)
 │       ├── lockfile.yaml               # pinned agent versions resolved at install
 │       └── instances/<id>/state/       # per-instance state (stateful apps)
 ├── credentials/                        # encrypted; OS keychain on Mac/Linux, DPAPI on Windows
@@ -279,7 +279,7 @@ Registry:
 
 These belong to other components, not the CLI binary:
 
-- **A visual authoring canvas** (a separate downstream project). Reads the same files (`~/.aware/apps/*.app`, agent manifests). Separate executable, separate license.
+- **A visual authoring canvas** (a separate downstream project). Reads the same files (the installed apps under `~/.aware/apps/`, agent manifests). Separate executable, separate license.
 - **The registry web service.** v0 uses GitHub-hosted JSON; later replaced by a hosted service. CLI just consumes the index.
 - **Hosted execution.** AWARE is local-first. Cloud execution is a separate product layer if/when it ships.
 
