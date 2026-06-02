@@ -85,7 +85,7 @@ aware
 │   └── <agent-id>/                     # installed agent (manifest + skills + commands)
 ├── apps/
 │   └── <app-id>/                       # installed app
-│       ├── <app-id>.app                # the app source (extension-agnostic: .app / .flo / …)
+│       ├── <app-id>.<ext>              # app source; <ext> is .app (recommended), .flo, etc.
 │       ├── lockfile.yaml               # pinned agent versions resolved at install
 │       └── instances/<id>/state/       # per-instance state (stateful apps)
 ├── credentials/                        # encrypted; OS keychain on Mac/Linux, DPAPI on Windows
