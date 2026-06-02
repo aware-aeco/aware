@@ -16,7 +16,8 @@ $ npm install -g @aware-aeco/cli                       # any OS — recommended
   #   curl ... install.sh | bash             # Linux / Mac, no Node
   #   iex (irm ... install.ps1)              # Windows PowerShell, no Node
 
-$ aware agent install tekla trimble-connect    # any software → an agent (skills + commands)
+$ aware agent install tekla              # any software → an agent (skills + commands)
+$ aware agent install trimble-connect
   ✓ tekla            · Tekla Open API, version-pinned
   ✓ trimble-connect  · REST
 
