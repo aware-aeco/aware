@@ -30,7 +30,7 @@ $ claude-code                    # or codex, or opencode — your AI is the runt
   → AWARE hands your AI the tekla + trimble-connect skills; it writes the
     integration and saves it as a plain-text app — readable, forkable,
     open source by construction:
-  → ~/.aware/apps/welded-to-tc/welded-to-tc.aware
+  → ~/.aware/apps/welded-to-tc/welded-to-tc.app
 
 $ aware app run welded-to-tc
 ```
