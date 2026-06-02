@@ -1,6 +1,6 @@
 ---
 name: aware-skill-builder-decouple-source-runtime-isms
-description: This skill should be used when porting a skill into AWARE from a closed or host runtime — the canonical case being FloLess's WPF/C# runtime (`src/FloLess/Core/Skills/Resources/`). Lists the seven categories of source-runtime assumptions that must be stripped or rephrased so the skill works for any AWARE agent runtime. Apply at Step 3 of the skill-builder pipeline, after frontmatter conventions are applied and before runtime-scoping. The seven categories are exhaustive — checking against all seven prevents source-runtime leakage into the generic substrate.
+description: This skill should be used when porting a skill into AWARE from a closed/host runtime — canonically FloLess's WPF/C# runtime (`src/FloLess/Core/Skills/Resources/`). Lists the seven categories of source-runtime assumptions to strip or rephrase so the skill works for any AWARE agent runtime. Apply at Step 3 of the skill-builder pipeline (after frontmatter conventions, before runtime-scoping).
 ---
 
 # Decouple source-runtime assumptions
