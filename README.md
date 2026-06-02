@@ -74,21 +74,6 @@ aware-aeco/
 └── registry-index.json     # the registry — source of truth for installable agents
 ```
 
-### Stats — as of 2026-06-01 (regenerate from `registry-index.json` + the tree)
-
-| | Count |
-|---|---|
-| Agents | **<!--stat:agents_total-->66<!--/stat-->** — all registered & installable |
-| — curated (hand-written skills) | **<!--stat:agents_curated-->17<!--/stat-->** |
-| — reflected (auto-generated: NuGet / npm / YARD / OpenAPI) | **<!--stat:agents_reflected-->49<!--/stat-->** |
-| Skills | **<!--stat:skills-->3,282<!--/stat-->** |
-| API commands | **<!--stat:commands-->46,813<!--/stat-->** command files · **<!--stat:catalog-->12,162<!--/stat-->** catalog entries |
-| Reference apps | **<!--stat:apps-->7<!--/stat-->** (`.flo`) |
-| Meta-primitives | **<!--stat:meta_primitives-->5<!--/stat-->** (agent-builder · skill-builder · html-report · http · ui-inspector) |
-| Disciplines | engineering · architecture · construction · visualization · cross-cutting |
-
-> Numbers grow as agents land. [`registry-index.json`](./registry-index.json) is the source of truth — every agent in the tree is registered.
-
 ---
 
 ## Read these in order
