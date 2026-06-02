@@ -40,7 +40,7 @@ Your apps MUST pin every required field. The peer-review-delta reference app alr
 ## 20-35 min: install the reference app
 
 ```powershell
-aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/engineer-peer-review-delta.flo
+aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/engineer-peer-review-delta.app
 ```
 
 Edit the `engineering.pins` block to match your project. Example: a UK steel project running EC3+UK NA on EN 10365 sections:

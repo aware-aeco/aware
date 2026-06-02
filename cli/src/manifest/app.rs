@@ -1,8 +1,8 @@
 //! Typed deserialization for AWARE app manifests (`.flo` files).
 //!
 //! Shapes verified against the 2 reference apps:
-//! - `30-apps/_examples/welded-to-tc.flo`   — linear layout, 3 nodes, 2 connections
-//! - `30-apps/_examples/qa-drawings-to-tekla.flo` — DAG layout, 7 nodes, 6 connections
+//! - `30-apps/_examples/welded-to-tc.app`   — linear layout, 3 nodes, 2 connections
+//! - `30-apps/_examples/qa-drawings-to-tekla.app` — DAG layout, 7 nodes, 6 connections
 
 use std::collections::BTreeMap;
 
@@ -484,7 +484,7 @@ mod tests {
         let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
             .unwrap()
-            .join("30-apps/_examples/welded-to-tc.flo");
+            .join("30-apps/_examples/welded-to-tc.app");
         let text = std::fs::read_to_string(&path).unwrap();
         let a: App = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.app, "welded-to-tc");
@@ -500,7 +500,7 @@ mod tests {
         let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
             .unwrap()
-            .join("30-apps/_examples/qa-drawings-to-tekla.flo");
+            .join("30-apps/_examples/qa-drawings-to-tekla.app");
         let text = std::fs::read_to_string(&path).unwrap();
         let a: App = serde_yaml::from_str(&text).unwrap();
         assert_eq!(a.app, "qa-drawings-to-tekla");
@@ -515,7 +515,7 @@ mod tests {
         let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
             .unwrap()
-            .join("30-apps/_examples/welded-to-tc.flo");
+            .join("30-apps/_examples/welded-to-tc.app");
         let text = std::fs::read_to_string(&path).unwrap();
         let a: App = serde_yaml::from_str(&text).unwrap();
         let inline = a.nodes.iter().find(|n| n.id == "filter-welded").unwrap();

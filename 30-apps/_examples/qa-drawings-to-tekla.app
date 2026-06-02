@@ -9,7 +9,7 @@ description: |
   Demonstrates the AWARE DAG features: fan-in (drawing + spec → validated job)
   and fan-out (validated job → both Tekla insert AND Slack notify).
 
-  This is the worked example used in the FloLess canvas demo. Realistic AECO
+  Realistic AECO
   QA workflow shape — software composed from a paragraph.
 
 exposes-as-agent: false      # internal pipeline, not meant to be wrapped

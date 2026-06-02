@@ -190,14 +190,14 @@ mod tests {
         let flo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
             .unwrap()
-            .join("30-apps/_examples/welded-to-tc.flo");
-        std::fs::copy(&flo, app_src.join("welded-to-tc.flo")).unwrap();
+            .join("30-apps/_examples/welded-to-tc.app");
+        std::fs::copy(&flo, app_src.join("welded-to-tc.app")).unwrap();
 
         let installed = install_app_from_path(&app_src, &paths).unwrap();
         assert_eq!(installed, "welded-to-tc");
         assert!(
             tmp.path()
-                .join("apps/welded-to-tc/welded-to-tc.flo")
+                .join("apps/welded-to-tc/welded-to-tc.app")
                 .is_file()
         );
     }

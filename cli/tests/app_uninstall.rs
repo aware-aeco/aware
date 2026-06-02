@@ -10,7 +10,7 @@ fn uninstalls_app() {
     // Set up a dummy installed app
     std::fs::create_dir_all(aware.join("apps/welded-to-tc")).unwrap();
     std::fs::write(
-        aware.join("apps/welded-to-tc/welded-to-tc.flo"),
+        aware.join("apps/welded-to-tc/welded-to-tc.app"),
         "app: welded-to-tc\nversion: 0.0.1\ndescription: x\nnodes: [{id: a}]\nconnections: []\nrequires: []",
     )
     .unwrap();

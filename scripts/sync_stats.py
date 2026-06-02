@@ -6,7 +6,7 @@ Single source of truth (all computed, never hand-counted):
   - registry-index.json         → registered-agent count
   - 20-agents/ tree             → manifests, curated/reflected split, skills,
                                    commands, catalog entries, meta-primitives
-  - 30-apps/**/*.flo            → reference-app count
+  - 30-apps/_examples/*.{flo,app} → reference-app count (top-level only)
   - 00-vision/decalog.md        → number of structural truths
   - cli/Cargo.toml              → CLI version
 
@@ -102,7 +102,8 @@ def compute_stats() -> dict[str, str]:
             elif in_catalog and fn.endswith(".json"):
                 catalog += 1
 
-    apps = sum(1 for _ in (REPO / "30-apps").rglob("*.flo"))
+    examples = REPO / "30-apps" / "_examples"
+    apps = sum(1 for p in examples.iterdir() if p.is_file() and p.suffix in (".flo", ".app"))
     core = agents_root / "_core"
     meta = sum(1 for p in core.iterdir() if (p / "manifest.yaml").is_file())
     decalog = len(

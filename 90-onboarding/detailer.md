@@ -50,7 +50,7 @@ In Tekla, open *Numbering → Modified Objects* once to make sure the model is u
 ## 40-55 min: install + customise the reference app
 
 ```powershell
-aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/detailer-issue-pack.flo
+aware app install https://github.com/aware-aeco/aware/raw/main/30-apps/_examples/detailer-issue-pack.app
 ```
 
 Edit inputs at top:

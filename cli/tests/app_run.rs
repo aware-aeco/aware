@@ -19,8 +19,8 @@ fn run_one_shot_app_with_no_installed_agents_fails_clearly() {
     let flo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap()
-        .join("30-apps/_examples/welded-to-tc.flo");
-    std::fs::copy(&flo, app_src.join("welded-to-tc.flo")).unwrap();
+        .join("30-apps/_examples/welded-to-tc.app");
+    std::fs::copy(&flo, app_src.join("welded-to-tc.app")).unwrap();
 
     Command::cargo_bin("aware")
         .unwrap()

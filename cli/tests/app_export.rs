@@ -9,7 +9,7 @@ fn exports_installed_app() {
     let aware = tmp.path().join("aware");
     std::fs::create_dir_all(aware.join("apps/welded-to-tc")).unwrap();
     let original = "app: welded-to-tc\nversion: 0.0.1\ndescription: x\nnodes: [{id: a}]\nconnections: []\nrequires: []";
-    std::fs::write(aware.join("apps/welded-to-tc/welded-to-tc.flo"), original).unwrap();
+    std::fs::write(aware.join("apps/welded-to-tc/welded-to-tc.app"), original).unwrap();
 
     let out = tmp.path().join("exported.flo");
     Command::cargo_bin("aware")

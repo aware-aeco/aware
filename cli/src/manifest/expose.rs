@@ -287,7 +287,7 @@ mod tests {
         let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
             .parent()
             .unwrap()
-            .join("30-apps/_examples/welded-to-tc.flo");
+            .join("30-apps/_examples/welded-to-tc.app");
         serde_yaml::from_str(&std::fs::read_to_string(path).unwrap()).unwrap()
     }
 

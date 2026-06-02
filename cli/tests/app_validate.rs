@@ -9,8 +9,8 @@ fn valid_app_exits_0() {
     let flo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .parent()
         .unwrap()
-        .join("30-apps/_examples/welded-to-tc.flo");
-    std::fs::copy(&flo, tmp.path().join("welded-to-tc.flo")).unwrap();
+        .join("30-apps/_examples/welded-to-tc.app");
+    std::fs::copy(&flo, tmp.path().join("welded-to-tc.app")).unwrap();
 
     Command::cargo_bin("aware")
         .unwrap()

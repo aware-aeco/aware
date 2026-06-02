@@ -131,8 +131,8 @@ mod tests {
         let src_manifest = repo_root.join("20-agents/aeco/engineering/tekla/manifest.yaml");
         std::fs::copy(&src_manifest, aware.join("agents/tekla/manifest.yaml")).unwrap();
 
-        let src_flo = repo_root.join("30-apps/_examples/welded-to-tc.flo");
-        std::fs::copy(&src_flo, aware.join("apps/welded-to-tc/welded-to-tc.flo")).unwrap();
+        let src_flo = repo_root.join("30-apps/_examples/welded-to-tc.app");
+        std::fs::copy(&src_flo, aware.join("apps/welded-to-tc/welded-to-tc.app")).unwrap();
 
         let aware = aware.clone();
         // Intentional leak: keeps the TempDir alive for the test process.

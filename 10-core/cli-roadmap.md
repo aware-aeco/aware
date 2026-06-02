@@ -479,11 +479,11 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 **Goal:** every persona has a worked end-to-end app that runs against their installed tools, plus a 60-second demo in the manifesto.
 
 **Content:**
-- `30-apps/_examples/bim-monday-audit.flo` — Revit + ACC + M365 + html-report
-- `30-apps/_examples/designer-monday-shots.flo` — Rhino + M365 + html-report
-- `30-apps/_examples/architect-sheet-status.flo` — Revit + ACC + M365
-- `30-apps/_examples/engineer-peer-review-delta.flo` — TSD + snapshot + html-report + M365
-- `30-apps/_examples/detailer-issue-pack.flo` — Tekla + Trimble Connect + M365
+- `30-apps/_examples/bim-monday-audit.app` — Revit + ACC + M365 + html-report
+- `30-apps/_examples/designer-monday-shots.app` — Rhino + M365 + html-report
+- `30-apps/_examples/architect-sheet-status.app` — Revit + ACC + M365
+- `30-apps/_examples/engineer-peer-review-delta.app` — TSD + snapshot + html-report + M365
+- `30-apps/_examples/detailer-issue-pack.app` — Tekla + Trimble Connect + M365
 
 **Docs:**
 - `cli/README.md` gains a 60-second demo per persona
