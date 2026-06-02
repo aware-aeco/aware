@@ -52,7 +52,7 @@ fn populate() -> TempDir {
         copy_dir_recursive(src_dir, &dst_dir).unwrap();
     }
 
-    // Apps: each .flo in 30-apps/_examples/ becomes <tmp>/apps/<stem>/<stem>.flo
+    // Apps: each app file (.app/.flo) in 30-apps/_examples/ becomes <tmp>/apps/<stem>/<stem>.<ext>
     let apps_src = repo_root.join("30-apps/_examples");
     for entry in std::fs::read_dir(&apps_src).unwrap().flatten() {
         let p = entry.path();
