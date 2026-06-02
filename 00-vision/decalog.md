@@ -62,9 +62,9 @@ The 2026-05-17 persona audit surfaced this as the single most important boundary
 
 Truth #9 is that distinction.
 
-**Composing the plan** — an LLM authors the `.flo`, picks the agents, wires the topology. Non-deterministic, conversational, iterative.
+**Composing the plan** — an LLM authors the app, picks the agents, wires the topology. Non-deterministic, conversational, iterative.
 
-**Being the plan** — the `.flo` runs. Every node is a typed agent invocation, a deterministic atom, or a substrate primitive (`for-each` / `compare` / `assert` / `snapshot` / `model-lock`). The runtime walks the DAG; no LLM is in the loop.
+**Being the plan** — the app runs. Every node is a typed agent invocation, a deterministic atom, or a substrate primitive (`for-each` / `compare` / `assert` / `snapshot` / `model-lock`). The runtime walks the DAG; no LLM is in the loop.
 
 **Hard rules this implies:**
 

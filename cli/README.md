@@ -391,7 +391,7 @@ aware agent update tekla
 aware agent validate ./my-agent
 aware app install ./my-app                                   # writes lockfile.yaml
 aware app validate ./my-app
-aware app export welded-to-tc /tmp/exported.flo
+aware app export welded-to-tc /tmp/exported.app
 ```
 
 ### Run an app (v0.3)

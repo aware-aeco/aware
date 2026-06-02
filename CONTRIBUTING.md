@@ -25,7 +25,7 @@ Compose existing agents into something useful. If others might want to use your 
 
 - **Compose:** write the app file directly, or have Claude compose it for you in your terminal.
 - **Validate:** `aware app validate <path>` checks structure, version pins, capabilities, and cycle-freedom.
-- **Publish:** for the registry, open a PR under `30-apps/<your-handle>/<app-name>/`. For private use, share the file directly — `.flo`/`.app` files are plain text.
+- **Publish:** for the registry, open a PR under `30-apps/<your-handle>/<app-name>/`. For private use, share the file directly — `.app` files are plain text.
 
 See [`10-core/app-spec.md`](./10-core/app-spec.md) for the format.
 
@@ -81,4 +81,4 @@ If a contribution debate stalls, the decalog is the tiebreaker.
 
 ## Who's behind this
 
-AWARE is maintained by BIMstudio and a growing list of AECO contributors. The substrate is Apache 2.0 forever. The commercial apps built on top (including [FloLess](https://floless.io)) are separate projects under their own licenses.
+AWARE is maintained by BIMstudio and a growing list of AECO contributors. The substrate is Apache 2.0 forever. The commercial apps built on top are separate projects under their own licenses.

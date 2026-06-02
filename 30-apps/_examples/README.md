@@ -1,6 +1,6 @@
 # Reference apps
 
-Seven worked examples spanning every persona from the 2026-05-17 audit. Each `.flo` file is plain text — read it in Notepad, edit by hand, diff in git, share as an email attachment.
+Seven worked examples spanning every persona from the 2026-05-17 audit. Each app file is plain text — read it in Notepad, edit by hand, diff in git, share as an email attachment.
 
 ## The seven
 
@@ -56,7 +56,7 @@ The first six audit phases (v0.10 → v0.16) closed those gaps. v0.17–v0.21 ma
 
 1. Open Claude Code (or codex, opencode) with `aware-aeco` installed
 2. Describe what you want in plain English
-3. The AI composes the `.flo` file using the installed agents + atoms
-4. Inspect it visually with FloLess (the commercial canvas) when it ships, or via `aware app show <name>`
+3. The AI composes the app file using the installed agents + atoms
+4. Inspect it via `aware app show <name>`
 
 See [`CONTRIBUTING.md`](../../CONTRIBUTING.md) for how to publish your apps to the community registry.

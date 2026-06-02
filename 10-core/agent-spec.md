@@ -331,7 +331,7 @@ Output: a `*.aware-receipt.json` next to the artifact containing:
 - agent versions used
 - expression-engine version
 
-A checker years from now can re-create the receipt against a fresh AWARE install + the same `.flo` + the same pins. Mismatch = the calc is no longer reproducible; investigate.
+A checker years from now can re-create the receipt against a fresh AWARE install + the same app file + the same pins. Mismatch = the calc is no longer reproducible; investigate.
 
 ### What this guarantees
 

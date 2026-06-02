@@ -14,7 +14,7 @@ The honest part of the agent name. Enscape (Chaos) provides:
 ❌ Animation timeline scripting
 ❌ Cloud render dispatch via API
 
-We **cannot**, from a `.flo` app:
+We **cannot**, from an AWARE app:
 
 - Change Enscape's material library programmatically
 - Set up a multi-frame animation render

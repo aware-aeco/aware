@@ -13,7 +13,7 @@ Two views of the AWARE substrate.
 - **Gray nodes** = post-v0 / future scope
 - **Blue substrate** = the always-free, Apache-2.0 core
 - **Yellow meta** = `aware-agent-builder` — the agent that makes agents
-- **Pink commercial** = apps built on AWARE that ship under their own license (e.g. FloLess)
+- **Pink commercial** = apps built on AWARE that ship under their own license
 
 ## When to update which
 

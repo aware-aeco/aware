@@ -91,4 +91,4 @@ The card lands in your `principals-rollup` Teams channel:
 
 - Add ACC Docs file listing: `acc-docs.files.list since:last-friday` to find sheets touched this week
 - Add the Bluebeam markup-disposition workflow: `bluebeam-studio.markups.pull` + `set-status`
-- For tender issues, look at the architect's other reference app pattern (`sheet.export-pdfs` + `sheet.stamp` + `acc-docs.transmittals.create`) — write a `tender-issue.flo` and let the AI compose it for you
+- For tender issues, look at the architect's other reference app pattern (`sheet.export-pdfs` + `sheet.stamp` + `acc-docs.transmittals.create`) — write a `tender-issue.app` and let the AI compose it for you
