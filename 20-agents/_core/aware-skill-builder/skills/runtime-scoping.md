@@ -1,6 +1,6 @@
 ---
 name: aware-skill-builder-runtime-scoping
-description: This skill should be used when deciding which language conventions (C#, Python, TypeScript, etc.) belong inside an AWARE skill. Encodes the rule "C# only when the target API mandates .NET — otherwise pick whatever's best for AWARE." Lists the AECO software tiers (mandate-.NET vs runtime-agnostic) and shows how to scope C# code examples in runtime-agnostic agents. Apply at Step 4 of the skill-builder pipeline, after FloLess-isms have been decoupled.
+description: This skill should be used when deciding which language conventions (C#, Python, TypeScript, etc.) belong inside an AWARE skill. Encodes the rule "C# only when the target API mandates .NET — otherwise pick whatever's best for AWARE." Lists the AECO software tiers (mandate-.NET vs runtime-agnostic) and shows how to scope C# code examples in runtime-agnostic agents. Apply at Step 4 of the skill-builder pipeline, after source-runtime-isms have been decoupled.
 ---
 
 # Runtime scoping for AWARE skills

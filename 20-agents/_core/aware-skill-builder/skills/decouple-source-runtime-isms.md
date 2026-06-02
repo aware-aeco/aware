@@ -1,17 +1,17 @@
 ---
-name: aware-skill-builder-decouple-floless-isms
-description: This skill should be used when porting skills from FloLess source (`src/FloLess/Core/Skills/Resources/`) into AWARE. Lists the seven categories of FloLess-runtime assumptions that must be stripped or rephrased so the skill works for any AWARE agent runtime. Apply at Step 3 of the skill-builder pipeline, after frontmatter conventions are applied and before runtime-scoping. The seven categories are exhaustive — checking against all seven prevents FloLess-runtime leakage into the generic substrate.
+name: aware-skill-builder-decouple-source-runtime-isms
+description: This skill should be used when porting a skill into AWARE from a closed/host runtime — canonically FloLess's WPF/C# runtime (`src/FloLess/Core/Skills/Resources/`). Lists the seven categories of source-runtime assumptions to strip or rephrase so the skill works for any AWARE agent runtime. Apply at Step 3 of the skill-builder pipeline (after frontmatter conventions, before runtime-scoping).
 ---
 
-# Decouple FloLess-runtime assumptions
+# Decouple source-runtime assumptions
 
-**FloLess production skills carry seven categories of runtime assumptions that don't apply to the broader AWARE substrate. Strip or rephrase them on every port.**
+**Skills ported from a closed source runtime carry runtime assumptions that don't apply to the broader AWARE substrate. Strip or rephrase them on every port. The canonical source is FloLess's WPF runtime; the seven categories below are the worked example.**
 
 Why this matters: AWARE agents may be implemented in any language, called from any agentic CLI, and consumed by anyone. A skill that says *"FloLess injects the token via `inputs['trimbleConnectAccessToken']`"* is unintelligible to a contributor writing a Python-based agent — and worse, it primes the AI to generate FloLess-shaped code where AWARE wants language-agnostic guidance.
 
 ## The seven categories
 
-| # | FloLess-ism | AWARE equivalent | Severity |
+| # | source-runtime-ism | AWARE equivalent | Severity |
 |---|---|---|---|
 | 1 | `group: <name>` frontmatter line | Drop entirely | mechanical |
 | 2 | *"FloLess injects the token via `inputs[...]`"* | *"AWARE runtime injects the token after `aware connect <agent>`"* | substantive |

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-01T16:49:36.253578700+00:00",
+  "updated-at": "2026-06-02T19:30:53.833430400+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1116,7 +1116,7 @@
             "pipeline",
             "skill-creator-invocation",
             "frontmatter-conventions",
-            "decouple-floless-isms",
+            "decouple-source-runtime-isms",
             "runtime-scoping",
             "folder-placement-and-manifest"
           ],
@@ -1141,7 +1141,7 @@
             },
             {
               "name": "port",
-              "description": "Port an existing skill from an external source (FloLess production skills, vendor doc, etc.).",
+              "description": "Port an existing skill from an external source (a closed-runtime codebase, vendor doc, contributor draft, etc.).",
               "lifecycle": "single",
               "category": "curated"
             }

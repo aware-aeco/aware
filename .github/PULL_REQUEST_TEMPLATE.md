@@ -50,7 +50,7 @@ Confirm one of:
 
 - [ ] Skill was authored / modified via Anthropic's `skill-creator` (mandatory per CLAUDE.md)
 - [ ] Frontmatter has `name:` (agent-prefixed) and `description:` (third-person, trigger-rich)
-- [ ] No FloLess-runtime-isms (no `group:`, no `Settings > Integrations`, no `inputs[xxxToken]`, no "Smart Node" naming)
+- [ ] No source-runtime-isms (no `group:`, no `Settings > Integrations`, no `inputs[xxxToken]`, no "Smart Node" naming)
 - [ ] `.ConfigureAwait(false)` / `System.Text.Json` mandates are scoped as ".NET note" if the agent is Tier B (REST-only)
 - [ ] Skill file is listed in the parent agent's `manifest.yaml` `skills:` block
 
