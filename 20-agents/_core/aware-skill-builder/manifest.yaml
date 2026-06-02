@@ -7,7 +7,7 @@ description: |
   Skills produced this way satisfy both Anthropic's authoring conventions
   (frontmatter, imperative voice, description trigger phrasing, progressive
   disclosure) AND AWARE's agent-spec conventions (folder placement,
-  manifest update, runtime-scoping, FloLess-runtime decoupling).
+  manifest update, runtime-scoping, source-runtime decoupling).
 
   This is the second meta-agent in AWARE (alongside aware-agent-builder).
   Where the agent-builder produces a whole agent from a code/doc source,
@@ -55,7 +55,7 @@ commands:
 
   port:
     lifecycle: single
-    description: Port an existing skill from an external source (FloLess production skills, vendor doc, etc.).
+    description: Port an existing skill from an external source (a closed-runtime codebase, vendor doc, contributor draft, etc.).
     inputs:
       source: string                 # path to the source markdown file
       target-agent: string           # which AWARE agent gets the skill
@@ -67,7 +67,7 @@ commands:
       schema:
         path: string
         manifest-updated: bool
-        decouplings-applied: array   # list of FloLess-isms / runtime-isms cleaned up
+        decouplings-applied: array   # list of source-runtime-isms cleaned up
         eval-passed: bool
 
   modify:
@@ -113,6 +113,6 @@ skills:
   - pipeline.md
   - skill-creator-invocation.md
   - frontmatter-conventions.md
-  - decouple-floless-isms.md
+  - decouple-source-runtime-isms.md
   - runtime-scoping.md
   - folder-placement-and-manifest.md

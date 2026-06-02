@@ -1,11 +1,11 @@
 ---
 name: aware-skill-builder-pipeline
-description: This skill should be used as the entry point when authoring, porting, or refining any AWARE agent skill. Describes the six-step pipeline that produces an AWARE-spec-compliant skill from a source (existing markdown, contributor notes, vendor docs). Apply whenever a contributor adds a new skill to an agent, ports an external skill into AWARE, or updates an existing skill's content. The pipeline composes Anthropic's `skill-creator` (the engine) with AWARE-specific post-processing (folder placement, manifest update, FloLess-decoupling, runtime-scoping).
+description: This skill should be used as the entry point when authoring, porting, or refining any AWARE agent skill. Describes the six-step pipeline that produces an AWARE-spec-compliant skill from a source (existing markdown, contributor notes, vendor docs). Apply whenever a contributor adds a new skill to an agent, ports an external skill into AWARE, or updates an existing skill's content. The pipeline composes Anthropic's `skill-creator` (the engine) with AWARE-specific post-processing (folder placement, manifest update, source-runtime decoupling, runtime-scoping).
 ---
 
 # AWARE skill-builder pipeline
 
-**Every AWARE skill goes through six steps. Skipping any step risks a skill that doesn't trigger correctly, doesn't fit the target agent's folder, or smuggles in FloLess-runtime assumptions.**
+**Every AWARE skill goes through six steps. Skipping any step risks a skill that doesn't trigger correctly, doesn't fit the target agent's folder, or smuggles in source-runtime assumptions.**
 
 ```
 ┌─ INPUT ──────────────────────────────────────────────────────────────────┐
@@ -24,14 +24,14 @@ description: This skill should be used as the entry point when authoring, portin
 ┌─ STEP 2 · Apply AWARE frontmatter conventions ───────────────────────────┐
 │  • Frontmatter `name`: agent-prefixed (e.g. `tekla-drawing-identity`)    │
 │  • `description`: third-person, enumerates trigger phrases               │
-│  • Drop FloLess-only fields (`group:`)                                   │
+│  • Drop source-runtime-only fields (`group:`)                                   │
 │  See: frontmatter-conventions.md                                         │
 └─────────────────────────────┬────────────────────────────────────────────┘
                               ▼
-┌─ STEP 3 · Decouple FloLess-runtime assumptions ──────────────────────────┐
-│  Seven categories of FloLess-isms to strip or rephrase                   │
+┌─ STEP 3 · Decouple source-runtime assumptions ──────────────────────────┐
+│  Seven categories of source-runtime-isms to strip or rephrase                   │
 │  (token injection mechanism, Settings UI references, "Smart Node"        │
-│  naming, etc.). See: decouple-floless-isms.md                            │
+│  naming, etc.). See: decouple-source-runtime-isms.md                            │
 └─────────────────────────────┬────────────────────────────────────────────┘
                               ▼
 ┌─ STEP 4 · Scope runtime guidance correctly ──────────────────────────────┐
@@ -62,7 +62,7 @@ description: This skill should be used as the entry point when authoring, portin
 
 ## When to skip steps
 
-- **Step 3** is no-op when porting from a non-FloLess source (vendor docs, contributor notes from scratch).
+- **Step 3** is no-op when the source carries no host runtime to strip (vendor docs, contributor notes from scratch).
 - **Step 4** is no-op when the target agent is .NET-mandated (Tekla, Revit, AutoCAD) — the C# examples stay as-is.
 - **Step 6** is **never** skipped. Eval is the cheapest catch for description drift.
 
@@ -78,4 +78,4 @@ description: This skill should be used as the entry point when authoring, portin
 - Is the target agent's `manifest.yaml` clean (no syntax errors)?
 - Does the target agent's `skills/` folder exist?
 - For ports: does the source file actually exist?
-- For ports from FloLess: have I read [decouple-floless-isms.md](./decouple-floless-isms.md)?
+- For ports from FloLess: have I read [decouple-source-runtime-isms.md](./decouple-source-runtime-isms.md)?

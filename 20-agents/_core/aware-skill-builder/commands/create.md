@@ -42,7 +42,7 @@ See [`pipeline.md`](../skills/pipeline.md). The command executes all six steps:
 
 1. Invoke Anthropic `skill-creator` in **create** mode → see [`skill-creator-invocation.md`](../skills/skill-creator-invocation.md)
 2. Apply AWARE frontmatter conventions → [`frontmatter-conventions.md`](../skills/frontmatter-conventions.md)
-3. Decouple FloLess-isms → [`decouple-floless-isms.md`](../skills/decouple-floless-isms.md) (no-op for new skills with no FloLess inheritance)
+3. Decouple source-runtime-isms → [`decouple-source-runtime-isms.md`](../skills/decouple-source-runtime-isms.md) (no-op for new skills with no FloLess inheritance)
 4. Apply runtime scoping → [`runtime-scoping.md`](../skills/runtime-scoping.md)
 5. Place in folder + update manifest → [`folder-placement-and-manifest.md`](../skills/folder-placement-and-manifest.md)
 6. Run skill-creator eval (Step 6 is mandatory)

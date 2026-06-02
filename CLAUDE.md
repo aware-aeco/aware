@@ -79,7 +79,7 @@ Full surface in [`10-core/cli-spec.md`](./10-core/cli-spec.md). Per-phase delive
 
 ## Engineering rules — non-negotiable
 
-These rules apply to every session in this repo. Inherited from the parent CLAUDE.md (`D:\Repos\floless-app\CLAUDE.md`).
+These rules apply to every session in this repo.
 
 ### Verify before answering
 
@@ -142,5 +142,4 @@ Build the `aware` CLI per `cli-roadmap.md`, starting with v0.1 read-only command
 
 ## Related repos
 
-- **Parent project** (`floless-app`): `D:\Repos\floless-app`. The commercial canvas + the source of ported skills.
-- **floless-web**: `D:\Repos\floless-web`. Marketing site, unrelated to AWARE substrate.
+- **Ported-skill source** (`floless-app` at `D:\Repos\floless-app`) — the external codebase several AWARE skills were ported from; the skill-builder strips its source-runtime-isms on port.

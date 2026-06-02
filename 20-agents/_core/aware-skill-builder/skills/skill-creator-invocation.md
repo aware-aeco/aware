@@ -39,7 +39,7 @@ app that involves <AGENT>, this skill should trigger so the AI knows
 to <SPECIFIC GOTCHA>.
 
 Constraints:
-- Skill content is generic AECO knowledge, NOT FloLess-runtime-specific.
+- Skill content is generic AECO knowledge, NOT source-runtime-specific.
   No references to "FloLess injects token", "Smart Node", "inputs[]" —
   strip if found.
 - The skill is part of an AWARE agent at agents/<vertical>/<name>/.
@@ -91,7 +91,7 @@ If skill-creator's output:
 - Adds `name:` and `description:` that match AWARE conventions → use as-is
 - Suggests breaking the skill into multiple files → consider; usually means scope creep, but sometimes correct
 - Inserts examples that reference Claude Code-specific tooling (Slash commands, etc.) → strip — those are out of scope for AWARE agent skills
-- Adds `group:` or other FloLess-runtime fields → strip; skill-creator wouldn't do this, but verify
+- Adds `group:` or other source-runtime fields → strip; skill-creator wouldn't do this, but verify
 
 ## Failure modes
 

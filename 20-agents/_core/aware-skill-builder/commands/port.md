@@ -15,14 +15,14 @@ This is the highest-traffic command for the substrate's growth — every existin
 | `source` | string | Path to the source markdown file (e.g. `D:\Repos\floless-app\src\FloLess\Core\Skills\Resources\Tekla\2025\tekla-events-clash-detection.md`). |
 | `target-agent` | string | Which AWARE agent receives the skill. |
 | `target-name` | string (optional) | Override the derived filename. Default = derived from source basename. |
-| `source-kind` | enum | `floless`, `vendor-doc`, `contributor-notes`, `other`. Default `other`. |
+| `source-kind` | enum | `closed-runtime`, `vendor-doc`, `contributor-notes`, `other`. Default `other`. |
 
 ## Outputs
 
 ```yaml
 path:                  string
 manifest-updated:      bool
-decouplings-applied:   array         # which of the seven FloLess-ism categories fired
+decouplings-applied:   array         # which of the seven source-runtime-ism categories fired
 runtime-scoping-mode:  enum          # tier-a | tier-b | tier-c (see runtime-scoping.md)
 eval-passed:           bool
 eval-accuracy:         number
@@ -34,7 +34,7 @@ eval-accuracy:         number
 aware skill port \
   --source D:/Repos/floless-app/src/FloLess/Core/Skills/Resources/Tekla/2025/tekla-events-clash-detection.md \
   --target-agent tekla \
-  --source-kind floless
+  --source-kind closed-runtime
 ```
 
 ## What runs internally
@@ -44,8 +44,8 @@ Same six-step pipeline as [`create`](./create.md), with these differences:
 | Step | `create` | `port` |
 |---|---|---|
 | 1 — skill-creator | Mode: `create`, with topic + notes | Mode: `create`, with the source file as input |
-| 2 — frontmatter | Generate from scratch | Derive from source's existing frontmatter; drop FloLess-only fields |
-| 3 — decouple FloLess-isms | No-op | **Fully active.** All seven categories scanned. |
+| 2 — frontmatter | Generate from scratch | Derive from source's existing frontmatter; drop source-runtime-only fields |
+| 3 — decouple source-runtime-isms | No-op | **Fully active.** All seven categories scanned. |
 | 4 — runtime scoping | Based on `tier` input | Auto-detected: read agent manifest's `transport`, classify Tier A/B/C |
 | 5 — folder + manifest | Compute target path | Same |
 | 6 — eval | Build test set from common composition prompts | Same, plus a regression test against the source's original use cases |
@@ -54,7 +54,7 @@ Same six-step pipeline as [`create`](./create.md), with these differences:
 
 | `source-kind` | What it tells the pipeline | Step 3 behavior |
 |---|---|---|
-| `floless` | Source is from `src/FloLess/Core/Skills/Resources/`. Apply all seven decoupling categories. | Aggressive — every FloLess-ism rewritten |
+| `closed-runtime` | Source is a closed/host runtime's skill codebase (canonical case: FloLess at `src/FloLess/Core/Skills/Resources/`). Apply all seven decoupling categories. | Aggressive — every source-runtime-ism rewritten |
 | `vendor-doc` | Source is a vendor's published documentation. | Light — preserve original wording for legal/attribution clarity; only AWARE-specific layering |
 | `contributor-notes` | Source is a rough contributor draft. | Substantial — skill-creator does most of the heavy lifting in Step 1 |
 | `other` | Unknown origin. | Default — conservative; flags potential issues but doesn't auto-rewrite |
@@ -67,7 +67,7 @@ The `trimble-connect-files` port (the substrate's first worked example):
 aware skill port \
   --source D:/Repos/floless-app/src/FloLess/Core/Skills/Resources/TrimbleConnect/trimble-connect-files.md \
   --target-agent trimble-connect \
-  --source-kind floless
+  --source-kind closed-runtime
 ```
 
 Decouplings applied (Step 3):
@@ -86,7 +86,7 @@ Output: `20-agents/aeco/construction/trimble-connect/skills/files.md`
 |---|---|---|
 | `skill.source-not-found` | Source path invalid | Check the path |
 | `skill.source-not-markdown` | Source isn't `.md` | Convert or use `--source-kind vendor-doc` with the original format if HTML |
-| `skill.decoupling-incomplete` | A FloLess-ism survived Step 3 (grep finds it post-port) | Re-run with `--strict-decoupling` or hand-fix and commit |
+| `skill.decoupling-incomplete` | A source-runtime-ism survived Step 3 (grep finds it post-port) | Re-run with `--strict-decoupling` or hand-fix and commit |
 | `skill.eval-failed` | Regression test against source's original use cases fails | The port lost a trigger context; re-invoke with the missing context spelled out |
 
 ## When NOT to use `port`
@@ -98,5 +98,5 @@ Output: `20-agents/aeco/construction/trimble-connect/skills/files.md`
 ## See also
 
 - [`pipeline.md`](../skills/pipeline.md) — the six-step pipeline overview
-- [`decouple-floless-isms.md`](../skills/decouple-floless-isms.md) — Step 3 details
+- [`decouple-source-runtime-isms.md`](../skills/decouple-source-runtime-isms.md) — Step 3 details
 - [`runtime-scoping.md`](../skills/runtime-scoping.md) — Step 4 details

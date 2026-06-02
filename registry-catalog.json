@@ -1116,7 +1116,7 @@
             "pipeline",
             "skill-creator-invocation",
             "frontmatter-conventions",
-            "decouple-floless-isms",
+            "decouple-source-runtime-isms",
             "runtime-scoping",
             "folder-placement-and-manifest"
           ],

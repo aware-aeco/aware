@@ -1,6 +1,6 @@
 ---
 name: aware-skill-builder-frontmatter-conventions
-description: This skill should be used when applying or reviewing AWARE-specific frontmatter on a skill file. Covers the required fields (`name`, `description`), the AWARE-specific naming rule (agent-prefixed), the third-person description phrasing, the trigger-phrase enumeration pattern, and the FloLess-only fields that must be stripped. Apply at Step 2 of the skill-builder pipeline, after `skill-creator` has produced its output and before folder placement.
+description: This skill should be used when applying or reviewing AWARE-specific frontmatter on a skill file. Covers the required fields (`name`, `description`), the AWARE-specific naming rule (agent-prefixed), the third-person description phrasing, the trigger-phrase enumeration pattern, and the source-runtime-only fields that must be stripped. Apply at Step 2 of the skill-builder pipeline, after `skill-creator` has produced its output and before folder placement.
 ---
 
 # AWARE frontmatter conventions
@@ -71,14 +71,14 @@ That description:
 
 ## Fields that must NOT appear in AWARE skills
 
-These are FloLess-runtime-specific. Strip them on every port:
+These are source-runtime-specific. Strip them on every port:
 
 | Field | Origin | Action |
 |---|---|---|
 | `group:` | FloLess `BuiltInSkills.cs` runtime — maps the skill to a UI group | **Strip.** AWARE has no UI-group concept. The parent folder is the implicit group. |
 | `version:` (on skill itself) | Some early FloLess skills had this | **Strip.** Skill versions are derived from the parent agent's manifest version. |
 | `compatibility:` | FloLess WPF runtime compatibility | **Strip.** Out of scope for AWARE substrate. |
-| Any `floless-*` prefix in name | FloLess-runtime tagging | **Strip prefix.** Replace with the agent name. |
+| Any `floless-*` prefix in name | source-runtime tagging | **Strip prefix.** Replace with the agent name. |
 
 ## Fields that are OPTIONAL but useful
 
@@ -96,7 +96,7 @@ After Step 2, the frontmatter must:
 
 - Have `name:` matching `<agent>-<filename-without-extension>`
 - Have `description:` starting with *"This skill should be used when"*
-- Have no `group:`, `version:`, `compatibility:`, or other FloLess-only fields
+- Have no `group:`, `version:`, `compatibility:`, or other source-runtime-only fields
 - Total description length: 200–500 characters
 - Description names at least 3 concrete trigger phrases
 
