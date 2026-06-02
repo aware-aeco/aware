@@ -38,7 +38,7 @@ aware
 │   ├── run <app> [--instance <id>] [--input <kv>...]       execute
 │   ├── stop <app> [--instance <id>]    stop a running app
 │   ├── validate <path>                 schema + cycle + cap checks
-│   ├── export <app> <output-path>      copy .flo file out
+│   ├── export <app> <output-path>      copy the app file out
 │   └── logs <app> [--instance <id>] [--tail]   read execution traces
 │
 ├── connect <integration>               provision OAuth credentials (default: browser-paste)
@@ -85,7 +85,7 @@ aware
 │   └── <agent-id>/                     # installed agent (manifest + skills + commands)
 ├── apps/
 │   └── <app-id>/                       # installed app
-│       ├── <app-id>.flo
+│       ├── <app-id>.app
 │       ├── lockfile.yaml               # pinned agent versions resolved at install
 │       └── instances/<id>/state/       # per-instance state (stateful apps)
 ├── credentials/                        # encrypted; OS keychain on Mac/Linux, DPAPI on Windows
@@ -192,7 +192,7 @@ skills (31):
 
 ### `aware app run <app>`
 
-The heaviest command. Loads the `.flo`, resolves agent dependencies via the lockfile, starts any stateful agents, wires connections, and either:
+The heaviest command. Loads the app file, resolves agent dependencies via the lockfile, starts any stateful agents, wires connections, and either:
 - Returns immediately (one-shot app with only stateless nodes)
 - Blocks until stopped (long-running app with stateful nodes)
 
@@ -279,7 +279,7 @@ Registry:
 
 These belong to other components, not the CLI binary:
 
-- **The FloLess visual canvas.** Reads the same files (`~/.aware/apps/*.flo`, agent manifests). Separate executable, separate license.
+- **A visual authoring canvas** (a separate downstream project). Reads the same files (`~/.aware/apps/*.app`, agent manifests). Separate executable, separate license.
 - **The registry web service.** v0 uses GitHub-hosted JSON; later replaced by a hosted service. CLI just consumes the index.
 - **Hosted execution.** AWARE is local-first. Cloud execution is a separate product layer if/when it ships.
 

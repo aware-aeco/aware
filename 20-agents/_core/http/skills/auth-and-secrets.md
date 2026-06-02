@@ -9,7 +9,7 @@ A generic client needs credentials, and credentials must never be written into t
 
 ## The rule
 
-Put `{{ secrets.<name> }}` in a **header value**. Never paste a raw token into the `.flo`.
+Put `{{ secrets.<name> }}` in a **header value**. Never paste a raw token into the app file.
 
 ```yaml
 - id: call

@@ -25,11 +25,11 @@ $ claude-code
   → Picked tekla agent for the trigger.
   → Added inline welded filter.
   → Used trimble-connect's upload command.
-  → Wrote ~/.aware/apps/welded-to-tc.flo
+  → Wrote ~/.aware/apps/welded-to-tc.app
 
   Composed:  [Tekla Watcher] → [Welded Filter] → [TC Uploader]
 
-$ cat ~/.aware/apps/welded-to-tc.flo
+$ cat ~/.aware/apps/welded-to-tc.app
   # plain text · readable · editable · forkable · open source by being a file
 ```
 
@@ -39,7 +39,7 @@ For decades that integration was either *"buy a $40,000 plugin"* or *"hire two d
 
 ### Five 60-second demos — one per persona
 
-The fabricator pitch above is the canonical 60 seconds. The 2026-05-17 persona audit asked for one per discipline. Each composes to a `.flo` file in `30-apps/_examples/`:
+The fabricator pitch above is the canonical 60 seconds. The 2026-05-17 persona audit asked for one per discipline. Each composes to an app in `30-apps/_examples/`:
 
 | Persona | Sentence to Claude / codex | Reference app |
 |---|---|---|
@@ -141,7 +141,7 @@ aware CLI                            ─ manages everything
 - Vector / embedding-based RAG (raw grep + skill files are enough for now)
 - App-of-apps direct nesting (use app-as-agent instead)
 - Hosted registry service (GitHub is enough for year one)
-- FloLess visual canvas (separate project; this manifesto is about the substrate)
+- A visual authoring canvas (a separate downstream project; this manifesto is about the substrate)
 
 ---
 

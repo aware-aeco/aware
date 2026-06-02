@@ -1,6 +1,6 @@
 # Cross-cutting atoms
 
-Named, reusable, typed building blocks for `.flo` apps. Replaces the
+Named, reusable, typed building blocks for AWARE apps. Replaces the
 inline JavaScript glue (`code: | e => e.type == "Welded"`) that the
 2026-05-17 persona audit flagged as "not no-code."
 
@@ -11,7 +11,7 @@ inline JavaScript glue (`code: | e => e.type == "Welded"`) that the
 | The predicate / map / reduce is referenced more than once | One-off; used only in this app |
 | It encodes a project / firm standard ("is this drawing ready for issue") | A trivial filter inline-readable in 3 lines |
 | It needs typed inputs / outputs the app composer can rely on | The shape is genuinely free-form |
-| You want it auditable across apps in the registry | The logic is local to one .flo |
+| You want it auditable across apps in the registry | The logic is local to one app |
 
 ## Folder structure
 

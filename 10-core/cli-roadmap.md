@@ -29,7 +29,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 | v0.19 substrate primitives | 🟡 partial | parsed + validated, but only `assert:` executes at runtime — for-each/compare/sweep/approve/snapshot/model-lock (+ schedule) return `NotYetImplemented` pending v0.19.x |
 | v0.20 named atoms | ✅ shipped | 33 atoms — 20 cross-cutting (`atoms/`) + 5 tekla + 8 revit (matches app-spec) |
 | v0.21 engineering envelope | ✅ shipped | agent-spec `engineering:`, `signed-output`, units (CLI `app reproduce` not yet wired) |
-| v0.22 persona apps | ✅ shipped | all 5 reference `.flo` present |
+| v0.22 persona apps | ✅ shipped | all 5 reference apps present |
 | v0.23 decalog #9 | ✅ shipped | "AI composes the plan; deterministic code is the plan" |
 | v0.24 lockfile + Glass Box | ✅ shipped | `app compile\|inspect`, `app_lock.rs` |
 | v0.25 voice packs | ✅ shipped | `voice` command group |
@@ -131,7 +131,7 @@ The phases compound. Phase N requires everything Phase N−1 shipped. Don't skip
 - `aware app logs <app>` — read execution traces
 
 **Internal modules added**:
-- `cli::runtime::orchestrator` — load `.flo`, build the topology graph, schedule execution
+- `cli::runtime::orchestrator` — load the app file, build the topology graph, schedule execution
 - `cli::runtime::template` — `{{ }}` substitution against inputs / upstream outputs / secrets
 - `cli::runtime::lifecycle` — start / stop stateful agents, marshal events between nodes
 - `cli::runtime::provenance` — write `.jsonl` execution traces under `~/.aware/logs/`
@@ -443,7 +443,7 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 **Spec changes:**
 - `atoms/` subfolder per agent (and at substrate level for cross-cutting)
 - Each atom: `id`, `kind: predicate|map|reduce`, `inputs`, `outputs`, `code` (typed; not free-text)
-- App `.flo` references atoms by ID: `filter: atom://tekla/is-ready-for-issue`
+- App files reference atoms by ID: `filter: atom://tekla/is-ready-for-issue`
 
 **Content:**
 - 20 cross-cutting atoms: `is-newer-than`, `group-by`, `sort-by`, `unique`, `pluck`, `count`, `sum`, `avg`, `min`, `max`, `at-least`, `at-most`, `format-date`, `path-join`, `naming-template`, `kebab-to-pascal`, `pascal-to-kebab`, `csv-row-build`, `json-path`, `regex-match`
@@ -512,7 +512,7 @@ The bones (text composition, decalog discipline, CLI ergonomics, hand-curated Te
 
 **Why next:** the persona audit + the 4-agent verification brainstorm both converged on the same insight — engineers will never trust prose composed by an AI; they will trust a deterministic, signed, multi-voice-reviewed artifact the AI's prose compiled into. The lockfile is the foundation; v0.25 layers panel review on top.
 
-**Substrate-correct framing (mandatory):** the lockfile sidecar is named `<app-name>.lock`, never `.flo.lock`. The substrate is extension-agnostic — `.flo` is FloLess's extension; `.app`, `.flow`, `.aware`, and custom extensions all compile to the same lockfile shape.
+**Substrate-correct framing (mandatory):** the lockfile sidecar is named `<app-name>.lock`, derived from the app's id — never from the source file's extension. The substrate is extension-agnostic — `.app` (the recommended default), `.flow`, `.aware`, and custom extensions all compile to the same lockfile shape.
 
 **Spec changes (`10-core/app-spec.md`):**
 - New "Lockfile sidecar" section defining the `.lock` format
@@ -635,7 +635,7 @@ After v0.5, all five spec documents (decalog, manifesto, agent-spec, app-spec, c
 - A real third-party app published to the registry by someone other than the AWARE team
 
 **Not required for v1.0**:
-- The FloLess canvas (separate project)
+- A visual authoring canvas (separate project)
 - A hosted registry (GitHub-hosted is sufficient)
 - Cloud execution (local-first is the thesis)
 
@@ -650,7 +650,7 @@ These come up; the answer is no. Documented here so they don't keep coming up.
 | A new chat host competing with claude-code / codex | Decalog #4: ride existing CLIs. Building yet another chat is fragmentation. |
 | A proprietary protocol competing with MCP | Decalog #3: don't gate. MCP is the transport; AWARE is the AECO domain layer. |
 | A hosted runtime as the default | Decalog #2: AI is the runtime. Hosted execution is an optional add-on later; local-first is the substrate. |
-| A graphical app authoring canvas inside the CLI | Out of scope. The CLI is for execution + management; FloLess (separate project) is the visual authoring canvas. |
+| A graphical app authoring canvas inside the CLI | Out of scope. The CLI is for execution + management; a separate downstream project provides the visual authoring canvas. |
 | Cloud-stored credentials | Decalog #4 + security. Credentials encrypted on the user's machine, period. |
 
 ---
@@ -663,13 +663,13 @@ Logged here so they don't keep coming up, but not strictly rejected the way the 
 
 **Priority:** low — no concrete consumer today.
 
-**What:** Publish an official Docker image on each release. Downstream packagers (FloLess, third-party SaaS, internal IT) base their containers on it; demo / CI / "try-without-installing" use cases also benefit.
+**What:** Publish an official Docker image on each release. Downstream packagers (commercial canvases, third-party SaaS, internal IT) base their containers on it; demo / CI / "try-without-installing" use cases also benefit.
 
 **Cost:** ~1 day of CI work — Dockerfile + GitHub Actions release job. Near-zero ongoing maintenance.
 
-**Why parked:** Modest value with no concrete consumer today. Persona audit didn't flag it. v0.10–v0.23 catalogue gaps are higher leverage. Add it when FloLess (or another downstream product) starts shipping a containerized AWARE-based product and would actually consume the image.
+**Why parked:** Modest value with no concrete consumer today. Persona audit didn't flag it. v0.10–v0.23 catalogue gaps are higher leverage. Add it when a downstream product starts shipping a containerized AWARE-based product and would actually consume the image.
 
-**Discussed:** 2026-05-17, during a "should AWARE support team deployment?" brainstorm. Conclusion: team deployment is overwhelmingly a downstream concern (FloLess et al), not an AWARE substrate concern. AWARE stays local-first per decalog #4; the Docker image is the only piece that might legitimately belong upstream. Host CAD software (Tekla / Revit / Rhino) can never run on the team box — it stays on the engineer's Windows machine — which further narrows what a team server would even be useful for.
+**Discussed:** 2026-05-17, during a "should AWARE support team deployment?" brainstorm. Conclusion: team deployment is overwhelmingly a downstream concern, not an AWARE substrate concern. AWARE stays local-first per decalog #4; the Docker image is the only piece that might legitimately belong upstream. Host CAD software (Tekla / Revit / Rhino) can never run on the team box — it stays on the engineer's Windows machine — which further narrows what a team server would even be useful for.
 
 ---
 
