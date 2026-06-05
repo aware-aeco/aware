@@ -42,10 +42,16 @@ Optionally with `?revision={revision-id}` for non-latest versions.
   command: list-folders
   config: { folder-id: "{{ inputs.root-folder-id }}" }   # a project's rootId
 
+- id: subfolders
+  inline:
+    kind: predicate
+    description: list-folders returns files too — keep only sub-folders to recurse into.
+    code: f => f.type == "FOLDER"          # applied to each item in list.body
+
 - id: per-folder-files
   agent: trimble-connect
   command: list-files
-  config: { folder-id: "{{ list.body.*.id }}" }          # fan-out (items are in body)
+  config: { folder-id: "{{ subfolders.*.id }}" }         # fan-out over folders only
 
 - id: download
   agent: trimble-connect
