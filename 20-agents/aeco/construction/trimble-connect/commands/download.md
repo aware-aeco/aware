@@ -45,7 +45,7 @@ Optionally with `?revision={revision-id}` for non-latest versions.
 - id: per-folder-files
   agent: trimble-connect
   command: list-files
-  config: { folder-id: "{{ list.items.*.id }}" }         # fan-out
+  config: { folder-id: "{{ list.body.*.id }}" }          # fan-out (items are in body)
 
 - id: download
   agent: trimble-connect

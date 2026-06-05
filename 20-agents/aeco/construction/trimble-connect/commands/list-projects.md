@@ -18,8 +18,14 @@ member of. This is the entry point for the read path: each project carries a `ro
 
 ## Outputs
 
+The REST transport returns the HTTP exchange envelope — `{ status, headers, body }` —
+so an app can branch on `status` (a 4xx is returned as data, not raised).
+`GET /projects` responds with a bare JSON array, so the projects are in `body`:
+
 ```yaml
-projects:
+status:  int
+headers: object
+body:                        # the projects array
   type: array
   items:
     id:       string
@@ -28,7 +34,7 @@ projects:
     location: string         # region, e.g. "northAmerica"
 ```
 
-The API returns projects unsorted; sort client-side if order matters.
+The API returns projects unsorted; sort `body` client-side if order matters.
 
 ## REST translation
 
@@ -49,8 +55,8 @@ Authorization: Bearer ****
 - id: root
   inline:
     kind: pick
-    description: Take the target project's root folder id.
-    code: p => p.name == "Fab Pipeline" ? p.rootId : null
+    description: Find the target project and take its root folder id (from `body`).
+    code: out => out.body.find(p => p.name == "Fab Pipeline").rootId
 
 - id: folders
   agent: trimble-connect
@@ -63,4 +69,4 @@ Authorization: Bearer ****
 | Error | Cause | Recovery |
 |---|---|---|
 | `tc.auth-missing` | No credential provisioned | `aware connect trimble-connect --oauth` |
-| `tc.auth-expired` | Refresh expired | `aware connect trimble-connect --refresh` |
+| `tc.auth-expired` (401 in `body`) | Refresh expired | `aware connect trimble-connect --refresh` |

@@ -18,19 +18,26 @@ project's `rootId` (from [`list-projects`](./list-projects.md)) as the `folder-i
 
 ## Outputs
 
+The REST transport returns the HTTP exchange envelope — `{ status, headers, body }` —
+so an app can branch on `status` (a 4xx is returned as data, not raised).
+`GET /folders/{id}/items` responds with a bare JSON array, so the items are in `body`:
+
 ```yaml
-items:
+status:  int
+headers: object
+body:                         # the folder's items (sub-folders and files)
   type: array
   items:
-    id:        string
-    name:      string
-    type:      string         # FOLDER | FILE
-    parent-id: string
-    size:      int
+    id:       string
+    name:     string
+    type:     string          # FOLDER | FILE
+    parentId: string
+    size:     int
 ```
 
-The list is **one level deep** and mixes folders and files. Filter to `type == "FOLDER"`
-for folders only; to enumerate recursively, call the command per sub-folder id.
+The list is **one level deep** and mixes folders and files. Filter `body` to
+`type == "FOLDER"` for folders only; to enumerate recursively, call the command per
+sub-folder id.
 
 ## REST translation
 
@@ -54,24 +61,19 @@ Authorization: Bearer ****
 - id: root
   inline:
     kind: pick
-    description: Take the target project's root folder id.
-    code: p => p.name == "Fab Pipeline" ? p.rootId : null
+    description: Find the target project and take its root folder id (from `body`).
+    code: out => out.body.find(p => p.name == "Fab Pipeline").rootId
 
 - id: list
   agent: trimble-connect
   command: list-folders
   config: { folder-id: "{{ root }}" }
 
-- id: filter
-  inline:
-    kind: predicate
-    code: |
-      f => f.type == "FOLDER" && f.name == "Fab Drawings"
-
 - id: target-folder
   inline:
-    kind: pick-first
-    description: Take the first matching folder (assumes unique names at this level)
+    kind: pick
+    description: First sub-folder named "Fab Drawings" (items are in `body`).
+    code: out => out.body.find(f => f.type == "FOLDER" && f.name == "Fab Drawings")
 
 - id: upload
   agent: trimble-connect
@@ -81,8 +83,8 @@ Authorization: Bearer ****
     ...
 ```
 
-The inline glue steps (`pick` + `predicate` + `pick-first`) make the folder resolution
-visible in the topology rather than buried in a query string.
+The inline glue steps make the folder resolution visible in the topology rather than
+buried in a query string.
 
 ### Cache the folder ID once
 
@@ -100,7 +102,7 @@ nodes:
   - id: pick
     inline:
       kind: pick
-      code: f => f.type == "FOLDER" && f.name == "Fab Drawings"
+      code: out => out.body.find(f => f.type == "FOLDER" && f.name == "Fab Drawings")
 
   - id: upload
     agent: trimble-connect
@@ -117,5 +119,5 @@ across all event invocations within a single app run.
 
 | Error | Cause | Recovery |
 |---|---|---|
-| `tc.folder-not-found` | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
-| `tc.auth-expired` | Refresh expired | `aware connect trimble-connect --refresh` |
+| `tc.folder-not-found` (404 in `body`) | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
+| `tc.auth-expired` (401 in `body`) | Refresh expired | `aware connect trimble-connect --refresh` |

@@ -61,10 +61,15 @@ commands:
         in: query
         default: 0
         description: Number of projects to skip (pagination).
+    # The REST transport returns the raw HTTP exchange — { status, headers, body }
+    # — so an app can branch on `status` (a 4xx is returned as data, not raised).
+    # GET /projects responds with a bare JSON array, so the projects land in `body`.
     outputs:
       type: single
       schema:
-        projects:
+        status: int
+        headers: object
+        body:
           type: array
           items:
             id:       string
@@ -86,10 +91,14 @@ commands:
         type: string
         in: path
         description: Folder id (a project's rootId for the top level).
+    # REST exchange envelope — { status, headers, body }. GET /folders/{id}/items
+    # responds with a bare JSON array, so the items land in `body`.
     outputs:
       type: single
       schema:
-        items:
+        status: int
+        headers: object
+        body:
           type: array
           items:
             id:       string
