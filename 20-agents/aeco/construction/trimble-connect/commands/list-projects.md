@@ -45,30 +45,20 @@ GET https://app.connect.trimble.com/tc/api/2.0/projects?top=100&skip=0
 Authorization: Bearer ****
 ```
 
-## Composition example
+## Composing
 
-### Resolve a project's root folder by name
+The output is the HTTP envelope `{ status, headers, body }`; the projects array is in
+`body`. Downstream nodes reference it with templating (e.g. `{{ projects.body }}`).
 
-```yaml
-- id: projects
-  agent: trimble-connect
-  command: list-projects
-
-- id: root
-  inline:
-    kind: pick
-    description: Find the target project and take its root folder id (from `body`).
-    code: out => out.body.find(p => p.name == "Fab Pipeline").rootId
-
-- id: folders
-  agent: trimble-connect
-  command: list-folders
-  config: { folder-id: "{{ root }}" }
-```
+Selecting one project by name *at runtime* isn't expressible with the current inline
+glue — a `predicate` node only gates an event stream with `e => e.<field> …`; it can't
+pick a field out of a response body. So apps typically take the target `projectId` /
+`rootId` as an app input and pass it straight to [`list-folders`](./list-folders.md) as
+`folder-id`.
 
 ## Failure modes
 
 | Error | Cause | Recovery |
 |---|---|---|
 | `tc.auth-missing` | No credential provisioned | `aware connect trimble-connect --oauth` |
-| `tc.auth-expired` (401 in `body`) | Refresh expired | `aware connect trimble-connect --refresh` |
+| `401` in `body` (`INVALID_SESSION`) | Access token expired | `aware connect trimble-connect --refresh` |

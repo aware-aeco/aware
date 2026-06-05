@@ -37,9 +37,8 @@ body:                         # the folder's items (sub-folders and files)
     size:     int
 ```
 
-The list is **one level deep** and mixes folders and files. Filter `body` to
-`type == "FOLDER"` for folders only; to enumerate recursively, call the command per
-sub-folder id.
+The list is **one level deep** and mixes folders and files (`type`). To enumerate
+recursively, call the command again per sub-folder id.
 
 ## REST translation
 
@@ -51,75 +50,21 @@ Authorization: Bearer ****
 > **IMPORTANT:** Folder/file endpoints are addressed by globally-unique id and do **not**
 > include `/projects/{projectId}/` (see `skills/projects.md § Folders & Files`).
 
-## Composition examples
+## Composing
 
-### List a project's root, then pick a folder by name (common interactive pattern)
+The output is `{ status, headers, body }`; the items are in `body`, each tagged with a
+`type` of `FOLDER` or `FILE`. Pass a `folder-id` — a project's `rootId` (from
+[`list-projects`](./list-projects.md)) or a sub-folder id — typically as an app input
+(`{{ inputs.folder-id }}`) or from an upstream node (`{{ node.body }}`).
 
-```yaml
-- id: projects
-  agent: trimble-connect
-  command: list-projects
-
-- id: root
-  inline:
-    kind: pick
-    description: Find the target project and take its root folder id (from `body`).
-    code: out => out.body.find(p => p.name == "Fab Pipeline").rootId
-
-- id: list
-  agent: trimble-connect
-  command: list-folders
-  config: { folder-id: "{{ root }}" }
-
-- id: target-folder
-  inline:
-    kind: pick
-    description: First sub-folder named "Fab Drawings" (items are in `body`).
-    code: out => out.body.find(f => f.type == "FOLDER" && f.name == "Fab Drawings")
-
-- id: upload
-  agent: trimble-connect
-  command: upload
-  config:
-    folder-id: "{{ target-folder.id }}"
-    ...
-```
-
-The inline glue steps make the folder resolution visible in the topology rather than
-buried in a query string.
-
-### Cache the folder ID once
-
-For long-running apps that always upload to the same folder, resolve the folder ID at
-app start and cache it:
-
-```yaml
-nodes:
-  - id: list
-    agent: trimble-connect
-    command: list-folders
-    config: { folder-id: "{{ inputs.root-folder-id }}" }
-    cache: app-lifetime           # only resolve once per app run
-
-  - id: pick
-    inline:
-      kind: pick
-      code: out => out.body.find(f => f.type == "FOLDER" && f.name == "Fab Drawings")
-
-  - id: upload
-    agent: trimble-connect
-    command: upload
-    config:
-      folder-id: "{{ pick.id }}"
-      ...
-```
-
-`cache: app-lifetime` is an app-level hint — the orchestrator caches `list`'s output
-across all event invocations within a single app run.
+The current inline glue is a boolean `predicate` gate over an event stream
+(`e => e.<field> …`); it does not transform a response body, so selecting a specific
+item out of `body` is done by the consuming agent (or a future map primitive), not by
+inline glue.
 
 ## Failure modes
 
 | Error | Cause | Recovery |
 |---|---|---|
-| `tc.folder-not-found` (404 in `body`) | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
-| `tc.auth-expired` (401 in `body`) | Refresh expired | `aware connect trimble-connect --refresh` |
+| `404` in `body` | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
+| `401` in `body` (`INVALID_SESSION`) | Access token expired | `aware connect trimble-connect --refresh` |
