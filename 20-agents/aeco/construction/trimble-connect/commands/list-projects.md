@@ -14,7 +14,9 @@ member of. This is the entry point for the read path: each project carries a `ro
 |---|---|---|
 | `top` | int (optional) | Page size, max 100. Default 100. |
 | `skip` | int (optional) | Number of projects to skip (pagination). Default 0. |
-| `auth-as` | string (optional) | Named credential. |
+
+The agent authenticates with the single `trimble-connect` credential from
+`aware connect trimble-connect` (see the agent's `auth:` block).
 
 ## Outputs
 
