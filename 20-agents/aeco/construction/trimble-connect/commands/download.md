@@ -40,12 +40,12 @@ Optionally with `?revision={revision-id}` for non-latest versions.
 - id: list
   agent: trimble-connect
   command: list-folders
-  config: { project-id: "..." }
+  config: { folder-id: "{{ inputs.root-folder-id }}" }   # a project's rootId
 
 - id: per-folder-files
   agent: trimble-connect
   command: list-files
-  config: { folder-id: "{{ list.folders.*.id }}" }       # fan-out
+  config: { folder-id: "{{ list.items.*.id }}" }         # fan-out
 
 - id: download
   agent: trimble-connect

@@ -1,5 +1,5 @@
 agent:        trimble-connect
-version:      0.1.0
+version:      0.2.0
 sdk-target:   2.4.0
 display-name: Trimble Connect
 description: |
@@ -30,16 +30,81 @@ requires:
   secrets:
     - trimble-connect       # cross-references ~/.aware/credentials/trimble-connect.json
 
+# Trimble Connect is a pure REST API — there is no compiled bridge binary, so this
+# agent is REST-only. (It previously also declared `transport.cli.binary:
+# aware-trimble-connect`; because the runtime selects `cli` before `rest`, every
+# call routed to that never-built binary and failed at run with "program not
+# found" — #196.) The `auth:` block attaches the OAuth token provisioned by
+# `aware connect trimble-connect` as `Authorization: Bearer` on every request.
 transport:
-  cli:
-    binary: aware-trimble-connect
-  rest:                     # convenience — TC is already REST
+  rest:
     base: https://app.connect.trimble.com/tc/api/2.0/
 
+auth:
+  scheme: oauth2          # sent as `Authorization: Bearer <token>`
+  secret: trimble-connect # == the `aware connect trimble-connect` credential id
+
 commands:
+  list-projects:
+    lifecycle: single
+    description: List the projects the authenticated user can access.
+    method: GET
+    path: /projects
+    inputs:
+      top:
+        type: int
+        in: query
+        default: 100
+        description: Page size (max 100).
+      skip:
+        type: int
+        in: query
+        default: 0
+        description: Number of projects to skip (pagination).
+    outputs:
+      type: single
+      schema:
+        projects:
+          type: array
+          items:
+            id:       string
+            name:     string
+            rootId:   string      # root folder id — pass to list-folders
+            location: string      # region, e.g. "northAmerica"
+
+  list-folders:
+    lifecycle: single
+    description: |
+      List the items (sub-folders and files) directly under a folder. Trimble
+      Connect addresses folders by globally-unique id — NOT under the project
+      path — so to enumerate a project's top level, pass its `rootId` from
+      list-projects. Filter the result to `type == "FOLDER"` for folders only.
+    method: GET
+    path: /folders/{folder-id}/items
+    inputs:
+      folder-id:
+        type: string
+        in: path
+        description: Folder id (a project's rootId for the top level).
+    outputs:
+      type: single
+      schema:
+        items:
+          type: array
+          items:
+            id:       string
+            name:     string
+            type:     string      # FOLDER | FILE
+            parentId: string
+            size:     int
+
   upload:
     lifecycle: single
     description: Upload a file to a folder. Idempotent by drawing mark.
+    # REST wiring deferred (follow-up to #196): Trimble Connect upload is a
+    # multi-step, multipart/binary flow (create file → PUT bytes → commit) that
+    # the single-call REST transport cannot yet express. Until then this command
+    # is declared but not dispatchable.
     inputs:
       project-id: string
       folder-id:  string
@@ -58,6 +123,9 @@ commands:
   download:
     lifecycle: single
     description: Download a file by ID.
+    # REST wiring deferred (follow-up to #196): fetching bytes is a 2-step flow
+    # (request a download URL, then GET the binary) plus binary-body handling,
+    # which the single-call REST transport cannot yet express.
     inputs:
       project-id: string
       file-id:    string
@@ -67,25 +135,6 @@ commands:
         filename: string
         bytes:    bytes
         size-kb:  number
-
-  list-folders:
-    lifecycle: single
-    description: List folders in a project (one level deep).
-    inputs:
-      project-id: string
-      parent-folder-id:
-        type: string
-        default: null         # null = root
-    outputs:
-      type: single
-      schema:
-        folders:
-          type: array
-          items:
-            id:        string
-            name:      string
-            parent-id: string
-            file-count: int
 
 skills:
   - auth-flow.md

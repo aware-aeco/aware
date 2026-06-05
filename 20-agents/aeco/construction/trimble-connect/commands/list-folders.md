@@ -1,6 +1,9 @@
-# `trimble-connect.list-folders` — enumerate folders in a project
+# `trimble-connect.list-folders` — enumerate items under a folder
 
-Stateless command. Returns the folders one level deep under a parent (or under the project root if no parent is given).
+Stateless command. Returns the items (sub-folders **and** files) one level deep under
+a folder. Trimble Connect addresses folders by a globally-unique id — there is **no**
+`/projects/{projectId}/folders` route — so to enumerate a project's top level, pass the
+project's `rootId` (from [`list-projects`](./list-projects.md)) as the `folder-id`.
 
 ## Lifecycle
 
@@ -10,47 +13,60 @@ Stateless command. Returns the folders one level deep under a parent (or under t
 
 | Field | Type | Description |
 |---|---|---|
-| `project-id` | string | Project UUID. |
-| `parent-folder-id` | string (optional) | List children of this folder. Default `null` = list project root. |
+| `folder-id` | string | Folder UUID. A project's `rootId` lists its top level. |
 | `auth-as` | string (optional) | Named credential. |
 
 ## Outputs
 
 ```yaml
-folders:
+items:
   type: array
   items:
-    id:         string
-    name:       string
-    parent-id:  string
-    file-count: int
-    path:       string         # human-readable path from root, e.g. "Fab/East Tower/Drawings"
+    id:        string
+    name:      string
+    type:      string         # FOLDER | FILE
+    parent-id: string
+    size:      int
 ```
 
-The list is **one level deep**. To enumerate recursively, call the command per folder (or use the `walk-folders` command in v0.2).
+The list is **one level deep** and mixes folders and files. Filter to `type == "FOLDER"`
+for folders only; to enumerate recursively, call the command per sub-folder id.
 
 ## REST translation
 
 ```http
-GET https://app.connect.trimble.com/tc/api/2.0/projects/{project-id}/folders?parent={parent-folder-id}
+GET https://app.connect.trimble.com/tc/api/2.0/folders/{folder-id}/items
 Authorization: Bearer ****
 ```
 
+> **IMPORTANT:** Folder/file endpoints are addressed by globally-unique id and do **not**
+> include `/projects/{projectId}/` (see `skills/projects.md § Folders & Files`).
+
 ## Composition examples
 
-### Pick a folder by name (common interactive pattern)
+### List a project's root, then pick a folder by name (common interactive pattern)
 
 ```yaml
+- id: projects
+  agent: trimble-connect
+  command: list-projects
+
+- id: root
+  inline:
+    kind: pick
+    description: Take the target project's root folder id.
+    code: p => p.name == "Fab Pipeline" ? p.rootId : null
+
 - id: list
   agent: trimble-connect
   command: list-folders
-  config: { project-id: "{{ inputs.project-id }}" }
+  config: { folder-id: "{{ root }}" }
 
 - id: filter
   inline:
     kind: predicate
     code: |
-      f => f.name == "Fab Drawings"
+      f => f.type == "FOLDER" && f.name == "Fab Drawings"
 
 - id: target-folder
   inline:
@@ -65,24 +81,26 @@ Authorization: Bearer ****
     ...
 ```
 
-The two inline glue steps (`predicate` + `pick-first`) make the folder resolution visible in the topology rather than buried in a query string.
+The inline glue steps (`pick` + `predicate` + `pick-first`) make the folder resolution
+visible in the topology rather than buried in a query string.
 
 ### Cache the folder ID once
 
-For long-running apps that always upload to the same folder, resolve the folder ID at app start and cache it:
+For long-running apps that always upload to the same folder, resolve the folder ID at
+app start and cache it:
 
 ```yaml
 nodes:
-  - id: resolve
+  - id: list
     agent: trimble-connect
     command: list-folders
-    config: { project-id: "..." }
+    config: { folder-id: "{{ inputs.root-folder-id }}" }
     cache: app-lifetime           # only resolve once per app run
 
   - id: pick
     inline:
       kind: pick
-      code: f => f.name == "Fab Drawings"
+      code: f => f.type == "FOLDER" && f.name == "Fab Drawings"
 
   - id: upload
     agent: trimble-connect
@@ -92,12 +110,12 @@ nodes:
       ...
 ```
 
-`cache: app-lifetime` is an app-level hint — the orchestrator caches `resolve`'s output across all event invocations within a single app run.
+`cache: app-lifetime` is an app-level hint — the orchestrator caches `list`'s output
+across all event invocations within a single app run.
 
 ## Failure modes
 
 | Error | Cause | Recovery |
 |---|---|---|
-| `tc.project-not-found` | project-id invalid or no access | Verify in TC web UI |
-| `tc.parent-folder-not-found` | parent-folder-id invalid | List from root and walk down |
+| `tc.folder-not-found` | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
 | `tc.auth-expired` | Refresh expired | `aware connect trimble-connect --refresh` |
