@@ -516,6 +516,43 @@ commands: {}
     }
 
     #[test]
+    fn parses_real_trimble_connect_manifest_is_rest_with_auth() {
+        // #196: trimble-connect must be a REST agent — no `cli` transport (which
+        // the runtime selects first, routing every call to a never-built
+        // `aware-trimble-connect` binary), a declared `auth:` block so the OAuth
+        // token is attached, and read commands carrying `method`/`path` so the
+        // REST transport can form an authenticated request.
+        let path = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .join("20-agents/aeco/construction/trimble-connect/manifest.yaml");
+        let text = std::fs::read_to_string(&path).unwrap();
+        let a: Agent = serde_yaml::from_str(&text).unwrap();
+
+        // REST-only: no CLI transport to mis-route to.
+        assert!(
+            a.transport.cli.is_none(),
+            "must not declare a cli transport"
+        );
+        assert!(a.transport.rest.is_some(), "must declare a rest transport");
+
+        // Declarative OAuth2 auth wired to the connect credential.
+        let auth = a.auth.as_ref().expect("must declare an auth block");
+        assert_eq!(auth.scheme, "oauth2");
+        assert_eq!(auth.secret, "trimble-connect");
+
+        // Read commands carry method + path; path placeholders use the input name
+        // (`{folder-id}`) the REST transport substitutes from `in: path` inputs.
+        let projects = a.commands.get("list-projects").expect("list-projects");
+        assert_eq!(projects.method.as_deref(), Some("GET"));
+        assert_eq!(projects.path.as_deref(), Some("/projects"));
+
+        let folders = a.commands.get("list-folders").expect("list-folders");
+        assert_eq!(folders.method.as_deref(), Some("GET"));
+        assert_eq!(folders.path.as_deref(), Some("/folders/{folder-id}/items"));
+    }
+
+    #[test]
     fn tekla_commands_are_explicitly_curated() {
         // The Tekla curated agent is the gold-standard category: curated agent.
         // All 3 commands declare `category: curated` explicitly.

@@ -1,6 +1,9 @@
-# `trimble-connect.list-folders` — enumerate folders in a project
+# `trimble-connect.list-folders` — enumerate items under a folder
 
-Stateless command. Returns the folders one level deep under a parent (or under the project root if no parent is given).
+Stateless command. Returns the items (sub-folders **and** files) one level deep under
+a folder. Trimble Connect addresses folders by a globally-unique id — there is **no**
+`/projects/{projectId}/folders` route — so to enumerate a project's top level, pass the
+project's `rootId` (from [`list-projects`](./list-projects.md)) as the `folder-id`.
 
 ## Lifecycle
 
@@ -10,94 +13,58 @@ Stateless command. Returns the folders one level deep under a parent (or under t
 
 | Field | Type | Description |
 |---|---|---|
-| `project-id` | string | Project UUID. |
-| `parent-folder-id` | string (optional) | List children of this folder. Default `null` = list project root. |
-| `auth-as` | string (optional) | Named credential. |
+| `folder-id` | string | Folder UUID. A project's `rootId` lists its top level. |
+
+The agent authenticates with the single `trimble-connect` credential from
+`aware connect trimble-connect` (see the agent's `auth:` block).
 
 ## Outputs
 
+The REST transport returns the HTTP exchange envelope — `{ status, headers, body }` —
+so an app can branch on `status` (a 4xx is returned as data, not raised).
+`GET /folders/{id}/items` responds with a bare JSON array, so the items are in `body`:
+
 ```yaml
-folders:
+status:  int
+headers: object
+body:                         # the folder's items (sub-folders and files)
   type: array
   items:
-    id:         string
-    name:       string
-    parent-id:  string
-    file-count: int
-    path:       string         # human-readable path from root, e.g. "Fab/East Tower/Drawings"
+    id:       string
+    name:     string
+    type:     string          # FOLDER | FILE
+    parentId: string
+    size:     int
 ```
 
-The list is **one level deep**. To enumerate recursively, call the command per folder (or use the `walk-folders` command in v0.2).
+The list is **one level deep** and mixes folders and files (`type`). To enumerate
+recursively, call the command again per sub-folder id.
 
 ## REST translation
 
 ```http
-GET https://app.connect.trimble.com/tc/api/2.0/projects/{project-id}/folders?parent={parent-folder-id}
+GET https://app.connect.trimble.com/tc/api/2.0/folders/{folder-id}/items
 Authorization: Bearer ****
 ```
 
-## Composition examples
+> **IMPORTANT:** Folder/file endpoints are addressed by globally-unique id and do **not**
+> include `/projects/{projectId}/` (see `skills/projects.md § Folders & Files`).
 
-### Pick a folder by name (common interactive pattern)
+## Composing
 
-```yaml
-- id: list
-  agent: trimble-connect
-  command: list-folders
-  config: { project-id: "{{ inputs.project-id }}" }
+The output is `{ status, headers, body }`; the items are in `body`, each tagged with a
+`type` of `FOLDER` or `FILE`. Pass a `folder-id` — a project's `rootId` (from
+[`list-projects`](./list-projects.md)) or a sub-folder id — typically as an app input
+(`{{ inputs.folder-id }}`) or from an upstream node (`{{ node.body }}`).
 
-- id: filter
-  inline:
-    kind: predicate
-    code: |
-      f => f.name == "Fab Drawings"
-
-- id: target-folder
-  inline:
-    kind: pick-first
-    description: Take the first matching folder (assumes unique names at this level)
-
-- id: upload
-  agent: trimble-connect
-  command: upload
-  config:
-    folder-id: "{{ target-folder.id }}"
-    ...
-```
-
-The two inline glue steps (`predicate` + `pick-first`) make the folder resolution visible in the topology rather than buried in a query string.
-
-### Cache the folder ID once
-
-For long-running apps that always upload to the same folder, resolve the folder ID at app start and cache it:
-
-```yaml
-nodes:
-  - id: resolve
-    agent: trimble-connect
-    command: list-folders
-    config: { project-id: "..." }
-    cache: app-lifetime           # only resolve once per app run
-
-  - id: pick
-    inline:
-      kind: pick
-      code: f => f.name == "Fab Drawings"
-
-  - id: upload
-    agent: trimble-connect
-    command: upload
-    config:
-      folder-id: "{{ pick.id }}"
-      ...
-```
-
-`cache: app-lifetime` is an app-level hint — the orchestrator caches `resolve`'s output across all event invocations within a single app run.
+The current inline glue is a boolean `predicate` gate over an event stream
+(`e => e.<field> …`); it does not transform a response body, so selecting a specific
+item out of `body` is done by the consuming agent (or a future map primitive), not by
+inline glue.
 
 ## Failure modes
 
 | Error | Cause | Recovery |
 |---|---|---|
-| `tc.project-not-found` | project-id invalid or no access | Verify in TC web UI |
-| `tc.parent-folder-not-found` | parent-folder-id invalid | List from root and walk down |
-| `tc.auth-expired` | Refresh expired | `aware connect trimble-connect --refresh` |
+| `404` in `body` | folder-id invalid or no access | Verify the id (or the project's `rootId`) in the TC web UI |
+| `401` in `body` (`INVALID_SESSION`) | Access token expired | `aware connect trimble-connect --refresh` |
