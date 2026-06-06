@@ -15,6 +15,7 @@
 
 use std::io::Read;
 use std::path::{Path, PathBuf};
+use std::time::Duration;
 
 use base64::Engine;
 use serde_json::{Value, json};
@@ -23,6 +24,16 @@ use crate::error::AwareError;
 use crate::runtime::invoker::{percent_encode_path, resolve_rest_credential, rest_base_url};
 
 const TC_AGENT: &str = "trimble-connect";
+
+/// HTTP agent with connect + read (inactivity) timeouts, so an unresponsive TC / S3
+/// endpoint can't hang the blocking worker thread forever (review). `timeout_read` is a
+/// per-read inactivity bound, so a steady large-file transfer never trips it.
+fn http_agent() -> ureq::Agent {
+    ureq::AgentBuilder::new()
+        .timeout_connect(Duration::from_secs(15))
+        .timeout_read(Duration::from_secs(120))
+        .build()
+}
 
 /// `trimble-connect.upload` — 3-step package upload. Blocking HTTP runs off the reactor.
 pub async fn upload(agents_dir: PathBuf, args: Value) -> Result<Value, AwareError> {
@@ -60,6 +71,7 @@ fn auth_and_base(agents_dir: &Path) -> Result<(String, String), AwareError> {
 
 fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError> {
     let (token, base) = auth_and_base(agents_dir)?;
+    let agent = http_agent();
     let folder_id = str_arg(args, "folder-id")?;
     let filename = str_arg(args, "filename")?;
     let bytes = extract_bytes(args.get("bytes"))?;
@@ -71,6 +83,7 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
         percent_encode_path(folder_id)
     );
     let init = post_json(
+        &agent,
         &initiate_url,
         &token,
         &json!({ "name": filename, "contents": [ {} ] }),
@@ -90,6 +103,7 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
             Some(v) => v.to_string(),
             None => {
                 let meta = get_json(
+                    &agent,
                     &format!("{base}/files/{}", percent_encode_path(&file_id)),
                     Some(&token),
                     "duplicate file metadata",
@@ -122,7 +136,8 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
 
     // Step 2 — PUT bytes to the pre-signed S3 URL (different domain — NO auth header).
     check_ok(
-        ureq::put(presigned)
+        agent
+            .put(presigned)
             .set("Content-Type", "application/octet-stream")
             .send_bytes(&bytes),
         "upload PUT",
@@ -133,7 +148,7 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
         "{base}/files/fs/upload?uploadId={}&wait=true",
         percent_encode_path(upload_id)
     );
-    let complete = get_json(&complete_url, Some(&token), "upload complete")?;
+    let complete = get_json(&agent, &complete_url, Some(&token), "upload complete")?;
     // Fail fast on an incomplete 2xx (e.g. a status-only response) rather than
     // reporting success with empty identifiers downstream nodes would persist (#200 Codex).
     let file_id = complete
@@ -153,6 +168,7 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
 
 fn download_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError> {
     let (token, base) = auth_and_base(agents_dir)?;
+    let agent = http_agent();
     let file_id = str_arg(args, "file-id")?;
 
     // Step 1 — pre-signed download URL (optionally for a specific version).
@@ -167,14 +183,15 @@ fn download_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareErro
     {
         url_endpoint.push_str(&format!("?versionId={}", percent_encode_path(ver)));
     }
-    let url_json = get_json(&url_endpoint, Some(&token), "download url")?;
+    let url_json = get_json(&agent, &url_endpoint, Some(&token), "download url")?;
     let presigned = url_json
         .get("url")
         .and_then(|v| v.as_str())
         .ok_or_else(|| AwareError::Network("download: no pre-signed url".into()))?;
 
     // Step 2 — GET the bytes from the pre-signed URL (NO auth header).
-    let resp = ureq::get(presigned)
+    let resp = agent
+        .get(presigned)
         .call()
         .map_err(|e| AwareError::Network(format!("download GET: {e}")))?;
     let mut bytes = Vec::new();
@@ -199,14 +216,26 @@ fn str_arg<'a>(args: &'a Value, key: &str) -> Result<&'a str, AwareError> {
         })
 }
 
-/// Decode the `bytes` input. Binary travels over JSON, so a string is treated as base64
-/// (the convention) and only used as raw UTF-8 bytes if it isn't valid base64; an array
-/// of numbers is taken as raw bytes.
+/// Decode the `bytes` input into raw file content. The convention (manifest + docs) is a
+/// **base64 string**; whitespace and the URL-safe alphabet (padded or not) are tolerated,
+/// but an invalid base64 string is rejected rather than silently uploaded as literal text
+/// (review). A JSON array is taken as raw bytes (each element an integer 0-255).
 fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
+    use base64::engine::general_purpose::{STANDARD, STANDARD_NO_PAD, URL_SAFE, URL_SAFE_NO_PAD};
     match v {
-        Some(Value::String(s)) => Ok(base64::engine::general_purpose::STANDARD
-            .decode(s)
-            .unwrap_or_else(|_| s.clone().into_bytes())),
+        Some(Value::String(s)) => {
+            let cleaned: String = s.chars().filter(|c| !c.is_ascii_whitespace()).collect();
+            STANDARD
+                .decode(&cleaned)
+                .or_else(|_| URL_SAFE.decode(&cleaned))
+                .or_else(|_| STANDARD_NO_PAD.decode(&cleaned))
+                .or_else(|_| URL_SAFE_NO_PAD.decode(&cleaned))
+                .map_err(|_| {
+                    AwareError::Validation(
+                        "trimble-connect upload: `bytes` must be a base64 string".into(),
+                    )
+                })
+        }
         // A byte array must be integers 0–255 — reject anything else rather than
         // silently dropping/truncating it into corrupted content (#200 Codex).
         Some(Value::Array(items)) => items
@@ -228,16 +257,28 @@ fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
     }
 }
 
-fn post_json(url: &str, token: &str, body: &Value, what: &str) -> Result<Value, AwareError> {
-    let resp = ureq::post(url)
+fn post_json(
+    agent: &ureq::Agent,
+    url: &str,
+    token: &str,
+    body: &Value,
+    what: &str,
+) -> Result<Value, AwareError> {
+    let resp = agent
+        .post(url)
         .set("Authorization", &format!("Bearer {token}"))
         .set("Content-Type", "application/json")
         .send_string(&body.to_string());
     json_body(resp, what)
 }
 
-fn get_json(url: &str, token: Option<&str>, what: &str) -> Result<Value, AwareError> {
-    let mut req = ureq::get(url);
+fn get_json(
+    agent: &ureq::Agent,
+    url: &str,
+    token: Option<&str>,
+    what: &str,
+) -> Result<Value, AwareError> {
+    let mut req = agent.get(url);
     if let Some(t) = token {
         req = req.set("Authorization", &format!("Bearer {t}"));
     }
@@ -284,10 +325,26 @@ mod tests {
     }
 
     #[test]
-    fn extract_bytes_non_base64_string_is_utf8() {
-        // "!!!" isn't valid base64 → treated as raw UTF-8 bytes.
-        let got = extract_bytes(Some(&Value::String("!!!".into()))).unwrap();
-        assert_eq!(got, b"!!!");
+    fn extract_bytes_invalid_base64_string_errors() {
+        // Not valid base64 → rejected (NOT silently uploaded as literal text).
+        assert!(extract_bytes(Some(&Value::String("!!!not base64".into()))).is_err());
+    }
+
+    #[test]
+    fn extract_bytes_base64_tolerates_whitespace_and_url_safe() {
+        // MIME-style line-wrapped base64 (with a newline) still decodes.
+        let b64 = base64::engine::general_purpose::STANDARD.encode(b"a longer payload of bytes");
+        let wrapped = format!("{}\n{}", &b64[..8], &b64[8..]);
+        assert_eq!(
+            extract_bytes(Some(&Value::String(wrapped))).unwrap(),
+            b"a longer payload of bytes"
+        );
+        // URL-safe alphabet (no padding) also decodes.
+        let url = base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(b"\xff\xfe\x01");
+        assert_eq!(
+            extract_bytes(Some(&Value::String(url))).unwrap(),
+            vec![0xff, 0xfe, 0x01]
+        );
     }
 
     #[test]
