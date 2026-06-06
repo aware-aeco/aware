@@ -499,7 +499,17 @@ impl AgentInvoker for RestInvoker {
             if let Some(auth) = &m.auth
                 && !is_public
             {
-                let cred = resolve_rest_credential(&self.agents_dir, auth);
+                // Credential resolution can refresh an OAuth token (keychain I/O +
+                // a blocking token-endpoint POST), so run it off the async reactor —
+                // same posture as the REST request below (#198 Codex).
+                let auth_owned = auth.clone();
+                let dir = self.agents_dir.clone();
+                let cred =
+                    tokio::task::spawn_blocking(move || resolve_rest_credential(&dir, &auth_owned))
+                        .await
+                        .map_err(|e| {
+                            AwareError::Internal(format!("credential resolve task join: {e}"))
+                        })?;
                 let Some(cred) = cred else {
                     return Err(AwareError::Validation(format!(
                         "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
