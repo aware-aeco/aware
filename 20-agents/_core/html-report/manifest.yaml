@@ -48,6 +48,21 @@ commands:
       title:
         type: string
         description: Optional page title; defaults to "Report".
+      columns:
+        type: array
+        description: |
+          Optional list of column keys to show, in this exact order (array-of-objects
+          tables only). Omit to show every key. Lets a report keep the columns that
+          matter and drop noise (raw URLs, nested JSON blobs, internal ids).
+      sort:
+        type: string
+        description: |
+          Optional key to sort rows by before rendering (array-of-objects tables only).
+          Numbers sort numerically; other values by string form, so ISO timestamps sort
+          chronologically; a missing key sorts last.
+      sort-desc:
+        type: boolean
+        description: Sort descending (e.g. most-recent-first for a timestamp). Needs `sort`.
       output-path:
         type: string
         description: Optional file path; when given, the HTML is also written there.

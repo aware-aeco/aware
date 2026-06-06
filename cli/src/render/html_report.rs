@@ -81,18 +81,38 @@ const STYLE: &str = r#"
   }
 "#;
 
-/// Render `data` into a complete, self-contained HTML document titled `title`.
+/// Optional table presentation controls for the `render` command. `Default`
+/// reproduces the legacy behaviour: every key as a column (first-seen order) and
+/// rows in input order. Only affects an array-of-objects (the table case).
+#[derive(Debug, Default, Clone)]
+pub struct TableOptions {
+    /// Columns to show, in this exact order. `None` or an empty list → the union of
+    /// all keys in first-seen order (legacy behaviour). Lets a report drop noise
+    /// (raw URLs, nested JSON blobs, internal ids) and keep what matters.
+    pub columns: Option<Vec<String>>,
+    /// Key to sort rows by before rendering. `None` → input order. Numbers compare
+    /// numerically; everything else by string form (so ISO timestamps sort
+    /// chronologically); a missing key sorts last (ascending).
+    pub sort_by: Option<String>,
+    /// Sort descending (e.g. most-recent-first for an ISO timestamp). Ignored unless
+    /// `sort_by` is set.
+    pub sort_desc: bool,
+}
+
+/// Render `data` into a complete, self-contained HTML document titled `title`,
+/// with table presentation `opts` (column selection/order and row sort). Pass
+/// `&TableOptions::default()` for the legacy all-columns, input-order behaviour.
 ///
-/// Deterministic: identical `(title, data)` always yield identical bytes (no
+/// Deterministic: identical `(title, data, opts)` always yield identical bytes (no
 /// timestamp / no environment), so reports are reproducible and testable.
-pub fn render_report(title: &str, data: &Value) -> String {
+pub fn render_report_with(title: &str, data: &Value, opts: &TableOptions) -> String {
     let count = item_count(data);
     let title = if title.trim().is_empty() {
         "Report"
     } else {
         title
     };
-    let body = render_node(data);
+    let body = render_node(data, opts);
     format!(
         "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n\
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n\
@@ -121,9 +141,9 @@ pub fn item_count(data: &Value) -> usize {
 }
 
 /// Render the top-level value into the report body fragment.
-fn render_node(data: &Value) -> String {
+fn render_node(data: &Value, opts: &TableOptions) -> String {
     match data {
-        Value::Array(items) => render_array(items),
+        Value::Array(items) => render_array(items, opts),
         Value::Object(map) => render_object(map),
         scalar => format!(
             "<div class=\"summary-cards\"><div class=\"card\">\
@@ -133,14 +153,28 @@ fn render_node(data: &Value) -> String {
     }
 }
 
-/// An array renders as a table. An array of objects uses the union of their keys
-/// (first-seen order) as columns; any other array is a single `Value` column.
-fn render_array(items: &[Value]) -> String {
+/// An array renders as a table. An array of objects uses [`TableOptions::columns`]
+/// (or the union of keys, first-seen order) as columns and may be sorted by
+/// [`TableOptions::sort_by`]; any other array is a single `Value` column.
+fn render_array(items: &[Value], opts: &TableOptions) -> String {
     if items.is_empty() {
         return "<p class=\"empty\">No items.</p>".to_string();
     }
     if items.iter().all(|v| v.is_object()) {
-        let columns = union_keys(items);
+        // Sort first so column selection and row order stay independent concerns.
+        let sorted;
+        let items: &[Value] = match &opts.sort_by {
+            Some(key) => {
+                sorted = sort_items(items, key, opts.sort_desc);
+                &sorted
+            }
+            None => items,
+        };
+        // Selected columns in the requested order, else the union of all keys.
+        let columns: Vec<String> = match &opts.columns {
+            Some(cols) if !cols.is_empty() => cols.clone(),
+            _ => union_keys(items),
+        };
         let head: String = columns
             .iter()
             .map(|c| format!("<th>{}</th>", esc(c)))
@@ -163,6 +197,48 @@ fn render_array(items: &[Value]) -> String {
         .map(|v| format!("<tr><td>{}</td></tr>", cell(v)))
         .collect();
     table("<tr><th>Value</th></tr>", &rows)
+}
+
+/// Sort a copy of `items` by each object's `key`. Numbers compare numerically;
+/// other values by string form (ISO timestamps therefore sort chronologically); a
+/// missing/null key sorts last (ascending). Stable, so equal keys keep input order
+/// and the output stays deterministic. `desc` reverses the comparison.
+fn sort_items(items: &[Value], key: &str, desc: bool) -> Vec<Value> {
+    let mut out = items.to_vec();
+    out.sort_by(|a, b| {
+        let ord = cmp_cell(a.get(key), b.get(key));
+        if desc { ord.reverse() } else { ord }
+    });
+    out
+}
+
+/// Order two optional cell values: missing/null last (ascending), numbers
+/// numerically, everything else by string form.
+fn cmp_cell(a: Option<&Value>, b: Option<&Value>) -> std::cmp::Ordering {
+    use std::cmp::Ordering;
+    let missing = |v: Option<&Value>| matches!(v, None | Some(Value::Null));
+    match (missing(a), missing(b)) {
+        (true, true) => return Ordering::Equal,
+        (true, false) => return Ordering::Greater,
+        (false, true) => return Ordering::Less,
+        (false, false) => {}
+    }
+    match (a, b) {
+        (Some(Value::Number(x)), Some(Value::Number(y))) => x
+            .as_f64()
+            .partial_cmp(&y.as_f64())
+            .unwrap_or(Ordering::Equal),
+        (Some(x), Some(y)) => sort_key(x).cmp(&sort_key(y)),
+        _ => Ordering::Equal,
+    }
+}
+
+/// Comparable string form for a non-numeric sort key (string as-is, else JSON).
+fn sort_key(v: &Value) -> String {
+    match v {
+        Value::String(s) => s.clone(),
+        other => other.to_string(),
+    }
 }
 
 /// An object renders as a two-column Field / Value table.
@@ -233,6 +309,11 @@ fn esc(s: &str) -> String {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    /// Default-presentation convenience for the legacy table/object/scalar cases.
+    fn render_report(title: &str, data: &Value) -> String {
+        render_report_with(title, data, &TableOptions::default())
+    }
 
     #[test]
     fn array_of_objects_renders_a_table_with_union_columns() {
@@ -316,5 +397,70 @@ mod tests {
     fn empty_title_falls_back_to_report() {
         let html = render_report("   ", &json!({}));
         assert!(html.contains("<title>Report</title>"));
+    }
+
+    #[test]
+    fn columns_option_selects_and_orders_visible_columns() {
+        let data = json!([
+            {"id": "p1", "name": "Tower A", "secret": "hush", "region": "EU"},
+            {"id": "p2", "name": "Tower B", "secret": "hush", "region": "US"},
+        ]);
+        let opts = TableOptions {
+            columns: Some(vec!["name".into(), "region".into()]),
+            ..Default::default()
+        };
+        let html = render_report_with("Projects", &data, &opts);
+        // Only the requested columns, in the requested order.
+        assert!(html.contains("<th>name</th><th>region</th>"));
+        assert!(!html.contains("<th>id</th>"));
+        assert!(!html.contains("<th>secret</th>"));
+        assert!(!html.contains("hush")); // the dropped column's values are gone too
+        assert!(html.contains("<td>Tower A</td><td>EU</td>"));
+        // Count still reflects the full array, not the visible column count.
+        assert!(html.contains("2 items"));
+    }
+
+    #[test]
+    fn empty_columns_list_falls_back_to_all_keys() {
+        let data = json!([{"a": 1, "b": 2}]);
+        let opts = TableOptions {
+            columns: Some(vec![]),
+            ..Default::default()
+        };
+        let html = render_report_with("P", &data, &opts);
+        assert!(html.contains("<th>a</th><th>b</th>"));
+    }
+
+    #[test]
+    fn sort_by_descending_orders_rows_most_recent_first() {
+        let data = json!([
+            {"name": "Old", "modifiedOn": "2023-01-01T00:00:00+0000"},
+            {"name": "New", "modifiedOn": "2026-06-01T00:00:00+0000"},
+            {"name": "Mid", "modifiedOn": "2024-03-01T00:00:00+0000"},
+        ]);
+        let opts = TableOptions {
+            sort_by: Some("modifiedOn".into()),
+            sort_desc: true,
+            ..Default::default()
+        };
+        let html = render_report_with("P", &data, &opts);
+        let pos = |needle: &str| html.find(needle).expect("row present");
+        assert!(pos("<td>New</td>") < pos("<td>Mid</td>"));
+        assert!(pos("<td>Mid</td>") < pos("<td>Old</td>"));
+    }
+
+    #[test]
+    fn sort_by_numeric_key_compares_numerically_not_lexically() {
+        let data = json!([
+            {"name": "b", "size": 9},
+            {"name": "a", "size": 100},
+        ]);
+        let opts = TableOptions {
+            sort_by: Some("size".into()),
+            ..Default::default()
+        };
+        let html = render_report_with("P", &data, &opts);
+        // Ascending numeric: 9 before 100 (a lexical sort would order "100" first).
+        assert!(html.find("<td>b</td>").unwrap() < html.find("<td>a</td>").unwrap());
     }
 }
