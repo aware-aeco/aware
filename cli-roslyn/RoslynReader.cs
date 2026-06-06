@@ -137,12 +137,25 @@ public static class RoslynReader
             foreach (var t in asm.Types) index.TryAdd(t.FullName, t);
         }
 
+        // Surface ANY hard load failure rather than silently returning a partial agent. For a
+        // .sln where one C# project fails to load while another succeeds, returning just the
+        // loaded one would silently drop the failed project's commands/recipes — exactly the
+        // kind of quiet, wrong-output result the substrate forbids. Fail loud with the
+        // diagnostics so the user can fix it (restore the project) or target a specific .csproj
+        // with --from-csproj (#185 Codex).
+        if (failures.Count > 0)
+        {
+            throw new InvalidOperationException(
+                "the .csproj/.sln did not load cleanly, so reflection would be incomplete: "
+                + string.Join("; ", failures.Take(5))
+                + ". Ensure the .NET SDK is installed and every project restores, or pass a "
+                + "specific project with --from-csproj.");
+        }
         if (asms.Count == 0)
         {
-            var detail = failures.Count > 0 ? $" ({string.Join("; ", failures.Take(3))})" : "";
             throw new InvalidOperationException(
-                "no C# project compilation could be loaded from the given .csproj/.sln" + detail
-                + "; ensure the .NET SDK is installed and the project restores.");
+                "no C# project compilation could be loaded from the given .csproj/.sln; "
+                + "ensure the .NET SDK is installed and the project restores.");
         }
 
         return new SourceReflection(new ReflectedSet(asms, index), docs);
