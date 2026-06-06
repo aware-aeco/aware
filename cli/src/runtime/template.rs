@@ -324,19 +324,33 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     cur
 }
 
-/// True when `s` is *exactly* one `{{ … }}` expression after trimming — no literal
-/// text and no second expression around it (e.g. `"{{ projects.body }}"`). Such a
-/// "whole-value" config leaf should resolve to its structured value via
-/// [`resolve_value`] rather than be stringified by [`render`] (#205). An embedded
-/// template like `"file:{{ x }}.pdf"` or a multi-expression `"{{ a }}{{ b }}"` is
-/// NOT whole-value and stays a rendered string.
+/// True when `s` is *exactly* one `{{ <bare-path> }}` expression after trimming —
+/// no literal text, no second expression, and the inner content is a bare
+/// dot/kebab path (the grammar [`resolve_value`] walks), e.g. `"{{ projects.body }}"`.
+/// Such a "whole-value" config leaf resolves to its structured value via
+/// [`resolve_value`] rather than being stringified by [`render`] (#205).
+///
+/// Anything else stays a rendered string: an embedded template (`"file:{{ x }}.pdf"`),
+/// a multi-expression string (`"{{ a }}{{ b }}"`), OR a single expression that
+/// carries a **filter, bracket/index, or call** (`"{{ x | f }}"`, `"{{ s[0] }}"`,
+/// `"{{ upstream['n'].x }}"`). Those are excluded because `resolve_value` would
+/// silently drop everything past the bare path; letting them fall through to
+/// `render` preserves minijinja's correct (or loudly-erroring) handling (review).
 pub fn is_whole_value_template(s: &str) -> bool {
     let t = s.trim();
-    t.len() >= 4
-        && t.starts_with("{{")
-        && t.ends_with("}}")
-        && t.matches("{{").count() == 1
-        && t.matches("}}").count() == 1
+    if t.len() < 4
+        || !t.starts_with("{{")
+        || !t.ends_with("}}")
+        || t.matches("{{").count() != 1
+        || t.matches("}}").count() != 1
+    {
+        return false;
+    }
+    let inner = t[2..t.len() - 2].trim();
+    !inner.is_empty()
+        && inner
+            .chars()
+            .all(|c| c.is_alphanumeric() || c == '_' || c == '-' || c == '.')
 }
 
 #[cfg(test)]
@@ -369,6 +383,13 @@ mod tests {
         assert!(!is_whole_value_template("{{ a }} text"));
         assert!(!is_whole_value_template("text {{ a }}"));
         assert!(!is_whole_value_template("plain string"));
+        // A single expression that carries a filter / bracket / index is NOT a bare
+        // path — `resolve_value` would silently drop the tail, so it stays a rendered
+        // string (review, #205):
+        assert!(!is_whole_value_template("{{ x | rowCount }}"));
+        assert!(!is_whole_value_template("{{ src.items[0] }}"));
+        assert!(!is_whole_value_template("{{ upstream['node-id'].field }}"));
+        assert!(!is_whole_value_template("{{}}")); // empty expression
     }
 
     #[test]
