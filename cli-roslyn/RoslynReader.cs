@@ -1,7 +1,10 @@
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using AwareReader;
+using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.CodeAnalysis.Text;
 using RoslynTypeKind = Microsoft.CodeAnalysis.TypeKind;
 using IrTypeKind = AwareReader.TypeKind;
@@ -17,8 +20,13 @@ public sealed record SourceReflection(ReflectedSet Set, IReadOnlyDictionary<stri
 /// source and compiled inputs identically. Bare <c>.cs</c> files/dirs/globs compile standalone
 /// with framework references plus any caller-supplied reference-dir DLLs; pointing a reference
 /// dir at an SDK's bin resolves base types/attributes so the recipe fires on source.
-/// (Project/solution graph loading via MSBuildWorkspace is intentionally out of scope — see the
-/// csproj note — so a <c>.csproj</c>/<c>.sln</c> input returns a clear, actionable error.)
+///
+/// A <c>.csproj</c>/<c>.sln</c> input (#185) is loaded via <see cref="MSBuildWorkspace"/> — the
+/// <c>.cs</c> set + all <c>PackageReference</c>/<c>ProjectReference</c>s are resolved
+/// automatically (no <c>--reference-dir</c> needed). Each project's <see cref="Compilation"/> is
+/// fed through the SAME <see cref="ReflectCompilation"/> symbol→IR path, so the project path and
+/// the bare-<c>.cs</c> path produce identical IR. This path needs the host .NET SDK installed
+/// (<see cref="Microsoft.Build.Locator"/> loads its MSBuild); the bare-<c>.cs</c> path does not.
 /// </summary>
 public static class RoslynReader
 {
@@ -32,12 +40,14 @@ public static class RoslynReader
 
     public static SourceReflection ReflectPaths(IReadOnlyList<string> paths, IReadOnlyList<string> referenceDirs)
     {
+        // A .csproj/.sln input goes through MSBuildWorkspace (#185). Register the host SDK's
+        // MSBuild FIRST — before the workspace loads any Microsoft.Build assembly — then call the
+        // (non-inlined) graph reader so the MSBuild types it references are only JIT-loaded after
+        // registration. The bare-.cs path below never touches MSBuild, so it needs no SDK.
         if (paths.Any(IsProjectOrSolution))
         {
-            throw new InvalidOperationException(
-                "project/solution (.csproj/.sln) graph loading is not supported in this build; "
-                + "pass .cs files, a directory, or a glob to --from-csharp, with --reference-dir "
-                + "pointing at the SDK's DLLs so base types and attributes resolve.");
+            EnsureMSBuildLocator();
+            return ReflectProjectGraph(paths);
         }
 
         var comp = BuildSourceCompilation(paths, referenceDirs);
@@ -53,6 +63,90 @@ public static class RoslynReader
     private static bool IsProjectOrSolution(string p) =>
         p.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)
         || p.EndsWith(".sln", StringComparison.OrdinalIgnoreCase);
+
+    // ── Project/solution graph loading via MSBuildWorkspace (#185) ─────────────
+
+    private static bool _msbuildRegistered;
+
+    /// <summary>
+    /// Register a host .NET SDK's MSBuild with <see cref="MSBuildLocator"/> exactly once, so
+    /// <see cref="MSBuildWorkspace"/> can load <c>Microsoft.Build.*</c> at run time (our build pins
+    /// those packages with <c>ExcludeAssets=runtime</c>, so the SDK's copy is authoritative). Must
+    /// run before any MSBuild type loads — hence the call site precedes the non-inlined
+    /// <see cref="ReflectProjectGraph"/>. Throws an actionable error when no SDK is present.
+    /// </summary>
+    private static void EnsureMSBuildLocator()
+    {
+        if (_msbuildRegistered) return;
+        var instances = MSBuildLocator.QueryVisualStudioInstances().ToList();
+        if (instances.Count == 0)
+        {
+            throw new InvalidOperationException(
+                "--from-csproj/--from-sln needs the .NET SDK installed (its MSBuild is loaded at "
+                + "run time); install it from https://dotnet.microsoft.com, or use --from-csharp "
+                + "with --reference-dir pointing at the SDK's DLLs.");
+        }
+        // Highest version available — matches the newest installed SDK.
+        MSBuildLocator.RegisterInstance(instances.OrderByDescending(i => i.Version).First());
+        _msbuildRegistered = true;
+    }
+
+    /// <summary>
+    /// Load each <c>.csproj</c> (or every C# project in a <c>.sln</c>) via MSBuildWorkspace,
+    /// resolving its package/project references, and map every project's <see cref="Compilation"/>
+    /// through <see cref="ReflectCompilation"/> — the SAME symbol→IR path the bare-<c>.cs</c> and
+    /// compiled-DLL readers use. Non-C# projects in a mixed solution are skipped.
+    /// <para>
+    /// <c>NoInlining</c> keeps the MSBuild-referencing body out of <see cref="ReflectPaths"/>'s JIT
+    /// frame, so MSBuild assemblies load only when this method is first called — after
+    /// <see cref="EnsureMSBuildLocator"/> has registered the SDK.
+    /// </para>
+    /// </summary>
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static SourceReflection ReflectProjectGraph(IReadOnlyList<string> paths)
+    {
+        using var workspace = MSBuildWorkspace.Create();
+        var failures = new List<string>();
+        workspace.WorkspaceFailed += (_, e) =>
+        {
+            // Only hard FAILUREs matter (a project that can't load yields no symbols); the
+            // workspace also raises benign warnings for unresolved optional targets.
+            if (e.Diagnostic.Kind == WorkspaceDiagnosticKind.Failure)
+                failures.Add(e.Diagnostic.Message);
+        };
+
+        var projects = new List<Project>();
+        foreach (var path in paths)
+        {
+            if (path.EndsWith(".sln", StringComparison.OrdinalIgnoreCase))
+                projects.AddRange(workspace.OpenSolutionAsync(path).GetAwaiter().GetResult().Projects);
+            else
+                projects.Add(workspace.OpenProjectAsync(path).GetAwaiter().GetResult());
+        }
+
+        var docs = new Dictionary<string, string>(StringComparer.Ordinal);
+        var asms = new List<AssemblyRecord>();
+        var index = new Dictionary<string, TypeRecord>(StringComparer.Ordinal);
+        foreach (var project in projects)
+        {
+            if (project.Language != LanguageNames.CSharp) continue; // C#-shaped IR only
+            var comp = project.GetCompilationAsync().GetAwaiter().GetResult();
+            if (comp is null) continue;
+            var asm = ReflectCompilation(comp, docs);
+            asms.Add(asm);
+            foreach (var t in asm.Types) index.TryAdd(t.FullName, t);
+        }
+
+        if (asms.Count == 0)
+        {
+            var detail = failures.Count > 0 ? $" ({string.Join("; ", failures.Take(3))})" : "";
+            throw new InvalidOperationException(
+                "no C# project compilation could be loaded from the given .csproj/.sln" + detail
+                + "; ensure the .NET SDK is installed and the project restores.");
+        }
+
+        return new SourceReflection(new ReflectedSet(asms, index), docs);
+    }
 
     // ── Compilation construction ──────────────────────────────────────────────
 

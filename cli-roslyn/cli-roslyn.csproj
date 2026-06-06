@@ -11,12 +11,17 @@
     Published self-contained single-file per OS (see release.yml) so it needs no .NET
     runtime on the user's machine, matching aware-sidecar's "just a binary" deployment.
 
-    Depends ONLY on Microsoft.CodeAnalysis.CSharp (no MSBuild): it compiles bare .cs files,
+    The bare-.cs path uses Microsoft.CodeAnalysis.CSharp only: it compiles .cs files,
     directories, or globs with framework references plus any caller-supplied reference-dir
     DLLs. Pointing a reference dir at an SDK's bin (e.g. a Tekla install) resolves base types
-    and attributes, so the recipe fires on source. Project/solution graph loading via
-    MSBuildWorkspace is intentionally out of scope (it drags in the advisory-laden
-    Microsoft.Build package chain); it is tracked as a follow-up.
+    and attributes, so the recipe fires on source.
+
+    The .csproj/.sln path (#185) adds Microsoft.CodeAnalysis.Workspaces.MSBuild +
+    Microsoft.Build.Locator. The Microsoft.Build.* packages are pinned to a NON-vulnerable
+    version (17.14.28 — clears CVE-2025-26646/NU1903 + CVE-2025-55247) with
+    ExcludeAssets=runtime, so MSBuildLocator binds the host .NET SDK's MSBuild at run time and
+    nothing vulnerable ships. That path therefore requires the .NET SDK on the user's machine
+    (the bare-.cs path does not).
   -->
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -37,6 +42,35 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0" />
+  </ItemGroup>
+
+  <!--
+    #185 — project/solution graph loading. MSBuildWorkspace pulls the Microsoft.Build.* chain,
+    whose default-resolved versions ([17.7.2,)) carry open NuGet advisories (NU1903 /
+    CVE-2025-26646; CVE-2025-55247) that the audit promotes to build errors. Pin all four to
+    17.14.28 (the lowest version clearing BOTH) with ExcludeAssets=runtime: the version pin is
+    what satisfies the audit; ExcludeAssets keeps the package's runtime assemblies out of our
+    output so Microsoft.Build.Locator binds the host SDK's MSBuild at run time. (ExcludeAssets
+    alone does NOT silence the audit — it flags the resolved version regardless of assets.)
+  -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.14.0" />
+    <!-- The C# WORKSPACE language services. Workspaces.MSBuild pulls only the language-agnostic
+         Microsoft.CodeAnalysis.Workspaces; without this, MSBuildWorkspace's MEF host has no C#
+         provider and OpenProject fails with "language 'C#' is not supported". -->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0" />
+    <PackageReference Include="Microsoft.Build.Locator" Version="1.9.1" />
+    <PackageReference Include="Microsoft.Build" Version="17.14.28" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="17.14.28" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.14.28" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.14.28" ExcludeAssets="runtime" />
+    <!--
+      The Microsoft.Build.Tasks.Core chain pins System.Security.Cryptography.Xml to the 9.0.0
+      line, which carries its own advisories (GHSA-37gx-xxp4-5rgx / CVE-2026-33116,
+      GHSA-w3x6-4m5h-cxqf) and is NOT framework-pruned on net10 (it's an older-than-framework
+      explicit version). Pin it up to a patched 9.0.x so the audit clears.
+    -->
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.15" />
   </ItemGroup>
 
   <ItemGroup>

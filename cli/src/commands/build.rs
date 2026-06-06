@@ -50,6 +50,15 @@ pub struct BuildAgentArgs {
     /// bin so base types and attributes resolve (lets the recipe fire on source).
     #[arg(long = "reference-dir")]
     pub reference_dir: Vec<String>,
+    /// (v0.60) C# project: a .csproj. Loads the project graph via MSBuildWorkspace — the .cs set
+    /// plus every PackageReference/ProjectReference resolve automatically (no --reference-dir).
+    /// Requires the host .NET SDK installed.
+    #[arg(long = "from-csproj")]
+    pub from_csproj: Option<String>,
+    /// (v0.60) C# solution: a .sln. Reflects every C# project in the solution via MSBuildWorkspace.
+    /// Requires the host .NET SDK installed.
+    #[arg(long = "from-sln")]
+    pub from_sln: Option<String>,
     /// (v0.30) Build an agent from a host-coverage IR file.
     #[arg(long = "from-coverage")]
     pub from_coverage: Option<std::path::PathBuf>,
@@ -129,9 +138,13 @@ fn build_agent(ctx: &Context, args: &BuildAgentArgs) -> Result<(), AwareError> {
         builder::npm::build_from_npm(s, id_override)?
     } else if let Some(s) = &args.from_csharp {
         builder::roslyn::build_from_csharp(s, &args.reference_dir, id_override)?
+    } else if let Some(s) = &args.from_csproj {
+        builder::roslyn::build_from_project(s, id_override)?
+    } else if let Some(s) = &args.from_sln {
+        builder::roslyn::build_from_project(s, id_override)?
     } else {
         return Err(AwareError::Validation(
-            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard, --from-npm, --from-csharp, --from-coverage".into()
+            "aware build agent: must specify one of --from-openapi, --from-cli, --from-nuget, --from-python, --from-dlls, --from-com, --from-headers, --from-ruby, --from-yard, --from-npm, --from-csharp, --from-csproj, --from-sln, --from-coverage".into()
         ));
     };
 
