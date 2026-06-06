@@ -80,15 +80,16 @@ jobs:
       - name: Publish C# sidecar (NativeAOT)
         run: dotnet publish cli-sidecar -c Release -r ${{ matrix.rid }} -p:PublishAot=true
 
-      - name: Publish Roslyn source reader (self-contained single-file)
-        # aware-roslyn hosts Roslyn (which can't go in the NativeAOT sidecar). Self-contained
-        # single-file → one binary, no .NET runtime needed, discoverable next to aware/aware-sidecar.
+      - name: Publish Roslyn source reader (self-contained folder)
+        # aware-roslyn hosts Roslyn (which can't go in the NativeAOT sidecar). It ships as a
+        # self-contained FOLDER, NOT single-file: the .csproj/.sln path (#185) uses
+        # MSBuildWorkspace, which cannot run from a single-file bundle — there Assembly.Location
+        # is empty, so MSBuild's path resolution throws ("path1" null). The folder is staged
+        # under `aware-roslyn/` next to aware and discovered there; still no .NET runtime needed.
         run: >-
           dotnet publish cli-roslyn -c Release -r ${{ matrix.rid }}
           --self-contained
-          -p:PublishSingleFile=true
-          -p:IncludeNativeLibrariesForSelfExtract=true
-          -p:EnableCompressionInSingleFile=true
+          -p:PublishSingleFile=false
 
       - name: Stage artifacts
         shell: bash
@@ -102,7 +103,10 @@ jobs:
           mkdir -p "$stage"
           cp "cli/target/release/aware${{ matrix.ext }}" "$stage/"
           cp "cli-sidecar/bin/Release/net10.0/${{ matrix.rid }}/publish/aware-sidecar${{ matrix.ext }}" "$stage/"
-          cp "cli-roslyn/bin/Release/net10.0/${{ matrix.rid }}/publish/aware-roslyn${{ matrix.ext }}" "$stage/"
+          # aware-roslyn ships as a self-contained FOLDER (#185 — see the publish step). Stage the
+          # whole publish dir under `aware-roslyn/`; the CLI discovers `aware-roslyn/aware-roslyn`.
+          mkdir -p "$stage/aware-roslyn"
+          cp -r "cli-roslyn/bin/Release/net10.0/${{ matrix.rid }}/publish/." "$stage/aware-roslyn/"
           cp LICENSE "$stage/" 2>/dev/null || echo "(no LICENSE file)" > "$stage/LICENSE"
           cp cli/README.md "$stage/README.md"
           echo "$version" > "$stage/VERSION"
