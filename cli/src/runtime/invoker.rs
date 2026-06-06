@@ -759,12 +759,23 @@ fn resolve_rest_credential(
     agents_dir: &std::path::Path,
     auth: &crate::manifest::agent::AuthScheme,
 ) -> Option<String> {
-    if matches!(auth.scheme.as_str(), "oauth2" | "bearer")
-        && crate::auth::config::for_integration(&auth.secret).is_ok()
-        && let Some(home) = agents_dir.parent()
-        && let Ok(tok) = crate::auth::refresh::ensure_fresh(&auth.secret, None, home)
-    {
-        return Some(tok.access_token);
+    if matches!(auth.scheme.as_str(), "oauth2" | "bearer") {
+        // The credential handle may be alias-qualified — `<integration>.<alias>`,
+        // e.g. `google-workspace.personal` from `aware connect … --as personal`. The
+        // registered-integration check + refresh must use the base integration and
+        // pass the alias through (the keychain stores `<integration>.<alias>` accounts
+        // and `ensure_fresh` takes an alias). A handle whose base is not a registered
+        // integration (e.g. `my.api.key`) falls through to the raw stored value.
+        let (integration, alias) = match auth.secret.split_once('.') {
+            Some((base, alias)) => (base, Some(alias)),
+            None => (auth.secret.as_str(), None),
+        };
+        if crate::auth::config::for_integration(integration).is_ok()
+            && let Some(home) = agents_dir.parent()
+            && let Ok(tok) = crate::auth::refresh::ensure_fresh(integration, alias, home)
+        {
+            return Some(tok.access_token);
+        }
     }
     load_secret_value(agents_dir, &auth.secret)
         .as_ref()
@@ -1925,6 +1936,33 @@ commands:
         assert_eq!(
             resolve_rest_credential(&agents, &auth).as_deref(),
             Some("byo-tok")
+        );
+    }
+
+    #[test]
+    fn resolve_rest_credential_dotted_non_integration_secret_uses_raw() {
+        use crate::manifest::agent::AuthScheme;
+        // A dotted handle whose base isn't a registered integration (e.g. `my.api.key`)
+        // is NOT treated as an aliased OAuth credential — it falls back to the raw value.
+        let tmp = tempfile::tempdir().unwrap();
+        let agents = tmp.path().join("agents");
+        let creds = tmp.path().join("credentials");
+        std::fs::create_dir_all(&agents).unwrap();
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(
+            creds.join("my.api.key.json"),
+            r#"{"access_token":"dotted"}"#,
+        )
+        .unwrap();
+        let auth = AuthScheme {
+            scheme: "oauth2".into(),
+            location: None,
+            name: None,
+            secret: "my.api.key".into(),
+        };
+        assert_eq!(
+            resolve_rest_credential(&agents, &auth).as_deref(),
+            Some("dotted")
         );
     }
 
