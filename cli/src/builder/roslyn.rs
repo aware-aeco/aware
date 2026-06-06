@@ -40,13 +40,25 @@ pub fn build_from_project(
     path: &str,
     agent_id: Option<&str>,
 ) -> Result<GeneratedAgent, AwareError> {
-    if path.trim().is_empty() {
+    let trimmed = path.trim();
+    if trimmed.is_empty() {
         return Err(AwareError::Validation(
             "--from-csproj/--from-sln requires a .csproj or .sln path".into(),
         ));
     }
+    // The reader routes to MSBuildWorkspace by file EXTENSION; a non-project path (a typo, or a
+    // directory/glob) would otherwise fall through to bare-.cs compilation with no project or
+    // package references — silently producing an incomplete agent. Reject it here so the mistake
+    // fails fast (#185 Codex).
+    let lower = trimmed.to_ascii_lowercase();
+    if !(lower.ends_with(".csproj") || lower.ends_with(".sln")) {
+        return Err(AwareError::Validation(format!(
+            "--from-csproj/--from-sln expects a .csproj or .sln file, got '{trimmed}'; \
+             for loose .cs files, a directory, or a glob, use --from-csharp"
+        )));
+    }
     let args = crate::sidecar::ReflectCsharpArgs {
-        paths: vec![path.to_string()],
+        paths: vec![trimmed.to_string()],
         references: Vec::new(), // the project graph resolves its own references
         agent_id: agent_id.map(String::from),
     };
@@ -67,6 +79,22 @@ mod tests {
     fn empty_project_path_is_validation_error() {
         let err = build_from_project("   ", None).unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
+    }
+
+    #[test]
+    fn non_project_path_is_validation_error() {
+        // A path that isn't a .csproj/.sln must fail fast, not silently bare-compile (#185).
+        for p in ["Foo.cs", "/some/src/dir", "Project.txt", "sln"] {
+            assert!(
+                matches!(build_from_project(p, None), Err(AwareError::Validation(_))),
+                "expected a validation error for non-project path {p:?}"
+            );
+        }
+        // A real project/solution path passes the extension gate (then proceeds to the reader).
+        assert!(
+            "App.csproj".to_ascii_lowercase().ends_with(".csproj")
+                && "App.sln".to_ascii_lowercase().ends_with(".sln")
+        );
     }
 
     #[test]
