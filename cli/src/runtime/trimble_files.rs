@@ -78,11 +78,31 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
     )?;
     // A content-identical file already present: TC returns DUPLICATE + the fileId.
     if init.get("status").and_then(|v| v.as_str()) == Some("DUPLICATE") {
-        // Keep the output shape consistent with the success path (#200 Codex): TC
-        // returns the existing fileId (and usually versionId) on a content match.
+        let file_id = init
+            .get("fileId")
+            .and_then(|v| v.as_str())
+            .ok_or_else(|| AwareError::Network("upload DUPLICATE: no fileId".into()))?
+            .to_string();
+        // The Files API only guarantees fileId on DUPLICATE, but the result contract
+        // promises a usable version-id — fetch it from the file metadata when the
+        // initiate response doesn't carry it (#200 Codex).
+        let version_id = match init.get("versionId").and_then(|v| v.as_str()) {
+            Some(v) => v.to_string(),
+            None => {
+                let meta = get_json(
+                    &format!("{base}/files/{}", percent_encode_path(&file_id)),
+                    Some(&token),
+                    "duplicate file metadata",
+                )?;
+                meta.get("versionId")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or_default()
+                    .to_string()
+            }
+        };
         return Ok(json!({
-            "file-id": init.get("fileId").and_then(|v| v.as_str()).unwrap_or_default(),
-            "version-id": init.get("versionId").and_then(|v| v.as_str()).unwrap_or_default(),
+            "file-id": file_id,
+            "version-id": version_id,
             "replaced": true,
             "status": "DUPLICATE",
         }));
@@ -175,11 +195,21 @@ fn extract_bytes(v: Option<&Value>) -> Result<Vec<u8>, AwareError> {
         Some(Value::String(s)) => Ok(base64::engine::general_purpose::STANDARD
             .decode(s)
             .unwrap_or_else(|_| s.clone().into_bytes())),
-        Some(Value::Array(items)) => Ok(items
+        // A byte array must be integers 0–255 — reject anything else rather than
+        // silently dropping/truncating it into corrupted content (#200 Codex).
+        Some(Value::Array(items)) => items
             .iter()
-            .filter_map(|n| n.as_u64())
-            .map(|n| n as u8)
-            .collect()),
+            .map(|n| {
+                n.as_u64()
+                    .filter(|&b| b <= 255)
+                    .map(|b| b as u8)
+                    .ok_or_else(|| {
+                        AwareError::Validation(format!(
+                            "trimble-connect upload: byte array element {n} is not an integer 0-255"
+                        ))
+                    })
+            })
+            .collect(),
         _ => Err(AwareError::Validation(
             "trimble-connect upload: missing required input `bytes`".into(),
         )),
@@ -414,5 +444,42 @@ mod tests {
             !put.contains("Authorization") && put.contains("hello"),
             "{put}"
         );
+    }
+
+    #[test]
+    fn extract_bytes_rejects_out_of_range_or_non_int_array() {
+        assert!(extract_bytes(Some(&json!([256]))).is_err());
+        assert!(extract_bytes(Some(&json!([1, "x"]))).is_err());
+        assert!(extract_bytes(Some(&json!([1, -1]))).is_err());
+    }
+
+    #[tokio::test]
+    async fn upload_duplicate_fetches_version_from_metadata() {
+        // DUPLICATE initiate carries only fileId → the handler fetches versionId from
+        // the file metadata so the result stays usable.
+        let (base, _rx) = mock_routed(2, |_b| {
+            vec![
+                (
+                    "POST /files/fs/upload",
+                    200,
+                    r#"{"status":"DUPLICATE","fileId":"DUPFID"}"#.to_string(),
+                ),
+                (
+                    "/files/DUPFID",
+                    200,
+                    r#"{"versionId":"DUPVER"}"#.to_string(),
+                ),
+            ]
+        });
+        let agents = mock_agents(&base);
+        let out = upload(
+            agents.path().join("agents"),
+            serde_json::json!({ "folder-id": "f", "filename": "a.txt", "bytes": "aGk=" }),
+        )
+        .await
+        .unwrap();
+        assert_eq!(out["file-id"], "DUPFID");
+        assert_eq!(out["version-id"], "DUPVER");
+        assert_eq!(out["replaced"], true);
     }
 }
