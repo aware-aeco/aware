@@ -861,6 +861,91 @@ fn shape_response(resp: ureq::Response) -> Value {
     })
 }
 
+/// In-process handler for `builtin`-transport `_core` utilities (#201) — runtime
+/// built-ins with no host binary to ship or install. Routed by agent id; currently
+/// serves `html-report`'s generic renderer.
+struct BuiltinInvoker {
+    /// On a `--dry-run` / `--simulate` run, the optional `output-path` file write is
+    /// skipped so a preview never touches disk; the HTML and result shape are still
+    /// returned so downstream nodes resolve.
+    dry_run: bool,
+}
+
+#[async_trait]
+impl AgentInvoker for BuiltinInvoker {
+    async fn invoke_single(
+        &self,
+        agent: &str,
+        command: &str,
+        args: Value,
+    ) -> Result<Value, AwareError> {
+        match (agent, command) {
+            ("html-report", "render") => render_html_report(args, self.dry_run),
+            _ => Err(AwareError::Validation(format!(
+                "builtin transport: no handler for {agent}/{command}"
+            ))),
+        }
+    }
+
+    async fn invoke_stream(
+        &self,
+        agent: &str,
+        command: &str,
+        _args: Value,
+    ) -> Result<StreamingHandle, AwareError> {
+        Err(AwareError::Validation(format!(
+            "builtin agent {agent} command {command:?} is single-shot and does not stream"
+        )))
+    }
+}
+
+/// `html-report.render` — generically format an arbitrary `data` payload into a
+/// self-contained HTML document (#201). Emits the HTML under `html` (canonical — what
+/// the report Viewer reads) and `htmlReport` (alias), plus `item-count`. When
+/// `output-path` is given it also writes the file and echoes `output-path` + `bytes`.
+fn render_html_report(args: Value, dry_run: bool) -> Result<Value, AwareError> {
+    let title = args
+        .get("title")
+        .and_then(|v| v.as_str())
+        .unwrap_or("Report");
+    // The `data` input is the payload; if absent, render the whole args object so a
+    // bare `render` over an upstream value still produces something useful.
+    let data = args.get("data").unwrap_or(&args);
+    let html = crate::render::html_report::render_report(title, data);
+    let count = crate::render::html_report::item_count(data) as u64;
+
+    let mut out = serde_json::Map::new();
+    out.insert("html".into(), Value::String(html.clone()));
+    out.insert("htmlReport".into(), Value::String(html.clone()));
+    out.insert("item-count".into(), Value::from(count));
+
+    if let Some(path) = args
+        .get("output-path")
+        .and_then(|v| v.as_str())
+        .map(str::trim)
+        .filter(|s| !s.is_empty())
+    {
+        // Real run only: a preview (--dry-run / --simulate) returns the HTML + the
+        // would-be path/size but never touches disk.
+        if !dry_run {
+            if let Some(parent) = std::path::Path::new(path).parent()
+                && !parent.as_os_str().is_empty()
+            {
+                std::fs::create_dir_all(parent).map_err(|e| {
+                    AwareError::Internal(format!("html-report: create {}: {e}", parent.display()))
+                })?;
+            }
+            std::fs::write(path, html.as_bytes())
+                .map_err(|e| AwareError::Internal(format!("html-report: write {path}: {e}")))?;
+        }
+        out.insert("output-path".into(), Value::String(path.to_string()));
+        out.insert("path".into(), Value::String(path.to_string()));
+        out.insert("bytes".into(), Value::from(html.len() as u64));
+    }
+
+    Ok(Value::Object(out))
+}
+
 /// The invoker the orchestrator uses in production. Routes each call to the
 /// right transport invoker by inspecting the agent's manifest: a `cli`
 /// transport spawns a subprocess; a `rest` transport makes an HTTP call; an
@@ -915,9 +1000,11 @@ impl DispatchInvoker {
             Ok(TransportKind::Rest)
         } else if m.transport.app.is_some() {
             Ok(TransportKind::App)
+        } else if m.transport.builtin.is_some() {
+            Ok(TransportKind::Builtin)
         } else {
             Err(AwareError::Validation(format!(
-                "agent {agent} has no executable transport (need `cli`, `rest`, or `app`)"
+                "agent {agent} has no executable transport (need `cli`, `rest`, `app`, or `builtin`)"
             )))
         }
     }
@@ -1086,6 +1173,7 @@ enum TransportKind {
     Cli,
     Rest,
     App,
+    Builtin,
 }
 
 #[async_trait]
@@ -1115,6 +1203,16 @@ impl AgentInvoker for DispatchInvoker {
                 }
                 None => Err(Self::nested_recursion_error(agent)),
             },
+            TransportKind::Builtin => {
+                BuiltinInvoker {
+                    dry_run: self
+                        .app_ctx
+                        .as_ref()
+                        .is_some_and(|c| c.dry_run || c.simulate),
+                }
+                .invoke_single(agent, command, args)
+                .await
+            }
         }
     }
 
@@ -1143,6 +1241,11 @@ impl AgentInvoker for DispatchInvoker {
                 }
                 None => Err(Self::nested_recursion_error(agent)),
             },
+            TransportKind::Builtin => {
+                BuiltinInvoker { dry_run: false }
+                    .invoke_stream(agent, command, args)
+                    .await
+            }
         }
     }
 }
@@ -2288,5 +2391,67 @@ commands:
             req.starts_with("GET /search?body=hello"),
             "query param named `body` should be in the query string: {req}"
         );
+    }
+}
+
+#[cfg(test)]
+mod builtin_invoker_tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn render_returns_html_aliases_and_count() {
+        let out =
+            render_html_report(json!({ "title": "T", "data": [{ "id": 1 }] }), false).unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(html.starts_with("<!DOCTYPE html>"));
+        assert!(html.contains("<title>T</title>"));
+        // `htmlReport` mirrors `html` (styling contract); count is the array length.
+        assert_eq!(out["htmlReport"], out["html"]);
+        assert_eq!(out["item-count"], json!(1));
+        // No output-path → pure formatter, no file keys.
+        assert!(out.get("output-path").is_none());
+    }
+
+    #[test]
+    fn render_dry_run_echoes_path_but_skips_write() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("r.html");
+        let ps = path.to_string_lossy().to_string();
+        let out =
+            render_html_report(json!({ "data": [], "output-path": ps.clone() }), true).unwrap();
+        assert_eq!(out["output-path"].as_str().unwrap(), ps);
+        assert!(out["bytes"].as_u64().unwrap() > 0, "would-be size reported");
+        assert!(!path.exists(), "a dry run must not write the file");
+    }
+
+    #[test]
+    fn render_real_run_writes_the_file_and_creates_parents() {
+        let tmp = tempfile::tempdir().unwrap();
+        let path = tmp.path().join("sub").join("r.html"); // parent dir is created
+        let ps = path.to_string_lossy().to_string();
+        let out =
+            render_html_report(json!({ "data": [{ "a": 1 }], "output-path": ps }), false).unwrap();
+        assert!(path.exists(), "a real run writes the file");
+        let written = std::fs::read_to_string(&path).unwrap();
+        assert_eq!(written, out["html"].as_str().unwrap());
+    }
+
+    #[tokio::test]
+    async fn builtin_stream_is_rejected() {
+        let err = BuiltinInvoker { dry_run: false }
+            .invoke_stream("html-report", "render", json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)));
+    }
+
+    #[tokio::test]
+    async fn unknown_builtin_command_errors() {
+        let err = BuiltinInvoker { dry_run: false }
+            .invoke_single("html-report", "nope", json!({}))
+            .await
+            .unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)));
     }
 }

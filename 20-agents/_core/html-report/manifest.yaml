@@ -1,22 +1,16 @@
 agent:        html-report
-version:      0.1.0
+version:      0.2.0
 display-name: HTML Report
 description: |
   Utility agent for generating self-contained HTML reports — single-file
-  documents with inlined CSS, runnable in any browser. Used as the sink of
-  many AECO compositions (Tekla Connection X-Ray, BCF reports, fab pipelines,
-  QC dashboards) that need a portable, sharable artifact.
+  documents with inlined CSS, runnable in any browser. The generic sink of
+  AECO compositions that need a portable, sharable artifact: hand it any
+  workflow's output and it renders a styled report (no per-scenario code).
 
   Lives under `_core/` because it's not tied to any AECO vertical — it's
   general output formatting that any agent's command may compose with.
 
 stateful: false
-
-# Not yet runnable: the `aware-html-report` transport binary isn't shipped or
-# installable. Apps referencing it are rejected at validate/compile rather than
-# failing at run with "program not found" (#161). Flip to `available` once the
-# binary ships.
-status: planned
 
 vendor:   aware
 license:  Apache-2.0
@@ -25,33 +19,51 @@ keywords: [aware, html, report, output, viewer, dashboard]
 
 requires:
   filesystem:
-    - write: any                 # caller's chosen path
+    - write: any                 # only when `render` is given an output-path
 
+# Runtime built-in (#201): the renderer runs in-process in the `aware` runtime —
+# there is no `aware-html-report` host binary to ship or install, so the agent is
+# `available` (resolves the #161 unshipped-binary gap for this agent). Dispatch is
+# routed by agent id to the generic HTML renderer (`cli/src/render/html_report.rs`).
 transport:
-  cli:
-    binary: aware-html-report
+  builtin: {}
 
 commands:
   render:
     lifecycle: single
-    description: Render an HTML report from a template + data payload to a target path.
+    # Read-mode: rendering mutates no system of record, so a report node needs no
+    # `safety:` block — reporting stays frictionless for every app. When `output-path`
+    # is given the runtime writes that artifact on a real run only (skipped under
+    # --dry-run / --simulate), so a preview never touches disk.
+    description: |
+      Render an HTML report from an arbitrary data payload. Generic auto-render: an
+      array of objects becomes a table (keys as columns), an object becomes a
+      field/value table, a scalar renders as a single value, and nested structures are
+      shown as compact JSON. No template needed.
     inputs:
-      template:
-        type: enum
-        values: [tekla-connection-xray, bcf-summary, fab-pipeline-log, qc-dashboard, blank]
-        description: Built-in template name, or `blank` for a custom HTML body.
       data:
-        type: object
-        description: Template-specific data payload.
-      output-path: string
+        description: |
+          Any JSON value to render. Array of objects -> table; object -> field/value
+          table; scalar -> single value. Nested values render as compact JSON.
       title:
         type: string
-        description: Optional page title; defaults to template name.
+        description: Optional page title; defaults to "Report".
+      output-path:
+        type: string
+        description: Optional file path; when given, the HTML is also written there.
+      template:
+        type: string
+        description: |
+          Optional curated-layout name (reserved). Generic auto-render runs regardless;
+          named vertical templates are a planned follow-on (#201).
     outputs:
       type: single
+      # `html` is also emitted under the alias `htmlReport` for descriptive consumers.
       schema:
-        path:   string
-        bytes:  int
+        html:        string    # canonical self-contained HTML (the Viewer reads this)
+        item-count:  int
+        output-path: string    # present only when an output-path was given (file written)
+        bytes:       int       # present only when written
 
 skills:
   - styling.md

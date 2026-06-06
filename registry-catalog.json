@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-05T17:19:25.064858100+00:00",
+  "updated-at": "2026-06-06T05:46:53.791204900+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2259,9 +2259,9 @@
       "versions": {
         "1.0.0": {
           "description": "Utility agent for generating self-contained HTML reports — single-file",
-          "status": "planned",
+          "status": "available",
           "stateful": false,
-          "transport": "cli",
+          "transport": "builtin",
           "command_count": 1,
           "skills": [
             "styling"
@@ -2269,7 +2269,7 @@
           "commands": [
             {
               "name": "render",
-              "description": "Render an HTML report from a template + data payload to a target path.",
+              "description": "Render an HTML report from an arbitrary data payload. Generic auto-render: an",
               "lifecycle": "single",
               "category": "curated"
             }
