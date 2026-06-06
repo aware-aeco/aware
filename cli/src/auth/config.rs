@@ -74,7 +74,10 @@ pub fn for_integration(id: &str) -> Result<IntegrationConfig, AwareError> {
             id: "trimble-connect".to_string(),
             auth_url: "https://id.trimble.com/oauth/authorize".to_string(),
             token_url: "https://id.trimble.com/oauth/token".to_string(),
-            default_scopes: scopes(&["openid", "profile", "TrimbleConnect"]),
+            // offline_access is required for Trimble Identity to issue a refresh token; without
+            // it the ~1h access token can't be renewed and the auto-refresh wired in #198 no-ops,
+            // forcing a browser re-login every hour (#211). Mirrors microsoft-365 below.
+            default_scopes: scopes(&["openid", "profile", "TrimbleConnect", "offline_access"]),
             client_id_env: "AWARE_OAUTH_TRIMBLE_CLIENT_ID",
             default_client_id: "AWARE_AECO_PLACEHOLDER_TRIMBLE_CLIENT_ID".to_string(),
             client_secret_env: None,
@@ -425,6 +428,22 @@ mod tests {
         let c = for_integration("trimble-connect").unwrap();
         assert_eq!(c.id, "trimble-connect");
         assert!(!c.default_scopes.is_empty());
+    }
+
+    #[test]
+    fn auto_refreshed_integrations_request_offline_access() {
+        // offline_access is what makes the identity provider issue a REFRESH token, so the
+        // auto-refresh wired in #198 can renew the ~1h access token instead of forcing a
+        // browser re-login. Every integration AWARE auto-refreshes must request it at consent
+        // time — trimble-connect previously omitted it (#211).
+        for id in ["trimble-connect", "microsoft-365"] {
+            let c = for_integration(id).unwrap();
+            assert!(
+                c.default_scopes.iter().any(|s| s == "offline_access"),
+                "{id} must request offline_access for refresh-token issuance; scopes: {:?}",
+                c.default_scopes
+            );
+        }
     }
 
     #[test]
