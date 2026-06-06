@@ -314,12 +314,19 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
             .cloned()
             .unwrap_or_else(|| serde_json::Value::Object(ctx.run.clone())),
         // `upstream` namespace — render() exposes the whole upstream map as a
-        // top-level object, so `{{ upstream.<node>.<field> }}` / `{{ upstream['n'].x }}`
-        // resolve against it. An upstream node literally named `upstream` takes
-        // precedence (render()'s upstream loop would overwrite the key), mirroring the
-        // `run` arm. Without this a whole-value `{{ upstream.x.y }}` config leaf would
-        // treat `upstream` as a missing node id and resolve to null (#205 Codex).
-        "upstream" => ctx
+        // top-level object, so `{{ upstream.<node>.<field> }}` resolves against it. An
+        // upstream node literally named `upstream` takes precedence (render()'s upstream
+        // loop would overwrite the key), mirroring the `run` arm. Without this a
+        // whole-value `{{ upstream.x.y }}` config leaf would treat `upstream` as a
+        // missing node id and resolve to null (#205 Codex).
+        //
+        // Guard on a non-empty `rest`: a bracket ref `{{ upstream['n'].x }}` truncates
+        // at `[` to just `upstream` (no rest). Returning the whole map there would make
+        // a `for-each` iterate every node; instead let it fall through to the node-id
+        // arm (→ null), matching the pre-#205 behavior. (Bracket refs never reach here
+        // as config — they aren't bare-path, so `is_whole_value_template` rejects them
+        // and they render; only for-each / compare pass brackets to this resolver.)
+        "upstream" if !rest.is_empty() => ctx
             .upstream
             .get("upstream")
             .cloned()
@@ -475,10 +482,16 @@ mod tests {
         // a whole-value `{{ upstream.<node>.<field> }}` config leaf resolves rather than
         // treating `upstream` as a missing node id (#205 Codex).
         let ctx = ctx_with_upstream("src", serde_json::json!({ "items": [1, 2, 3] }));
+        // Dot form navigates the map …
         assert_eq!(
             resolve_value("{{ upstream.src.items }}", &ctx),
             serde_json::json!([1, 2, 3])
         );
+        // … but a bracket ref (the parser truncates at `[` → no rest) must NOT return
+        // the whole map — that would make a for-each iterate every node. It resolves to
+        // null, the pre-#205 behavior. A bare `{{ upstream }}` is null too (#205 Codex).
+        assert!(resolve_value("{{ upstream['src'].items }}", &ctx).is_null());
+        assert!(resolve_value("{{ upstream }}", &ctx).is_null());
     }
 
     #[test]
