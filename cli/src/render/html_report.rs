@@ -92,7 +92,7 @@ pub struct TableOptions {
     pub columns: Option<Vec<String>>,
     /// Key to sort rows by before rendering. `None` → input order. Numbers compare
     /// numerically; everything else by string form (so ISO timestamps sort
-    /// chronologically); a missing key sorts last (ascending).
+    /// chronologically); a missing/null key sorts last in both directions.
     pub sort_by: Option<String>,
     /// Sort descending (e.g. most-recent-first for an ISO timestamp). Ignored unless
     /// `sort_by` is set.
@@ -201,13 +201,24 @@ fn render_array(items: &[Value], opts: &TableOptions) -> String {
 
 /// Sort a copy of `items` by each object's `key`. Numbers compare numerically;
 /// other values by string form (ISO timestamps therefore sort chronologically); a
-/// missing/null key sorts last (ascending). Stable, so equal keys keep input order
-/// and the output stays deterministic. `desc` reverses the comparison.
+/// missing/null key sorts last in BOTH directions. Stable, so equal keys keep input
+/// order and the output stays deterministic. `desc` reverses the order of PRESENT
+/// values only.
 fn sort_items(items: &[Value], key: &str, desc: bool) -> Vec<Value> {
     let mut out = items.to_vec();
     out.sort_by(|a, b| {
-        let ord = cmp_cell(a.get(key), b.get(key));
-        if desc { ord.reverse() } else { ord }
+        let (av, bv) = (a.get(key), b.get(key));
+        let ord = cmp_cell(av, bv);
+        // `desc` reverses the comparison ONLY when both keys are present. A missing/null key
+        // sorts last regardless of direction — the old blanket `ord.reverse()` floated blank
+        // rows to the TOP under `sort-desc`, contradicting the documented "missing sorts last"
+        // (#210 follow-up).
+        let both_present = av.is_some_and(|v| !v.is_null()) && bv.is_some_and(|v| !v.is_null());
+        if desc && both_present {
+            ord.reverse()
+        } else {
+            ord
+        }
     });
     out
 }
@@ -462,5 +473,28 @@ mod tests {
         let html = render_report_with("P", &data, &opts);
         // Ascending numeric: 9 before 100 (a lexical sort would order "100" first).
         assert!(html.find("<td>b</td>").unwrap() < html.find("<td>a</td>").unwrap());
+    }
+
+    #[test]
+    fn missing_sort_key_sorts_last_even_when_descending() {
+        // A row missing the sort key must sort LAST in both directions — `sort-desc` must not
+        // float blank rows to the top (#210 follow-up: the manifest documents "missing sorts
+        // last", but the old blanket reverse put them first under desc).
+        let data = json!([
+            {"name": "HasKey-Low",  "modifiedOn": "2023-01-01T00:00:00+0000"},
+            {"name": "NoKey"},
+            {"name": "HasKey-High", "modifiedOn": "2026-06-01T00:00:00+0000"},
+        ]);
+        let opts = TableOptions {
+            sort_by: Some("modifiedOn".into()),
+            sort_desc: true,
+            ..Default::default()
+        };
+        let html = render_report_with("P", &data, &opts);
+        let pos = |needle: &str| html.find(needle).expect("row present");
+        // desc orders present values High-before-Low …
+        assert!(pos("<td>HasKey-High</td>") < pos("<td>HasKey-Low</td>"));
+        // … and the missing-key row stays LAST, not first.
+        assert!(pos("<td>HasKey-Low</td>") < pos("<td>NoKey</td>"));
     }
 }
