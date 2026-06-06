@@ -297,7 +297,16 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     };
 
     let mut cur = match *head {
-        "inputs" => ctx.inputs.clone(),
+        // Mirror render(): a synthetic `inputs` overlay in `upstream` (the streaming
+        // per-event fields, already merged over the base inputs) takes precedence over
+        // base inputs, exactly as render()'s upstream loop overwrites the base `inputs`
+        // key. Without this a whole-value `{{ inputs.<event-field> }}` in a streaming
+        // downstream node would resolve to null (#205 Codex).
+        "inputs" => ctx
+            .upstream
+            .get("inputs")
+            .cloned()
+            .unwrap_or_else(|| ctx.inputs.clone()),
         "config" => serde_json::Value::Object(ctx.config.clone()),
         "secrets" => serde_json::Value::Object(ctx.secrets.clone()),
         // Ambient run namespace — but an upstream node literally named `run`
@@ -404,6 +413,40 @@ mod tests {
         // … whereas render would stringify it.
         let s = render("{{ projects.body }}", &ctx).unwrap();
         assert!(s.trim_start().starts_with('[') && s.contains("p1"));
+    }
+
+    #[test]
+    fn resolve_value_inputs_honors_streaming_overlay() {
+        // The streaming path overlays per-event fields (merged over base inputs) at
+        // upstream["inputs"]; resolve_value must see them like render does (#205 Codex).
+        let mut ctx = RenderContext {
+            inputs: serde_json::json!({ "tc-project-id": "p-1" }),
+            ..Default::default()
+        };
+        ctx.record_output(
+            "inputs",
+            serde_json::json!({ "tc-project-id": "p-1", "mark": "A-104" }),
+        );
+        // Event field resolves via the overlay …
+        assert_eq!(
+            resolve_value("{{ inputs.mark }}", &ctx),
+            serde_json::json!("A-104")
+        );
+        // … and the base input survives the merge (dotted kebab path form).
+        assert_eq!(
+            resolve_value("{{ inputs.tc-project-id }}", &ctx),
+            serde_json::json!("p-1"),
+            "base input must survive the event merge"
+        );
+        // With no overlay, base inputs are used.
+        let plain = RenderContext {
+            inputs: serde_json::json!({ "x": 1 }),
+            ..Default::default()
+        };
+        assert_eq!(
+            resolve_value("{{ inputs.x }}", &plain),
+            serde_json::json!(1)
+        );
     }
 
     #[test]
