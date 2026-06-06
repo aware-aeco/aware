@@ -146,16 +146,26 @@ public static class RoslynReader
             foreach (var t in asm.Types) index.TryAdd(t.FullName, t);
         }
 
-        // A failure is fatal ONLY when it concerns a project that did NOT produce a compilation
-        // — i.e. its message names no successfully-loaded project file. That still surfaces a
-        // genuine C# project load failure (silently dropping its commands is forbidden) while
-        // ignoring the warnings-as-failures noise (dotnet/roslyn#75182): a project that compiled
-        // despite a NUxxxx/MSBxxxx warning is named in `loaded`, so its diagnostic is filtered
-        // out here. Non-C# projects in a mixed .sln also never appear in `loaded`, but their
-        // diagnostics name a non-`.csproj` file we never tried to reflect; in practice a real
-        // C# load failure is what this catches (the user fixes it or passes a specific project).
+        // A failure is fatal ONLY when the project it is ABOUT did not produce a compilation.
+        // MSBuildWorkspace names that project as the FIRST `'…'`-quoted path in the message
+        // ("Msbuild failed when processing the file '<path>' with message: …"). Match ONLY that
+        // token against `loaded` — never the free message body — so:
+        //   • a project that compiled despite a warning-as-failure (an MSBuild/NuGet WARNING
+        //     surfaced as Failure, dotnet/roslyn#75182) is in `loaded`, so its own diagnostic is
+        //     filtered out and not treated as fatal; and
+        //   • a genuine C# load failure (its project absent from `loaded`) still surfaces — no
+        //     silent partial — even when its message body happens to mention a loaded sibling's
+        //     path (e.g. a project-reference resolution error). A message with no quoted path
+        //     can't be attributed, so it is treated as fatal (fail loud, never drop silently).
+        static string? FailedProjectPath(string msg)
+        {
+            var open = msg.IndexOf('\'');
+            if (open < 0) return null;
+            var close = msg.IndexOf('\'', open + 1);
+            return close > open ? msg[(open + 1)..close] : null;
+        }
         var fatal = failures
-            .Where(msg => !loaded.Any(fp => msg.Contains(fp, StringComparison.OrdinalIgnoreCase)))
+            .Where(msg => FailedProjectPath(msg) is not { } p || !loaded.Contains(p))
             .ToList();
         if (asms.Count == 0)
         {
