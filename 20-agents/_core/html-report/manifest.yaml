@@ -63,6 +63,7 @@ commands:
         htmlReport:  string    # alias of `html` for descriptive consumers (Text Panel / logs)
         item-count:  int
         output-path: string    # present only when an output-path was given (file written)
+        path:        string    # alias of `output-path` (the written artifact location)
         bytes:       int       # present only when written
 
 skills:

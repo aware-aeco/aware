@@ -939,6 +939,10 @@ fn render_html_report(args: Value, dry_run: bool) -> Result<Value, AwareError> {
                 .map_err(|e| AwareError::Internal(format!("html-report: write {path}: {e}")))?;
         }
         out.insert("output-path".into(), Value::String(path.to_string()));
+        // `path` alias: existing apps reference the artifact under both names —
+        // `{{ node.output-path }}` (e.g. an email attachment) and `{{ node.path }}`
+        // (e.g. an engineering output seal). Both are declared in the manifest schema.
+        out.insert("path".into(), Value::String(path.to_string()));
         out.insert("bytes".into(), Value::from(html.len() as u64));
     }
 
