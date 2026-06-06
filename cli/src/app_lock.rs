@@ -571,6 +571,42 @@ fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
     }
 }
 
+/// Like [`collect_refs`] but captures the leading node-id HEAD of every `{{ <head>… }}`
+/// reference — including a bare whole-node ref `{{ projects }}` (a single path segment),
+/// which `collect_refs` skips (it records only two-segment `<node>.<field>` pairs). Edge
+/// derivation (#208) needs the head alone: a whole-node reference reads the upstream
+/// node's entire output and is just as much a data dependency as `{{ projects.body }}`.
+fn collect_ref_heads(value: &serde_yaml::Value, out: &mut Vec<String>) {
+    match value {
+        serde_yaml::Value::String(s) => {
+            let mut rest = s.as_str();
+            while let Some(start) = rest.find("{{") {
+                let after = &rest[start + 2..];
+                let Some(end) = after.find("}}") else { break };
+                let inner = after[..end].trim();
+                let path_end = inner
+                    .find(|c: char| !(c.is_alphanumeric() || c == '_' || c == '-' || c == '.'))
+                    .unwrap_or(inner.len());
+                if let Some(head) = inner[..path_end].split('.').find(|p| !p.is_empty()) {
+                    out.push(head.to_string());
+                }
+                rest = &after[end + 2..];
+            }
+        }
+        serde_yaml::Value::Mapping(m) => {
+            for (_, v) in m {
+                collect_ref_heads(v, out);
+            }
+        }
+        serde_yaml::Value::Sequence(seq) => {
+            for v in seq {
+                collect_ref_heads(v, out);
+            }
+        }
+        _ => {}
+    }
+}
+
 /// Scheduling edges implied by `{{ <node>.<field> }}` data references (#208).
 ///
 /// A node config that reads an upstream node's output (`data: '{{ projects.body }}'`)
@@ -634,34 +670,38 @@ pub(crate) fn derive_connections(app: &App) -> Vec<crate::manifest::app::Connect
         let scope_prefix = scoped_id.rsplit_once('.').map(|(p, _)| p);
         let local_id = node.id.as_str();
 
-        let mut refs: Vec<(String, String)> = Vec::new();
+        // Collect the node-id HEAD of every reference — including a bare whole-node ref
+        // (`{{ projects }}`, `for-each: '{{ projects }}'`) which reads the upstream
+        // node's entire output and is just as much a dependency as `{{ projects.body }}`
+        // (#208 Codex).
+        let mut heads: Vec<String> = Vec::new();
         if let Some(params) = node.merged_params() {
-            collect_refs(&params, &mut refs);
+            collect_ref_heads(&params, &mut heads);
         }
         if let Some(expr) = &node.for_each {
-            collect_refs(&serde_yaml::Value::String(expr.clone()), &mut refs);
+            collect_ref_heads(&serde_yaml::Value::String(expr.clone()), &mut heads);
         }
         // Substrate primitives carry cross-node refs OUTSIDE config/inputs, resolved at
         // run time (run_compare / assert / sweep) — scan them too so their sources are
         // ordered first (#208 Codex). compare sides + snapshots, the assert expression,
-        // and sweep values can each be a `{{ <node>.<field> }}` reference.
+        // and sweep values can each be a `{{ <node>… }}` reference.
         if let Some(cmp) = &node.compare {
             for s in [&cmp.a, &cmp.b, &cmp.a_snapshot, &cmp.b_snapshot]
                 .into_iter()
                 .flatten()
             {
-                collect_refs(&serde_yaml::Value::String(s.clone()), &mut refs);
+                collect_ref_heads(&serde_yaml::Value::String(s.clone()), &mut heads);
             }
         }
         if let Some(assert) = &node.assert {
-            collect_refs(&serde_yaml::Value::String(assert.expr.clone()), &mut refs);
+            collect_ref_heads(&serde_yaml::Value::String(assert.expr.clone()), &mut heads);
         }
         if let Some(sweep) = &node.sweep {
             for v in &sweep.values {
-                collect_refs(v, &mut refs);
+                collect_ref_heads(v, &mut heads);
             }
         }
-        for (nid, _field) in refs {
+        for nid in heads {
             if nid == local_id || iter_vars.iter().any(|v| v == &nid) {
                 continue;
             }
@@ -999,6 +1039,41 @@ requires: []
                 .iter()
                 .any(|c| c.from == "tekla-watch" && c.to == "consumer"),
             "underscore-alias ref must derive tekla-watch->consumer (canonical id); got {derived:?}"
+        );
+    }
+
+    #[test]
+    fn derive_connections_handles_bare_whole_node_ref() {
+        // #208 Codex: a bare whole-node ref `{{ projects }}` (one path segment) reads the
+        // upstream node's entire output and must derive an edge — `collect_refs` records
+        // only two-segment `<node>.<field>` pairs, so the head-collector covers this.
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("whole.flo");
+        std::fs::write(
+            &src,
+            r#"app: whole
+version: 0.0.1
+description: x
+nodes:
+  - id: projects
+    agent: x
+    command: emit
+  - id: report
+    agent: x
+    command: consume
+    config:
+      data: '{{ projects }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let derived = derive_connections(&app);
+        assert!(
+            derived
+                .iter()
+                .any(|c| c.from == "projects" && c.to == "report"),
+            "bare whole-node ref must derive projects->report; got {derived:?}"
         );
     }
 
