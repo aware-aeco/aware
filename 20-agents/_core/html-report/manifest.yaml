@@ -58,9 +58,9 @@ commands:
           named vertical templates are a planned follow-on (#201).
     outputs:
       type: single
-      # `html` is also emitted under the alias `htmlReport` for descriptive consumers.
       schema:
         html:        string    # canonical self-contained HTML (the Viewer reads this)
+        htmlReport:  string    # alias of `html` for descriptive consumers (Text Panel / logs)
         item-count:  int
         output-path: string    # present only when an output-path was given (file written)
         bytes:       int       # present only when written
