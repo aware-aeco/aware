@@ -159,10 +159,17 @@ public static class RoslynReader
         //     can't be attributed, so it is treated as fatal (fail loud, never drop silently).
         static string? FailedProjectPath(string msg)
         {
-            var open = msg.IndexOf('\'');
-            if (open < 0) return null;
-            var close = msg.IndexOf('\'', open + 1);
-            return close > open ? msg[(open + 1)..close] : null;
+            // Anchor to the diagnostic template ("…processing the file '{0}' with message: {1}")
+            // rather than the first quote pair, so a project path that itself contains an
+            // apostrophe (legal on Windows + Linux, e.g. C:\Users\O'Brien\App.csproj) isn't
+            // truncated — the closing delimiter is `' with message:`, not just `'` (review).
+            const string pre = "processing the file '";
+            const string post = "' with message:";
+            var start = msg.IndexOf(pre, StringComparison.Ordinal);
+            if (start < 0) return null;
+            start += pre.Length;
+            var end = msg.IndexOf(post, start, StringComparison.Ordinal);
+            return end > start ? msg[start..end] : null;
         }
         var fatal = failures
             .Where(msg => FailedProjectPath(msg) is not { } p || !loaded.Contains(p))
