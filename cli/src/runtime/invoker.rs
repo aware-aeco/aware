@@ -446,6 +446,21 @@ impl AgentInvoker for RestInvoker {
         command: &str,
         args: Value,
     ) -> Result<Value, AwareError> {
+        // Trimble Connect file ops are multi-step, binary, cross-domain flows the
+        // single-call REST path can't express, so they're handled out-of-line (#200).
+        if agent == "trimble-connect" {
+            match command {
+                "upload" => {
+                    return crate::runtime::trimble_files::upload(self.agents_dir.clone(), args)
+                        .await;
+                }
+                "download" => {
+                    return crate::runtime::trimble_files::download(self.agents_dir.clone(), args)
+                        .await;
+                }
+                _ => {}
+            }
+        }
         // Two shapes reach this transport:
         //  - built OpenAPI agent (#106): the command maps to a manifest `method`
         //    + `path` template, and inputs are routed by their declared `in:`
@@ -587,7 +602,7 @@ impl AgentInvoker for RestInvoker {
 /// Read an optional `base` URL from an agent's `rest` transport block. The
 /// generic `http` agent declares no base (callers pass absolute URLs); a
 /// domain-specific rest agent may set one and pass relative paths.
-fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
+pub(crate) fn rest_base_url(agents_dir: &std::path::Path, agent: &str) -> Option<String> {
     let m =
         crate::manifest::loader::load_agent(&agents_dir.join(agent).join("manifest.yaml")).ok()?;
     m.transport
@@ -612,7 +627,7 @@ fn command_method(agents_dir: &std::path::Path, agent: &str, command: &str) -> O
 /// Percent-encode an OpenAPI path-parameter value (RFC 3986 unreserved set):
 /// everything except `A-Z a-z 0-9 - . _ ~` is `%`-escaped, so a value like
 /// `a/b.txt` becomes `a%2Fb.txt` rather than splitting the route (#106).
-fn percent_encode_path(s: &str) -> String {
+pub(crate) fn percent_encode_path(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     for b in s.bytes() {
         match b {
@@ -755,7 +770,7 @@ fn build_operation_request(
 /// to the raw stored value, so a still-valid token is used and a genuinely-missing
 /// one yields the caller's clear "provision it" error. For api-key schemes and
 /// unregistered secrets (out-of-band tokens) the raw stored value is used unchanged.
-fn resolve_rest_credential(
+pub(crate) fn resolve_rest_credential(
     agents_dir: &std::path::Path,
     auth: &crate::manifest::agent::AuthScheme,
 ) -> Option<String> {

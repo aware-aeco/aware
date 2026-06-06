@@ -109,40 +109,40 @@ commands:
 
   upload:
     lifecycle: single
-    description: Upload a file to a folder. Idempotent by drawing mark.
-    # REST wiring deferred (follow-up to #196): Trimble Connect upload is a
-    # multi-step, multipart/binary flow (create file → PUT bytes → commit) that
-    # the single-call REST transport cannot yet express. Until then this command
-    # is declared but not dispatchable.
+    # 3-step package upload (initiate → PUT bytes to a pre-signed URL → complete),
+    # handled by the runtime's trimble file handler (cli/src/runtime/trimble_files.rs,
+    # #200) since it can't be expressed as a single REST call.
+    description: Upload a file to a folder (3-step package upload).
     inputs:
-      project-id: string
       folder-id:  string
       filename:   string
-      bytes:      bytes
-      properties:
-        type: object
-        description: Custom properties stored on the file (must include `mark` for idempotency).
+      bytes:
+        type: bytes
+        description: File content. Binary travels as a base64 string (or a byte array).
+      # `project-id`/`properties` are accepted for composition convenience but not
+      # required: TC addresses folders by global id and dedups by content hash.
     outputs:
       type: single
       schema:
-        file-id: string
-        url:     string
-        replaced: bool       # true if an existing file with same mark was replaced
+        file-id:    string
+        version-id: string
+        replaced:   bool       # true when TC returned DUPLICATE (content already present)
 
   download:
     lifecycle: single
-    description: Download a file by ID.
-    # REST wiring deferred (follow-up to #196): fetching bytes is a 2-step flow
-    # (request a download URL, then GET the binary) plus binary-body handling,
-    # which the single-call REST transport cannot yet express.
+    # 2-step pre-signed download (downloadurl → GET bytes), handled by the runtime's
+    # trimble file handler (#200).
+    description: Download a file's bytes by ID (2-step pre-signed download).
     inputs:
-      project-id: string
       file-id:    string
+      version-id:
+        type: string
+        description: Optional specific version; default = latest.
     outputs:
       type: single
       schema:
-        filename: string
-        bytes:    bytes
+        bytes:    string       # base64-encoded file content
+        encoding: string       # "base64"
         size-kb:  number
 
 skills:

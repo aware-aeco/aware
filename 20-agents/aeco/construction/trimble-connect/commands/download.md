@@ -1,11 +1,7 @@
-# `trimble-connect.download` — read a file by ID
+# `trimble-connect.download` — read a file's bytes by ID
 
-Stateless command. Downloads a file's bytes by its TC UUID.
-
-> **REST wiring deferred (follow-up to #196).** Trimble Connect download is a two-step,
-> binary flow (request a download URL, then `GET` the bytes) that the single-call REST
-> transport cannot yet express, so this command is declared but not dispatchable. The
-> contract below documents the intended shape.
+Stateless command. Downloads a file's bytes by its TC UUID via TC's **2-step pre-signed
+download**, handled in-process by the runtime (`cli/src/runtime/trimble_files.rs`, #200).
 
 ## Lifecycle
 
@@ -15,27 +11,36 @@ Stateless command. Downloads a file's bytes by its TC UUID.
 
 | Field | Type | Description |
 |---|---|---|
-| `project-id` | string | Project UUID. |
 | `file-id` | string | File UUID. |
-| `revision` | string (optional) | Specific revision ID. Default = latest. |
+| `version-id` | string (optional) | Specific version; default = latest. |
 
 The agent authenticates with the single `trimble-connect` credential from
-`aware connect trimble-connect` (see the agent's `auth:` block).
+`aware connect trimble-connect` (the token is refreshed automatically, #198).
 
-## Outputs (intended)
+## Outputs
 
 ```yaml
-filename:   string
-bytes:      bytes
-size-kb:    number
-properties: object        # custom properties stored on the file (including `mark` if set)
-revision:   string        # which revision was returned
+bytes:    string          # base64-encoded file content
+encoding: string          # "base64"
+size-kb:  number          # decoded size / 1024
+```
+
+## REST translation (2-step)
+
+```http
+1. GET {base}/files/fs/{file-id}/downloadurl    (Bearer)   → { url }
+2. GET {presigned-url}                           (NO auth — S3)   → <raw bytes>
 ```
 
 ## Failure modes
 
 | Error | Cause | Recovery |
 |---|---|---|
-| `tc.file-not-found` | UUID invalid or user no longer has access | Verify in TC web UI |
-| `tc.revision-not-found` | Specific revision deleted | Drop the `revision` param to get latest |
-| `401` (`INVALID_SESSION`) | Access token expired | `aware connect trimble-connect --refresh` |
+| `download url: HTTP 404` | UUID invalid or no access | Verify the id in the TC web UI |
+| `download GET: …` | The pre-signed storage GET failed | Retry; check network |
+| `tc.auth-missing` | No credential provisioned | `aware connect trimble-connect --oauth` |
+
+## See also
+
+- [files.md](../skills/files.md) — the full Files & Folders API reference
+- [trimble-connect.upload](./upload.md) — the write counterpart
