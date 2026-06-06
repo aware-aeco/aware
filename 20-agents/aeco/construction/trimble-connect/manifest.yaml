@@ -109,6 +109,7 @@ commands:
 
   upload:
     lifecycle: single
+    mode: write          # writes to TC — must be write-mode so --dry-run stubs it (#200)
     # 3-step package upload (initiate → PUT bytes to a pre-signed URL → complete),
     # handled by the runtime's trimble file handler (cli/src/runtime/trimble_files.rs,
     # #200) since it can't be expressed as a single REST call.
