@@ -1407,8 +1407,17 @@ fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareErr
     fn walk(v: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
         match v {
             Value::String(s) => {
-                let rendered = template::render(s, ctx)?;
-                Ok(Value::String(rendered))
+                // A whole-value template (`"{{ node.field }}"` and nothing else)
+                // resolves to its structured value (array / object / scalar) so
+                // structured data flows node→node (#205) — mirroring what `for-each`
+                // already does. An embedded template (`"file:{{ x }}.pdf"`) or a
+                // multi-expression string renders to a String; a whole-value ref to a
+                // string yields the same string either way.
+                if template::is_whole_value_template(s) {
+                    Ok(template::resolve_value(s, ctx))
+                } else {
+                    Ok(Value::String(template::render(s, ctx)?))
+                }
             }
             Value::Object(map) => {
                 let mut out = serde_json::Map::new();
@@ -1468,6 +1477,31 @@ mod tests {
     use crate::runtime::invoker::MockInvoker;
     use crate::runtime::lifecycle::stop_channel;
     use crate::runtime::provenance::{log_path_for, read_run_events};
+
+    #[test]
+    fn render_config_passes_whole_value_templates_through_structurally() {
+        // #205: a whole-value `{{ node.field }}` config leaf resolves to its
+        // structured value (array/object) so it can be piped node→node; an embedded
+        // template stays a rendered string.
+        let mut ctx = RuntimeContext::default();
+        ctx.record_output(
+            "projects",
+            serde_json::json!({ "body": [ { "id": "p1" }, { "id": "p2" } ] }),
+        );
+        let config = serde_json::json!({
+            "data": "{{ projects.body }}",         // whole-value → array
+            "label": "count={{ projects.body }}",  // embedded → string
+        });
+        let out = render_config(&config, &ctx).unwrap();
+        assert!(
+            out["data"].is_array() && out["data"].as_array().unwrap().len() == 2,
+            "whole-value array must pass through structurally: {out}"
+        );
+        assert!(
+            out["label"].is_string(),
+            "embedded template must render to a string: {out}"
+        );
+    }
 
     async fn make_orchestrator(
         app: App,

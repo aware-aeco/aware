@@ -324,6 +324,21 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     cur
 }
 
+/// True when `s` is *exactly* one `{{ … }}` expression after trimming — no literal
+/// text and no second expression around it (e.g. `"{{ projects.body }}"`). Such a
+/// "whole-value" config leaf should resolve to its structured value via
+/// [`resolve_value`] rather than be stringified by [`render`] (#205). An embedded
+/// template like `"file:{{ x }}.pdf"` or a multi-expression `"{{ a }}{{ b }}"` is
+/// NOT whole-value and stays a rendered string.
+pub fn is_whole_value_template(s: &str) -> bool {
+    let t = s.trim();
+    t.len() >= 4
+        && t.starts_with("{{")
+        && t.ends_with("}}")
+        && t.matches("{{").count() == 1
+        && t.matches("}}").count() == 1
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -342,6 +357,32 @@ mod tests {
         };
         let out = render("{{ inputs['tc-project-id'] }}", &ctx).unwrap();
         assert_eq!(out, "proj-123");
+    }
+
+    #[test]
+    fn is_whole_value_template_detects_pure_expression() {
+        assert!(is_whole_value_template("{{ projects.body }}"));
+        assert!(is_whole_value_template("  {{ x }}  ")); // surrounding whitespace ok
+        // Embedded / decorated / multi-expression strings are NOT whole-value:
+        assert!(!is_whole_value_template("file:{{ x }}.pdf"));
+        assert!(!is_whole_value_template("{{ a }}{{ b }}"));
+        assert!(!is_whole_value_template("{{ a }} text"));
+        assert!(!is_whole_value_template("text {{ a }}"));
+        assert!(!is_whole_value_template("plain string"));
+    }
+
+    #[test]
+    fn whole_value_template_resolves_structured_array_not_string() {
+        let ctx = ctx_with_upstream(
+            "projects",
+            serde_json::json!({ "body": [ { "id": "p1" }, { "id": "p2" } ] }),
+        );
+        // resolve_value yields the array structurally (#205) …
+        let v = resolve_value("{{ projects.body }}", &ctx);
+        assert!(v.is_array() && v.as_array().unwrap().len() == 2);
+        // … whereas render would stringify it.
+        let s = render("{{ projects.body }}", &ctx).unwrap();
+        assert!(s.trim_start().starts_with('[') && s.contains("p1"));
     }
 
     #[test]
