@@ -297,16 +297,11 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     };
 
     let mut cur = match *head {
-        // Mirror render(): a synthetic `inputs` overlay in `upstream` (the streaming
-        // per-event fields, already merged over the base inputs) takes precedence over
-        // base inputs, exactly as render()'s upstream loop overwrites the base `inputs`
-        // key. Without this a whole-value `{{ inputs.<event-field> }}` in a streaming
-        // downstream node would resolve to null (#205 Codex).
-        "inputs" => ctx
-            .upstream
-            .get("inputs")
-            .cloned()
-            .unwrap_or_else(|| ctx.inputs.clone()),
+        // Base inputs. (The streaming per-event `inputs` overlay is applied only in
+        // the config-rendering context — see `orchestrator::render_config` — so that
+        // for-each / compare, which also call this resolver, keep reading app inputs
+        // rather than a left-over event overlay. #205 Codex.)
+        "inputs" => ctx.inputs.clone(),
         "config" => serde_json::Value::Object(ctx.config.clone()),
         "secrets" => serde_json::Value::Object(ctx.secrets.clone()),
         // Ambient run namespace — but an upstream node literally named `run`
@@ -340,10 +335,11 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
 /// [`resolve_value`] rather than being stringified by [`render`] (#205).
 ///
 /// Anything else stays a rendered string: an embedded template (`"file:{{ x }}.pdf"`),
-/// a multi-expression string (`"{{ a }}{{ b }}"`), OR a single expression that
-/// carries a **filter, bracket/index, or call** (`"{{ x | f }}"`, `"{{ s[0] }}"`,
-/// `"{{ upstream['n'].x }}"`). Those are excluded because `resolve_value` would
-/// silently drop everything past the bare path; letting them fall through to
+/// a multi-expression string (`"{{ a }}{{ b }}"`), a single expression that carries a
+/// **filter, bracket/index, or call** (`"{{ x | f }}"`, `"{{ s[0] }}"`,
+/// `"{{ upstream['n'].x }}"`), or a **literal** (`"{{ 123 }}"`, `"{{ true }}"`). Those
+/// are excluded because `resolve_value` would silently drop the tail (filters/brackets)
+/// or treat a literal as a missing node id (→ null); letting them fall through to
 /// `render` preserves minijinja's correct (or loudly-erroring) handling (review).
 pub fn is_whole_value_template(s: &str) -> bool {
     let t = s.trim();
@@ -356,10 +352,24 @@ pub fn is_whole_value_template(s: &str) -> bool {
         return false;
     }
     let inner = t[2..t.len() - 2].trim();
-    !inner.is_empty()
-        && inner
+    // Must be a bare path over exactly the charset `resolve_value` walks …
+    if inner.is_empty()
+        || !inner
             .chars()
             .all(|c| c.is_alphanumeric() || c == '_' || c == '-' || c == '.')
+    {
+        return false;
+    }
+    // … whose head is an identifier — a number literal (`123`, `1.5`) starts with a
+    // digit and is not a path — and which isn't a Minijinja literal keyword. Such
+    // literals must keep going through `render` so they evaluate, rather than resolve
+    // to a null "node id" (#205 Codex).
+    let first = inner.chars().next().unwrap();
+    (first.is_alphabetic() || first == '_')
+        && !matches!(
+            inner.to_ascii_lowercase().as_str(),
+            "true" | "false" | "none" | "null"
+        )
 }
 
 #[cfg(test)]
@@ -416,37 +426,36 @@ mod tests {
     }
 
     #[test]
-    fn resolve_value_inputs_honors_streaming_overlay() {
-        // The streaming path overlays per-event fields (merged over base inputs) at
-        // upstream["inputs"]; resolve_value must see them like render does (#205 Codex).
+    fn resolve_value_inputs_reads_base_not_streaming_overlay() {
+        // resolve_value (used by for-each / compare) reads BASE inputs, NOT the
+        // streaming `upstream["inputs"]` overlay — the overlay is applied only in
+        // render_config, so a left-over event overlay can't shadow app inputs in a
+        // primitive (#205 Codex).
         let mut ctx = RenderContext {
-            inputs: serde_json::json!({ "tc-project-id": "p-1" }),
+            inputs: serde_json::json!({ "x": "base" }),
             ..Default::default()
         };
-        ctx.record_output(
-            "inputs",
-            serde_json::json!({ "tc-project-id": "p-1", "mark": "A-104" }),
-        );
-        // Event field resolves via the overlay …
+        ctx.record_output("inputs", serde_json::json!({ "x": "overlay", "evt": "e" }));
         assert_eq!(
-            resolve_value("{{ inputs.mark }}", &ctx),
-            serde_json::json!("A-104")
+            resolve_value("{{ inputs.x }}", &ctx),
+            serde_json::json!("base")
         );
-        // … and the base input survives the merge (dotted kebab path form).
-        assert_eq!(
-            resolve_value("{{ inputs.tc-project-id }}", &ctx),
-            serde_json::json!("p-1"),
-            "base input must survive the event merge"
-        );
-        // With no overlay, base inputs are used.
-        let plain = RenderContext {
-            inputs: serde_json::json!({ "x": 1 }),
-            ..Default::default()
-        };
-        assert_eq!(
-            resolve_value("{{ inputs.x }}", &plain),
-            serde_json::json!(1)
-        );
+        assert!(resolve_value("{{ inputs.evt }}", &ctx).is_null());
+    }
+
+    #[test]
+    fn is_whole_value_template_rejects_literals() {
+        // Minijinja literals must keep going through `render` (resolve_value would
+        // treat them as missing node ids → null). #205 Codex.
+        assert!(!is_whole_value_template("{{ true }}"));
+        assert!(!is_whole_value_template("{{ false }}"));
+        assert!(!is_whole_value_template("{{ none }}"));
+        assert!(!is_whole_value_template("{{ null }}"));
+        assert!(!is_whole_value_template("{{ 123 }}"));
+        assert!(!is_whole_value_template("{{ 1.5 }}"));
+        // A bare node id (identifier head) is still whole-value.
+        assert!(is_whole_value_template("{{ projects }}"));
+        assert!(is_whole_value_template("{{ _internal }}"));
     }
 
     #[test]

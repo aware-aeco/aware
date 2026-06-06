@@ -1402,6 +1402,23 @@ fn yaml_to_json(v: serde_yaml::Value) -> Result<Value, AwareError> {
 }
 
 fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
+    // Streaming fan-in overlays per-event fields at `upstream["inputs"]` (merged over
+    // base inputs). Config rendering must see that overlay for whole-value
+    // `{{ inputs.X }}` refs too — exactly as `render()`'s upstream loop does — so
+    // resolve against an effective context whose `inputs` IS that overlay. (for-each /
+    // compare keep base inputs: they call `resolve_value` with the raw ctx, not this
+    // one, so a left-over event overlay can't shadow their app inputs. #205 Codex.)
+    let overlaid: RuntimeContext;
+    let ctx: &RuntimeContext = if let Some(overlay) = ctx.upstream.get("inputs") {
+        overlaid = RuntimeContext {
+            inputs: overlay.clone(),
+            ..ctx.clone()
+        };
+        &overlaid
+    } else {
+        ctx
+    };
+
     // Recursively walk the config object. For each string leaf, run it through the templater.
     // Non-string leaves pass through unchanged.
     fn walk(v: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
@@ -1500,6 +1517,28 @@ mod tests {
         assert!(
             out["label"].is_string(),
             "embedded template must render to a string: {out}"
+        );
+    }
+
+    #[test]
+    fn render_config_sees_streaming_inputs_overlay() {
+        // The streaming fan-in overlays per-event fields at upstream["inputs"]; a
+        // whole-value `{{ inputs.<event-field> }}` config leaf must resolve against it
+        // (like render does), not base inputs (#205 Codex).
+        let mut ctx = RuntimeContext {
+            inputs: serde_json::json!({ "tc-project-id": "p-1" }),
+            ..Default::default()
+        };
+        ctx.record_output(
+            "inputs",
+            serde_json::json!({ "tc-project-id": "p-1", "mark": "A-104" }),
+        );
+        let config = serde_json::json!({ "evt": "{{ inputs.mark }}" });
+        let out = render_config(&config, &ctx).unwrap();
+        assert_eq!(
+            out["evt"],
+            serde_json::json!("A-104"),
+            "config must see the per-event inputs overlay: {out}"
         );
     }
 
