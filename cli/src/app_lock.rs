@@ -596,10 +596,23 @@ pub(crate) fn derive_connections(app: &App) -> Vec<crate::manifest::app::Connect
     flatten_nodes(&app.nodes, None, &[], &mut flat);
 
     // Every scoped id is a resolvable target. Values are unused — `resolve_scope` only
-    // tests key presence — so they're all `None`.
+    // tests key presence — so they're all `None`. Both the raw id AND its underscore
+    // alias are registered, because `record_output` exposes both at run time (a kebab
+    // node `tekla-watch` is referenceable as `{{ tekla_watch.x }}`); `canonical` maps the
+    // alias back to the raw id so the derived edge matches the node id used in
+    // `connections` / topo (#208 Codex).
     let mut known: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
+    let mut canonical: BTreeMap<String, String> = BTreeMap::new();
     for (_, scoped_id, _, _) in &flat {
         known.insert(scoped_id.clone(), None);
+        canonical.insert(scoped_id.clone(), scoped_id.clone());
+        let aliased = scoped_id.replace('-', "_");
+        if aliased != *scoped_id {
+            known.entry(aliased.clone()).or_insert(None);
+            canonical
+                .entry(aliased)
+                .or_insert_with(|| scoped_id.clone());
+        }
     }
 
     let existing: BTreeSet<(String, String)> = app
@@ -652,9 +665,11 @@ pub(crate) fn derive_connections(app: &App) -> Vec<crate::manifest::app::Connect
             if nid == local_id || iter_vars.iter().any(|v| v == &nid) {
                 continue;
             }
-            let Some(target) = resolve_scope(&nid, scope_prefix, &known) else {
+            let Some(matched) = resolve_scope(&nid, scope_prefix, &known) else {
                 continue; // namespace / unknown head — resolves to no node, no edge
             };
+            // Map an underscore-alias match back to the canonical (raw) id.
+            let target = canonical.get(&matched).cloned().unwrap_or(matched);
             // Only a TOP-LEVEL target (bare id, no scope dot) is a connection endpoint;
             // and never a self-edge to this node's own top-level subtree.
             if target.contains('.') || target == to_top {
@@ -949,6 +964,41 @@ requires: []
         assert!(
             derived.iter().any(|c| c.from == "right" && c.to == "diff"),
             "compare side `b` must derive right->diff: {derived:?}"
+        );
+    }
+
+    #[test]
+    fn derive_connections_resolves_underscore_alias() {
+        // #208 Codex: a kebab node `tekla-watch` referenced via its underscore alias
+        // `{{ tekla_watch.mark }}` (which record_output exposes at run time) must still
+        // derive an edge — keyed to the canonical raw id used in connections / topo.
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("alias.flo");
+        std::fs::write(
+            &src,
+            r#"app: alias
+version: 0.0.1
+description: x
+nodes:
+  - id: tekla-watch
+    agent: x
+    command: emit
+  - id: consumer
+    agent: x
+    command: consume
+    config:
+      v: '{{ tekla_watch.mark }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let derived = derive_connections(&app);
+        assert!(
+            derived
+                .iter()
+                .any(|c| c.from == "tekla-watch" && c.to == "consumer"),
+            "underscore-alias ref must derive tekla-watch->consumer (canonical id); got {derived:?}"
         );
     }
 
