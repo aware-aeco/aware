@@ -971,7 +971,24 @@ fn render_html_report(args: Value, dry_run: bool) -> Result<Value, AwareError> {
     // The `data` input is the payload; if absent, render the whole args object so a
     // bare `render` over an upstream value still produces something useful.
     let data = args.get("data").unwrap_or(&args);
-    let html = crate::render::html_report::render_report(title, data);
+    // Optional table presentation: pick/order columns and sort rows, so a report can
+    // drop noise (raw URLs, nested JSON blobs, internal ids) and lead with the latest.
+    let opts = crate::render::html_report::TableOptions {
+        columns: args.get("columns").and_then(|v| v.as_array()).map(|a| {
+            a.iter()
+                .filter_map(|x| x.as_str().map(str::to_string))
+                .collect()
+        }),
+        sort_by: args
+            .get("sort")
+            .and_then(|v| v.as_str())
+            .map(str::to_string),
+        sort_desc: args
+            .get("sort-desc")
+            .and_then(|v| v.as_bool())
+            .unwrap_or(false),
+    };
+    let html = crate::render::html_report::render_report_with(title, data, &opts);
     let count = crate::render::html_report::item_count(data) as u64;
 
     let mut out = serde_json::Map::new();
