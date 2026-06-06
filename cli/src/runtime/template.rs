@@ -313,6 +313,17 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
             .get("run")
             .cloned()
             .unwrap_or_else(|| serde_json::Value::Object(ctx.run.clone())),
+        // `upstream` namespace — render() exposes the whole upstream map as a
+        // top-level object, so `{{ upstream.<node>.<field> }}` / `{{ upstream['n'].x }}`
+        // resolve against it. An upstream node literally named `upstream` takes
+        // precedence (render()'s upstream loop would overwrite the key), mirroring the
+        // `run` arm. Without this a whole-value `{{ upstream.x.y }}` config leaf would
+        // treat `upstream` as a missing node id and resolve to null (#205 Codex).
+        "upstream" => ctx
+            .upstream
+            .get("upstream")
+            .cloned()
+            .unwrap_or_else(|| serde_json::Value::Object(ctx.upstream.clone())),
         // Upstream node id — `record_output` stores raw kebab and underscore forms.
         _ => ctx
             .upstream
@@ -456,6 +467,18 @@ mod tests {
         // A bare node id (identifier head) is still whole-value.
         assert!(is_whole_value_template("{{ projects }}"));
         assert!(is_whole_value_template("{{ _internal }}"));
+    }
+
+    #[test]
+    fn resolve_value_handles_upstream_namespace() {
+        // render() exposes `upstream` as a top-level object; resolve_value must too, so
+        // a whole-value `{{ upstream.<node>.<field> }}` config leaf resolves rather than
+        // treating `upstream` as a missing node id (#205 Codex).
+        let ctx = ctx_with_upstream("src", serde_json::json!({ "items": [1, 2, 3] }));
+        assert_eq!(
+            resolve_value("{{ upstream.src.items }}", &ctx),
+            serde_json::json!([1, 2, 3])
+        );
     }
 
     #[test]
