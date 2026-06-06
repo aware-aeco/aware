@@ -628,6 +628,26 @@ pub(crate) fn derive_connections(app: &App) -> Vec<crate::manifest::app::Connect
         if let Some(expr) = &node.for_each {
             collect_refs(&serde_yaml::Value::String(expr.clone()), &mut refs);
         }
+        // Substrate primitives carry cross-node refs OUTSIDE config/inputs, resolved at
+        // run time (run_compare / assert / sweep) — scan them too so their sources are
+        // ordered first (#208 Codex). compare sides + snapshots, the assert expression,
+        // and sweep values can each be a `{{ <node>.<field> }}` reference.
+        if let Some(cmp) = &node.compare {
+            for s in [&cmp.a, &cmp.b, &cmp.a_snapshot, &cmp.b_snapshot]
+                .into_iter()
+                .flatten()
+            {
+                collect_refs(&serde_yaml::Value::String(s.clone()), &mut refs);
+            }
+        }
+        if let Some(assert) = &node.assert {
+            collect_refs(&serde_yaml::Value::String(assert.expr.clone()), &mut refs);
+        }
+        if let Some(sweep) = &node.sweep {
+            for v in &sweep.values {
+                collect_refs(v, &mut refs);
+            }
+        }
         for (nid, _field) in refs {
             if nid == local_id || iter_vars.iter().any(|v| v == &nid) {
                 continue;
@@ -889,6 +909,46 @@ requires: []
         assert!(
             derive_connections(&app).is_empty(),
             "explicit a->b edge must not be re-derived"
+        );
+    }
+
+    #[test]
+    fn derive_connections_covers_compare_sides() {
+        // #208 Codex: a `compare` node's inline sides (`a:`/`b:`) carry cross-node refs
+        // resolved at run time, outside config/inputs — derive_connections must still
+        // order their sources first.
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("prims.flo");
+        std::fs::write(
+            &src,
+            r#"app: prims
+version: 0.0.1
+description: x
+nodes:
+  - id: left
+    agent: x
+    command: emit
+  - id: right
+    agent: x
+    command: emit
+  - id: diff
+    compare:
+      a: '{{ left.rows }}'
+      b: '{{ right.rows }}'
+      by: id
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let derived = derive_connections(&app);
+        assert!(
+            derived.iter().any(|c| c.from == "left" && c.to == "diff"),
+            "compare side `a` must derive left->diff: {derived:?}"
+        );
+        assert!(
+            derived.iter().any(|c| c.from == "right" && c.to == "diff"),
+            "compare side `b` must derive right->diff: {derived:?}"
         );
     }
 
