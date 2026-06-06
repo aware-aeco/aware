@@ -78,8 +78,11 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
     )?;
     // A content-identical file already present: TC returns DUPLICATE + the fileId.
     if init.get("status").and_then(|v| v.as_str()) == Some("DUPLICATE") {
+        // Keep the output shape consistent with the success path (#200 Codex): TC
+        // returns the existing fileId (and usually versionId) on a content match.
         return Ok(json!({
             "file-id": init.get("fileId").and_then(|v| v.as_str()).unwrap_or_default(),
+            "version-id": init.get("versionId").and_then(|v| v.as_str()).unwrap_or_default(),
             "replaced": true,
             "status": "DUPLICATE",
         }));

@@ -1,12 +1,12 @@
 app:           welded-to-tc
 version:       0.3.1
-display-name:  Welded â†’ TC Uploader
+display-name:  Welded → TC Uploader
 description: |
   Watches the active Tekla model for new welded assemblies. When one is
   detected, fetches its drawing and uploads to a configured Trimble Connect
   folder, idempotent by drawing Mark.
 
-  The canonical AWARE app â€” three nodes, linear topology, real AECO tools.
+  The canonical AWARE app — three nodes, linear topology, real AECO tools.
   This is the example referenced in the manifesto's 60-second demo.
 
 # This app exposes itself as an agent so other apps can install and use it.
@@ -26,7 +26,7 @@ exposed-commands:
       schema:
         mark:    string
         file-id: string
-        url:     string
+        version-id: string
         replaced: bool
 
 # Pinned agent versions. Minor pinning recommended.
@@ -80,7 +80,7 @@ connections:
     to:   tc-upload
     label: "AssemblyEvent (welded)"
 
-# App-level skills â€” knowledge specific to operating this app.
+# App-level skills — knowledge specific to operating this app.
 skills:
   - configuring.md
   - troubleshooting.md
