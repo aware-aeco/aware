@@ -102,11 +102,8 @@ public sealed class RoslynReaderTests : IDisposable
         Assert.Contains("Configures", cmd.Description);
     }
 
-    [Fact]
-    public void ProjectAndSolutionInputsAreRejectedWithActionableError()
-    {
-        var ex = Assert.Throws<InvalidOperationException>(
-            () => RoslynReader.ReflectPaths(new[] { "Some.csproj" }, Array.Empty<string>()));
-        Assert.Contains("--reference-dir", ex.Message);
-    }
+    // NOTE: `.csproj`/`.sln` inputs are no longer rejected — they route to the MSBuildWorkspace
+    // path (#185). That path is exercised out-of-process by the Rust integration test
+    // `roslyn_e2e_reflects_csproj_into_agent`; an in-process test here is deliberately avoided
+    // because MSBuildLocator registration is process-global and would perturb the other tests.
 }

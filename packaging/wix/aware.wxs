@@ -9,7 +9,10 @@
   Install layout: C:\Program Files\AWARE\
     aware.exe
     aware-sidecar.exe
-    aware-roslyn.exe
+    aware-roslyn\               (self-contained FOLDER — the MSBuildWorkspace
+      aware-roslyn.exe           .csproj/.sln path can't run from a single file,
+      …runtime + Roslyn DLLs     so it ships as a folder; discovered as a subdir
+                                 next to aware.exe — #185)
     LICENSE
     README.md
     VERSION
@@ -45,10 +48,14 @@
 
     <Feature Id="Main" Title="AWARE CLI" Level="1">
       <ComponentGroupRef Id="MainGroup" />
+      <ComponentGroupRef Id="RoslynGroup" />
     </Feature>
 
     <StandardDirectory Id="ProgramFiles64Folder">
-      <Directory Id="INSTALLFOLDER" Name="AWARE" />
+      <Directory Id="INSTALLFOLDER" Name="AWARE">
+        <!-- aware-roslyn ships as a self-contained folder (#185). -->
+        <Directory Id="ROSLYNFOLDER" Name="aware-roslyn" />
+      </Directory>
     </StandardDirectory>
 
     <ComponentGroup Id="MainGroup" Directory="INSTALLFOLDER">
@@ -57,9 +64,6 @@
       </Component>
       <Component Id="AwareSidecarExe" Bitness="always64">
         <File Source="$(var.StageDir)\aware-sidecar.exe" KeyPath="yes" />
-      </Component>
-      <Component Id="AwareRoslynExe" Bitness="always64">
-        <File Source="$(var.StageDir)\aware-roslyn.exe" KeyPath="yes" />
       </Component>
       <Component Id="ReadmeFile" Bitness="always64">
         <File Source="$(var.StageDir)\README.md" KeyPath="yes" />
@@ -87,6 +91,13 @@
             Value="1"
             KeyPath="yes" />
       </Component>
+    </ComponentGroup>
+
+    <!-- aware-roslyn self-contained FOLDER (#185) — harvested into the aware-roslyn
+         subdir so the .csproj/.sln (MSBuildWorkspace) path works (a single file can't
+         host MSBuild). WiX 6 <Files> auto-creates one component per file, recursively. -->
+    <ComponentGroup Id="RoslynGroup" Directory="ROSLYNFOLDER">
+      <Files Include="$(var.StageDir)\aware-roslyn\**" />
     </ComponentGroup>
 
     <!-- Add/Remove Programs metadata -->

@@ -49,13 +49,26 @@ fn discover_named(env_var: &str, stem: &str) -> Result<PathBuf, AwareError> {
         )));
     }
 
-    // 2. Sibling of the running aware binary
+    // 2. Beside the running aware binary. Check a same-named SUBDIRECTORY first, then a
+    //    direct sibling. The subdir form supports a helper that must ship as a self-contained
+    //    FOLDER rather than a single file: `aware-roslyn`'s MSBuildWorkspace (`.csproj`/`.sln`)
+    //    path can't run from a single-file bundle (its `Assembly.Location` is empty there, so
+    //    MSBuild path resolution fails), so release staging places it at `<stem>/<stem>.exe`
+    //    next to `aware` (#185). Subdir-FIRST matters on upgrade: extracting the new archive
+    //    over an old install can leave a stale top-level single-file `aware-roslyn.exe` beside
+    //    the new `aware-roslyn/` folder — prefer the folder so the project path keeps working
+    //    (#185 Codex). A single-file helper (aware-sidecar) has no subdir, so it falls through
+    //    to the direct sibling.
     if let Ok(current) = std::env::current_exe()
         && let Some(dir) = current.parent()
     {
-        let candidate = dir.join(&bin_name);
-        if candidate.is_file() {
-            return Ok(candidate);
+        let in_subdir = dir.join(stem).join(&bin_name);
+        if in_subdir.is_file() {
+            return Ok(in_subdir);
+        }
+        let direct = dir.join(&bin_name);
+        if direct.is_file() {
+            return Ok(direct);
         }
     }
 

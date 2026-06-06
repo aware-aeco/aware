@@ -69,6 +69,8 @@ aware
 │   ├── --from-python <module>
 │   ├── --from-csharp <path>            C# source (.cs file/dir/glob) via aware-roslyn
 │   ├── --reference-dir <dir>          extra ref-DLL dir for --from-csharp (repeatable)
+│   ├── --from-csproj <path>           C# project (.csproj) via MSBuildWorkspace (needs .NET SDK)
+│   ├── --from-sln <path>              C# solution (.sln) via MSBuildWorkspace (needs .NET SDK)
 │   ├── --decompile                     opt-in, license-checked
 │   ├── --tier-strategy <auto|all-1|all-2>
 │   └── --output <agent-id>
