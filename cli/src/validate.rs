@@ -178,8 +178,14 @@ pub fn validate_app(app: &App) -> Vec<ValidationIssue> {
         }
     }
 
+    // #208: a `{{ <node>.<field> }}` data reference is an implicit scheduling edge
+    // (see `app_lock::derive_connections` + the orchestrator's `topo_order`). A circular
+    // DATA dependency is therefore just as unschedulable as an explicit connection cycle,
+    // so include the derived edges here — catching it at `validate` / `compile` instead
+    // of only at run, matching how explicit cycles are rejected.
+    let derived = crate::app_lock::derive_connections(app);
     let mut graph: BTreeMap<&str, Vec<&str>> = BTreeMap::new();
-    for c in &app.connections {
+    for c in app.connections.iter().chain(derived.iter()) {
         graph
             .entry(c.from.as_str())
             .or_default()
@@ -457,6 +463,37 @@ mod tests {
         let a = load_agent("20-agents/aeco/engineering/tekla/manifest.yaml");
         let issues = validate_agent(&a);
         assert!(!has_errors(&issues), "issues: {issues:?}");
+    }
+
+    #[test]
+    fn implicit_ref_cycle_is_rejected() {
+        // #208: `a` reads `{{ b.x }}` and `b` reads `{{ a.x }}` with NO explicit
+        // connections. The derived edges form a cycle, which must be rejected at
+        // validate (like an explicit cycle) — not silently pass and fail at run.
+        let app: App = serde_yaml::from_str(
+            r#"app: cyc
+version: 0.0.1
+description: x
+nodes:
+  - id: a
+    agent: x
+    command: emit
+    config:
+      v: '{{ b.x }}'
+  - id: b
+    agent: x
+    command: emit
+    config:
+      v: '{{ a.x }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let issues = validate_app(&app);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_CYCLE"),
+            "implicit ref cycle must be flagged E_APP_CYCLE; issues: {issues:?}"
+        );
     }
 
     #[test]

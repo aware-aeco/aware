@@ -665,6 +665,12 @@ Fan-in nodes (multiple inputs) must declare which input each incoming edge maps 
   input: spec
 ```
 
+### Data references imply scheduling edges
+
+A node config that reads an upstream node's output — `data: '{{ projects.body }}'` (see [Templating](#templating)) — is itself a **data dependency**. The orchestrator treats every cross-node `{{ <node>.<field> }}` reference as an implicit edge `from: <referenced>, to: <referencing>` and folds it into the execution order, so a referencing node is always scheduled *after* the node it reads — even when no explicit `connections` edge was written. Piping one node's output into the next is thus safe by construction: the reference alone is enough, no redundant hand-written edge required. A genuinely circular data dependency (two nodes referencing each other) is rejected as a cycle, exactly like an explicit one.
+
+Derived edges affect **ordering only**. Fan-in slots, `compare` inputs, streaming event routing, and an exposed app's terminal output still come from the edges you write explicitly — so a reference never silently turns a node into a fan-in target. Write an explicit `connections` edge (optionally with `input:`) when you need those semantics.
+
 ---
 
 ## Templating
