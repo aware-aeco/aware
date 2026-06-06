@@ -499,9 +499,17 @@ impl AgentInvoker for RestInvoker {
             if let Some(auth) = &m.auth
                 && !is_public
             {
-                let cred = load_secret_value(&self.agents_dir, &auth.secret)
-                    .as_ref()
-                    .and_then(secret_as_str);
+                // Credential resolution can refresh an OAuth token (keychain I/O +
+                // a blocking token-endpoint POST), so run it off the async reactor —
+                // same posture as the REST request below (#198 Codex).
+                let auth_owned = auth.clone();
+                let dir = self.agents_dir.clone();
+                let cred =
+                    tokio::task::spawn_blocking(move || resolve_rest_credential(&dir, &auth_owned))
+                        .await
+                        .map_err(|e| {
+                            AwareError::Internal(format!("credential resolve task join: {e}"))
+                        })?;
                 let Some(cred) = cred else {
                     return Err(AwareError::Validation(format!(
                         "agent {agent} declares `auth` but credential {:?} is missing or unusable — \
@@ -735,6 +743,43 @@ fn build_operation_request(
     }
     let url = resolve_url(rest_base_url(agents_dir, agent).as_deref(), &path);
     Ok((method, url, headers, query, body))
+}
+
+/// Resolve the credential string to inject for a REST `auth:` block.
+///
+/// For an `oauth2`/`bearer` scheme whose `secret` names a **registered** OAuth
+/// integration (`config::for_integration` resolves it), refresh the token first:
+/// [`crate::auth::refresh::ensure_fresh`] re-mints + re-stores it when within the
+/// expiry buffer, so a long-lived session never sends a stale access token (#198).
+/// Best-effort — if refresh fails (e.g. the refresh token itself expired), fall back
+/// to the raw stored value, so a still-valid token is used and a genuinely-missing
+/// one yields the caller's clear "provision it" error. For api-key schemes and
+/// unregistered secrets (out-of-band tokens) the raw stored value is used unchanged.
+fn resolve_rest_credential(
+    agents_dir: &std::path::Path,
+    auth: &crate::manifest::agent::AuthScheme,
+) -> Option<String> {
+    if matches!(auth.scheme.as_str(), "oauth2" | "bearer") {
+        // The credential handle may be alias-qualified — `<integration>.<alias>`,
+        // e.g. `google-workspace.personal` from `aware connect … --as personal`. The
+        // registered-integration check + refresh must use the base integration and
+        // pass the alias through (the keychain stores `<integration>.<alias>` accounts
+        // and `ensure_fresh` takes an alias). A handle whose base is not a registered
+        // integration (e.g. `my.api.key`) falls through to the raw stored value.
+        let (integration, alias) = match auth.secret.split_once('.') {
+            Some((base, alias)) => (base, Some(alias)),
+            None => (auth.secret.as_str(), None),
+        };
+        if crate::auth::config::for_integration(integration).is_ok()
+            && let Some(home) = agents_dir.parent()
+            && let Ok(tok) = crate::auth::refresh::ensure_fresh(integration, alias, home)
+        {
+            return Some(tok.access_token);
+        }
+    }
+    load_secret_value(agents_dir, &auth.secret)
+        .as_ref()
+        .and_then(secret_as_str)
 }
 
 /// Load a credential by handle, reusing the runtime secret loader (OS keychain,
@@ -1842,6 +1887,82 @@ commands:
         assert!(
             req.contains("X-API-Key: sk-live-123"),
             "injected api-key header missing: {req}"
+        );
+    }
+
+    #[test]
+    fn resolve_rest_credential_api_key_uses_raw_value_no_refresh() {
+        use crate::manifest::agent::AuthScheme;
+        // api-key scheme → never attempts OAuth refresh; the raw stored value is used.
+        let tmp = tempfile::tempdir().unwrap();
+        let agents = tmp.path().join("agents");
+        let creds = tmp.path().join("credentials");
+        std::fs::create_dir_all(&agents).unwrap();
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(creds.join("svc-key.json"), r#"{"access_token":"raw-key"}"#).unwrap();
+        let auth = AuthScheme {
+            scheme: "api-key".into(),
+            location: None,
+            name: None,
+            secret: "svc-key".into(),
+        };
+        assert_eq!(
+            resolve_rest_credential(&agents, &auth).as_deref(),
+            Some("raw-key")
+        );
+    }
+
+    #[test]
+    fn resolve_rest_credential_unregistered_oauth_falls_back_to_raw() {
+        use crate::manifest::agent::AuthScheme;
+        // oauth2 scheme but the secret is NOT a registered integration → raw value
+        // (there is no refresh path for an out-of-band token).
+        let tmp = tempfile::tempdir().unwrap();
+        let agents = tmp.path().join("agents");
+        let creds = tmp.path().join("credentials");
+        std::fs::create_dir_all(&agents).unwrap();
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(
+            creds.join("some-byo-api.json"),
+            r#"{"access_token":"byo-tok"}"#,
+        )
+        .unwrap();
+        let auth = AuthScheme {
+            scheme: "oauth2".into(),
+            location: None,
+            name: None,
+            secret: "some-byo-api".into(),
+        };
+        assert_eq!(
+            resolve_rest_credential(&agents, &auth).as_deref(),
+            Some("byo-tok")
+        );
+    }
+
+    #[test]
+    fn resolve_rest_credential_dotted_non_integration_secret_uses_raw() {
+        use crate::manifest::agent::AuthScheme;
+        // A dotted handle whose base isn't a registered integration (e.g. `my.api.key`)
+        // is NOT treated as an aliased OAuth credential — it falls back to the raw value.
+        let tmp = tempfile::tempdir().unwrap();
+        let agents = tmp.path().join("agents");
+        let creds = tmp.path().join("credentials");
+        std::fs::create_dir_all(&agents).unwrap();
+        std::fs::create_dir_all(&creds).unwrap();
+        std::fs::write(
+            creds.join("my.api.key.json"),
+            r#"{"access_token":"dotted"}"#,
+        )
+        .unwrap();
+        let auth = AuthScheme {
+            scheme: "oauth2".into(),
+            location: None,
+            name: None,
+            secret: "my.api.key".into(),
+        };
+        assert_eq!(
+            resolve_rest_credential(&agents, &auth).as_deref(),
+            Some("dotted")
         );
     }
 
