@@ -297,6 +297,10 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
     };
 
     let mut cur = match *head {
+        // Base inputs. (The streaming per-event `inputs` overlay is applied only in
+        // the config-rendering context — see `orchestrator::render_config` — so that
+        // for-each / compare, which also call this resolver, keep reading app inputs
+        // rather than a left-over event overlay. #205 Codex.)
         "inputs" => ctx.inputs.clone(),
         "config" => serde_json::Value::Object(ctx.config.clone()),
         "secrets" => serde_json::Value::Object(ctx.secrets.clone()),
@@ -309,6 +313,24 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
             .get("run")
             .cloned()
             .unwrap_or_else(|| serde_json::Value::Object(ctx.run.clone())),
+        // `upstream` namespace — render() exposes the whole upstream map as a
+        // top-level object, so `{{ upstream.<node>.<field> }}` resolves against it. An
+        // upstream node literally named `upstream` takes precedence (render()'s upstream
+        // loop would overwrite the key), mirroring the `run` arm. Without this a
+        // whole-value `{{ upstream.x.y }}` config leaf would treat `upstream` as a
+        // missing node id and resolve to null (#205 Codex).
+        //
+        // Guard on a non-empty `rest`: a bracket ref `{{ upstream['n'].x }}` truncates
+        // at `[` to just `upstream` (no rest). Returning the whole map there would make
+        // a `for-each` iterate every node; instead let it fall through to the node-id
+        // arm (→ null), matching the pre-#205 behavior. (Bracket refs never reach here
+        // as config — they aren't bare-path, so `is_whole_value_template` rejects them
+        // and they render; only for-each / compare pass brackets to this resolver.)
+        "upstream" if !rest.is_empty() => ctx
+            .upstream
+            .get("upstream")
+            .cloned()
+            .unwrap_or_else(|| serde_json::Value::Object(ctx.upstream.clone())),
         // Upstream node id — `record_output` stores raw kebab and underscore forms.
         _ => ctx
             .upstream
@@ -322,6 +344,50 @@ pub fn resolve_value(expr: &str, ctx: &RenderContext) -> serde_json::Value {
         cur = cur.get(seg).cloned().unwrap_or(serde_json::Value::Null);
     }
     cur
+}
+
+/// True when `s` is *exactly* one `{{ <bare-path> }}` expression after trimming —
+/// no literal text, no second expression, and the inner content is a bare
+/// dot/kebab path (the grammar [`resolve_value`] walks), e.g. `"{{ projects.body }}"`.
+/// Such a "whole-value" config leaf resolves to its structured value via
+/// [`resolve_value`] rather than being stringified by [`render`] (#205).
+///
+/// Anything else stays a rendered string: an embedded template (`"file:{{ x }}.pdf"`),
+/// a multi-expression string (`"{{ a }}{{ b }}"`), a single expression that carries a
+/// **filter, bracket/index, or call** (`"{{ x | f }}"`, `"{{ s[0] }}"`,
+/// `"{{ upstream['n'].x }}"`), or a **literal** (`"{{ 123 }}"`, `"{{ true }}"`). Those
+/// are excluded because `resolve_value` would silently drop the tail (filters/brackets)
+/// or treat a literal as a missing node id (→ null); letting them fall through to
+/// `render` preserves minijinja's correct (or loudly-erroring) handling (review).
+pub fn is_whole_value_template(s: &str) -> bool {
+    let t = s.trim();
+    if t.len() < 4
+        || !t.starts_with("{{")
+        || !t.ends_with("}}")
+        || t.matches("{{").count() != 1
+        || t.matches("}}").count() != 1
+    {
+        return false;
+    }
+    let inner = t[2..t.len() - 2].trim();
+    // Must be a bare path over exactly the charset `resolve_value` walks …
+    if inner.is_empty()
+        || !inner
+            .chars()
+            .all(|c| c.is_alphanumeric() || c == '_' || c == '-' || c == '.')
+    {
+        return false;
+    }
+    // … whose head is an identifier — a number literal (`123`, `1.5`) starts with a
+    // digit and is not a path — and which isn't a Minijinja literal keyword. Such
+    // literals must keep going through `render` so they evaluate, rather than resolve
+    // to a null "node id" (#205 Codex).
+    let first = inner.chars().next().unwrap();
+    (first.is_alphabetic() || first == '_')
+        && !matches!(
+            inner.to_ascii_lowercase().as_str(),
+            "true" | "false" | "none" | "null"
+        )
 }
 
 #[cfg(test)]
@@ -342,6 +408,90 @@ mod tests {
         };
         let out = render("{{ inputs['tc-project-id'] }}", &ctx).unwrap();
         assert_eq!(out, "proj-123");
+    }
+
+    #[test]
+    fn is_whole_value_template_detects_pure_expression() {
+        assert!(is_whole_value_template("{{ projects.body }}"));
+        assert!(is_whole_value_template("  {{ x }}  ")); // surrounding whitespace ok
+        // Embedded / decorated / multi-expression strings are NOT whole-value:
+        assert!(!is_whole_value_template("file:{{ x }}.pdf"));
+        assert!(!is_whole_value_template("{{ a }}{{ b }}"));
+        assert!(!is_whole_value_template("{{ a }} text"));
+        assert!(!is_whole_value_template("text {{ a }}"));
+        assert!(!is_whole_value_template("plain string"));
+        // A single expression that carries a filter / bracket / index is NOT a bare
+        // path — `resolve_value` would silently drop the tail, so it stays a rendered
+        // string (review, #205):
+        assert!(!is_whole_value_template("{{ x | rowCount }}"));
+        assert!(!is_whole_value_template("{{ src.items[0] }}"));
+        assert!(!is_whole_value_template("{{ upstream['node-id'].field }}"));
+        assert!(!is_whole_value_template("{{}}")); // empty expression
+    }
+
+    #[test]
+    fn whole_value_template_resolves_structured_array_not_string() {
+        let ctx = ctx_with_upstream(
+            "projects",
+            serde_json::json!({ "body": [ { "id": "p1" }, { "id": "p2" } ] }),
+        );
+        // resolve_value yields the array structurally (#205) …
+        let v = resolve_value("{{ projects.body }}", &ctx);
+        assert!(v.is_array() && v.as_array().unwrap().len() == 2);
+        // … whereas render would stringify it.
+        let s = render("{{ projects.body }}", &ctx).unwrap();
+        assert!(s.trim_start().starts_with('[') && s.contains("p1"));
+    }
+
+    #[test]
+    fn resolve_value_inputs_reads_base_not_streaming_overlay() {
+        // resolve_value (used by for-each / compare) reads BASE inputs, NOT the
+        // streaming `upstream["inputs"]` overlay — the overlay is applied only in
+        // render_config, so a left-over event overlay can't shadow app inputs in a
+        // primitive (#205 Codex).
+        let mut ctx = RenderContext {
+            inputs: serde_json::json!({ "x": "base" }),
+            ..Default::default()
+        };
+        ctx.record_output("inputs", serde_json::json!({ "x": "overlay", "evt": "e" }));
+        assert_eq!(
+            resolve_value("{{ inputs.x }}", &ctx),
+            serde_json::json!("base")
+        );
+        assert!(resolve_value("{{ inputs.evt }}", &ctx).is_null());
+    }
+
+    #[test]
+    fn is_whole_value_template_rejects_literals() {
+        // Minijinja literals must keep going through `render` (resolve_value would
+        // treat them as missing node ids → null). #205 Codex.
+        assert!(!is_whole_value_template("{{ true }}"));
+        assert!(!is_whole_value_template("{{ false }}"));
+        assert!(!is_whole_value_template("{{ none }}"));
+        assert!(!is_whole_value_template("{{ null }}"));
+        assert!(!is_whole_value_template("{{ 123 }}"));
+        assert!(!is_whole_value_template("{{ 1.5 }}"));
+        // A bare node id (identifier head) is still whole-value.
+        assert!(is_whole_value_template("{{ projects }}"));
+        assert!(is_whole_value_template("{{ _internal }}"));
+    }
+
+    #[test]
+    fn resolve_value_handles_upstream_namespace() {
+        // render() exposes `upstream` as a top-level object; resolve_value must too, so
+        // a whole-value `{{ upstream.<node>.<field> }}` config leaf resolves rather than
+        // treating `upstream` as a missing node id (#205 Codex).
+        let ctx = ctx_with_upstream("src", serde_json::json!({ "items": [1, 2, 3] }));
+        // Dot form navigates the map …
+        assert_eq!(
+            resolve_value("{{ upstream.src.items }}", &ctx),
+            serde_json::json!([1, 2, 3])
+        );
+        // … but a bracket ref (the parser truncates at `[` → no rest) must NOT return
+        // the whole map — that would make a for-each iterate every node. It resolves to
+        // null, the pre-#205 behavior. A bare `{{ upstream }}` is null too (#205 Codex).
+        assert!(resolve_value("{{ upstream['src'].items }}", &ctx).is_null());
+        assert!(resolve_value("{{ upstream }}", &ctx).is_null());
     }
 
     #[test]

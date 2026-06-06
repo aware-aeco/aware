@@ -1402,13 +1402,50 @@ fn yaml_to_json(v: serde_yaml::Value) -> Result<Value, AwareError> {
 }
 
 fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
+    // Streaming fan-in overlays per-event fields at `upstream["inputs"]` (merged over
+    // base inputs). Config rendering must see that overlay for whole-value
+    // `{{ inputs.X }}` refs too — exactly as `render()`'s upstream loop does — so
+    // resolve against an effective context whose `inputs` IS that overlay. (for-each /
+    // compare keep base inputs: they call `resolve_value` with the raw ctx, not this
+    // one, so a left-over event overlay can't shadow their app inputs. #205 Codex.)
+    let overlaid: RuntimeContext;
+    let ctx: &RuntimeContext = if let Some(overlay) = ctx.upstream.get("inputs") {
+        overlaid = RuntimeContext {
+            inputs: overlay.clone(),
+            ..ctx.clone()
+        };
+        &overlaid
+    } else {
+        ctx
+    };
+
     // Recursively walk the config object. For each string leaf, run it through the templater.
     // Non-string leaves pass through unchanged.
     fn walk(v: &Value, ctx: &RuntimeContext) -> Result<Value, AwareError> {
         match v {
             Value::String(s) => {
-                let rendered = template::render(s, ctx)?;
-                Ok(Value::String(rendered))
+                // A whole-value template (`"{{ node.field }}"` and nothing else)
+                // resolves to its structured value (array / object / scalar) so
+                // structured data flows node→node (#205) — mirroring what `for-each`
+                // already does. An embedded template (`"file:{{ x }}.pdf"`) or a
+                // multi-expression string renders to a String; a whole-value ref to a
+                // string yields the same string either way.
+                if template::is_whole_value_template(s) {
+                    // A present, non-null value passes through structurally. An
+                    // unresolved-or-null whole-value ref falls back to render's lenient
+                    // behavior (an absent `{{ inputs.optional }}` becomes `""`, not JSON
+                    // null) — preserving how optional refs rendered before #205, so a
+                    // command expecting a string param doesn't suddenly receive null
+                    // (#205 Codex).
+                    let resolved = template::resolve_value(s, ctx);
+                    if resolved.is_null() {
+                        Ok(Value::String(template::render(s, ctx)?))
+                    } else {
+                        Ok(resolved)
+                    }
+                } else {
+                    Ok(Value::String(template::render(s, ctx)?))
+                }
             }
             Value::Object(map) => {
                 let mut out = serde_json::Map::new();
@@ -1468,6 +1505,70 @@ mod tests {
     use crate::runtime::invoker::MockInvoker;
     use crate::runtime::lifecycle::stop_channel;
     use crate::runtime::provenance::{log_path_for, read_run_events};
+
+    #[test]
+    fn render_config_passes_whole_value_templates_through_structurally() {
+        // #205: a whole-value `{{ node.field }}` config leaf resolves to its
+        // structured value (array/object) so it can be piped node→node; an embedded
+        // template stays a rendered string.
+        let mut ctx = RuntimeContext::default();
+        ctx.record_output(
+            "projects",
+            serde_json::json!({ "body": [ { "id": "p1" }, { "id": "p2" } ] }),
+        );
+        let config = serde_json::json!({
+            "data": "{{ projects.body }}",         // whole-value → array
+            "label": "count={{ projects.body }}",  // embedded → string
+        });
+        let out = render_config(&config, &ctx).unwrap();
+        assert!(
+            out["data"].is_array() && out["data"].as_array().unwrap().len() == 2,
+            "whole-value array must pass through structurally: {out}"
+        );
+        assert!(
+            out["label"].is_string(),
+            "embedded template must render to a string: {out}"
+        );
+    }
+
+    #[test]
+    fn render_config_sees_streaming_inputs_overlay() {
+        // The streaming fan-in overlays per-event fields at upstream["inputs"]; a
+        // whole-value `{{ inputs.<event-field> }}` config leaf must resolve against it
+        // (like render does), not base inputs (#205 Codex).
+        let mut ctx = RuntimeContext {
+            inputs: serde_json::json!({ "tc-project-id": "p-1" }),
+            ..Default::default()
+        };
+        ctx.record_output(
+            "inputs",
+            serde_json::json!({ "tc-project-id": "p-1", "mark": "A-104" }),
+        );
+        let config = serde_json::json!({ "evt": "{{ inputs.mark }}" });
+        let out = render_config(&config, &ctx).unwrap();
+        assert_eq!(
+            out["evt"],
+            serde_json::json!("A-104"),
+            "config must see the per-event inputs overlay: {out}"
+        );
+    }
+
+    #[test]
+    fn render_config_unresolved_whole_value_falls_back_to_empty_string() {
+        // An absent whole-value ref keeps the pre-#205 lenient rendering ("" not JSON
+        // null), so an optional string param doesn't suddenly become null (#205 Codex).
+        let ctx = RuntimeContext {
+            inputs: serde_json::json!({}),
+            ..Default::default()
+        };
+        let config = serde_json::json!({ "opt": "{{ inputs.optional }}" });
+        let out = render_config(&config, &ctx).unwrap();
+        assert_eq!(
+            out["opt"],
+            serde_json::json!(""),
+            "missing whole-value ref must render to empty string, not null: {out}"
+        );
+    }
 
     async fn make_orchestrator(
         app: App,
