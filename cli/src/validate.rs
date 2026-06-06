@@ -337,6 +337,24 @@ fn check_node_agents(
                         n.id, agent_id
                     ),
                 ));
+            } else if let Some(cmd_name) = &n.command
+                && d.manifest
+                    .commands
+                    .get(cmd_name)
+                    .is_some_and(|c| c.status == AgentStatus::Planned)
+            {
+                // Per-command availability (#199): the agent is runnable but this
+                // specific command is declared `status: planned` (not yet wired —
+                // e.g. a multi-step/binary REST op). Fail fast at validate/compile
+                // rather than at run.
+                out.push(ValidationIssue::error(
+                    "E_APP_COMMAND_UNAVAILABLE",
+                    format!(
+                        "node {:?} references command {:?} of agent {:?}, which is declared but \
+                         not yet runnable (planned)",
+                        n.id, cmd_name, agent_id
+                    ),
+                ));
             }
 
             // v0 no-recursion rule: an `exposes-as-agent` app cannot itself
@@ -488,6 +506,42 @@ mod tests {
         assert!(
             !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
             "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn rejects_node_referencing_planned_command() {
+        // The agent is available, but one command is `status: planned` (#199) — an
+        // app using it must fail validate, while a sibling available command passes.
+        let yaml = "agent: part\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+                    license: MIT\ntransport:\n  rest:\n    base: https://x\ncommands:\n  \
+                    read-thing:\n    lifecycle: single\n    description: x\n  \
+                    write-thing:\n    lifecycle: single\n    status: planned\n    description: x\n";
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(yaml).unwrap(),
+            root: std::path::PathBuf::from("."),
+        }];
+
+        let bad: App = serde_yaml::from_str(
+            "app: uses-planned-cmd\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+             nodes:\n  - id: w\n    agent: part\n    command: write-thing\n",
+        )
+        .unwrap();
+        let issues = validate_app_agents(&bad, &agents);
+        assert!(
+            issues.iter().any(|i| i.code == "E_APP_COMMAND_UNAVAILABLE"),
+            "planned command must be rejected: {issues:?}"
+        );
+
+        let ok: App = serde_yaml::from_str(
+            "app: uses-avail-cmd\nversion: 0.0.1\ndescription: x\nrequires: []\n\
+             nodes:\n  - id: r\n    agent: part\n    command: read-thing\n",
+        )
+        .unwrap();
+        let issues = validate_app_agents(&ok, &agents);
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_COMMAND_UNAVAILABLE"),
+            "available command must pass: {issues:?}"
         );
     }
 
