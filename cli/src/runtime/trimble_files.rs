@@ -96,7 +96,9 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
                 )?;
                 meta.get("versionId")
                     .and_then(|v| v.as_str())
-                    .unwrap_or_default()
+                    .ok_or_else(|| {
+                        AwareError::Network("duplicate file metadata: no versionId".into())
+                    })?
                     .to_string()
             }
         };
@@ -132,9 +134,19 @@ fn upload_blocking(agents_dir: &Path, args: &Value) -> Result<Value, AwareError>
         percent_encode_path(upload_id)
     );
     let complete = get_json(&complete_url, Some(&token), "upload complete")?;
+    // Fail fast on an incomplete 2xx (e.g. a status-only response) rather than
+    // reporting success with empty identifiers downstream nodes would persist (#200 Codex).
+    let file_id = complete
+        .get("fileId")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| AwareError::Network("upload complete: no fileId".into()))?;
+    let version_id = complete
+        .get("versionId")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| AwareError::Network("upload complete: no versionId".into()))?;
     Ok(json!({
-        "file-id": complete.get("fileId").and_then(|v| v.as_str()).unwrap_or_default(),
-        "version-id": complete.get("versionId").and_then(|v| v.as_str()).unwrap_or_default(),
+        "file-id": file_id,
+        "version-id": version_id,
         "replaced": false,
     }))
 }
