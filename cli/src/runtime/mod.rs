@@ -13,4 +13,5 @@ pub mod orchestrator;
 pub mod pidfile;
 pub mod provenance;
 pub mod template;
+pub mod trimble_files;
 // other submodules added later in v0.3

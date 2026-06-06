@@ -26,7 +26,7 @@ exposed-commands:
       schema:
         mark:    string
         file-id: string
-        url:     string
+        version-id: string
         replaced: bool
 
 # Pinned agent versions. Minor pinning recommended.
@@ -67,6 +67,9 @@ nodes:
       properties:
         mark:   "{{ tekla-watch.mark }}"   # see trimble-connect/skills/idempotency.md
         source: "aware-fab-pipeline"
+    safety:
+      transaction-group: fab-upload
+      snapshot: false
 
 connections:
   - from: tekla-watch
