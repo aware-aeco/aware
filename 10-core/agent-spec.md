@@ -207,6 +207,15 @@ A stateful agent's `start` command may emit a `stream` output (events flow until
 
 ---
 
+## Runnability (`status`)
+
+Both an agent and an individual command can declare `status: available` (the default) or `status: planned`. `planned` means *declared but not yet runnable* — the contract is published so apps can be authored against it, but the implementation isn't shipped yet. Apps that reference a `planned` agent or command are rejected at **validate / compile** (`E_APP_AGENT_UNAVAILABLE` / `E_APP_COMMAND_UNAVAILABLE`) rather than failing at run with a confusing dispatch error.
+
+- **Agent-level** (`status:` at the top of the manifest) — the whole agent isn't runnable (e.g. no shipped/installable transport binary).
+- **Command-level** (`status:` on a command) — the agent is runnable but a *specific* command isn't wired yet (e.g. a REST agent whose read commands work but whose multi-step / binary upload awaits an implementation). An agent can be partially runnable.
+
+---
+
 ## Transport
 
 Required: at least one transport. Optional: more than one.

@@ -199,6 +199,15 @@ pub struct TransportApp {
 pub struct Command {
     pub lifecycle: Lifecycle,
     pub description: String,
+    /// Per-command runnability (v0.57, #199). `available` (default) means the
+    /// command is dispatchable; `planned` means it is declared but not yet wired
+    /// (e.g. a REST agent's command awaiting a multi-step / binary implementation),
+    /// so apps that reference it are rejected at validate/compile
+    /// (`E_APP_COMMAND_UNAVAILABLE`) instead of failing at run. This is the
+    /// command-level counterpart of the agent-level `status:` (#161): an agent can
+    /// be partially runnable — some commands wired, some not.
+    #[serde(default)]
+    pub status: AgentStatus,
     #[serde(default)]
     #[allow(dead_code)]
     pub inputs: Value,
