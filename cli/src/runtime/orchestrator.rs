@@ -1103,10 +1103,24 @@ enum NodeResult {
     Gated,
 }
 
+/// The effective scheduling edges: explicit `connections` plus the edges implied by
+/// `{{ <node>.<field> }}` data references (#208). Used for ordering + predecessor
+/// tracking ONLY — streaming fan-in, `compare` slots, and terminal-output detection
+/// stay on the author's explicit `connections` (a derived edge must not, e.g., flip a
+/// node into fan-in mode).
+fn effective_edges(app: &App) -> Vec<crate::manifest::app::Connection> {
+    let mut edges = app.connections.clone();
+    edges.extend(crate::app_lock::derive_connections(app));
+    edges
+}
+
 fn topo_order(app: &App) -> Result<Vec<String>, AwareError> {
-    // Kahn's algorithm.
+    // Kahn's algorithm over the effective edge set (explicit + ref-derived, #208), so a
+    // node that references an upstream output is ordered after it even without a
+    // hand-written connection. A circular data dependency surfaces here as a cycle.
+    let edges = effective_edges(app);
     let mut indegree: HashMap<&str, usize> = app.nodes.iter().map(|n| (n.id.as_str(), 0)).collect();
-    for c in &app.connections {
+    for c in &edges {
         *indegree.entry(c.to.as_str()).or_default() += 1;
     }
     let mut queue: std::collections::VecDeque<&str> = indegree
@@ -1116,7 +1130,7 @@ fn topo_order(app: &App) -> Result<Vec<String>, AwareError> {
     let mut out = Vec::new();
     while let Some(id) = queue.pop_front() {
         out.push(id.to_string());
-        for c in app.connections.iter().filter(|c| c.from == id) {
+        for c in edges.iter().filter(|c| c.from == id) {
             let entry = indegree.get_mut(c.to.as_str()).unwrap();
             *entry -= 1;
             if *entry == 0 {
@@ -1134,8 +1148,13 @@ fn topo_order(app: &App) -> Result<Vec<String>, AwareError> {
 
 fn build_predecessors(app: &App) -> HashMap<String, Vec<String>> {
     let mut preds: HashMap<String, Vec<String>> = HashMap::new();
-    for c in &app.connections {
-        preds.entry(c.to.clone()).or_default().push(c.from.clone());
+    // Effective edges (explicit + ref-derived, #208) so a node waits for / is gated by
+    // the source of a `{{ source.field }}` ref even when no connection was written.
+    for c in &effective_edges(app) {
+        let entry = preds.entry(c.to.clone()).or_default();
+        if !entry.contains(&c.from) {
+            entry.push(c.from.clone());
+        }
     }
     preds
 }
@@ -1567,6 +1586,47 @@ mod tests {
             out["opt"],
             serde_json::json!(""),
             "missing whole-value ref must render to empty string, not null: {out}"
+        );
+    }
+
+    #[test]
+    fn topo_order_and_predecessors_honor_derived_ref_edges() {
+        // #208: `report` reads `{{ projects.body }}` but declares NO connection. The
+        // derived edge must order projects before report (no race) and make projects a
+        // predecessor of report (so report waits / is gated correctly).
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("pipe.flo");
+        std::fs::write(
+            &src,
+            r#"app: pipe
+version: 0.0.1
+description: x
+nodes:
+  - id: projects
+    agent: trimble-connect
+    command: list-projects
+  - id: report
+    agent: html-report
+    command: render
+    config:
+      data: '{{ projects.body }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let order = topo_order(&app).unwrap();
+        let pi = order.iter().position(|id| id == "projects").unwrap();
+        let ri = order.iter().position(|id| id == "report").unwrap();
+        assert!(
+            pi < ri,
+            "projects must be ordered before report via the derived edge; order: {order:?}"
+        );
+        let preds = build_predecessors(&app);
+        assert_eq!(
+            preds.get("report").map(|v| v.as_slice()),
+            Some(["projects".to_string()].as_slice()),
+            "report must have projects as a derived predecessor; preds: {preds:?}"
         );
     }
 

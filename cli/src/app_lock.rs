@@ -571,6 +571,93 @@ fn collect_refs(value: &serde_yaml::Value, out: &mut Vec<(String, String)>) {
     }
 }
 
+/// Scheduling edges implied by `{{ <node>.<field> }}` data references (#208).
+///
+/// A node config that reads an upstream node's output (`data: '{{ projects.body }}'`)
+/// is a data dependency, but the orchestrator orders execution from explicit
+/// `connections` only. So a reference WITHOUT a matching connection used to race its
+/// source — and since #205 (whole-value templates resolve structurally) the unresolved
+/// ref is a hard `template render: undefined value` rather than a silent empty render.
+/// Deriving the implied edges lets the scheduler order the referencing node after its
+/// source; a genuinely circular data dependency then surfaces as a topo-sort cycle.
+///
+/// Every node (top-level or `do:`-body) is scanned; each reference is resolved through
+/// the SAME lexical scope chain the compile-time ref-check uses ([`resolve_scope`]). A
+/// reference that resolves to a TOP-LEVEL node becomes an edge `from: <referenced>, to:
+/// <this node's top-level ancestor>` (connections are between top-level nodes). Excluded:
+/// self-edges, references that resolve to a `do:`-body-local node, per-iteration vars
+/// (`item` / `var`), namespace heads (`inputs` / `secrets` / `config` / `run` / … —
+/// which resolve to no node), and edges already declared in `connections`. The result is
+/// the deduped set of NEW edges, sorted for determinism.
+pub(crate) fn derive_connections(app: &App) -> Vec<crate::manifest::app::Connection> {
+    use crate::manifest::app::Connection;
+
+    let mut flat: Vec<FlatNode> = Vec::new();
+    flatten_nodes(&app.nodes, None, &[], &mut flat);
+
+    // Every scoped id is a resolvable target. Values are unused — `resolve_scope` only
+    // tests key presence — so they're all `None`.
+    let mut known: BTreeMap<String, Option<BTreeSet<String>>> = BTreeMap::new();
+    for (_, scoped_id, _, _) in &flat {
+        known.insert(scoped_id.clone(), None);
+    }
+
+    let existing: BTreeSet<(String, String)> = app
+        .connections
+        .iter()
+        .map(|c| (c.from.clone(), c.to.clone()))
+        .collect();
+
+    let mut derived: BTreeSet<(String, String)> = BTreeSet::new();
+    for entry in &flat {
+        let (node, scoped_id, iter_vars) = (entry.0, &entry.1, &entry.3);
+        // Connections are between top-level nodes, so a `do:`-body ref is attributed to
+        // its top-level ancestor (the first segment of the scoped id).
+        let to_top = scoped_id
+            .split('.')
+            .next()
+            .unwrap_or(scoped_id.as_str())
+            .to_string();
+        let scope_prefix = scoped_id.rsplit_once('.').map(|(p, _)| p);
+        let local_id = node.id.as_str();
+
+        let mut refs: Vec<(String, String)> = Vec::new();
+        if let Some(params) = node.merged_params() {
+            collect_refs(&params, &mut refs);
+        }
+        if let Some(expr) = &node.for_each {
+            collect_refs(&serde_yaml::Value::String(expr.clone()), &mut refs);
+        }
+        for (nid, _field) in refs {
+            if nid == local_id || iter_vars.iter().any(|v| v == &nid) {
+                continue;
+            }
+            let Some(target) = resolve_scope(&nid, scope_prefix, &known) else {
+                continue; // namespace / unknown head — resolves to no node, no edge
+            };
+            // Only a TOP-LEVEL target (bare id, no scope dot) is a connection endpoint;
+            // and never a self-edge to this node's own top-level subtree.
+            if target.contains('.') || target == to_top {
+                continue;
+            }
+            let edge = (target, to_top.clone());
+            if !existing.contains(&edge) {
+                derived.insert(edge);
+            }
+        }
+    }
+
+    derived
+        .into_iter()
+        .map(|(from, to)| Connection {
+            from,
+            to,
+            label: None,
+            input: None,
+        })
+        .collect()
+}
+
 /// Write a lockfile to disk as YAML next to the source app file.
 ///
 /// Output filename: `<app-name>.lock` (substrate-correct per
@@ -718,6 +805,91 @@ mod tests {
         assert!(refs.contains(&("list".to_string(), "folders".to_string())));
         // Function-call expression contributes no direct ref.
         assert!(!refs.iter().any(|(n, _)| n == "join"));
+    }
+
+    #[test]
+    fn derive_connections_adds_edge_for_ref_without_connection() {
+        // #208: `report` reads `{{ projects.body }}` but declares NO connection — the
+        // implied data-dependency edge projects->report must be derived. A namespace
+        // ref (`{{ inputs.title }}`) and a self-ref must NOT become edges.
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("pipe.flo");
+        std::fs::write(
+            &src,
+            r#"app: pipe
+version: 0.0.1
+description: x
+nodes:
+  - id: projects
+    agent: trimble-connect
+    command: list-projects
+  - id: report
+    agent: html-report
+    command: render
+    config:
+      data: '{{ projects.body }}'
+      title: '{{ inputs.title }}'
+      self: '{{ report.x }}'
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let derived = derive_connections(&app);
+        assert!(
+            derived
+                .iter()
+                .any(|c| c.from == "projects" && c.to == "report"),
+            "expected derived edge projects->report; got {:?}",
+            derived
+                .iter()
+                .map(|c| (c.from.as_str(), c.to.as_str()))
+                .collect::<Vec<_>>()
+        );
+        assert!(
+            !derived.iter().any(|c| c.from == "inputs"),
+            "namespace head must not become an edge: {derived:?}"
+        );
+        assert!(
+            !derived
+                .iter()
+                .any(|c| c.from == "report" || c.to == "projects"),
+            "self-ref / reverse edge must not be derived: {derived:?}"
+        );
+    }
+
+    #[test]
+    fn derive_connections_skips_already_declared_edges() {
+        // An explicit connection a->b already covers the `{{ a.body }}` ref, so nothing
+        // new is derived (no duplicate edge).
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("explicit.flo");
+        std::fs::write(
+            &src,
+            r#"app: explicit
+version: 0.0.1
+description: x
+nodes:
+  - id: a
+    agent: x
+    command: emit
+  - id: b
+    agent: x
+    command: consume
+    config:
+      v: '{{ a.body }}'
+connections:
+  - from: a
+    to: b
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        assert!(
+            derive_connections(&app).is_empty(),
+            "explicit a->b edge must not be re-derived"
+        );
     }
 
     #[test]
