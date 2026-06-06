@@ -173,6 +173,13 @@ pub struct Transport {
     /// runs the named backing app's node chain instead of spawning a binary.
     #[serde(default)]
     pub app: Option<TransportApp>,
+    /// `builtin` transport (v0.56, #201) — a `_core` utility the runtime handles
+    /// in-process, with no host binary to ship or install. Routed by agent id to a
+    /// built-in handler (e.g. `html-report` → the generic HTML renderer). Carrying
+    /// it as a present-but-empty block (`builtin: {}`) keeps the agent runnable
+    /// (`status: available`) without a `cli`/`rest`/`app`/`mcp` transport.
+    #[serde(default)]
+    pub builtin: Option<Value>,
 }
 
 #[derive(Debug, Deserialize)]

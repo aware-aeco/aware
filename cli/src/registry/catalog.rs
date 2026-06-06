@@ -197,6 +197,8 @@ fn transport_str(t: &Transport) -> &'static str {
         "rest"
     } else if t.mcp.is_some() {
         "mcp"
+    } else if t.builtin.is_some() {
+        "builtin"
     } else {
         "none"
     }

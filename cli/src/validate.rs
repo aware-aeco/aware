@@ -76,10 +76,11 @@ pub fn validate_agent(agent: &Agent) -> Vec<ValidationIssue> {
         && agent.transport.mcp.is_none()
         && agent.transport.rest.is_none()
         && agent.transport.app.is_none()
+        && agent.transport.builtin.is_none()
     {
         out.push(ValidationIssue::error(
             "E_AGENT_NO_TRANSPORT",
-            "agent must declare at least one transport (cli / mcp / rest / app)",
+            "agent must declare at least one transport (cli / mcp / rest / app / builtin)",
         ));
     }
     if agent.stateful {

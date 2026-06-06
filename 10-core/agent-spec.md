@@ -216,6 +216,7 @@ Required: at least one transport. Optional: more than one.
 | `cli` | Default. Works in any agentic CLI (claude-code, codex, opencode). | A binary in `runtime/cli/` + a stable JSON response envelope. |
 | `mcp` | When the agent needs to work in non-CLI hosts (Claude Desktop, Cursor) or wants streaming/server-pushed events. | An MCP server config in `runtime/mcp-server.json`. |
 | `rest` | When the underlying tool is already a REST API and a REST shim is simpler than a CLI. | An OpenAPI spec or hand-written shim. |
+| `builtin` | A `_core` utility the runtime handles **in-process** — no host binary to ship or install (e.g. `html-report`'s generic renderer). | A present-but-empty `builtin: {}` block; dispatch routes by agent id to a runtime handler. |
 
 The contract every transport satisfies: **structured input → structured output, with errors as data, not exceptions.** The CLI envelope is documented in [`response-envelope.md`](./response-envelope.md) (forthcoming).
 
