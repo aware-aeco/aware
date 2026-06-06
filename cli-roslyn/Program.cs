@@ -10,9 +10,10 @@ namespace AwareRoslyn;
 /// <summary>
 /// aware-roslyn entry point. One JSON request in on stdin, one JSON response out on stdout
 /// (same envelope shape as aware-sidecar so the Rust CLI parses both identically). The only
-/// op is <c>reflect-csharp</c>: reflect C# source (a .cs file, directory, or glob) → AwareReader
-/// IR → AgentSynthesizer → GeneratedAgent. (.csproj/.sln graph loading is out of scope; such an
-/// input returns a clear, actionable error.)
+/// op is <c>reflect-csharp</c>: reflect C# source → AwareReader IR → AgentSynthesizer →
+/// GeneratedAgent. The input <c>paths</c> are either bare <c>.cs</c> (file/dir/glob, compiled
+/// directly) or a <c>.csproj</c>/<c>.sln</c> (loaded via MSBuildWorkspace; needs the .NET SDK) —
+/// see <see cref="AwareRoslyn.RoslynReader"/>.
 /// </summary>
 internal static class Program
 {

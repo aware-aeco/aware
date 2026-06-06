@@ -109,15 +109,14 @@ public static class RoslynReader
         var failures = new List<string>();
         workspace.WorkspaceFailed += (_, e) =>
         {
-            // Record only hard FAILUREs that name a C# project (`.csproj`). A mixed solution
-            // legitimately contains non-C# projects (VB / F# / installer / .vcxproj) that
-            // MSBuildWorkspace can't load and that we skip below anyway — their load failures
-            // must NOT reject the whole solution (#185 Codex). A C# project that genuinely fails
-            // to load IS fatal (otherwise its commands would be silently dropped); the failure
-            // diagnostic names its `.csproj`, so that's the discriminator. Benign warnings
-            // (unresolved optional targets) are a different Kind and ignored.
-            if (e.Diagnostic.Kind == WorkspaceDiagnosticKind.Failure
-                && e.Diagnostic.Message.Contains(".csproj", StringComparison.OrdinalIgnoreCase))
+            // Record ALL hard FAILUREs; whether each is actually fatal is decided AFTER load
+            // (below) by correlating it with the projects that produced a compilation. The
+            // Kind/message can't be trusted on its own: MSBuildWorkspace surfaces benign MSBuild
+            // *warnings* — notably NuGet advisory warnings NU1901-NU1904 — as `Failure`
+            // diagnostics that name the project's `.csproj`, even though the project compiles
+            // fine (open bug dotnet/roslyn#75182). Keying fatality on the message alone would
+            // reject any otherwise-buildable project that has a flagged transitive dependency.
+            if (e.Diagnostic.Kind == WorkspaceDiagnosticKind.Failure)
                 failures.Add(e.Diagnostic.Message);
         };
 
@@ -133,35 +132,45 @@ public static class RoslynReader
         var docs = new Dictionary<string, string>(StringComparer.Ordinal);
         var asms = new List<AssemblyRecord>();
         var index = new Dictionary<string, TypeRecord>(StringComparer.Ordinal);
+        // File paths of the C# projects that produced a compilation — used below to decide which
+        // recorded failures are real (a project that compiled did NOT fail to load).
+        var loaded = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var project in projects)
         {
             if (project.Language != LanguageNames.CSharp) continue; // C#-shaped IR only
             var comp = project.GetCompilationAsync().GetAwaiter().GetResult();
             if (comp is null) continue;
+            if (project.FilePath is { Length: > 0 } fp) loaded.Add(fp);
             var asm = ReflectCompilation(comp, docs);
             asms.Add(asm);
             foreach (var t in asm.Types) index.TryAdd(t.FullName, t);
         }
 
-        // Surface ANY hard load failure rather than silently returning a partial agent. For a
-        // .sln where one C# project fails to load while another succeeds, returning just the
-        // loaded one would silently drop the failed project's commands/recipes — exactly the
-        // kind of quiet, wrong-output result the substrate forbids. Fail loud with the
-        // diagnostics so the user can fix it (restore the project) or target a specific .csproj
-        // with --from-csproj (#185 Codex).
-        if (failures.Count > 0)
+        // A failure is fatal ONLY when it concerns a project that did NOT produce a compilation
+        // — i.e. its message names no successfully-loaded project file. That still surfaces a
+        // genuine C# project load failure (silently dropping its commands is forbidden) while
+        // ignoring the warnings-as-failures noise (dotnet/roslyn#75182): a project that compiled
+        // despite a NUxxxx/MSBxxxx warning is named in `loaded`, so its diagnostic is filtered
+        // out here. Non-C# projects in a mixed .sln also never appear in `loaded`, but their
+        // diagnostics name a non-`.csproj` file we never tried to reflect; in practice a real
+        // C# load failure is what this catches (the user fixes it or passes a specific project).
+        var fatal = failures
+            .Where(msg => !loaded.Any(fp => msg.Contains(fp, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+        if (asms.Count == 0)
+        {
+            var detail = fatal.Count > 0 ? $" ({string.Join("; ", fatal.Take(3))})" : "";
+            throw new InvalidOperationException(
+                "no C# project compilation could be loaded from the given .csproj/.sln" + detail
+                + "; ensure the .NET SDK is installed and the project restores.");
+        }
+        if (fatal.Count > 0)
         {
             throw new InvalidOperationException(
                 "the .csproj/.sln did not load cleanly, so reflection would be incomplete: "
-                + string.Join("; ", failures.Take(5))
+                + string.Join("; ", fatal.Take(5))
                 + ". Ensure the .NET SDK is installed and every project restores, or pass a "
                 + "specific project with --from-csproj.");
-        }
-        if (asms.Count == 0)
-        {
-            throw new InvalidOperationException(
-                "no C# project compilation could be loaded from the given .csproj/.sln; "
-                + "ensure the .NET SDK is installed and the project restores.");
         }
 
         return new SourceReflection(new ReflectedSet(asms, index), docs);
