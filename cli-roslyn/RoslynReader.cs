@@ -109,9 +109,15 @@ public static class RoslynReader
         var failures = new List<string>();
         workspace.WorkspaceFailed += (_, e) =>
         {
-            // Only hard FAILUREs matter (a project that can't load yields no symbols); the
-            // workspace also raises benign warnings for unresolved optional targets.
-            if (e.Diagnostic.Kind == WorkspaceDiagnosticKind.Failure)
+            // Record only hard FAILUREs that name a C# project (`.csproj`). A mixed solution
+            // legitimately contains non-C# projects (VB / F# / installer / .vcxproj) that
+            // MSBuildWorkspace can't load and that we skip below anyway — their load failures
+            // must NOT reject the whole solution (#185 Codex). A C# project that genuinely fails
+            // to load IS fatal (otherwise its commands would be silently dropped); the failure
+            // diagnostic names its `.csproj`, so that's the discriminator. Benign warnings
+            // (unresolved optional targets) are a different Kind and ignored.
+            if (e.Diagnostic.Kind == WorkspaceDiagnosticKind.Failure
+                && e.Diagnostic.Message.Contains(".csproj", StringComparison.OrdinalIgnoreCase))
                 failures.Add(e.Diagnostic.Message);
         };
 
