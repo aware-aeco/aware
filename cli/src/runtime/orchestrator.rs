@@ -1431,7 +1431,18 @@ fn render_config(config: &Value, ctx: &RuntimeContext) -> Result<Value, AwareErr
                 // multi-expression string renders to a String; a whole-value ref to a
                 // string yields the same string either way.
                 if template::is_whole_value_template(s) {
-                    Ok(template::resolve_value(s, ctx))
+                    // A present, non-null value passes through structurally. An
+                    // unresolved-or-null whole-value ref falls back to render's lenient
+                    // behavior (an absent `{{ inputs.optional }}` becomes `""`, not JSON
+                    // null) — preserving how optional refs rendered before #205, so a
+                    // command expecting a string param doesn't suddenly receive null
+                    // (#205 Codex).
+                    let resolved = template::resolve_value(s, ctx);
+                    if resolved.is_null() {
+                        Ok(Value::String(template::render(s, ctx)?))
+                    } else {
+                        Ok(resolved)
+                    }
                 } else {
                     Ok(Value::String(template::render(s, ctx)?))
                 }
@@ -1539,6 +1550,23 @@ mod tests {
             out["evt"],
             serde_json::json!("A-104"),
             "config must see the per-event inputs overlay: {out}"
+        );
+    }
+
+    #[test]
+    fn render_config_unresolved_whole_value_falls_back_to_empty_string() {
+        // An absent whole-value ref keeps the pre-#205 lenient rendering ("" not JSON
+        // null), so an optional string param doesn't suddenly become null (#205 Codex).
+        let ctx = RuntimeContext {
+            inputs: serde_json::json!({}),
+            ..Default::default()
+        };
+        let config = serde_json::json!({ "opt": "{{ inputs.optional }}" });
+        let out = render_config(&config, &ctx).unwrap();
+        assert_eq!(
+            out["opt"],
+            serde_json::json!(""),
+            "missing whole-value ref must render to empty string, not null: {out}"
         );
     }
 
