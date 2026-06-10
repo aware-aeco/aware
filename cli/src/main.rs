@@ -164,7 +164,7 @@ async fn main() -> anyhow::Result<()> {
     };
 
     let result: Result<(), AwareError> = match cli.command {
-        Command::Agent { action } => commands::agent::dispatch(action, &ctx),
+        Command::Agent { action } => commands::agent::dispatch(action, &ctx).await,
         Command::App { action } => commands::app::dispatch(action, &ctx).await,
         Command::Connect(args) => commands::connect::run_connect(args, &ctx),
         Command::Disconnect(args) => commands::connect::run_disconnect(args, &ctx),

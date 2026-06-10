@@ -13,7 +13,9 @@ use serde_json::Value;
 
 /// Self-contained dark-theme CSS, inlined into every report. Verbatim from the
 /// html-report `styling.md` design contract (palette + tables + cards + print rules).
-const STYLE: &str = r#"
+/// `pub(crate)` so the declarative-UI renderer (#215, `super::ui`) shares the
+/// exact same visual language instead of forking the palette.
+pub(crate) const STYLE: &str = r#"
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -138,6 +140,15 @@ pub fn item_count(data: &Value) -> usize {
         Value::Null => 0,
         _ => 1,
     }
+}
+
+/// Render a value into a report BODY FRAGMENT (no document shell): array →
+/// table (honoring `opts`), object → field/value table, scalar → value card.
+/// `pub(crate)` so the declarative-UI renderer (#215, `super::ui`) reuses the
+/// exact table/sort/column logic for its `table`/`report` blocks instead of
+/// reimplementing it.
+pub(crate) fn render_fragment(data: &Value, opts: &TableOptions) -> String {
+    render_node(data, opts)
 }
 
 /// Render the top-level value into the report body fragment.
@@ -301,7 +312,9 @@ fn cell(v: &Value) -> String {
 }
 
 /// HTML-escape text for safe insertion into element content / attributes.
-fn esc(s: &str) -> String {
+/// `pub(crate)` so every renderer in the crate (incl. `super::ui`, #215) escapes
+/// user-supplied strings through this one function.
+pub(crate) fn esc(s: &str) -> String {
     let mut out = String::with_capacity(s.len());
     for c in s.chars() {
         match c {

@@ -90,6 +90,13 @@ name = "agent_val_test"
 path = "tests/agent_validate.rs"
 
 [[test]]
+# Source is tests/agent_invoke.rs.
+# "invoke" is safe on Windows AppCompat (no "install"/"update"/"patch" substring),
+# but we use a short alias for consistency with the naming convention above.
+name = "agent_inv_test"
+path = "tests/agent_invoke.rs"
+
+[[test]]
 # Source is tests/app_install.rs.
 # "install" in the binary name triggers the Windows AppCompat UAC heuristic;
 # use a different name so CI / local runs don't require elevation.

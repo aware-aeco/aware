@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-06T05:46:53.791204900+00:00",
+  "updated-at": "2026-06-10T17:20:26.999723+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -6639,6 +6639,54 @@
             {
               "name": "view.list",
               "description": "List named views in the host file. Read-only.",
+              "lifecycle": "single",
+              "category": "curated"
+            }
+          ]
+        }
+      }
+    },
+    "ui": {
+      "display-name": "Declarative UI",
+      "vendor": "aware",
+      "keywords": [
+        "aware",
+        "ui",
+        "declarative",
+        "descriptor",
+        "panels",
+        "blocks",
+        "validate",
+        "catalog",
+        "render",
+        "dashboard"
+      ],
+      "versions": {
+        "1.0.0": {
+          "description": "Declarative-UI substrate (#215): the schema, validator, block catalog, and",
+          "status": "available",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 3,
+          "skills": [
+            "descriptor-authoring"
+          ],
+          "commands": [
+            {
+              "name": "catalog",
+              "description": "Machine-readable catalog of what may be composed: every block type with",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "render",
+              "description": "FALLBACK renderer: descriptor (+ optional named `data` payloads) -> one",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "validate",
+              "description": "Deterministically validate a descriptor against schema v1. Returns",
               "lifecycle": "single",
               "category": "curated"
             }

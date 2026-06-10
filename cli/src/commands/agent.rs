@@ -98,9 +98,27 @@ pub enum AgentCommand {
         #[arg(long)]
         check: bool,
     },
+
+    /// Invoke an installed BUILTIN agent's command directly, outside a workflow.
+    /// (#215)
+    ///
+    /// Builtin-only by design: `transport: builtin {}` agents are in-process
+    /// pure functions (no credentials, no child processes), so a host can call
+    /// e.g. `ui.validate` or `html-report.render` without authoring a temp
+    /// `.flo`. For cli/rest/app transports, compose a `.flo` app and run it.
+    Invoke {
+        /// Agent id (must be installed with `transport: builtin`).
+        agent: String,
+        /// Command name (e.g. `validate`, `catalog`, `render`).
+        command: String,
+        /// Command inputs as a JSON object string, or `@path/to/file.json`.
+        /// Defaults to `{}`.
+        #[arg(long)]
+        inputs: Option<String>,
+    },
 }
 
-pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
+pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
     match cmd {
         AgentCommand::List => list(ctx),
         AgentCommand::Describe { agent, available } => describe(ctx, &agent, available),
@@ -120,7 +138,101 @@ pub fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError> {
         AgentCommand::Search { query, capability } => search_cmd(ctx, &query, capability),
         AgentCommand::Has { agent, capability } => has_cmd(ctx, &agent, &capability),
         AgentCommand::Reindex { check } => reindex(ctx, check),
+        AgentCommand::Invoke {
+            agent,
+            command,
+            inputs,
+        } => invoke_cmd(ctx, &agent, &command, inputs.as_deref()).await,
     }
+}
+
+/// `aware agent invoke <agent> <command> [--inputs <json|@file>]` — run a
+/// BUILTIN agent command in-process and print its JSON result (#215).
+///
+/// Restricted to `transport: builtin {}` by design: built-ins are single-shot
+/// pure functions with no credentials and no child processes, so invoking them
+/// outside a workflow is safe. This is what lets a host consume `ui.validate` /
+/// `ui.catalog` / `ui.render` (and, retroactively, `html-report.render`)
+/// without the temp-`.flo` + compile + run detour.
+async fn invoke_cmd(
+    ctx: &Context,
+    agent_id: &str,
+    command: &str,
+    inputs: Option<&str>,
+) -> Result<(), AwareError> {
+    use crate::runtime::invoker::{
+        AgentInvoker, BuiltinInvoker, TransportKind, effective_transport,
+    };
+
+    let started = Instant::now();
+    let manifest_path = ctx.paths.agents_dir().join(agent_id).join("manifest.yaml");
+    if !manifest_path.is_file() {
+        return Err(AwareError::NotFound(format!(
+            "agent '{agent_id}' is not installed — `aware agent install {agent_id}` first"
+        )));
+    }
+    let m = crate::manifest::loader::load_agent(&manifest_path)?;
+    // Resolve the EFFECTIVE transport through the same priority order workflow
+    // dispatch uses (cli > rest > app > builtin) — NOT a bare `builtin` probe.
+    // A crafted MIXED-transport manifest (builtin + cli/rest/app) dispatches as
+    // its higher-priority transport, so it must be refused here too; otherwise
+    // this guard and dispatch would disagree (#215 Codex review).
+    let kind = effective_transport(&m, agent_id)?;
+    if kind != TransportKind::Builtin {
+        let kind = kind.as_str();
+        return Err(AwareError::Validation(format!(
+            "agent invoke is builtin-only: '{agent_id}' has a `{kind}` transport. Builtin \
+             agents run in-process as pure functions (no credentials, no child processes); \
+             to drive a `{kind}` agent, compose it in a .flo app and `aware app run` it."
+        )));
+    }
+    if !m.commands.contains_key(command) {
+        let available: Vec<&str> = m.commands.keys().map(String::as_str).collect();
+        return Err(AwareError::Validation(format!(
+            "agent '{agent_id}' has no command '{command}' (available: {})",
+            available.join(", ")
+        )));
+    }
+
+    let args = parse_invoke_inputs(inputs)?;
+    // Direct invocation is always a REAL run (dry_run: false): there is no
+    // --dry-run posture here, and the caller asked for the side effect (e.g. an
+    // `output-path` write) explicitly.
+    let result = BuiltinInvoker { dry_run: false }
+        .invoke_single(agent_id, command, args)
+        .await?;
+
+    if ctx.json {
+        envelope::print_ok("agent invoke", result, started).ok();
+    } else {
+        println!("{}", serde_json::to_string_pretty(&result)?);
+    }
+    Ok(())
+}
+
+/// Parse `--inputs` for `agent invoke`: a JSON object literal, or `@file` to
+/// read the JSON from a file. Absent → `{}` (commands with no required inputs,
+/// e.g. `ui.catalog`, need no flag).
+fn parse_invoke_inputs(inputs: Option<&str>) -> Result<serde_json::Value, AwareError> {
+    let Some(raw) = inputs.map(str::trim).filter(|s| !s.is_empty()) else {
+        return Ok(serde_json::json!({}));
+    };
+    let text = match raw.strip_prefix('@') {
+        Some(path) => std::fs::read_to_string(path)
+            .map_err(|e| AwareError::Validation(format!("--inputs: read {path}: {e}")))?,
+        None => raw.to_string(),
+    };
+    // Tolerate a UTF-8 BOM: PowerShell's `Out-File -Encoding utf8` (the obvious
+    // way to author an `@file` on Windows) prepends one, and serde_json rejects it.
+    let text = text.trim_start_matches('\u{feff}');
+    let v: serde_json::Value = serde_json::from_str(text)
+        .map_err(|e| AwareError::Validation(format!("--inputs: invalid JSON: {e}")))?;
+    if !v.is_object() {
+        return Err(AwareError::Validation(
+            "--inputs must be a JSON object, e.g. '{\"descriptor\": {…}}' (or @file.json)".into(),
+        ));
+    }
+    Ok(v)
 }
 
 fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {

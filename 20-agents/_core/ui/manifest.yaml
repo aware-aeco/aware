@@ -1,0 +1,109 @@
+agent:        ui
+version:      1.0.0
+display-name: Declarative UI
+description: |
+  Declarative-UI substrate (#215): the schema, validator, block catalog, and
+  deterministic fallback renderer for prompt-composed UI descriptors. A host AI
+  composes a small JSON descriptor ("put a stat card here, a table there, bound
+  to this run's output"); this agent validates it, tells the AI what it may
+  compose (`catalog`), and can render it to self-contained HTML as a fallback.
+  Hosts own chrome: they render descriptors with their OWN design systems —
+  this agent never dictates host pixels. No LLM anywhere: the AI composes,
+  AWARE validates/renders (same division of labor as .flo compose -> compile).
+
+  Lives under `_core/` because it's not tied to any AECO vertical — it's the
+  cross-host UI contract any AWARE front-end (floless.app is the first) can
+  build on instead of inventing a private one.
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/ui
+keywords: [aware, ui, declarative, descriptor, panels, blocks, validate, catalog, render, dashboard]
+
+requires:
+  filesystem:
+    - write: any                 # only when `render` is given an output-path
+
+# Runtime built-in (#201 pattern): all three commands run in-process in the
+# `aware` runtime — there is no `aware-ui` host binary to ship or install.
+# Dispatch is routed by agent id to `cli/src/render/ui.rs`. Builtins are also
+# invocable outside a workflow via `aware agent invoke ui <command>` (#215).
+transport:
+  builtin: {}
+
+commands:
+  validate:
+    lifecycle: single
+    # Read-mode pure function: touches nothing, returns a verdict.
+    description: |
+      Deterministically validate a descriptor against schema v1. Returns
+      `valid` plus `errors`/`warnings` strings with JSON-path-style locations
+      (e.g. `panels[0].blocks[2].type: ...`). Forward compatible: an UNKNOWN
+      block type is a warning, not an error, so old validators pass newer
+      descriptors; unknown extra fields on known blocks warn too.
+    inputs:
+      descriptor:
+        description: The descriptor object to validate (see descriptor-authoring.md).
+      schema-version:
+        type: string
+        description: Optional; must be "1" when given. Other values are rejected.
+    outputs:
+      type: single
+      schema:
+        valid:          boolean
+        errors:         array     # strings with JSON-path locations; empty when valid
+        warnings:       array     # forward-compat notes (unknown types/fields)
+        schema-version: string    # the schema this validator implements ("1")
+
+  catalog:
+    lifecycle: single
+    description: |
+      Machine-readable catalog of what may be composed: every block type with
+      its typed field contract (name, type, required, description) plus a note
+      on slots (host-interpreted). Built from the SAME table the validator
+      uses, so catalog and validation cannot drift. This is what lets a host AI
+      on any front-end (Claude Code, Codex, ...) discover the UI vocabulary
+      without bespoke prompting.
+    inputs: {}
+    outputs:
+      type: single
+      schema:
+        schema-version: string
+        slots:          object    # { note } — slot names are host-interpreted
+        blocks:         array     # [{ name, description, fields: [{ name, type, required, description }] }]
+
+  render:
+    lifecycle: single
+    # Read-mode by default; when `output-path` is given the runtime writes that
+    # artifact on a real run only (skipped under --dry-run / --simulate), so a
+    # preview never touches disk — same contract as html-report.render.
+    description: |
+      FALLBACK renderer: descriptor (+ optional named `data` payloads) -> one
+      deterministic, self-contained HTML document (inline CSS, no JS, no
+      external resources), reusing html-report's visual language and its
+      columns/sort table semantics (#210). Unknown block types render a
+      visible placeholder ("needs a newer renderer"); a `source` missing from
+      `data` renders a "no data" placeholder — neither is an error. Hosts with
+      their own design system should render descriptors themselves instead.
+    inputs:
+      descriptor:
+        description: The descriptor object to render. Must pass `validate` (errors refuse the render).
+      data:
+        description: |
+          Optional object mapping payload names to JSON values. `table` and
+          `report` blocks resolve their `source` field against this map at
+          render time.
+      output-path:
+        type: string
+        description: Optional file path; when given, the HTML is also written there (real runs only).
+    outputs:
+      type: single
+      schema:
+        html:        string    # the self-contained HTML document
+        bytes:       int       # size of `html` in bytes
+        output-path: string    # present only when an output-path was given
+
+skills:
+  - descriptor-authoring.md
