@@ -922,13 +922,15 @@ fn shape_response(resp: ureq::Response) -> Value {
 }
 
 /// In-process handler for `builtin`-transport `_core` utilities (#201) — runtime
-/// built-ins with no host binary to ship or install. Routed by agent id; currently
-/// serves `html-report`'s generic renderer.
-struct BuiltinInvoker {
+/// built-ins with no host binary to ship or install. Routed by agent id; serves
+/// `html-report`'s generic renderer and the declarative-UI `ui` agent (#215).
+/// `pub(crate)` so `aware agent invoke` (commands/agent.rs) drives the same
+/// dispatch table outside a workflow.
+pub(crate) struct BuiltinInvoker {
     /// On a `--dry-run` / `--simulate` run, the optional `output-path` file write is
     /// skipped so a preview never touches disk; the HTML and result shape are still
     /// returned so downstream nodes resolve.
-    dry_run: bool,
+    pub(crate) dry_run: bool,
 }
 
 #[async_trait]
@@ -941,6 +943,9 @@ impl AgentInvoker for BuiltinInvoker {
     ) -> Result<Value, AwareError> {
         match (agent, command) {
             ("html-report", "render") => render_html_report(args, self.dry_run),
+            ("ui", "validate") => crate::render::ui::ui_validate(&args),
+            ("ui", "catalog") => crate::render::ui::ui_catalog(&args),
+            ("ui", "render") => crate::render::ui::ui_render(&args, self.dry_run),
             _ => Err(AwareError::Validation(format!(
                 "builtin transport: no handler for {agent}/{command}"
             ))),
