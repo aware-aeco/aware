@@ -1862,9 +1862,15 @@ internal static class Program
             var payload = new JsonObject { ["message"] = message }.ToJsonString();
             child.StandardInput.Write(payload);
             child.StandardInput.Close();
-            string stdout = child.StandardOutput.ReadToEnd();
-            string stderr = child.StandardError.ReadToEnd();
+            // Drain stdout and stderr concurrently. #217 routes all vendor
+            // noise to the child's stderr, so a sequential ReadToEnd on
+            // stdout could deadlock: the child blocks writing into a full
+            // stderr pipe buffer while we block waiting for stdout EOF.
+            var soTask = child.StandardOutput.ReadToEndAsync();
+            var seTask = child.StandardError.ReadToEndAsync();
             child.WaitForExit();
+            string stdout = soTask.GetAwaiter().GetResult();
+            string stderr = seTask.GetAwaiter().GetResult();
             if (child.ExitCode == 0)
             {
                 combined.Add(JsonNode.Parse(stdout));
