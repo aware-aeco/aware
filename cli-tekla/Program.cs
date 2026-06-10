@@ -38,6 +38,30 @@ public sealed class ExecGlobals
 
 internal static class Program
 {
+    // ── stdout hygiene (#217) ────────────────────────────────────────────────
+    // INVARIANT: stdout carries ONLY protocol JSON (receipts, watch `fired`
+    // events) plus the explicitly-requested --help text. Everything else —
+    // our own diagnostics, vendor-assembly console noise (Trimble.Remoting
+    // prints a multi-line "Connection failed" stack trace to Console.Out
+    // while Model is constructed without a live Tekla), and user exec-code
+    // Console.WriteLine — belongs on stderr. Main enforces this structurally:
+    // it captures the real stdout here, then points Console.Out at stderr,
+    // so the only way to reach the protocol stream is an explicit write
+    // through `Protocol`.
+    //
+    // `_protocol` stays null when Main didn't run — the unit tests drive verb
+    // handlers directly and capture output via Console.SetOut, so `Protocol`
+    // falls back to Console.Out there.
+    static TextWriter? _protocol;
+    static TextWriter Protocol => _protocol ?? Console.Out;
+
+    static void WriteProtocolLine(string line)
+    {
+        var w = Protocol;
+        w.WriteLine(line);
+        w.Flush(); // the receipt must hit the pipe even if we exit right after
+    }
+
     static int Main(string[] args)
     {
         // Force UTF-8 on stdin/stdout — .NET Framework defaults to the
@@ -45,6 +69,15 @@ internal static class Program
         // accented chars etc when JSON travels in either direction.
         Console.InputEncoding  = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
         Console.OutputEncoding = new System.Text.UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+
+        // stdout hygiene (#217): capture the (now UTF-8) real stdout as the
+        // protocol stream, then route Console.Out to stderr so nothing that
+        // writes through Console — vendor assemblies, user exec code, stray
+        // library logging — can corrupt the whole-stdout JSON contract.
+        // Must run AFTER the encoding setup above (setting OutputEncoding
+        // recreates Console.Out) and BEFORE any Tekla/Roslyn interaction.
+        _protocol = Console.Out;
+        Console.SetOut(Console.Error);
 
         try
         {
@@ -213,7 +246,7 @@ internal static class Program
             ["targets"]  = results,
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
-        Console.WriteLine(receipt.ToJsonString());
+        WriteProtocolLine(receipt.ToJsonString());
         return failed == 0 ? 0 : 2;
     }
 
@@ -759,8 +792,9 @@ internal static class Program
         // Worker-thread events can fire concurrently; serialize stdout writes.
         lock (_watchConsoleLock)
         {
-            Console.Out.WriteLine(node.ToJsonString());
-            Console.Out.Flush();
+            var w = Protocol;
+            w.WriteLine(node.ToJsonString());
+            w.Flush();
         }
     }
 
@@ -1345,7 +1379,7 @@ internal static class Program
             ["verb"] = "exec",
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
-        Console.WriteLine(receipt.ToJsonString());
+        WriteProtocolLine(receipt.ToJsonString());
     }
 
     static void EmitExecFail(string message, string stack, string? hostVersion = null, int? hostPid = null)
@@ -1361,7 +1395,7 @@ internal static class Program
             ["verb"] = "exec",
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
-        Console.WriteLine(receipt.ToJsonString());
+        WriteProtocolLine(receipt.ToJsonString());
     }
 
     static void EmitExecError(string message)
@@ -1551,7 +1585,7 @@ internal static class Program
             },
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
-        Console.WriteLine(receipt.ToJsonString());
+        WriteProtocolLine(receipt.ToJsonString());
         return 0;
     }
 
@@ -1570,7 +1604,11 @@ internal static class Program
 
     static void PrintHelp()
     {
-        Console.WriteLine("""
+        // Help is the one non-JSON stdout payload — it only prints when the
+        // caller explicitly asked for it (no args / --help), never during a
+        // protocol exchange, so routing it through Protocol keeps the
+        // historical stdout behavior without weakening the invariant.
+        WriteProtocolLine("""
             aware-tekla — Tekla Open API sidecar
 
             Usage:
@@ -1712,7 +1750,7 @@ internal static class Program
                     ["exe_path"] = i.ExePath,
                 }).ToArray()),
         };
-        Console.WriteLine(obj.ToJsonString());
+        WriteProtocolLine(obj.ToJsonString());
         return 0;
     }
 
@@ -1824,9 +1862,15 @@ internal static class Program
             var payload = new JsonObject { ["message"] = message }.ToJsonString();
             child.StandardInput.Write(payload);
             child.StandardInput.Close();
-            string stdout = child.StandardOutput.ReadToEnd();
-            string stderr = child.StandardError.ReadToEnd();
+            // Drain stdout and stderr concurrently. #217 routes all vendor
+            // noise to the child's stderr, so a sequential ReadToEnd on
+            // stdout could deadlock: the child blocks writing into a full
+            // stderr pipe buffer while we block waiting for stdout EOF.
+            var soTask = child.StandardOutput.ReadToEndAsync();
+            var seTask = child.StandardError.ReadToEndAsync();
             child.WaitForExit();
+            string stdout = soTask.GetAwaiter().GetResult();
+            string stderr = seTask.GetAwaiter().GetResult();
             if (child.ExitCode == 0)
             {
                 combined.Add(JsonNode.Parse(stdout));
@@ -1853,7 +1897,7 @@ internal static class Program
             ["targets"]  = combined,
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
-        Console.WriteLine(allReceipt.ToJsonString());
+        WriteProtocolLine(allReceipt.ToJsonString());
         return failed == 0 ? 0 : (failed == targets.Count ? 2 : 0);
     }
 
@@ -1871,7 +1915,7 @@ internal static class Program
             ["verb_result"] = new JsonObject { ["message"] = message },
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
-        Console.WriteLine(receipt.ToJsonString());
+        WriteProtocolLine(receipt.ToJsonString());
     }
 
     internal static List<TeklaInstance> FilterTargets(List<TeklaInstance> all, ParsedArgs args)
