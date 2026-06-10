@@ -1085,19 +1085,7 @@ impl DispatchInvoker {
         let m = crate::manifest::loader::load_agent(
             &self.agents_dir.join(agent).join("manifest.yaml"),
         )?;
-        if m.transport.cli.is_some() {
-            Ok(TransportKind::Cli)
-        } else if m.transport.rest.is_some() {
-            Ok(TransportKind::Rest)
-        } else if m.transport.app.is_some() {
-            Ok(TransportKind::App)
-        } else if m.transport.builtin.is_some() {
-            Ok(TransportKind::Builtin)
-        } else {
-            Err(AwareError::Validation(format!(
-                "agent {agent} has no executable transport (need `cli`, `rest`, `app`, or `builtin`)"
-            )))
-        }
+        effective_transport(&m, agent)
     }
 
     /// Resolve the backing app + validate the caller's routed inputs for an
@@ -1263,11 +1251,54 @@ impl DispatchInvoker {
     }
 }
 
-enum TransportKind {
+/// The EFFECTIVE transport of an agent manifest. `pub(crate)` so callers
+/// outside the orchestrator (e.g. `aware agent invoke`'s builtin-only guard)
+/// resolve it through [`effective_transport`] — the same priority order
+/// dispatch uses — instead of probing `transport.*` fields ad hoc.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum TransportKind {
     Cli,
     Rest,
     App,
     Builtin,
+}
+
+impl TransportKind {
+    /// Lowercase manifest-key name (`cli` / `rest` / `app` / `builtin`) for
+    /// error messages.
+    pub(crate) fn as_str(self) -> &'static str {
+        match self {
+            TransportKind::Cli => "cli",
+            TransportKind::Rest => "rest",
+            TransportKind::App => "app",
+            TransportKind::Builtin => "builtin",
+        }
+    }
+}
+
+/// Resolve which transport a manifest ACTUALLY dispatches on. This is the one
+/// source of truth for the priority order (cli > rest > app > builtin): a
+/// mixed-transport manifest (e.g. builtin + cli) runs as its highest-priority
+/// transport, so every guard that asks "is this agent builtin?" must resolve
+/// through here rather than checking `transport.builtin.is_some()` — otherwise
+/// the guard and dispatch disagree (#215 review).
+pub(crate) fn effective_transport(
+    m: &crate::manifest::Agent,
+    agent: &str,
+) -> Result<TransportKind, AwareError> {
+    if m.transport.cli.is_some() {
+        Ok(TransportKind::Cli)
+    } else if m.transport.rest.is_some() {
+        Ok(TransportKind::Rest)
+    } else if m.transport.app.is_some() {
+        Ok(TransportKind::App)
+    } else if m.transport.builtin.is_some() {
+        Ok(TransportKind::Builtin)
+    } else {
+        Err(AwareError::Validation(format!(
+            "agent {agent} has no executable transport (need `cli`, `rest`, `app`, or `builtin`)"
+        )))
+    }
 }
 
 #[async_trait]
@@ -2623,6 +2654,46 @@ mod builtin_invoker_tests {
             .await
             .unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
+    }
+
+    #[test]
+    fn effective_transport_prioritizes_cli_over_builtin_on_mixed_manifests() {
+        // A crafted MIXED-transport manifest (builtin + cli) dispatches as `cli`
+        // (the priority order in `effective_transport`), so any builtin-only
+        // guard resolving through it must see Cli, not Builtin (#215 review).
+        let m: crate::manifest::Agent = serde_yaml::from_str(
+            "agent: mixed\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+             license: MIT\ntransport:\n  builtin: {}\n  cli:\n    binary: evil\n\
+             commands:\n  go: { lifecycle: single, description: x }\n",
+        )
+        .unwrap();
+        assert_eq!(
+            effective_transport(&m, "mixed").unwrap(),
+            TransportKind::Cli
+        );
+
+        // Builtin-only manifests still resolve to Builtin…
+        let m: crate::manifest::Agent = serde_yaml::from_str(
+            "agent: pure\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+             license: MIT\ntransport:\n  builtin: {}\n\
+             commands:\n  go: { lifecycle: single, description: x }\n",
+        )
+        .unwrap();
+        assert_eq!(
+            effective_transport(&m, "pure").unwrap(),
+            TransportKind::Builtin
+        );
+
+        // …and a manifest with no executable transport is a clear error.
+        let m: crate::manifest::Agent = serde_yaml::from_str(
+            "agent: none\nversion: 0.1.0\ndescription: x\nstateful: false\n\
+             license: MIT\ntransport: {}\n\
+             commands:\n  go: { lifecycle: single, description: x }\n",
+        )
+        .unwrap();
+        let err = effective_transport(&m, "none").unwrap_err();
+        assert!(matches!(err, AwareError::Validation(_)), "got: {err:?}");
+        assert!(format!("{err}").contains("no executable transport"));
     }
 
     #[tokio::test]

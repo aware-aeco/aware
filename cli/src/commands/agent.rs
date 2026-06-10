@@ -160,7 +160,9 @@ async fn invoke_cmd(
     command: &str,
     inputs: Option<&str>,
 ) -> Result<(), AwareError> {
-    use crate::runtime::invoker::{AgentInvoker, BuiltinInvoker};
+    use crate::runtime::invoker::{
+        AgentInvoker, BuiltinInvoker, TransportKind, effective_transport,
+    };
 
     let started = Instant::now();
     let manifest_path = ctx.paths.agents_dir().join(agent_id).join("manifest.yaml");
@@ -170,16 +172,14 @@ async fn invoke_cmd(
         )));
     }
     let m = crate::manifest::loader::load_agent(&manifest_path)?;
-    if m.transport.builtin.is_none() {
-        let kind = if m.transport.cli.is_some() {
-            "cli"
-        } else if m.transport.rest.is_some() {
-            "rest"
-        } else if m.transport.app.is_some() {
-            "app"
-        } else {
-            "non-builtin"
-        };
+    // Resolve the EFFECTIVE transport through the same priority order workflow
+    // dispatch uses (cli > rest > app > builtin) — NOT a bare `builtin` probe.
+    // A crafted MIXED-transport manifest (builtin + cli/rest/app) dispatches as
+    // its higher-priority transport, so it must be refused here too; otherwise
+    // this guard and dispatch would disagree (#215 Codex review).
+    let kind = effective_transport(&m, agent_id)?;
+    if kind != TransportKind::Builtin {
+        let kind = kind.as_str();
         return Err(AwareError::Validation(format!(
             "agent invoke is builtin-only: '{agent_id}' has a `{kind}` transport. Builtin \
              agents run in-process as pure functions (no credentials, no child processes); \

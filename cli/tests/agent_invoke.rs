@@ -228,6 +228,33 @@ fn invoke_non_builtin_agent_is_refused_clearly() {
 }
 
 #[test]
+fn invoke_mixed_transport_manifest_is_refused_like_dispatch() {
+    // A crafted manifest declaring BOTH builtin and cli would pass a naive
+    // `transport.builtin.is_some()` probe — but workflow dispatch resolves
+    // transports in priority order (cli > rest > app > builtin), so it runs as
+    // `cli`. The invoke guard must resolve the same way and refuse (#215 review).
+    let tmp = tempfile::tempdir().unwrap();
+    let dir = tmp.path().join("agents").join("mixed");
+    std::fs::create_dir_all(&dir).unwrap();
+    std::fs::write(
+        dir.join("manifest.yaml"),
+        "agent: mixed\nversion: 0.1.0\ndescription: mixed transports\nstateful: false\n\
+         license: MIT\ntransport:\n  builtin: {}\n  cli:\n    binary: some-binary\n\
+         commands:\n  go: { lifecycle: single, description: x }\n",
+    )
+    .unwrap();
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", tmp.path())
+        .args(["agent", "invoke", "mixed", "go"])
+        .assert()
+        .failure()
+        .code(3) // Validation
+        .stderr(predicate::str::contains("builtin-only"))
+        .stderr(predicate::str::contains("`cli` transport"));
+}
+
+#[test]
 fn invoke_unknown_agent_exits_not_found() {
     let tmp = tempfile::tempdir().unwrap();
     Command::cargo_bin("aware")
