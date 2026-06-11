@@ -485,12 +485,19 @@ internal static class Program
     // the run's NodeStart/NodeOutput events (#143 precedent); listening and
     // model-load are emitted as stderr breadcrumbs (see WriteDiagnostic).
     //
-    // Threading: Tekla raises `ModelObjectChanged` asynchronously on a worker
-    // thread (see skills/event-threading.md and the Events catalog), so the
-    // handler can fire concurrently — every stdout write is serialized under
-    // `_watchConsoleLock`. The bridge is headless (no UI), so no WPF/WinForms
-    // dispatcher marshaling is needed; we just keep the process alive on the
-    // stop signal while the worker thread emits.
+    // Root cause of the original "zero live events" bug (#219): the bridge bound
+    // `ModelObjectChanged` with a reflection-emitted DynamicMethod delegate, and
+    // Tekla's Open API simply does not deliver to one — `Register()` succeeds but
+    // the callback never fires. A REAL-method delegate receives fine (verified
+    // live against Tekla 2025 + 2026), so RunWatchLoop now binds via
+    // Delegate.CreateDelegate (see BindEventHandler). NO message pump, STA thread,
+    // or SynchronizationContext is involved: Tekla raises the handler on its own
+    // async thread (Open API Events docs: handlers run "asynchronously" and are
+    // "not guaranteed in the same thread where registered"), so the bridge just
+    // keeps the (MTA) process alive on a wait handle — the same shape Tekla's own
+    // standalone event apps and FloLess's TeklaBridge use. Because the handler
+    // can fire on a Tekla worker thread, every stdout write stays serialized
+    // under `_watchConsoleLock`.
     internal static int Watch(ParsedArgs args)
     {
         string filter = "all";
@@ -520,12 +527,16 @@ internal static class Program
                 filter = input?["filter"]?.GetValue<string>() ?? filter;
                 selfTest = ReadBool(input, "self_test") || ReadBool(input, "self-test");
                 _watchIncludeDeleted = ReadBool(input, "include_deleted") || ReadBool(input, "include-deleted");
+                ParseEventSelection(input?["events"]);
                 version ??= input?["version"]?.GetValue<string>();
             }
+            else ParseEventSelection(null);
         }
+        else ParseEventSelection(null);
 
         filter = (filter ?? "all").Trim().ToLowerInvariant();
         _watchFilter = filter;
+        _watchDebug = Environment.GetEnvironmentVariable("AWARE_TEKLA_WATCH_DEBUG") == "1";
 
         // Offline self-test path: exercise the full listening → filter → fired
         // emit pipeline with synthetic changes, no live Tekla. This is what the
@@ -585,6 +596,24 @@ internal static class Program
                 return 1;
             }
 
+            if (_watchDebug)
+            {
+                string? modelName = null;
+                try
+                {
+                    var info = modelType.GetMethod("GetInfo")?.Invoke(model, null);
+                    modelName = info?.GetType().GetProperty("ModelName")?.GetValue(info)?.ToString();
+                }
+                catch { /* best effort */ }
+                WriteDiagnostic(new JsonObject
+                {
+                    ["signal"]       = "debug",
+                    ["msg"]          = "connected",
+                    ["model"]        = modelName,
+                    ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+                });
+            }
+
             return RunWatchLoop(modelType.Assembly, filter);
         }
         finally
@@ -593,9 +622,21 @@ internal static class Program
         }
     }
 
-    // Register the model event handlers and block until Tekla exits (or the
-    // transport kills us). Kept NoInlining for the same JIT/AssemblyResolve
-    // ordering reason as the exec path.
+    // Register the model event handlers, then block until Tekla exits (or the
+    // transport kills the child). Tekla delivers ModelObjectChanged to an
+    // out-of-process subscriber on its own async thread — NOT via a message pump,
+    // and not necessarily on the registering thread (per the Open API Events
+    // docs) — so the bridge just keeps the process alive on a wait handle, the
+    // same shape Tekla's own standalone event apps use.
+    //
+    // The one hard requirement (#219): the handler must be a REAL-method delegate.
+    // Tekla does not deliver to a reflection-emitted DynamicMethod delegate (it
+    // registers and Register() succeeds, but the callback never fires), so the
+    // handlers are bound with Delegate.CreateDelegate to real static methods —
+    // ModelObjectChanged's `List<ChangeData>` parameter binds to
+    // OnModelObjectChanged(object) by reference contravariance, verified live.
+    //
+    // Kept NoInlining for the same JIT/AssemblyResolve ordering reason as exec.
     [MethodImpl(MethodImplOptions.NoInlining)]
     static int RunWatchLoop(Assembly modelAsm, string filter)
     {
@@ -610,27 +651,61 @@ internal static class Program
         var loadEvent    = eventsType.GetEvent("ModelLoad");
         var exitEvent    = eventsType.GetEvent("TeklaStructuresExit");
 
-        // ModelObjectChanged carries `List<ChangeData>` — forward arg0 to our
-        // typeless handler. Load/exit carry no payload we need, so reuse the
-        // arg-ignoring dynamic handler.
-        var changedHandler = BuildForwardingHandler(changedEvent, nameof(OnModelObjectChanged));
-        var loadHandler    = BuildDynamicHandler(loadEvent, nameof(SignalModelLoad));
-        var exitHandler    = BuildDynamicHandler(exitEvent, nameof(SignalWatchStop));
+        // Bind real static methods (see BindEventHandler). ModelObjectChanged's
+        // List<ChangeData> binds to OnModelObjectChanged(object) contravariantly;
+        // the no-arg lifecycle events bind to their void() signallers.
+        // ModelObjectChanged keeps its rich `fired` handler; ModelLoad and
+        // TeklaStructuresExit are infrastructure (a stderr breadcrumb and the stop
+        // signal) and are always bound. The `fired` stream is gated on selection.
+        var changedHandler = IsEventSelected("ModelObjectChanged")
+            ? BindEventHandler(changedEvent, nameof(OnModelObjectChanged)) : null;
+        var loadHandler    = BindEventHandler(loadEvent, nameof(SignalModelLoad));
+        var exitHandler    = BindEventHandler(exitEvent, nameof(SignalWatchStop));
 
         if (changedHandler is not null) changedEvent!.AddEventHandler(eventsInstance, changedHandler);
         if (loadHandler is not null) loadEvent!.AddEventHandler(eventsInstance, loadHandler);
         if (exitHandler is not null) exitEvent!.AddEventHandler(eventsInstance, exitHandler);
+
+        // Every OTHER selected Tekla event is bound generically (real-method
+        // closed-delegate emitters — see BindGenericEvent) and streamed as a
+        // `{"signal":"event", …}` record. `events: all` (or a name list) widens
+        // coverage to the whole Events surface; the default is ModelObjectChanged.
+        var genericHandlers = new List<(EventInfo Ev, Delegate Handler)>();
+        var boundNames = new List<string>();
+        foreach (var ev in eventsType.GetEvents())
+        {
+            var nm = ev.Name;
+            if (nm is "ModelObjectChanged" or "ModelLoad" or "TeklaStructuresExit") continue;
+            if (!IsEventSelected(nm)) continue;
+            var h = BindGenericEvent(ev);
+            if (h is null) continue;
+            ev.AddEventHandler(eventsInstance, h);
+            genericHandlers.Add((ev, h));
+            boundNames.Add(nm);
+        }
+
         eventsType.GetMethod("Register")?.Invoke(eventsInstance, null);
+
+        if (_watchDebug)
+            WriteDiagnostic(new JsonObject
+            {
+                ["signal"]        = "debug",
+                ["msg"]           = "registered",
+                ["apartment"]     = System.Threading.Thread.CurrentThread.GetApartmentState().ToString(),
+                ["changed_bound"] = changedHandler is not null,
+                ["generic_events"] = string.Join(",", boundNames),
+                ["delivered_at"]  = DateTime.UtcNow.ToString("o"),
+            });
 
         EmitListening(filter);
 
         try
         {
-            // Block until TeklaStructuresExit sets the signal. The runtime's
-            // streaming transport stops a watcher by killing the child process
-            // (see cli/src/runtime/invoker.rs), so a hard kill is the common
-            // exit; reacting to Tekla's own exit lets us shut down cleanly when
-            // the host goes away instead of lingering as a zombie watcher.
+            // Keep the process alive until TeklaStructuresExit sets the signal.
+            // The runtime's streaming transport stops a watcher by killing the
+            // child process (see cli/src/runtime/invoker.rs), so a hard kill is the
+            // common exit; reacting to Tekla's own exit lets us shut down cleanly
+            // when the host goes away instead of lingering as a zombie watcher.
             _watchStopSignal.Wait();
         }
         finally
@@ -640,6 +715,7 @@ internal static class Program
                 if (changedHandler is not null) changedEvent!.RemoveEventHandler(eventsInstance, changedHandler);
                 if (loadHandler is not null) loadEvent!.RemoveEventHandler(eventsInstance, loadHandler);
                 if (exitHandler is not null) exitEvent!.RemoveEventHandler(eventsInstance, exitHandler);
+                foreach (var (ev, h) in genericHandlers) ev.RemoveEventHandler(eventsInstance, h);
                 eventsType.GetMethod("UnRegister")?.Invoke(eventsInstance, null);
             }
             catch { /* best-effort cleanup — the host may already be gone */ }
@@ -647,6 +723,142 @@ internal static class Program
         }
         return 0;
     }
+
+    // Bind a Tekla event to a REAL static method via Delegate.CreateDelegate.
+    // CreateDelegate's relaxed (variant) matching lets a method with `object`
+    // parameters bind to Tekla's concrete delegate types (e.g. the
+    // List<ChangeData> of ModelObjectChanged) by reference contravariance, and
+    // no-arg signallers bind to no-arg event delegates. Crucially the result is
+    // a real-method delegate, which — unlike a reflection-emitted DynamicMethod —
+    // Tekla actually invokes (#219). Returns null if the signatures are
+    // incompatible on this Tekla version (best-effort, never throws).
+    internal static Delegate? BindEventHandler(EventInfo? eventInfo, string methodName)
+    {
+        if (eventInfo?.EventHandlerType is null) return null;
+        var method = typeof(Program).GetMethod(
+            methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+        if (method is null) return null;
+        try { return Delegate.CreateDelegate(eventInfo.EventHandlerType, method); }
+        catch { return null; }
+    }
+
+    // Bind any Tekla event to a generic real-method emitter, closing the event's
+    // NAME into arg0 via Delegate.CreateDelegate(type, firstArgument, method) so a
+    // single method covers every event of a given parameter shape. The remaining
+    // parameters map to the event's own args (reference types bind to `object` by
+    // contravariance; value-typed shapes need an exact-typed emitter). Exotic
+    // shapes we don't model (e.g. (int,int,enum)) are skipped — best-effort, never
+    // throws. Like BindEventHandler, the result is a REAL-method delegate so Tekla
+    // actually delivers to it (#219).
+    internal static Delegate? BindGenericEvent(EventInfo ev)
+    {
+        var invoke = ev.EventHandlerType?.GetMethod("Invoke");
+        if (invoke is null) return null;
+        var ps = invoke.GetParameters();
+        string? methodName = ps.Length switch
+        {
+            0 => nameof(EmitEv0),
+            1 when !ps[0].ParameterType.IsValueType => nameof(EmitEv1),
+            1 when ps[0].ParameterType == typeof(int) => nameof(EmitEvInt),
+            3 when ps[0].ParameterType == typeof(string)
+                && ps[1].ParameterType == typeof(string)
+                && ps[2].ParameterType == typeof(bool) => nameof(EmitEvCmd),
+            _ => null,
+        };
+        if (methodName is null) return null;
+        var m = typeof(Program).GetMethod(
+            methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+        if (m is null) return null;
+        try { return Delegate.CreateDelegate(ev.EventHandlerType!, ev.Name, m); }
+        catch { return null; }
+    }
+
+    // Generic emitters. arg0 (`name`) is fixed at bind time (closed delegate); the
+    // remaining parameters are the Tekla event's own. Internal so tests can bind
+    // them directly. Reading deep Tekla state from the callback thread risks
+    // re-entrancy, so these stay to the primitive args the delegate already hands us.
+    internal static void EmitEv0(string name) => EmitEventRecord(name, null);
+    internal static void EmitEv1(string name, object? a) => EmitEventRecord(name, DescribeArg(a));
+    internal static void EmitEvInt(string name, int a) => EmitEventRecord(name, JsonValue.Create(a));
+    internal static void EmitEvCmd(string name, string command, string param, bool status) =>
+        EmitEventRecord(name, new JsonObject
+        {
+            ["command"] = command,
+            ["param"]   = param,
+            ["active"]  = status,
+        });
+
+    // A non-`fired` event record on the stdout data stream — same channel as
+    // `fired`, discriminated by `signal`/`event` so downstream nodes can route.
+    static void EmitEventRecord(string eventName, JsonNode? data)
+    {
+        WriteJsonLine(new JsonObject
+        {
+            ["signal"]       = "event",
+            ["event"]        = eventName,
+            ["data"]         = data,
+            ["host"]         = "tekla",
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        });
+    }
+
+    // Best-effort, allocation-light description of a single event argument without
+    // re-entering Tekla: strings pass through, collections report their count, and
+    // an object exposing an Identifier.GUID (or GUID) reports type + guid.
+    internal static JsonNode? DescribeArg(object? a)
+    {
+        if (a is null) return null;
+        if (a is string s) return JsonValue.Create(s);
+        if (a is System.Collections.ICollection col) return new JsonObject { ["count"] = col.Count };
+        var guid = TryGetGuid(a) ?? a.GetType().GetProperty("GUID")?.GetValue(a)?.ToString();
+        if (!string.IsNullOrEmpty(guid))
+            return new JsonObject { ["type"] = a.GetType().Name, ["guid"] = guid };
+        return JsonValue.Create(a.ToString());
+    }
+
+    // ── event selection (`events` config) ───────────────────────────────────────
+    // Which Tekla events the watch streams. Default: ModelObjectChanged only (the
+    // historical behavior). `events: "all"` widens to the whole Events surface;
+    // `events: ["ModelSave", "model-object-changed", …]` selects by name (kebab or
+    // PascalCase, case-insensitive). Names are stored normalized (alphanumerics,
+    // lower-cased) so spelling/casing variations all match.
+    internal static bool _watchEventsAll;
+    internal static HashSet<string> _watchEvents = new(StringComparer.Ordinal);
+
+    internal static void ParseEventSelection(JsonNode? node)
+    {
+        _watchEventsAll = false;
+        _watchEvents = new HashSet<string>(StringComparer.Ordinal);
+
+        void Add(string? raw)
+        {
+            if (string.IsNullOrWhiteSpace(raw)) return;
+            if (raw!.Trim().Equals("all", StringComparison.OrdinalIgnoreCase)) { _watchEventsAll = true; return; }
+            _watchEvents.Add(NormalizeEventName(raw));
+        }
+
+        if (node is JsonArray arr)
+        {
+            foreach (var n in arr)
+            {
+                try { Add(n?.GetValue<string>()); } catch { /* skip non-string entries */ }
+            }
+        }
+        else if (node is not null)
+        {
+            try { Add(node.GetValue<string>()); } catch { /* not a string scalar */ }
+        }
+
+        // Default to the model-change stream when nothing usable was supplied.
+        if (!_watchEventsAll && _watchEvents.Count == 0)
+            _watchEvents.Add(NormalizeEventName("ModelObjectChanged"));
+    }
+
+    internal static bool IsEventSelected(string teklaEventName) =>
+        _watchEventsAll || _watchEvents.Contains(NormalizeEventName(teklaEventName));
+
+    internal static string NormalizeEventName(string s) =>
+        new string(s.Where(char.IsLetterOrDigit).ToArray()).ToLowerInvariant();
 
     // Emit `listening`, then synthetic `fired` events covering the object kinds
     // the filter discriminates, so the filter + emit path is verifiable without
@@ -686,6 +898,15 @@ internal static class Program
     // the stream, so each is wrapped.
     internal static void OnModelObjectChanged(object? changes)
     {
+        if (_watchDebug)
+            WriteDiagnostic(new JsonObject
+            {
+                ["signal"]       = "debug",
+                ["msg"]          = "ModelObjectChanged fired",
+                ["apartment"]    = System.Threading.Thread.CurrentThread.GetApartmentState().ToString(),
+                ["payload_type"] = changes?.GetType().FullName,
+                ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+            });
         if (changes is not System.Collections.IEnumerable list) return;
         foreach (var cd in list)
         {
@@ -932,30 +1153,6 @@ internal static class Program
             catch { return null; }
         };
         _resolverWired = true;
-    }
-
-    // Build a delegate matching `eventInfo`'s single-argument signature that
-    // forwards arg0 to the named static `void(object)` method. Used for
-    // ModelObjectChanged, whose `List<ChangeData>` payload we process
-    // reflectively (the bridge has no compile-time Tekla reference). Returns
-    // null if the event is missing or isn't single-argument.
-    static Delegate? BuildForwardingHandler(EventInfo? eventInfo, string targetMethodName)
-    {
-        if (eventInfo?.EventHandlerType is null) return null;
-        var invokeSig = eventInfo.EventHandlerType.GetMethod("Invoke")!;
-        var paramTypes = invokeSig.GetParameters().Select(p => p.ParameterType).ToArray();
-        if (paramTypes.Length != 1) return null;
-        var dyn = new System.Reflection.Emit.DynamicMethod(
-            $"{eventInfo.Name}Forward", typeof(void), paramTypes, typeof(Program), true);
-        var il = dyn.GetILGenerator();
-        // The arg is a reference type (List<ChangeData>) assignable to object,
-        // so it can be passed straight to a `void(object)` target.
-        il.Emit(System.Reflection.Emit.OpCodes.Ldarg_0);
-        il.Emit(System.Reflection.Emit.OpCodes.Call,
-            typeof(Program).GetMethod(targetMethodName, BindingFlags.NonPublic | BindingFlags.Static)
-                ?? typeof(Program).GetMethod(targetMethodName, BindingFlags.Public | BindingFlags.Static)!);
-        il.Emit(System.Reflection.Emit.OpCodes.Ret);
-        return dyn.CreateDelegate(eventInfo.EventHandlerType);
     }
 
     internal static void SignalModelLoad()
@@ -1940,6 +2137,9 @@ internal static class Program
     // Internal so the test assembly can drive OnModelObjectChanged directly.
     internal static string _watchFilter = "all";
     internal static bool _watchIncludeDeleted;
+    // Diagnostic gate (AWARE_TEKLA_WATCH_DEBUG=1) — emits stderr breadcrumbs for
+    // event-delivery debugging (#219). Off in normal runs.
+    internal static bool _watchDebug;
 
     // Static handle for ModelSave event signaling — Tekla's
     // Events.ModelSaveDelegate is `void(string modelPath)`, so the handler

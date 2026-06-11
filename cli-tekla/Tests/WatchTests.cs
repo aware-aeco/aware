@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json.Nodes;
 using Xunit;
 
@@ -307,3 +308,230 @@ public class WatchHandlerReflectionTests
 
 [CollectionDefinition("WatchConsole", DisableParallelization = true)]
 public class WatchConsoleCollection { }
+
+/// <summary>
+/// Regression tests for #219 — <c>tekla.watch</c> received zero live events
+/// because the watcher bound <c>ModelObjectChanged</c> with a reflection-emitted
+/// <c>DynamicMethod</c> delegate, and Tekla's Open API does not invoke one
+/// (<c>Register()</c> succeeds but the callback never fires). The fix binds a
+/// REAL static method via <see cref="Program.BindEventHandler"/> /
+/// <c>Delegate.CreateDelegate</c>, whose <c>List&lt;ChangeData&gt;</c> parameter
+/// is satisfied by <c>OnModelObjectChanged(object)</c> through reference
+/// contravariance.
+///
+/// These lock in the binding mechanism Tekla-free: a fake event whose delegate
+/// takes <c>List&lt;FakeChange&gt;</c> (mirroring Tekla's <c>List&lt;ChangeData&gt;</c>)
+/// must bind to the real <c>object</c>-param handler, and the resulting delegate
+/// must be a real MethodInfo (NOT a DynamicMethod — the thing that broke).
+/// </summary>
+public class WatchHandlerBindingTests
+{
+    public sealed class FakeChange
+    {
+        public int Type { get; set; }
+        public object? Object { get; set; }
+    }
+
+    public delegate void FakeModelObjectChangedDelegate(System.Collections.Generic.List<FakeChange> changes);
+    public delegate void FakeNoArgDelegate();
+    public delegate void FakeIntDelegate(int value);
+    public delegate void FakeCmdDelegate(string command, string param, bool status);
+
+    // A stand-in for Tekla.Structures.Model.Events: events mirroring the parameter
+    // shapes the generic emitters cover — a List<> arg, no args, an int, and the
+    // (string,string,bool) of CommandStatusChange.
+    public sealed class FakeEvents
+    {
+        public event FakeModelObjectChangedDelegate? Changed;
+        public event FakeNoArgDelegate? Loaded;
+        public event FakeIntDelegate? IntEvent;
+        public event FakeCmdDelegate? CmdEvent;
+
+        public void RaiseChanged(System.Collections.Generic.List<FakeChange> changes) => Changed?.Invoke(changes);
+        public void RaiseLoaded() => Loaded?.Invoke();
+        public void RaiseInt(int v) => IntEvent?.Invoke(v);
+        public void RaiseCmd(string c, string p, bool s) => CmdEvent?.Invoke(c, p, s);
+    }
+
+    [Fact]
+    public void BindEventHandler_BindsRealMethod_ToConcreteListDelegate_ViaContravariance()
+    {
+        var ev = typeof(FakeEvents).GetEvent(nameof(FakeEvents.Changed));
+        var handler = Program.BindEventHandler(ev, nameof(Program.OnModelObjectChanged));
+
+        Assert.NotNull(handler);
+        // The decisive property the bug violated: the delegate targets a REAL
+        // declared method on Program (a DynamicMethod-backed delegate, which Tekla
+        // won't invoke, has no such DeclaringType/Name).
+        Assert.Equal(typeof(Program), handler!.Method.DeclaringType);
+        Assert.Equal(nameof(Program.OnModelObjectChanged), handler.Method.Name);
+        Assert.IsType<FakeModelObjectChangedDelegate>(handler);
+    }
+
+    [Fact]
+    public void BoundHandler_ActuallyFires_WhenTheEventIsRaised()
+    {
+        // Subscribe the bound real-method delegate exactly as RunWatchLoop does,
+        // raise the event, and confirm OnModelObjectChanged ran end-to-end —
+        // emitting a `fired` line for the changed object.
+        var ev = typeof(FakeEvents).GetEvent(nameof(FakeEvents.Changed))!;
+        var handler = Program.BindEventHandler(ev, nameof(Program.OnModelObjectChanged))!;
+        var host = new FakeEvents();
+        ev.AddEventHandler(host, handler);
+
+        var originalOut = Console.Out;
+        try
+        {
+            Program._watchFilter = "all";
+            Program._watchIncludeDeleted = false;
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+
+            host.RaiseChanged(new System.Collections.Generic.List<FakeChange>
+            {
+                new() { Type = 0, Object = new ChangeObj() }, // OBJECT_INSERT
+            });
+
+            var lines = sw.ToString().Split('\n').Select(l => l.Trim()).Where(l => l.Length > 0).ToArray();
+            var fired = JsonNode.Parse(Assert.Single(lines))!;
+            Assert.Equal("fired", fired["signal"]!.GetValue<string>());
+            Assert.Equal("added", fired["change"]!.GetValue<string>());
+            Assert.Equal("ChangeObj", fired["type"]!.GetValue<string>());
+        }
+        finally
+        {
+            Console.SetOut(originalOut);
+            ev.RemoveEventHandler(host, handler);
+            Program._watchFilter = "all";
+        }
+    }
+
+    // Duck-typed like a Tekla ModelObject: an Identifier.GUID the handler reads.
+    public sealed class ChangeObj
+    {
+        public Ident Identifier { get; } = new Ident();
+        public sealed class Ident { public Guid GUID { get; } = Guid.NewGuid(); }
+    }
+
+    [Fact]
+    public void BindEventHandler_BindsNoArgSignaller_ToNoArgDelegate()
+    {
+        var ev = typeof(FakeEvents).GetEvent(nameof(FakeEvents.Loaded));
+        var handler = Program.BindEventHandler(ev, nameof(Program.SignalModelLoad));
+
+        Assert.NotNull(handler);
+        Assert.Equal(typeof(Program), handler!.Method.DeclaringType);
+        Assert.Equal(nameof(Program.SignalModelLoad), handler.Method.Name);
+        Assert.IsType<FakeNoArgDelegate>(handler);
+    }
+
+    [Fact]
+    public void BindEventHandler_ReturnsNull_OnMissingEventOrMethod()
+    {
+        Assert.Null(Program.BindEventHandler(null, nameof(Program.OnModelObjectChanged)));
+        var ev = typeof(FakeEvents).GetEvent(nameof(FakeEvents.Changed));
+        Assert.Null(Program.BindEventHandler(ev, "NoSuchMethodOnProgram"));
+    }
+}
+
+/// <summary>
+/// Coverage of the full Tekla Events surface: parsing the <c>events</c> selection
+/// and binding arbitrary event shapes to generic real-method emitters via a
+/// closed-delegate (the event name is fixed into arg0). Stdout-driven, so these
+/// run in the serialized WatchConsole collection.
+/// </summary>
+[Collection("WatchConsole")]
+public class WatchEventCoverageTests
+{
+    static JsonNode[] CaptureRaised(EventInfo ev, Action<WatchHandlerBindingTests.FakeEvents> raise)
+    {
+        var host = new WatchHandlerBindingTests.FakeEvents();
+        var handler = Program.BindGenericEvent(ev);
+        Assert.NotNull(handler);
+        // The decisive #219 property: a real-method delegate, not a DynamicMethod.
+        Assert.Equal(typeof(Program), handler!.Method.DeclaringType);
+        ev.AddEventHandler(host, handler);
+
+        var originalOut = Console.Out;
+        try
+        {
+            var sw = new StringWriter();
+            Console.SetOut(sw);
+            raise(host);
+            return sw.ToString().Split('\n').Select(l => l.Trim()).Where(l => l.Length > 0)
+                .Select(l => JsonNode.Parse(l)!).ToArray();
+        }
+        finally
+        {
+            Console.SetOut(originalOut);
+            ev.RemoveEventHandler(host, handler);
+        }
+    }
+
+    [Fact]
+    public void GenericBind_NoArgEvent_EmitsEventRecordWithName()
+    {
+        var ev = typeof(WatchHandlerBindingTests.FakeEvents).GetEvent("Loaded")!;
+        var line = Assert.Single(CaptureRaised(ev, h => h.RaiseLoaded()));
+        Assert.Equal("event", line["signal"]!.GetValue<string>());
+        Assert.Equal("Loaded", line["event"]!.GetValue<string>());
+        Assert.Null(line["data"]);
+    }
+
+    [Fact]
+    public void GenericBind_IntEvent_ClosedDelegateCarriesValueTypeArg()
+    {
+        // Value-type remaining parameter through a closed delegate — the binding
+        // path that contravariance can't cover. Proves EmitEvInt(string,int) works.
+        var ev = typeof(WatchHandlerBindingTests.FakeEvents).GetEvent("IntEvent")!;
+        var line = Assert.Single(CaptureRaised(ev, h => h.RaiseInt(42)));
+        Assert.Equal("event", line["signal"]!.GetValue<string>());
+        Assert.Equal("IntEvent", line["event"]!.GetValue<string>());
+        Assert.Equal(42, line["data"]!.GetValue<int>());
+    }
+
+    [Fact]
+    public void GenericBind_RefArgEvent_DescribesCollectionCount()
+    {
+        var ev = typeof(WatchHandlerBindingTests.FakeEvents).GetEvent("Changed")!;
+        var line = Assert.Single(CaptureRaised(ev, h => h.RaiseChanged(
+            new System.Collections.Generic.List<WatchHandlerBindingTests.FakeChange> { new(), new(), new() })));
+        Assert.Equal("Changed", line["event"]!.GetValue<string>());
+        Assert.Equal(3, line["data"]!["count"]!.GetValue<int>());
+    }
+
+    [Fact]
+    public void GenericBind_CommandStatusShape_EmitsStructuredData()
+    {
+        var ev = typeof(WatchHandlerBindingTests.FakeEvents).GetEvent("CmdEvent")!;
+        var line = Assert.Single(CaptureRaised(ev, h => h.RaiseCmd("weld", "create", true)));
+        Assert.Equal("CmdEvent", line["event"]!.GetValue<string>());
+        Assert.Equal("weld", line["data"]!["command"]!.GetValue<string>());
+        Assert.Equal("create", line["data"]!["param"]!.GetValue<string>());
+        Assert.True(line["data"]!["active"]!.GetValue<bool>());
+    }
+
+    [Theory]
+    [InlineData(null, "ModelObjectChanged", true)]    // default selection
+    [InlineData(null, "ModelSave", false)]
+    [InlineData("all", "ViewClosed", true)]           // wildcard covers everything
+    [InlineData("all", "ModelObjectChanged", true)]
+    public void EventSelection_ScalarStringOrDefault(string? sel, string probe, bool expected)
+    {
+        Program.ParseEventSelection(sel is null ? null : JsonValue.Create(sel));
+        Assert.Equal(expected, Program.IsEventSelected(probe));
+    }
+
+    [Fact]
+    public void EventSelection_ListMatchesByNameRegardlessOfCasingOrSeparators()
+    {
+        var arr = new JsonArray("model-save", "ModelObjectChanged", "CLASH_DETECTED");
+        Program.ParseEventSelection(arr);
+
+        Assert.True(Program.IsEventSelected("ModelSave"));        // kebab → Pascal
+        Assert.True(Program.IsEventSelected("modelobjectchanged")); // casing
+        Assert.True(Program.IsEventSelected("ClashDetected"));   // snake → Pascal
+        Assert.False(Program.IsEventSelected("ViewClosed"));     // not selected
+        Assert.False(Program.IsEventSelected("ModelLoad"));
+    }
+}

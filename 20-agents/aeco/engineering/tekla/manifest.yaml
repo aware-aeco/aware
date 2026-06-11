@@ -125,33 +125,46 @@ commands:
   watch:
     lifecycle: start
     category: curated
-    description: Subscribe to ModelObjectChanged events on the active Tekla model.
+    description: Subscribe to live Tekla model events on the active model (ModelObjectChanged by default; opt into the full Events surface with `events`).
     inputs:
       filter:
         type: enum
         values: [all, welded, bolted, assembly]
         default: all
         # Matches the changed object's kind: welded→Weld objects,
-        # bolted→Bolt* objects, assembly→Assembly. (Drawing changes are not
-        # surfaced by ModelObjectChanged — they need Tekla.Structures.Drawing
-        # events, a separate stream not yet wired here.)
+        # bolted→Bolt* objects, assembly→Assembly. Applies to the ModelObjectChanged
+        # `fired` stream only. (Drawing changes are not surfaced by
+        # ModelObjectChanged — they need Tekla.Structures.Drawing events, a separate
+        # stream not yet wired here.)
       include-deleted:
         type: boolean
         default: false
         description: Also emit on OBJECT_DELETE (removed). Default drops deletions.
+      events:
+        type: string-or-list
+        default: ModelObjectChanged
+        # Which Tekla.Structures.Model.Events to stream. Default = ModelObjectChanged
+        # (the `fired` model-change stream). Pass "all" for every supported event, or
+        # a list of event names (case-insensitive; kebab/PascalCase both match), e.g.
+        # ["ModelObjectChanged", "model-save", "ClashDetected"]. Non-change events are
+        # emitted as {"signal":"event", "event":<Name>, "data":…} records. A few
+        # exotic signatures (ClipPlaneChanged, TrackEvent) are not yet surfaced.
     outputs:
       type: stream
-      # The data stream carries one change event per line. Live trigger state
+      # The data stream carries one event per line. Live trigger state
       # (subscribed↔fired) is observable from the run's NodeStart/NodeOutput
       # events, not in-band (an in-band control record would propagate downstream
-      # as a phantom change).
+      # as a phantom change). Two record shapes share the stream, discriminated by
+      # `signal`: "fired" (ModelObjectChanged) and "event" (every other event).
       schema:
-        signal:   string             # always "fired" on the data stream
-        guid:     string
-        mark:     string             # NOTE: identity is Mark, never Name
-        type:     string             # changed object's runtime type (Beam, Assembly, Weld, …)
-        change:   string             # added | modified | removed
-        geometry: object             # best-effort bounding box { min, max } in the CURRENT transformation plane (= world when the work plane is global)
+        signal:   string             # "fired" (model-object change) | "event" (any other Tekla event)
+        event:    string             # on "event" records: the Tekla event name (ModelSave, SelectionChange, …)
+        data:     object             # on "event" records: the event's payload (count / value / {command,param,active} / {type,guid})
+        guid:     string             # on "fired" records
+        mark:     string             # on "fired" records — identity is Mark, never Name
+        type:     string             # on "fired" records: changed object's runtime type (Beam, Assembly, Weld, …)
+        change:   string             # on "fired" records: added | modified | removed
+        geometry: object             # on "fired" records: best-effort bounding box { min, max } in the CURRENT transformation plane (= world when the work plane is global)
 
   insert:
     lifecycle: single
