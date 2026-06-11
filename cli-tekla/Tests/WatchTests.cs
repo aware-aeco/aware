@@ -448,8 +448,10 @@ public class WatchEventCoverageTests
         var host = new WatchHandlerBindingTests.FakeEvents();
         var handler = Program.BindGenericEvent(ev);
         Assert.NotNull(handler);
-        // The decisive #219 property: a real-method delegate, not a DynamicMethod.
-        Assert.Equal(typeof(Program), handler!.Method.DeclaringType);
+        // The decisive property: an INSTANCE-method delegate on the emitter (the
+        // shape Tekla invokes), not a closed-static or DynamicMethod delegate.
+        Assert.Equal(typeof(Program.GenericEventEmitter), handler!.Method.DeclaringType);
+        Assert.IsType<Program.GenericEventEmitter>(handler.Target);
         ev.AddEventHandler(host, handler);
 
         var originalOut = Console.Out;
