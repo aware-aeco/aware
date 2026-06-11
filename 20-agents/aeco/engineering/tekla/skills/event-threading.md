@@ -55,24 +55,26 @@ Worker-thread events can fire in rapid bursts (e.g. a bulk paste of 500 assembli
 
 The agent's `watch` command currently emits one event per change (no debounce). For bursty models, debounce or batch downstream — apply it in the consuming node rather than relying on the source.
 
-## Out-of-process subscribers: the handler must be a REAL-method delegate
+## Out-of-process subscribers: two hard requirements (delegate shape + message pump)
 
-A subscriber in a **separate process** (e.g. the `aware-tekla` bridge's `watch`) receives Tekla events fine — Tekla raises them on its own async thread and invokes your delegate directly. There is **no message-pump or STA requirement** (a plain MTA console that blocks on a wait handle after `Register()` works; this is how FloLess's `TeklaBridge` and AWARE's `aware-tekla watch` both run).
+A subscriber in a **separate process** (e.g. the `aware-tekla` bridge's `watch`) does receive Tekla events, but two things must be right or events silently never fire. Both were learned the hard way against a live model (verified on Tekla 2025 + 2026); see [`aware-aeco/aware#219`](https://github.com/aware-aeco/aware/issues/219) and its follow-up.
 
-The non-obvious failure (and the #1 silent footgun): **Tekla never invokes a reflection-emitted `DynamicMethod` delegate.** `Events.Register()` succeeds, the connection is live, the handler is attached — and **zero events fire**, forever. A version-agnostic bridge that has no compile-time Tekla reference is tempted to build its handler with `Reflection.Emit.DynamicMethod` (to match `List<ChangeData>` reflectively); that delegate is accepted by `+=` but silently never called.
+**1. The handler must be a delegate shape Tekla actually invokes.**
 
-The fix is to bind a **real, declared method** instead:
+- ✅ **Open static** (`Delegate.CreateDelegate(type, staticMethodInfo)`, `Target == null`) — works. `OnChanged(object)` binds to `void(List<ChangeData>)` by reference contravariance.
+- ✅ **Instance method** (`events.X += obj.Handler`, or `CreateDelegate(type, instance, instanceMethodInfo)`, `Target == an object`) — works. This is what the Open API samples and FloLess's `TeklaEventManager` use.
+- ❌ **`Reflection.Emit.DynamicMethod`** — accepted by `+=`, but Tekla **never invokes it**. A version-agnostic bridge with no compile-time Tekla types is tempted to emit one; don't.
+- ❌ **Closed *static*** (`CreateDelegate(type, firstArg, staticMethodInfo)`, where `firstArg` is e.g. a string — `Target` is a string) — also **not invoked**. To carry per-event state without a closure, use an **instance** emitter object (`Target` = the object), not a string-closed static.
 
-```csharp
-// `OnChanged(object)` binds to Tekla's void(List<ChangeData>) delegate by
-// reference contravariance — and is a real MethodInfo, which Tekla delivers to.
-var d = Delegate.CreateDelegate(ev.EventHandlerType, typeof(MyBridge).GetMethod("OnChanged"));
-ev.AddEventHandler(eventsInstance, d);
-// For events with their own value-typed args, close the event name into arg0:
-//   Delegate.CreateDelegate(ev.EventHandlerType, ev.Name, miOfStaticEmitter)
-```
+**2. UI-thread events need a Windows message pump on an STA thread.**
 
-Symptom signature when it's wrong: `self_test`-style synthetic emits work (they skip `Register`), `exec`/request-response works (no events involved), but the live watch sits at `listening` with zero `fired` events. Version-independent — verified live on Tekla 2025 + 2026. Regression: [`aware-aeco/aware#219`](https://github.com/aware-aeco/aware/issues/219).
+The two event classes deliver differently:
+- **Worker-thread events** (`ModelObjectChanged`, `ConnectionInserted`, …) arrive on Tekla's own async thread — delivered to a plain MTA process with no pump.
+- **UI-thread events** (`SelectionChange`, `AnnotationSelectionChange`, `ViewClosed`, `ViewCameraChanged`, `HiddenObjectsChanged`, `TemporaryStatesChanged`, …) are posted to the **message queue** and fire **only while that thread pumps**. The Open API's own `TeklaEvents` sample is a WinForms (STA + `Application.Run`) app for exactly this reason.
+
+So a watcher that only blocks on a wait handle (MTA, no pump) gets `ModelObjectChanged` but **never** `SelectionChange`. Run the registration + handlers on a **dedicated STA thread with a message pump** (`MsgWaitForMultipleObjects` + `PeekMessage`/`TranslateMessage`/`DispatchMessage`, waiting on your stop handle alongside the queue), and both classes deliver.
+
+Symptom signatures: a `DynamicMethod`/closed-static handler → *zero* events of any kind; a real handler but no pump → `ModelObjectChanged` fires but UI events (`SelectionChange`, …) never do.
 
 ## Cross-process variant
 

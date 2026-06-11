@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Microsoft.CodeAnalysis;
@@ -614,7 +615,13 @@ internal static class Program
                 });
             }
 
-            return RunWatchLoop(modelType.Assembly, filter);
+            // Run the event loop on a dedicated STA thread with a message pump —
+            // the configuration Tekla's own standalone event sample uses. UI-thread
+            // events (SelectionChange, ViewClosed, …) are delivered through the
+            // message queue and only fire while that thread pumps; worker-thread
+            // events (ModelObjectChanged) deliver regardless. MTA-without-a-pump
+            // (the prior shape) got ModelObjectChanged but never SelectionChange.
+            return RunWatchLoopOnStaThread(modelType.Assembly, filter);
         }
         finally
         {
@@ -622,19 +629,106 @@ internal static class Program
         }
     }
 
+    // Marshal RunWatchLoop onto a dedicated STA thread (Tekla's standalone event
+    // apps are STA + message-pumped). The Events instance is created, registered,
+    // and pumped all on this one thread so UI events have a pump to ride. Faults
+    // rethrow on the caller so Main's top-level handler still reports them.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static int RunWatchLoopOnStaThread(Assembly modelAsm, string filter)
+    {
+        int rc = 0;
+        Exception? fault = null;
+        var t = new System.Threading.Thread(() =>
+        {
+            try { rc = RunWatchLoop(modelAsm, filter); }
+            catch (Exception e) { fault = e; }
+        })
+        {
+            IsBackground = false,
+            Name = "aware-tekla-watch",
+        };
+        t.SetApartmentState(System.Threading.ApartmentState.STA);
+        t.Start();
+        t.Join();
+        if (fault is not null) throw fault;
+        return rc;
+    }
+
+    // Pump the Windows message queue on the current (STA) thread until `stop` is
+    // signaled. MsgWaitForMultipleObjects wakes on a new message OR on `stop`
+    // (index 0, so stop wins) — no busy spin — and a bounded tick is a liveness
+    // safety net. This is what carries Tekla's UI-thread events to our handlers.
+    static void PumpMessagesUntil(System.Threading.WaitHandle stop)
+    {
+        var handles = new[] { stop.SafeWaitHandle.DangerousGetHandle() };
+        while (true)
+        {
+            uint r = MsgWaitForMultipleObjects(1, handles, false, PUMP_TICK_MS, QS_ALLINPUT);
+            if (r == WAIT_OBJECT_0) break;   // `stop` signaled
+            if (r == WAIT_FAILED) break;     // bail rather than spin
+            while (PeekMessage(out var msg, IntPtr.Zero, 0, 0, PM_REMOVE))
+            {
+                if (msg.Message == WM_QUIT) { GC.KeepAlive(stop); return; }
+                TranslateMessage(ref msg);
+                DispatchMessage(ref msg);
+            }
+        }
+        GC.KeepAlive(stop);
+    }
+
+    const uint PUMP_TICK_MS  = 200;
+    const uint QS_ALLINPUT   = 0x04FF;
+    const uint PM_REMOVE     = 0x0001;
+    const uint WAIT_OBJECT_0 = 0x00000000;
+    const uint WAIT_FAILED   = 0xFFFFFFFF;
+    const uint WM_QUIT       = 0x0012;
+
+#pragma warning disable CS0649 // fields populated by the P/Invoke marshaller, not C#
+    [StructLayout(LayoutKind.Sequential)]
+    struct NativeMessage
+    {
+        public IntPtr Hwnd;
+        public uint   Message;
+        public IntPtr WParam;
+        public IntPtr LParam;
+        public uint   Time;
+        public int    PtX;
+        public int    PtY;
+    }
+#pragma warning restore CS0649
+
+    [DllImport("user32.dll", SetLastError = true)]
+    static extern uint MsgWaitForMultipleObjects(
+        uint nCount, IntPtr[] pHandles, bool bWaitAll, uint dwMilliseconds, uint dwWakeMask);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    static extern bool PeekMessage(
+        out NativeMessage lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax, uint wRemoveMsg);
+
+    [DllImport("user32.dll")]
+    [return: MarshalAs(UnmanagedType.Bool)]
+    static extern bool TranslateMessage(ref NativeMessage lpMsg);
+
+    [DllImport("user32.dll")]
+    static extern IntPtr DispatchMessage(ref NativeMessage lpMsg);
+
     // Register the model event handlers, then block until Tekla exits (or the
     // transport kills the child). Tekla delivers ModelObjectChanged to an
     // out-of-process subscriber on its own async thread — NOT via a message pump,
     // and not necessarily on the registering thread (per the Open API Events
-    // docs) — so the bridge just keeps the process alive on a wait handle, the
-    // same shape Tekla's own standalone event apps use.
+    // docs). Runs on an STA thread with a Win32 message pump (see
+    // RunWatchLoopOnStaThread / PumpMessagesUntil) — the configuration Tekla's own
+    // standalone event sample uses. Worker-thread events (ModelObjectChanged)
+    // deliver regardless of the pump; UI-thread events (SelectionChange, …) are
+    // posted to the message queue and only fire while it is pumped.
     //
-    // The one hard requirement (#219): the handler must be a REAL-method delegate.
-    // Tekla does not deliver to a reflection-emitted DynamicMethod delegate (it
-    // registers and Register() succeeds, but the callback never fires), so the
-    // handlers are bound with Delegate.CreateDelegate to real static methods —
-    // ModelObjectChanged's `List<ChangeData>` parameter binds to
-    // OnModelObjectChanged(object) by reference contravariance, verified live.
+    // Two hard requirements:
+    //  1. (#219) the handler must be a REAL-method delegate — Tekla does not invoke
+    //     a reflection-emitted DynamicMethod delegate. ModelObjectChanged binds to
+    //     OnModelObjectChanged(object) by contravariance; generic events bind to a
+    //     per-event instance emitter (see BindEventHandler / BindGenericEvent).
+    //  2. the STA message pump above, for UI-thread events.
     //
     // Kept NoInlining for the same JIT/AssemblyResolve ordering reason as exec.
     [MethodImpl(MethodImplOptions.NoInlining)]
@@ -701,12 +795,14 @@ internal static class Program
 
         try
         {
-            // Keep the process alive until TeklaStructuresExit sets the signal.
-            // The runtime's streaming transport stops a watcher by killing the
-            // child process (see cli/src/runtime/invoker.rs), so a hard kill is the
-            // common exit; reacting to Tekla's own exit lets us shut down cleanly
-            // when the host goes away instead of lingering as a zombie watcher.
-            _watchStopSignal.Wait();
+            // Pump the Windows message queue until TeklaStructuresExit sets the
+            // signal — this is what delivers UI-thread events (SelectionChange,
+            // ViewClosed, …) to this STA thread. The runtime's streaming transport
+            // stops a watcher by killing the child process (see
+            // cli/src/runtime/invoker.rs), so a hard kill is the common exit;
+            // reacting to Tekla's own exit lets us shut down cleanly when the host
+            // goes away instead of lingering as a zombie watcher.
+            PumpMessagesUntil(_watchStopSignal.WaitHandle);
         }
         finally
         {
@@ -742,14 +838,18 @@ internal static class Program
         catch { return null; }
     }
 
-    // Bind any Tekla event to a generic real-method emitter, closing the event's
-    // NAME into arg0 via Delegate.CreateDelegate(type, firstArgument, method) so a
-    // single method covers every event of a given parameter shape. The remaining
-    // parameters map to the event's own args (reference types bind to `object` by
-    // contravariance; value-typed shapes need an exact-typed emitter). Exotic
-    // shapes we don't model (e.g. (int,int,enum)) are skipped — best-effort, never
-    // throws. Like BindEventHandler, the result is a REAL-method delegate so Tekla
-    // actually delivers to it (#219).
+    // Bind any Tekla event to a generic emitter. CRITICAL (#219 follow-up): the
+    // handler must be the SAME delegate shape Tekla actually invokes — a plain
+    // INSTANCE-method delegate (Target = an object), exactly like the Open API
+    // samples' `events.SelectionChange += handler.OnX` and FloLess's
+    // TeklaEventManager. An earlier version used a *closed static* delegate
+    // (Delegate.CreateDelegate(type, eventName, staticMethod), Target = a string);
+    // ModelObjectChanged still fired (it uses an open static delegate) but the
+    // no-payload events like SelectionChange never did. Here each event gets a
+    // GenericEventEmitter instance that carries the event name, and we bind one of
+    // its instance methods by parameter shape (reference args bind to `object` by
+    // contravariance; value-typed shapes use an exact-typed method). Exotic shapes
+    // we don't model (e.g. (int,int,enum)) are skipped — best-effort, never throws.
     internal static Delegate? BindGenericEvent(EventInfo ev)
     {
         var invoke = ev.EventHandlerType?.GetMethod("Invoke");
@@ -757,36 +857,40 @@ internal static class Program
         var ps = invoke.GetParameters();
         string? methodName = ps.Length switch
         {
-            0 => nameof(EmitEv0),
-            1 when !ps[0].ParameterType.IsValueType => nameof(EmitEv1),
-            1 when ps[0].ParameterType == typeof(int) => nameof(EmitEvInt),
+            0 => nameof(GenericEventEmitter.Emit0),
+            1 when !ps[0].ParameterType.IsValueType => nameof(GenericEventEmitter.Emit1),
+            1 when ps[0].ParameterType == typeof(int) => nameof(GenericEventEmitter.EmitInt),
             3 when ps[0].ParameterType == typeof(string)
                 && ps[1].ParameterType == typeof(string)
-                && ps[2].ParameterType == typeof(bool) => nameof(EmitEvCmd),
+                && ps[2].ParameterType == typeof(bool) => nameof(GenericEventEmitter.EmitCmd),
             _ => null,
         };
         if (methodName is null) return null;
-        var m = typeof(Program).GetMethod(
-            methodName, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static);
+        var m = typeof(GenericEventEmitter).GetMethod(
+            methodName, BindingFlags.Public | BindingFlags.Instance);
         if (m is null) return null;
-        try { return Delegate.CreateDelegate(ev.EventHandlerType!, ev.Name, m); }
+        try { return Delegate.CreateDelegate(ev.EventHandlerType!, new GenericEventEmitter(ev.Name), m); }
         catch { return null; }
     }
 
-    // Generic emitters. arg0 (`name`) is fixed at bind time (closed delegate); the
-    // remaining parameters are the Tekla event's own. Internal so tests can bind
-    // them directly. Reading deep Tekla state from the callback thread risks
-    // re-entrancy, so these stay to the primitive args the delegate already hands us.
-    internal static void EmitEv0(string name) => EmitEventRecord(name, null);
-    internal static void EmitEv1(string name, object? a) => EmitEventRecord(name, DescribeArg(a));
-    internal static void EmitEvInt(string name, int a) => EmitEventRecord(name, JsonValue.Create(a));
-    internal static void EmitEvCmd(string name, string command, string param, bool status) =>
-        EmitEventRecord(name, new JsonObject
-        {
-            ["command"] = command,
-            ["param"]   = param,
-            ["active"]  = status,
-        });
+    // Per-event emitter: an instance object carrying the event name, bound to a
+    // Tekla event via an INSTANCE-method delegate (the delegate shape Tekla
+    // invokes — see BindGenericEvent). The delegate keeps this instance alive.
+    internal sealed class GenericEventEmitter
+    {
+        readonly string _name;
+        public GenericEventEmitter(string name) => _name = name;
+        public void Emit0() => EmitEventRecord(_name, null);
+        public void Emit1(object? a) => EmitEventRecord(_name, DescribeArg(a));
+        public void EmitInt(int a) => EmitEventRecord(_name, JsonValue.Create(a));
+        public void EmitCmd(string command, string param, bool status) =>
+            EmitEventRecord(_name, new JsonObject
+            {
+                ["command"] = command,
+                ["param"]   = param,
+                ["active"]  = status,
+            });
+    }
 
     // A non-`fired` event record on the stdout data stream — same channel as
     // `fired`, discriminated by `signal`/`event` so downstream nodes can route.

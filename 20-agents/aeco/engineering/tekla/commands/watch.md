@@ -2,7 +2,9 @@
 
 Stateful command. Starts a long-running subscription to Tekla model events on the active model. By default it streams `ModelObjectChanged` (one event per affected model object); the `events` input widens it to the full `Tekla.Structures.Model.Events` surface (saves, selections, numbering, clashes, view changes, …).
 
-> **How delivery works (implementation note).** Tekla raises Open-API events on its own async thread and hands the subscriber the event payload directly — there is **no** message pump or STA requirement. The one hard rule: the handler must be a **real-method delegate**. Tekla silently never invokes a reflection-emitted `DynamicMethod` delegate (this was the cause of [aware-aeco/aware#219](https://github.com/aware-aeco/aware/issues/219) — `Register()` succeeded but zero events arrived). The bridge binds every handler with `Delegate.CreateDelegate` to a real static method (the event name is closed into arg0 for the generic emitters), which Tekla delivers to. Verified live on Tekla 2025 + 2026.
+> **How delivery works (implementation note).** Two things must be right for an out-of-process watcher to receive events (both verified live on Tekla 2025 + 2026 — see the [`event-threading`](../skills/event-threading.md) skill):
+> 1. **Real-method delegate shape.** Tekla silently never invokes a reflection-emitted `DynamicMethod` *or* a closed-static delegate (this was the cause of [aware-aeco/aware#219](https://github.com/aware-aeco/aware/issues/219) — `Register()` succeeded but zero events arrived). The bridge binds `ModelObjectChanged` to a real static method by contravariance and every other event to a per-event **instance** emitter.
+> 2. **STA thread + message pump.** `ModelObjectChanged` fires on a worker thread (no pump needed), but UI-thread events (`SelectionChange`, `ViewClosed`, …) are posted to the message queue and only fire while it's pumped — exactly the WinForms/STA configuration the Open API's own `TeklaEvents` sample uses. The bridge runs registration + handlers on a dedicated STA thread with a Win32 message pump.
 
 ## Lifecycle
 
