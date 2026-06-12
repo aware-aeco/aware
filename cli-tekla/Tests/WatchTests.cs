@@ -193,6 +193,36 @@ public class WatchSelfTestEndToEndTests
         var listening = Assert.Single(stderrDiag, e => e["signal"]!.GetValue<string>() == "listening");
         Assert.Equal("all", listening["filter"]!.GetValue<string>());
     }
+
+    [Fact]
+    public void SelfTest_Once_StopsAfterTheFirstEmittedEvent()
+    {
+        try
+        {
+            // `once:true` → one-shot snapshot: fire on the FIRST event, then stop
+            // and exit. Without it the self-test emits several `fired` records
+            // (Assembly/Weld/BoltArray/Beam-modified); with it, exactly one.
+            var (fired, _) = RunWatch(@"{""self_test"":true,""filter"":""all"",""once"":true}");
+            var only = Assert.Single(fired);
+            Assert.Equal("fired", only["signal"]!.GetValue<string>());
+        }
+        finally
+        {
+            // One-shot state is process-global; clear it so later tests in this
+            // serialized collection that drive the emit path directly (which never
+            // pass through Watch()'s entry reset) aren't suppressed.
+            Program._watchOnce = false;
+        }
+    }
+
+    [Fact]
+    public void SelfTest_OnceFalse_StreamsEveryEvent()
+    {
+        // The default (continuous) behavior is unchanged: once:false still streams
+        // every synthetic event, not just the first.
+        var (fired, _) = RunWatch(@"{""self_test"":true,""filter"":""all"",""once"":false}");
+        Assert.True(fired.Length >= 4, $"expected the full stream, got {fired.Length}");
+    }
 }
 
 /// Drives the worker-thread <see cref="Program.OnModelObjectChanged"/> handler
