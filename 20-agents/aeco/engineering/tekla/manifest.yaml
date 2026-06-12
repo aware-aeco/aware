@@ -140,6 +140,15 @@ commands:
         type: boolean
         default: false
         description: Also emit on OBJECT_DELETE (removed). Default drops deletions.
+      once:
+        type: boolean
+        default: false
+        description: >
+          One-shot mode. false (default) = continuous: fire the downstream on
+          EVERY matching event while the watch runs (the natural streaming
+          behavior). true = fire on the FIRST matching event, then unregister and
+          exit — an event-driven snapshot (e.g. "report the current selection the
+          moment it next changes, once"). Accepts `one_time`/`one-time` as aliases.
       events:
         type: string-or-list
         default: ModelObjectChanged

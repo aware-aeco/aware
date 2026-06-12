@@ -505,6 +505,8 @@ internal static class Program
         bool selfTest = false;
         string? version = args.Version;
         _watchIncludeDeleted = false;
+        _watchOnce = false;
+        _watchEmittedOnce = false;
 
         if (args.JsonStdin)
         {
@@ -528,6 +530,7 @@ internal static class Program
                 filter = input?["filter"]?.GetValue<string>() ?? filter;
                 selfTest = ReadBool(input, "self_test") || ReadBool(input, "self-test");
                 _watchIncludeDeleted = ReadBool(input, "include_deleted") || ReadBool(input, "include-deleted");
+                _watchOnce = ReadBool(input, "once") || ReadBool(input, "one_time") || ReadBool(input, "one-time");
                 ParseEventSelection(input?["events"]);
                 version ??= input?["version"]?.GetValue<string>();
             }
@@ -1117,9 +1120,20 @@ internal static class Program
         // Worker-thread events can fire concurrently; serialize stdout writes.
         lock (_watchConsoleLock)
         {
+            // One-shot mode (`once`): emit the FIRST record, then suppress any
+            // further records and signal the pump to unwind — an event-driven
+            // snapshot. The suppression guard matters because a single
+            // ModelObjectChanged batch can carry several changes that would
+            // otherwise all be written before the stop signal is observed.
+            if (_watchOnce && _watchEmittedOnce) return;
             var w = Protocol;
             w.WriteLine(node.ToJsonString());
             w.Flush();
+            if (_watchOnce)
+            {
+                _watchEmittedOnce = true;
+                SignalWatchStop(); // unregister + exit the message pump
+            }
         }
     }
 
@@ -2241,6 +2255,15 @@ internal static class Program
     // Internal so the test assembly can drive OnModelObjectChanged directly.
     internal static string _watchFilter = "all";
     internal static bool _watchIncludeDeleted;
+    // One-shot mode (watch input `once`/`one_time`): when true, the watch emits on
+    // the FIRST fired/event record then stops (unregister + exit the pump) — an
+    // event-driven snapshot. Default false = continuous (fire on every event).
+    // Internal so the test assembly can clear the process-global flag between runs.
+    internal static bool _watchOnce;
+    // Tripped after the first emitted record in one-shot mode, so a multi-change
+    // batch (one ModelObjectChanged carrying several changes) still yields exactly
+    // one record before the pump unwinds. Reset at each Watch() entry.
+    static bool _watchEmittedOnce;
     // Diagnostic gate (AWARE_TEKLA_WATCH_DEBUG=1) — emits stderr breadcrumbs for
     // event-delivery debugging (#219). Off in normal runs.
     internal static bool _watchDebug;

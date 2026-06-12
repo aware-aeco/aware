@@ -17,6 +17,7 @@ Stateful command. Starts a long-running subscription to Tekla model events on th
 |---|---|---|---|
 | `filter` | enum (`all` `welded` `bolted` `assembly`) | `all` | Pre-filter the **`fired`** (ModelObjectChanged) stream by the **changed object's kind**: `welded`→`Weld` objects, `bolted`→`Bolt*` objects (BoltArray/BoltGroup), `assembly`→`Assembly`. Drawing changes are not surfaced by `ModelObjectChanged` (they come from `Tekla.Structures.Drawing.Events`, a separate stream not yet wired), so there is no `drawing` filter. |
 | `include-deleted` | bool | `false` | Emit on deletion (`OBJECT_DELETE`) as well as addition/modification. |
+| `once` | bool | `false` | One-shot mode. `false` (default) = **continuous**: fire the downstream on **every** matching event while the watch runs. `true` = **one-shot**: emit on the **first** matching event, then unregister and exit — an event-driven snapshot (e.g. "report the current selection the moment it next changes, once"). Aliases: `one_time`, `one-time`. |
 | `events` | string \| list | `ModelObjectChanged` | Which Tekla events to stream. `"all"` covers the whole supported Events surface; a list selects by name (case-insensitive; kebab- or PascalCase both match), e.g. `["ModelObjectChanged", "model-save", "ClashDetected"]`. |
 
 ### `events` vocabulary
