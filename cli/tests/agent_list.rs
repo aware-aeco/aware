@@ -61,7 +61,9 @@ fn json_output_returns_envelope() {
     //              → 67 (tekla plugin-SDK agents, PR #149)
     //              → 66 (idea-statica-25.0/26.0 retired; registry 1:1 with tree, #187)
     //              → 67 (the declarative-UI `ui` builtin, #215).
+    //              → 68 (the `vision.extract` curated runtime-extraction agent, RFC #223).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 67);
+    assert_eq!(agents.len(), 68);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
+    assert!(agents.iter().any(|a| a["id"] == "vision"));
 }
