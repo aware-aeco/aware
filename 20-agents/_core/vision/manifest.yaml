@@ -1,0 +1,75 @@
+agent:        vision
+version:      0.1.0
+display-name: Vision Extract
+description: |
+  Curated runtime extraction: an image/PDF + a FIXED output schema → structured
+  JSON, via a pinned multimodal model, at run time. Extracts, never decides — the
+  single, fenced exception to decalog #9's no-LLM-in-run-path rule (RFC #223 /
+  app-spec § Runtime model extraction). NOT a general LLM agent: the output is
+  schema-bound, the result is content-hash cached (same input → same JSON, with no
+  model call), and the first downstream write must sit behind `approve:` so a human
+  confirms the extraction. Reach for it only when a deterministic parser can't read
+  the input and the source drawing must change per run; otherwise prefer a read-only
+  `exec` parser (B1) or compose-time extraction (the bake / re-bake pattern).
+
+stateful: false
+
+vendor:   null
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/vision
+keywords: [aware, vision, extract, multimodal, image, pdf, schema, curated, cross-cutting, carve-out]
+
+provenance:
+  generated-by: hand-curated
+
+requires:
+  # The pinned model endpoint + the vault credential it reads. Narrow on purpose:
+  # this agent talks to exactly one model API, not "any host".
+  network:
+    - "api.anthropic.com:443"
+  secrets:
+    - vision-model
+
+# The agent-level half of the validator carve-out (RFC #223 §5.2). Without this
+# flag a `model-extraction: true` command is rejected E_APP_RUNTIME_MODEL_FORBIDDEN.
+capabilities:
+  runtime-model-extraction: true
+
+# In-process `_core` utility (like html-report / ui): the runtime handles dispatch,
+# no host binary to ship/install. status defaults to `available` → runnable.
+transport:
+  builtin: {}
+
+commands:
+  extract:
+    lifecycle: single
+    category: curated          # the command half of the carve-out — curated, never reflected
+    mode: read                 # extraction reads; it never writes host state
+    model-extraction: true     # the per-command marker the validator admits ONLY here
+    description: |
+      Extract structured JSON from an image/PDF against a FIXED output schema, via a
+      pinned multimodal model, at run time. A pure leaf — (bytes, prompt, schema,
+      model) → JSON — content-hash cached, so a repeat input replays from cache with
+      no model call (deterministic per distinct input). Extracts, never decides:
+      everything downstream stays the reviewed, deterministic plan. Put the first
+      write-mode node behind `approve:` so the extraction is human-confirmed.
+    inputs:
+      file:
+        type: bytes
+        description: The image/PDF bytes to read (on the edge, e.g. `{{ inputs.drawing }}`).
+      schema:
+        type: object
+        description: The FIXED output JSON schema the extraction must conform to.
+      prompt:
+        type: string
+        description: The extraction instruction (lock-pinned; part of the cache key).
+      model:
+        type: string
+        description: The pinned multimodal model id (e.g. `claude-…`). A swap re-invalidates approval.
+    outputs:
+      type: single
+      schema:
+        result: object
+
+skills:
+  - when-to-extract.md

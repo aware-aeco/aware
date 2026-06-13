@@ -66,6 +66,12 @@ pub struct Agent {
     #[allow(dead_code)]
     #[serde(default)]
     pub engineering: Option<EngineeringDecl>,
+    /// Agent-level capability flags (RFC #223). The validator's runtime model-
+    /// extraction carve-out is keyed to `runtime-model-extraction: true` declared
+    /// HERE *and* a `model-extraction: true` curated command — both, or it's
+    /// rejected (`E_APP_RUNTIME_MODEL_FORBIDDEN`). Keeps the exception narrow.
+    #[serde(default)]
+    pub capabilities: Option<Capabilities>,
     pub transport: Transport,
     /// Declarative auth (v0.39). When present, the REST transport injects the
     /// referenced secret on every call (apiKey header/query, or bearer/oauth2
@@ -78,6 +84,17 @@ pub struct Agent {
     pub commands: BTreeMap<String, Command>,
     #[serde(default)]
     pub skills: Vec<String>,
+}
+
+/// Agent-level capability flags (RFC #223). Currently the single fenced
+/// `runtime-model-extraction` flag the validator honors for `vision.extract`.
+#[derive(Debug, Deserialize, Clone, Default)]
+pub struct Capabilities {
+    /// The agent may carry a curated `model-extraction: true` command that calls a
+    /// model at run time (the `vision.extract` carve-out). Without this flag, a
+    /// `model-extraction` command is rejected `E_APP_RUNTIME_MODEL_FORBIDDEN`.
+    #[serde(rename = "runtime-model-extraction", default)]
+    pub runtime_model_extraction: bool,
 }
 
 /// Whether an agent's transport is runnable today.
@@ -248,6 +265,15 @@ pub struct Command {
     /// at validate-time (see `10-core/app-spec.md § Safety contract`). (#165)
     #[serde(rename = "mode-overridable", default)]
     pub mode_overridable: bool,
+    /// Marks a command that performs a **runtime model extraction** — it calls a
+    /// multimodal model at run time to turn bytes (image/PDF) into schema-bound JSON
+    /// (RFC #223, the single fenced exception to decalog #9's no-LLM-in-run-path rule).
+    /// This flag is honored ONLY on a `category: curated` command whose agent declares
+    /// `capabilities.runtime-model-extraction: true`; anywhere else it is itself a
+    /// validation error (`E_APP_RUNTIME_MODEL_FORBIDDEN`), so a reflected or hand-rolled
+    /// command can never mint a model-reader. See `validate.rs::check_node_agents`.
+    #[serde(rename = "model-extraction", default)]
+    pub model_extraction: bool,
 }
 
 /// Read/write mode for a command — drives the safety-contract enforcement.

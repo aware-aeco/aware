@@ -407,6 +407,49 @@ fn check_node_agents(
                     ),
                 ));
             }
+
+            // RFC #223 — the fenced runtime model-extraction carve-out. A command that
+            // calls a model at run time (`model-extraction: true`) is admitted into the
+            // deterministic run path ONLY when it is `category: curated` AND its agent
+            // declares `capabilities.runtime-model-extraction: true`. Every other path to
+            // the flag — a reflected/auto-generated command, or a curated command on an
+            // agent that lacks the capability — is rejected here, so no node can mint a
+            // model-reader except the single curated `vision.extract`. Keyed to the flag +
+            // curated + capability (structural), never to the literal agent/command name,
+            // so the exception to decalog #9 stays narrow and cannot widen by accident.
+            if let Some(cmd_name) = &n.command
+                && let Some(cmd) = d.manifest.commands.get(cmd_name.as_str())
+                && cmd.model_extraction
+            {
+                let curated =
+                    d.manifest.category_of(cmd) == crate::manifest::agent::Category::Curated;
+                let capable = d
+                    .manifest
+                    .capabilities
+                    .as_ref()
+                    .is_some_and(|c| c.runtime_model_extraction);
+                if !(curated && capable) {
+                    out.push(ValidationIssue::error(
+                        "E_APP_RUNTIME_MODEL_FORBIDDEN",
+                        format!(
+                            "node {:?} resolves to {}.{}, which declares `model-extraction: true` (it \
+                             calls a model at run time) but is not an admitted carve-out: a runtime model \
+                             extraction is permitted ONLY on a `category: curated` command whose agent \
+                             declares `capabilities.runtime-model-extraction: true` ({}). The run path is \
+                             deterministic — see RFC #223 + app-spec § Runtime model extraction (the one \
+                             carve-out).",
+                            n.id,
+                            agent_id,
+                            cmd_name,
+                            if !curated {
+                                "this command is not category: curated"
+                            } else {
+                                "this agent does not declare the runtime-model-extraction capability"
+                            },
+                        ),
+                    ));
+                }
+            }
         }
         if let Some(body) = &n.do_ {
             check_node_agents(body, agents, app_exposes, app_id, out);
@@ -579,6 +622,86 @@ requires: []
         assert!(
             !issues.iter().any(|i| i.code == "E_APP_COMMAND_UNAVAILABLE"),
             "available command must pass: {issues:?}"
+        );
+    }
+
+    fn one_node_app(agent: &str, command: &str) -> App {
+        serde_yaml::from_str(&format!(
+            "app: a\nversion: 0.0.1\ndescription: x\nrequires: []\nnodes:\n  - id: e\n    agent: {agent}\n    command: {command}\n"
+        ))
+        .unwrap()
+    }
+
+    #[test]
+    fn admits_curated_capable_vision_extract() {
+        // RFC #223: a curated `model-extraction` command whose agent declares the
+        // capability is ADMITTED into the run path (no E_APP_RUNTIME_MODEL_FORBIDDEN).
+        let agents = vec![discovered(
+            "agent: vision\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             capabilities:\n  runtime-model-extraction: true\ntransport:\n  builtin: {}\n\
+             commands:\n  extract:\n    lifecycle: single\n    category: curated\n    mode: read\n    \
+             model-extraction: true\n    description: x\n",
+        )];
+        let issues = validate_app_agents(&one_node_app("vision", "extract"), &agents);
+        assert!(
+            !issues
+                .iter()
+                .any(|i| i.code == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
+            "curated+capable vision.extract must be admitted: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn rejects_model_extraction_without_capability() {
+        // Same curated command, but the agent does NOT declare the capability → forbidden.
+        let agents = vec![discovered(
+            "agent: vision\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             transport:\n  builtin: {}\ncommands:\n  extract:\n    lifecycle: single\n    \
+             category: curated\n    mode: read\n    model-extraction: true\n    description: x\n",
+        )];
+        let issues = validate_app_agents(&one_node_app("vision", "extract"), &agents);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
+            "model-extraction without the capability flag must be forbidden: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn rejects_reflected_model_extraction_even_with_capability() {
+        // A model-extraction command that is NOT curated (reflected) → forbidden even
+        // with the capability flag, so no `aware build --from-*` output mints a reader.
+        let agents = vec![discovered(
+            "agent: rogue\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+             provenance:\n  generated-by: reflected\ncapabilities:\n  runtime-model-extraction: true\n\
+             transport:\n  builtin: {}\ncommands:\n  extract:\n    lifecycle: single\n    \
+             category: reflected\n    mode: read\n    model-extraction: true\n    description: x\n",
+        )];
+        let issues = validate_app_agents(&one_node_app("rogue", "extract"), &agents);
+        assert!(
+            issues
+                .iter()
+                .any(|i| i.code == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
+            "reflected model-extraction must be forbidden: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn real_vision_manifest_loads_and_is_admitted() {
+        // The shipped 20-agents/_core/vision manifest deserializes AND its extract node
+        // passes the carve-out (curated + capability) — guards the manifest against drift.
+        let a = load_agent("20-agents/_core/vision/manifest.yaml");
+        let agents = vec![crate::manifest::loader::DiscoveredAgent {
+            manifest: a,
+            root: std::path::PathBuf::from("."),
+        }];
+        let issues = validate_app_agents(&one_node_app("vision", "extract"), &agents);
+        assert!(
+            !issues
+                .iter()
+                .any(|i| i.code == "E_APP_RUNTIME_MODEL_FORBIDDEN"),
+            "the real vision manifest must be admitted: {issues:?}"
         );
     }
 
