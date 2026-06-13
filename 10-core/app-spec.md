@@ -345,6 +345,19 @@ When the extraction is high-stakes or the human should eyeball it before any wri
 
 What this is **not**: a runtime `think-node` that reads the drawing while the app executes. `aware app validate` rejects that for the same structural reason it rejects an LLM `assert:` — the run path is deterministic, so front doors should extract up front (optionally behind `approve:`), not defer reading to execution.
 
+### Runtime model extraction (the one carve-out)
+
+There is exactly **one** fenced exception to "no model in the run path" (RFC #223): the curated **`vision.extract`** agent. It reads an image/PDF and returns JSON conforming to a **fixed schema**, by calling a pinned multimodal model at run time. It **extracts, never decides** — every node downstream stays the reviewed, deterministic plan.
+
+It is admitted **only** under all of these, enforced by `aware app validate` (`check_node_agents`):
+
+- the command declares `model-extraction: true` **and** is `category: curated`, **and** its agent declares `capabilities.runtime-model-extraction: true`. Any other path to `model-extraction` — a `reflected`/auto-generated command, or a curated one on an agent lacking the capability — is rejected `E_APP_RUNTIME_MODEL_FORBIDDEN`. The fence is keyed to flag+curated+capability (structural), never to the agent/command name, so it cannot widen by accident.
+- the output is **schema-bound** (a fixed JSON schema, not free text a node `eval`s); it **cannot** be an `assert:` evaluator (validators stay LLM-free) and **cannot** branch control flow.
+- it is **content-hash cached** — `sha256(bytes ‖ prompt ‖ schema ‖ model)`; a hit replays the stored JSON with no model call, so it is deterministic per distinct input (non-determinism bounded to first sight of a new input, like live host I/O).
+- the **model is pinned in the lock** (`model-pin` on the compiled node, alongside a `runtime-model: true` marker); a model swap re-invalidates approval like a source-hash change. The first downstream write **must** sit behind `approve:`, so a human confirms the extraction before any host write.
+
+Reach for it only when a deterministic parser cannot read the input **and** the source artifact changes per run; otherwise prefer a read-only `exec` parser or compose-time extraction (above). See `20-agents/_core/vision/` and RFC #223.
+
 ### `snapshot`
 
 Freeze model state to an immutable artifact. Pairs with the v0.11 safety contract's `snapshot:` flag but operates at the topology level — the artifact is *named* in the topology and addressable by downstream nodes.

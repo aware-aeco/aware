@@ -105,6 +105,25 @@ pub struct CompiledNode {
     /// `{ kind, text }` maps.
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub notes: Vec<CompileNote>,
+
+    /// RFC #223: `true` when this node resolves to a curated `model-extraction`
+    /// command (`vision.extract`) — it calls a model at run time. Lets the lock be
+    /// the single source of truth that a model runs here, so `aware app run`, the
+    /// Glass Box, and a front door can render it honestly to the approver. Absent
+    /// (false) for every ordinary deterministic node.
+    #[serde(rename = "runtime-model", default, skip_serializing_if = "is_false")]
+    pub runtime_model: bool,
+
+    /// RFC #223 §5.3: the pinned model id the lock was approved against (from the
+    /// node's `model` input). A model swap changes this, re-invalidating the
+    /// approval the same way a source-hash change does. None for non-extraction nodes.
+    #[serde(rename = "model-pin", default, skip_serializing_if = "Option::is_none")]
+    pub model_pin: Option<String>,
+}
+
+#[allow(clippy::trivially_copy_pass_by_ref)]
+fn is_false(b: &bool) -> bool {
+    !*b
 }
 
 /// Severity of a compile-time [`CompileNote`]. Consumers (the CLI, the lock
@@ -479,6 +498,32 @@ fn compile_node(
     // invoke the node — so the lockfile can't show args the run drops (#117-3).
     let inputs = node.merged_params();
 
+    // RFC #223: stamp the runtime-model marker + the pinned model id when this node
+    // resolves to a curated `model-extraction` command (`vision.extract`). The lock
+    // then carries the fact that a model runs here, and the model-pin makes a model
+    // swap re-invalidate approval (the validator already fences which nodes may set it).
+    let runtime_model = node
+        .agent
+        .as_ref()
+        .zip(node.command.as_ref())
+        .and_then(|(aid, cmd_name)| {
+            let d = agents.iter().find(|d| d.manifest.agent == *aid)?;
+            d.manifest
+                .commands
+                .get(cmd_name.as_str())
+                .map(|c| c.model_extraction)
+        })
+        .unwrap_or(false);
+    let model_pin = if runtime_model {
+        inputs
+            .as_ref()
+            .and_then(|v| v.get("model"))
+            .and_then(|m| m.as_str())
+            .map(str::to_string)
+    } else {
+        None
+    };
+
     Ok(CompiledNode {
         id: node.id.clone(),
         kind: kind.to_string(),
@@ -489,6 +534,8 @@ fn compile_node(
         inputs,
         output_schema,
         notes: command_notes,
+        runtime_model,
+        model_pin,
     })
 }
 
@@ -1143,6 +1190,63 @@ requires: []
             !sink.notes.iter().any(|n| n.text.contains("{{ src.path }}")),
             "valid reference must NOT be flagged; notes: {:?}",
             sink.notes
+        );
+    }
+
+    #[test]
+    fn vision_extract_node_stamps_runtime_model_and_pin() {
+        // RFC #223 §5.3: a curated model-extraction node compiles with
+        // `runtime-model: true` + the pinned model id; an ordinary node carries neither.
+        let agent_yaml = r#"agent: vision
+version: 0.1.0
+description: x
+stateful: false
+license: MIT
+capabilities:
+  runtime-model-extraction: true
+transport:
+  builtin: {}
+commands:
+  extract:
+    lifecycle: single
+    category: curated
+    mode: read
+    model-extraction: true
+    description: x
+"#;
+        let manifest: crate::manifest::Agent = serde_yaml::from_str(agent_yaml).unwrap();
+        let agents = vec![DiscoveredAgent {
+            manifest,
+            root: std::path::PathBuf::from("/dev/null"),
+        }];
+        let tmp = tempfile::tempdir().unwrap();
+        let src = tmp.path().join("app.flo");
+        std::fs::write(
+            &src,
+            r#"app: vapp
+version: 0.0.1
+description: x
+nodes:
+  - id: extract
+    agent: vision
+    command: extract
+    config:
+      model: claude-sonnet-4-6
+requires: []
+"#,
+        )
+        .unwrap();
+        let app = crate::manifest::loader::load_app(&src).unwrap();
+        let lock = compile(&app, &agents, &src).unwrap();
+        let n = lock.nodes.iter().find(|n| n.id == "extract").unwrap();
+        assert!(
+            n.runtime_model,
+            "vision.extract must stamp runtime-model: true"
+        );
+        assert_eq!(
+            n.model_pin.as_deref(),
+            Some("claude-sonnet-4-6"),
+            "must pin the model id from the node's `model` input"
         );
     }
 

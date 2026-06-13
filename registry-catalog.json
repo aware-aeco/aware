@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-10T17:20:26.999723+00:00",
+  "updated-at": "2026-06-13T11:23:57.076778700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5401,7 +5401,7 @@
             },
             {
               "name": "watch",
-              "description": "Subscribe to ModelObjectChanged events on the active Tekla model.",
+              "description": "Subscribe to live Tekla model events on the active model (ModelObjectChanged by default; opt into the full Events surface with `events`).",
               "lifecycle": "start",
               "category": "curated"
             },
@@ -6752,6 +6752,42 @@
             {
               "name": "walk-tabs",
               "description": "Walk every tab of a tabbed dialog: switch to each tab, settle, enumerate",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
+        }
+      }
+    },
+    "vision": {
+      "display-name": "Vision Extract",
+      "keywords": [
+        "aware",
+        "vision",
+        "extract",
+        "multimodal",
+        "image",
+        "pdf",
+        "schema",
+        "curated",
+        "cross-cutting",
+        "carve-out"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Curated runtime extraction: an image/PDF + a FIXED output schema → structured",
+          "status": "available",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "skills": [
+            "when-to-extract"
+          ],
+          "commands": [
+            {
+              "name": "extract",
+              "description": "Extract structured JSON from an image/PDF against a FIXED output schema, via a",
               "lifecycle": "single",
               "category": "curated",
               "mode": "read"
