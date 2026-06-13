@@ -946,6 +946,7 @@ impl AgentInvoker for BuiltinInvoker {
             ("ui", "validate") => crate::render::ui::ui_validate(&args),
             ("ui", "catalog") => crate::render::ui::ui_catalog(&args),
             ("ui", "render") => crate::render::ui::ui_render(&args, self.dry_run),
+            ("vision", "extract") => vision_extract(args, self.dry_run).await,
             _ => Err(AwareError::Validation(format!(
                 "builtin transport: no handler for {agent}/{command}"
             ))),
@@ -1029,6 +1030,201 @@ fn render_html_report(args: Value, dry_run: bool) -> Result<Value, AwareError> {
     }
 
     Ok(Value::Object(out))
+}
+
+// ── vision.extract — the fenced runtime model extraction (RFC #223) ─────────────
+// The validator (`validate::check_node_agents`) has already fenced WHICH nodes may
+// reach this handler: only the curated, capability-flagged `vision.extract`. Here we
+// add the §6 determinism core — a content-hash cache — so the extraction is a pure
+// function with a cache: same (bytes, prompt, schema, model) → same JSON, replayed
+// from disk with NO model call. Only first-sight of a new input calls the model.
+
+fn vision_aware_home() -> std::path::PathBuf {
+    std::env::var_os("AWARE_HOME")
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(|| dirs::home_dir().unwrap_or_default().join(".aware"))
+}
+fn vision_cache_dir() -> std::path::PathBuf {
+    vision_aware_home().join("cache").join("vision")
+}
+
+/// sha256(bytes ‖ prompt ‖ schema ‖ model) — the §6 cache key.
+fn vision_cache_key(bytes: &[u8], prompt: &str, schema: &Value, model: &str) -> String {
+    use sha2::Digest;
+    let mut h = sha2::Sha256::new();
+    h.update(bytes);
+    h.update(prompt.as_bytes());
+    h.update(serde_json::to_string(schema).unwrap_or_default().as_bytes());
+    h.update(model.as_bytes());
+    format!("{:x}", h.finalize())
+}
+
+/// `vision.extract`: read the image/PDF at the `file` path and return schema-bound
+/// JSON via the pinned model — content-hash cached. The `file` arrives as a path on
+/// the edge (front doors store the picked artifact and template `{{ inputs.<x> }}`).
+async fn vision_extract(args: Value, dry_run: bool) -> Result<Value, AwareError> {
+    let s = |k: &str| args.get(k).and_then(|v| v.as_str()).map(str::to_string);
+    let file = s("file").ok_or_else(|| {
+        AwareError::Validation("vision.extract: `file` (image/PDF path) is required".into())
+    })?;
+    let prompt = s("prompt")
+        .ok_or_else(|| AwareError::Validation("vision.extract: `prompt` is required".into()))?;
+    let model = s("model").ok_or_else(|| {
+        AwareError::Validation("vision.extract: `model` (a pinned model id) is required".into())
+    })?;
+    let schema = args.get("schema").cloned().unwrap_or(Value::Null);
+
+    let bytes = std::fs::read(&file).map_err(|e| {
+        AwareError::Validation(format!("vision.extract: cannot read file {file}: {e}"))
+    })?;
+
+    // §6 content-hash cache key: sha256(bytes ‖ prompt ‖ schema ‖ model).
+    let key = vision_cache_key(&bytes, &prompt, &schema, &model);
+    let cache_path = vision_cache_dir().join(format!("{key}.json"));
+
+    // Cache HIT — deterministic replay, no model call.
+    if let Ok(text) = std::fs::read_to_string(&cache_path)
+        && let Ok(result) = serde_json::from_str::<Value>(&text)
+    {
+        return Ok(serde_json::json!({ "result": result, "cached": true, "model": model }));
+    }
+    if dry_run {
+        return Ok(
+            serde_json::json!({ "result": Value::Null, "cached": false, "dry-run": true, "model": model }),
+        );
+    }
+
+    // MISS — call the pinned model once (blocking ureq → off the async reactor), store, return.
+    let result = {
+        let model2 = model.clone();
+        tokio::task::spawn_blocking(move || call_vision_model(&bytes, &prompt, &schema, &model2))
+            .await
+            .map_err(|e| {
+                AwareError::Internal(format!("vision.extract: blocking task failed: {e}"))
+            })??
+    };
+    if let Some(dir) = cache_path.parent() {
+        let _ = std::fs::create_dir_all(dir);
+    }
+    let _ = std::fs::write(
+        &cache_path,
+        serde_json::to_string(&result).unwrap_or_default(),
+    );
+    Ok(serde_json::json!({ "result": result, "cached": false, "model": model }))
+}
+
+/// Call the pinned multimodal model once (a cache miss). Reads the API key from
+/// `~/.aware/credentials/vision-model.json` (`{ "api_key", "base_url"? }`), sends the
+/// bytes + schema-constrained prompt to the Anthropic Messages API, and parses the
+/// schema-bound JSON back. Egress is to the credentialed endpoint only.
+fn call_vision_model(
+    bytes: &[u8],
+    prompt: &str,
+    schema: &Value,
+    model: &str,
+) -> Result<Value, AwareError> {
+    use base64::Engine as _;
+    let cred_path = vision_aware_home()
+        .join("credentials")
+        .join("vision-model.json");
+    let cred_text = std::fs::read_to_string(&cred_path).map_err(|_| {
+        AwareError::Network(format!(
+            "vision.extract: missing model credential — provision {} with {{\"api_key\":\"…\"}} \
+             (the pinned model API key). vision.extract calls a model at run time (RFC #223).",
+            cred_path.display()
+        ))
+    })?;
+    let cred: Value = serde_json::from_str(&cred_text)
+        .map_err(|e| AwareError::Network(format!("vision.extract: bad credential JSON: {e}")))?;
+    let api_key = cred
+        .get("api_key")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| {
+            AwareError::Network("vision.extract: credential missing `api_key`".into())
+        })?;
+    let base = cred
+        .get("base_url")
+        .and_then(|v| v.as_str())
+        .unwrap_or("https://api.anthropic.com");
+
+    let media = if bytes.starts_with(b"\x89PNG") {
+        "image/png"
+    } else if bytes.starts_with(&[0xff, 0xd8, 0xff]) {
+        "image/jpeg"
+    } else if bytes.len() >= 12 && &bytes[8..12] == b"WEBP" {
+        "image/webp"
+    } else if bytes.starts_with(b"%PDF-") {
+        "application/pdf"
+    } else {
+        "image/png"
+    };
+    let block_type = if media == "application/pdf" {
+        "document"
+    } else {
+        "image"
+    };
+    let data = base64::engine::general_purpose::STANDARD.encode(bytes);
+    let instruction = format!(
+        "{prompt}\n\nReturn ONLY a JSON object conforming to this schema, with no prose or \
+         markdown fences:\n{}",
+        serde_json::to_string(schema).unwrap_or_default()
+    );
+    let req = serde_json::json!({
+        "model": model,
+        "max_tokens": 4096,
+        "messages": [{
+            "role": "user",
+            "content": [
+                { "type": block_type, "source": { "type": "base64", "media_type": media, "data": data } },
+                { "type": "text", "text": instruction }
+            ]
+        }]
+    });
+    let body_str = serde_json::to_string(&req)
+        .map_err(|e| AwareError::Internal(format!("vision.extract: request encode: {e}")))?;
+    let resp = match ureq::post(&format!("{base}/v1/messages"))
+        .set("x-api-key", api_key)
+        .set("anthropic-version", "2023-06-01")
+        .set("content-type", "application/json")
+        .send_string(&body_str)
+    {
+        Ok(r) => r,
+        Err(ureq::Error::Status(code, _)) => {
+            return Err(AwareError::Network(format!(
+                "vision.extract: model returned HTTP {code}"
+            )));
+        }
+        Err(e) => {
+            return Err(AwareError::Network(format!(
+                "vision.extract: model request failed: {e}"
+            )));
+        }
+    };
+    let text_body = resp.into_string().map_err(|e| {
+        AwareError::Network(format!("vision.extract: unreadable model response: {e}"))
+    })?;
+    let parsed: Value = serde_json::from_str(&text_body).map_err(|e| {
+        AwareError::Network(format!("vision.extract: non-JSON model response: {e}"))
+    })?;
+    let text = parsed
+        .get("content")
+        .and_then(|c| c.as_array())
+        .and_then(|a| {
+            a.iter()
+                .find_map(|m| m.get("text").and_then(|t| t.as_str()))
+        })
+        .unwrap_or_default();
+    let cleaned = text
+        .trim()
+        .trim_start_matches("```json")
+        .trim_start_matches("```")
+        .trim_end_matches("```")
+        .trim();
+    serde_json::from_str::<Value>(cleaned).map_err(|e| {
+        AwareError::Validation(format!(
+            "vision.extract: model did not return schema-conforming JSON: {e}"
+        ))
+    })
 }
 
 /// The invoker the orchestrator uses in production. Routes each call to the
@@ -1617,6 +1813,51 @@ mod stream_pump_tests {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn vision_cache_key_is_content_addressed() {
+        // RFC #223 §6: the key is sha256(bytes ‖ prompt ‖ schema ‖ model). Same inputs →
+        // same key (deterministic replay); any field change → a different key (a fresh
+        // input, prompt, schema, or model swap is a cache miss, never a stale hit).
+        let schema = json!({ "type": "object" });
+        let base = vision_cache_key(b"PNGBYTES", "extract rows", &schema, "claude-x");
+        assert_eq!(base.len(), 64, "sha256 hex");
+        assert_eq!(
+            base,
+            vision_cache_key(b"PNGBYTES", "extract rows", &schema, "claude-x"),
+            "same inputs must give the same key"
+        );
+        assert_ne!(
+            base,
+            vision_cache_key(b"OTHER", "extract rows", &schema, "claude-x")
+        );
+        assert_ne!(
+            base,
+            vision_cache_key(b"PNGBYTES", "different", &schema, "claude-x")
+        );
+        assert_ne!(
+            base,
+            vision_cache_key(b"PNGBYTES", "extract rows", &schema, "claude-y")
+        );
+        assert_ne!(
+            base,
+            vision_cache_key(
+                b"PNGBYTES",
+                "extract rows",
+                &json!({ "type": "array" }),
+                "claude-x"
+            ),
+            "a schema change must miss"
+        );
+    }
+
+    #[tokio::test]
+    async fn vision_extract_missing_file_is_a_clear_error() {
+        // A non-existent file path → a clear validation error, never a panic.
+        let args = json!({ "file": "/no/such/file.png", "prompt": "x", "model": "claude-x", "schema": {} });
+        let err = vision_extract(args, false).await.unwrap_err();
+        assert!(format!("{err}").contains("cannot read file"), "got: {err}");
+    }
 
     #[tokio::test]
     async fn mock_single_returns_canned_output() {
