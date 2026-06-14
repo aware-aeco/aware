@@ -1,0 +1,98 @@
+agent:        steel-detailer-aisc
+version:      0.1.0
+sdk-target:   aisc-360-22                 # the code edition these rules are sourced from
+display-name: Steel Detailer — US (AISC)
+
+description: |
+  Verified, citation-backed US steel connection-detailing rules (AISC). A
+  knowledge agent: its value is a set of skills, each rule transcribed from a
+  free, authoritative source — AISC 360-22 "Specification for Structural Steel
+  Buildings" (Chapter J) and the RCSC 2020 "Specification for Structural Joints
+  Using High-Strength Bolts" — and carrying its exact citation plus a short
+  source quote. The composing/terminal AI reads these skills to answer
+  connection-detailing questions and ALWAYS cites the clause; it refuses
+  ("no verified source") rather than guessing. Covers bolted + welded connection
+  geometry and the governing limit states (edge distance, spacing, hole types,
+  weld sizing, block shear). US/AISC only — never mix with Eurocode (that is the
+  separate steel-detailer-eurocode agent and a different code).
+
+# Knowledge agent. The deterministic `lookup` command's binary is not shipped yet
+# (roadmap Phase 4); today the value is the cited skills, read by the composing AI
+# at compose/prompt time. So the agent is honestly `planned` (no runnable transport
+# binary), not `available`.
+status: planned
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/steel-detailer-aisc
+keywords: [aeco, engineering, structural, steel, detailing, connections, aisc, bolts, welds, us]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+    docs: "AISC 360-22 (aisc.org/standards); RCSC 2020 (boltcouncil.org)"
+
+# Engineering envelope (agent-spec § Engineering envelope): the code-of-practice
+# these rules are sourced from. Advisory until the envelope is wired for knowledge
+# agents; documents the region pin and keeps US/AISC from drifting into Eurocode.
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Design code + edition the rules are sourced from
+      required: true
+      example: 'aisc-360@2022'
+    - id: bolting-spec
+      description: High-strength bolting specification edition
+      required: false
+      example: 'rcsc@2020'
+
+transport:
+  # Planned deterministic-lookup binary (Phase 4). Declared so the contract is
+  # published; not shipped yet — hence the agent-level `status: planned`.
+  cli:
+    binary: aware-steel-detailer-aisc
+
+commands:
+  lookup:
+    lifecycle: single
+    category: curated
+    status: planned
+    mode: read
+    description: |
+      (Planned — roadmap Phase 4.) Deterministic clause lookup with NO LLM in the
+      loop: given a rule selector, return the exact AISC/RCSC clause, value, units
+      and citation as typed JSON — or an explicit miss (found:false) so the caller
+      refuses rather than guesses. Until shipped, the agent's value is its cited
+      skills, read by the composing AI at compose/prompt time (see skills/_grounding.md).
+    inputs:
+      rule:
+        type: string
+        description: 'Rule selector, e.g. "bolt min edge distance, M20, sheared edge".'
+    outputs:
+      type: single
+      schema:
+        rule:         string
+        value:        string
+        units:        string
+        citation:     string    # e.g. "AISC 360-22 §J3.4, Table J3.4"
+        source_quote: string    # short verbatim excerpt for verification
+        found:        boolean    # false → no verified rule (refuse, don't guess)
+
+# Discovered from skills/*.md. Each rule skill was authored from a verified
+# extraction (extract from the real source → independent adversarial cross-check
+# → human seed spot-check), and carries its citation + a short source quote.
+skills:
+  - _grounding.md
+  - scope-and-citation.md
+  - bolt-spacing.md
+  - bolt-edge-distance.md
+  - bolt-holes.md
+  - bolt-bearing-tearout.md
+  - bolt-pretension-and-joint-types.md
+  - bolt-washers.md
+  - weld-fillet-sizing.md
+  - weld-length-and-pjp.md
+  - connecting-elements-block-shear.md
