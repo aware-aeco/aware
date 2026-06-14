@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-13T11:23:57.076778700+00:00",
+  "updated-at": "2026-06-14T15:08:01.391927700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -6755,6 +6755,39 @@
               "lifecycle": "single",
               "category": "curated",
               "mode": "read"
+            }
+          ]
+        }
+      }
+    },
+    "viewer-3d": {
+      "display-name": "3D Viewer",
+      "vendor": "aware",
+      "keywords": [
+        "aware",
+        "3d",
+        "viewer",
+        "scene",
+        "three.js",
+        "visualization",
+        "output"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
+          "status": "available",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "skills": [
+            "scene-schema"
+          ],
+          "commands": [
+            {
+              "name": "render",
+              "description": "Render a generic 3D scene into a self-contained interactive HTML document. The scene is",
+              "lifecycle": "single",
+              "category": "curated"
             }
           ]
         }

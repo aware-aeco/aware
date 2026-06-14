@@ -62,8 +62,10 @@ fn json_output_returns_envelope() {
     //              → 66 (idea-statica-25.0/26.0 retired; registry 1:1 with tree, #187)
     //              → 67 (the declarative-UI `ui` builtin, #215).
     //              → 68 (the `vision.extract` curated runtime-extraction agent, RFC #223).
+    //              → 69 (the `viewer-3d` builtin scene renderer — generic interactive 3D HTML).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 68);
+    assert_eq!(agents.len(), 69);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
+    assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));
 }
