@@ -2,8 +2,9 @@ agent:        viewer-3d
 version:      0.1.0
 display-name: 3D Viewer
 description: |
-  Utility agent that renders a generic 3D scene into a self-contained, interactive HTML
-  document — orbit/zoom, click-to-inspect, a legend and side tables, runnable in any browser.
+  Utility agent that renders a generic 3D scene into a single-file interactive HTML
+  document (Three.js via a pinned CDN — offline inlining planned) — orbit/zoom,
+  click-to-inspect, a legend and side tables.
   The portable 3D sink of AWARE compositions: hand it a domain-agnostic scene (elements as
   lines/boxes/nodes + groups + grids + panels) and it renders it (no per-scenario code). A
   steel app maps members -> elements + a takeoff panel; a data app maps bars -> elements + a
@@ -45,6 +46,7 @@ commands:
       renders without tuning. No template needed.
     inputs:
       scene:
+        type: object
         description: |
           The 3D scene to render (object). Shape:
           `{ meta:{name,units,up}, groups:[{key,label,color}],

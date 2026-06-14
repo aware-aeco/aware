@@ -98,7 +98,7 @@ function renderScene(S){
   const up=(S.meta&&S.meta.up)||'z';
   const colorOf={}; (S.groups||[]).forEach(g=>colorOf[g.key]=g.color);
   const box=new THREE.Box3();
-  for(const e of (S.elements||[])){ if(e.from)box.expandByPoint(conv(e.from,up)); if(e.to)box.expandByPoint(conv(e.to,up)); if(e.at)box.expandByPoint(conv(e.at,up)); }
+  for(const e of (S.elements||[])){ if(Array.isArray(e.from))box.expandByPoint(conv(e.from,up)); if(Array.isArray(e.to))box.expandByPoint(conv(e.to,up)); if(Array.isArray(e.at))box.expandByPoint(conv(e.at,up)); }
   if(box.isEmpty()) box.set(new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1));
   const size=box.getSize(new THREE.Vector3()), center=box.getCenter(new THREE.Vector3());
   const maxDim=Math.max(size.x,size.y,size.z)||1; const thick=maxDim*0.006;
@@ -110,6 +110,7 @@ function renderScene(S){
 
   const upY=new THREE.Vector3(0,1,0);
   for(const e of (S.elements||[])){
+    if(!e || (e.kind==='node' ? !Array.isArray(e.at) : (!Array.isArray(e.from)||!Array.isArray(e.to)))) continue;
     const col=colorOf[e.group] || 0xffffff;
     const mat=new THREE.MeshStandardMaterial({color:col, metalness:0.5, roughness:0.5}); let mesh;
     if(e.kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
@@ -119,9 +120,9 @@ function renderScene(S){
       mesh.quaternion.setFromUnitVectors(upY, dir.normalize()); }
     mesh.userData=e; content.add(mesh); pickable.push(mesh);
   }
-  for(const g of (S.grids||[])) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
+  for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
 
-  if(S.camera&&S.camera.eye&&S.camera.target){ camera.position.set(...S.camera.eye); controls.target.set(...S.camera.target); }
+  if(S.camera&&Array.isArray(S.camera.eye)&&Array.isArray(S.camera.target)){ camera.position.copy(conv(S.camera.eye,up)); controls.target.copy(conv(S.camera.target,up)); }
   else { const dist=maxDim*1.7; camera.position.copy(center).add(new THREE.Vector3(dist,dist*0.8,dist)); controls.target.copy(center); }
   camera.near=maxDim/500; camera.far=maxDim*40; camera.updateProjectionMatrix();
 
@@ -187,12 +188,18 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
         }
     };
 
-    // Serialize the scene and inject it into the renderer shell. Escape `</` so a string value
-    // containing `</script>` can't close the embedding <script> element (the only XSS-shaped
-    // break-out for JSON embedded in a script context).
+    // Serialize the scene and inject it into the renderer shell as a JS object-literal
+    // expression. Neutralize EVERY `<` as a `<` escape that renders back
+    // to `<` at runtime) so no HTML-tokenizer-significant sequence can survive in a string
+    // value: not just `</script>` (close) but also `<!--` / `<script` (which would push the
+    // tokenizer into the script-data-(double-)escaped state and stop the template's own
+    // closing `</script>` from closing the element). JSON only contains `<` inside string
+    // values, so escaping all of them is safe. Also escape the JS line terminators U+2028/U+2029.
     let scene_json = serde_json::to_string(scene)
         .map_err(|e| AwareError::Internal(format!("viewer-3d: serialize scene: {e}")))?
-        .replace("</", "<\\/");
+        .replace('<', "\\u003C")
+        .replace('\u{2028}', "\\u2028")
+        .replace('\u{2029}', "\\u2029");
     let html = TEMPLATE.replace("__SCENE_JSON__", &scene_json);
 
     let mut out = serde_json::Map::new();
@@ -265,14 +272,16 @@ mod tests {
     }
 
     #[test]
-    fn escapes_script_close_in_string_values() {
+    fn neutralizes_html_breakout_in_string_values() {
         let scene = json!({ "meta": { "name": "x" }, "elements": [],
-            "panels": [ { "title": "</script><script>alert(1)", "columns": [], "rows": [] } ] });
+            "panels": [ { "title": "</script><script>x<!--<script", "columns": [], "rows": [] } ] });
         let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
         let html = out["html"].as_str().unwrap();
-        // the literal closing tag must not survive inside the embedded data
-        assert!(!html.contains("</script><script>alert(1)"));
-        assert!(html.contains("<\\/script>"));
+        // Every `<` from the payload is escaped, so NO tokenizer-significant sequence survives:
+        // not the close tag, not the comment / script-escaped openers (`<!--`, `<script`).
+        assert!(!html.contains("</script><script>x"));
+        assert!(!html.contains("<!--<script"));
+        assert!(html.contains("\\u003C/script>\\u003Cscript>x\\u003C!--\\u003Cscript"));
     }
 
     #[test]
