@@ -97,6 +97,12 @@ pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
 /// `export` resolve an app consistently, instead of some keying on the directory
 /// and others on the `app:` field.
 pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
+    // An installed app id is always a plain directory segment; reject anything
+    // with a path separator / `..` BEFORE joining it onto apps_dir, so a crafted
+    // id can never resolve to a directory outside apps/ (defense-in-depth).
+    if !is_safe_segment(id) {
+        return Err(AwareError::NotFound(format!("app: {id}")));
+    }
     let direct = paths.apps_dir().join(id);
     if direct.is_dir() {
         return Ok(direct);
@@ -112,11 +118,19 @@ pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
             .unwrap_or("?")
             .to_string();
         eprintln!(
-            "warning: app {id:?} lives in directory {dir:?} — its directory name and `app:` field disagree; run `aware app rename` to re-sync them"
+            "warning: app {id:?} lives in directory {dir:?} — its directory name and `app:` field disagree; re-sync with `aware app rename {dir} {id}`"
         );
         return Ok(d.root);
     }
     Err(AwareError::NotFound(format!("app: {id}")))
+}
+
+/// True when `id` is a plain path segment safe to join onto a directory: non-empty,
+/// not `.`/`..`, and free of path separators or NUL. Used to fence an installed
+/// app id (always a plain slug) before it is joined onto apps_dir. The stricter
+/// charset/reserved-name check for a *new* id lives in `install::rename`.
+pub(crate) fn is_safe_segment(id: &str) -> bool {
+    !id.is_empty() && id != "." && id != ".." && !id.contains(['/', '\\', '\0'])
 }
 
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {

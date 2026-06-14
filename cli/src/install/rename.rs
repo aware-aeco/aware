@@ -11,12 +11,17 @@
 //!
 //! An app's identity is its top-level `app:` field, stamped in BOTH the source
 //! and the compiled `<id>.lock`, and it lives in `apps/<id>/` (dir name == `app:`
-//! field by convention; that is how the by-id verbs resolve it). Renaming
-//! therefore: moves the dir, rewrites the field, renames the source file to
-//! `<new>.<ext>`, regenerates the lock so its `source-hash` matches the renamed
-//! bytes (no drift — the Run gate stays green), and — for a baked app —
-//! regenerates the synthesized agent under `agents/<new>/` and removes the old
-//! one. Duplicate does the same on a copy, leaving the original untouched.
+//! field by convention; that is how the by-id verbs resolve it).
+//!
+//! Both verbs **stage a fresh `apps/<new>/` first** — copy, rewrite the `app:`
+//! field, rename the source to `<new>.<ext>`, regenerate the lock so its
+//! `source-hash` matches the renamed bytes (no drift — the Run gate stays green),
+//! and for a baked app synthesize the agent under `agents/<new>/` — and only then
+//! does `rename` remove the original (`duplicate` keeps it). So a failure while
+//! building the new copy leaves the original completely untouched; the partial
+//! copy is cleaned up. The source id is resolved strictly by directory name (a
+//! destructive move should act on exactly the directory named); a desynced app
+//! is re-synced with `aware app rename <dir-name> <app-field>`.
 
 use std::path::{Path, PathBuf};
 
@@ -24,16 +29,29 @@ use crate::error::AwareError;
 use crate::install::local::{
     copy_dir_recursive, is_app_backed_agent, write_app_lockfile, write_synthesized_agent,
 };
-use crate::manifest::loader::{find_app_manifest, load_app};
+use crate::manifest::loader::{find_app_manifest, is_safe_segment, load_app};
 use crate::paths::Paths;
 
-/// Outcome of a rename/duplicate: the resulting app id and whether a fresh
-/// compiled `<id>.lock` was produced (so the caller can report
-/// runnable-vs-needs-compile without re-reading the directory).
+/// What happened to the compiled `<id>.lock` during a rename/duplicate, so the
+/// caller can tell the user whether the app is still ready to run.
+#[derive(Debug, PartialEq, Eq)]
+pub enum LockOutcome {
+    /// The app had a compiled lock and it was regenerated — still ready to run.
+    Refreshed,
+    /// The app had no compiled lock; none was created (its "not yet compiled"
+    /// state is preserved).
+    None,
+    /// The app had a lock but recompiling it failed for a benign reason (e.g. it
+    /// now references an uninstalled agent) — `aware app compile` is needed. A
+    /// non-benign (I/O) failure is NOT this; it aborts the whole op instead.
+    NeedsRefresh,
+}
+
+/// Outcome of a rename/duplicate: the resulting app id and what became of its lock.
 #[derive(Debug)]
 pub struct AppMoveOutcome {
     pub id: String,
-    pub compiled: bool,
+    pub lock: LockOutcome,
 }
 
 /// Windows reserved device names. The app id becomes a directory name, so an id
@@ -44,13 +62,15 @@ const RESERVED_NAMES: &[&str] = &[
     "COM9", "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9",
 ];
 
-/// Validate a candidate app id: the slug charset installed apps already use
+/// Validate a candidate NEW app id: the slug charset installed apps already use
 /// (`[A-Za-z0-9._-]`, first char alphanumeric — which also rejects `.`/`..` and
-/// any leading-dot name), no path separators, and not a Windows reserved device
-/// name. Mirrors the `APP_ID` charset on the floless side; the first-char rule +
-/// charset is what fences out directory traversal.
+/// any leading-dot name), no trailing dot (Windows strips it, aliasing `foo.`
+/// onto `foo`), no path separators, and not a Windows reserved device name.
+/// Mirrors the `APP_ID` charset on the floless side; the first-char rule + charset
+/// fence out directory traversal.
 fn validate_app_id(id: &str) -> Result<(), AwareError> {
     let charset_ok = !id.is_empty()
+        && !id.ends_with('.')
         && id
             .chars()
             .all(|c| c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.'))
@@ -155,8 +175,9 @@ fn split_inline_comment(s: &str) -> (&str, &str) {
 /// lock artifact (`*.lock` + the legacy `lockfile.yaml`). Returns the new source
 /// path and whether a compiled `*.lock` was present beforehand (so the caller
 /// only regenerates a lock for an app that already had one). The text rewrite is
-/// computed before any write, so a missing `app:` field fails the whole op
-/// without having mutated the directory.
+/// computed before any write, so a missing `app:` field fails without having
+/// mutated the directory. Best-effort removals warn (rather than fail) so a
+/// lingering stale source / lock is at least diagnosable.
 fn restamp_dir(dir: &Path, new_id: &str) -> Result<(PathBuf, bool), AwareError> {
     let source = find_app_manifest(dir).ok_or_else(|| {
         AwareError::Validation(format!("app dir {} has no .flo/.app source", dir.display()))
@@ -167,10 +188,16 @@ fn restamp_dir(dir: &Path, new_id: &str) -> Result<(PathBuf, bool), AwareError> 
     let ext = source.extension().and_then(|e| e.to_str()).unwrap_or("flo");
     let new_source = dir.join(format!("{new_id}.{ext}"));
     std::fs::write(&new_source, rewritten)?;
-    if new_source != source {
-        // Best-effort: the canonical-name lookup already prefers `<dir>.<ext>`,
-        // so a lingering old-named source would be ignored — but drop it anyway.
-        let _ = std::fs::remove_file(&source);
+    if new_source != source
+        && let Err(e) = std::fs::remove_file(&source)
+    {
+        // The canonical-name lookup already prefers `<dir>.<ext>`, so a leftover
+        // old-named source is ignored — but warn so it's diagnosable.
+        eprintln!(
+            "warning: wrote {}, but removing the old source {} failed ({e})",
+            new_source.display(),
+            source.display()
+        );
     }
 
     // Drop stale lock artifacts — a `*.lock` carries the old id and a now-wrong
@@ -181,11 +208,12 @@ fn restamp_dir(dir: &Path, new_id: &str) -> Result<(PathBuf, bool), AwareError> 
         for entry in read.flatten() {
             let name = entry.file_name();
             let name = name.to_string_lossy();
-            if name.ends_with(".lock") {
-                had_compiled_lock = true;
-                let _ = std::fs::remove_file(entry.path());
-            } else if name == "lockfile.yaml" {
-                let _ = std::fs::remove_file(entry.path());
+            let is_lock = name.ends_with(".lock");
+            if is_lock || name == "lockfile.yaml" {
+                had_compiled_lock |= is_lock;
+                if let Err(e) = std::fs::remove_file(entry.path()) {
+                    eprintln!("warning: could not remove stale {name} ({e})");
+                }
             }
         }
     }
@@ -193,68 +221,45 @@ fn restamp_dir(dir: &Path, new_id: &str) -> Result<(PathBuf, bool), AwareError> 
 }
 
 /// Regenerate the install-time `lockfile.yaml` and, when the app already had a
-/// compiled `<id>.lock`, recompile it so a renamed/duplicated app's on-disk
-/// shape matches a freshly installed-and-compiled one. Recompile is best-effort:
-/// an app that references a now-uninstalled agent can't compile, which is an
-/// honest "needs refresh" state, not a failed rename — so it warns rather than
-/// unwinding the move. Returns whether a fresh `<id>.lock` now exists.
-fn refresh_locks(new_source: &Path, dir: &Path, had_compiled_lock: bool, paths: &Paths) -> bool {
-    if let Ok(app) = load_app(new_source) {
-        let _ = write_app_lockfile(&app, dir, paths);
+/// compiled `<id>.lock`, recompile it so a renamed/duplicated app's on-disk shape
+/// matches a freshly installed-and-compiled one. A recompile failure is split:
+/// a `Validation` error (the app references a now-uninstalled agent) is the honest
+/// "needs refresh" state and degrades to `NeedsRefresh`; any other error (I/O,
+/// serialize) means the move could not be completed cleanly and is propagated so
+/// the caller unwinds — never a silent lockless app reported as success.
+fn refresh_locks(
+    new_source: &Path,
+    dir: &Path,
+    had_compiled_lock: bool,
+    paths: &Paths,
+) -> Result<LockOutcome, AwareError> {
+    if let Ok(app) = load_app(new_source)
+        && let Err(e) = write_app_lockfile(&app, dir, paths)
+    {
+        eprintln!("warning: app moved, but rewriting lockfile.yaml failed ({e})");
     }
     if !had_compiled_lock {
-        return false;
+        return Ok(LockOutcome::None);
     }
     match crate::app_lock::compile_to_disk(new_source, paths) {
-        Ok(_) => true,
-        Err(e) => {
+        Ok(_) => Ok(LockOutcome::Refreshed),
+        Err(e @ AwareError::Validation(_)) => {
             eprintln!(
                 "warning: app moved, but recompiling its lock failed ({e}); run `aware app compile` to refresh"
             );
-            false
+            Ok(LockOutcome::NeedsRefresh)
         }
+        Err(e) => Err(e),
     }
 }
 
-/// Regenerate the synthesized agent for a baked (`exposes-as-agent`) app under
-/// its new id. `old_id` is `None` for duplicate (the source's agent stays);
-/// `Some(old)` for rename (the old synthesized agent is removed after the new
-/// one is written). On failure the partially-written new agent is cleaned up and
-/// the error returned so the caller can unwind.
-fn move_synth_agent(
-    new_source: &Path,
-    new_id: &str,
-    old_id: Option<&str>,
-    paths: &Paths,
-) -> Result<(), AwareError> {
-    let app = load_app(new_source)?;
-    if !app.exposes_as_agent {
-        return Ok(());
-    }
-    if let Err(e) = write_synthesized_agent(&app, paths) {
-        let _ = std::fs::remove_dir_all(paths.agents_dir().join(new_id));
-        return Err(e);
-    }
-    if let Some(old_id) = old_id {
-        let old_agent = paths.agents_dir().join(old_id);
-        if old_agent.exists()
-            && is_app_backed_agent(&old_agent, old_id)
-            && let Err(e) = std::fs::remove_dir_all(&old_agent)
-        {
-            eprintln!(
-                "warning: app renamed, but removing the old synthesized agent {old_id} failed ({e})"
-            );
-        }
-    }
-    Ok(())
-}
-
-/// Pre-flight: a baked app would register a synthesized agent at `agents/<new>/`.
-/// Refuse if a real (not app-backed-by-`backed_by`) agent already squats that
-/// name, mirroring `install`'s guard, so we never half-move an app.
-fn assert_agent_name_free(new_id: &str, backed_by: &str, paths: &Paths) -> Result<(), AwareError> {
+/// A baked app registers a synthesized agent at `agents/<new_id>/`. Refuse if a
+/// REAL (not app-backed-by-`new_id`) agent already holds that name; an orphaned
+/// app-backed agent of the same name is reclaimable (overwritten), mirroring
+/// `install`'s guard. Runs before any directory is created, so we never half-stage.
+fn assert_agent_name_free(new_id: &str, paths: &Paths) -> Result<(), AwareError> {
     let new_agent = paths.agents_dir().join(new_id);
-    if new_agent.exists() && !is_app_backed_agent(&new_agent, backed_by) {
+    if new_agent.exists() && !is_app_backed_agent(&new_agent, new_id) {
         return Err(AwareError::Conflict(format!(
             "an agent named {new_id} is already installed"
         )));
@@ -262,9 +267,50 @@ fn assert_agent_name_free(new_id: &str, backed_by: &str, paths: &Paths) -> Resul
     Ok(())
 }
 
-/// Rename an installed app `old_id` → `new_id`, in place. The app keeps running
-/// the same plan under the new identity (lock regenerated, no drift).
+/// Build a fresh `apps/<new_id>/` from `src_dir`: copy, restamp to `new_id`,
+/// synthesize the agent for a baked app, regenerate the locks. On ANY failure the
+/// partial new directory (and the synth agent, if we created it) is removed, so
+/// `src_dir` is never left in a half-state. `agent_preexisted` tells cleanup not
+/// to delete a synth agent that was already there before we started.
+fn stage_app(
+    src_dir: &Path,
+    new_dir: &Path,
+    new_id: &str,
+    agent_preexisted: bool,
+    paths: &Paths,
+) -> Result<LockOutcome, AwareError> {
+    let staged = stage_app_inner(src_dir, new_dir, new_id, paths);
+    if staged.is_err() {
+        let _ = std::fs::remove_dir_all(new_dir);
+        if !agent_preexisted {
+            let _ = std::fs::remove_dir_all(paths.agents_dir().join(new_id));
+        }
+    }
+    staged
+}
+
+fn stage_app_inner(
+    src_dir: &Path,
+    new_dir: &Path,
+    new_id: &str,
+    paths: &Paths,
+) -> Result<LockOutcome, AwareError> {
+    copy_dir_recursive(src_dir, new_dir).map_err(AwareError::Io)?;
+    let (new_source, had_lock) = restamp_dir(new_dir, new_id)?;
+    let app = load_app(&new_source)?;
+    if app.exposes_as_agent {
+        write_synthesized_agent(&app, paths)?;
+    }
+    refresh_locks(&new_source, new_dir, had_lock, paths)
+}
+
+/// Rename an installed app `old_id` → `new_id`. Stages a fresh `apps/<new_id>/`
+/// (original untouched), then removes the original on success — so a failure
+/// mid-build never corrupts the original.
 pub fn rename_app(old_id: &str, new_id: &str, paths: &Paths) -> Result<AppMoveOutcome, AwareError> {
+    if !is_safe_segment(old_id) {
+        return Err(AwareError::NotFound(format!("app: {old_id}")));
+    }
     let old_dir = paths.apps_dir().join(old_id);
     if !old_dir.is_dir() {
         return Err(AwareError::NotFound(format!("app: {old_id}")));
@@ -281,34 +327,38 @@ pub fn rename_app(old_id: &str, new_id: &str, paths: &Paths) -> Result<AppMoveOu
             "an app named {new_id} already exists"
         )));
     }
-    // Guard the synthesized-agent name collision BEFORE moving anything.
     let old_source = find_app_manifest(&old_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {old_id} has no .flo/.app source")))?;
     let exposes = load_app(&old_source)?.exposes_as_agent;
+    let agent_preexisted = paths.agents_dir().join(new_id).exists();
     if exposes {
-        assert_agent_name_free(new_id, old_id, paths)?;
+        assert_agent_name_free(new_id, paths)?;
     }
 
-    // The load-bearing step. After it, unwind by renaming back.
-    std::fs::rename(&old_dir, &new_dir)?;
+    let lock = stage_app(&old_dir, &new_dir, new_id, agent_preexisted, paths)?;
 
-    let (new_source, had_lock) = match restamp_dir(&new_dir, new_id) {
-        Ok(v) => v,
-        Err(e) => {
-            let _ = std::fs::rename(&new_dir, &old_dir);
-            return Err(e);
+    // The new app is fully built and runnable — commit by removing the original.
+    // A failure here leaves BOTH (recoverable), so warn with the fix rather than
+    // unwind a perfectly good new app.
+    if let Err(e) = std::fs::remove_dir_all(&old_dir) {
+        eprintln!(
+            "warning: created {new_id}, but removing the old app {old_id} failed (is it running?) — remove it with `aware app uninstall {old_id}` ({e})"
+        );
+    }
+    if exposes {
+        let old_agent = paths.agents_dir().join(old_id);
+        if old_agent.exists()
+            && is_app_backed_agent(&old_agent, old_id)
+            && let Err(e) = std::fs::remove_dir_all(&old_agent)
+        {
+            eprintln!(
+                "warning: renamed the agent, but removing the old synthesized agent {old_id} failed — remove it with `aware agent uninstall {old_id}` ({e})"
+            );
         }
-    };
-
-    if exposes && let Err(e) = move_synth_agent(&new_source, new_id, Some(old_id), paths) {
-        let _ = std::fs::rename(&new_dir, &old_dir);
-        return Err(e);
     }
-
-    let compiled = refresh_locks(&new_source, &new_dir, had_lock, paths);
     Ok(AppMoveOutcome {
         id: new_id.to_string(),
-        compiled,
+        lock,
     })
 }
 
@@ -319,6 +369,9 @@ pub fn duplicate_app(
     new_id: &str,
     paths: &Paths,
 ) -> Result<AppMoveOutcome, AwareError> {
+    if !is_safe_segment(src_id) {
+        return Err(AwareError::NotFound(format!("app: {src_id}")));
+    }
     let src_dir = paths.apps_dir().join(src_id);
     if !src_dir.is_dir() {
         return Err(AwareError::NotFound(format!("app: {src_id}")));
@@ -333,31 +386,16 @@ pub fn duplicate_app(
     let src_source = find_app_manifest(&src_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {src_id} has no .flo/.app source")))?;
     let exposes = load_app(&src_source)?.exposes_as_agent;
+    let agent_preexisted = paths.agents_dir().join(new_id).exists();
     if exposes {
-        // A duplicate's synth agent is brand new, so the target name must be free
-        // outright (there is no prior app-backed agent of `new_id` to reclaim).
-        assert_agent_name_free(new_id, new_id, paths)?;
+        assert_agent_name_free(new_id, paths)?;
     }
 
-    copy_dir_recursive(&src_dir, &new_dir)?;
-
-    let (new_source, had_lock) = match restamp_dir(&new_dir, new_id) {
-        Ok(v) => v,
-        Err(e) => {
-            let _ = std::fs::remove_dir_all(&new_dir);
-            return Err(e);
-        }
-    };
-
-    if exposes && let Err(e) = move_synth_agent(&new_source, new_id, None, paths) {
-        let _ = std::fs::remove_dir_all(&new_dir);
-        return Err(e);
-    }
-
-    let compiled = refresh_locks(&new_source, &new_dir, had_lock, paths);
+    // Stage the copy; the original is intentionally never touched (no commit step).
+    let lock = stage_app(&src_dir, &new_dir, new_id, agent_preexisted, paths)?;
     Ok(AppMoveOutcome {
         id: new_id.to_string(),
-        compiled,
+        lock,
     })
 }
 
@@ -371,9 +409,9 @@ mod tests {
         }
     }
 
-    /// Install a minimal app `id` directly on disk (source + a compiled-looking
-    /// `<id>.lock`), returning its paths root. `exposes` adds an exposes-as-agent
-    /// block and the synthesized agent, mirroring an `aware app install`.
+    /// Install a minimal app `id` directly on disk (source + a stand-in compiled
+    /// `<id>.lock`). `exposes` adds an exposes-as-agent block and synthesizes the
+    /// agent, mirroring an `aware app install`.
     fn seed_app(paths: &Paths, id: &str, exposes: bool) {
         let dir = paths.apps_dir().join(id);
         std::fs::create_dir_all(&dir).unwrap();
@@ -390,7 +428,6 @@ mod tests {
             )
         };
         std::fs::write(dir.join(format!("{id}.flo")), body).unwrap();
-        // A stand-in compiled lock so rename/duplicate treat the app as compiled.
         std::fs::write(
             dir.join(format!("{id}.lock")),
             "source-hash: sha256:stale\n",
@@ -400,6 +437,20 @@ mod tests {
             let app = load_app(&dir.join(format!("{id}.flo"))).unwrap();
             write_synthesized_agent(&app, paths).unwrap();
         }
+    }
+
+    /// Write a REAL (non-app-backed, cli-transport) agent that merely shares a name.
+    fn seed_real_agent(paths: &Paths, id: &str) {
+        let dir = paths.agents_dir().join(id);
+        std::fs::create_dir_all(&dir).unwrap();
+        std::fs::write(
+            dir.join("manifest.yaml"),
+            format!(
+                "agent: {id}\nversion: 1.0\ndescription: real\nstateful: false\nlicense: MIT\n\
+                 transport: {{ cli: {{ binary: aware-{id} }} }}\ncommands: {{ go: {{ lifecycle: single, description: x }} }}\n"
+            ),
+        )
+        .unwrap();
     }
 
     fn read_app_field(paths: &Paths, id: &str) -> String {
@@ -415,18 +466,12 @@ mod tests {
 
         let out = rename_app("old-name", "new-name", &paths).unwrap();
         assert_eq!(out.id, "new-name");
-        assert!(out.compiled, "an app that had a lock must be recompiled");
+        assert_eq!(out.lock, LockOutcome::Refreshed);
 
-        // Old dir gone, new dir present with the canonical source name.
         assert!(!paths.apps_dir().join("old-name").exists());
         assert!(paths.apps_dir().join("new-name/new-name.flo").is_file());
-        assert!(
-            !paths.apps_dir().join("new-name/old-name.flo").exists(),
-            "old-named source must be removed"
-        );
-        // The `app:` field followed the rename.
+        assert!(!paths.apps_dir().join("new-name/old-name.flo").exists());
         assert_eq!(read_app_field(&paths, "new-name"), "new-name");
-        // A fresh lock exists whose source-hash matches the renamed bytes.
         let lock =
             std::fs::read_to_string(paths.apps_dir().join("new-name/new-name.lock")).unwrap();
         assert!(
@@ -443,12 +488,11 @@ mod tests {
     fn rename_without_prior_lock_does_not_force_compile() {
         let tmp = tempfile::tempdir().unwrap();
         let paths = paths_in(tmp.path());
-        // Seed then delete the stand-in lock → app was never compiled.
         seed_app(&paths, "src", false);
         std::fs::remove_file(paths.apps_dir().join("src/src.lock")).unwrap();
 
         let out = rename_app("src", "dst", &paths).unwrap();
-        assert!(!out.compiled);
+        assert_eq!(out.lock, LockOutcome::None);
         assert!(!paths.apps_dir().join("dst/dst.lock").exists());
     }
 
@@ -461,7 +505,6 @@ mod tests {
 
         rename_app("baked", "rebaked", &paths).unwrap();
 
-        // The synthesized agent followed the rename.
         assert!(
             !paths.agents_dir().join("baked").exists(),
             "old synth agent must be removed"
@@ -481,9 +524,24 @@ mod tests {
         seed_app(&paths, "b", false);
         let err = rename_app("a", "b", &paths).unwrap_err();
         assert!(matches!(err, AwareError::Conflict(_)), "got {err:?}");
-        // Both apps untouched.
         assert!(paths.apps_dir().join("a/a.flo").is_file());
         assert!(paths.apps_dir().join("b/b.flo").is_file());
+    }
+
+    #[test]
+    fn rename_onto_a_real_agent_name_conflicts_and_changes_nothing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = paths_in(tmp.path());
+        seed_app(&paths, "baked", true);
+        seed_real_agent(&paths, "taken");
+
+        let err = rename_app("baked", "taken", &paths).unwrap_err();
+        assert!(matches!(err, AwareError::Conflict(_)), "got {err:?}");
+        // Nothing moved: the source app, its agent, and the real agent are intact.
+        assert!(paths.apps_dir().join("baked/baked.flo").is_file());
+        assert!(paths.agents_dir().join("baked/manifest.yaml").is_file());
+        assert!(!paths.apps_dir().join("taken").exists());
+        assert!(paths.agents_dir().join("taken/manifest.yaml").is_file());
     }
 
     #[test]
@@ -504,18 +562,39 @@ mod tests {
     }
 
     #[test]
-    fn rename_rejects_invalid_id() {
+    fn rename_rejects_invalid_new_id() {
         let tmp = tempfile::tempdir().unwrap();
         let paths = paths_in(tmp.path());
         seed_app(&paths, "ok", false);
-        for bad in ["../escape", "has space", ".hidden", "nul", "a/b"] {
+        for bad in [
+            "../escape",
+            "has space",
+            ".hidden",
+            "nul",
+            "a/b",
+            "trailingdot.",
+        ] {
             let err = rename_app("ok", bad, &paths).unwrap_err();
             assert!(
                 matches!(err, AwareError::Validation(_)),
                 "expected Validation for {bad:?}, got {err:?}"
             );
         }
-        // The original is intact after every rejected attempt.
+        assert!(paths.apps_dir().join("ok/ok.flo").is_file());
+    }
+
+    #[test]
+    fn rename_rejects_unsafe_source_id() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = paths_in(tmp.path());
+        seed_app(&paths, "ok", false);
+        for bad in ["../ok", "a/b", "..", "a\\b"] {
+            let err = rename_app(bad, "new", &paths).unwrap_err();
+            assert!(
+                matches!(err, AwareError::NotFound(_)),
+                "expected NotFound for source {bad:?}, got {err:?}"
+            );
+        }
         assert!(paths.apps_dir().join("ok/ok.flo").is_file());
     }
 
@@ -527,14 +606,13 @@ mod tests {
 
         let out = duplicate_app("orig", "copy", &paths).unwrap();
         assert_eq!(out.id, "copy");
+        assert_eq!(out.lock, LockOutcome::Refreshed);
 
-        // Original untouched.
         assert!(paths.apps_dir().join("orig/orig.flo").is_file());
         assert_eq!(read_app_field(&paths, "orig"), "orig");
-        // Copy exists with its own identity.
         assert!(paths.apps_dir().join("copy/copy.flo").is_file());
         assert_eq!(read_app_field(&paths, "copy"), "copy");
-        assert!(out.compiled && paths.apps_dir().join("copy/copy.lock").is_file());
+        assert!(paths.apps_dir().join("copy/copy.lock").is_file());
     }
 
     #[test]
@@ -545,12 +623,26 @@ mod tests {
 
         duplicate_app("baked", "baked-copy", &paths).unwrap();
 
-        // Original synth agent still present; copy got its own.
         assert!(paths.agents_dir().join("baked/manifest.yaml").is_file());
         let copy_manifest = paths.agents_dir().join("baked-copy/manifest.yaml");
         assert!(copy_manifest.is_file());
         let agent = crate::manifest::loader::load_agent(&copy_manifest).unwrap();
         assert_eq!(agent.transport.app.unwrap().backed_by, "baked-copy");
+    }
+
+    #[test]
+    fn duplicate_onto_a_real_agent_name_conflicts_and_changes_nothing() {
+        let tmp = tempfile::tempdir().unwrap();
+        let paths = paths_in(tmp.path());
+        seed_app(&paths, "baked", true);
+        seed_real_agent(&paths, "taken");
+
+        let err = duplicate_app("baked", "taken", &paths).unwrap_err();
+        assert!(matches!(err, AwareError::Conflict(_)), "got {err:?}");
+        assert!(!paths.apps_dir().join("taken").exists());
+        assert!(paths.agents_dir().join("taken/manifest.yaml").is_file());
+        // The source is untouched.
+        assert!(paths.apps_dir().join("baked/baked.flo").is_file());
     }
 
     #[test]
@@ -576,8 +668,6 @@ mod tests {
 
     #[test]
     fn rewrite_app_field_ignores_nested_app_keys() {
-        // An indented `app:` (e.g. inside a node's transport config) must NOT be
-        // rewritten — only the top-level identity.
         let src = "app: real\nnodes:\n  - id: n\n    config:\n      app: nested-should-stay\n";
         let out = rewrite_app_field(src, "renamed").unwrap();
         assert!(out.contains("app: renamed\n"));
@@ -606,6 +696,7 @@ mod tests {
             "has space",
             "nul",
             "COM1",
+            "trailing.",
         ] {
             assert!(validate_app_id(bad).is_err(), "{bad} should be invalid");
         }

@@ -12,6 +12,6 @@ pub use local::install_agent_from_path;
 pub use local::install_app_from_path;
 pub use registry::install_agent_from_registry;
 pub use registry::update_agent_from_registry;
-pub use rename::{duplicate_app, rename_app};
+pub use rename::{LockOutcome, duplicate_app, rename_app};
 #[allow(unused_imports)] // consumed by v0.2 `aware agent uninstall` + `aware app uninstall`
 pub use uninstall::{uninstall_agent, uninstall_app};

@@ -177,6 +177,13 @@ async fn run(
     // Resolve the app's directory (by directory name, else by `app:` field — see
     // resolve_app_dir, #226) and load its source.
     let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    // Key all run state (pidfile, logs, instances under apps/<id>/) on the actual
+    // DIRECTORY name, never the caller's id — so resolving a desynced app by its
+    // `app:` field can't spawn a stray apps/<field>/ dir alongside the real one.
+    let app_id = app_dir
+        .file_name()
+        .and_then(|s| s.to_str())
+        .unwrap_or(app_id);
     let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     let app = crate::manifest::loader::load_app(&manifest_path)?;
@@ -588,9 +595,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 fn rename_cmd(ctx: &Context, old: &str, new: &str) -> Result<(), AwareError> {
     let out = crate::install::rename_app(old, new, &ctx.paths)?;
     println!("\u{2713} renamed {old} \u{2192} {}", out.id);
-    if out.compiled {
-        println!("  lock refreshed \u{2014} still ready to run");
-    }
+    print_lock_outcome(out.lock);
     Ok(())
 }
 
@@ -598,10 +603,22 @@ fn rename_cmd(ctx: &Context, old: &str, new: &str) -> Result<(), AwareError> {
 fn duplicate_cmd(ctx: &Context, src: &str, new: &str) -> Result<(), AwareError> {
     let out = crate::install::duplicate_app(src, new, &ctx.paths)?;
     println!("\u{2713} duplicated {src} \u{2192} {}", out.id);
-    if out.compiled {
-        println!("  lock compiled \u{2014} ready to run");
-    }
+    print_lock_outcome(out.lock);
     Ok(())
+}
+
+/// Report what happened to the compiled lock after a rename/duplicate, so a user
+/// who had a ready-to-run app learns immediately if it now needs a recompile
+/// (rather than the failure being an absent line they have to notice).
+fn print_lock_outcome(lock: crate::install::LockOutcome) {
+    use crate::install::LockOutcome;
+    match lock {
+        LockOutcome::Refreshed => println!("  lock refreshed \u{2014} ready to run"),
+        LockOutcome::NeedsRefresh => println!(
+            "  \u{26a0} lock could not be refreshed \u{2014} run `aware app compile` before running"
+        ),
+        LockOutcome::None => {}
+    }
 }
 
 fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
