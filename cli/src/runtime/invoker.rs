@@ -1200,13 +1200,29 @@ fn resolve_vision_provider_from(
     }
 }
 
+/// Load the (optional) credential JSON. An **absent** file → `Ok(None)` (the zero-config
+/// default path). A **present but unparseable** file → `Err` — a corrupt key file should
+/// fail loudly, not silently switch the user to a different provider/billing.
+fn load_vision_credential(path: &std::path::Path) -> Result<Option<Value>, AwareError> {
+    match std::fs::read_to_string(path) {
+        Ok(t) => {
+            let v = serde_json::from_str(&t).map_err(|e| {
+                AwareError::Network(format!(
+                    "vision.extract: bad credential JSON in {}: {e}",
+                    path.display()
+                ))
+            })?;
+            Ok(Some(v))
+        }
+        Err(_) => Ok(None),
+    }
+}
+
 fn resolve_vision_provider() -> Result<VisionProvider, AwareError> {
     let cred_path = vision_aware_home()
         .join("credentials")
         .join("vision-model.json");
-    let cred: Option<Value> = std::fs::read_to_string(&cred_path)
-        .ok()
-        .and_then(|t| serde_json::from_str(&t).ok());
+    let cred = load_vision_credential(&cred_path)?;
     resolve_vision_provider_from(cred.as_ref(), &cred_path, |n| find_on_path(n).is_some())
 }
 
@@ -1256,7 +1272,9 @@ fn parse_vision_json(text: &str) -> Result<Value, AwareError> {
 fn find_on_path(name: &str) -> Option<PathBuf> {
     let path = std::env::var_os("PATH")?;
     let dirs: Vec<PathBuf> = std::env::split_paths(&path).collect();
-    let exts: &[&str] = if cfg!(windows) {
+    // If the caller already supplied an extension (e.g. "codex.cmd"), don't append a
+    // second one — look the name up verbatim.
+    let exts: &[&str] = if cfg!(windows) && std::path::Path::new(name).extension().is_none() {
         &[".exe", ".cmd", ".bat", ".com"]
     } else {
         &[""]
@@ -1285,6 +1303,22 @@ fn vision_temp_path(ext: &str) -> PathBuf {
 }
 
 const VISION_CLI_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(240);
+
+/// Kill a child and (on Windows) its whole process tree — a `codex.cmd`/`.bat` shim
+/// spawns the real CLI as a grandchild, and `claude` may spawn tool subprocesses, so
+/// `Child::kill` alone can orphan them on timeout. Always reaps the immediate child.
+fn kill_process_tree(child: &mut std::process::Child) {
+    #[cfg(windows)]
+    {
+        let _ = std::process::Command::new("taskkill")
+            .args(["/PID", &child.id().to_string(), "/T", "/F"])
+            .stdout(std::process::Stdio::null())
+            .stderr(std::process::Stdio::null())
+            .status();
+    }
+    let _ = child.kill();
+    let _ = child.wait();
+}
 
 /// Spawn a CLI provider, draining stdout/stderr on threads (so a chatty child can't
 /// deadlock on a full pipe) and killing it past `timeout`. Optionally feeds `stdin_data`
@@ -1323,15 +1357,21 @@ fn run_cli_capture(
         let _ = stderr.read_to_string(&mut s);
         s
     });
-    // Feed stdin AFTER the output drains are running, so a child that writes before it
-    // finishes reading stdin can't deadlock us on a full pipe.
-    if let Some(data) = stdin_data {
-        use std::io::Write;
-        if let Some(mut si) = child.stdin.take() {
-            let _ = si.write_all(data);
-            // drop `si` → closes stdin (EOF).
+    // Feed stdin from its OWN thread (after the output drains are running): a child that
+    // stops reading, or a payload past the OS pipe buffer, then can't block us past the
+    // watchdog — the wait loop below still governs the deadline. On kill, the broken pipe
+    // ends this thread.
+    let h_in = match (stdin_data, child.stdin.take()) {
+        (Some(data), Some(mut si)) => {
+            let owned = data.to_vec();
+            Some(std::thread::spawn(move || {
+                use std::io::Write;
+                let _ = si.write_all(&owned);
+                // drop `si` → closes stdin (EOF).
+            }))
         }
-    }
+        _ => None,
+    };
 
     let deadline = std::time::Instant::now() + timeout;
     let status = loop {
@@ -1339,8 +1379,7 @@ fn run_cli_capture(
             Ok(Some(st)) => break st,
             Ok(None) => {
                 if std::time::Instant::now() >= deadline {
-                    let _ = child.kill();
-                    let _ = child.wait();
+                    kill_process_tree(&mut child);
                     return Err(AwareError::Network(format!(
                         "vision.extract: {label} timed out after {}s",
                         timeout.as_secs()
@@ -1357,6 +1396,9 @@ fn run_cli_capture(
     };
     let stdout_s = h_out.join().unwrap_or_default();
     let stderr_s = h_err.join().unwrap_or_default();
+    if let Some(h) = h_in {
+        let _ = h.join();
+    }
     if !status.success() {
         let tail: String = stderr_s
             .chars()
@@ -1463,9 +1505,12 @@ fn call_codex_cli(
         "--skip-git-repo-check".into(),
         "--color".into(),
         "never".into(),
+        // `-` is codex's explicit "read the prompt from stdin" form (vs relying on the
+        // no-arg default). The prompt rides stdin, not argv, because codex resolves to a
+        // `.cmd`/`.ps1` shim on Windows and a multi-line prompt in argv fails the `.cmd`
+        // arg-escaping check.
+        "-".into(),
     ];
-    // The prompt rides stdin, not argv: codex resolves to a `.cmd`/`.ps1` shim on
-    // Windows, and a multi-line prompt in argv fails the `.cmd` arg-escaping check.
     let instruction = vision_instruction(prompt, schema);
     run_cli_capture(
         &program,
@@ -1675,6 +1720,22 @@ mod vision_provider_tests {
         assert_eq!(vision_media(&[0xff, 0xd8, 0xff, 0xe0]).0, "image/jpeg");
         assert_eq!(vision_media(b"%PDF-1.7").0, "application/pdf");
         assert_eq!(vision_media(b"%PDF-1.7").1, ".pdf");
+    }
+
+    #[test]
+    fn load_credential_absent_is_none_corrupt_is_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        // Absent file → Ok(None): the zero-config default (use the local CLI).
+        let missing = tmp.path().join("vision-model.json");
+        assert_eq!(load_vision_credential(&missing).unwrap(), None);
+        // Valid JSON → Ok(Some).
+        let good = tmp.path().join("good.json");
+        std::fs::write(&good, r#"{"provider":"claude"}"#).unwrap();
+        assert!(load_vision_credential(&good).unwrap().is_some());
+        // Present-but-corrupt → Err (a broken key file must not silently switch provider).
+        let bad = tmp.path().join("bad.json");
+        std::fs::write(&bad, "{not json").unwrap();
+        assert!(load_vision_credential(&bad).is_err());
     }
 }
 
