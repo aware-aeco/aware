@@ -1,0 +1,66 @@
+agent:        viewer-3d
+version:      0.1.0
+display-name: 3D Viewer
+description: |
+  Utility agent that renders a generic 3D scene into a self-contained, interactive HTML
+  document — orbit/zoom, click-to-inspect, a legend and side tables, runnable in any browser.
+  The portable 3D sink of AWARE compositions: hand it a domain-agnostic scene (elements as
+  lines/boxes/nodes + groups + grids + panels) and it renders it (no per-scenario code). A
+  steel app maps members -> elements + a takeoff panel; a data app maps bars -> elements + a
+  totals panel — the renderer itself stays generic.
+
+  Lives under `_core/` because it's not tied to any AECO vertical — general 3D output any
+  agent's command may compose with. Companion to `html-report` (static documents) and `ui`
+  (declarative panels); this one is interactive 3D, so it needs a script-enabled client
+  surface (or a browser), not the static no-scripts report sandbox.
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/viewer-3d
+keywords: [aware, 3d, viewer, scene, three.js, visualization, output]
+
+requires:
+  filesystem:
+    - write: any                 # only when `render` is given an output-path
+
+# Runtime built-in (#201): the renderer runs in-process in the `aware` runtime — there is no
+# `aware-viewer-3d` host binary to ship or install, so the agent is `available`. Dispatch is
+# routed by agent id to the scene renderer (`cli/src/render/viewer_3d.rs`).
+transport:
+  builtin: {}
+
+commands:
+  render:
+    lifecycle: single
+    # Read-mode: rendering mutates no system of record, so a viewer node needs no `safety:`
+    # block. When `output-path` is given the runtime writes that artifact on a real run only
+    # (skipped under --dry-run / --simulate), so a preview never touches disk.
+    description: |
+      Render a generic 3D scene into a self-contained interactive HTML document. The scene is
+      domain-agnostic: `elements` are lines/boxes (a member `from`->`to`, optional
+      cross-section) or nodes (a point `at`); `groups` drive the legend + colour; `grids` place
+      labels; `panels` are generic side tables. The camera auto-fits the scene, so any scale
+      renders without tuning. No template needed.
+    inputs:
+      scene:
+        description: |
+          The 3D scene to render (object). Shape:
+          `{ meta:{name,units,up}, groups:[{key,label,color}],
+             elements:[{id,group,kind:"line|box|node",from,to,at,section:{w,d},size,meta}],
+             grids:[{label,at}], panels:[{title,note,columns,rows}], camera:{eye,target} }`.
+          The producer owns all domain meaning; the renderer is generic. See `scene-schema.md`.
+      output-path:
+        type: string
+        description: Optional file path; when given, the HTML is also written there.
+    outputs:
+      type: single
+      schema:
+        html:        string    # canonical self-contained interactive HTML (a client renders this)
+        bytes:       int       # length of the rendered HTML
+        output-path: string    # present only when an output-path was given (file written)
+        path:        string    # alias of `output-path` (the written artifact location)
+
+skills:
+  - scene-schema.md

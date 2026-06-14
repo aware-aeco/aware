@@ -947,6 +947,9 @@ impl AgentInvoker for BuiltinInvoker {
             ("ui", "catalog") => crate::render::ui::ui_catalog(&args),
             ("ui", "render") => crate::render::ui::ui_render(&args, self.dry_run),
             ("vision", "extract") => vision_extract(args, self.dry_run).await,
+            ("viewer-3d", "render") => {
+                crate::render::viewer_3d::viewer_3d_render(&args, self.dry_run)
+            }
             _ => Err(AwareError::Validation(format!(
                 "builtin transport: no handler for {agent}/{command}"
             ))),
