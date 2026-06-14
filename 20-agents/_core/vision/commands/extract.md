@@ -68,7 +68,19 @@ nodes:
 - **Approve-gated.** The first downstream write sits behind `approve:`; the human eyeballs the
   extraction. It **cannot** be an `assert:` evaluator and **cannot** branch control flow.
 
-## Credential
+## Model provider
 
-Reads `~/.aware/credentials/vision-model.json` (`{ "api_key": "…", "base_url"?: "…" }`) — the
-pinned model API key. Never written into the app file or the lock.
+AWARE runs inside an AI terminal that already has an authenticated, subscription-billed CLI on
+`PATH`, so by **default `vision.extract` needs no API key** — a cache miss shells out to the
+local CLI. The provider is chosen from the **optional** `~/.aware/credentials/vision-model.json`:
+
+| `vision-model.json` | Provider | Notes |
+|---|---|---|
+| *absent* (the default) | local **`claude`** CLI, else **`codex`** | uses your existing subscription; no key, no metered API cost |
+| `{ "provider": "claude" }` | local **`claude`** CLI | reads the artifact with Claude's Read tool (images **and** PDFs); honors the pinned `model` id via `--model` |
+| `{ "provider": "codex" }` | local **`codex`** CLI | `codex exec -i`; runs codex's own configured model, so the pinned Anthropic `model` id is informational |
+| `{ "api_key": "…", "base_url"?: "…" }` | **Anthropic API** | the metered fallback (for CI / headless hosts with no logged-in CLI); also `{ "provider": "anthropic", "api_key": "…" }` |
+
+The credential is never written into the app file or the lock. The fence is unchanged — provider
+is a runtime credential choice, not a validation concern (no validator/lock change): the cache,
+schema-binding, and `approve:` gate hold for every provider.

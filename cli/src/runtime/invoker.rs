@@ -1116,62 +1116,408 @@ async fn vision_extract(args: Value, dry_run: bool) -> Result<Value, AwareError>
     Ok(serde_json::json!({ "result": result, "cached": false, "model": model }))
 }
 
-/// Call the pinned multimodal model once (a cache miss). Reads the API key from
-/// `~/.aware/credentials/vision-model.json` (`{ "api_key", "base_url"? }`), sends the
-/// bytes + schema-constrained prompt to the Anthropic Messages API, and parses the
-/// schema-bound JSON back. Egress is to the credentialed endpoint only.
+/// Which model provider a `vision.extract` cache-miss calls. The credential file
+/// `~/.aware/credentials/vision-model.json` is **optional**: AWARE runs inside an AI
+/// terminal that already has an authenticated, subscription-billed CLI, so the common
+/// case needs no API key at all (and avoids the ~10× metered-API marginal cost).
+#[derive(Debug, PartialEq)]
+enum VisionProvider {
+    /// The local `claude` CLI in headless print mode (the zero-config default).
+    ClaudeCli,
+    /// The local `codex` CLI (`codex exec`), an explicit opt-in.
+    CodexCli,
+    /// The Anthropic Messages API — used when an `api_key` credential is configured.
+    Anthropic { api_key: String, base_url: String },
+}
+
+/// Resolve the provider from the (optional) credential JSON. Pure + injectable so it
+/// is unit-tested without touching the filesystem or PATH:
+/// - `provider: claude|codex|anthropic` is honored explicitly.
+/// - a bare `{"api_key":"…"}` (no `provider`) → Anthropic (back-compat).
+/// - no file / no provider / no key → the local `claude` CLI if present, else `codex`.
+fn resolve_vision_provider_from(
+    cred: Option<&Value>,
+    cred_path: &std::path::Path,
+    cli_available: impl Fn(&str) -> bool,
+) -> Result<VisionProvider, AwareError> {
+    let provider = cred
+        .and_then(|c| c.get("provider"))
+        .and_then(|v| v.as_str())
+        .map(|s| s.trim().to_ascii_lowercase());
+    let api_key = cred
+        .and_then(|c| c.get("api_key"))
+        .and_then(|v| v.as_str())
+        .map(str::to_string);
+    let base_url = cred
+        .and_then(|c| c.get("base_url"))
+        .and_then(|v| v.as_str())
+        .unwrap_or("https://api.anthropic.com")
+        .to_string();
+
+    match provider.as_deref() {
+        Some("claude" | "claude-cli" | "claude-code") => return Ok(VisionProvider::ClaudeCli),
+        Some("codex" | "codex-cli") => return Ok(VisionProvider::CodexCli),
+        Some("anthropic" | "api" | "anthropic-api") => {
+            return match api_key {
+                Some(k) => Ok(VisionProvider::Anthropic {
+                    api_key: k,
+                    base_url,
+                }),
+                None => Err(AwareError::Network(format!(
+                    "vision.extract: provider `anthropic` needs an `api_key` in {}",
+                    cred_path.display()
+                ))),
+            };
+        }
+        Some(other) => {
+            return Err(AwareError::Validation(format!(
+                "vision.extract: unknown provider `{other}` in {} — use `claude`, `codex`, or `anthropic`",
+                cred_path.display()
+            )));
+        }
+        None => {}
+    }
+    // No explicit provider: an api_key means "use the API" (back-compat); else the
+    // local CLI the operator is already authenticated for.
+    if let Some(k) = api_key {
+        return Ok(VisionProvider::Anthropic {
+            api_key: k,
+            base_url,
+        });
+    }
+    if cli_available("claude") {
+        Ok(VisionProvider::ClaudeCli)
+    } else if cli_available("codex") {
+        Ok(VisionProvider::CodexCli)
+    } else {
+        Err(AwareError::Network(
+            "vision.extract: no model provider available — install the `claude` CLI (recommended: \
+             it uses your existing Claude subscription, no API key) or the `codex` CLI, or provision \
+             ~/.aware/credentials/vision-model.json with {\"api_key\":\"…\"}. vision.extract calls a \
+             model at run time (RFC #223)."
+                .into(),
+        ))
+    }
+}
+
+fn resolve_vision_provider() -> Result<VisionProvider, AwareError> {
+    let cred_path = vision_aware_home()
+        .join("credentials")
+        .join("vision-model.json");
+    let cred: Option<Value> = std::fs::read_to_string(&cred_path)
+        .ok()
+        .and_then(|t| serde_json::from_str(&t).ok());
+    resolve_vision_provider_from(cred.as_ref(), &cred_path, |n| find_on_path(n).is_some())
+}
+
+/// Image/PDF sniff → (Anthropic media type, temp-file extension).
+fn vision_media(bytes: &[u8]) -> (&'static str, &'static str) {
+    if bytes.starts_with(b"\x89PNG") {
+        ("image/png", ".png")
+    } else if bytes.starts_with(&[0xff, 0xd8, 0xff]) {
+        ("image/jpeg", ".jpg")
+    } else if bytes.len() >= 12 && &bytes[8..12] == b"WEBP" {
+        ("image/webp", ".webp")
+    } else if bytes.starts_with(b"%PDF-") {
+        ("application/pdf", ".pdf")
+    } else {
+        ("image/png", ".png")
+    }
+}
+
+/// The schema-constrained extraction instruction shared by every provider.
+fn vision_instruction(prompt: &str, schema: &Value) -> String {
+    format!(
+        "{prompt}\n\nReturn ONLY a JSON object conforming to this schema, with no prose or \
+         markdown fences:\n{}",
+        serde_json::to_string(schema).unwrap_or_default()
+    )
+}
+
+/// Strip optional ``` fences and parse the model's reply as JSON.
+fn parse_vision_json(text: &str) -> Result<Value, AwareError> {
+    let cleaned = text
+        .trim()
+        .trim_start_matches("```json")
+        .trim_start_matches("```")
+        .trim_end_matches("```")
+        .trim();
+    serde_json::from_str::<Value>(cleaned).map_err(|e| {
+        AwareError::Validation(format!(
+            "vision.extract: model did not return schema-conforming JSON: {e}"
+        ))
+    })
+}
+
+/// Resolve `name` to a directly-spawnable executable on PATH. On Windows this appends
+/// the PATHEXT variants `Command::new` can actually launch (`.exe`/`.cmd`/`.bat`/`.com`)
+/// — npm ships `codex` only as `.cmd`/`.ps1` shims, and the bare or `.ps1` forms are not
+/// spawnable by CreateProcess. On Unix the bare name resolves.
+fn find_on_path(name: &str) -> Option<PathBuf> {
+    let path = std::env::var_os("PATH")?;
+    let dirs: Vec<PathBuf> = std::env::split_paths(&path).collect();
+    let exts: &[&str] = if cfg!(windows) {
+        &[".exe", ".cmd", ".bat", ".com"]
+    } else {
+        &[""]
+    };
+    find_in_dirs(name, &dirs, exts)
+}
+
+fn find_in_dirs(name: &str, dirs: &[PathBuf], exts: &[&str]) -> Option<PathBuf> {
+    for dir in dirs {
+        for ext in exts {
+            let cand = dir.join(format!("{name}{ext}"));
+            if cand.is_file() {
+                return Some(cand);
+            }
+        }
+    }
+    None
+}
+
+/// A unique temp path (pid + atomic seq) so concurrent extractions never collide.
+fn vision_temp_path(ext: &str) -> PathBuf {
+    use std::sync::atomic::{AtomicU64, Ordering};
+    static SEQ: AtomicU64 = AtomicU64::new(0);
+    let seq = SEQ.fetch_add(1, Ordering::Relaxed);
+    std::env::temp_dir().join(format!("aware-vision-{}-{seq}{ext}", std::process::id()))
+}
+
+const VISION_CLI_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(240);
+
+/// Spawn a CLI provider, draining stdout/stderr on threads (so a chatty child can't
+/// deadlock on a full pipe) and killing it past `timeout`. Optionally feeds `stdin_data`
+/// to the child — used to pass the prompt to `codex` out-of-band, since a multi-line
+/// prompt in argv can't be escaped for a Windows `.cmd`/`.bat` shim. Returns trimmed stdout.
+fn run_cli_capture(
+    program: &std::path::Path,
+    args: &[String],
+    stdin_data: Option<&[u8]>,
+    timeout: std::time::Duration,
+    label: &str,
+) -> Result<String, AwareError> {
+    use std::io::Read;
+    use std::process::Stdio;
+    let mut child = std::process::Command::new(program)
+        .args(args)
+        .stdin(if stdin_data.is_some() {
+            Stdio::piped()
+        } else {
+            Stdio::null()
+        })
+        .stdout(Stdio::piped())
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| AwareError::Network(format!("vision.extract: spawn {label}: {e}")))?;
+
+    let mut stdout = child.stdout.take().expect("piped stdout");
+    let mut stderr = child.stderr.take().expect("piped stderr");
+    let h_out = std::thread::spawn(move || {
+        let mut s = String::new();
+        let _ = stdout.read_to_string(&mut s);
+        s
+    });
+    let h_err = std::thread::spawn(move || {
+        let mut s = String::new();
+        let _ = stderr.read_to_string(&mut s);
+        s
+    });
+    // Feed stdin AFTER the output drains are running, so a child that writes before it
+    // finishes reading stdin can't deadlock us on a full pipe.
+    if let Some(data) = stdin_data {
+        use std::io::Write;
+        if let Some(mut si) = child.stdin.take() {
+            let _ = si.write_all(data);
+            // drop `si` → closes stdin (EOF).
+        }
+    }
+
+    let deadline = std::time::Instant::now() + timeout;
+    let status = loop {
+        match child.try_wait() {
+            Ok(Some(st)) => break st,
+            Ok(None) => {
+                if std::time::Instant::now() >= deadline {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return Err(AwareError::Network(format!(
+                        "vision.extract: {label} timed out after {}s",
+                        timeout.as_secs()
+                    )));
+                }
+                std::thread::sleep(std::time::Duration::from_millis(100));
+            }
+            Err(e) => {
+                return Err(AwareError::Network(format!(
+                    "vision.extract: {label} wait failed: {e}"
+                )));
+            }
+        }
+    };
+    let stdout_s = h_out.join().unwrap_or_default();
+    let stderr_s = h_err.join().unwrap_or_default();
+    if !status.success() {
+        let tail: String = stderr_s
+            .chars()
+            .rev()
+            .take(500)
+            .collect::<Vec<_>>()
+            .into_iter()
+            .rev()
+            .collect();
+        return Err(AwareError::Network(format!(
+            "vision.extract: {label} failed ({status}): {}",
+            tail.trim()
+        )));
+    }
+    Ok(stdout_s.trim().to_string())
+}
+
+/// Removes its temp path on drop, so a `?` early-return still cleans up.
+struct ScratchFile(PathBuf);
+impl ScratchFile {
+    fn new(ext: &str) -> Self {
+        ScratchFile(vision_temp_path(ext))
+    }
+    fn path(&self) -> &std::path::Path {
+        &self.0
+    }
+}
+impl Drop for ScratchFile {
+    fn drop(&mut self) {
+        let _ = std::fs::remove_file(&self.0);
+    }
+}
+
+/// `claude` CLI provider: write the artifact to a temp file, have Claude read it
+/// (its Read tool handles images **and** PDFs) and return schema-bound JSON. Passes
+/// the pinned `model` id through `--model`, so the cache key's model matches what ran.
+fn call_claude_cli(
+    bytes: &[u8],
+    prompt: &str,
+    schema: &Value,
+    model: &str,
+) -> Result<Value, AwareError> {
+    let program = find_on_path("claude").ok_or_else(|| {
+        AwareError::Network(
+            "vision.extract: provider `claude` selected but the `claude` CLI is not on PATH".into(),
+        )
+    })?;
+    let (_, ext) = vision_media(bytes);
+    let img = ScratchFile::new(ext);
+    std::fs::write(img.path(), bytes)
+        .map_err(|e| AwareError::Internal(format!("vision.extract: temp write: {e}")))?;
+    let instruction = format!(
+        "Read the file at {} using the Read tool — it is the image/PDF to extract from. {}",
+        img.path().display(),
+        vision_instruction(prompt, schema)
+    );
+    let mut args = vec![
+        "-p".into(),
+        instruction,
+        "--allowedTools".into(),
+        "Read".into(),
+        "--permission-mode".into(),
+        "acceptEdits".into(),
+        "--output-format".into(),
+        "text".into(),
+    ];
+    if !model.is_empty() {
+        args.push("--model".into());
+        args.push(model.to_string());
+    }
+    let out = run_cli_capture(&program, &args, None, VISION_CLI_TIMEOUT, "claude")?;
+    parse_vision_json(&out)
+}
+
+/// `codex` CLI provider: attach the image with `-i`, take the final message from `-o`,
+/// and constrain it via the schema embedded in the (stdin) prompt. We deliberately do
+/// NOT use codex's `--output-schema`: it demands a strict JSON Schema (every object with
+/// `additionalProperties:false` + all keys `required`), which arbitrary vision schemas
+/// won't have — so we treat the schema as a textual constraint, exactly like the claude
+/// and Anthropic paths. NOTE: `codex` runs its own configured model, so the pinned
+/// (Anthropic) `model` id is informational here.
+fn call_codex_cli(
+    bytes: &[u8],
+    prompt: &str,
+    schema: &Value,
+    _model: &str,
+) -> Result<Value, AwareError> {
+    let program = find_on_path("codex").ok_or_else(|| {
+        AwareError::Network(
+            "vision.extract: provider `codex` selected but the `codex` CLI is not on PATH".into(),
+        )
+    })?;
+    let (_, ext) = vision_media(bytes);
+    let img = ScratchFile::new(ext);
+    let out_file = ScratchFile::new(".txt");
+    std::fs::write(img.path(), bytes)
+        .map_err(|e| AwareError::Internal(format!("vision.extract: temp write: {e}")))?;
+    let args = vec![
+        "exec".into(),
+        "-i".into(),
+        img.path().display().to_string(),
+        "-o".into(),
+        out_file.path().display().to_string(),
+        "--skip-git-repo-check".into(),
+        "--color".into(),
+        "never".into(),
+    ];
+    // The prompt rides stdin, not argv: codex resolves to a `.cmd`/`.ps1` shim on
+    // Windows, and a multi-line prompt in argv fails the `.cmd` arg-escaping check.
+    let instruction = vision_instruction(prompt, schema);
+    run_cli_capture(
+        &program,
+        &args,
+        Some(instruction.as_bytes()),
+        VISION_CLI_TIMEOUT,
+        "codex",
+    )?;
+    let result = std::fs::read_to_string(out_file.path()).map_err(|e| {
+        AwareError::Network(format!("vision.extract: codex produced no output: {e}"))
+    })?;
+    parse_vision_json(&result)
+}
+
+/// Call the pinned multimodal model once (a cache miss). Dispatches to the resolved
+/// provider — the local `claude`/`codex` CLI by default (no API key needed), or the
+/// Anthropic Messages API when an `api_key` credential is configured. See
+/// `resolve_vision_provider` + docs/superpowers/specs/2026-06-14-vision-extract-cli-provider.md.
 fn call_vision_model(
     bytes: &[u8],
     prompt: &str,
     schema: &Value,
     model: &str,
 ) -> Result<Value, AwareError> {
-    use base64::Engine as _;
-    let cred_path = vision_aware_home()
-        .join("credentials")
-        .join("vision-model.json");
-    let cred_text = std::fs::read_to_string(&cred_path).map_err(|_| {
-        AwareError::Network(format!(
-            "vision.extract: missing model credential — provision {} with {{\"api_key\":\"…\"}} \
-             (the pinned model API key). vision.extract calls a model at run time (RFC #223).",
-            cred_path.display()
-        ))
-    })?;
-    let cred: Value = serde_json::from_str(&cred_text)
-        .map_err(|e| AwareError::Network(format!("vision.extract: bad credential JSON: {e}")))?;
-    let api_key = cred
-        .get("api_key")
-        .and_then(|v| v.as_str())
-        .ok_or_else(|| {
-            AwareError::Network("vision.extract: credential missing `api_key`".into())
-        })?;
-    let base = cred
-        .get("base_url")
-        .and_then(|v| v.as_str())
-        .unwrap_or("https://api.anthropic.com");
+    match resolve_vision_provider()? {
+        VisionProvider::ClaudeCli => call_claude_cli(bytes, prompt, schema, model),
+        VisionProvider::CodexCli => call_codex_cli(bytes, prompt, schema, model),
+        VisionProvider::Anthropic { api_key, base_url } => {
+            call_anthropic_api(bytes, prompt, schema, model, &api_key, &base_url)
+        }
+    }
+}
 
-    let media = if bytes.starts_with(b"\x89PNG") {
-        "image/png"
-    } else if bytes.starts_with(&[0xff, 0xd8, 0xff]) {
-        "image/jpeg"
-    } else if bytes.len() >= 12 && &bytes[8..12] == b"WEBP" {
-        "image/webp"
-    } else if bytes.starts_with(b"%PDF-") {
-        "application/pdf"
-    } else {
-        "image/png"
-    };
+/// The original Anthropic Messages API path (now one provider among several): send the
+/// bytes + schema-constrained prompt to `{base}/v1/messages` and parse the JSON back.
+fn call_anthropic_api(
+    bytes: &[u8],
+    prompt: &str,
+    schema: &Value,
+    model: &str,
+    api_key: &str,
+    base: &str,
+) -> Result<Value, AwareError> {
+    use base64::Engine as _;
+    let (media, _) = vision_media(bytes);
     let block_type = if media == "application/pdf" {
         "document"
     } else {
         "image"
     };
     let data = base64::engine::general_purpose::STANDARD.encode(bytes);
-    let instruction = format!(
-        "{prompt}\n\nReturn ONLY a JSON object conforming to this schema, with no prose or \
-         markdown fences:\n{}",
-        serde_json::to_string(schema).unwrap_or_default()
-    );
+    let instruction = vision_instruction(prompt, schema);
     let req = serde_json::json!({
         "model": model,
         "max_tokens": 4096,
@@ -1217,17 +1563,119 @@ fn call_vision_model(
                 .find_map(|m| m.get("text").and_then(|t| t.as_str()))
         })
         .unwrap_or_default();
-    let cleaned = text
-        .trim()
-        .trim_start_matches("```json")
-        .trim_start_matches("```")
-        .trim_end_matches("```")
-        .trim();
-    serde_json::from_str::<Value>(cleaned).map_err(|e| {
-        AwareError::Validation(format!(
-            "vision.extract: model did not return schema-conforming JSON: {e}"
-        ))
-    })
+    parse_vision_json(text)
+}
+
+#[cfg(test)]
+mod vision_provider_tests {
+    use super::*;
+    use serde_json::json;
+
+    fn p() -> std::path::PathBuf {
+        std::path::PathBuf::from("/x/credentials/vision-model.json")
+    }
+
+    #[test]
+    fn no_credential_defaults_to_claude_cli() {
+        let got = resolve_vision_provider_from(None, &p(), |n| n == "claude").unwrap();
+        assert_eq!(got, VisionProvider::ClaudeCli);
+    }
+
+    #[test]
+    fn no_credential_falls_back_to_codex_then_errors() {
+        let codex = resolve_vision_provider_from(None, &p(), |n| n == "codex").unwrap();
+        assert_eq!(codex, VisionProvider::CodexCli);
+        // Neither CLI present and no api_key → a clear, actionable error (not a panic).
+        assert!(resolve_vision_provider_from(None, &p(), |_| false).is_err());
+    }
+
+    #[test]
+    fn bare_api_key_uses_anthropic_for_backcompat() {
+        let c = json!({ "api_key": "sk-test" });
+        // Even with no CLI on PATH, an explicit key keeps the original API behavior.
+        let got = resolve_vision_provider_from(Some(&c), &p(), |_| false).unwrap();
+        assert_eq!(
+            got,
+            VisionProvider::Anthropic {
+                api_key: "sk-test".into(),
+                base_url: "https://api.anthropic.com".into(),
+            }
+        );
+    }
+
+    #[test]
+    fn explicit_claude_wins_over_a_present_api_key() {
+        // provider:claude must NOT use the API even if a key is sitting in the file.
+        let c = json!({ "provider": "claude", "api_key": "sk-test" });
+        let got = resolve_vision_provider_from(Some(&c), &p(), |_| false).unwrap();
+        assert_eq!(got, VisionProvider::ClaudeCli);
+    }
+
+    #[test]
+    fn provider_name_is_case_and_alias_insensitive() {
+        for name in ["codex", "CODEX", "codex-cli", " Codex "] {
+            let c = json!({ "provider": name });
+            assert_eq!(
+                resolve_vision_provider_from(Some(&c), &p(), |_| false).unwrap(),
+                VisionProvider::CodexCli,
+                "provider {name:?}"
+            );
+        }
+        for name in ["claude", "claude-cli", "claude-code"] {
+            let c = json!({ "provider": name });
+            assert_eq!(
+                resolve_vision_provider_from(Some(&c), &p(), |_| false).unwrap(),
+                VisionProvider::ClaudeCli,
+                "provider {name:?}"
+            );
+        }
+    }
+
+    #[test]
+    fn explicit_anthropic_requires_a_key_and_honors_base_url() {
+        assert!(
+            resolve_vision_provider_from(Some(&json!({ "provider": "anthropic" })), &p(), |_| true)
+                .is_err()
+        );
+        let c =
+            json!({ "provider": "anthropic", "api_key": "k", "base_url": "https://proxy.local" });
+        assert_eq!(
+            resolve_vision_provider_from(Some(&c), &p(), |_| false).unwrap(),
+            VisionProvider::Anthropic {
+                api_key: "k".into(),
+                base_url: "https://proxy.local".into()
+            }
+        );
+    }
+
+    #[test]
+    fn unknown_provider_is_a_clear_error() {
+        let c = json!({ "provider": "gpt-4o" });
+        assert!(resolve_vision_provider_from(Some(&c), &p(), |_| true).is_err());
+    }
+
+    #[test]
+    fn find_in_dirs_resolves_by_extension_and_misses_cleanly() {
+        let tmp = tempfile::tempdir().unwrap();
+        let exts: &[&str] = if cfg!(windows) {
+            &[".exe", ".cmd", ".bat", ".com"]
+        } else {
+            &[""]
+        };
+        let fname = if cfg!(windows) { "toolx.cmd" } else { "toolx" };
+        std::fs::write(tmp.path().join(fname), b"shim").unwrap();
+        let dirs = vec![tmp.path().to_path_buf()];
+        assert!(find_in_dirs("toolx", &dirs, exts).is_some());
+        assert!(find_in_dirs("absent", &dirs, exts).is_none());
+    }
+
+    #[test]
+    fn vision_media_sniffs_image_and_pdf() {
+        assert_eq!(vision_media(b"\x89PNG\r\n").0, "image/png");
+        assert_eq!(vision_media(&[0xff, 0xd8, 0xff, 0xe0]).0, "image/jpeg");
+        assert_eq!(vision_media(b"%PDF-1.7").0, "application/pdf");
+        assert_eq!(vision_media(b"%PDF-1.7").1, ".pdf");
+    }
 }
 
 /// The invoker the orchestrator uses in production. Routes each call to the
