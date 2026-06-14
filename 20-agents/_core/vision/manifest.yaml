@@ -23,8 +23,12 @@ provenance:
   generated-by: hand-curated
 
 requires:
-  # The pinned model endpoint + the vault credential it reads. Narrow on purpose:
-  # this agent talks to exactly one model API, not "any host".
+  # By default the extraction runs through the local `claude`/`codex` CLI already
+  # authenticated in the operator's terminal — no API key, no direct egress from
+  # AWARE (the CLI carries its own auth + connection). The declarations below apply
+  # ONLY to the optional `api_key` fallback (`provider: anthropic`), where AWARE
+  # talks to exactly one model API. The `vision-model` secret is therefore optional
+  # (soft — a missing secret is not fatal; see runtime/context.rs).
   network:
     - "api.anthropic.com:443"
   secrets:
