@@ -29,7 +29,7 @@ rules faithfully — not to recall AISC 360 / RCSC from training.
 
 - **US/AISC only.** These rules are AISC 360-22 + RCSC 2020 (US practice). Never answer a
   UK or European question from this agent, and never mix in Eurocode values — that is a
-  different agent (`steel-detailer-eurocode`) and a different code with different factors,
+  different agent (`steel-detailer-uk`, the UK/Eurocode agent) and a different code with different factors,
   bolt grades, and conventions.
 - **Edition matters.** State the edition in every citation (AISC 360-**22**). If asked about
   another edition, say the rule is sourced from 360-22 and may differ elsewhere.

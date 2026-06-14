@@ -96,3 +96,9 @@ skills:
   - weld-fillet-sizing.md
   - weld-length-and-pjp.md
   - connecting-elements-block-shear.md
+  # Phase 3 — drawing & detailing conventions (AISC 303 Code of Standard Practice)
+  - drawing-types-and-roles.md
+  - connection-design-responsibility.md
+  - drawing-approval-process.md
+  - marking-conventions.md
+  - tolerances-overview.md

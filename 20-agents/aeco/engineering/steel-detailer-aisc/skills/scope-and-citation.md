@@ -38,7 +38,7 @@ the free PDF.
 - **Ready-made connection design tables** → AISC *Steel Construction Manual* (paid). The
   underlying limit-state rules are in AISC 360-22 §J (free) — cite those.
 - **Seismic connection demands** → AISC 341 / 358 (free; not in v1 scope yet).
-- **UK / European practice** → `steel-detailer-eurocode` (a different code entirely).
+- **UK / European practice** → `steel-detailer-uk` (UK NA — a different code entirely).
 
 ## Copyright posture
 
