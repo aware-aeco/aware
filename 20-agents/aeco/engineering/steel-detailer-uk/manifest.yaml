@@ -1,0 +1,98 @@
+agent:        steel-detailer-uk
+version:      0.1.0
+sdk-target:   bs-en-1993-1-8:2005+uk-na          # the code + national annex these rules are sourced from
+display-name: Steel Detailer — UK (Eurocode 3 + UK NA)
+
+description: |
+  Verified, citation-backed UK steel connection-detailing rules (Eurocode 3 +
+  UK National Annex). A knowledge agent: each rule is transcribed from a free,
+  authoritative source — primarily SCI/BCSA P358 "Joints in Steel Construction:
+  Simple Joints to Eurocode 3" (the Green Book), with the EN 1993-1-8 Table 3.3
+  spacing/edge geometry corroborated from the free SCI/BCSA steelconstruction.info
+  (P358 cites Table 3.3 but does not tabulate it) — and carries its exact citation
+  plus a short source quote. The composing/terminal AI reads these skills to answer
+  connection-detailing questions and ALWAYS cites (the P358 section/table and the
+  EN 1993-1-8 clause it implements); it refuses rather than guessing. Covers bolted
+  + welded connection geometry, resistances, preload/slip, welds, block tearing, and
+  the UK NA partial factors. UK/Eurocode only — never mix with US/AISC (that is the
+  separate steel-detailer-aisc agent and a different code).
+
+# Knowledge agent. The deterministic `lookup` command's binary is not shipped yet
+# (roadmap Phase 4); today the value is the cited skills, read by the composing AI
+# at compose/prompt time. So the agent is honestly `planned`, not `available`.
+status: planned
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/steel-detailer-uk
+keywords: [aeco, engineering, structural, steel, detailing, connections, eurocode, en-1993-1-8, uk, national-annex, bolts, welds]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+    docs: "SCI P358 (free, steelconstruction.info); EN 1993-1-8:2005 Table 3.3 via steelconstruction.info + eurocodeapplied.com (free); BS EN 1993-1-8 + UK NA (paywalled, BSI)"
+
+# Engineering envelope (agent-spec § Engineering envelope): the code-of-practice +
+# national annex these rules are sourced from. Advisory until wired for knowledge
+# agents; documents the region pin and keeps UK/Eurocode from drifting into AISC or
+# another country's National Annex.
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Design code + edition + national annex the rules are sourced from
+      required: true
+      example: 'eurocode-3-1-8@2005+uk-na'
+    - id: execution-standard
+      description: Execution / fabrication standard (hole clearances, tolerances)
+      required: false
+      example: 'en-1090-2@2018'
+
+transport:
+  # Planned deterministic-lookup binary (Phase 4); declared so the contract is
+  # published, not shipped yet — hence the agent-level `status: planned`.
+  cli:
+    binary: aware-steel-detailer-uk
+
+commands:
+  lookup:
+    lifecycle: single
+    category: curated
+    status: planned
+    mode: read
+    description: |
+      (Planned — roadmap Phase 4.) Deterministic clause lookup with NO LLM in the
+      loop: given a rule selector, return the exact Eurocode/P358 clause, value, units
+      and citation as typed JSON — or an explicit miss (found:false) so the caller
+      refuses rather than guesses. Until shipped, the agent's value is its cited skills,
+      read by the composing AI at compose/prompt time (see skills/_grounding.md).
+    inputs:
+      rule:
+        type: string
+        description: 'Rule selector, e.g. "minimum edge distance e2", "slip resistance", "fillet weld throat".'
+    outputs:
+      type: single
+      schema:
+        rule:         string
+        value:        string
+        units:        string
+        citation:     string    # e.g. "BS EN 1993-1-8:2005 Table 3.3" or "SCI P358 Check 4 (EN 1993-1-8 cl. 3.9.1)"
+        source_quote: string    # short verbatim excerpt for verification
+        found:        boolean    # false → no verified rule (refuse, don't guess)
+
+# Discovered from skills/*.md. Each rule skill was authored from a verified extraction
+# (extract from the real source → cross-corroborate → seed spot-check); each carries its
+# citation + a short source quote.
+skills:
+  - _grounding.md
+  - scope-and-citation.md
+  - bolt-spacing-and-edge-distances.md
+  - bolt-holes.md
+  - bolt-categories.md
+  - bolt-shear-and-bearing.md
+  - bolt-preload-and-slip.md
+  - weld-fillet.md
+  - block-tearing.md
+  - partial-factors-uk-na.md
