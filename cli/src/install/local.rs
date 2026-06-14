@@ -1,8 +1,10 @@
 //! Install an agent or app from a local path. Validates first.
 
+use std::collections::BTreeMap;
 use std::path::Path;
 
 use crate::error::AwareError;
+use crate::manifest::App;
 use crate::manifest::loader::{load_agent, load_app};
 use crate::paths::Paths;
 use crate::validate::{Severity, has_errors, validate_agent_on_disk, validate_app};
@@ -105,12 +107,40 @@ pub fn install_app_from_path(src: &Path, paths: &Paths) -> Result<String, AwareE
 /// Write the synthesized callable agent manifest for an `exposes-as-agent` app
 /// to `<agents_dir>/<app>/manifest.yaml`, so the app resolves and dispatches as
 /// an agent (`agent: <app>, command: <cmd>`). See [`crate::manifest::expose`].
-fn write_synthesized_agent(app: &crate::manifest::App, paths: &Paths) -> Result<(), AwareError> {
+/// `pub(crate)` so `rename`/`duplicate` can regenerate it for the new id.
+pub(crate) fn write_synthesized_agent(app: &App, paths: &Paths) -> Result<(), AwareError> {
     let yaml = crate::manifest::expose::synthesize_agent_manifest(app)?;
     let agent_dir = paths.agents_dir().join(&app.app);
     std::fs::create_dir_all(&agent_dir)?;
     std::fs::write(agent_dir.join("manifest.yaml"), yaml)?;
     Ok(())
+}
+
+/// Resolve an app's `requires` to installed agent versions and write the
+/// install-time `lockfile.yaml` (legacy agent-version pins) into `app_dir`.
+/// Best-effort resolution — an agent that isn't installed is simply omitted,
+/// matching `aware app install` (it does not require every `requires` to be
+/// present). Shared by `install` and `rename`/`duplicate` so a renamed app's
+/// on-disk shape is identical to a freshly installed one.
+pub(crate) fn write_app_lockfile(
+    app: &App,
+    app_dir: &Path,
+    paths: &Paths,
+) -> Result<(), AwareError> {
+    let mut resolved = BTreeMap::new();
+    for req in &app.requires {
+        let id = req.split_once('@').map_or(req.as_str(), |(i, _)| i);
+        let agent_manifest = paths.agents_dir().join(id).join("manifest.yaml");
+        if let Ok(m) = load_agent(&agent_manifest) {
+            resolved.insert(id.to_string(), m.version);
+        }
+    }
+    crate::lockfile::write(
+        &app.app,
+        &app.version,
+        resolved,
+        &app_dir.join("lockfile.yaml"),
+    )
 }
 
 /// True when `<agent_dir>/manifest.yaml` is a synthesized agent backed by the

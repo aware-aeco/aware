@@ -25,6 +25,25 @@ pub enum AppCommand {
     Install { path_or_name: String },
     /// Uninstall an app. (v0.2)
     Uninstall { app: String },
+    /// Rename an installed app in place. Moves its directory, rewrites the
+    /// `app:` field, regenerates the lock (so it stays runnable, no drift), and
+    /// — for an `exposes-as-agent` app — the synthesized agent. (v0.67)
+    Rename {
+        /// The installed app to rename.
+        app: String,
+        /// The new app id (slug: letters, digits, dash, underscore, dot).
+        #[arg(value_name = "NEW_NAME")]
+        new_name: String,
+    },
+    /// Duplicate an installed app into an independent copy under a new id. The
+    /// original is left untouched. (v0.67)
+    Duplicate {
+        /// The installed app to copy.
+        app: String,
+        /// The new app id for the copy.
+        #[arg(value_name = "NEW_NAME")]
+        new_name: String,
+    },
     /// Validate an app file against the app-spec. (v0.2)
     Validate { path: std::path::PathBuf },
     /// Export an installed app's .flo file to a path. (v0.2)
@@ -97,6 +116,8 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             println!("\u{2713} uninstalled {app}");
             Ok(())
         }
+        AppCommand::Rename { app, new_name } => rename_cmd(ctx, &app, &new_name),
+        AppCommand::Duplicate { app, new_name } => duplicate_cmd(ctx, &app, &new_name),
         AppCommand::Validate { path } => validate_cmd(ctx, &path),
         AppCommand::Export { app, output } => export(ctx, &app, &output),
         AppCommand::Run {
@@ -153,20 +174,10 @@ async fn run(
     // every node so they render the same values within one run (#127).
     let run_ctx = crate::runtime::context::run_context(&run_id);
 
-    // Load the app.
-    let app_dir = ctx.paths.apps_dir().join(app_id);
-    if !app_dir.is_dir() {
-        return Err(AwareError::NotFound(format!("app: {app_id}")));
-    }
-    let manifest_path = std::fs::read_dir(&app_dir)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
+    // Resolve the app's directory (by directory name, else by `app:` field — see
+    // resolve_app_dir, #226) and load its source.
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     let app = crate::manifest::loader::load_app(&manifest_path)?;
 
@@ -564,25 +575,32 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
 
     let app = crate::manifest::loader::load_app(&manifest_path)?;
 
-    // Resolve each `requires` entry to an installed agent's exact version.
-    let mut resolved = std::collections::BTreeMap::new();
-    for req in &app.requires {
-        let (id, _version_spec) = match req.split_once('@') {
-            Some((i, v)) => (i, v),
-            None => (req.as_str(), "*"),
-        };
-        let agent_manifest_path = ctx.paths.agents_dir().join(id).join("manifest.yaml");
-        if let Ok(agent_manifest) = crate::manifest::loader::load_agent(&agent_manifest_path) {
-            resolved.insert(id.to_string(), agent_manifest.version);
-        }
-        // If the agent isn't installed, silently skip — install proceeds; lockfile
-        // simply omits it. v0.2 doesn't enforce that all requires must already be present.
-    }
-
-    let lockfile_path = app_dir.join("lockfile.yaml");
-    crate::lockfile::write(&app_id, &app.version, resolved, &lockfile_path)?;
+    // Resolve `requires` → installed agent versions and write `lockfile.yaml`.
+    // Shared with rename/duplicate so a moved app's on-disk shape matches a
+    // freshly-installed one.
+    crate::install::local::write_app_lockfile(&app, &app_dir, &ctx.paths)?;
 
     println!("\u{2713} installed {app_id} (lockfile written)");
+    Ok(())
+}
+
+/// `aware app rename <app> <new-name>` — rename an installed app in place. (v0.67)
+fn rename_cmd(ctx: &Context, old: &str, new: &str) -> Result<(), AwareError> {
+    let out = crate::install::rename_app(old, new, &ctx.paths)?;
+    println!("\u{2713} renamed {old} \u{2192} {}", out.id);
+    if out.compiled {
+        println!("  lock refreshed \u{2014} still ready to run");
+    }
+    Ok(())
+}
+
+/// `aware app duplicate <app> <new-name>` — copy an installed app to a new id. (v0.67)
+fn duplicate_cmd(ctx: &Context, src: &str, new: &str) -> Result<(), AwareError> {
+    let out = crate::install::duplicate_app(src, new, &ctx.paths)?;
+    println!("\u{2713} duplicated {src} \u{2192} {}", out.id);
+    if out.compiled {
+        println!("  lock compiled \u{2014} ready to run");
+    }
     Ok(())
 }
 
@@ -636,19 +654,8 @@ fn explain(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
     use crate::manifest::agent::Mode;
     use std::collections::BTreeSet;
 
-    let app_dir = ctx.paths.apps_dir().join(app_id);
-    if !app_dir.is_dir() {
-        return Err(AwareError::NotFound(format!("app: {app_id}")));
-    }
-    let manifest_path = std::fs::read_dir(&app_dir)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
     let app = crate::manifest::loader::load_app(&manifest_path)?;
     let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
@@ -928,22 +935,10 @@ fn html_escape_local(s: &str) -> String {
 }
 
 fn export(ctx: &Context, app_id: &str, output: &std::path::Path) -> Result<(), AwareError> {
-    let app_dir = ctx.paths.apps_dir().join(app_id);
-    if !app_dir.is_dir() {
-        return Err(AwareError::NotFound(format!("app: {app_id}")));
-    }
-    let manifest_path = std::fs::read_dir(&app_dir)?
-        .flatten()
-        .map(|e| e.path())
-        .find(|p| {
-            matches!(
-                p.extension().and_then(|e| e.to_str()),
-                Some("flo") | Some("app")
-            )
-        })
-        .ok_or_else(|| {
-            AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
-        })?;
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir).ok_or_else(|| {
+        AwareError::Internal(format!("installed app {app_id} missing .flo/.app file"))
+    })?;
 
     std::fs::copy(&manifest_path, output)?;
     println!("\u{2713} exported {app_id} \u{2192} {}", output.display());
@@ -967,13 +962,10 @@ struct AppListData {
 fn show(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
     use crate::render::topology::format_topology;
 
-    let discovered = discover_apps(&ctx.paths)?;
-    let d = discovered
-        .into_iter()
-        .find(|d| d.manifest.app == app_id)
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::NotFound(format!("app: {app_id}")))?;
-
-    let m = &d.manifest;
+    let m = crate::manifest::loader::load_app(&manifest_path)?;
     println!("app:           {}", m.app);
     println!("version:       {}", m.version);
     if let Some(dn) = &m.display_name {
@@ -996,13 +988,29 @@ fn show(ctx: &Context, app_id: &str) -> Result<(), AwareError> {
     }
     println!();
 
-    print!("{}", format_topology(m));
+    print!("{}", format_topology(&m));
     Ok(())
 }
 
 fn list(ctx: &Context) -> Result<(), AwareError> {
     let started = Instant::now();
     let discovered = discover_apps(&ctx.paths)?;
+
+    // Surface the #226 footgun: an app whose directory name and `app:` field
+    // disagree (e.g. after a manual `mv`) is only half-addressable. Warn in the
+    // human view; `--json` stdout stays clean for machine consumers.
+    if !ctx.json {
+        for d in &discovered {
+            if let Some(dir) = d.root.file_name().and_then(|s| s.to_str())
+                && dir != d.manifest.app
+            {
+                eprintln!(
+                    "warning: app {:?} is in directory {:?} — name and `app:` field disagree; run `aware app rename` to re-sync",
+                    d.manifest.app, dir
+                );
+            }
+        }
+    }
 
     if ctx.json {
         let data = AppListData {

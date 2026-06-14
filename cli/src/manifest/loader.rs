@@ -82,6 +82,43 @@ pub fn discover_apps(paths: &Paths) -> Result<Vec<DiscoveredApp>, AwareError> {
     Ok(out)
 }
 
+/// Resolve an installed app by id to its directory, for the by-id verbs
+/// (`run`, `show`, `explain`, `export`). Resolution order — and the fix for the
+/// #226 footgun where verbs disagreed on what "id" meant:
+///
+/// 1. A directory whose NAME is `id` (`apps/<id>/`) — the fast, canonical path
+///    (dir name == `app:` field by convention), unchanged from before.
+/// 2. Failing that, the app whose manifest `app:` field equals `id` — so an app
+///    whose directory was renamed out from under its field stays addressable.
+///    Resolving this way means dir-name and field disagree, so it warns (to
+///    stderr, leaving `--json` stdout clean); `aware app rename` re-syncs them.
+///
+/// `NotFound` when neither matches. This is what makes `run`/`show`/`explain`/
+/// `export` resolve an app consistently, instead of some keying on the directory
+/// and others on the `app:` field.
+pub fn resolve_app_dir(paths: &Paths, id: &str) -> Result<PathBuf, AwareError> {
+    let direct = paths.apps_dir().join(id);
+    if direct.is_dir() {
+        return Ok(direct);
+    }
+    if let Some(d) = discover_apps(paths)?
+        .into_iter()
+        .find(|d| d.manifest.app == id)
+    {
+        let dir = d
+            .root
+            .file_name()
+            .and_then(|s| s.to_str())
+            .unwrap_or("?")
+            .to_string();
+        eprintln!(
+            "warning: app {id:?} lives in directory {dir:?} — its directory name and `app:` field disagree; run `aware app rename` to re-sync them"
+        );
+        return Ok(d.root);
+    }
+    Err(AwareError::NotFound(format!("app: {id}")))
+}
+
 pub(crate) fn find_app_manifest(root: &Path) -> Option<PathBuf> {
     // Preferred: <root>/<dir-name>.flo, then any *.flo, then any *.app.
     let dir_name = root.file_name()?.to_string_lossy().to_string();
