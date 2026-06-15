@@ -14,12 +14,13 @@ description: |
   connection-detailing questions and ALWAYS cites (the P358 section/table and the
   EN 1993-1-8 clause it implements); it refuses rather than guessing. Covers bolted
   + welded connection geometry, resistances, preload/slip, welds, block tearing, and
-  the UK NA partial factors. UK/Eurocode only — never mix with US/AISC (that is the
+  the UK NA partial factors, drawing & detailing conventions, materials/sections,
+  and a deterministic lookup command backed by a 49-rule verified JSON database.
+  UK/Eurocode only — never mix with US/AISC (that is the
   separate steel-detailer-aisc agent and a different code).
 
-# Knowledge agent. The deterministic `lookup` command's binary is not shipped yet
-# (roadmap Phase 4); today the value is the cited skills, read by the composing AI
-# at compose/prompt time. So the agent is honestly `planned`, not `available`.
+# Phase 4: deterministic lookup binary built (Rust, shared steel-detailer-lookup/);
+# users must build from Cargo.toml and place on PATH to compose lookup-command apps.
 status: planned
 
 stateful: false
@@ -60,18 +61,17 @@ commands:
   lookup:
     lifecycle: single
     category: curated
-    status: planned
     mode: read
     description: |
-      (Planned — roadmap Phase 4.) Deterministic clause lookup with NO LLM in the
-      loop: given a rule selector, return the exact Eurocode/P358 clause, value, units
-      and citation as typed JSON — or an explicit miss (found:false) so the caller
-      refuses rather than guesses. Until shipped, the agent's value is its cited skills,
-      read by the composing AI at compose/prompt time (see skills/_grounding.md).
+      Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a
+      rule id (e.g. bolt.edge.min.e2, partial.gamma.M2.connectors), return the exact
+      Eurocode/P358 clause, value, units and citation as typed JSON — or found:false so
+      the caller refuses rather than guesses. Rule IDs: run `lookup --list`.
+      Binary must be installed from steel-detailer-lookup/ (cargo build --release).
     inputs:
       rule:
         type: string
-        description: 'Rule selector, e.g. "minimum edge distance e2", "slip resistance", "fillet weld throat".'
+        description: 'Rule id, e.g. "bolt.edge.min.e1", "partial.gamma.M2.connectors". Run --list for all ids.'
     outputs:
       type: single
       schema:
@@ -105,3 +105,5 @@ skills:
   # Phase 3b — materials, sections & specs
   - steel-grades.md
   - section-designations.md
+  # Phase 4 — lookup command usage
+  - lookup-usage.md

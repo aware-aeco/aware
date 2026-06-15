@@ -1,0 +1,19 @@
+[workspace]
+members = ["."]
+
+[package]
+name = "steel-detailer-lookup"
+version = "0.1.0"
+edition = "2021"
+description = "Deterministic clause-lookup CLI for steel-detailer-aisc and steel-detailer-uk AWARE agents"
+
+[[bin]]
+name = "aware-steel-detailer-aisc"
+path = "src/main.rs"
+
+[[bin]]
+name = "aware-steel-detailer-uk"
+path = "src/main.rs"
+
+[dependencies]
+serde_json = "1"

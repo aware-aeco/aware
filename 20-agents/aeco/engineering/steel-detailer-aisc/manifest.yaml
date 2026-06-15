@@ -13,13 +13,14 @@ description: |
   connection-detailing questions and ALWAYS cites the clause; it refuses
   ("no verified source") rather than guessing. Covers bolted + welded connection
   geometry and the governing limit states (edge distance, spacing, hole types,
-  weld sizing, block shear). US/AISC only — never mix with Eurocode (that is the
-  separate steel-detailer-eurocode agent and a different code).
+  weld sizing, block shear), drawing & detailing conventions (AISC 303),
+  materials/sections, and a deterministic lookup command backed by a 66-rule
+  verified JSON database. US/AISC only — never mix with Eurocode (that is the
+  separate steel-detailer-uk agent).
 
-# Knowledge agent. The deterministic `lookup` command's binary is not shipped yet
-# (roadmap Phase 4); today the value is the cited skills, read by the composing AI
-# at compose/prompt time. So the agent is honestly `planned` (no runnable transport
-# binary), not `available`.
+# Phase 4: deterministic lookup binary built (Rust, steel-detailer-lookup/);
+# users must build from Cargo.toml and place on PATH to compose lookup-command apps.
+# Skills are available without the binary at compose/prompt time.
 status: planned
 
 stateful: false
@@ -59,18 +60,17 @@ commands:
   lookup:
     lifecycle: single
     category: curated
-    status: planned
     mode: read
     description: |
-      (Planned — roadmap Phase 4.) Deterministic clause lookup with NO LLM in the
-      loop: given a rule selector, return the exact AISC/RCSC clause, value, units
-      and citation as typed JSON — or an explicit miss (found:false) so the caller
-      refuses rather than guesses. Until shipped, the agent's value is its cited
-      skills, read by the composing AI at compose/prompt time (see skills/_grounding.md).
+      Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a
+      rule id (e.g. bolt.spacing.min, weld.fillet.min.to.025in), return the exact
+      AISC/RCSC clause, value, units and citation as typed JSON — or found:false so
+      the caller refuses rather than guesses. Rule IDs: run `lookup --list`.
+      Binary must be installed from steel-detailer-lookup/ (cargo build --release).
     inputs:
       rule:
         type: string
-        description: 'Rule selector, e.g. "bolt min edge distance, M20, sheared edge".'
+        description: 'Rule id, e.g. "bolt.spacing.min", "bolt.pretension.group120.0.75in". Run --list for all ids.'
     outputs:
       type: single
       schema:
@@ -105,3 +105,6 @@ skills:
   # Phase 3b — materials, sections & specs
   - steel-grades.md
   - section-designations.md
+  # Phase 4 — lookup command usage + checker workflow design
+  - lookup-usage.md
+  - checker-workflow.md

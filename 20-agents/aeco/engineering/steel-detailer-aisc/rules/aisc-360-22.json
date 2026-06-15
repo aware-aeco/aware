@@ -1,0 +1,674 @@
+{
+  "agent": "steel-detailer-aisc",
+  "standard": "aisc-360-22",
+  "version": "1.0.0",
+  "last_verified": "2026-06-14",
+  "sources": [
+    "AISC 360-22 (free — aisc.org/standards)",
+    "RCSC 2020 (free — boltcouncil.org)",
+    "AISC 303-22 (free — aisc.org/standards)",
+    "AISC Shapes Database v16 (free — aisc.org)"
+  ],
+  "rules": [
+    {
+      "id": "bolt.spacing.min",
+      "category": "bolts",
+      "rule": "Minimum bolt spacing (center-to-center)",
+      "value": "2.67d (2⅔·d); 3d preferred",
+      "units": "× bolt diameter d",
+      "citation": "AISC 360-22 §J3.4",
+      "source_quote": "The distance between centers of standard, oversized, or slotted holes shall not be less than 2⅔ times the nominal diameter, d, of the fastener",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.clear",
+      "category": "bolts",
+      "rule": "Minimum clear distance between bolt holes (or slots)",
+      "value": "1.0d (one bolt diameter)",
+      "units": "× bolt diameter d",
+      "citation": "AISC 360-22 §J3.4",
+      "source_quote": "the clear distance between bolt holes or slots shall not be less than d",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.max.painted",
+      "category": "bolts",
+      "rule": "Maximum bolt spacing — painted members, or unpainted not subject to atmospheric corrosion",
+      "value": "lesser of 24t or 12 in. (300 mm)",
+      "units": "t = thickness of thinner connected part",
+      "citation": "AISC 360-22 §J3.6",
+      "source_quote": "In painted members or unpainted members not subject to atmospheric corrosion, the spacing shall not exceed the lesser of 24 times the thickness of the thinner part or 12 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.max.weathering",
+      "category": "bolts",
+      "rule": "Maximum bolt spacing — unpainted weathering steel exposed to atmospheric corrosion",
+      "value": "lesser of 14t or 7 in. (180 mm)",
+      "units": "t = thickness of thinner connected part",
+      "citation": "AISC 360-22 §J3.6",
+      "source_quote": "In unpainted members used in exposed conditions subject to atmospheric corrosion, the spacing shall not exceed the lesser of 14 times the thickness of the thinner part or 7 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.0.5in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — ½ in. bolt (standard hole, any edge direction)",
+      "value": "¾ in. (19 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "The distance from the center of a standard hole to an edge of a connected part in any direction shall not be less than either the applicable value from Table J3.4 or Table J3.4M",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.0.625in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — ⅝ in. bolt (standard hole)",
+      "value": "⅞ in. (22 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4 minimum edge distance for ⅝ in. bolt diameter",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.0.75in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — ¾ in. bolt (standard hole)",
+      "value": "1 in. (25 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4 minimum edge distance for ¾ in. bolt diameter",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.0.875in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — ⅞ in. bolt (standard hole)",
+      "value": "1⅛ in. (29 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4 minimum edge distance for ⅞ in. bolt diameter",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.1.0in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — 1 in. bolt (standard hole)",
+      "value": "1¼ in. (32 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4 minimum edge distance for 1 in. bolt diameter",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.1.125in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — 1⅛ in. bolt (standard hole)",
+      "value": "1½ in. (38 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4 minimum edge distance for 1⅛ in. bolt diameter",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.1.25in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — 1¼ in. bolt (standard hole)",
+      "value": "1⅝ in. (41 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4 minimum edge distance for 1¼ in. bolt diameter",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.over1.25in",
+      "category": "bolts",
+      "rule": "Minimum edge distance — bolt diameter over 1¼ in. (standard hole)",
+      "value": "1.25d (post-2010 single-column value; NOT the superseded 1.75d two-column value)",
+      "units": "× bolt diameter d",
+      "citation": "AISC 360-22 §J3.5, Table J3.4",
+      "source_quote": "Table J3.4: for bolt diameters over 1¼ in., minimum edge distance = 1.25d",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.max",
+      "category": "bolts",
+      "rule": "Maximum edge distance",
+      "value": "12t, but not more than 6 in. (150 mm)",
+      "units": "t = thickness of connected part",
+      "citation": "AISC 360-22 §J3.6",
+      "source_quote": "The distance from the center of a fastener to the edge of a connected part shall not exceed the lesser of 12 times the thickness of the connected part or 6 in.",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.0.5in",
+      "category": "bolts",
+      "rule": "Standard hole diameter — ½ in. bolt",
+      "value": "9/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ½ in. bolt nominal diameter → 9/16 in. standard hole",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.0.625in",
+      "category": "bolts",
+      "rule": "Standard hole diameter — ⅝ in. bolt",
+      "value": "11/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅝ in. bolt → 11/16 in. standard hole",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.0.75in",
+      "category": "bolts",
+      "rule": "Standard hole diameter — ¾ in. bolt",
+      "value": "13/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ¾ in. bolt → 13/16 in. standard hole",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.0.875in",
+      "category": "bolts",
+      "rule": "Standard hole diameter — ⅞ in. bolt",
+      "value": "15/16 in.",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC 360-22 Table J3.3: ⅞ in. bolt → 15/16 in. standard hole",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.standard.1.0in",
+      "category": "bolts",
+      "rule": "Standard hole diameter — 1 in. bolt",
+      "value": "1⅛ in. (d + 1/8 in.)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "AISC FAQ: Table J3.3 is based upon the RCSC Specification Table 3.1; for 1 in. bolt the standard hole is 1⅛ in. (d + 1/8 in. increment begins at 1 in. nominal)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.formula",
+      "category": "bolts",
+      "rule": "Standard hole size formula by bolt diameter",
+      "value": "d + 1/16 in. for bolts up to ⅞ in.; d + 1/8 in. for bolts 1 in. and larger",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J3.3 (= RCSC 2020 Table 3.1)",
+      "source_quote": "RCSC Table 3.1 footnote: increment is 1/16 in. for bolt diameters through ⅞ in., 1/8 in. for 1 in. and larger",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.0.5in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120 (e.g. A325), ½ in. bolt",
+      "value": "12 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2 Minimum Bolt Pretension Tm: ½ in., Group 120 = 12 kips; Tm = 0.70 × specified minimum tensile strength × tensile stress area, rounded to nearest kip",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.0.625in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120, ⅝ in. bolt",
+      "value": "19 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: ⅝ in., Group 120 = 19 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.0.75in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120, ¾ in. bolt",
+      "value": "28 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: ¾ in., Group 120 = 28 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.0.875in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120, ⅞ in. bolt",
+      "value": "39 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: ⅞ in., Group 120 = 39 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.1.0in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120, 1 in. bolt",
+      "value": "51 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: 1 in., Group 120 = 51 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.1.125in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120, 1⅛ in. bolt",
+      "value": "64 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: 1⅛ in., Group 120 = 64 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group120.1.25in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 120, 1¼ in. bolt",
+      "value": "81 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: 1¼ in., Group 120 = 81 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group150.0.5in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 150 (e.g. A490), ½ in. bolt",
+      "value": "15 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: ½ in., Group 150 = 15 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group150.0.75in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 150, ¾ in. bolt",
+      "value": "35 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: ¾ in., Group 150 = 35 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group150.0.875in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 150, ⅞ in. bolt",
+      "value": "49 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: ⅞ in., Group 150 = 49 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.group150.1.0in",
+      "category": "bolts",
+      "rule": "Minimum pretension — Group 150, 1 in. bolt",
+      "value": "64 kips",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 (= AISC 360-22 Table J3.1)",
+      "source_quote": "Table 5.2: 1 in., Group 150 = 64 kips",
+      "found": true
+    },
+    {
+      "id": "bolt.pretension.formula",
+      "category": "bolts",
+      "rule": "Pretension derivation formula",
+      "value": "Tm = 0.70 × (specified minimum tensile strength × tensile stress area), rounded to nearest kip",
+      "units": "kips",
+      "citation": "RCSC 2020 Table 5.2 footnote",
+      "source_quote": "The specified minimum pretensions … are based on 70 percent of the tensile strength … rounded to the nearest kip",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.min.to.025in",
+      "category": "welds",
+      "rule": "Minimum fillet weld leg — thinner part ≤ ¼ in. (6 mm)",
+      "value": "1/8 in. (3 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.4",
+      "source_quote": "Table J2.4 Minimum Size of Fillet Welds: thickness of thinner part joined — to ¼ in. (6 mm) inclusive → minimum fillet weld size 1/8 in. (3 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.min.025to05in",
+      "category": "welds",
+      "rule": "Minimum fillet weld leg — thinner part over ¼ in. to ½ in. (13 mm)",
+      "value": "3/16 in. (5 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.4",
+      "source_quote": "Table J2.4: over ¼ in. to ½ in. (13 mm) → 3/16 in. (5 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.min.05to075in",
+      "category": "welds",
+      "rule": "Minimum fillet weld leg — thinner part over ½ in. to ¾ in. (19 mm)",
+      "value": "¼ in. (6 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.4",
+      "source_quote": "Table J2.4: over ½ in. to ¾ in. (19 mm) → ¼ in. (6 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.min.over075in",
+      "category": "welds",
+      "rule": "Minimum fillet weld leg — thinner part over ¾ in. (19 mm)",
+      "value": "5/16 in. (8 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.4",
+      "source_quote": "Table J2.4: over ¾ in. (19 mm) → 5/16 in. (8 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.max.thin",
+      "category": "welds",
+      "rule": "Maximum fillet weld size — along edge of material less than ¼ in. thick",
+      "value": "≤ thickness of the material",
+      "units": "in.",
+      "citation": "AISC 360-22 §J2.2b",
+      "source_quote": "Along edges of material less than ¼ in. (6 mm) thick, the maximum size of the fillet weld shall equal the thickness of the material",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.max.standard",
+      "category": "welds",
+      "rule": "Maximum fillet weld size — along edge of material ¼ in. or thicker",
+      "value": "t − 1/16 in. (2 mm), unless weld is detailed to be built out to full throat",
+      "units": "in. (t = material thickness)",
+      "citation": "AISC 360-22 §J2.2b",
+      "source_quote": "Along edges of material ¼ in. (6 mm) or more in thickness, the maximum size of the fillet weld shall be 1/16 in. (2 mm) less than the thickness of the material",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.throat",
+      "category": "welds",
+      "rule": "Effective throat of equal-leg fillet weld",
+      "value": "0.707 × leg (w); the shortest distance from root to face of the diagrammatic weld",
+      "units": "dimensionless coefficient × leg size",
+      "citation": "AISC 360-22 §J2.2a",
+      "source_quote": "The effective throat of a fillet weld is the shortest distance from the root to the face of the diagrammatic weld",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.min.length",
+      "category": "welds",
+      "rule": "Minimum fillet weld length (for strength design)",
+      "value": "≥ 4 × nominal leg size; else effective size = ¼ of its actual length",
+      "units": "in. (× leg size)",
+      "citation": "AISC 360-22 §J2.2b",
+      "source_quote": "The minimum length of a fillet weld designed for strength purposes shall be at least four times the nominal size … if longer than four times the nominal size, the effective size shall be not more than one-quarter of its length",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.intermittent.min",
+      "category": "welds",
+      "rule": "Minimum intermittent fillet weld segment length",
+      "value": "≥ 4 × leg size AND ≥ 1½ in. (38 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 §J2.2b",
+      "source_quote": "Intermittent fillet welds shall have a minimum length of not less than four times the weld size, with a minimum of 1½ in. (38 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.long.reduction",
+      "category": "welds",
+      "rule": "End-loaded fillet weld length reduction (β factor)",
+      "value": "l ≤ 100w → β = 1.0; l > 100w → β = 1.2 − 0.002(l/w) ≤ 1.0; l > 300w → effective = 180w",
+      "units": "l = weld length, w = leg size",
+      "citation": "AISC 360-22 §J2.2b (Eq. J2-1)",
+      "source_quote": "β = 1.2 − 0.002(l/w) ≤ 1.0 (Eq. J2-1); where l/w > 300, the effective length shall be taken as 180w",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.to025in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part ≤ ¼ in. (6 mm)",
+      "value": "1/8 in. (3 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3 Minimum Effective Throat Size of PJP Groove Welds: to ¼ in. (6 mm) inclusive → 1/8 in. (3 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.025to05in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part over ¼ in. to ½ in. (13 mm)",
+      "value": "3/16 in. (5 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3: over ¼ in. to ½ in. (13 mm) → 3/16 in. (5 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.05to075in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part over ½ in. to ¾ in. (19 mm)",
+      "value": "¼ in. (6 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3: over ½ in. to ¾ in. (19 mm) → ¼ in. (6 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.075to15in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part over ¾ in. to 1½ in. (38 mm)",
+      "value": "5/16 in. (8 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3: over ¾ in. to 1½ in. (38 mm) → 5/16 in. (8 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.15to225in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part over 1½ in. to 2¼ in. (57 mm)",
+      "value": "3/8 in. (10 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3: over 1½ in. to 2¼ in. (57 mm) → 3/8 in. (10 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.225to6in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part over 2¼ in. to 6 in. (150 mm)",
+      "value": "½ in. (13 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3: over 2¼ in. to 6 in. (150 mm) → ½ in. (13 mm)",
+      "found": true
+    },
+    {
+      "id": "weld.pjp.min.throat.over6in",
+      "category": "welds",
+      "rule": "Minimum PJP groove weld effective throat — thinner part over 6 in. (150 mm)",
+      "value": "5/8 in. (16 mm)",
+      "units": "in.",
+      "citation": "AISC 360-22 Table J2.3",
+      "source_quote": "Table J2.3: over 6 in. (150 mm) → 5/8 in. (16 mm)",
+      "found": true
+    },
+    {
+      "id": "bearing.rn.standard.deform",
+      "category": "connection-strength",
+      "rule": "Nominal bearing strength at bolt hole — deformation is a design consideration (standard/oversized/short-slotted, or long-slotted parallel to force)",
+      "value": "Rn = 2.4·d·t·Fu",
+      "units": "kips (d = bolt dia. in., t = ply thickness in., Fu = connected material strength ksi)",
+      "citation": "AISC 360-22 §J3.11 (Eq. J3-6a)",
+      "source_quote": "Rn = 2.4dtFu (J3-6a)",
+      "found": true
+    },
+    {
+      "id": "bearing.rn.standard.nodeform",
+      "category": "connection-strength",
+      "rule": "Nominal bearing strength at bolt hole — deformation not a design consideration",
+      "value": "Rn = 3.0·d·t·Fu",
+      "units": "kips",
+      "citation": "AISC 360-22 §J3.11 (Eq. J3-6b)",
+      "source_quote": "Rn = 3.0dtFu (J3-6b)",
+      "found": true
+    },
+    {
+      "id": "bearing.tearout.deform",
+      "category": "connection-strength",
+      "rule": "Nominal tearout strength — deformation is a design consideration",
+      "value": "Rn = 1.2·lc·t·Fu",
+      "units": "kips (lc = clear distance in force direction, in.)",
+      "citation": "AISC 360-22 §J3.11 (Eq. J3-6c)",
+      "source_quote": "Rn = 1.2 lc t Fu (J3-6c)",
+      "found": true
+    },
+    {
+      "id": "bearing.tearout.nodeform",
+      "category": "connection-strength",
+      "rule": "Nominal tearout strength — deformation not a design consideration",
+      "value": "Rn = 1.5·lc·t·Fu",
+      "units": "kips",
+      "citation": "AISC 360-22 §J3.11 (Eq. J3-6d)",
+      "source_quote": "Rn = 1.5 lc t Fu (J3-6d)",
+      "found": true
+    },
+    {
+      "id": "bearing.phi.lrfd",
+      "category": "connection-strength",
+      "rule": "LRFD resistance factor for bolt bearing and tearout",
+      "value": "φ = 0.75",
+      "units": "dimensionless",
+      "citation": "AISC 360-22 §J3.11",
+      "source_quote": "φ = 0.75 (LRFD) and Ω = 2.00 (ASD) for bolt bearing and tearout provisions",
+      "found": true
+    },
+    {
+      "id": "bearing.omega.asd",
+      "category": "connection-strength",
+      "rule": "ASD safety factor for bolt bearing and tearout",
+      "value": "Ω = 2.00",
+      "units": "dimensionless",
+      "citation": "AISC 360-22 §J3.11",
+      "source_quote": "φ = 0.75 (LRFD) and Ω = 2.00 (ASD) for bolt bearing and tearout provisions",
+      "found": true
+    },
+    {
+      "id": "material.grade.w-shapes",
+      "category": "materials",
+      "rule": "Preferred grade for wide-flange W-shapes",
+      "value": "ASTM A992 — Fy = 50 ksi, Fu = 65 ksi; yield-to-tensile ratio capped at 0.85",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.1 + AISC SteelWise June 2022",
+      "source_quote": "A992: Fy min 50 ksi, Fu min 65 ksi; Fy/Fu ≤ 0.85 (ductility cap)",
+      "found": true
+    },
+    {
+      "id": "material.grade.hp-piles",
+      "category": "materials",
+      "rule": "Preferred grade for HP bearing piles and plates/bars",
+      "value": "ASTM A572 Grade 50 — Fy = 50 ksi, Fu = 65 ksi",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.1 + AISC SteelWise June 2022",
+      "source_quote": "AISC SteelWise 2022 recommendation: HP piles and plates → A572-50",
+      "found": true
+    },
+    {
+      "id": "material.grade.channels",
+      "category": "materials",
+      "rule": "Preferred grade for C and MC channels (360-22 update)",
+      "value": "ASTM A992 — Fy = 50 ksi, Fu = 65 ksi (360-22 updated preference from A36)",
+      "units": "ksi",
+      "citation": "AISC SteelWise June 2022 (360-22 companion)",
+      "source_quote": "360-22 updated preference: channels (C/MC) now commonly A992, previously A36",
+      "found": true
+    },
+    {
+      "id": "material.grade.angles",
+      "category": "materials",
+      "rule": "Grade for angles (L shapes)",
+      "value": "A36 — Fy = 36 ksi, Fu = 58 ksi (transitioning to 50-ksi grades)",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.1",
+      "source_quote": "L shapes: A36 (Fy 36 ksi, Fu 58 ksi); transitioning to 50-ksi grades per SteelWise",
+      "found": true
+    },
+    {
+      "id": "material.grade.hss.rect",
+      "category": "materials",
+      "rule": "Preferred grade for rectangular/square HSS (360-22 update)",
+      "value": "ASTM A500 Grade C — Fy = 50 ksi, Fu = 62 ksi (360-22 update from Grade B: rect was 46/58)",
+      "units": "ksi",
+      "citation": "AISC SteelWise June 2022 (360-22 companion)",
+      "source_quote": "360-22 preference: HSS rectangular → A500 Grade C (Fy 50 ksi, Fu 62 ksi); Grade B (Fy 46 ksi, Fu 58 ksi for rect) no longer preferred",
+      "found": true
+    },
+    {
+      "id": "material.grade.hss.round",
+      "category": "materials",
+      "rule": "Preferred grade for round HSS (360-22 update)",
+      "value": "ASTM A500 Grade C — Fy = 46 ksi, Fu = 62 ksi",
+      "units": "ksi",
+      "citation": "AISC SteelWise June 2022 (360-22 companion)",
+      "source_quote": "360-22 preference: HSS round → A500 Grade C (Fy 46 ksi, Fu 62 ksi)",
+      "found": true
+    },
+    {
+      "id": "material.grade.hss.premium",
+      "category": "materials",
+      "rule": "Grade for premium HSS (tight tolerance)",
+      "value": "ASTM A1085 — Fy = 50 ksi, Fu = 65 ksi (supplier-corroborated Fu)",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.1",
+      "source_quote": "A1085 HSS: Fy 50 ksi; Fu = 65 ksi per AISC Basic Design Values; tighter tolerances than A500",
+      "found": true
+    },
+    {
+      "id": "material.grade.pipe",
+      "category": "materials",
+      "rule": "Grade for standard pipe (round)",
+      "value": "ASTM A53 Grade B — Fy = 35 ksi, Fu = 60 ksi",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.1",
+      "source_quote": "A53 Grade B: Fy 35 ksi, Fu 60 ksi",
+      "found": true
+    },
+    {
+      "id": "material.grade.anchor-rods",
+      "category": "materials",
+      "rule": "Grade for anchor rods",
+      "value": "ASTM F1554 — Gr. 36 (Fy=36), Gr. 55 (Fy=55), Gr. 105 (Fy=105 ksi)",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.1",
+      "source_quote": "F1554 anchor rods: Grade designation = Fy in ksi (Gr. 36, 55, 105)",
+      "found": true
+    },
+    {
+      "id": "material.grade.bolts.group120",
+      "category": "materials",
+      "rule": "Bolt grade — Group 120 (formerly ASTM A325)",
+      "value": "F3125 Group 120; minimum tensile strength Fu = 120 ksi",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.3; ASTM F3125",
+      "source_quote": "ASTM F3125 consolidates A325 (and A325M) into Group 120; minimum Fu = 120 ksi",
+      "found": true
+    },
+    {
+      "id": "material.grade.bolts.group150",
+      "category": "materials",
+      "rule": "Bolt grade — Group 150 (formerly ASTM A490)",
+      "value": "F3125 Group 150; minimum tensile strength Fu = 150 ksi",
+      "units": "ksi",
+      "citation": "AISC 360-22 Table A3.3; ASTM F3125",
+      "source_quote": "ASTM F3125 consolidates A490 (and A490M) into Group 150; minimum Fu = 150 ksi",
+      "found": true
+    },
+    {
+      "id": "material.grade.electrode",
+      "category": "materials",
+      "rule": "Weld electrode grade (common structural steel)",
+      "value": "E70XX — FEXX = 70 ksi",
+      "units": "ksi",
+      "citation": "AISC 360-22 §J2 (Table A3.2); AWS A5.1",
+      "source_quote": "E70XX classification: 70 = minimum tensile strength in ksi (FEXX); matched to A36/A572/A992 base metal per AWS D1.1 Table 3.1",
+      "found": true
+    }
+  ]
+}
