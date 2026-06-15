@@ -43,6 +43,43 @@ pub fn load_secret(ctx: &mut RenderContext, creds_dir: &Path, id: &str) -> Resul
     Ok(())
 }
 
+/// Load the app's `config.yaml` into the `config` namespace, so documented
+/// `{{ config.<key> }}` references resolve at run time.
+///
+/// app-spec § Templating: *"App config: `{{ config.<key> }}` (resolved against
+/// `~/.aware/apps/<name>/config.yaml`)"*. The renderer already exposes a `config`
+/// namespace; nothing populated it from disk, so every `{{ config.x }}` silently
+/// rendered empty (#230). This closes that gap.
+///
+/// Mirrors [`load_secret`] on the soft path — a **missing** (or empty / comments-
+/// only) `config.yaml` is not an error, since an app may declare no config. But a
+/// present-but-**malformed** file, or one whose top level is not a mapping, IS an
+/// error: a silently-empty `config` namespace is exactly the footgun #230 reports,
+/// so we fail loudly rather than render nothing. Each top-level key of the mapping
+/// becomes a `config.<key>` entry.
+pub fn load_app_config(ctx: &mut RenderContext, app_dir: &Path) -> Result<(), AwareError> {
+    let path = app_dir.join("config.yaml");
+    if !path.is_file() {
+        return Ok(()); // soft: an app may legitimately ship no config.yaml
+    }
+    let text = std::fs::read_to_string(&path)?;
+    let value: serde_json::Value = serde_yaml::from_str(&text)
+        .map_err(|e| AwareError::Validation(format!("config.yaml: {e}")))?;
+    match value {
+        // Empty file or comments-only → no config keys (not an error).
+        serde_json::Value::Null => Ok(()),
+        serde_json::Value::Object(map) => {
+            for (k, v) in map {
+                ctx.config.insert(k, v);
+            }
+            Ok(())
+        }
+        _ => Err(AwareError::Validation(
+            "config.yaml: top level must be a mapping of keys to values".into(),
+        )),
+    }
+}
+
 /// Build the ambient `run` context (`run.id`, `run.date`, `run.operator`) that is
 /// injected into every node's template environment for a single run, so the
 /// documented time-dependent expressions resolve (#127).
@@ -100,5 +137,67 @@ mod tests {
         // `operator` is always present (possibly empty) so `{{ run.operator }}` renders.
         assert!(m.contains_key("operator"));
         assert!(m["operator"].is_string());
+    }
+
+    #[test]
+    fn loads_app_config_keys() {
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(
+            tmp.path().join("config.yaml"),
+            "scene:\n  meta: { name: x }\n  elements: []\nschedule-rows: 12\n",
+        )
+        .unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_app_config(&mut ctx, tmp.path()).unwrap();
+        // Structured value preserved as an object; scalar preserved as a number.
+        assert_eq!(ctx.config["scene"]["meta"]["name"], "x");
+        assert!(ctx.config["scene"]["elements"].is_array());
+        assert_eq!(ctx.config["schedule-rows"], 12);
+    }
+
+    #[test]
+    fn config_resolves_through_the_renderer_end_to_end() {
+        // The #230 regression: `{{ config.<key> }}` rendered empty because nothing
+        // loaded config.yaml. Prove the whole path now works through `template`.
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(tmp.path().join("config.yaml"), "scene: { name: tower }\n").unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_app_config(&mut ctx, tmp.path()).unwrap();
+        let out = crate::runtime::template::render("{{ config.scene.name }}", &ctx).unwrap();
+        assert_eq!(out, "tower");
+    }
+
+    #[test]
+    fn missing_app_config_is_not_an_error() {
+        let tmp = tempfile::tempdir().unwrap();
+        let mut ctx = RuntimeContext::default();
+        load_app_config(&mut ctx, tmp.path()).unwrap();
+        assert!(ctx.config.is_empty());
+    }
+
+    #[test]
+    fn empty_or_comment_only_app_config_is_not_an_error() {
+        for body in ["", "   \n", "# just a comment\n"] {
+            let tmp = tempfile::tempdir().unwrap();
+            std::fs::write(tmp.path().join("config.yaml"), body).unwrap();
+            let mut ctx = RuntimeContext::default();
+            load_app_config(&mut ctx, tmp.path()).unwrap();
+            assert!(ctx.config.is_empty(), "body {body:?}");
+        }
+    }
+
+    #[test]
+    fn malformed_or_non_mapping_app_config_is_an_error() {
+        // Broken YAML → error (don't silently render an empty namespace).
+        let tmp = tempfile::tempdir().unwrap();
+        std::fs::write(tmp.path().join("config.yaml"), "scene: [unterminated\n").unwrap();
+        let mut ctx = RuntimeContext::default();
+        assert!(load_app_config(&mut ctx, tmp.path()).is_err());
+
+        // Valid YAML but a non-mapping top level (a sequence) → error.
+        let tmp2 = tempfile::tempdir().unwrap();
+        std::fs::write(tmp2.path().join("config.yaml"), "- a\n- b\n").unwrap();
+        let mut ctx2 = RuntimeContext::default();
+        assert!(load_app_config(&mut ctx2, tmp2.path()).is_err());
     }
 }
