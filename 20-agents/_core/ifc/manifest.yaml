@@ -1,0 +1,68 @@
+agent:        ifc
+version:      0.1.0
+display-name: IFC Writer
+description: |
+  Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc) —
+  IfcColumn/IfcBeam/IfcMember as extruded rectangular sections placed on the member axis, under
+  an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Host-free: pure
+  serialization, no Tekla/Revit needed to export.
+
+  The portable IFC sink of AWARE compositions, and the file-writing companion to `viewer-3d`:
+  hand both the SAME domain-agnostic scene (elements as `from`->`to` boxes with a cross-section +
+  groups) and one renders it in 3D while this one writes a model you can open in Tekla, SDS2,
+  Revit or Navisworks — one scene, two outputs. The producer owns all domain meaning (a steel app
+  maps members -> elements; the writer knows nothing about steel) and the output path.
+
+  Lives under `_core/` because it's not tied to any AECO vertical. NOTE this is distinct from
+  `tekla/ifc-export`, which exports a LIVE Tekla model to IFC (needs Tekla open); this `ifc` agent
+  writes IFC from a generic scene with NO host.
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/ifc
+keywords: [aware, ifc, ifc4, export, scene, bim, steel, output]
+
+requires:
+  filesystem:
+    - write: any                 # only when `write` is given an output-path
+
+# Runtime built-in: the writer runs in-process in the `aware` runtime — there is no `aware-ifc`
+# host binary to ship or install, so the agent is `available`. Dispatch is routed by agent id to
+# the scene-to-IFC writer (`cli/src/render/ifc.rs`).
+transport:
+  builtin: {}
+
+commands:
+  write:
+    lifecycle: single
+    # Read-mode for systems of record: writing an export file mutates no model, so a writer node
+    # needs no `safety:` block. When `output-path` is given the runtime writes that artifact on a
+    # real run only (skipped under --dry-run / --simulate), so a preview never touches disk.
+    description: |
+      Write a generic 3D scene to a universal IFC4 file. The scene is domain-agnostic: `elements`
+      are members (`from`->`to`) with an optional `section:{w,d}` and a `group` (column/beam/brace
+      -> IfcColumn/IfcBeam/IfcMember); `meta.profile` names the section. Geometry is an extruded
+      rectangle on the member axis. Output is deterministic (identical scene -> identical bytes).
+    inputs:
+      scene:
+        type: object
+        description: |
+          The 3D scene to export (object) — the SAME schema `viewer-3d` renders. Shape:
+          `{ meta:{name,units,up}, groups:[{key,label,color}],
+             elements:[{id,group,kind,from,to,section:{w,d},meta:{profile}}], grids, panels }`.
+          The producer owns all domain meaning; the writer is generic. This is the same scene
+          `viewer-3d` renders — see its `scene-schema.md` for the canonical, shared contract.
+      output-path:
+        type: string
+        description: Optional file path; when given, the IFC is written there (caller owns the path).
+    outputs:
+      type: single
+      schema:
+        path:    string    # present only when an output-path was given (file written); alias output-path
+        bytes:   int        # length of the IFC document in bytes
+        members: int        # number of elements written
+        columns:  int       # IfcColumn count (group=column)
+        beams:    int       # IfcBeam count (everything not column/brace)
+        profiles: object    # profile-string -> count breakdown (for the caller's report)

@@ -950,6 +950,7 @@ impl AgentInvoker for BuiltinInvoker {
             ("viewer-3d", "render") => {
                 crate::render::viewer_3d::viewer_3d_render(&args, self.dry_run)
             }
+            ("ifc", "write") => crate::render::ifc::ifc_write(&args, self.dry_run),
             _ => Err(AwareError::Validation(format!(
                 "builtin transport: no handler for {agent}/{command}"
             ))),
