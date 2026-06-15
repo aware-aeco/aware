@@ -241,6 +241,43 @@ commands:
         stack:        string             # only when ok=false
         delivered_at: string
 
+  bake-scene:
+    lifecycle: single
+    category: curated
+    mode: write              # creates native model objects (Beams) + commits
+    mode-overridable: false  # the bridge ships the script; a node can't override to read
+    description: |
+      Create native Tekla members from a generic 3D scene — a Beam per element
+      (column/beam/brace -> Name + colour Class), placed on the member axis, with the
+      drawing's catalogue profile or a sized "w*d" parametric section fallback. The
+      bridge-shipped, first-class form of the steel "bake into Tekla" operation: needs
+      Tekla OPEN with a model. Auto-commits; Tekla Undo reverts the whole bake. The
+      producer owns domain meaning (the SAME scene viewer-3d renders and the ifc agent
+      writes); this creates the live objects. Returns structured counts; client renders.
+    inputs:
+      scene:
+        type: object
+        required: true
+        description: |
+          The 3D scene to bake (object) — the same schema viewer-3d renders and the ifc
+          agent writes: `{ meta:{name}, elements:[{id,group,from,to,section:{w,d},
+          meta:{profile}}] }`. Each element becomes one Tekla Beam.
+      version:
+        type: string
+        required: false
+        example: "2026.0"
+        description: |
+          Tekla version — selects the version-specific remoting channel (a wrong
+          version silently finds no model). Use the running Tekla's version.
+    outputs:
+      type: single
+      schema:
+        ok:           boolean
+        result:       object  # { created, columns, beams, native, placeholder, failed, skipped, model, scene_name, profiles }
+        error:        string  # only when ok=false
+        stack:        string  # only when ok=false
+        delivered_at: string
+
   save-attributes:
     lifecycle: single
     category: curated

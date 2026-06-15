@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-15T11:33:22.098338+00:00",
+  "updated-at": "2026-06-15T14:15:42.344123500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5258,7 +5258,7 @@
           "stateful": true,
           "sdk-target": "2025+",
           "transport": "cli",
-          "command_count": 23,
+          "command_count": 24,
           "skills": [
             "runtime-bridge-dotnet-framework",
             "headless-startup-and-shutdown",
@@ -5300,6 +5300,13 @@
               "description": "Per-assembly schedule (mark / type / weight / piece-count). Read-only.",
               "lifecycle": "single",
               "category": "curated"
+            },
+            {
+              "name": "bake-scene",
+              "description": "Create native Tekla members from a generic 3D scene — a Beam per element",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
             },
             {
               "name": "bolt-list",
