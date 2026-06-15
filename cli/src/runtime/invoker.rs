@@ -1545,6 +1545,35 @@ fn call_vision_model(
     }
 }
 
+/// Pull a human-readable detail out of a model-API error response body.
+///
+/// Prefers the conventional `error.message` field (Anthropic/OpenAI shape); returns
+/// `None` when the body is not JSON or carries no message, so the caller falls back to
+/// the bare status code. The detail is truncated to keep surfaced errors readable.
+fn vision_error_detail(body: &str) -> Option<String> {
+    let value: Value = serde_json::from_str(body).ok()?;
+    let message = value
+        .get("error")
+        .and_then(|e| e.get("message"))
+        .and_then(|m| m.as_str())?
+        .trim();
+    if message.is_empty() {
+        return None;
+    }
+    Some(truncate_error_detail(message))
+}
+
+/// Cap an error detail at a readable length on a char boundary, appending an ellipsis
+/// when truncated (API messages can be long; a one-liner is enough to diagnose).
+fn truncate_error_detail(detail: &str) -> String {
+    const MAX_CHARS: usize = 300;
+    if detail.chars().count() <= MAX_CHARS {
+        return detail.to_string();
+    }
+    let truncated: String = detail.chars().take(MAX_CHARS).collect();
+    format!("{truncated}…")
+}
+
 /// The original Anthropic Messages API path (now one provider among several): send the
 /// bytes + schema-constrained prompt to `{base}/v1/messages` and parse the JSON back.
 fn call_anthropic_api(
@@ -1584,10 +1613,16 @@ fn call_anthropic_api(
         .send_string(&body_str)
     {
         Ok(r) => r,
-        Err(ureq::Error::Status(code, _)) => {
-            return Err(AwareError::Network(format!(
-                "vision.extract: model returned HTTP {code}"
-            )));
+        // A 4xx/5xx is a completed exchange whose body carries the actionable
+        // detail (e.g. `error.message`: bad model id, rate limit, auth, billing).
+        // Surface it instead of flattening every failure to a bare status code.
+        Err(ureq::Error::Status(code, resp)) => {
+            let detail = resp.into_string().ok();
+            let detail = detail.as_deref().and_then(vision_error_detail);
+            return Err(AwareError::Network(match detail {
+                Some(d) => format!("vision.extract: model returned HTTP {code} — {d}"),
+                None => format!("vision.extract: model returned HTTP {code}"),
+            }));
         }
         Err(e) => {
             return Err(AwareError::Network(format!(
@@ -1737,6 +1772,48 @@ mod vision_provider_tests {
         let bad = tmp.path().join("bad.json");
         std::fs::write(&bad, "{not json").unwrap();
         assert!(load_vision_credential(&bad).is_err());
+    }
+
+    #[test]
+    fn vision_error_detail_extracts_api_message() {
+        // The real Anthropic billing error from issue #229.
+        let body = r#"{"type":"error","error":{"type":"invalid_request_error",
+            "message":"Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits."}}"#;
+        let got = vision_error_detail(body).expect("message extracted");
+        assert!(got.contains("credit balance is too low"), "got: {got}");
+    }
+
+    #[test]
+    fn vision_error_detail_none_without_a_message() {
+        // Non-JSON body → no detail (fall back to the bare status code).
+        assert!(vision_error_detail("upstream proxy error, not json").is_none());
+        // JSON with no error.message → no detail.
+        assert!(vision_error_detail(r#"{"error":{"type":"overloaded_error"}}"#).is_none());
+        // Empty/whitespace message → treated as absent.
+        assert!(vision_error_detail(r#"{"error":{"message":"   "}}"#).is_none());
+    }
+
+    #[test]
+    fn vision_error_detail_truncates_long_messages() {
+        let long = "x".repeat(1000);
+        let body = json!({ "error": { "message": long } }).to_string();
+        let got = vision_error_detail(&body).expect("message extracted");
+        // 300 chars + the ellipsis marker, no more.
+        assert_eq!(got.chars().count(), 301);
+        assert!(got.ends_with('…'));
+    }
+
+    #[test]
+    fn vision_error_detail_truncates_on_a_char_boundary() {
+        // Multi-byte chars must be cut on a codepoint boundary, never mid-byte
+        // (a byte-slice would panic). `€` is 3 bytes in UTF-8.
+        let long = "€".repeat(400);
+        let body = json!({ "error": { "message": long } }).to_string();
+        let got = vision_error_detail(&body).expect("message extracted");
+        assert_eq!(got.chars().count(), 301);
+        assert!(got.ends_with('…'));
+        // Exactly 300 intact `€` survive — no split codepoint.
+        assert_eq!(got.chars().filter(|&c| c == '€').count(), 300);
     }
 }
 
