@@ -37,9 +37,45 @@ fn guid(n: i64) -> String {
     String::from_utf8(out.to_vec()).unwrap_or_default()
 }
 
-/// An IFC string literal: single-quoted, with embedded single-quotes doubled.
+/// An IFC (ISO 10303-21) string literal: single-quoted, with Part 21 escaping. Apostrophe and
+/// backslash (the Part 21 escape introducer) are doubled; any control or non-ASCII character is
+/// emitted as a `\X2\<utf-16 hex…>\X0\` block so the SPF stays valid for strict parsers even when
+/// names carry an em-dash, accented letters, etc.
 fn s_lit(x: &str) -> String {
-    format!("'{}'", x.replace('\'', "''"))
+    /// Flush a run of accumulated UTF-16 code units as one `\X2\…\X0\` escape block.
+    fn flush(out: &mut String, u16s: &mut Vec<u16>) {
+        if u16s.is_empty() {
+            return;
+        }
+        out.push_str("\\X2\\");
+        for u in u16s.iter() {
+            let _ = write!(out, "{u:04X}");
+        }
+        out.push_str("\\X0\\");
+        u16s.clear();
+    }
+
+    let mut out = String::from("'");
+    let mut u16s: Vec<u16> = Vec::new();
+    for ch in x.chars() {
+        if ch == ' ' || ch.is_ascii_graphic() {
+            flush(&mut out, &mut u16s); // close any pending non-ASCII run first
+            match ch {
+                '\'' => out.push_str("''"),
+                '\\' => out.push_str("\\\\"),
+                _ => out.push(ch),
+            }
+        } else {
+            // control or non-ASCII: batch the UTF-16 code unit(s) into the current escape run
+            let mut buf = [0u16; 2];
+            for u in ch.encode_utf16(&mut buf) {
+                u16s.push(*u);
+            }
+        }
+    }
+    flush(&mut out, &mut u16s);
+    out.push('\'');
+    out
 }
 
 /// An IFC real: invariant, always with a decimal point, trailing zeros trimmed (but keep one).
@@ -507,5 +543,14 @@ mod tests {
     fn non_object_scene_is_a_validation_error() {
         let err = ifc_write(&json!({ "scene": "nope" }), true).unwrap_err();
         assert!(matches!(err, AwareError::Validation(_)));
+    }
+
+    #[test]
+    fn s_lit_applies_part21_escaping() {
+        assert_eq!(s_lit("plain text"), "'plain text'");
+        assert_eq!(s_lit("a'b"), "'a''b'"); // apostrophe doubled
+        assert_eq!(s_lit("a\\b"), "'a\\\\b'"); // backslash (Part 21 escape char) doubled
+        // non-ASCII (em-dash U+2014) → a \X2\<utf-16>\X0\ block
+        assert_eq!(s_lit("a\u{2014}b"), "'a\\X2\\2014\\X0\\b'");
     }
 }

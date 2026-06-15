@@ -60,8 +60,9 @@ commands:
     outputs:
       type: single
       schema:
-        path:    string    # present only when an output-path was given (file written); alias output-path
-        bytes:   int        # length of the IFC document in bytes
+        output-path: string # present only when an output-path was given (the file written)
+        path:        string # alias of output-path (the written artifact location)
+        bytes:       int     # length of the IFC document in bytes
         members: int        # number of elements written
         columns:  int       # IfcColumn count (group=column)
         beams:    int       # IfcBeam count (everything not column/brace)
