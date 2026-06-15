@@ -63,9 +63,11 @@ fn json_output_returns_envelope() {
     //              → 67 (the declarative-UI `ui` builtin, #215).
     //              → 68 (the `vision.extract` curated runtime-extraction agent, RFC #223).
     //              → 69 (the `viewer-3d` builtin scene renderer — generic interactive 3D HTML).
+    //              → 70 (the `ifc` builtin scene-to-IFC4 writer — host-free SPF export, sibling to viewer-3d).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 69);
+    assert_eq!(agents.len(), 70);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));
+    assert!(agents.iter().any(|a| a["id"] == "ifc"));
 }
