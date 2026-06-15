@@ -13,6 +13,8 @@ fn main() {
 
     let (agent_id, rules_file) = if bin_name.contains("-uk") {
         ("steel-detailer-uk", "bs-en-1993-uk.json")
+    } else if bin_name.contains("-eu") {
+        ("steel-detailer-eu", "bs-en-1993-eu.json")
     } else {
         ("steel-detailer-aisc", "aisc-360-22.json")
     };
