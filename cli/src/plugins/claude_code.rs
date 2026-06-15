@@ -110,8 +110,8 @@ mod tests {
         let plugin_root = tmp.path().join("plugins");
         let count = generate(&agents, &plugin_root).unwrap();
 
-        // Tekla currently has 23 curated commands (count was stale at 22).
-        assert_eq!(count, 23);
+        // Tekla currently has 24 curated commands (grew from 23 with `bake-scene`, #235).
+        assert_eq!(count, 24);
         assert!(plugin_root.join("aware-aeco/plugin.json").is_file());
 
         let json: serde_json::Value = serde_json::from_str(
@@ -119,7 +119,7 @@ mod tests {
         )
         .unwrap();
         assert_eq!(json["name"], "aware-aeco");
-        assert_eq!(json["commands"].as_array().unwrap().len(), 23);
+        assert_eq!(json["commands"].as_array().unwrap().len(), 24);
     }
 
     #[test]
