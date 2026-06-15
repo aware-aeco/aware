@@ -147,10 +147,10 @@ internal static class Program
         // If --json-stdin wasn't passed explicitly but we took the embedded-
         // verb path above, the body still came through stdin so the flag is
         // implied. The downstream verb handlers check parsed.JsonStdin.
-        if (!parsed.JsonStdin && verb == "exec")
+        if (!parsed.JsonStdin && (verb == "exec" || verb == "bake-scene"))
         {
-            // Exec is always stdin-driven; force the flag if the caller used
-            // the embedded-verb style.
+            // Exec / bake-scene are always stdin-driven; force the flag if the caller
+            // used the embedded-verb style.
             parsed.JsonStdin = true;
         }
 
@@ -166,6 +166,8 @@ internal static class Program
                 return Close(parsed);
             case "exec":
                 return Exec(parsed);
+            case "bake-scene":
+                return BakeScene(parsed);
             case "watch":
                 return Watch(parsed);
             default:
@@ -1319,14 +1321,55 @@ internal static class Program
         try { input = JsonNode.Parse(stdin); }
         catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
 
-        string? code     = input?["code"]?.GetValue<string>();
-        string? version  = input?["version"]?.GetValue<string>() ?? args.Version;
-        var argsNode     = input?["args"] as JsonObject;
+        string? code    = input?["code"]?.GetValue<string>();
+        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        var argsNode    = input?["args"] as JsonObject;
         if (string.IsNullOrEmpty(code))
         {
             EmitExecError("missing required field: code (the C# script to compile + run)");
             return 2;
         }
+
+        return ExecuteResolvedScript(code!, version, argsNode);
+    }
+
+    // ── bake-scene ─────────────────────────────────────────────────────────────
+    // Create native Tekla members (a Beam per scene element) from a generic 3D scene
+    // — the bridge-shipped, first-class form of the steel "bake into Tekla" operation
+    // (previously inlined as a FloLess app exec script). WRITE: needs Tekla open with
+    // a model. Runs the embedded BakeSceneCode through the same Roslyn path as `exec`,
+    // so it shares host resolution, the assembly resolver, and the post-script commit.
+    static int BakeScene(ParsedArgs args)
+    {
+        if (!args.JsonStdin)
+        {
+            EmitExecError("bake-scene requires --json-stdin (or pass the request JSON via stdin)");
+            return 2;
+        }
+
+        string stdin = Console.In.ReadToEnd();
+        JsonNode? input;
+        try { input = JsonNode.Parse(stdin); }
+        catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
+
+        var scene = input?["scene"];
+        if (scene is null)
+        {
+            EmitExecError("missing required field: scene (the 3D scene to bake into the model)");
+            return 2;
+        }
+        string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+
+        // Hand the scene to the embedded bake script as the `args.scene` global.
+        var argsNode = new JsonObject { ["scene"] = scene.DeepClone() };
+        return ExecuteResolvedScript(BakeSceneCode, version, argsNode);
+    }
+
+    // Shared core for the script-running verbs (`exec`, `bake-scene`): resolve the
+    // Tekla host for `version`, wire the assembly resolver, run `code` via Roslyn with
+    // `argsNode` exposed as the `args` global, and emit the standard exec receipt.
+    static int ExecuteResolvedScript(string code, string? version, JsonObject? argsNode)
+    {
 
         // Find the running Tekla instance (if any) to populate host_pid and
         // host_version in the receipt — matches the cli-rhino receipt shape so
@@ -1410,6 +1453,79 @@ internal static class Program
             return 2;
         }
     }
+
+    // The canonical "scene -> native Tekla members" bake script, shipped WITH the
+    // bridge (single source of truth; was previously inlined in the steel-to-tekla
+    // FloLess app). Reads `args.scene`, creates a Beam per element via the Open API
+    // (the drawing profile, else a sized "w*d" parametric section), and returns
+    // structured counts — the client renders any report. ExecuteResolvedScript /
+    // RunScript performs the post-script CommitChanges() when the model is connected.
+    const string BakeSceneCode = """
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using Tekla.Structures.Model;
+using Tekla.Structures.Geometry3d;
+
+var inv = CultureInfo.InvariantCulture;
+Func<object,double> num = o => { if (o == null) return 0; if (o is double dd) return dd; if (o is long ll) return ll; if (o is int ii) return ii; double.TryParse(o.ToString(), NumberStyles.Any, inv, out var r); return r; };
+
+var m = model as Model;
+if (m == null || !m.GetConnectionStatus())
+    return new { ok = false, error = "No live Tekla model — open a model in Tekla Structures, then run this again." };
+
+var scene = args != null && args.TryGetValue("scene", out var sv) ? sv as IDictionary<string,object> : null;
+if (scene == null) return new { ok = false, error = "no scene object in args" };
+var smeta = scene.TryGetValue("meta", out var mv) ? mv as IDictionary<string,object> : null;
+string sceneName = smeta != null && smeta.TryGetValue("name", out var nmv) && nmv != null ? nmv.ToString() : "Steel from Drawings";
+var elements = scene.TryGetValue("elements", out var ev) ? ev as IEnumerable : null;
+
+int created = 0, columns = 0, beams = 0, failed = 0, native = 0, placeholder = 0, skipped = 0;
+var profileCounts = new Dictionary<string,int>();
+if (elements != null) foreach (var eo in elements) {
+    var el = eo as IDictionary<string,object>; if (el == null) { skipped++; continue; }
+    var from = el.TryGetValue("from", out var fo) ? fo as IList : null;
+    var to   = el.TryGetValue("to",   out var to2) ? to2 as IList : null;
+    if (from == null || to == null || from.Count < 3 || to.Count < 3) { skipped++; continue; }
+    var p1 = new Point(num(from[0]), num(from[1]), num(from[2]));
+    var p2 = new Point(num(to[0]),   num(to[1]),   num(to[2]));
+    if (Distance.PointToPoint(p1, p2) < 1.0) { skipped++; continue; }
+
+    var sec = el.TryGetValue("section", out var so) ? so as IDictionary<string,object> : null;
+    double sw = sec != null && sec.TryGetValue("w", out var wv) ? num(wv) : 100; if (sw <= 0) sw = 100;
+    double sd = sec != null && sec.TryGetValue("d", out var dv) ? num(dv) : 100; if (sd <= 0) sd = 100;
+    var em = el.TryGetValue("meta", out var emo) ? emo as IDictionary<string,object> : null;
+    string profileRaw = em != null && em.TryGetValue("profile", out var pv) && pv != null ? pv.ToString() : "";
+    string profile = string.IsNullOrWhiteSpace(profileRaw) ? "" : profileRaw.ToUpperInvariant().Replace('×','X');
+    string group = el.TryGetValue("group", out var gv) && gv != null ? gv.ToString().ToLowerInvariant() : "";
+    string nm  = group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM";
+    string cls = group == "column" ? "2" : group == "brace" ? "4" : "3";
+    string paramProfile = ((int)Math.Round(sw)) + "*" + ((int)Math.Round(sd));
+
+    Func<string,bool> tryInsert = ps => {
+        try {
+            var b = new Beam(p1, p2);
+            b.Profile.ProfileString = ps;
+            b.Name = nm; b.Class = cls;
+            b.Position.Depth = Position.DepthEnum.MIDDLE;
+            b.Position.Plane = Position.PlaneEnum.MIDDLE;
+            b.Position.Rotation = Position.RotationEnum.TOP;
+            return b.Insert();
+        } catch { return false; }
+    };
+
+    bool inserted = false; string used = profile;
+    if (!string.IsNullOrEmpty(profile) && tryInsert(profile)) { inserted = true; native++; }
+    else if (tryInsert(paramProfile)) { inserted = true; used = paramProfile + " (placeholder)"; placeholder++; }
+    if (inserted) { created++; if (group == "column") columns++; else if (group != "brace") beams++; profileCounts[used] = (profileCounts.TryGetValue(used, out var pc) ? pc : 0) + 1; }
+    else failed++;
+}
+
+string modelName; try { modelName = m.GetInfo().ModelName; } catch { modelName = "Tekla model"; }
+
+return new { ok = true, scene_name = sceneName, model = modelName, created, columns, beams, native, placeholder, failed, skipped, profiles = profileCounts };
+""";
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     static object? RunScript(
