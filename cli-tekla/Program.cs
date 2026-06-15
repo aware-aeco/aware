@@ -1330,7 +1330,7 @@ internal static class Program
             return 2;
         }
 
-        return ExecuteResolvedScript(code!, version, argsNode);
+        return ExecuteResolvedScript("exec", code!, version, argsNode);
     }
 
     // ── bake-scene ─────────────────────────────────────────────────────────────
@@ -1362,13 +1362,13 @@ internal static class Program
 
         // Hand the scene to the embedded bake script as the `args.scene` global.
         var argsNode = new JsonObject { ["scene"] = scene.DeepClone() };
-        return ExecuteResolvedScript(BakeSceneCode, version, argsNode);
+        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, argsNode);
     }
 
     // Shared core for the script-running verbs (`exec`, `bake-scene`): resolve the
     // Tekla host for `version`, wire the assembly resolver, run `code` via Roslyn with
     // `argsNode` exposed as the `args` global, and emit the standard exec receipt.
-    static int ExecuteResolvedScript(string code, string? version, JsonObject? argsNode)
+    static int ExecuteResolvedScript(string verb, string code, string? version, JsonObject? argsNode)
     {
 
         // Find the running Tekla instance (if any) to populate host_pid and
@@ -1432,7 +1432,7 @@ internal static class Program
         try
         {
             var result = RunScript(code!, probedReferences, argsNode, probedDir);
-            EmitExecOk(result, hostVersion, hostPid);
+            EmitExecOk(result, verb, hostVersion, hostPid);
             return 0;
         }
         catch (CompilationErrorException ce)
@@ -1440,7 +1440,7 @@ internal static class Program
             // Script failed to compile — surface diagnostics so the caller
             // (likely an AI) can re-draft.
             var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
-            EmitExecFail($"compile error: {ce.Message}", diagnostics, hostVersion, hostPid);
+            EmitExecFail($"compile error: {ce.Message}", diagnostics, verb, hostVersion, hostPid);
             return 2;
         }
         catch (Exception e)
@@ -1449,7 +1449,7 @@ internal static class Program
             while (root is TargetInvocationException && root.InnerException is not null)
                 root = root.InnerException;
             EmitExecFail(root.GetType().Name + ": " + root.Message, root.StackTrace ?? "",
-                         hostVersion, hostPid);
+                         verb, hostVersion, hostPid);
             return 2;
         }
     }
@@ -1798,7 +1798,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
         return null;
     }
 
-    static void EmitExecOk(object? result, string? hostVersion = null, int? hostPid = null)
+    static void EmitExecOk(object? result, string verb, string? hostVersion = null, int? hostPid = null)
     {
         var receipt = new JsonObject
         {
@@ -1807,13 +1807,13 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
             ["host"] = "tekla",
             ["host_version"] = hostVersion,
             ["host_pid"] = hostPid,
-            ["verb"] = "exec",
+            ["verb"] = verb,
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
         WriteProtocolLine(receipt.ToJsonString());
     }
 
-    static void EmitExecFail(string message, string stack, string? hostVersion = null, int? hostPid = null)
+    static void EmitExecFail(string message, string stack, string verb, string? hostVersion = null, int? hostPid = null)
     {
         var receipt = new JsonObject
         {
@@ -1823,7 +1823,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
             ["host"] = "tekla",
             ["host_version"] = hostVersion,
             ["host_pid"] = hostPid,
-            ["verb"] = "exec",
+            ["verb"] = verb,
             ["delivered_at"] = DateTime.UtcNow.ToString("o"),
         };
         WriteProtocolLine(receipt.ToJsonString());
@@ -2051,6 +2051,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
               launch           Start a Tekla instance via Bypass.ini (headless)
               close            Save + clean-shutdown a Tekla instance (Open API + ModelSave event)
               exec             Compile + run an ad-hoc C# script against the active model
+              bake-scene       Create native Tekla members from a 3D scene (write; needs a model open)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:

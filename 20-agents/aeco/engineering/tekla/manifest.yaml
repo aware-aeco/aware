@@ -272,9 +272,11 @@ commands:
     outputs:
       type: single
       schema:
-        ok:     boolean
-        result: object       # { created, columns, beams, native, placeholder, failed, skipped, model, scene_name, profiles }
-        error:  string        # only when ok=false
+        ok:           boolean
+        result:       object  # { created, columns, beams, native, placeholder, failed, skipped, model, scene_name, profiles }
+        error:        string  # only when ok=false
+        stack:        string  # only when ok=false
+        delivered_at: string
 
   save-attributes:
     lifecycle: single
