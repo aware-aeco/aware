@@ -127,7 +127,7 @@ pub async fn dispatch(cmd: AgentCommand, ctx: &Context) -> Result<(), AwareError
         AgentCommand::Uninstall { agent } => {
             crate::install::uninstall_agent(&agent, &ctx.paths)?;
             println!("✓ uninstalled {agent}");
-            let _ = auto_regenerate_plugins(ctx);
+            let _ = auto_regenerate_plugins(ctx, false);
             let _ = crate::commands::diagram::auto_regenerate(ctx);
             Ok(())
         }
@@ -242,7 +242,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         let installed = crate::install::install_agent_from_path(&path, &ctx.paths)?;
         println!("✓ installed {installed} from {}", path.display());
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
-        let _ = auto_regenerate_plugins(ctx);
+        let _ = auto_regenerate_plugins(ctx, false);
         let _ = crate::commands::diagram::auto_regenerate(ctx);
         return Ok(());
     }
@@ -264,7 +264,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
             println!("  ✗ {s}: {e}");
         }
         // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
-        let _ = auto_regenerate_plugins(ctx);
+        let _ = auto_regenerate_plugins(ctx, false);
         let _ = crate::commands::diagram::auto_regenerate(ctx);
         return Ok(());
     }
@@ -276,7 +276,7 @@ fn install(ctx: &Context, spec: &str) -> Result<(), AwareError> {
         crate::install::install_agent_from_registry(id, version_pin, &ctx.paths, &index)?;
     println!("✓ installed {installed}");
     // Auto-regenerate host plugins (best-effort — failures don't tear down the install)
-    let _ = auto_regenerate_plugins(ctx);
+    let _ = auto_regenerate_plugins(ctx, false);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
 }
@@ -300,7 +300,9 @@ fn update_one(ctx: &Context, id: &str) -> Result<(), AwareError> {
     // so a failed re-pull leaves the existing agent intact (#174).
     let installed = crate::install::update_agent_from_registry(id, &ctx.paths, &index)?;
     println!("\u{2713} updated {installed}");
-    let _ = auto_regenerate_plugins(ctx);
+    // Full rebuild: an updated agent's command descriptions may have changed, which the
+    // presence-based (incremental) path would skip.
+    let _ = auto_regenerate_plugins(ctx, true);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
     Ok(())
 }
@@ -333,8 +335,9 @@ fn update_all(ctx: &Context) -> Result<(), AwareError> {
         }
     }
 
-    // Refresh derived artefacts once at the end (cheaper than per-agent).
-    let _ = auto_regenerate_plugins(ctx);
+    // Refresh derived artefacts once at the end (cheaper than per-agent). Full rebuild —
+    // any updated agent's command descriptions may have changed.
+    let _ = auto_regenerate_plugins(ctx, true);
     let _ = crate::commands::diagram::auto_regenerate(ctx);
 
     println!();
@@ -710,7 +713,11 @@ fn skill_cmd(ctx: &Context, agent_id: &str, skill_name: &str) -> Result<(), Awar
     Ok(())
 }
 
-fn auto_regenerate_plugins(ctx: &Context) -> Result<(), AwareError> {
+/// Regenerate host plugins from the installed agents. `full` forces every command file
+/// to be rewritten; install/uninstall pass `false` (incremental — only the changed
+/// agent's files are touched, see plugins::claude_code::generate / #244), update passes
+/// `true` (an existing command's description may have changed).
+fn auto_regenerate_plugins(ctx: &Context, full: bool) -> Result<(), AwareError> {
     let home = dirs::home_dir().ok_or_else(|| AwareError::Internal("home dir".into()))?;
     let agents = crate::manifest::loader::discover_agents(&ctx.paths)?;
 
@@ -719,7 +726,7 @@ fn auto_regenerate_plugins(ctx: &Context) -> Result<(), AwareError> {
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|| home.join(".claude/plugins"));
     if claude_target.exists() || std::env::var_os("AWARE_PLUGINS_CLAUDE").is_some() {
-        let _ = crate::plugins::claude_code::generate(&agents, &claude_target);
+        let _ = crate::plugins::claude_code::generate(&agents, &claude_target, full);
     }
     // codex / opencode left as scaffolds — regen on install would write the same TODO every time
 

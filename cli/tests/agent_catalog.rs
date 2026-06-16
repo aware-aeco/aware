@@ -78,5 +78,8 @@ fn catalog_json_surfaces_vendor_and_keywords() {
     // The agent with no vendor/keywords omits both keys entirely (minimal row).
     let bare = agents.iter().find(|a| a["id"] == "bare").expect("bare row");
     assert!(bare.get("vendor").is_none(), "vendor omitted when absent");
-    assert!(bare.get("keywords").is_none(), "keywords omitted when empty");
+    assert!(
+        bare.get("keywords").is_none(),
+        "keywords omitted when empty"
+    );
 }
