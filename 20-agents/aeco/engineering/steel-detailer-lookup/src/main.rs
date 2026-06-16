@@ -36,11 +36,10 @@ fn main() {
         process::exit(2);
     });
 
-    let db: serde_json::Value =
-        serde_json::from_str(&rules_json).unwrap_or_else(|e| {
-            eprintln!("error: invalid rules JSON: {}", e);
-            process::exit(2);
-        });
+    let db: serde_json::Value = serde_json::from_str(&rules_json).unwrap_or_else(|e| {
+        eprintln!("error: invalid rules JSON: {}", e);
+        process::exit(2);
+    });
 
     let rules = db["rules"].as_array().unwrap_or_else(|| {
         eprintln!("error: rules JSON has no 'rules' array");
@@ -54,10 +53,7 @@ fn main() {
         "lookup" => run_lookup(rules, &args[1..], &db),
         "describe" => run_describe(rules, &db),
         _ => {
-            eprintln!(
-                "usage: {} <lookup|describe> [options]",
-                bin_name
-            );
+            eprintln!("usage: {} <lookup|describe> [options]", bin_name);
             eprintln!("  lookup --rule <id>           look up a specific rule by id");
             eprintln!("  lookup --category <cat>      list all rules in a category");
             eprintln!("  lookup --list                list all rule ids");

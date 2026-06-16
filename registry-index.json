@@ -561,6 +561,30 @@
           "subdir": "aware-main/20-agents/aeco/architecture/solibri-26.4.1"
         }
       }
+    },
+    "steel-detailer-aisc": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-aisc"
+        }
+      }
+    },
+    "steel-detailer-uk": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-uk"
+        }
+      }
+    },
+    "steel-detailer-eu": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-eu"
+        }
+      }
     }
   },
   "bundles": {
@@ -633,7 +657,10 @@
         "tekla-tedds-25@25.0.0",
         "tekla-tedds-26@26.0.0",
         "bluebeam-v1@1.0.0",
-        "solibri-26.4.1@26.4.1"
+        "solibri-26.4.1@26.4.1",
+        "steel-detailer-aisc@0.1.0",
+        "steel-detailer-uk@0.1.0",
+        "steel-detailer-eu@0.1.0"
       ]
     }
   }
