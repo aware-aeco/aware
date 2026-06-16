@@ -214,8 +214,11 @@ fn extract_subdir(tarball: &Path, dest: &Path, subdir: &str) -> Result<(), Aware
     for entry in archive.entries().map_err(map)? {
         let mut entry = entry.map_err(map)?;
         let path = entry.path().map_err(map)?.into_owned();
-        let p = path.to_string_lossy();
-        // The agent dir itself or anything beneath it (tar paths use '/').
+        let raw = path.to_string_lossy();
+        // Normalize a leading "./" (some archivers prefix entries with it) before
+        // matching; tar paths are '/'-delimited on every platform.
+        let p = raw.strip_prefix("./").unwrap_or(&raw);
+        // The agent dir itself or anything beneath it.
         if p.trim_end_matches('/') == want || p.starts_with(&prefix) {
             // unpack_in is path-traversal-safe (it refuses to escape `dest`).
             entry.unpack_in(dest).map_err(map)?;
