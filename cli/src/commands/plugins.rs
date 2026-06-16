@@ -32,7 +32,8 @@ fn regenerate(ctx: &Context) -> Result<(), AwareError> {
         .map(std::path::PathBuf::from)
         .unwrap_or_else(|| home.join(".claude/plugins"));
     if claude_target.exists() || std::env::var_os("AWARE_PLUGINS_CLAUDE").is_some() {
-        let count = crate::plugins::claude_code::generate(&agents, &claude_target)?;
+        // Explicit `aware plugins regenerate` → full rebuild (also the drift-repair path).
+        let count = crate::plugins::claude_code::generate(&agents, &claude_target, true)?;
         println!("  \u{2713} claude-code: {count} commands");
     } else {
         println!("  \u{00b7} claude-code: ~/.claude/plugins not present (skipped)");

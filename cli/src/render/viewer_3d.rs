@@ -93,6 +93,54 @@ function makeLabel(text,pos,maxDim){
   sp.scale.set(maxDim*0.09, maxDim*0.045, 1); sp.position.copy(pos); return sp;
 }
 
+// ---- structural cross-section profiles (extruded), derived from the member's profile name ----
+// section.w = flange width / overall width, section.d = section depth. An optional
+// section.shape ("I"|"C"|"L"|"TUBE"|"BOX") overrides the name-based guess.
+function shapeOf(e){
+  const p=((e.section&&e.section.shape)||(e.meta&&e.meta.profile)||'').toString().toUpperCase().trim();
+  if(/^(W|M|S|HP|UC|UB|UKC|UKB|IPE|HE)/.test(p)) return 'I';
+  if(/^(C|MC|PFC)/.test(p)) return 'C';
+  if(/^L/.test(p)) return 'L';
+  if(/^(HSS|PIPE|TS|SHS|RHS|CHS|TUBE|HSQ)/.test(p)) return 'TUBE';
+  return 'BOX';
+}
+function profileShape(kind,w,d){
+  const s=new THREE.Shape(), hw=w/2, hd=d/2;
+  if(kind==='I'){ const tf=Math.min(d*0.5,Math.max(d*0.10,6)), tw=Math.min(w*0.5,Math.max(w*0.10,5));
+    s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+tf); s.lineTo(tw/2,-hd+tf);
+    s.lineTo(tw/2,hd-tf); s.lineTo(hw,hd-tf); s.lineTo(hw,hd); s.lineTo(-hw,hd);
+    s.lineTo(-hw,hd-tf); s.lineTo(-tw/2,hd-tf); s.lineTo(-tw/2,-hd+tf); s.lineTo(-hw,-hd+tf); s.closePath();
+  } else if(kind==='C'){ const tf=Math.max(d*0.10,5), tw=Math.max(w*0.12,5);
+    s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+tf); s.lineTo(-hw+tw,-hd+tf);
+    s.lineTo(-hw+tw,hd-tf); s.lineTo(hw,hd-tf); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
+  } else if(kind==='L'){ const t=Math.max(Math.min(w,d)*0.18,5);
+    s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,-hd+t); s.lineTo(-hw+t,-hd+t); s.lineTo(-hw+t,hd); s.lineTo(-hw,hd); s.closePath();
+  } else if(kind==='TUBE'){ const t=Math.max(Math.min(w,d)*0.12,4);
+    s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath();
+    const h=new THREE.Path(); h.moveTo(-hw+t,-hd+t); h.lineTo(hw-t,-hd+t); h.lineTo(hw-t,hd-t); h.lineTo(-hw+t,hd-t); h.closePath(); s.holes.push(h);
+  } else { s.moveTo(-hw,-hd); s.lineTo(hw,-hd); s.lineTo(hw,hd); s.lineTo(-hw,hd); s.closePath(); }
+  return s;
+}
+function profileGeom(e,w,d,len){
+  const kind=shapeOf(e);
+  if(kind==='BOX') return new THREE.BoxGeometry(w,len,d);          // fallback: length on local Y
+  const g=new THREE.ExtrudeGeometry(profileShape(kind,w,d), {depth:len, bevelEnabled:false});
+  g.translate(0,0,-len/2); return g;                                // extruded along +Z, centred
+}
+const _ZA=new THREE.Vector3(0,0,1), _YA=new THREE.Vector3(0,1,0);
+function orientMember(mesh, dir){
+  const m=dir.clone().normalize();
+  if(mesh.geometry.type==='BoxGeometry'){ mesh.quaternion.setFromUnitVectors(_YA,m); return; }
+  const q=new THREE.Quaternion().setFromUnitVectors(_ZA,m);         // member axis = extrude (Z)
+  const proj=_YA.clone().sub(m.clone().multiplyScalar(_YA.dot(m))); // world-up perpendicular to member
+  if(proj.lengthSq()>1e-6){ proj.normalize();
+    const ly=_YA.clone().applyQuaternion(q);                        // where section-depth currently points
+    const ang=Math.atan2(ly.clone().cross(proj).dot(m), ly.dot(proj));
+    q.premultiply(new THREE.Quaternion().setFromAxisAngle(m, ang)); // roll so the web stands vertical
+  }
+  mesh.quaternion.copy(q);
+}
+
 function renderScene(S){
   clearContent();
   const up=(S.meta&&S.meta.up)||'z';
@@ -116,8 +164,8 @@ function renderScene(S){
     if(e.kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
-      mesh=new THREE.Mesh(new THREE.BoxGeometry(w,len,d), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
-      mesh.quaternion.setFromUnitVectors(upY, dir.normalize()); }
+      mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
+      orientMember(mesh, dir); }
     mesh.userData=e; content.add(mesh); pickable.push(mesh);
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));

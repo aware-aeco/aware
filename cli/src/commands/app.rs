@@ -272,6 +272,9 @@ async fn run(
                 }
             }
         }
+        // Load `<app-dir>/config.yaml` into the `config` namespace so
+        // `{{ config.<key> }}` resolves (app-spec § Templating; #230).
+        crate::runtime::context::load_app_config(&mut rt_ctx, &app_dir)?;
 
         let orch = Orchestrator {
             app,
@@ -345,6 +348,9 @@ async fn run(
             }
         }
     }
+    // Load `<app-dir>/config.yaml` into the `config` namespace so
+    // `{{ config.<key> }}` resolves (app-spec § Templating; #230).
+    crate::runtime::context::load_app_config(&mut rt_ctx, &app_dir)?;
 
     let orch = Orchestrator {
         app,

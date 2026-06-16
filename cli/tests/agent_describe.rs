@@ -51,8 +51,9 @@ fn json_describe_returns_envelope() {
     let v: serde_json::Value = serde_json::from_slice(&output).unwrap();
     assert_eq!(v["ok"], true);
     assert_eq!(v["data"]["agent"], "tekla");
-    // tekla currently declares 33 skills and 23 commands (count was stale at 22).
-    // The agent.rs unit tests have the same expectation — see `cli/src/manifest/agent.rs`.
+    // tekla currently declares 33 skills and 24 commands (grew from 23 with the
+    // `bake-scene` verb, #235). The agent.rs unit tests have the same expectation
+    // — see `cli/src/manifest/agent.rs`.
     assert_eq!(v["data"]["skill_count"], 33);
-    assert_eq!(v["data"]["command_count"], 23);
+    assert_eq!(v["data"]["command_count"], 24);
 }
