@@ -5,6 +5,7 @@
 use std::path::{Path, PathBuf};
 
 use flate2::read::GzDecoder;
+use sha2::{Digest, Sha256};
 use tar::Archive;
 
 use crate::error::AwareError;
@@ -44,7 +45,13 @@ fn stage_agent_from_registry(
 
     let cache_dir = paths.cache_dir().join("agents");
     std::fs::create_dir_all(&cache_dir)?;
-    let cache_file = cache_dir.join(format!("{key}-{resolved_version}.tar.gz"));
+    // Cache the downloaded tarball by its URL + the index snapshot, NOT the agent id:
+    // every agent in a substrate registry shares ONE tarball (the repo archive), so a
+    // per-agent key made each new agent re-download the same (often hundreds-of-MB)
+    // archive (#243). With this key all agents in one snapshot share a single cached
+    // download — only the first install pays for it — and a registry update (a new
+    // `updated-at`) rotates the key so the cache can't go stale across versions.
+    let cache_file = cache_dir.join(tarball_cache_name(&entry.tarball, &index.updated_at));
 
     if cache_file.is_file() {
         std::fs::copy(&cache_file, &tarball_path)?;
@@ -73,6 +80,18 @@ fn stage_agent_from_registry(
         )));
     }
     Ok((scratch, subdir))
+}
+
+/// Cache filename for a registry tarball, keyed by its URL + the index snapshot
+/// (`updated-at`). Agents sharing one tarball share one cache file (#243); a registry
+/// update rotates the key. Hashed so any URL maps to a fixed-length, filesystem-safe
+/// name (SHA-256 is already a dependency and is stable across runs/platforms).
+fn tarball_cache_name(tarball: &str, updated_at: &str) -> String {
+    let mut h = Sha256::new();
+    h.update(tarball.as_bytes());
+    h.update([0]); // domain-separate URL from timestamp so a+b can't collide with a'+b'
+    h.update(updated_at.as_bytes());
+    format!("tarball-{:x}.tar.gz", h.finalize())
 }
 
 /// Atomically update an installed agent to the latest registry version.
@@ -189,6 +208,30 @@ mod tests {
     use crate::registry::{IndexEntry, VersionEntry};
     use std::collections::BTreeMap;
     use std::io::Write;
+
+    #[test]
+    fn tarball_cache_name_shares_one_file_per_url_and_snapshot() {
+        let url = "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz";
+        // Two different agents in the SAME registry snapshot share one cache file (#243).
+        assert_eq!(
+            tarball_cache_name(url, "2026-06-16T00:00:00Z"),
+            tarball_cache_name(url, "2026-06-16T00:00:00Z"),
+        );
+        // A new registry snapshot (different `updated-at`) rotates the key → fresh download.
+        assert_ne!(
+            tarball_cache_name(url, "2026-06-16T00:00:00Z"),
+            tarball_cache_name(url, "2026-06-17T00:00:00Z"),
+        );
+        // A different tarball URL → a different cache file.
+        assert_ne!(
+            tarball_cache_name(url, "snap"),
+            tarball_cache_name("file:///tmp/other.tar.gz", "snap"),
+        );
+        // Domain separation: (url+"\0"+ts) can't collide across a boundary shift.
+        assert_ne!(tarball_cache_name("ab", "c"), tarball_cache_name("a", "bc"));
+        let name = tarball_cache_name(url, "snap");
+        assert!(name.starts_with("tarball-") && name.ends_with(".tar.gz"));
+    }
 
     fn make_test_tarball(path: &Path) {
         let tar_gz = std::fs::File::create(path).unwrap();
