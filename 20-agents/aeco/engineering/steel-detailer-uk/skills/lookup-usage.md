@@ -48,15 +48,17 @@ Run `aware-steel-detailer-uk lookup --list` for all 49 rule IDs.
 
 `~/.aware/agents/steel-detailer-uk/rules/bs-en-1993-uk.json` — human-readable JSON; each rule contains citation + source quote.
 
-## How to use in a workflow
+## How to use the lookup result
 
-In an AWARE `.app` that checks a UK/Eurocode model, a `steel-detailer-uk` node with the `lookup` command returns typed JSON as its `result`. Downstream nodes compare extracted model values against `result.value`:
+The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in the run path): invoke it directly, or from a checker script, and consume its typed JSON. A checker compares extracted model values against `result.value`:
 
 ```
 [model read] → [lookup bolt.edge.min.e1] → [compare & report]
 ```
 
-If `found: false`, the workflow node reports "rule not in verified database" and does NOT fall back to inference.
+If `found: false`, the consumer reports "rule not in verified database" and does NOT fall back to inference.
+
+> The agent is `status: planned`: today the lookup is a standalone CLI (build it per the install note below). Composing it as a first-class node in a runnable AWARE `.app` is planned — it lights up when the agent becomes `available`.
 
 ## Install note
 

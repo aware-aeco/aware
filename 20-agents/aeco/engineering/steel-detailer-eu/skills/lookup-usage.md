@@ -58,14 +58,18 @@ Run `aware-steel-detailer-eu lookup --list` for all rule IDs.
 `~/.aware/agents/steel-detailer-eu/rules/bs-en-1993-eu.json` — human-readable JSON;
 each rule contains citation, source quote, and `ndp` boolean.
 
-## How to use in a workflow
+## How to use the lookup result
+
+The `lookup` command is a standalone deterministic CLI (decalog #9 — no LLM in the run path): invoke it directly, or from a checker script, and consume its typed JSON.
 
 ```
 [model read] → [lookup bolt.pitch.min.p1] → [compare & report NDP warning if ndp:true]
 ```
 
-If `found: false`, the workflow reports "rule not in verified database" and does NOT
+If `found: false`, the consumer reports "rule not in verified database" and does NOT
 fall back to inference.
+
+> The agent is `status: planned`: today the lookup is a standalone CLI (build it per the install note below). Composing it as a first-class node in a runnable AWARE `.app` is planned — it lights up when the agent becomes `available`.
 
 ## Install note
 
