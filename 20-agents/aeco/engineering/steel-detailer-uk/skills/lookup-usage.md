@@ -50,7 +50,7 @@ Run `aware-steel-detailer-uk lookup --list` for all 49 rule IDs.
 
 ## How to use in a workflow
 
-In a `.flo` that checks a UK/Eurocode model, a `steel-detailer-uk` node with the `lookup` command returns typed JSON as its `result`. Downstream nodes compare extracted model values against `result.value`:
+In an AWARE `.app` that checks a UK/Eurocode model, a `steel-detailer-uk` node with the `lookup` command returns typed JSON as its `result`. Downstream nodes compare extracted model values against `result.value`:
 
 ```
 [model read] → [lookup bolt.edge.min.e1] → [compare & report]

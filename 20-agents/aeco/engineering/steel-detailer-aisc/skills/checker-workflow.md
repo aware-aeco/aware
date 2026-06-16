@@ -1,11 +1,11 @@
 ---
 name: steel-detailer-aisc-checker-workflow
-description: Use when the user wants to check a structural model or set of drawings against AISC detailing rules — explains the checker pattern, how to compose the lookup command with Tekla / Steel-from-Drawings workflows, and what a compliance report looks like.
+description: Use when the user wants to check a structural model or set of drawings against AISC detailing rules — explains the checker pattern, how to compose the lookup command with Tekla or drawings-to-scene workflows, and what a compliance report looks like.
 ---
 
 # Checker workflow — checking a model against AISC rules
 
-The checker is a **composed workflow** (`.flo`) that reads a structural model and checks it against the verified AISC rules database deterministically. It has no LLM in the run path.
+The checker is a **composed workflow** (an AWARE `.app`) that reads a structural model and checks it against the verified AISC rules database deterministically. It has no LLM in the run path.
 
 ## Workflow pattern
 
@@ -47,7 +47,7 @@ The checker is a **composed workflow** (`.flo`) that reads a structural model an
 
 When `found: false` for any rule, the checker reports "**rule not in verified database — check manually**" and does NOT interpolate a value.
 
-## How to author the checker .flo
+## How to author the checker app
 
 ```yaml
 # Example snippet for a bolt-spacing check
@@ -69,12 +69,12 @@ node check-spacings {
 
 A `script` (model-free arithmetic) node compares `connection.spacing` against `rule.value`; output is `{pass, fail, not_checked}` per connection.
 
-## Composing with Steel-from-Drawings
+## Composing with a drawings-to-scene reader
 
-When the model comes from `floless-app-steel-from-drawings` (PDF → baked scene), the scene JSON already contains member sizes and grid data. A checker `.flo` can directly consume the baked scene:
+When the model comes from a drawings-to-scene reader (PDF → a `viewer-3d` scene), the scene JSON already contains member sizes and grid data. A checker `.app` can directly consume the baked scene:
 
 ```
-[steel-from-drawings/read]  →  [steel-detailer-aisc/lookup bolt.spacing.min]
+[drawings-to-scene/read]    →  [steel-detailer-aisc/lookup bolt.spacing.min]
                             →  [compare spacing vs 2.67d]
                             →  [report violations]
 ```

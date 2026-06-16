@@ -50,7 +50,7 @@ Run `aware-steel-detailer-aisc lookup --list` for all 66 rule IDs.
 
 ## How to use in a workflow
 
-In a `.flo` that checks a model, a `steel-detailer-aisc` node with the `lookup` command returns typed JSON as its `result`. Downstream nodes compare extracted model values against `result.value`:
+In an AWARE `.app` that checks a model, a `steel-detailer-aisc` node with the `lookup` command returns typed JSON as its `result`. Downstream nodes compare extracted model values against `result.value`:
 
 ```
 [model read] → [lookup bolt.spacing.min] → [compare & report]
