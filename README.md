@@ -22,7 +22,7 @@ $ aware agent install trimble-connect
   ✓ trimble-connect  · REST
 
 $ claude-code                    # or codex, or opencode — your AI is the runtime
-  ✓ plugin: aware-aeco · 70 agents · 3,285 skills
+  ✓ plugin: aware-aeco · 73 agents · 3,335 skills
 
 > From this Tekla model, export each welded assembly's drawing
 > to my Trimble Connect fab folder.
@@ -47,7 +47,7 @@ That's the whole thing: any software becomes an agent, your AI composes those ag
 aware-aeco/
 ├── 00-vision/              # decalog · manifesto · positioning
 ├── 10-core/                # agent-spec · app-spec · cli-spec · cli-roadmap · runtime contracts
-├── 20-agents/              # 70 agents · 21 curated + 49 reflected · all Apache 2.0
+├── 20-agents/              # 73 agents · 24 curated + 49 reflected · all Apache 2.0
 │   ├── _core/              #   5 meta-primitives: aware-agent-builder · aware-skill-builder ·
 │   │                       #   html-report · http · ui-inspector
 │   └── aeco/
@@ -95,7 +95,7 @@ aware-aeco/
 
 The `aware` CLI is live at **v<!--stat:cli_version-->0.72.0<!--/stat-->** (Rust), published to npm as **`@aware-aeco/cli`**, with curl + PowerShell installers in [`scripts/`](./scripts/). What began as 7 reference agents is now a working substrate:
 
-- **<!--stat:agents_total-->70<!--/stat--> agents** — <!--stat:agents_curated-->21<!--/stat--> hand-written + <!--stat:agents_reflected-->49<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
+- **<!--stat:agents_total-->73<!--/stat--> agents** — <!--stat:agents_curated-->24<!--/stat--> hand-written + <!--stat:agents_reflected-->49<!--/stat--> auto-generated from vendor SDKs — **all registered** in [`registry-index.json`](./registry-index.json) and installable today.
 - **`aware build agent`** generators: `--from-nuget`, `--from-npm`, `--from-yard`, `--from-openapi`, `--from-csharp` (Roslyn source reader).
 - **Desktop-host sidecars** for stateful, in-process vendor APIs: `cli-tekla`, `cli-revit`, `cli-rhino`, `cli-sketchup`.
 

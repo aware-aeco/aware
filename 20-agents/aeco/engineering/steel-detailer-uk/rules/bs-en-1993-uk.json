@@ -1,0 +1,510 @@
+{
+  "agent": "steel-detailer-uk",
+  "standard": "eurocode-3-1-8-uk-na",
+  "version": "1.0.0",
+  "last_verified": "2026-06-14",
+  "sources": [
+    "SCI P358 (free — steelconstruction.info/images/a/a9/SCI_P358.pdf)",
+    "steelconstruction.info (free, cited by ?oldid permalink)",
+    "SCI P363 / eBlueBook (free — steelconstruction.info)",
+    "eurocodeapplied.com (free, corroboration only)"
+  ],
+  "paywalled_cited_only": [
+    "BS EN 1993-1-8:2005 + UK NA (BSI)",
+    "EN 1090-2 (BSI/CEN)",
+    "EN 10025-2, EN 10210, EN 10219 (BSI/CEN)",
+    "BS EN ISO 2553, BS 8888 (BSI)"
+  ],
+  "rules": [
+    {
+      "id": "bolt.edge.min.e1",
+      "category": "bolts",
+      "rule": "Minimum end distance e1 (parallel to load direction)",
+      "value": "1.2·d0",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3 §3.5 (corroborated: steelconstruction.info + eurocodeapplied.com)",
+      "source_quote": "End distance e1 ≥ 1.2d0 (Table 3.3 minimum)",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.e2",
+      "category": "bolts",
+      "rule": "Minimum edge distance e2 (perpendicular to load direction)",
+      "value": "1.2·d0",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3 §3.5 (corroborated: steelconstruction.info + eurocodeapplied.com)",
+      "source_quote": "Edge distance e2 ≥ 1.2d0 (Table 3.3 minimum); NOTE: pre-2005 ENV draft gave 1.5d0 — that value is superseded",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.min.e3.e4.slot",
+      "category": "bolts",
+      "rule": "Minimum slotted-hole distances e3 and e4 (to slot centre)",
+      "value": "1.5·d0",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3",
+      "source_quote": "Table 3.3: e3 (end of slot) ≥ 1.5d0; e4 (edge to slot centre) ≥ 1.5d0",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.min.p1",
+      "category": "bolts",
+      "rule": "Minimum bolt pitch p1 (in direction of load)",
+      "value": "2.2·d0",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3 §3.5 (corroborated: steelconstruction.info + eurocodeapplied.com)",
+      "source_quote": "Spacing p1 ≥ 2.2d0 (Table 3.3 minimum)",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.min.p2",
+      "category": "bolts",
+      "rule": "Minimum bolt pitch p2 (perpendicular to load direction)",
+      "value": "2.4·d0",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3 §3.5 (corroborated: steelconstruction.info + eurocodeapplied.com)",
+      "source_quote": "Spacing p2 ≥ 2.4d0 (Table 3.3 minimum)",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.max.exposed",
+      "category": "bolts",
+      "rule": "Maximum edge distance e1, e2 — member exposed to weather or corrosion",
+      "value": "4t + 40 mm",
+      "units": "mm (t = thickness of thinner outer connected part)",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3",
+      "source_quote": "Table 3.3 maximum: e1, e2 ≤ 4t + 40 mm (exposed to weather / corrosion)",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.max.internal",
+      "category": "bolts",
+      "rule": "Maximum edge distance e1, e2 — member not exposed to weather",
+      "value": "larger of 8t or 125 mm",
+      "units": "mm (t = thickness of thinner outer connected part)",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3",
+      "source_quote": "Table 3.3 maximum: e1, e2 ≤ max(8t, 125 mm) for non-exposed members",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.max.p1.p2",
+      "category": "bolts",
+      "rule": "Maximum bolt pitch p1, p2 (standard, tension or shear members)",
+      "value": "smaller of 14t or 200 mm",
+      "units": "mm (t = thickness of thinner outer connected part)",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3",
+      "source_quote": "Table 3.3 maximum: p1, p2 ≤ min(14t, 200 mm)",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.max.p1.compression",
+      "category": "bolts",
+      "rule": "Maximum pitch p1 for inner bolt rows in compression direction",
+      "value": "smaller of 28t or 400 mm (single free-source; verify against EN 1993-1-8 Table 3.3)",
+      "units": "mm",
+      "citation": "BS EN 1993-1-8:2005 Table 3.3",
+      "source_quote": "Table 3.3 compression-member inner rows: p1,i ≤ min(28t, 400 mm); outer rows: min(14t, 200 mm)",
+      "found": true
+    },
+    {
+      "id": "bolt.edge.bearing.e1.threshold",
+      "category": "bolts",
+      "rule": "Bearing-resistance un-reduced threshold — end distance e1",
+      "value": "e1 ≥ 1.5·d0 (below this, αd bearing factor reduces; see bolt-shear-and-bearing)",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.4",
+      "source_quote": "Table 3.4: for bearing not to be reduced, e1 ≥ 1.5d0 (entering the αd formula)",
+      "found": true
+    },
+    {
+      "id": "bolt.spacing.bearing.p1.threshold",
+      "category": "bolts",
+      "rule": "Bearing-resistance un-reduced threshold — pitch p1",
+      "value": "p1 ≥ 3.75·d0 (below this, αd factor reduces)",
+      "units": "× hole diameter d0",
+      "citation": "BS EN 1993-1-8:2005 Table 3.4",
+      "source_quote": "Table 3.4: for bearing not to be reduced, p1 ≥ 3.75d0",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.clearance.m12.m14",
+      "category": "bolts",
+      "rule": "Standard round-hole clearance — M12 and M14 bolts",
+      "value": "+1 mm (d0 = 13 mm for M12; 15 mm for M14)",
+      "units": "mm",
+      "citation": "EN 1993-1-8:2005 §3.6.1 / EN 1090-2 Table 11 (corroborated: eurocodeapplied.com + GN 5.08)",
+      "source_quote": "M12, M14: clearance = 1 mm (d0 = d + 1 mm); note: commonly mis-stated as +2 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.clearance.m16.to.m24",
+      "category": "bolts",
+      "rule": "Standard round-hole clearance — M16 to M24 bolts",
+      "value": "+2 mm (d0 = d + 2 mm)",
+      "units": "mm",
+      "citation": "EN 1993-1-8:2005 §3.6.1 / EN 1090-2 Table 11 (corroborated: eurocodeapplied.com + GN 5.08)",
+      "source_quote": "M16, M18, M20, M22, M24: clearance = 2 mm (d0 = d + 2 mm)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.clearance.m27plus",
+      "category": "bolts",
+      "rule": "Standard round-hole clearance — M27 and larger bolts",
+      "value": "+3 mm (d0 = d + 3 mm)",
+      "units": "mm",
+      "citation": "EN 1993-1-8:2005 §3.6.1 / EN 1090-2 Table 11 (corroborated: eurocodeapplied.com + GN 5.08)",
+      "source_quote": "M27 and larger: clearance = 3 mm (d0 = d + 3 mm)",
+      "found": true
+    },
+    {
+      "id": "bolt.hole.p358.convention",
+      "category": "bolts",
+      "rule": "P358 practical hole clearance convention (standardised connections)",
+      "value": "d + 2 mm for d ≤ 24 mm; d + 3 mm for d > 24 mm; holding-down (HD) bolts d + 6 mm",
+      "units": "mm",
+      "citation": "SCI P358 §2.2",
+      "source_quote": "P358: standard holes d + 2 mm (d ≤ 24 mm), d + 3 mm (d > 24 mm); HD bolts d + 6 mm. Note: for M12/M14 use EN +1 mm, not P358's +2 mm",
+      "found": true
+    },
+    {
+      "id": "bolt.preload.formula",
+      "category": "bolts",
+      "rule": "Design preload of a preloaded bolt Fp,C",
+      "value": "Fp,C = 0.7 · fub · As",
+      "units": "kN (fub = bolt tensile strength N/mm², As = tensile stress area mm²)",
+      "citation": "BS EN 1993-1-8:2005 cl. 3.9.1 (SCI P358 §6 Check 4)",
+      "source_quote": "P358 §6 Check 4: Fp,C = 0.7 fub As; preloaded assemblies are property class 8.8 or 10.9 to BS EN 14399",
+      "found": true
+    },
+    {
+      "id": "bolt.slip.formula",
+      "category": "bolts",
+      "rule": "Design slip resistance of one preloaded bolt Fs,Rd",
+      "value": "Fs,Rd = (ks · n · μ / γM3) · Fp,C",
+      "units": "kN",
+      "citation": "BS EN 1993-1-8:2005 cl. 3.9.1 (SCI P358 §6 Check 4)",
+      "source_quote": "P358 §6 Check 4: Fs,Rd = (ks · n · μ / γM3) · Fp,C",
+      "found": true
+    },
+    {
+      "id": "bolt.slip.ks.standard",
+      "category": "bolts",
+      "rule": "Hole shape factor ks — standard clearance holes",
+      "value": "ks = 1.0",
+      "units": "dimensionless",
+      "citation": "BS EN 1993-1-8:2005 Table 3.6 (SCI P358 §6)",
+      "source_quote": "Table 3.6: ks = 1.0 for fasteners in standard clearance holes; reduced for oversized or slotted holes",
+      "found": true
+    },
+    {
+      "id": "bolt.slip.mu.class.a",
+      "category": "bolts",
+      "rule": "Slip factor μ — Class A faying surface (blasted, loose rust removed, not pitted)",
+      "value": "μ = 0.5",
+      "units": "dimensionless",
+      "citation": "BS EN 1090-2 Table 18 (SCI P358 §6)",
+      "source_quote": "EN 1090-2 Table 18 Class A: blasted, loose rust removed, not pitted → μ = 0.5",
+      "found": true
+    },
+    {
+      "id": "bolt.slip.mu.class.b",
+      "category": "bolts",
+      "rule": "Slip factor μ — Class B (blasted + alkali-zinc-silicate or metallised coating)",
+      "value": "μ = 0.4",
+      "units": "dimensionless",
+      "citation": "BS EN 1090-2 Table 18 (SCI P358 §6)",
+      "source_quote": "EN 1090-2 Table 18 Class B: blast-cleaned + alkali-zinc-silicate or thermally sprayed metal → μ = 0.4",
+      "found": true
+    },
+    {
+      "id": "bolt.slip.mu.class.c",
+      "category": "bolts",
+      "rule": "Slip factor μ — Class C (wire-brushed or flame-cleaned)",
+      "value": "μ = 0.3",
+      "units": "dimensionless",
+      "citation": "BS EN 1090-2 Table 18 (SCI P358 §6)",
+      "source_quote": "EN 1090-2 Table 18 Class C: wire-brushed or flame-cleaned → μ = 0.3",
+      "found": true
+    },
+    {
+      "id": "bolt.slip.mu.class.d",
+      "category": "bolts",
+      "rule": "Slip factor μ — Class D (as-rolled / untreated)",
+      "value": "μ = 0.2",
+      "units": "dimensionless",
+      "citation": "BS EN 1090-2 Table 18 (SCI P358 §6)",
+      "source_quote": "EN 1090-2 Table 18 Class D: as-rolled → μ = 0.2",
+      "found": true
+    },
+    {
+      "id": "partial.gamma.M0",
+      "category": "partial-factors",
+      "rule": "Partial factor γM0 — cross-section resistance (UK NA)",
+      "value": "1.0",
+      "units": "dimensionless",
+      "citation": "UK NA to BS EN 1993-1-1 (SCI P358 §1.6)",
+      "source_quote": "P358 §1.6 Major symbols: γM0 = 1.0 (UK NA to BS EN 1993-1-1)",
+      "found": true
+    },
+    {
+      "id": "partial.gamma.M1",
+      "category": "partial-factors",
+      "rule": "Partial factor γM1 — member resistance to instability (UK NA)",
+      "value": "1.0",
+      "units": "dimensionless",
+      "citation": "UK NA to BS EN 1993-1-1 (SCI P358 §1.6)",
+      "source_quote": "P358 §1.6: γM1 = 1.0 (UK NA to BS EN 1993-1-1)",
+      "found": true
+    },
+    {
+      "id": "partial.gamma.M2.connectors",
+      "category": "partial-factors",
+      "rule": "Partial factor γM2 — bolts, welds, pins, plates in bearing (UK NA)",
+      "value": "1.25",
+      "units": "dimensionless",
+      "citation": "UK NA to BS EN 1993-1-8 (SCI P358 §1.6)",
+      "source_quote": "P358 §1.6: γM2 = 1.25 for connectors (UK NA to BS EN 1993-1-8); WATCH: a different γM2 = 1.1 applies to member net-section fracture",
+      "found": true
+    },
+    {
+      "id": "partial.gamma.M2.net-section",
+      "category": "partial-factors",
+      "rule": "Partial factor γM2 — net-section fracture of a member in tension (UK NA)",
+      "value": "1.1 (applied with fu, not fy; this is a MEMBER check, not a connector check)",
+      "units": "dimensionless",
+      "citation": "UK NA to BS EN 1993-1-1 (SCI P358 §1.6)",
+      "source_quote": "P358 §1.6: γM2 = 1.1 for net-section fracture (UK NA to BS EN 1993-1-1); use with fu for member tension failure — distinct from the 1.25 connector value",
+      "found": true
+    },
+    {
+      "id": "partial.gamma.M3.uls",
+      "category": "partial-factors",
+      "rule": "Partial factor γM3 — slip resistance at ULS (UK NA)",
+      "value": "1.25",
+      "units": "dimensionless",
+      "citation": "UK NA to BS EN 1993-1-8 (SCI P358 §1.6)",
+      "source_quote": "P358 §1.6: γM3 = 1.25 at ULS for slip resistance (UK NA)",
+      "found": true
+    },
+    {
+      "id": "partial.gamma.M3.sls",
+      "category": "partial-factors",
+      "rule": "Partial factor γM3,ser — slip resistance at serviceability (UK NA)",
+      "value": "1.10",
+      "units": "dimensionless",
+      "citation": "UK NA to BS EN 1993-1-8 (SCI P358 §1.6)",
+      "source_quote": "P358 §1.6: γM3,ser = 1.10 at SLS for slip resistance (UK NA)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.throat",
+      "category": "welds",
+      "rule": "Effective throat — fillet weld",
+      "value": "a = 0.7 · s (a = throat, s = leg length)",
+      "units": "mm (coefficient × leg length)",
+      "citation": "BS EN 1993-1-8:2005 §4.5.2 (SCI P358 §7)",
+      "source_quote": "P358 §7: a = 0.7s (throat = 0.7 × leg for equal-leg fillet)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.design.strength.s275.long",
+      "category": "welds",
+      "rule": "P358 tabulated fillet weld design strength — S275 steel, longitudinal shear",
+      "value": "223 N/mm²",
+      "units": "N/mm² per unit throat",
+      "citation": "SCI P358 Table G.37",
+      "source_quote": "P358 Table G.37: S275 longitudinal design strength fvw,d = 223 N/mm²",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.design.strength.s275.transverse",
+      "category": "welds",
+      "rule": "P358 tabulated fillet weld design strength — S275 steel, transverse",
+      "value": "273 N/mm²",
+      "units": "N/mm² per unit throat",
+      "citation": "SCI P358 Table G.37",
+      "source_quote": "P358 Table G.37: S275 transverse design strength = 273 N/mm²",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.design.strength.s355.long",
+      "category": "welds",
+      "rule": "P358 tabulated fillet weld design strength — S355 steel, longitudinal shear",
+      "value": "241 N/mm²",
+      "units": "N/mm² per unit throat",
+      "citation": "SCI P358 Table G.37",
+      "source_quote": "P358 Table G.37: S355 longitudinal design strength fvw,d = 241 N/mm²",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.design.strength.s355.transverse",
+      "category": "welds",
+      "rule": "P358 tabulated fillet weld design strength — S355 steel, transverse",
+      "value": "295 N/mm²",
+      "units": "N/mm² per unit throat",
+      "citation": "SCI P358 Table G.37",
+      "source_quote": "P358 Table G.37: S355 transverse design strength = 295 N/mm²",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.beta.s275",
+      "category": "welds",
+      "rule": "Correlation factor βw — S275 steel",
+      "value": "0.85",
+      "units": "dimensionless",
+      "citation": "BS EN 1993-1-8:2005 Table 4.1 (SCI P358 §7)",
+      "source_quote": "EN 1993-1-8 Table 4.1: S275 → βw = 0.85",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.beta.s355",
+      "category": "welds",
+      "rule": "Correlation factor βw — S355 steel",
+      "value": "0.90",
+      "units": "dimensionless",
+      "citation": "BS EN 1993-1-8:2005 Table 4.1 (SCI P358 §7)",
+      "source_quote": "EN 1993-1-8 Table 4.1: S355 → βw = 0.90",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.throat.endplate.s275",
+      "category": "welds",
+      "rule": "P358 full-strength web weld throat — end-plate, S275 steel",
+      "value": "a ≥ 0.40·tw (tw = connected web thickness)",
+      "units": "dimensionless coefficient × tw",
+      "citation": "SCI P358 §7 Check 4 / Appendix C",
+      "source_quote": "P358 Appendix C: end-plate web weld → a ≥ 0.40tw (S275)",
+      "found": true
+    },
+    {
+      "id": "weld.fillet.throat.endplate.s355",
+      "category": "welds",
+      "rule": "P358 full-strength web weld throat — end-plate, S355 steel",
+      "value": "a ≥ 0.48·tw",
+      "units": "dimensionless coefficient × tw",
+      "citation": "SCI P358 §7 Check 4 / Appendix C",
+      "source_quote": "P358 Appendix C: end-plate web weld → a ≥ 0.48tw (S355)",
+      "found": true
+    },
+    {
+      "id": "material.grade.s275.fy.16",
+      "category": "materials",
+      "rule": "S275 yield strength fy — thickness t ≤ 16 mm",
+      "value": "275 N/mm² (MPa)",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info oldid=15167; SCI P363 §5.2)",
+      "source_quote": "S275: fy = 275 N/mm² for t ≤ 16 mm per EN 10025-2",
+      "found": true
+    },
+    {
+      "id": "material.grade.s275.fy.40",
+      "category": "materials",
+      "rule": "S275 yield strength fy — thickness 16 mm < t ≤ 40 mm",
+      "value": "265 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info + SCI P363 §5.2)",
+      "source_quote": "S275: fy = 265 N/mm² for 16 < t ≤ 40 mm",
+      "found": true
+    },
+    {
+      "id": "material.grade.s275.fu",
+      "category": "materials",
+      "rule": "S275 ultimate tensile strength fu (design value up to 100 mm)",
+      "value": "410 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info; SCI P363)",
+      "source_quote": "S275: nominal fu = 410 N/mm² used for design calculations up to 100 mm thickness",
+      "found": true
+    },
+    {
+      "id": "material.grade.s355.fy.16",
+      "category": "materials",
+      "rule": "S355 yield strength fy — thickness t ≤ 16 mm",
+      "value": "355 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info oldid=15167; SCI P363 §5.2)",
+      "source_quote": "S355: fy = 355 N/mm² for t ≤ 16 mm per EN 10025-2",
+      "found": true
+    },
+    {
+      "id": "material.grade.s355.fy.40",
+      "category": "materials",
+      "rule": "S355 yield strength fy — thickness 16 mm < t ≤ 40 mm",
+      "value": "345 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info + SCI P363 §5.2)",
+      "source_quote": "S355: fy = 345 N/mm² for 16 < t ≤ 40 mm",
+      "found": true
+    },
+    {
+      "id": "material.grade.s355.fy.63",
+      "category": "materials",
+      "rule": "S355 yield strength fy — thickness 40 mm < t ≤ 63 mm",
+      "value": "335 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info + SCI P363 §5.2)",
+      "source_quote": "S355: fy = 335 N/mm² for 40 < t ≤ 63 mm",
+      "found": true
+    },
+    {
+      "id": "material.grade.s355.fy.80",
+      "category": "materials",
+      "rule": "S355 yield strength fy — thickness 63 mm < t ≤ 80 mm",
+      "value": "325 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info + SCI P363 §5.2)",
+      "source_quote": "S355: fy = 325 N/mm² for 63 < t ≤ 80 mm",
+      "found": true
+    },
+    {
+      "id": "material.grade.s355.fu",
+      "category": "materials",
+      "rule": "S355 ultimate tensile strength fu (design value up to 100 mm)",
+      "value": "470 N/mm²",
+      "units": "N/mm²",
+      "citation": "EN 10025-2 (steelconstruction.info; SCI P363)",
+      "source_quote": "S355: nominal fu = 470 N/mm² used for design calculations up to 100 mm thickness",
+      "found": true
+    },
+    {
+      "id": "material.toughness.JR",
+      "category": "materials",
+      "rule": "Charpy impact toughness — subgrade JR",
+      "value": "27 J minimum at +20 °C",
+      "units": "Joules",
+      "citation": "EN 10025-2 (steelconstruction.info oldid=15167)",
+      "source_quote": "Subgrade JR: minimum 27 J Charpy V-notch at +20 °C",
+      "found": true
+    },
+    {
+      "id": "material.toughness.J0",
+      "category": "materials",
+      "rule": "Charpy impact toughness — subgrade J0",
+      "value": "27 J minimum at 0 °C",
+      "units": "Joules",
+      "citation": "EN 10025-2 (steelconstruction.info oldid=15167)",
+      "source_quote": "Subgrade J0: minimum 27 J at 0 °C",
+      "found": true
+    },
+    {
+      "id": "material.toughness.J2",
+      "category": "materials",
+      "rule": "Charpy impact toughness — subgrade J2",
+      "value": "27 J minimum at −20 °C",
+      "units": "Joules",
+      "citation": "EN 10025-2 (steelconstruction.info oldid=15167)",
+      "source_quote": "Subgrade J2: minimum 27 J at −20 °C",
+      "found": true
+    },
+    {
+      "id": "material.toughness.K2",
+      "category": "materials",
+      "rule": "Charpy impact toughness — subgrade K2",
+      "value": "40 J minimum at −20 °C",
+      "units": "Joules",
+      "citation": "EN 10025-2 (steelconstruction.info oldid=15167)",
+      "source_quote": "Subgrade K2: minimum 40 J at −20 °C (K2 is more stringent than J2 at the same temperature)",
+      "found": true
+    }
+  ]
+}

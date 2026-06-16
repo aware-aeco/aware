@@ -1,0 +1,97 @@
+agent:        steel-detailer-eu
+version:      0.1.0
+sdk-target:   eurocode-3-1-8@2005                 # the EN code edition these rules are sourced from
+display-name: Steel Detailer — EU (Eurocode 3, EN recommended values)
+
+description: |
+  Verified, citation-backed Eurocode 3 connection-detailing rules using the
+  EN 1993-1-8:2005 **recommended** (boxed) values — no National Annex applied.
+  A knowledge agent: each rule is transcribed from a free, authoritative source
+  (primarily JRC EUR 27346 "Design of Joints" worked examples, which reproduce
+  EN 1993-1-8 clauses, and the free SCI/BCSA steelconstruction.info /
+  eurocodeapplied.com for corroboration) and carries its exact citation plus a
+  short source quote. The composing/terminal AI reads these skills to answer
+  Eurocode connection-detailing questions, ALWAYS cites (the EN 1993-1-8 clause
+  and the free corroborating source), flags **NDP-sensitive** rules prominently
+  (countries may deviate via National Annexes), and refuses rather than guessing.
+  Covers bolted + welded connection geometry, bolt categories (A–E), preload/slip,
+  shear/bearing, partial factors (EN recommended), materials/sections, and a
+  deterministic lookup command backed by a ~62-rule verified JSON database.
+  EU recommended values only — for a specific country, use the country-specific
+  agent (e.g. steel-detailer-uk applies the UK National Annex via SCI P358;
+  steel-detailer-de applies the German NA, etc.).
+
+# Phase 5: EU recommended-values agent built.
+# Deterministic lookup binary shared with steel-detailer-aisc and steel-detailer-uk
+# (steel-detailer-lookup/ Cargo project); users must build from Cargo.toml.
+status: planned
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/steel-detailer-eu
+keywords: [aeco, engineering, structural, steel, detailing, connections, eurocode, en-1993-1-8, eu, recommended-values, ndp, bolts, welds]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+    docs: "JRC EUR 27346 (free, DOI 10.2788/605700); steelconstruction.info (free, ?oldid); eurocodeapplied.com (free)"
+
+# Engineering envelope: the EN code edition these rules are sourced from.
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Design code + edition (no National Annex for this agent)
+      required: true
+      example: 'eurocode-3-1-8@2005'
+    - id: execution-standard
+      description: Execution / fabrication standard (hole clearances, tolerances)
+      required: false
+      example: 'en-1090-2@2018'
+
+transport:
+  cli:
+    binary: aware-steel-detailer-eu
+
+commands:
+  lookup:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a
+      rule id (e.g. bolt.pitch.min.p1, partial.gamma.M2.connectors.recommended),
+      return the exact EN clause, value, units and citation as typed JSON — or
+      found:false so the caller refuses rather than guesses. Rule IDs: run
+      `lookup --list`. NDP rules are flagged with ndp:true in the JSON output.
+      Binary must be installed from steel-detailer-lookup/ (cargo build --release).
+    inputs:
+      rule:
+        type: string
+        description: 'Rule id, e.g. "bolt.end.min.e1", "weld.fillet.bw.s355". Run --list for all ids.'
+    outputs:
+      type: single
+      schema:
+        rule:         string
+        value:        string
+        units:        string
+        citation:     string    # e.g. "EN 1993-1-8:2005 Table 3.3 §3.5 (JRC EUR 27346)"
+        source_quote: string    # short verbatim excerpt for verification
+        ndp:          boolean   # true → NAs may set a different value
+        found:        boolean   # false → no verified rule (refuse, don't guess)
+
+skills:
+  - _grounding.md
+  - scope-and-citation.md
+  - ndp-sensitive-rules.md
+  - bolt-spacing-and-edge-distances.md
+  - bolt-holes.md
+  - bolt-categories.md
+  - bolt-shear-and-bearing.md
+  - bolt-preload-and-slip.md
+  - weld-fillet.md
+  - partial-factors-recommended.md
+  - steel-grades.md
+  - lookup-usage.md

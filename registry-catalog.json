@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-15T14:15:42.344123500+00:00",
+  "updated-at": "2026-06-16T14:40:27.164145600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5236,6 +5236,172 @@
             "web-xr-viewer",
             "world-tree",
             "world"
+          ]
+        }
+      }
+    },
+    "steel-detailer-aisc": {
+      "display-name": "Steel Detailer — US (AISC)",
+      "vendor": "aware",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "structural",
+        "steel",
+        "detailing",
+        "connections",
+        "aisc",
+        "bolts",
+        "welds",
+        "us"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
+          "status": "planned",
+          "stateful": false,
+          "sdk-target": "aisc-360-22",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "bolt-spacing",
+            "bolt-edge-distance",
+            "bolt-holes",
+            "bolt-bearing-tearout",
+            "bolt-pretension-and-joint-types",
+            "bolt-washers",
+            "weld-fillet-sizing",
+            "weld-length-and-pjp",
+            "connecting-elements-block-shear",
+            "drawing-types-and-roles",
+            "connection-design-responsibility",
+            "drawing-approval-process",
+            "marking-conventions",
+            "tolerances-overview",
+            "steel-grades",
+            "section-designations",
+            "lookup-usage",
+            "checker-workflow"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
+        }
+      }
+    },
+    "steel-detailer-eu": {
+      "display-name": "Steel Detailer — EU (Eurocode 3, EN recommended values)",
+      "vendor": "aware",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "structural",
+        "steel",
+        "detailing",
+        "connections",
+        "eurocode",
+        "en-1993-1-8",
+        "eu",
+        "recommended-values",
+        "ndp",
+        "bolts",
+        "welds"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Verified, citation-backed Eurocode 3 connection-detailing rules using the",
+          "status": "planned",
+          "stateful": false,
+          "sdk-target": "eurocode-3-1-8@2005",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "ndp-sensitive-rules",
+            "bolt-spacing-and-edge-distances",
+            "bolt-holes",
+            "bolt-categories",
+            "bolt-shear-and-bearing",
+            "bolt-preload-and-slip",
+            "weld-fillet",
+            "partial-factors-recommended",
+            "steel-grades",
+            "lookup-usage"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
+          ]
+        }
+      }
+    },
+    "steel-detailer-uk": {
+      "display-name": "Steel Detailer — UK (Eurocode 3 + UK NA)",
+      "vendor": "aware",
+      "keywords": [
+        "aeco",
+        "engineering",
+        "structural",
+        "steel",
+        "detailing",
+        "connections",
+        "eurocode",
+        "en-1993-1-8",
+        "uk",
+        "national-annex",
+        "bolts",
+        "welds"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Verified, citation-backed UK steel connection-detailing rules (Eurocode 3 +",
+          "status": "planned",
+          "stateful": false,
+          "sdk-target": "bs-en-1993-1-8:2005+uk-na",
+          "transport": "cli",
+          "command_count": 1,
+          "skills": [
+            "_grounding",
+            "scope-and-citation",
+            "bolt-spacing-and-edge-distances",
+            "bolt-holes",
+            "bolt-categories",
+            "bolt-shear-and-bearing",
+            "bolt-preload-and-slip",
+            "weld-fillet",
+            "block-tearing",
+            "partial-factors-uk-na",
+            "drawing-chain-and-roles",
+            "connection-design-responsibility",
+            "marking-conventions",
+            "execution-classes-and-ce-ukca",
+            "drawing-standards-reference",
+            "steel-grades",
+            "section-designations",
+            "lookup-usage"
+          ],
+          "commands": [
+            {
+              "name": "lookup",
+              "description": "Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            }
           ]
         }
       }

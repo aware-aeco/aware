@@ -1,0 +1,109 @@
+agent:        steel-detailer-uk
+version:      0.1.0
+sdk-target:   bs-en-1993-1-8:2005+uk-na          # the code + national annex these rules are sourced from
+display-name: Steel Detailer — UK (Eurocode 3 + UK NA)
+
+description: |
+  Verified, citation-backed UK steel connection-detailing rules (Eurocode 3 +
+  UK National Annex). A knowledge agent: each rule is transcribed from a free,
+  authoritative source — primarily SCI/BCSA P358 "Joints in Steel Construction:
+  Simple Joints to Eurocode 3" (the Green Book), with the EN 1993-1-8 Table 3.3
+  spacing/edge geometry corroborated from the free SCI/BCSA steelconstruction.info
+  (P358 cites Table 3.3 but does not tabulate it) — and carries its exact citation
+  plus a short source quote. The composing/terminal AI reads these skills to answer
+  connection-detailing questions and ALWAYS cites (the P358 section/table and the
+  EN 1993-1-8 clause it implements); it refuses rather than guessing. Covers bolted
+  + welded connection geometry, resistances, preload/slip, welds, block tearing, and
+  the UK NA partial factors, drawing & detailing conventions, materials/sections,
+  and a deterministic lookup command backed by a 49-rule verified JSON database.
+  UK/Eurocode only — never mix with US/AISC (that is the
+  separate steel-detailer-aisc agent and a different code).
+
+# Phase 4: deterministic lookup binary built (Rust, shared steel-detailer-lookup/);
+# users must build from Cargo.toml and place on PATH to compose lookup-command apps.
+status: planned
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/steel-detailer-uk
+keywords: [aeco, engineering, structural, steel, detailing, connections, eurocode, en-1993-1-8, uk, national-annex, bolts, welds]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+    docs: "SCI P358 (free, steelconstruction.info); EN 1993-1-8:2005 Table 3.3 via steelconstruction.info + eurocodeapplied.com (free); BS EN 1993-1-8 + UK NA (paywalled, BSI)"
+
+# Engineering envelope (agent-spec § Engineering envelope): the code-of-practice +
+# national annex these rules are sourced from. Advisory until wired for knowledge
+# agents; documents the region pin and keeps UK/Eurocode from drifting into AISC or
+# another country's National Annex.
+engineering:
+  pinnable:
+    - id: code-of-practice
+      description: Design code + edition + national annex the rules are sourced from
+      required: true
+      example: 'eurocode-3-1-8@2005+uk-na'
+    - id: execution-standard
+      description: Execution / fabrication standard (hole clearances, tolerances)
+      required: false
+      example: 'en-1090-2@2018'
+
+transport:
+  # Planned deterministic-lookup binary (Phase 4); declared so the contract is
+  # published, not shipped yet — hence the agent-level `status: planned`.
+  cli:
+    binary: aware-steel-detailer-uk
+
+commands:
+  lookup:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Deterministic clause lookup — NO LLM in the run path (decalog #9). Given a
+      rule id (e.g. bolt.edge.min.e2, partial.gamma.M2.connectors), return the exact
+      Eurocode/P358 clause, value, units and citation as typed JSON — or found:false so
+      the caller refuses rather than guesses. Rule IDs: run `lookup --list`.
+      Binary must be installed from steel-detailer-lookup/ (cargo build --release).
+    inputs:
+      rule:
+        type: string
+        description: 'Rule id, e.g. "bolt.edge.min.e1", "partial.gamma.M2.connectors". Run --list for all ids.'
+    outputs:
+      type: single
+      schema:
+        rule:         string
+        value:        string
+        units:        string
+        citation:     string    # e.g. "BS EN 1993-1-8:2005 Table 3.3" or "SCI P358 Check 4 (EN 1993-1-8 cl. 3.9.1)"
+        source_quote: string    # short verbatim excerpt for verification
+        found:        boolean    # false → no verified rule (refuse, don't guess)
+
+# Discovered from skills/*.md. Each rule skill was authored from a verified extraction
+# (extract from the real source → cross-corroborate → seed spot-check); each carries its
+# citation + a short source quote.
+skills:
+  - _grounding.md
+  - scope-and-citation.md
+  - bolt-spacing-and-edge-distances.md
+  - bolt-holes.md
+  - bolt-categories.md
+  - bolt-shear-and-bearing.md
+  - bolt-preload-and-slip.md
+  - weld-fillet.md
+  - block-tearing.md
+  - partial-factors-uk-na.md
+  # Phase 3 — drawing & detailing conventions (BCSA 45/07, steelconstruction.info, BS EN 1090)
+  - drawing-chain-and-roles.md
+  - connection-design-responsibility.md
+  - marking-conventions.md
+  - execution-classes-and-ce-ukca.md
+  - drawing-standards-reference.md
+  # Phase 3b — materials, sections & specs
+  - steel-grades.md
+  - section-designations.md
+  # Phase 4 — lookup command usage
+  - lookup-usage.md
