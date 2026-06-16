@@ -819,6 +819,14 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
             commands: usize,
             skills: usize,
             description: &'a str,
+            // `vendor`/`keywords` come straight from the registry catalog and let a UI
+            // group or facet the available agents (e.g. floless.app's "Available" tab)
+            // without re-deriving categories from the id. Omitted when absent/empty so
+            // the row stays minimal for agents that carry neither.
+            #[serde(skip_serializing_if = "Option::is_none")]
+            vendor: Option<&'a str>,
+            #[serde(skip_serializing_if = "<[_]>::is_empty")]
+            keywords: &'a [String],
         }
         #[derive(Serialize)]
         struct Data<'a> {
@@ -836,6 +844,8 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
                     commands: v.command_count,
                     skills: v.skills.len(),
                     description: &v.description,
+                    vendor: a.vendor.as_deref(),
+                    keywords: &a.keywords,
                 })
             })
             .collect();
