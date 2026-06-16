@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 use std::env;
 use std::fs;
+use std::io::Read;
 use std::path::PathBuf;
 use std::process;
 
@@ -19,13 +20,23 @@ fn main() {
         ("steel-detailer-aisc", "aisc-360-22.json")
     };
 
-    // Build path to rules file: ~/.aware/agents/<agent-id>/rules/<standard>.json
-    let home = env::var("USERPROFILE")
-        .or_else(|_| env::var("HOME"))
-        .unwrap_or_default();
-    let rules_path: PathBuf = [&home, ".aware", "agents", agent_id, "rules", rules_file]
-        .iter()
-        .collect();
+    // Rules live under the AWARE home: <AWARE_HOME>/agents/<agent-id>/rules/<standard>.json.
+    // Honor AWARE_HOME (the CLI + tests override it for portable / non-default installs,
+    // see cli/src/paths.rs); fall back to ~/.aware when it is unset.
+    let aware_home: PathBuf = match env::var_os("AWARE_HOME") {
+        Some(h) if !h.is_empty() => PathBuf::from(h),
+        _ => {
+            let home = env::var("USERPROFILE")
+                .or_else(|_| env::var("HOME"))
+                .unwrap_or_default();
+            PathBuf::from(home).join(".aware")
+        }
+    };
+    let rules_path = aware_home
+        .join("agents")
+        .join(agent_id)
+        .join("rules")
+        .join(rules_file);
 
     let rules_json = fs::read_to_string(&rules_path).unwrap_or_else(|e| {
         eprintln!(
@@ -57,43 +68,85 @@ fn main() {
             eprintln!("  lookup --rule <id>           look up a specific rule by id");
             eprintln!("  lookup --category <cat>      list all rules in a category");
             eprintln!("  lookup --list                list all rule ids");
+            eprintln!("  lookup --json-stdin          read {{rule|category}} as JSON on stdin (AWARE cli transport)");
             eprintln!("  describe                     show agent metadata and category list");
             process::exit(2);
         }
     }
 }
 
+/// Inputs for a lookup, sourced from argv flags or (under the AWARE cli
+/// transport) a JSON object on stdin.
+#[derive(Default)]
+struct LookupInputs {
+    rule_id: Option<String>,
+    category: Option<String>,
+    list_all: bool,
+}
+
+/// Parse `{ "rule": "...", "category": "...", "list": true }` from stdin. The
+/// AWARE cli transport spawns `<binary> lookup --json-stdin` and writes the
+/// manifest inputs JSON to stdin (see cli/src/runtime/invoker.rs).
+fn read_stdin_inputs() -> LookupInputs {
+    let mut buf = String::new();
+    if std::io::stdin().read_to_string(&mut buf).is_err() || buf.trim().is_empty() {
+        return LookupInputs::default();
+    }
+    let v: serde_json::Value = serde_json::from_str(&buf).unwrap_or_else(|e| {
+        eprintln!("error: --json-stdin payload is not valid JSON: {}", e);
+        process::exit(2);
+    });
+    LookupInputs {
+        rule_id: v["rule"].as_str().map(str::to_owned),
+        category: v["category"].as_str().map(str::to_owned),
+        list_all: v["list"].as_bool().unwrap_or(false),
+    }
+}
+
 fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Value) {
-    let mut rule_id: Option<&str> = None;
-    let mut category: Option<&str> = None;
-    let mut list_all = false;
+    let mut inputs = LookupInputs::default();
+    let mut json_mode = false;
 
     let mut i = 0;
     while i < args.len() {
         match args[i].as_str() {
             "--rule" => {
                 i += 1;
-                rule_id = args.get(i).map(|s| s.as_str());
+                inputs.rule_id = args.get(i).map(|s| s.to_owned());
             }
             "--category" => {
                 i += 1;
-                category = args.get(i).map(|s| s.as_str());
+                inputs.category = args.get(i).map(|s| s.to_owned());
             }
-            "--list" => {
-                list_all = true;
-            }
+            "--list" => inputs.list_all = true,
+            "--json-stdin" => json_mode = true,
             _ => {}
         }
         i += 1;
     }
 
-    if list_all {
+    // Under the cli transport, inputs arrive as a JSON object on stdin rather
+    // than as flags. Stdin values fill in anything not already given on argv.
+    if json_mode {
+        let stdin = read_stdin_inputs();
+        inputs.rule_id = inputs.rule_id.or(stdin.rule_id);
+        inputs.category = inputs.category.or(stdin.category);
+        inputs.list_all = inputs.list_all || stdin.list_all;
+    }
+
+    // `found: false` is a valid typed answer, not a failure. The cli transport
+    // treats any non-zero exit as a hard error and never parses stdout, so in
+    // --json-stdin mode a not-found result must still exit 0. Standalone shell
+    // use keeps exit 1 for not-found so it stays scriptable.
+    let not_found_code = if json_mode { 0 } else { 1 };
+
+    if inputs.list_all {
         let ids: Vec<&str> = rules.iter().filter_map(|r| r["id"].as_str()).collect();
         println!("{}", serde_json::to_string_pretty(&ids).unwrap());
         return;
     }
 
-    if let Some(id) = rule_id {
+    if let Some(id) = inputs.rule_id.as_deref() {
         match rules.iter().find(|r| r["id"].as_str() == Some(id)) {
             Some(rule) => {
                 println!("{}", serde_json::to_string_pretty(rule).unwrap());
@@ -110,13 +163,13 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
                     "found": false
                 });
                 println!("{}", serde_json::to_string_pretty(&not_found).unwrap());
-                process::exit(1); // exit 1 = not found
+                process::exit(not_found_code);
             }
         }
         return;
     }
 
-    if let Some(cat) = category {
+    if let Some(cat) = inputs.category.as_deref() {
         let filtered: Vec<&serde_json::Value> = rules
             .iter()
             .filter(|r| r["category"].as_str() == Some(cat))
@@ -124,7 +177,7 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
         if filtered.is_empty() {
             let result = serde_json::json!({ "category": cat, "rules": [], "found": false });
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
-            process::exit(1);
+            process::exit(not_found_code);
         } else {
             let result = serde_json::json!({ "category": cat, "rules": filtered });
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -132,7 +185,7 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
         return;
     }
 
-    eprintln!("lookup requires --rule <id>, --category <cat>, or --list");
+    eprintln!("lookup requires --rule <id>, --category <cat>, or --list (or a JSON {{rule|category}} on stdin with --json-stdin)");
     process::exit(2);
 }
 
