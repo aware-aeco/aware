@@ -69,8 +69,12 @@ fn stage_agent_from_registry(
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
 
+    // Extract ONLY the agent's subtree, not the whole archive: the substrate tarball is
+    // the entire monorepo, so unpacking all of it (tens of thousands of files) to reach
+    // one agent dominated install time — #243. We still stream through the gzip (it isn't
+    // seekable) but write only the matching entries.
     let extract_root = scratch.path().join("extract");
-    extract_tarball(&tarball_path, &extract_root)?;
+    extract_subdir(&tarball_path, &extract_root, &entry.subdir)?;
 
     let subdir = extract_root.join(&entry.subdir);
     if !subdir.is_dir() {
@@ -191,14 +195,32 @@ pub fn update_agent_from_registry(
     Ok(new_name)
 }
 
-fn extract_tarball(tarball: &Path, dest: &Path) -> Result<(), AwareError> {
+/// Extract only the entries under `subdir` (the agent's own subtree) from the tarball
+/// into `dest`, preserving their archive-relative paths. The substrate tarball is the
+/// whole monorepo, so unpacking everything to reach one agent was the dominant install
+/// cost (#243); this writes just the agent's files. The gzip stream is read in full
+/// (gzip isn't seekable), but that decompress is cheap next to the avoided disk writes.
+fn extract_subdir(tarball: &Path, dest: &Path, subdir: &str) -> Result<(), AwareError> {
     std::fs::create_dir_all(dest)?;
     let file = std::fs::File::open(tarball)?;
     let gz = GzDecoder::new(file);
     let mut archive = Archive::new(gz);
-    archive
-        .unpack(dest)
-        .map_err(|e| AwareError::Validation(format!("tarball extract: {e}")))?;
+    let want = subdir.trim_end_matches('/');
+    let prefix = format!("{want}/");
+    // A `fn` (not a closure) so it can be reused across the `map_err` calls below.
+    fn map(e: std::io::Error) -> AwareError {
+        AwareError::Validation(format!("tarball extract: {e}"))
+    }
+    for entry in archive.entries().map_err(map)? {
+        let mut entry = entry.map_err(map)?;
+        let path = entry.path().map_err(map)?.into_owned();
+        let p = path.to_string_lossy();
+        // The agent dir itself or anything beneath it (tar paths use '/').
+        if p.trim_end_matches('/') == want || p.starts_with(&prefix) {
+            // unpack_in is path-traversal-safe (it refuses to escape `dest`).
+            entry.unpack_in(dest).map_err(map)?;
+        }
+    }
     Ok(())
 }
 
@@ -231,6 +253,45 @@ mod tests {
         assert_ne!(tarball_cache_name("ab", "c"), tarball_cache_name("a", "bc"));
         let name = tarball_cache_name(url, "snap");
         assert!(name.starts_with("tarball-") && name.ends_with(".tar.gz"));
+    }
+
+    #[test]
+    fn extract_subdir_extracts_only_the_requested_subtree() {
+        // Build a tarball with two sibling agent dirs (plus a prefix-lookalike that must
+        // NOT match) and confirm extract_subdir writes only the requested one — the whole
+        // point of #243's fix (don't unpack the rest of the monorepo).
+        let tmp = tempfile::tempdir().unwrap();
+        let tarball = tmp.path().join("multi.tar.gz");
+        {
+            let enc = flate2::write::GzEncoder::new(
+                std::fs::File::create(&tarball).unwrap(),
+                flate2::Compression::default(),
+            );
+            let mut tar = tar::Builder::new(enc);
+            for path in [
+                "root/20-agents/alpha/manifest.yaml",
+                "root/20-agents/alpha/skills/a.md",
+                "root/20-agents/beta/manifest.yaml",
+                "root/20-agents/alpha-extra/manifest.yaml", // prefix lookalike — must NOT match
+            ] {
+                let body = b"x";
+                let mut h = tar::Header::new_gnu();
+                h.set_size(body.len() as u64);
+                h.set_mode(0o644);
+                h.set_cksum();
+                tar.append_data(&mut h, path, &body[..]).unwrap();
+            }
+            tar.into_inner().unwrap().finish().unwrap();
+        }
+
+        let dest = tmp.path().join("out");
+        extract_subdir(&tarball, &dest, "root/20-agents/alpha").unwrap();
+
+        assert!(dest.join("root/20-agents/alpha/manifest.yaml").is_file());
+        assert!(dest.join("root/20-agents/alpha/skills/a.md").is_file());
+        // The sibling and the prefix-lookalike must be absent.
+        assert!(!dest.join("root/20-agents/beta").exists());
+        assert!(!dest.join("root/20-agents/alpha-extra").exists());
     }
 
     fn make_test_tarball(path: &Path) {
