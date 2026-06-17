@@ -3,8 +3,8 @@ version:      0.1.0
 display-name: Shell
 description: |
   Generic OS primitive: open a file or folder with the operating system's default
-  handler — the same effect as double-clicking it (File Explorer for a folder, the
-  default app for a document, the browser for a URL). The safe, scoped complement to
+  handler — the same effect as double-clicking it (the file browser for a folder, the
+  default app for a document). The safe, scoped complement to
   an `exec` sandbox that blocks arbitrary process launches: a composition can take
   the natural follow-up action (open the folder it just wrote to) without opening the
   door to running arbitrary programs.
