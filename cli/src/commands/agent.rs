@@ -1133,7 +1133,12 @@ fn describe_from_catalog(
         struct D<'a> {
             agent: &'a str,
             installed: bool,
+            // `version` is the registry index key; `manifest_version` is the agent's
+            // manifest.version for that entry — the same axis as an installed agent's
+            // version (see the `catalog` command for the full rationale).
             version: &'a str,
+            #[serde(skip_serializing_if = "str::is_empty")]
+            manifest_version: &'a str,
             #[serde(skip_serializing_if = "Option::is_none")]
             display_name: Option<&'a str>,
             description: &'a str,
@@ -1151,6 +1156,7 @@ fn describe_from_catalog(
             agent: agent_id,
             installed: false,
             version: ver,
+            manifest_version: &v.manifest_version,
             display_name: agent.display_name.as_deref(),
             description: &v.description,
             status: &v.status,
