@@ -35,18 +35,49 @@ aware-steel-detailer-aisc describe
 
 When `found: false`, all fields except `id` are `null` — the caller **must refuse or flag**, not interpolate.
 
+**`sections` rules carry an extra `properties` object** with typed numeric fields, so a
+consumer reads machine values directly (not by parsing the `value` string):
+
+```json
+{
+  "id": "section.W16X26",
+  "category": "sections",
+  "value": "26 lb/ft; depth d = 15.7 in; area A = 7.68 in²",
+  "units": "imperial (lb/ft, in, in²)",
+  "properties": { "type": "W", "weight_plf": 26.0, "depth_in": 15.7,
+                  "width_in": 5.5, "area_in2": 7.68, "web_in": 0.25, "flange_in": 0.345 },
+  "citation": "AISC Shapes Database v15.0 (US)",
+  "found": true
+}
+```
+
+The rule `id` is `section.<AISC label>` (e.g. `section.HSS6X6X3/8`); uppercase the `x` in a
+drawing designation before the lookup. `wall_in` (HSS/pipe design wall) appears instead of
+`web_in`/`flange_in` for tubes; **`wall_in` and the HSS/pipe `weight_plf` are the AISC
+design-wall basis** (0.93× nominal for A500; nominal for A1085 — see `section-designations`).
+The bulk of weights/depths are *not* derivable from the designation (HSS, angles, pipe) —
+that is exactly why this lookup exists.
+
 ## Available categories
 
 - `bolts` — spacing, edge distances, hole sizes, pretension values
 - `welds` — fillet sizes, throat, length limits, PJP throat
 - `connection-strength` — bearing and tearout nominal strength equations (§J3.11)
 - `materials` — preferred ASTM grades and Fy/Fu by member type
+- `sections` — section properties (weight/ft, depth, width, area, thicknesses) for every
+  AISC shape, from the AISC Shapes Database (W, M, S, HP, C, MC, L, 2L, WT/MT/ST, HSS,
+  Pipe). `lookup --rule section.<label>` or `--category sections`.
 
-Run `aware-steel-detailer-aisc lookup --list` for all 66 rule IDs.
+Run `aware-steel-detailer-aisc lookup --list` for all rule IDs (66 connection rules +
+the ~2,090-shape AISC section table).
 
 ## Rules database location
 
-`~/.aware/agents/steel-detailer-aisc/rules/aisc-360-22.json` — human-readable JSON; each rule contains citation + source quote.
+- `~/.aware/agents/steel-detailer-aisc/rules/aisc-360-22.json` — the 66 curated,
+  hand-verified connection rules (citation + source quote each).
+- `~/.aware/agents/steel-detailer-aisc/rules/aisc-shapes-v15.json` — the generated AISC
+  section table (`sections` category), merged into the same lookup at runtime. Missing is
+  fine (connection rules still work); present-but-invalid is a hard error.
 
 ## How to use the lookup result
 
@@ -62,9 +93,10 @@ If `found: false`, the consumer reports "rule not in verified database" and does
 
 ## Install note
 
-Binary: `~/.aware/bin/aware-steel-detailer-aisc.exe` (build from `20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`). Requires `~/.aware/bin/` on PATH. Rules file is installed by `aware agent install steel-detailer-aisc`.
+Binary: `~/.aware/bin/aware-steel-detailer-aisc.exe` (build from `20-agents/aeco/engineering/steel-detailer-lookup/` via `cargo build --release`). Requires `~/.aware/bin/` on PATH. Both rules files (`aisc-360-22.json` + `aisc-shapes-v15.json`) are installed by `aware agent install steel-detailer-aisc`.
 
 ## Source
 
-- Rules database: `20-agents/aeco/engineering/steel-detailer-aisc/rules/aisc-360-22.json` (verified 2026-06-14; all rules traced to free AISC / RCSC documents).
+- Connection rules: `20-agents/aeco/engineering/steel-detailer-aisc/rules/aisc-360-22.json` (verified 2026-06-14; all rules traced to free AISC / RCSC documents).
+- Section table: `.../rules/aisc-shapes-v15.json` — generated from the AISC Shapes Database v15.0 (US) by `steel-detailer-lookup/tools/gen_sections.py` (vendored source CSV under `steel-detailer-lookup/data/`). Section geometry is edition-stable; v16.0 supersedes v15.0 with no change to existing shapes' dimensional properties.
 - CLI source: `20-agents/aeco/engineering/steel-detailer-lookup/src/main.rs` (Rust, no LLM in the run path; decalog #9 compliant).
