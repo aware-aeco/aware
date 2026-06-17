@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-17T12:33:38.918331+00:00",
+  "updated-at": "2026-06-17T13:10:23.986225700+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5403,7 +5403,7 @@
         "0.1.0": {
           "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
           "status": "planned",
-          "manifest-version": "0.1.0",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "aisc-360-22",
           "transport": "cli",
