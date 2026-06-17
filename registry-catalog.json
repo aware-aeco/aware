@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-17T08:08:23.225437200+00:00",
+  "updated-at": "2026-06-17T12:33:38.918331+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -21,6 +21,7 @@
         "1.0": {
           "description": "Auto-generated agent from Autodesk Platform Services'",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.0",
           "transport": "cli",
@@ -49,6 +50,7 @@
         "1.0.0": {
           "description": "The files side of ACC — sheets, files, folders, version control,",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -161,6 +163,7 @@
         "1.0": {
           "description": "Auto-generated agent from Autodesk Platform Services'",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.0",
           "transport": "cli",
@@ -189,6 +192,7 @@
         "1.0.0": {
           "description": "UK + international document control + correspondence management.",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -276,6 +280,7 @@
         "2024.0.1.35": {
           "description": "Auto-generated from vendor docs (scrape: https://pythonparts.allplan.com/2024/sitemap.xml)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2024.0",
           "transport": "cli",
@@ -400,6 +405,7 @@
         "2025.0.0.15": {
           "description": "Auto-generated from vendor docs (scrape: https://pythonparts.allplan.com/2025/sitemap.xml)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2025.0",
           "transport": "cli",
@@ -615,6 +621,7 @@
         "1.0": {
           "description": "Auto-generated agent from Autodesk Platform Services'",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.0",
           "transport": "cli",
@@ -644,6 +651,7 @@
         "28.0.0": {
           "description": "Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/command_definitions.js, https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/common_schema_definitions.js, https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/, https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/content/menutree.json)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "28.0",
           "transport": "cli",
@@ -673,6 +681,7 @@
         "29.0.0": {
           "description": "Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/command_definitions.js, https://raw.githubusercontent.com/ENZYME-APD/tapir-archicad-automation/main/docs/archicad-addon/common_schema_definitions.js, https://enzyme-apd.github.io/tapir-archicad-automation/archicad-addon/, https://archicadapi.graphisoft.com/JSONInterfaceDocumentation/content/menutree.json)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "29.0",
           "transport": "cli",
@@ -743,6 +752,7 @@
         "25.1.0": {
           "description": "Auto-generated agent from `AutoCAD.NET@25.1.0` on NuGet via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "25.1.0",
           "transport": "cli",
@@ -844,6 +854,7 @@
         "26.0.0": {
           "description": "Auto-generated agent from `AutoCAD.NET@26.0.0` on NuGet via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "26.0.0",
           "transport": "cli",
@@ -981,6 +992,7 @@
         "7.0.0": {
           "description": "Cloud-based specification authoring (US MasterFormat). Wraps the",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "7.0.0",
           "transport": "cli",
@@ -1072,6 +1084,7 @@
         "0.1.0": {
           "description": "Generate AWARE agents from existing software's API surface. Reflects DLLs,",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 1,
@@ -1109,6 +1122,7 @@
         "0.1.0": {
           "description": "Author, modify, port, and eval AWARE agent skills using Anthropic's",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 4,
@@ -1165,6 +1179,7 @@
         "1.0.0": {
           "description": "Pure file-format agent for BCF-XML 2.1 / 3.0 — read, write, merge,",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 9,
@@ -1256,6 +1271,7 @@
         "1.0.0": {
           "description": "PDF mark-up + Studio Session collaboration for AECO. Wraps the",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -1347,6 +1363,7 @@
         "1.0.0": {
           "description": "Auto-generated from vendor docs (scrape: https://support.bluebeam.com/developer/resources/bluebeamapi-postman.json)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "v1",
           "transport": "cli",
@@ -1385,6 +1402,7 @@
         "2.12.0": {
           "description": "Auto-generated agent from `CSiAPIv1-All@2.12.0` on NuGet via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "2.12.0",
           "transport": "cli",
@@ -1413,6 +1431,7 @@
         "1.0.0": {
           "description": "Pure file-format agent for CSI MasterFormat classification — code",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 6,
@@ -1478,6 +1497,7 @@
         "2.0.0": {
           "description": "Cross-cutting file storage + sharing for AECO firms running Dropbox",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "v2",
           "transport": "cli",
@@ -1579,6 +1599,7 @@
         "4.1.0.4845": {
           "description": "Auto-generated from vendor docs (hybrid: https://www.nuget.org/packages/DynamoVisualProgramming.Core/4.1.0.4845, https://github.com/DynamoDS/Dynamo/tree/v4.1.0)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "4.1.0",
           "transport": "cli",
@@ -1726,6 +1747,7 @@
         "4.1.1.4941": {
           "description": "Auto-generated from vendor docs (hybrid: https://www.nuget.org/packages/DynamoVisualProgramming.Core/4.1.1.4941, https://github.com/DynamoDS/Dynamo/tree/RC4.1.1_master)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "4.1.1",
           "transport": "cli",
@@ -1905,6 +1927,7 @@
         "1.0.0": {
           "description": "Honest agent — Enscape (Chaos) has no publicly scriptable API. This",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 4,
@@ -1962,6 +1985,7 @@
         "1.0.0": {
           "description": "Generic filesystem primitive: watch a directory for changes (a long-running",
           "status": "planned",
+          "manifest-version": "1.0.0",
           "stateful": true,
           "transport": "builtin",
           "command_count": 4,
@@ -2019,6 +2043,7 @@
         "1.0.0": {
           "description": "Read and write across Google Drive, Sheets, Calendar, and Gmail. Auto-generated",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -2209,6 +2234,7 @@
         "7.38.24338.17001": {
           "description": "Auto-generated from vendor docs (scrape: https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/7/api/grasshopper/html/723c01da-9986-4db2-8f53-6f3a7494df75.htm)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "7.0",
           "transport": "cli",
@@ -2258,6 +2284,7 @@
         "8.31.26126.13431": {
           "description": "Auto-generated from vendor docs (scrape: https://raw.githubusercontent.com/mcneel/grasshopper-api-docs/gh-pages/api/grasshopper/html/723c01da-9986-4db2-8f53-6f3a7494df75.htm)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "8.0",
           "transport": "cli",
@@ -2318,6 +2345,7 @@
         "1.0.0": {
           "description": "Utility agent for generating self-contained HTML reports — single-file",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
@@ -2352,6 +2380,7 @@
         "0.1.0": {
           "description": "A generic HTTP client — the substrate's escape hatch for any web API that",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "rest",
           "command_count": 6,
@@ -2425,6 +2454,7 @@
         "25.1.5.1431": {
           "description": "Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml, https://raw.githubusercontent.com/idea-statica/ideastatica-public/25.1.5.1491/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "25.0",
           "transport": "cli",
@@ -2455,6 +2485,7 @@
         "26.0.1.2450": {
           "description": "Auto-generated from vendor docs (hybrid: https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/connection-api/clients/csharp/api/openapi.yaml, https://raw.githubusercontent.com/idea-statica/ideastatica-public/26.0.1.2450/src/api-sdks/rcs-api/clients/csharp/api/openapi.yaml)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "26.0",
           "transport": "cli",
@@ -2487,6 +2518,7 @@
         "0.1.0": {
           "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc) —",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
@@ -2517,6 +2549,7 @@
         "1.0.0": {
           "description": "Headless IFC analysis — entity counts, GUID lists, Psets extraction,",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 8,
@@ -2606,6 +2639,7 @@
         "5.8.5": {
           "description": "Auto-generated agent from `@itwin/core-frontend@5.8.5` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "5.8.5",
           "transport": "cli",
@@ -3239,6 +3273,7 @@
         "5.9.3": {
           "description": "Auto-generated agent from `@itwin/core-frontend@5.9.3` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "5.9.3",
           "transport": "cli",
@@ -3864,6 +3899,7 @@
         "1.0.0": {
           "description": "Read and write across the Microsoft 365 surface — OneDrive, SharePoint,",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.0.0",
           "transport": "cli",
@@ -4055,6 +4091,7 @@
         "2026.0.0": {
           "description": "Federation + clash detection + 4D simulation for AECO models. Wraps the",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "2026.0.0",
           "transport": "cli",
@@ -4168,6 +4205,7 @@
         "2026.0.0": {
           "description": "Auto-generated from vendor docs (nuget: https://www.nuget.org/api/v2/package/Chuongmep.Navis.Api.Autodesk.Navisworks.Api/2026.0.0, https://aps.autodesk.com/developer/overview/navisworks-api)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2026.0",
           "transport": "cli",
@@ -4203,6 +4241,7 @@
         "4.0.0": {
           "description": "Cloud-based specification authoring (UK + global). Wraps the NBS",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "4.0.0",
           "transport": "cli",
@@ -4291,6 +4330,7 @@
         "1.0.0": {
           "description": "File-format agent: convert between DSTV `.nc1` (the industry-standard",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 4,
@@ -4347,6 +4387,7 @@
         "3.0.0": {
           "description": "Drawings + Submittals + RFIs + ASIs against the Procore platform. Wraps",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "3.0.0",
           "transport": "cli",
@@ -4436,6 +4477,7 @@
         "2025.0.2.419": {
           "description": "Auto-generated agent from `Autodesk.Revit.SDK@2025.0.2.419` on NuGet",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "2025.0.2.419",
           "transport": "cli",
@@ -4509,6 +4551,7 @@
         "2026.0.0.9999": {
           "description": "Auto-generated agent from `Autodesk.Revit.SDK@2026.0.0.9999` on NuGet",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "2026.0.0.9999",
           "transport": "cli",
@@ -4650,6 +4693,7 @@
         "7.38.24338.17001": {
           "description": "Auto-generated from vendor docs (scrape: https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/7/html/R_Project_RhinoCommon.htm)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "7.0",
           "transport": "cli",
@@ -4713,6 +4757,7 @@
         "8.31.26126.13431": {
           "description": "Auto-generated from vendor docs (scrape: https://raw.githubusercontent.com/mcneel/rhinocommon-api-docs/gh-pages/api/RhinoCommon/html/R_Project_RhinoCommon.htm)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "8.0",
           "transport": "cli",
@@ -4848,6 +4893,7 @@
         "0.1.0": {
           "description": "Generic OS primitive: open a file or folder with the operating system's default",
           "status": "planned",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
@@ -4883,6 +4929,7 @@
         "2025.0.3": {
           "description": "Auto-generated from vendor docs (scrape: https://ruby.sketchup.com/_index.html)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2025.0",
           "transport": "cli",
@@ -4916,6 +4963,7 @@
         "2026.0.0": {
           "description": "Auto-generated from vendor docs (scrape: https://ruby.sketchup.com/_index.html)",
           "status": "available",
+          "manifest-version": "0.34.0",
           "stateful": false,
           "sdk-target": "2026.0",
           "transport": "cli",
@@ -5022,6 +5070,7 @@
         "1.7.0": {
           "description": "Auto-generated agent from Slack's public OpenAPI specification",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "1.7.0",
           "transport": "cli",
@@ -5052,6 +5101,7 @@
         "9.13.0": {
           "description": "Rule-based IFC model checking — the credible BEP-enforcement and",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "9.13.0",
           "transport": "cli",
@@ -5131,6 +5181,7 @@
         "26.4.1": {
           "description": "Auto-generated from vendor docs (scrape: https://solibri.github.io/Developer-Platform/latest/solibri-api-v1.yaml)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "26.4.1",
           "transport": "cli",
@@ -5199,6 +5250,7 @@
         "2.28.0": {
           "description": "Auto-generated agent from `@speckle/viewer@2.28.0` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "2.28.0",
           "transport": "cli",
@@ -5351,6 +5403,7 @@
         "0.1.0": {
           "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
           "status": "planned",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "aisc-360-22",
           "transport": "cli",
@@ -5411,6 +5464,7 @@
         "0.1.0": {
           "description": "Verified, citation-backed Eurocode 3 connection-detailing rules using the",
           "status": "planned",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "eurocode-3-1-8@2005",
           "transport": "cli",
@@ -5462,6 +5516,7 @@
         "0.1.0": {
           "description": "Verified, citation-backed UK steel connection-detailing rules (Eurocode 3 +",
           "status": "planned",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "bs-en-1993-1-8:2005+uk-na",
           "transport": "cli",
@@ -5513,6 +5568,7 @@
         "2025.0.1": {
           "description": "Watches the active Tekla model, reads its state, and writes back via the",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": true,
           "sdk-target": "2025+",
           "transport": "cli",
@@ -5728,6 +5784,7 @@
         "2025.0.0": {
           "description": "Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-structures/2025/tekla-structures-45473)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2025.0",
           "transport": "cli",
@@ -5785,6 +5842,7 @@
         "2026.0.3": {
           "description": "Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-structures/2026/tekla-structures-64304)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2026.0",
           "transport": "cli",
@@ -5843,6 +5901,7 @@
         "2025.0.0": {
           "description": "Auto-generated from vendor docs (nuget: https://developer.tekla.com/documentation/direct-manipulation-api-plugins, https://www.nuget.org/api/v2/package/Tekla.Structures.Plugins.DirectManipulation/2025.0.0, https://www.nuget.org/api/v2/package/TeklaFusion/4.1.10)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2025.0",
           "transport": "cli",
@@ -5885,6 +5944,7 @@
         "2026.0.0": {
           "description": "Auto-generated from vendor docs (nuget: https://developer.tekla.com/documentation/direct-manipulation-api-plugins, https://www.nuget.org/api/v2/package/Tekla.Structures.Plugins.DirectManipulation/2026.0.3, https://www.nuget.org/api/v2/package/TeklaFusion/4.1.36)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "2026.0",
           "transport": "cli",
@@ -5931,6 +5991,7 @@
         "24.2.0": {
           "description": "The fabricator's ERP — production schedule, material yard, heat",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "24.2.0",
           "transport": "cli",
@@ -6020,6 +6081,7 @@
         "25.0.0": {
           "description": "Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-tedds/2025/41820)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "25.0",
           "transport": "cli",
@@ -6049,6 +6111,7 @@
         "26.0.0": {
           "description": "Auto-generated from vendor docs (scrape: https://developer.tekla.com/doc/tekla-tedds/2026/64124)",
           "status": "available",
+          "manifest-version": "0.30.0",
           "stateful": false,
           "sdk-target": "26.0",
           "transport": "cli",
@@ -6083,6 +6146,7 @@
         "3.4.6": {
           "description": "Auto-generated agent from `@thatopen/components@3.4.6` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "3.4.6",
           "transport": "cli",
@@ -6193,6 +6257,7 @@
         "0.184.1": {
           "description": "Auto-generated agent from `@types/three@0.184.1` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "0.184.1",
           "transport": "cli",
@@ -6728,6 +6793,7 @@
         "2.4.0": {
           "description": "Read and write files in a Trimble Connect project. Auto-generated from",
           "status": "available",
+          "manifest-version": "0.2.0",
           "stateful": false,
           "sdk-target": "2.4.0",
           "transport": "rest",
@@ -6765,6 +6831,7 @@
         "25.3.0": {
           "description": "Auto-generated agent from `TeklaStructuralDesigner.RemotingAPI@25.3.0`",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "25.3.0",
           "transport": "cli",
@@ -6837,6 +6904,7 @@
         "26.0.1": {
           "description": "Auto-generated agent from `TeklaStructuralDesigner.RemotingAPI@26.0.1`",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "26.0.1",
           "transport": "cli",
@@ -6904,6 +6972,7 @@
         "1.0.0": {
           "description": "Sibling of `enscape-prep` — drives Rhino / Revit / SketchUp / ArchiCAD",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 4,
@@ -6961,6 +7030,7 @@
         "1.0.0": {
           "description": "Declarative-UI substrate (#215): the schema, validator, block catalog, and",
           "status": "available",
+          "manifest-version": "1.0.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 3,
@@ -7008,6 +7078,7 @@
         "0.1.0": {
           "description": "Opens any desktop application's dialog, enumerates its controls, captures",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "cli",
           "command_count": 5,
@@ -7072,6 +7143,7 @@
         "0.1.0": {
           "description": "Utility agent that renders a generic 3D scene into a single-file interactive HTML",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
@@ -7107,6 +7179,7 @@
         "0.1.0": {
           "description": "Curated runtime extraction: an image/PDF + a FIXED output schema → structured",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "transport": "builtin",
           "command_count": 1,
@@ -7146,6 +7219,7 @@
         "0.0.77": {
           "description": "Auto-generated agent from `web-ifc@0.0.77` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "0.0.77",
           "transport": "cli",
@@ -7196,6 +7270,7 @@
         "2.6.109": {
           "description": "Auto-generated agent from `@xeokit/xeokit-sdk@2.6.109` on npm via",
           "status": "available",
+          "manifest-version": "0.1.0",
           "stateful": false,
           "sdk-target": "2.6.109",
           "transport": "cli",

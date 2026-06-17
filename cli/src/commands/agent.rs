@@ -821,7 +821,13 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
             id: &'a str,
             #[serde(skip_serializing_if = "Option::is_none")]
             display_name: Option<&'a str>,
+            // `version` is the registry INDEX key (the `agent install <id>@<version>`
+            // spec). `manifest_version` is the agent's own manifest.version for that
+            // entry — the value `agent list` reports for an installed agent, so a UI can
+            // compare the two to detect whether an in-place `agent update` is available.
             version: &'a str,
+            #[serde(skip_serializing_if = "str::is_empty")]
+            manifest_version: &'a str,
             status: &'a str,
             commands: usize,
             skills: usize,
@@ -847,6 +853,7 @@ fn catalog_cmd(ctx: &Context) -> Result<(), AwareError> {
                     id,
                     display_name: a.display_name.as_deref(),
                     version: ver,
+                    manifest_version: &v.manifest_version,
                     status: &v.status,
                     commands: v.command_count,
                     skills: v.skills.len(),
