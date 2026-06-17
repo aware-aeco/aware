@@ -18,7 +18,11 @@ bytes:   integer    # size read, in bytes
 path:    string     # the resolved absolute path
 ```
 
-## Composition example — read an export, then transform
+## Composition example — read an export, then transform its contents
+
+`read` returns the bytes as `content`; pipe that to any node that consumes inline
+text. (To hand a file to a path-based reader instead, pass the *path* to both nodes —
+don't read-then-pipe.)
 
 ```yaml
 nodes:
@@ -28,10 +32,13 @@ nodes:
     config: { path: "{{ inputs.export }}" }
 
   - id: parse
-    agent: bcf-file
-    command: write.from-csv
-    config:
-      csv: "{{ pull.content }}"
+    inline:
+      kind: map
+      description: Split the exported CSV text into rows
+      code: c => c.content.trim().split("\n").map(line => line.split(","))
+
+connections:
+  - { from: pull, to: parse, label: Text }
 ```
 
 ## Failure modes
