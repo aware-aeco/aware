@@ -358,6 +358,8 @@ It is admitted **only** under all of these, enforced by `aware app validate` (`c
 
 Reach for it only when a deterministic parser cannot read the input **and** the source artifact changes per run; otherwise prefer a read-only `exec` parser or compose-time extraction (above). See `20-agents/_core/vision/` and RFC #223.
 
+**Self-verify the extraction (correctness, not a new freedom).** A schema-valid extraction can still be *spatially* wrong — a region silently under-extracted or an element placed off its target, which schema validation and description-review both miss. The fix is a **compose-time / review-time** loop the host AI runs (never a runtime loop — `vision.extract` extracts, never decides): render the extraction back as an overlay on the source, read the overlay with vision against the source, flag gaps + mistakes, correct, re-render, and loop until clean or a cap; surface residual doubts in the `approve:` summary. See `20-agents/_core/vision/skills/self-verify-overlay.md`.
+
 ### `snapshot`
 
 Freeze model state to an immutable artifact. Pairs with the v0.11 safety contract's `snapshot:` flag but operates at the topology level — the artifact is *named* in the topology and addressable by downstream nodes.

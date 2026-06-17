@@ -83,6 +83,8 @@ When the model comes from a drawings-to-scene reader (PDF → a `viewer-3d` scen
 
 This makes the end-to-end flow: PDF drawing → structural model → compliance report, with every rule traced to a cited source.
 
+**Self-verify the drawing read first.** The compliance check is only as good as the scene it reads — and a drawings-to-scene read can silently get a region *spatially* wrong (a skewed bay collapsed, members bound off-target) while still producing schema-valid JSON. Before checking the scene against the rules, close the visual loop on the read: render the extracted members back over the source drawing and inspect the overlay with vision until they agree. See `20-agents/_core/vision/skills/self-verify-overlay.md`.
+
 ## Source
 
 - Checker pattern: decalog #9 (no LLM in the run path) + AWARE app-spec §4 (node composition).
