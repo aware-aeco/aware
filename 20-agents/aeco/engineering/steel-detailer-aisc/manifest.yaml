@@ -1,5 +1,5 @@
 agent:        steel-detailer-aisc
-version:      0.1.0
+version:      0.2.0
 sdk-target:   aisc-360-22                 # the code edition these rules are sourced from
 display-name: Steel Detailer — US (AISC)
 
