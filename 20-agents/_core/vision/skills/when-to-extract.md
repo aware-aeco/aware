@@ -33,3 +33,10 @@ Need to turn an image/PDF into data?
 If you find yourself wanting free-form prompts, control-flow decisions, or a general "ask the
 model" node — that's out of scope by design. Keep the extraction narrow, or move the judgment to
 compose time where a human reviews the result.
+
+## After you extract: self-verify
+
+A schema-valid extraction can still be **spatially wrong** — a region silently under-extracted or
+an element placed off its target. Whenever the read places things in space (members on a plan,
+boxes on a schedule), close the loop: render the extraction back over the source and read the
+overlay with vision until the two agree. See [self-verify-overlay.md](self-verify-overlay.md).
