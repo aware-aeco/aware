@@ -306,6 +306,14 @@
         }
       }
     },
+    "shell": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/_core/shell"
+        }
+      }
+    },
     "vision": {
       "versions": {
         "0.1.0": {
@@ -637,6 +645,7 @@
         "google-workspace@1.0.0",
         "html-report@1.0.0",
         "file@1.0.0",
+        "shell@0.1.0",
         "ui@1.0.0",
         "aware-agent-builder@0.1.0",
         "aware-skill-builder@0.1.0",
