@@ -46,6 +46,14 @@ pub struct CatalogAgent {
 pub struct CatalogVersion {
     pub description: String,
     pub status: String, // "available" | "planned"
+    /// The agent's own `manifest.version` for this entry. DISTINCT from the entry's
+    /// map KEY, which is the registry *index* version (the install spec). A consumer
+    /// can compare this against an installed agent's `manifest.version` (what
+    /// `agent list` reports) to tell whether an in-place `agent update` would pull a
+    /// newer build — the index key lives in a different axis and is not comparable.
+    /// `default` so an older sidecar (pre-this-field) still deserializes.
+    #[serde(rename = "manifest-version", default)]
+    pub manifest_version: String,
     pub stateful: bool,
     #[serde(
         rename = "sdk-target",
@@ -225,6 +233,7 @@ fn version_from_agent(a: &Agent) -> CatalogVersion {
     CatalogVersion {
         description: first_line(&a.description),
         status: status_str(a.status).to_string(),
+        manifest_version: a.version.clone(),
         stateful: a.stateful,
         sdk_target: a.sdk_target.clone(),
         transport: transport_str(&a.transport).to_string(),
@@ -437,6 +446,13 @@ mod tests {
         assert!(
             !a.versions.contains_key("9.9.9"),
             "NOT the manifest.version"
+        );
+        // …but the entry CARRIES the manifest version (9.9.9) as a comparable field,
+        // distinct from its index key (2025.0.1), so a UI can detect outdated installs.
+        assert_eq!(
+            a.versions.get("2025.0.1").unwrap().manifest_version,
+            "9.9.9",
+            "the entry records manifest.version separately from the index key"
         );
     }
 
