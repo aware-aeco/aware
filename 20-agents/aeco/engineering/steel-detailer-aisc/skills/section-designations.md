@@ -16,7 +16,13 @@ description: Use for US/AISC steel section type and naming questions — the sha
 
 **Wall-thickness note:** HSS thickness is *nominal*; the **design** wall = **0.93 × nominal for A500**, but = **nominal for A1085**.
 
-**Free property data:** the **AISC Shapes Database v16** (free Excel, aisc.org) gives every shape's dimensions + section properties + the detailing **T** dimension and the **workable gage** (WGi / WGo) — the source to drive a section lookup without hardcoding property tables.
+**Free property data:** the **AISC Shapes Database** (free, aisc.org) gives every shape's dimensions + section properties + the detailing **T** dimension and the **workable gage** (WGi / WGo) — the source to drive a section lookup without hardcoding property tables.
+
+**Deterministic section lookup:** this agent ships those properties as the `sections`
+category of the `lookup` command — `lookup --rule section.W16X26` → typed JSON with
+`weight_plf`, `depth_in`, `width_in`, `area_in2`, thicknesses + citation (generated from
+the AISC Shapes Database v15.0 US). Use it for weight/depth a designation does **not**
+encode (HSS, angles, pipe). See the `lookup-usage` skill.
 
 ## Source
 

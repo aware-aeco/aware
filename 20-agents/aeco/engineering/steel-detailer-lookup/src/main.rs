@@ -20,6 +20,14 @@ fn main() {
         ("steel-detailer-aisc", "aisc-360-22.json")
     };
 
+    // Optional section-properties dataset (designation -> weight / depth / area),
+    // merged into the rule set under the `sections` category. AISC only today; the
+    // UK/EU section tables land with their own files later.
+    let shapes_file: Option<&str> = match agent_id {
+        "steel-detailer-aisc" => Some("aisc-shapes-v15.json"),
+        _ => None,
+    };
+
     // Rules live under the AWARE home: <AWARE_HOME>/agents/<agent-id>/rules/<standard>.json.
     // Honor AWARE_HOME (the CLI + tests override it for portable / non-default installs,
     // see cli/src/paths.rs); fall back to ~/.aware when it is unset.
@@ -52,17 +60,53 @@ fn main() {
         process::exit(2);
     });
 
-    let rules = db["rules"].as_array().unwrap_or_else(|| {
-        eprintln!("error: rules JSON has no 'rules' array");
-        process::exit(2);
-    });
+    let mut rules: Vec<serde_json::Value> = db["rules"]
+        .as_array()
+        .unwrap_or_else(|| {
+            eprintln!("error: rules JSON has no 'rules' array");
+            process::exit(2);
+        })
+        .clone();
+
+    // Merge the optional section-properties dataset if installed. Missing is fine
+    // (the curated rules still work); present-but-invalid is a hard error so we never
+    // serve a partial or corrupt section table.
+    if let Some(sf) = shapes_file {
+        let shapes_path = aware_home
+            .join("agents")
+            .join(agent_id)
+            .join("rules")
+            .join(sf);
+        if shapes_path.exists() {
+            let shapes_json = fs::read_to_string(&shapes_path).unwrap_or_else(|e| {
+                eprintln!(
+                    "error: cannot read sections from {}: {}",
+                    shapes_path.display(),
+                    e
+                );
+                process::exit(2);
+            });
+            let shapes_db: serde_json::Value =
+                serde_json::from_str(&shapes_json).unwrap_or_else(|e| {
+                    eprintln!("error: invalid sections JSON: {}", e);
+                    process::exit(2);
+                });
+            match shapes_db["rules"].as_array() {
+                Some(arr) => rules.extend(arr.iter().cloned()),
+                None => {
+                    eprintln!("error: sections JSON has no 'rules' array");
+                    process::exit(2);
+                }
+            }
+        }
+    }
 
     let args: Vec<String> = env::args().skip(1).collect();
     let cmd = args.first().map(|s| s.as_str()).unwrap_or("");
 
     match cmd {
-        "lookup" => run_lookup(rules, &args[1..], &db),
-        "describe" => run_describe(rules, &db),
+        "lookup" => run_lookup(&rules, &args[1..], &db),
+        "describe" => run_describe(&rules, &db),
         _ => {
             eprintln!("usage: {} <lookup|describe> [options]", bin_name);
             eprintln!("  lookup --rule <id>           look up a specific rule by id");
@@ -147,7 +191,7 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
     }
 
     if let Some(id) = inputs.rule_id.as_deref() {
-        match rules.iter().find(|r| r["id"].as_str() == Some(id)) {
+        match find_rule(rules, id) {
             Some(rule) => {
                 println!("{}", serde_json::to_string_pretty(rule).unwrap());
                 // exit 0 = found
@@ -206,4 +250,63 @@ fn run_describe(rules: &[serde_json::Value], db: &serde_json::Value) {
         "categories": cat_list
     });
     println!("{}", serde_json::to_string_pretty(&info).unwrap());
+}
+
+/// Find a rule by its exact `id`. Pure — the curated connection rules and the merged
+/// `sections` table live in one slice, so this serves both. Unit-tested below.
+fn find_rule<'a>(rules: &'a [serde_json::Value], id: &str) -> Option<&'a serde_json::Value> {
+    rules.iter().find(|r| r["id"].as_str() == Some(id))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use serde_json::json;
+
+    /// Mimics the post-merge slice: curated connection rules + section rules together.
+    fn merged() -> Vec<serde_json::Value> {
+        vec![
+            json!({"id": "bolt.spacing.min", "category": "bolts", "value": "2.67d"}),
+            json!({"id": "section.W16X26", "category": "sections",
+                   "value": "26 lb/ft; depth d = 15.7 in; area A = 7.68 in²",
+                   "properties": {"type": "W", "weight_plf": 26.0, "depth_in": 15.7}}),
+            json!({"id": "section.HSS6X6X3/8", "category": "sections",
+                   "properties": {"type": "HSS", "weight_plf": 27.48, "wall_in": 0.349}}),
+        ]
+    }
+
+    #[test]
+    fn finds_section_by_designation_id() {
+        let rules = merged();
+        let r = find_rule(&rules, "section.W16X26").expect("section present");
+        assert_eq!(r["properties"]["weight_plf"], json!(26.0));
+        assert_eq!(r["category"], json!("sections"));
+    }
+
+    #[test]
+    fn finds_hss_weight_not_in_the_designation() {
+        // the whole point: HSS weight is not encoded in the name, so it must be looked up
+        let rules = merged();
+        let r = find_rule(&rules, "section.HSS6X6X3/8").expect("hss present");
+        assert_eq!(r["properties"]["weight_plf"], json!(27.48));
+    }
+
+    #[test]
+    fn missing_rule_is_none() {
+        assert!(find_rule(&merged(), "section.NOPE").is_none());
+    }
+
+    #[test]
+    fn curated_and_section_rules_coexist_after_merge() {
+        let rules = merged();
+        let cats: HashSet<&str> = rules
+            .iter()
+            .filter_map(|r| r["category"].as_str())
+            .collect();
+        assert!(
+            cats.contains("bolts"),
+            "curated connection rules survive the merge"
+        );
+        assert!(cats.contains("sections"), "section rules are added");
+    }
 }
