@@ -77,7 +77,16 @@ fn main() {
             .join(agent_id)
             .join("rules")
             .join(sf);
-        if shapes_path.exists() {
+        // try_exists so a permission/IO error on stat is a hard error, not a silent skip.
+        let present = shapes_path.try_exists().unwrap_or_else(|e| {
+            eprintln!(
+                "error: cannot stat sections file {}: {}",
+                shapes_path.display(),
+                e
+            );
+            process::exit(2);
+        });
+        if present {
             let shapes_json = fs::read_to_string(&shapes_path).unwrap_or_else(|e| {
                 eprintln!(
                     "error: cannot read sections from {}: {}",
@@ -91,13 +100,36 @@ fn main() {
                     eprintln!("error: invalid sections JSON: {}", e);
                     process::exit(2);
                 });
-            match shapes_db["rules"].as_array() {
-                Some(arr) => rules.extend(arr.iter().cloned()),
-                None => {
-                    eprintln!("error: sections JSON has no 'rules' array");
+            let incoming = shapes_db["rules"].as_array().unwrap_or_else(|| {
+                eprintln!("error: sections JSON has no 'rules' array");
+                process::exit(2);
+            });
+            // Validate before merging so a bad or hand-edited sections file can never
+            // shadow or duplicate a curated connection rule. Owned id set so we don't
+            // borrow `rules` across the following `extend`.
+            let existing: HashSet<String> = rules
+                .iter()
+                .filter_map(|r| r["id"].as_str().map(String::from))
+                .collect();
+            for r in incoming {
+                let id = r["id"].as_str().unwrap_or("");
+                let cat = r["category"].as_str().unwrap_or("");
+                if cat != "sections" || !id.starts_with("section.") {
+                    eprintln!(
+                        "error: sections file has a non-sections rule: id={:?} category={:?}",
+                        id, cat
+                    );
+                    process::exit(2);
+                }
+                if existing.contains(id) {
+                    eprintln!(
+                        "error: sections file id collides with a curated rule: {}",
+                        id
+                    );
                     process::exit(2);
                 }
             }
+            rules.extend(incoming.iter().cloned());
         }
     }
 
@@ -214,10 +246,7 @@ fn run_lookup(rules: &[serde_json::Value], args: &[String], _db: &serde_json::Va
     }
 
     if let Some(cat) = inputs.category.as_deref() {
-        let filtered: Vec<&serde_json::Value> = rules
-            .iter()
-            .filter(|r| r["category"].as_str() == Some(cat))
-            .collect();
+        let filtered = rules_in_category(rules, cat);
         if filtered.is_empty() {
             let result = serde_json::json!({ "category": cat, "rules": [], "found": false });
             println!("{}", serde_json::to_string_pretty(&result).unwrap());
@@ -256,6 +285,14 @@ fn run_describe(rules: &[serde_json::Value], db: &serde_json::Value) {
 /// `sections` table live in one slice, so this serves both. Unit-tested below.
 fn find_rule<'a>(rules: &'a [serde_json::Value], id: &str) -> Option<&'a serde_json::Value> {
     rules.iter().find(|r| r["id"].as_str() == Some(id))
+}
+
+/// All rules in a category — mirrors `lookup --category`. Pure — unit-tested.
+fn rules_in_category<'a>(rules: &'a [serde_json::Value], cat: &str) -> Vec<&'a serde_json::Value> {
+    rules
+        .iter()
+        .filter(|r| r["category"].as_str() == Some(cat))
+        .collect()
 }
 
 #[cfg(test)]
@@ -308,5 +345,16 @@ mod tests {
             "curated connection rules survive the merge"
         );
         assert!(cats.contains("sections"), "section rules are added");
+    }
+
+    #[test]
+    fn category_filter_selects_only_that_category() {
+        let rules = merged();
+        let secs = rules_in_category(&rules, "sections");
+        assert_eq!(secs.len(), 2);
+        assert!(secs
+            .iter()
+            .all(|r| r["id"].as_str().unwrap().starts_with("section.")));
+        assert!(rules_in_category(&rules, "nonexistent").is_empty());
     }
 }

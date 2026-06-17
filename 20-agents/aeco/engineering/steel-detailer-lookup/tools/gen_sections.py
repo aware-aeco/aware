@@ -9,7 +9,7 @@ import is reproducible and auditable.
 
 Run:  python gen_sections.py
 """
-import csv, json, os, re
+import csv, hashlib, json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CSV = os.path.normpath(os.path.join(HERE, "..", "data", "aisc-shapes-database-v15.0-us.csv"))
@@ -17,17 +17,21 @@ OUT = os.path.normpath(os.path.join(
     HERE, "..", "..", "steel-detailer-aisc", "rules", "aisc-shapes-v15.json"))
 
 
+_NA = {"", "-", "–", "—", "N/A", "n/a"}
+
+
 def num(s):
-    """CSV cell -> float or None (AISC uses '' and en-dash for N/A)."""
+    """CSV cell -> float, or None for a known N/A token. Raises on anything else, so a
+    surprising / corrupt cell is never silently dropped (verified-data discipline)."""
     if s is None:
         return None
-    s = s.strip().replace("–", "").replace("—", "")
-    if s in ("", "-"):
+    s = s.strip()
+    if s in _NA:
         return None
     try:
         return float(s)
     except ValueError:
-        return None
+        raise ValueError(f"unparseable numeric cell {s!r}")
 
 
 def first(*vals):
@@ -45,6 +49,7 @@ def fmt(v, unit):
 
 
 def main():
+    csv_sha256 = hashlib.sha256(open(CSV, "rb").read()).hexdigest()
     with open(CSV, newline="", encoding="utf-8-sig") as f:
         rows = list(csv.DictReader(f))
 
@@ -86,9 +91,13 @@ def main():
         if tf is not None: props["flange_in"] = tf
         if wall is not None: props["wall_in"] = wall
 
+        # `d` means different things by family: leg for an angle, OD for a round shape,
+        # depth otherwise. Label the human-readable string honestly (properties are typed).
+        is_round = typ in ("HSS", "PIPE") and num(r.get("OD")) is not None
+        dlabel = "leg" if typ == "L" else ("OD" if is_round else "depth d")
         value = "; ".join(x for x in (
             fmt(weight, "lb/ft"),
-            f"depth d = {depth:g} in" if depth is not None else None,
+            f"{dlabel} = {depth:g} in" if depth is not None else None,
             f"area A = {area:g} in²" if area is not None else None,
         ) if x)
 
@@ -118,6 +127,20 @@ def main():
             f"!= W column — CSV may be metric or corrupt (got {defin_ok} ok).")
     print(f"definitional cross-check: {defin_ok} ok / {defin_bad} bad")
 
+    # Hard imperial sentinel: known v15 US values. Guards against a metric / wrong file
+    # (the definitional check alone passes on metric data, which also encodes weight).
+    by_id = {r["id"]: r["properties"] for r in rules}
+    for sid, (w, d, a) in {
+        "section.W16X26": (26.0, 15.7, 7.68),
+        "section.HSS6X6X3/8": (27.48, 6.0, 7.58),
+        "section.L4X4X1/4": (6.6, 4.0, 1.93),
+    }.items():
+        p = by_id.get(sid)
+        if (not p or abs(p["weight_plf"] - w) > 0.01 or abs(p["depth_in"] - d) > 0.05
+                or abs(p["area_in2"] - a) > 0.01):
+            raise SystemExit(
+                f"ABORT: imperial sentinel {sid} mismatch (got {p}) — wrong/metric CSV?")
+
     db = {
         "agent": "steel-detailer-aisc",
         "dataset": "aisc-shapes-database-v15.0-us",
@@ -125,13 +148,21 @@ def main():
         "version": "15.0",
         "last_verified": "2026-06-17",
         "sources": [
-            {"name": "AISC Shapes Database v15.0 (US, imperial)",
-             "note": "Section dimensions & properties per the AISC Steel Construction "
-                     "Manual, 15th ed. Free dataset at aisc.org/manualresources. "
-                     "Section geometry is edition-stable; v16.0 supersedes v15.0 with "
-                     "no change to the dimensional properties of existing shapes.",
-             "access": "github.com/ambaker1/aisc-csv (v15.0/Shapes-US.csv), "
-                       "vendored at steel-detailer-lookup/data/."}
+            {
+                "name": "AISC Shapes Database v15.0 (US, imperial)",
+                "note": "Section dimensions & properties per the AISC Steel Construction "
+                        "Manual, 15th ed. (free at aisc.org/manualresources). Section "
+                        "geometry is edition-stable; the v15.0 dimensional properties of "
+                        "the shapes used here were spot-checked against v16.0 — a full "
+                        "v15-vs-v16 diff was not performed.",
+                "access": {
+                    "mirror": "github.com/ambaker1/aisc-csv — v15.0/Shapes-US.csv",
+                    "mirror_commit": "38d68425df714141465897b885a9e7a208c1161c",
+                    "accessed": "2026-06-17",
+                    "vendored": "steel-detailer-lookup/data/aisc-shapes-database-v15.0-us.csv",
+                    "vendored_sha256": csv_sha256,
+                },
+            }
         ],
         "rules": rules,
     }

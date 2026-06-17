@@ -7,8 +7,14 @@
  "sources": [
   {
    "name": "AISC Shapes Database v15.0 (US, imperial)",
-   "note": "Section dimensions & properties per the AISC Steel Construction Manual, 15th ed. Free dataset at aisc.org/manualresources. Section geometry is edition-stable; v16.0 supersedes v15.0 with no change to the dimensional properties of existing shapes.",
-   "access": "github.com/ambaker1/aisc-csv (v15.0/Shapes-US.csv), vendored at steel-detailer-lookup/data/."
+   "note": "Section dimensions & properties per the AISC Steel Construction Manual, 15th ed. (free at aisc.org/manualresources). Section geometry is edition-stable; the v15.0 dimensional properties of the shapes used here were spot-checked against v16.0 — a full v15-vs-v16 diff was not performed.",
+   "access": {
+    "mirror": "github.com/ambaker1/aisc-csv — v15.0/Shapes-US.csv",
+    "mirror_commit": "38d68425df714141465897b885a9e7a208c1161c",
+    "accessed": "2026-06-17",
+    "vendored": "steel-detailer-lookup/data/aisc-shapes-database-v15.0-us.csv",
+    "vendored_sha256": "99539f71b1488614a33f8840e2714f2d11606b220d347ed3865f868b154ef626"
+   }
   }
  ],
  "rules": [
@@ -8053,7 +8059,7 @@
    "id": "section.L12X12X1-3/8",
    "category": "sections",
    "rule": "L12X12X1-3/8 — section properties (AISC)",
-   "value": "105 lb/ft; depth d = 12 in; area A = 31.1 in²",
+   "value": "105 lb/ft; leg = 12 in; area A = 31.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8069,7 +8075,7 @@
    "id": "section.L12X12X1-1/4",
    "category": "sections",
    "rule": "L12X12X1-1/4 — section properties (AISC)",
-   "value": "96.4 lb/ft; depth d = 12 in; area A = 28.4 in²",
+   "value": "96.4 lb/ft; leg = 12 in; area A = 28.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8085,7 +8091,7 @@
    "id": "section.L12X12X1-1/8",
    "category": "sections",
    "rule": "L12X12X1-1/8 — section properties (AISC)",
-   "value": "87.2 lb/ft; depth d = 12 in; area A = 25.8 in²",
+   "value": "87.2 lb/ft; leg = 12 in; area A = 25.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8101,7 +8107,7 @@
    "id": "section.L12X12X1",
    "category": "sections",
    "rule": "L12X12X1 — section properties (AISC)",
-   "value": "77.8 lb/ft; depth d = 12 in; area A = 23 in²",
+   "value": "77.8 lb/ft; leg = 12 in; area A = 23 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8117,7 +8123,7 @@
    "id": "section.L10X10X1-3/8",
    "category": "sections",
    "rule": "L10X10X1-3/8 — section properties (AISC)",
-   "value": "87.1 lb/ft; depth d = 10 in; area A = 25.6 in²",
+   "value": "87.1 lb/ft; leg = 10 in; area A = 25.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8133,7 +8139,7 @@
    "id": "section.L10X10X1-1/4",
    "category": "sections",
    "rule": "L10X10X1-1/4 — section properties (AISC)",
-   "value": "79.9 lb/ft; depth d = 10 in; area A = 23.4 in²",
+   "value": "79.9 lb/ft; leg = 10 in; area A = 23.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8149,7 +8155,7 @@
    "id": "section.L10X10X1-1/8",
    "category": "sections",
    "rule": "L10X10X1-1/8 — section properties (AISC)",
-   "value": "72.3 lb/ft; depth d = 10 in; area A = 21.3 in²",
+   "value": "72.3 lb/ft; leg = 10 in; area A = 21.3 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8165,7 +8171,7 @@
    "id": "section.L10X10X1",
    "category": "sections",
    "rule": "L10X10X1 — section properties (AISC)",
-   "value": "64.7 lb/ft; depth d = 10 in; area A = 19 in²",
+   "value": "64.7 lb/ft; leg = 10 in; area A = 19 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8181,7 +8187,7 @@
    "id": "section.L10X10X7/8",
    "category": "sections",
    "rule": "L10X10X7/8 — section properties (AISC)",
-   "value": "56.9 lb/ft; depth d = 10 in; area A = 16.8 in²",
+   "value": "56.9 lb/ft; leg = 10 in; area A = 16.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8197,7 +8203,7 @@
    "id": "section.L10X10X3/4",
    "category": "sections",
    "rule": "L10X10X3/4 — section properties (AISC)",
-   "value": "49.1 lb/ft; depth d = 10 in; area A = 14.5 in²",
+   "value": "49.1 lb/ft; leg = 10 in; area A = 14.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8213,7 +8219,7 @@
    "id": "section.L8X8X1-1/8",
    "category": "sections",
    "rule": "L8X8X1-1/8 — section properties (AISC)",
-   "value": "56.9 lb/ft; depth d = 8 in; area A = 16.8 in²",
+   "value": "56.9 lb/ft; leg = 8 in; area A = 16.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8229,7 +8235,7 @@
    "id": "section.L8X8X1",
    "category": "sections",
    "rule": "L8X8X1 — section properties (AISC)",
-   "value": "51 lb/ft; depth d = 8 in; area A = 15.1 in²",
+   "value": "51 lb/ft; leg = 8 in; area A = 15.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8245,7 +8251,7 @@
    "id": "section.L8X8X7/8",
    "category": "sections",
    "rule": "L8X8X7/8 — section properties (AISC)",
-   "value": "45 lb/ft; depth d = 8 in; area A = 13.3 in²",
+   "value": "45 lb/ft; leg = 8 in; area A = 13.3 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8261,7 +8267,7 @@
    "id": "section.L8X8X3/4",
    "category": "sections",
    "rule": "L8X8X3/4 — section properties (AISC)",
-   "value": "38.9 lb/ft; depth d = 8 in; area A = 11.5 in²",
+   "value": "38.9 lb/ft; leg = 8 in; area A = 11.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8277,7 +8283,7 @@
    "id": "section.L8X8X5/8",
    "category": "sections",
    "rule": "L8X8X5/8 — section properties (AISC)",
-   "value": "32.7 lb/ft; depth d = 8 in; area A = 9.69 in²",
+   "value": "32.7 lb/ft; leg = 8 in; area A = 9.69 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8293,7 +8299,7 @@
    "id": "section.L8X8X9/16",
    "category": "sections",
    "rule": "L8X8X9/16 — section properties (AISC)",
-   "value": "29.6 lb/ft; depth d = 8 in; area A = 8.77 in²",
+   "value": "29.6 lb/ft; leg = 8 in; area A = 8.77 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8309,7 +8315,7 @@
    "id": "section.L8X8X1/2",
    "category": "sections",
    "rule": "L8X8X1/2 — section properties (AISC)",
-   "value": "26.4 lb/ft; depth d = 8 in; area A = 7.84 in²",
+   "value": "26.4 lb/ft; leg = 8 in; area A = 7.84 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8325,7 +8331,7 @@
    "id": "section.L8X6X1",
    "category": "sections",
    "rule": "L8X6X1 — section properties (AISC)",
-   "value": "44.2 lb/ft; depth d = 6 in; area A = 13.1 in²",
+   "value": "44.2 lb/ft; leg = 6 in; area A = 13.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8341,7 +8347,7 @@
    "id": "section.L8X6X7/8",
    "category": "sections",
    "rule": "L8X6X7/8 — section properties (AISC)",
-   "value": "39.1 lb/ft; depth d = 6 in; area A = 11.5 in²",
+   "value": "39.1 lb/ft; leg = 6 in; area A = 11.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8357,7 +8363,7 @@
    "id": "section.L8X6X3/4",
    "category": "sections",
    "rule": "L8X6X3/4 — section properties (AISC)",
-   "value": "33.8 lb/ft; depth d = 6 in; area A = 9.99 in²",
+   "value": "33.8 lb/ft; leg = 6 in; area A = 9.99 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8373,7 +8379,7 @@
    "id": "section.L8X6X5/8",
    "category": "sections",
    "rule": "L8X6X5/8 — section properties (AISC)",
-   "value": "28.5 lb/ft; depth d = 6 in; area A = 8.41 in²",
+   "value": "28.5 lb/ft; leg = 6 in; area A = 8.41 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8389,7 +8395,7 @@
    "id": "section.L8X6X9/16",
    "category": "sections",
    "rule": "L8X6X9/16 — section properties (AISC)",
-   "value": "25.7 lb/ft; depth d = 6 in; area A = 7.61 in²",
+   "value": "25.7 lb/ft; leg = 6 in; area A = 7.61 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8405,7 +8411,7 @@
    "id": "section.L8X6X1/2",
    "category": "sections",
    "rule": "L8X6X1/2 — section properties (AISC)",
-   "value": "23 lb/ft; depth d = 6 in; area A = 6.8 in²",
+   "value": "23 lb/ft; leg = 6 in; area A = 6.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8421,7 +8427,7 @@
    "id": "section.L8X6X7/16",
    "category": "sections",
    "rule": "L8X6X7/16 — section properties (AISC)",
-   "value": "20.2 lb/ft; depth d = 6 in; area A = 5.99 in²",
+   "value": "20.2 lb/ft; leg = 6 in; area A = 5.99 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8437,7 +8443,7 @@
    "id": "section.L8X4X1",
    "category": "sections",
    "rule": "L8X4X1 — section properties (AISC)",
-   "value": "37.4 lb/ft; depth d = 4 in; area A = 11.1 in²",
+   "value": "37.4 lb/ft; leg = 4 in; area A = 11.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8453,7 +8459,7 @@
    "id": "section.L8X4X7/8",
    "category": "sections",
    "rule": "L8X4X7/8 — section properties (AISC)",
-   "value": "33.1 lb/ft; depth d = 4 in; area A = 9.79 in²",
+   "value": "33.1 lb/ft; leg = 4 in; area A = 9.79 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8469,7 +8475,7 @@
    "id": "section.L8X4X3/4",
    "category": "sections",
    "rule": "L8X4X3/4 — section properties (AISC)",
-   "value": "28.7 lb/ft; depth d = 4 in; area A = 8.49 in²",
+   "value": "28.7 lb/ft; leg = 4 in; area A = 8.49 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8485,7 +8491,7 @@
    "id": "section.L8X4X5/8",
    "category": "sections",
    "rule": "L8X4X5/8 — section properties (AISC)",
-   "value": "24.2 lb/ft; depth d = 4 in; area A = 7.16 in²",
+   "value": "24.2 lb/ft; leg = 4 in; area A = 7.16 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8501,7 +8507,7 @@
    "id": "section.L8X4X9/16",
    "category": "sections",
    "rule": "L8X4X9/16 — section properties (AISC)",
-   "value": "21.9 lb/ft; depth d = 4 in; area A = 6.49 in²",
+   "value": "21.9 lb/ft; leg = 4 in; area A = 6.49 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8517,7 +8523,7 @@
    "id": "section.L8X4X1/2",
    "category": "sections",
    "rule": "L8X4X1/2 — section properties (AISC)",
-   "value": "19.6 lb/ft; depth d = 4 in; area A = 5.8 in²",
+   "value": "19.6 lb/ft; leg = 4 in; area A = 5.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8533,7 +8539,7 @@
    "id": "section.L8X4X7/16",
    "category": "sections",
    "rule": "L8X4X7/16 — section properties (AISC)",
-   "value": "17.2 lb/ft; depth d = 4 in; area A = 5.11 in²",
+   "value": "17.2 lb/ft; leg = 4 in; area A = 5.11 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8549,7 +8555,7 @@
    "id": "section.L7X4X3/4",
    "category": "sections",
    "rule": "L7X4X3/4 — section properties (AISC)",
-   "value": "26.2 lb/ft; depth d = 4 in; area A = 7.74 in²",
+   "value": "26.2 lb/ft; leg = 4 in; area A = 7.74 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8565,7 +8571,7 @@
    "id": "section.L7X4X5/8",
    "category": "sections",
    "rule": "L7X4X5/8 — section properties (AISC)",
-   "value": "22.1 lb/ft; depth d = 4 in; area A = 6.5 in²",
+   "value": "22.1 lb/ft; leg = 4 in; area A = 6.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8581,7 +8587,7 @@
    "id": "section.L7X4X1/2",
    "category": "sections",
    "rule": "L7X4X1/2 — section properties (AISC)",
-   "value": "17.9 lb/ft; depth d = 4 in; area A = 5.26 in²",
+   "value": "17.9 lb/ft; leg = 4 in; area A = 5.26 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8597,7 +8603,7 @@
    "id": "section.L7X4X7/16",
    "category": "sections",
    "rule": "L7X4X7/16 — section properties (AISC)",
-   "value": "15.7 lb/ft; depth d = 4 in; area A = 4.63 in²",
+   "value": "15.7 lb/ft; leg = 4 in; area A = 4.63 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8613,7 +8619,7 @@
    "id": "section.L7X4X3/8",
    "category": "sections",
    "rule": "L7X4X3/8 — section properties (AISC)",
-   "value": "13.6 lb/ft; depth d = 4 in; area A = 4 in²",
+   "value": "13.6 lb/ft; leg = 4 in; area A = 4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8629,7 +8635,7 @@
    "id": "section.L6X6X1",
    "category": "sections",
    "rule": "L6X6X1 — section properties (AISC)",
-   "value": "37.4 lb/ft; depth d = 6 in; area A = 11 in²",
+   "value": "37.4 lb/ft; leg = 6 in; area A = 11 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8645,7 +8651,7 @@
    "id": "section.L6X6X7/8",
    "category": "sections",
    "rule": "L6X6X7/8 — section properties (AISC)",
-   "value": "33.1 lb/ft; depth d = 6 in; area A = 9.75 in²",
+   "value": "33.1 lb/ft; leg = 6 in; area A = 9.75 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8661,7 +8667,7 @@
    "id": "section.L6X6X3/4",
    "category": "sections",
    "rule": "L6X6X3/4 — section properties (AISC)",
-   "value": "28.7 lb/ft; depth d = 6 in; area A = 8.46 in²",
+   "value": "28.7 lb/ft; leg = 6 in; area A = 8.46 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8677,7 +8683,7 @@
    "id": "section.L6X6X5/8",
    "category": "sections",
    "rule": "L6X6X5/8 — section properties (AISC)",
-   "value": "24.2 lb/ft; depth d = 6 in; area A = 7.13 in²",
+   "value": "24.2 lb/ft; leg = 6 in; area A = 7.13 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8693,7 +8699,7 @@
    "id": "section.L6X6X9/16",
    "category": "sections",
    "rule": "L6X6X9/16 — section properties (AISC)",
-   "value": "21.9 lb/ft; depth d = 6 in; area A = 6.45 in²",
+   "value": "21.9 lb/ft; leg = 6 in; area A = 6.45 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8709,7 +8715,7 @@
    "id": "section.L6X6X1/2",
    "category": "sections",
    "rule": "L6X6X1/2 — section properties (AISC)",
-   "value": "19.6 lb/ft; depth d = 6 in; area A = 5.77 in²",
+   "value": "19.6 lb/ft; leg = 6 in; area A = 5.77 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8725,7 +8731,7 @@
    "id": "section.L6X6X7/16",
    "category": "sections",
    "rule": "L6X6X7/16 — section properties (AISC)",
-   "value": "17.2 lb/ft; depth d = 6 in; area A = 5.08 in²",
+   "value": "17.2 lb/ft; leg = 6 in; area A = 5.08 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8741,7 +8747,7 @@
    "id": "section.L6X6X3/8",
    "category": "sections",
    "rule": "L6X6X3/8 — section properties (AISC)",
-   "value": "14.9 lb/ft; depth d = 6 in; area A = 4.38 in²",
+   "value": "14.9 lb/ft; leg = 6 in; area A = 4.38 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8757,7 +8763,7 @@
    "id": "section.L6X6X5/16",
    "category": "sections",
    "rule": "L6X6X5/16 — section properties (AISC)",
-   "value": "12.4 lb/ft; depth d = 6 in; area A = 3.67 in²",
+   "value": "12.4 lb/ft; leg = 6 in; area A = 3.67 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8773,7 +8779,7 @@
    "id": "section.L6X4X7/8",
    "category": "sections",
    "rule": "L6X4X7/8 — section properties (AISC)",
-   "value": "27.2 lb/ft; depth d = 4 in; area A = 8 in²",
+   "value": "27.2 lb/ft; leg = 4 in; area A = 8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8789,7 +8795,7 @@
    "id": "section.L6X4X3/4",
    "category": "sections",
    "rule": "L6X4X3/4 — section properties (AISC)",
-   "value": "23.6 lb/ft; depth d = 4 in; area A = 6.94 in²",
+   "value": "23.6 lb/ft; leg = 4 in; area A = 6.94 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8805,7 +8811,7 @@
    "id": "section.L6X4X5/8",
    "category": "sections",
    "rule": "L6X4X5/8 — section properties (AISC)",
-   "value": "20 lb/ft; depth d = 4 in; area A = 5.86 in²",
+   "value": "20 lb/ft; leg = 4 in; area A = 5.86 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8821,7 +8827,7 @@
    "id": "section.L6X4X9/16",
    "category": "sections",
    "rule": "L6X4X9/16 — section properties (AISC)",
-   "value": "18.1 lb/ft; depth d = 4 in; area A = 5.31 in²",
+   "value": "18.1 lb/ft; leg = 4 in; area A = 5.31 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8837,7 +8843,7 @@
    "id": "section.L6X4X1/2",
    "category": "sections",
    "rule": "L6X4X1/2 — section properties (AISC)",
-   "value": "16.2 lb/ft; depth d = 4 in; area A = 4.75 in²",
+   "value": "16.2 lb/ft; leg = 4 in; area A = 4.75 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8853,7 +8859,7 @@
    "id": "section.L6X4X7/16",
    "category": "sections",
    "rule": "L6X4X7/16 — section properties (AISC)",
-   "value": "14.3 lb/ft; depth d = 4 in; area A = 4.18 in²",
+   "value": "14.3 lb/ft; leg = 4 in; area A = 4.18 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8869,7 +8875,7 @@
    "id": "section.L6X4X3/8",
    "category": "sections",
    "rule": "L6X4X3/8 — section properties (AISC)",
-   "value": "12.3 lb/ft; depth d = 4 in; area A = 3.61 in²",
+   "value": "12.3 lb/ft; leg = 4 in; area A = 3.61 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8885,7 +8891,7 @@
    "id": "section.L6X4X5/16",
    "category": "sections",
    "rule": "L6X4X5/16 — section properties (AISC)",
-   "value": "10.3 lb/ft; depth d = 4 in; area A = 3.03 in²",
+   "value": "10.3 lb/ft; leg = 4 in; area A = 3.03 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8901,7 +8907,7 @@
    "id": "section.L6X3-1/2X1/2",
    "category": "sections",
    "rule": "L6X3-1/2X1/2 — section properties (AISC)",
-   "value": "15.3 lb/ft; depth d = 3.5 in; area A = 4.5 in²",
+   "value": "15.3 lb/ft; leg = 3.5 in; area A = 4.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8917,7 +8923,7 @@
    "id": "section.L6X3-1/2X3/8",
    "category": "sections",
    "rule": "L6X3-1/2X3/8 — section properties (AISC)",
-   "value": "11.7 lb/ft; depth d = 3.5 in; area A = 3.44 in²",
+   "value": "11.7 lb/ft; leg = 3.5 in; area A = 3.44 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8933,7 +8939,7 @@
    "id": "section.L6X3-1/2X5/16",
    "category": "sections",
    "rule": "L6X3-1/2X5/16 — section properties (AISC)",
-   "value": "9.8 lb/ft; depth d = 3.5 in; area A = 2.89 in²",
+   "value": "9.8 lb/ft; leg = 3.5 in; area A = 2.89 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8949,7 +8955,7 @@
    "id": "section.L5X5X7/8",
    "category": "sections",
    "rule": "L5X5X7/8 — section properties (AISC)",
-   "value": "27.2 lb/ft; depth d = 5 in; area A = 8 in²",
+   "value": "27.2 lb/ft; leg = 5 in; area A = 8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8965,7 +8971,7 @@
    "id": "section.L5X5X3/4",
    "category": "sections",
    "rule": "L5X5X3/4 — section properties (AISC)",
-   "value": "23.6 lb/ft; depth d = 5 in; area A = 6.98 in²",
+   "value": "23.6 lb/ft; leg = 5 in; area A = 6.98 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8981,7 +8987,7 @@
    "id": "section.L5X5X5/8",
    "category": "sections",
    "rule": "L5X5X5/8 — section properties (AISC)",
-   "value": "20 lb/ft; depth d = 5 in; area A = 5.9 in²",
+   "value": "20 lb/ft; leg = 5 in; area A = 5.9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -8997,7 +9003,7 @@
    "id": "section.L5X5X1/2",
    "category": "sections",
    "rule": "L5X5X1/2 — section properties (AISC)",
-   "value": "16.2 lb/ft; depth d = 5 in; area A = 4.79 in²",
+   "value": "16.2 lb/ft; leg = 5 in; area A = 4.79 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9013,7 +9019,7 @@
    "id": "section.L5X5X7/16",
    "category": "sections",
    "rule": "L5X5X7/16 — section properties (AISC)",
-   "value": "14.3 lb/ft; depth d = 5 in; area A = 4.22 in²",
+   "value": "14.3 lb/ft; leg = 5 in; area A = 4.22 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9029,7 +9035,7 @@
    "id": "section.L5X5X3/8",
    "category": "sections",
    "rule": "L5X5X3/8 — section properties (AISC)",
-   "value": "12.3 lb/ft; depth d = 5 in; area A = 3.65 in²",
+   "value": "12.3 lb/ft; leg = 5 in; area A = 3.65 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9045,7 +9051,7 @@
    "id": "section.L5X5X5/16",
    "category": "sections",
    "rule": "L5X5X5/16 — section properties (AISC)",
-   "value": "10.3 lb/ft; depth d = 5 in; area A = 3.07 in²",
+   "value": "10.3 lb/ft; leg = 5 in; area A = 3.07 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9061,7 +9067,7 @@
    "id": "section.L5X3-1/2X3/4",
    "category": "sections",
    "rule": "L5X3-1/2X3/4 — section properties (AISC)",
-   "value": "19.8 lb/ft; depth d = 3.5 in; area A = 5.85 in²",
+   "value": "19.8 lb/ft; leg = 3.5 in; area A = 5.85 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9077,7 +9083,7 @@
    "id": "section.L5X3-1/2X5/8",
    "category": "sections",
    "rule": "L5X3-1/2X5/8 — section properties (AISC)",
-   "value": "16.8 lb/ft; depth d = 3.5 in; area A = 4.93 in²",
+   "value": "16.8 lb/ft; leg = 3.5 in; area A = 4.93 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9093,7 +9099,7 @@
    "id": "section.L5X3-1/2X1/2",
    "category": "sections",
    "rule": "L5X3-1/2X1/2 — section properties (AISC)",
-   "value": "13.6 lb/ft; depth d = 3.5 in; area A = 4 in²",
+   "value": "13.6 lb/ft; leg = 3.5 in; area A = 4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9109,7 +9115,7 @@
    "id": "section.L5X3-1/2X3/8",
    "category": "sections",
    "rule": "L5X3-1/2X3/8 — section properties (AISC)",
-   "value": "10.4 lb/ft; depth d = 3.5 in; area A = 3.05 in²",
+   "value": "10.4 lb/ft; leg = 3.5 in; area A = 3.05 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9125,7 +9131,7 @@
    "id": "section.L5X3-1/2X5/16",
    "category": "sections",
    "rule": "L5X3-1/2X5/16 — section properties (AISC)",
-   "value": "8.7 lb/ft; depth d = 3.5 in; area A = 2.56 in²",
+   "value": "8.7 lb/ft; leg = 3.5 in; area A = 2.56 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9141,7 +9147,7 @@
    "id": "section.L5X3-1/2X1/4",
    "category": "sections",
    "rule": "L5X3-1/2X1/4 — section properties (AISC)",
-   "value": "7 lb/ft; depth d = 3.5 in; area A = 2.07 in²",
+   "value": "7 lb/ft; leg = 3.5 in; area A = 2.07 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9157,7 +9163,7 @@
    "id": "section.L5X3X1/2",
    "category": "sections",
    "rule": "L5X3X1/2 — section properties (AISC)",
-   "value": "12.8 lb/ft; depth d = 3 in; area A = 3.75 in²",
+   "value": "12.8 lb/ft; leg = 3 in; area A = 3.75 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9173,7 +9179,7 @@
    "id": "section.L5X3X7/16",
    "category": "sections",
    "rule": "L5X3X7/16 — section properties (AISC)",
-   "value": "11.3 lb/ft; depth d = 3 in; area A = 3.31 in²",
+   "value": "11.3 lb/ft; leg = 3 in; area A = 3.31 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9189,7 +9195,7 @@
    "id": "section.L5X3X3/8",
    "category": "sections",
    "rule": "L5X3X3/8 — section properties (AISC)",
-   "value": "9.8 lb/ft; depth d = 3 in; area A = 2.86 in²",
+   "value": "9.8 lb/ft; leg = 3 in; area A = 2.86 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9205,7 +9211,7 @@
    "id": "section.L5X3X5/16",
    "category": "sections",
    "rule": "L5X3X5/16 — section properties (AISC)",
-   "value": "8.2 lb/ft; depth d = 3 in; area A = 2.41 in²",
+   "value": "8.2 lb/ft; leg = 3 in; area A = 2.41 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9221,7 +9227,7 @@
    "id": "section.L5X3X1/4",
    "category": "sections",
    "rule": "L5X3X1/4 — section properties (AISC)",
-   "value": "6.6 lb/ft; depth d = 3 in; area A = 1.94 in²",
+   "value": "6.6 lb/ft; leg = 3 in; area A = 1.94 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9237,7 +9243,7 @@
    "id": "section.L4X4X3/4",
    "category": "sections",
    "rule": "L4X4X3/4 — section properties (AISC)",
-   "value": "18.5 lb/ft; depth d = 4 in; area A = 5.44 in²",
+   "value": "18.5 lb/ft; leg = 4 in; area A = 5.44 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9253,7 +9259,7 @@
    "id": "section.L4X4X5/8",
    "category": "sections",
    "rule": "L4X4X5/8 — section properties (AISC)",
-   "value": "15.7 lb/ft; depth d = 4 in; area A = 4.61 in²",
+   "value": "15.7 lb/ft; leg = 4 in; area A = 4.61 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9269,7 +9275,7 @@
    "id": "section.L4X4X1/2",
    "category": "sections",
    "rule": "L4X4X1/2 — section properties (AISC)",
-   "value": "12.8 lb/ft; depth d = 4 in; area A = 3.75 in²",
+   "value": "12.8 lb/ft; leg = 4 in; area A = 3.75 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9285,7 +9291,7 @@
    "id": "section.L4X4X7/16",
    "category": "sections",
    "rule": "L4X4X7/16 — section properties (AISC)",
-   "value": "11.3 lb/ft; depth d = 4 in; area A = 3.3 in²",
+   "value": "11.3 lb/ft; leg = 4 in; area A = 3.3 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9301,7 +9307,7 @@
    "id": "section.L4X4X3/8",
    "category": "sections",
    "rule": "L4X4X3/8 — section properties (AISC)",
-   "value": "9.8 lb/ft; depth d = 4 in; area A = 2.86 in²",
+   "value": "9.8 lb/ft; leg = 4 in; area A = 2.86 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9317,7 +9323,7 @@
    "id": "section.L4X4X5/16",
    "category": "sections",
    "rule": "L4X4X5/16 — section properties (AISC)",
-   "value": "8.2 lb/ft; depth d = 4 in; area A = 2.4 in²",
+   "value": "8.2 lb/ft; leg = 4 in; area A = 2.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9333,7 +9339,7 @@
    "id": "section.L4X4X1/4",
    "category": "sections",
    "rule": "L4X4X1/4 — section properties (AISC)",
-   "value": "6.6 lb/ft; depth d = 4 in; area A = 1.93 in²",
+   "value": "6.6 lb/ft; leg = 4 in; area A = 1.93 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9349,7 +9355,7 @@
    "id": "section.L4X3-1/2X1/2",
    "category": "sections",
    "rule": "L4X3-1/2X1/2 — section properties (AISC)",
-   "value": "11.9 lb/ft; depth d = 3.5 in; area A = 3.5 in²",
+   "value": "11.9 lb/ft; leg = 3.5 in; area A = 3.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9365,7 +9371,7 @@
    "id": "section.L4X3-1/2X3/8",
    "category": "sections",
    "rule": "L4X3-1/2X3/8 — section properties (AISC)",
-   "value": "9.1 lb/ft; depth d = 3.5 in; area A = 2.68 in²",
+   "value": "9.1 lb/ft; leg = 3.5 in; area A = 2.68 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9381,7 +9387,7 @@
    "id": "section.L4X3-1/2X5/16",
    "category": "sections",
    "rule": "L4X3-1/2X5/16 — section properties (AISC)",
-   "value": "7.7 lb/ft; depth d = 3.5 in; area A = 2.25 in²",
+   "value": "7.7 lb/ft; leg = 3.5 in; area A = 2.25 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9397,7 +9403,7 @@
    "id": "section.L4X3-1/2X1/4",
    "category": "sections",
    "rule": "L4X3-1/2X1/4 — section properties (AISC)",
-   "value": "6.2 lb/ft; depth d = 3.5 in; area A = 1.82 in²",
+   "value": "6.2 lb/ft; leg = 3.5 in; area A = 1.82 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9413,7 +9419,7 @@
    "id": "section.L4X3X5/8",
    "category": "sections",
    "rule": "L4X3X5/8 — section properties (AISC)",
-   "value": "13.6 lb/ft; depth d = 3 in; area A = 3.99 in²",
+   "value": "13.6 lb/ft; leg = 3 in; area A = 3.99 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9429,7 +9435,7 @@
    "id": "section.L4X3X1/2",
    "category": "sections",
    "rule": "L4X3X1/2 — section properties (AISC)",
-   "value": "11.1 lb/ft; depth d = 3 in; area A = 3.25 in²",
+   "value": "11.1 lb/ft; leg = 3 in; area A = 3.25 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9445,7 +9451,7 @@
    "id": "section.L4X3X3/8",
    "category": "sections",
    "rule": "L4X3X3/8 — section properties (AISC)",
-   "value": "8.5 lb/ft; depth d = 3 in; area A = 2.49 in²",
+   "value": "8.5 lb/ft; leg = 3 in; area A = 2.49 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9461,7 +9467,7 @@
    "id": "section.L4X3X5/16",
    "category": "sections",
    "rule": "L4X3X5/16 — section properties (AISC)",
-   "value": "7.2 lb/ft; depth d = 3 in; area A = 2.09 in²",
+   "value": "7.2 lb/ft; leg = 3 in; area A = 2.09 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9477,7 +9483,7 @@
    "id": "section.L4X3X1/4",
    "category": "sections",
    "rule": "L4X3X1/4 — section properties (AISC)",
-   "value": "5.8 lb/ft; depth d = 3 in; area A = 1.69 in²",
+   "value": "5.8 lb/ft; leg = 3 in; area A = 1.69 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9493,7 +9499,7 @@
    "id": "section.L3-1/2X3-1/2X1/2",
    "category": "sections",
    "rule": "L3-1/2X3-1/2X1/2 — section properties (AISC)",
-   "value": "11.1 lb/ft; depth d = 3.5 in; area A = 3.25 in²",
+   "value": "11.1 lb/ft; leg = 3.5 in; area A = 3.25 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9509,7 +9515,7 @@
    "id": "section.L3-1/2X3-1/2X7/16",
    "category": "sections",
    "rule": "L3-1/2X3-1/2X7/16 — section properties (AISC)",
-   "value": "9.8 lb/ft; depth d = 3.5 in; area A = 2.89 in²",
+   "value": "9.8 lb/ft; leg = 3.5 in; area A = 2.89 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9525,7 +9531,7 @@
    "id": "section.L3-1/2X3-1/2X3/8",
    "category": "sections",
    "rule": "L3-1/2X3-1/2X3/8 — section properties (AISC)",
-   "value": "8.5 lb/ft; depth d = 3.5 in; area A = 2.5 in²",
+   "value": "8.5 lb/ft; leg = 3.5 in; area A = 2.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9541,7 +9547,7 @@
    "id": "section.L3-1/2X3-1/2X5/16",
    "category": "sections",
    "rule": "L3-1/2X3-1/2X5/16 — section properties (AISC)",
-   "value": "7.2 lb/ft; depth d = 3.5 in; area A = 2.1 in²",
+   "value": "7.2 lb/ft; leg = 3.5 in; area A = 2.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9557,7 +9563,7 @@
    "id": "section.L3-1/2X3-1/2X1/4",
    "category": "sections",
    "rule": "L3-1/2X3-1/2X1/4 — section properties (AISC)",
-   "value": "5.8 lb/ft; depth d = 3.5 in; area A = 1.7 in²",
+   "value": "5.8 lb/ft; leg = 3.5 in; area A = 1.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9573,7 +9579,7 @@
    "id": "section.L3-1/2X3X1/2",
    "category": "sections",
    "rule": "L3-1/2X3X1/2 — section properties (AISC)",
-   "value": "10.2 lb/ft; depth d = 3 in; area A = 3.02 in²",
+   "value": "10.2 lb/ft; leg = 3 in; area A = 3.02 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9589,7 +9595,7 @@
    "id": "section.L3-1/2X3X7/16",
    "category": "sections",
    "rule": "L3-1/2X3X7/16 — section properties (AISC)",
-   "value": "9.1 lb/ft; depth d = 3 in; area A = 2.67 in²",
+   "value": "9.1 lb/ft; leg = 3 in; area A = 2.67 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9605,7 +9611,7 @@
    "id": "section.L3-1/2X3X3/8",
    "category": "sections",
    "rule": "L3-1/2X3X3/8 — section properties (AISC)",
-   "value": "7.9 lb/ft; depth d = 3 in; area A = 2.32 in²",
+   "value": "7.9 lb/ft; leg = 3 in; area A = 2.32 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9621,7 +9627,7 @@
    "id": "section.L3-1/2X3X5/16",
    "category": "sections",
    "rule": "L3-1/2X3X5/16 — section properties (AISC)",
-   "value": "6.6 lb/ft; depth d = 3 in; area A = 1.95 in²",
+   "value": "6.6 lb/ft; leg = 3 in; area A = 1.95 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9637,7 +9643,7 @@
    "id": "section.L3-1/2X3X1/4",
    "category": "sections",
    "rule": "L3-1/2X3X1/4 — section properties (AISC)",
-   "value": "5.4 lb/ft; depth d = 3 in; area A = 1.58 in²",
+   "value": "5.4 lb/ft; leg = 3 in; area A = 1.58 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9653,7 +9659,7 @@
    "id": "section.L3-1/2X2-1/2X1/2",
    "category": "sections",
    "rule": "L3-1/2X2-1/2X1/2 — section properties (AISC)",
-   "value": "9.4 lb/ft; depth d = 2.5 in; area A = 2.77 in²",
+   "value": "9.4 lb/ft; leg = 2.5 in; area A = 2.77 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9669,7 +9675,7 @@
    "id": "section.L3-1/2X2-1/2X3/8",
    "category": "sections",
    "rule": "L3-1/2X2-1/2X3/8 — section properties (AISC)",
-   "value": "7.2 lb/ft; depth d = 2.5 in; area A = 2.12 in²",
+   "value": "7.2 lb/ft; leg = 2.5 in; area A = 2.12 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9685,7 +9691,7 @@
    "id": "section.L3-1/2X2-1/2X5/16",
    "category": "sections",
    "rule": "L3-1/2X2-1/2X5/16 — section properties (AISC)",
-   "value": "6.1 lb/ft; depth d = 2.5 in; area A = 1.79 in²",
+   "value": "6.1 lb/ft; leg = 2.5 in; area A = 1.79 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9701,7 +9707,7 @@
    "id": "section.L3-1/2X2-1/2X1/4",
    "category": "sections",
    "rule": "L3-1/2X2-1/2X1/4 — section properties (AISC)",
-   "value": "4.9 lb/ft; depth d = 2.5 in; area A = 1.45 in²",
+   "value": "4.9 lb/ft; leg = 2.5 in; area A = 1.45 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9717,7 +9723,7 @@
    "id": "section.L3X3X1/2",
    "category": "sections",
    "rule": "L3X3X1/2 — section properties (AISC)",
-   "value": "9.4 lb/ft; depth d = 3 in; area A = 2.76 in²",
+   "value": "9.4 lb/ft; leg = 3 in; area A = 2.76 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9733,7 +9739,7 @@
    "id": "section.L3X3X7/16",
    "category": "sections",
    "rule": "L3X3X7/16 — section properties (AISC)",
-   "value": "8.3 lb/ft; depth d = 3 in; area A = 2.43 in²",
+   "value": "8.3 lb/ft; leg = 3 in; area A = 2.43 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9749,7 +9755,7 @@
    "id": "section.L3X3X3/8",
    "category": "sections",
    "rule": "L3X3X3/8 — section properties (AISC)",
-   "value": "7.2 lb/ft; depth d = 3 in; area A = 2.11 in²",
+   "value": "7.2 lb/ft; leg = 3 in; area A = 2.11 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9765,7 +9771,7 @@
    "id": "section.L3X3X5/16",
    "category": "sections",
    "rule": "L3X3X5/16 — section properties (AISC)",
-   "value": "6.1 lb/ft; depth d = 3 in; area A = 1.78 in²",
+   "value": "6.1 lb/ft; leg = 3 in; area A = 1.78 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9781,7 +9787,7 @@
    "id": "section.L3X3X1/4",
    "category": "sections",
    "rule": "L3X3X1/4 — section properties (AISC)",
-   "value": "4.9 lb/ft; depth d = 3 in; area A = 1.44 in²",
+   "value": "4.9 lb/ft; leg = 3 in; area A = 1.44 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9797,7 +9803,7 @@
    "id": "section.L3X3X3/16",
    "category": "sections",
    "rule": "L3X3X3/16 — section properties (AISC)",
-   "value": "3.71 lb/ft; depth d = 3 in; area A = 1.09 in²",
+   "value": "3.71 lb/ft; leg = 3 in; area A = 1.09 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9813,7 +9819,7 @@
    "id": "section.L3X2-1/2X1/2",
    "category": "sections",
    "rule": "L3X2-1/2X1/2 — section properties (AISC)",
-   "value": "8.5 lb/ft; depth d = 2.5 in; area A = 2.5 in²",
+   "value": "8.5 lb/ft; leg = 2.5 in; area A = 2.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9829,7 +9835,7 @@
    "id": "section.L3X2-1/2X7/16",
    "category": "sections",
    "rule": "L3X2-1/2X7/16 — section properties (AISC)",
-   "value": "7.6 lb/ft; depth d = 2.5 in; area A = 2.22 in²",
+   "value": "7.6 lb/ft; leg = 2.5 in; area A = 2.22 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9845,7 +9851,7 @@
    "id": "section.L3X2-1/2X3/8",
    "category": "sections",
    "rule": "L3X2-1/2X3/8 — section properties (AISC)",
-   "value": "6.6 lb/ft; depth d = 2.5 in; area A = 1.93 in²",
+   "value": "6.6 lb/ft; leg = 2.5 in; area A = 1.93 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9861,7 +9867,7 @@
    "id": "section.L3X2-1/2X5/16",
    "category": "sections",
    "rule": "L3X2-1/2X5/16 — section properties (AISC)",
-   "value": "5.6 lb/ft; depth d = 2.5 in; area A = 1.63 in²",
+   "value": "5.6 lb/ft; leg = 2.5 in; area A = 1.63 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9877,7 +9883,7 @@
    "id": "section.L3X2-1/2X1/4",
    "category": "sections",
    "rule": "L3X2-1/2X1/4 — section properties (AISC)",
-   "value": "4.5 lb/ft; depth d = 2.5 in; area A = 1.32 in²",
+   "value": "4.5 lb/ft; leg = 2.5 in; area A = 1.32 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9893,7 +9899,7 @@
    "id": "section.L3X2-1/2X3/16",
    "category": "sections",
    "rule": "L3X2-1/2X3/16 — section properties (AISC)",
-   "value": "3.39 lb/ft; depth d = 2.5 in; area A = 1 in²",
+   "value": "3.39 lb/ft; leg = 2.5 in; area A = 1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9909,7 +9915,7 @@
    "id": "section.L3X2X1/2",
    "category": "sections",
    "rule": "L3X2X1/2 — section properties (AISC)",
-   "value": "7.7 lb/ft; depth d = 2 in; area A = 2.26 in²",
+   "value": "7.7 lb/ft; leg = 2 in; area A = 2.26 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9925,7 +9931,7 @@
    "id": "section.L3X2X3/8",
    "category": "sections",
    "rule": "L3X2X3/8 — section properties (AISC)",
-   "value": "5.9 lb/ft; depth d = 2 in; area A = 1.75 in²",
+   "value": "5.9 lb/ft; leg = 2 in; area A = 1.75 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9941,7 +9947,7 @@
    "id": "section.L3X2X5/16",
    "category": "sections",
    "rule": "L3X2X5/16 — section properties (AISC)",
-   "value": "5 lb/ft; depth d = 2 in; area A = 1.48 in²",
+   "value": "5 lb/ft; leg = 2 in; area A = 1.48 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9957,7 +9963,7 @@
    "id": "section.L3X2X1/4",
    "category": "sections",
    "rule": "L3X2X1/4 — section properties (AISC)",
-   "value": "4.1 lb/ft; depth d = 2 in; area A = 1.2 in²",
+   "value": "4.1 lb/ft; leg = 2 in; area A = 1.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9973,7 +9979,7 @@
    "id": "section.L3X2X3/16",
    "category": "sections",
    "rule": "L3X2X3/16 — section properties (AISC)",
-   "value": "3.07 lb/ft; depth d = 2 in; area A = 0.917 in²",
+   "value": "3.07 lb/ft; leg = 2 in; area A = 0.917 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -9989,7 +9995,7 @@
    "id": "section.L2-1/2X2-1/2X1/2",
    "category": "sections",
    "rule": "L2-1/2X2-1/2X1/2 — section properties (AISC)",
-   "value": "7.7 lb/ft; depth d = 2.5 in; area A = 2.26 in²",
+   "value": "7.7 lb/ft; leg = 2.5 in; area A = 2.26 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10005,7 +10011,7 @@
    "id": "section.L2-1/2X2-1/2X3/8",
    "category": "sections",
    "rule": "L2-1/2X2-1/2X3/8 — section properties (AISC)",
-   "value": "5.9 lb/ft; depth d = 2.5 in; area A = 1.73 in²",
+   "value": "5.9 lb/ft; leg = 2.5 in; area A = 1.73 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10021,7 +10027,7 @@
    "id": "section.L2-1/2X2-1/2X5/16",
    "category": "sections",
    "rule": "L2-1/2X2-1/2X5/16 — section properties (AISC)",
-   "value": "5 lb/ft; depth d = 2.5 in; area A = 1.46 in²",
+   "value": "5 lb/ft; leg = 2.5 in; area A = 1.46 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10037,7 +10043,7 @@
    "id": "section.L2-1/2X2-1/2X1/4",
    "category": "sections",
    "rule": "L2-1/2X2-1/2X1/4 — section properties (AISC)",
-   "value": "4.1 lb/ft; depth d = 2.5 in; area A = 1.19 in²",
+   "value": "4.1 lb/ft; leg = 2.5 in; area A = 1.19 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10053,7 +10059,7 @@
    "id": "section.L2-1/2X2-1/2X3/16",
    "category": "sections",
    "rule": "L2-1/2X2-1/2X3/16 — section properties (AISC)",
-   "value": "3.07 lb/ft; depth d = 2.5 in; area A = 0.901 in²",
+   "value": "3.07 lb/ft; leg = 2.5 in; area A = 0.901 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10069,7 +10075,7 @@
    "id": "section.L2-1/2X2X3/8",
    "category": "sections",
    "rule": "L2-1/2X2X3/8 — section properties (AISC)",
-   "value": "5.3 lb/ft; depth d = 2 in; area A = 1.55 in²",
+   "value": "5.3 lb/ft; leg = 2 in; area A = 1.55 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10085,7 +10091,7 @@
    "id": "section.L2-1/2X2X5/16",
    "category": "sections",
    "rule": "L2-1/2X2X5/16 — section properties (AISC)",
-   "value": "4.5 lb/ft; depth d = 2 in; area A = 1.32 in²",
+   "value": "4.5 lb/ft; leg = 2 in; area A = 1.32 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10101,7 +10107,7 @@
    "id": "section.L2-1/2X2X1/4",
    "category": "sections",
    "rule": "L2-1/2X2X1/4 — section properties (AISC)",
-   "value": "3.62 lb/ft; depth d = 2 in; area A = 1.07 in²",
+   "value": "3.62 lb/ft; leg = 2 in; area A = 1.07 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10117,7 +10123,7 @@
    "id": "section.L2-1/2X2X3/16",
    "category": "sections",
    "rule": "L2-1/2X2X3/16 — section properties (AISC)",
-   "value": "2.75 lb/ft; depth d = 2 in; area A = 0.818 in²",
+   "value": "2.75 lb/ft; leg = 2 in; area A = 0.818 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10133,7 +10139,7 @@
    "id": "section.L2-1/2X1-1/2X1/4",
    "category": "sections",
    "rule": "L2-1/2X1-1/2X1/4 — section properties (AISC)",
-   "value": "3.19 lb/ft; depth d = 1.5 in; area A = 0.947 in²",
+   "value": "3.19 lb/ft; leg = 1.5 in; area A = 0.947 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10149,7 +10155,7 @@
    "id": "section.L2-1/2X1-1/2X3/16",
    "category": "sections",
    "rule": "L2-1/2X1-1/2X3/16 — section properties (AISC)",
-   "value": "2.44 lb/ft; depth d = 1.5 in; area A = 0.724 in²",
+   "value": "2.44 lb/ft; leg = 1.5 in; area A = 0.724 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10165,7 +10171,7 @@
    "id": "section.L2X2X3/8",
    "category": "sections",
    "rule": "L2X2X3/8 — section properties (AISC)",
-   "value": "4.7 lb/ft; depth d = 2 in; area A = 1.37 in²",
+   "value": "4.7 lb/ft; leg = 2 in; area A = 1.37 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10181,7 +10187,7 @@
    "id": "section.L2X2X5/16",
    "category": "sections",
    "rule": "L2X2X5/16 — section properties (AISC)",
-   "value": "3.92 lb/ft; depth d = 2 in; area A = 1.16 in²",
+   "value": "3.92 lb/ft; leg = 2 in; area A = 1.16 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10197,7 +10203,7 @@
    "id": "section.L2X2X1/4",
    "category": "sections",
    "rule": "L2X2X1/4 — section properties (AISC)",
-   "value": "3.19 lb/ft; depth d = 2 in; area A = 0.944 in²",
+   "value": "3.19 lb/ft; leg = 2 in; area A = 0.944 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10213,7 +10219,7 @@
    "id": "section.L2X2X3/16",
    "category": "sections",
    "rule": "L2X2X3/16 — section properties (AISC)",
-   "value": "2.44 lb/ft; depth d = 2 in; area A = 0.722 in²",
+   "value": "2.44 lb/ft; leg = 2 in; area A = 0.722 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -10229,7 +10235,7 @@
    "id": "section.L2X2X1/8",
    "category": "sections",
    "rule": "L2X2X1/8 — section properties (AISC)",
-   "value": "1.65 lb/ft; depth d = 2 in; area A = 0.491 in²",
+   "value": "1.65 lb/ft; leg = 2 in; area A = 0.491 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "L",
@@ -33628,7 +33634,7 @@
    "id": "section.HSS20.000X0.500",
    "category": "sections",
    "rule": "HSS20.000X0.500 — section properties (AISC)",
-   "value": "104 lb/ft; depth d = 20 in; area A = 28.5 in²",
+   "value": "104 lb/ft; OD = 20 in; area A = 28.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33646,7 +33652,7 @@
    "id": "section.HSS20.000X0.375",
    "category": "sections",
    "rule": "HSS20.000X0.375 — section properties (AISC)",
-   "value": "78.67 lb/ft; depth d = 20 in; area A = 21.5 in²",
+   "value": "78.67 lb/ft; OD = 20 in; area A = 21.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33664,7 +33670,7 @@
    "id": "section.HSS18.000X0.500",
    "category": "sections",
    "rule": "HSS18.000X0.500 — section properties (AISC)",
-   "value": "93.54 lb/ft; depth d = 18 in; area A = 25.6 in²",
+   "value": "93.54 lb/ft; OD = 18 in; area A = 25.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33682,7 +33688,7 @@
    "id": "section.HSS18.000X0.375",
    "category": "sections",
    "rule": "HSS18.000X0.375 — section properties (AISC)",
-   "value": "70.66 lb/ft; depth d = 18 in; area A = 19.4 in²",
+   "value": "70.66 lb/ft; OD = 18 in; area A = 19.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33700,7 +33706,7 @@
    "id": "section.HSS16.000X0.625",
    "category": "sections",
    "rule": "HSS16.000X0.625 — section properties (AISC)",
-   "value": "103 lb/ft; depth d = 16 in; area A = 28.1 in²",
+   "value": "103 lb/ft; OD = 16 in; area A = 28.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33718,7 +33724,7 @@
    "id": "section.HSS16.000X0.500",
    "category": "sections",
    "rule": "HSS16.000X0.500 — section properties (AISC)",
-   "value": "82.85 lb/ft; depth d = 16 in; area A = 22.7 in²",
+   "value": "82.85 lb/ft; OD = 16 in; area A = 22.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33736,7 +33742,7 @@
    "id": "section.HSS16.000X0.438",
    "category": "sections",
    "rule": "HSS16.000X0.438 — section properties (AISC)",
-   "value": "72.87 lb/ft; depth d = 16 in; area A = 19.9 in²",
+   "value": "72.87 lb/ft; OD = 16 in; area A = 19.9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33754,7 +33760,7 @@
    "id": "section.HSS16.000X0.375",
    "category": "sections",
    "rule": "HSS16.000X0.375 — section properties (AISC)",
-   "value": "62.64 lb/ft; depth d = 16 in; area A = 17.2 in²",
+   "value": "62.64 lb/ft; OD = 16 in; area A = 17.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33772,7 +33778,7 @@
    "id": "section.HSS16.000X0.312",
    "category": "sections",
    "rule": "HSS16.000X0.312 — section properties (AISC)",
-   "value": "52.32 lb/ft; depth d = 16 in; area A = 14.4 in²",
+   "value": "52.32 lb/ft; OD = 16 in; area A = 14.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33790,7 +33796,7 @@
    "id": "section.HSS16.000X0.250",
    "category": "sections",
    "rule": "HSS16.000X0.250 — section properties (AISC)",
-   "value": "42.09 lb/ft; depth d = 16 in; area A = 11.5 in²",
+   "value": "42.09 lb/ft; OD = 16 in; area A = 11.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33808,7 +33814,7 @@
    "id": "section.HSS14.000X0.625",
    "category": "sections",
    "rule": "HSS14.000X0.625 — section properties (AISC)",
-   "value": "89.36 lb/ft; depth d = 14 in; area A = 24.5 in²",
+   "value": "89.36 lb/ft; OD = 14 in; area A = 24.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33826,7 +33832,7 @@
    "id": "section.HSS14.000X0.500",
    "category": "sections",
    "rule": "HSS14.000X0.500 — section properties (AISC)",
-   "value": "72.16 lb/ft; depth d = 14 in; area A = 19.8 in²",
+   "value": "72.16 lb/ft; OD = 14 in; area A = 19.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33844,7 +33850,7 @@
    "id": "section.HSS14.000X0.375",
    "category": "sections",
    "rule": "HSS14.000X0.375 — section properties (AISC)",
-   "value": "54.62 lb/ft; depth d = 14 in; area A = 15 in²",
+   "value": "54.62 lb/ft; OD = 14 in; area A = 15 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33862,7 +33868,7 @@
    "id": "section.HSS14.000X0.312",
    "category": "sections",
    "rule": "HSS14.000X0.312 — section properties (AISC)",
-   "value": "45.65 lb/ft; depth d = 14 in; area A = 12.5 in²",
+   "value": "45.65 lb/ft; OD = 14 in; area A = 12.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33880,7 +33886,7 @@
    "id": "section.HSS14.000X0.250",
    "category": "sections",
    "rule": "HSS14.000X0.250 — section properties (AISC)",
-   "value": "36.75 lb/ft; depth d = 14 in; area A = 10.1 in²",
+   "value": "36.75 lb/ft; OD = 14 in; area A = 10.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33898,7 +33904,7 @@
    "id": "section.HSS12.750X0.500",
    "category": "sections",
    "rule": "HSS12.750X0.500 — section properties (AISC)",
-   "value": "65.48 lb/ft; depth d = 12.8 in; area A = 17.9 in²",
+   "value": "65.48 lb/ft; OD = 12.8 in; area A = 17.9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33916,7 +33922,7 @@
    "id": "section.HSS12.750X0.375",
    "category": "sections",
    "rule": "HSS12.750X0.375 — section properties (AISC)",
-   "value": "49.61 lb/ft; depth d = 12.8 in; area A = 13.6 in²",
+   "value": "49.61 lb/ft; OD = 12.8 in; area A = 13.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33934,7 +33940,7 @@
    "id": "section.HSS12.750X0.250",
    "category": "sections",
    "rule": "HSS12.750X0.250 — section properties (AISC)",
-   "value": "33.41 lb/ft; depth d = 12.8 in; area A = 9.16 in²",
+   "value": "33.41 lb/ft; OD = 12.8 in; area A = 9.16 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33952,7 +33958,7 @@
    "id": "section.HSS10.750X0.500",
    "category": "sections",
    "rule": "HSS10.750X0.500 — section properties (AISC)",
-   "value": "54.79 lb/ft; depth d = 10.8 in; area A = 15 in²",
+   "value": "54.79 lb/ft; OD = 10.8 in; area A = 15 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33970,7 +33976,7 @@
    "id": "section.HSS10.750X0.375",
    "category": "sections",
    "rule": "HSS10.750X0.375 — section properties (AISC)",
-   "value": "41.59 lb/ft; depth d = 10.8 in; area A = 11.4 in²",
+   "value": "41.59 lb/ft; OD = 10.8 in; area A = 11.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -33988,7 +33994,7 @@
    "id": "section.HSS10.750X0.250",
    "category": "sections",
    "rule": "HSS10.750X0.250 — section properties (AISC)",
-   "value": "28.06 lb/ft; depth d = 10.8 in; area A = 7.7 in²",
+   "value": "28.06 lb/ft; OD = 10.8 in; area A = 7.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34006,7 +34012,7 @@
    "id": "section.HSS10.000X0.625",
    "category": "sections",
    "rule": "HSS10.000X0.625 — section properties (AISC)",
-   "value": "62.64 lb/ft; depth d = 10 in; area A = 17.2 in²",
+   "value": "62.64 lb/ft; OD = 10 in; area A = 17.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34024,7 +34030,7 @@
    "id": "section.HSS10.000X0.500",
    "category": "sections",
    "rule": "HSS10.000X0.500 — section properties (AISC)",
-   "value": "50.78 lb/ft; depth d = 10 in; area A = 13.9 in²",
+   "value": "50.78 lb/ft; OD = 10 in; area A = 13.9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34042,7 +34048,7 @@
    "id": "section.HSS10.000X0.375",
    "category": "sections",
    "rule": "HSS10.000X0.375 — section properties (AISC)",
-   "value": "38.58 lb/ft; depth d = 10 in; area A = 10.6 in²",
+   "value": "38.58 lb/ft; OD = 10 in; area A = 10.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34060,7 +34066,7 @@
    "id": "section.HSS10.000X0.312",
    "category": "sections",
    "rule": "HSS10.000X0.312 — section properties (AISC)",
-   "value": "32.31 lb/ft; depth d = 10 in; area A = 8.88 in²",
+   "value": "32.31 lb/ft; OD = 10 in; area A = 8.88 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34078,7 +34084,7 @@
    "id": "section.HSS10.000X0.250",
    "category": "sections",
    "rule": "HSS10.000X0.250 — section properties (AISC)",
-   "value": "26.06 lb/ft; depth d = 10 in; area A = 7.15 in²",
+   "value": "26.06 lb/ft; OD = 10 in; area A = 7.15 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34096,7 +34102,7 @@
    "id": "section.HSS10.000X0.188",
    "category": "sections",
    "rule": "HSS10.000X0.188 — section properties (AISC)",
-   "value": "19.72 lb/ft; depth d = 10 in; area A = 5.37 in²",
+   "value": "19.72 lb/ft; OD = 10 in; area A = 5.37 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34114,7 +34120,7 @@
    "id": "section.HSS9.625X0.500",
    "category": "sections",
    "rule": "HSS9.625X0.500 — section properties (AISC)",
-   "value": "48.77 lb/ft; depth d = 9.63 in; area A = 13.4 in²",
+   "value": "48.77 lb/ft; OD = 9.63 in; area A = 13.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34132,7 +34138,7 @@
    "id": "section.HSS9.625X0.375",
    "category": "sections",
    "rule": "HSS9.625X0.375 — section properties (AISC)",
-   "value": "37.08 lb/ft; depth d = 9.63 in; area A = 10.2 in²",
+   "value": "37.08 lb/ft; OD = 9.63 in; area A = 10.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34150,7 +34156,7 @@
    "id": "section.HSS9.625X0.312",
    "category": "sections",
    "rule": "HSS9.625X0.312 — section properties (AISC)",
-   "value": "31.06 lb/ft; depth d = 9.63 in; area A = 8.53 in²",
+   "value": "31.06 lb/ft; OD = 9.63 in; area A = 8.53 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34168,7 +34174,7 @@
    "id": "section.HSS9.625X0.250",
    "category": "sections",
    "rule": "HSS9.625X0.250 — section properties (AISC)",
-   "value": "25.06 lb/ft; depth d = 9.63 in; area A = 6.87 in²",
+   "value": "25.06 lb/ft; OD = 9.63 in; area A = 6.87 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34186,7 +34192,7 @@
    "id": "section.HSS9.625X0.188",
    "category": "sections",
    "rule": "HSS9.625X0.188 — section properties (AISC)",
-   "value": "18.97 lb/ft; depth d = 9.63 in; area A = 5.17 in²",
+   "value": "18.97 lb/ft; OD = 9.63 in; area A = 5.17 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34204,7 +34210,7 @@
    "id": "section.HSS8.625X0.625",
    "category": "sections",
    "rule": "HSS8.625X0.625 — section properties (AISC)",
-   "value": "53.45 lb/ft; depth d = 8.63 in; area A = 14.7 in²",
+   "value": "53.45 lb/ft; OD = 8.63 in; area A = 14.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34222,7 +34228,7 @@
    "id": "section.HSS8.625X0.500",
    "category": "sections",
    "rule": "HSS8.625X0.500 — section properties (AISC)",
-   "value": "43.43 lb/ft; depth d = 8.63 in; area A = 11.9 in²",
+   "value": "43.43 lb/ft; OD = 8.63 in; area A = 11.9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34240,7 +34246,7 @@
    "id": "section.HSS8.625X0.375",
    "category": "sections",
    "rule": "HSS8.625X0.375 — section properties (AISC)",
-   "value": "33.07 lb/ft; depth d = 8.63 in; area A = 9.07 in²",
+   "value": "33.07 lb/ft; OD = 8.63 in; area A = 9.07 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34258,7 +34264,7 @@
    "id": "section.HSS8.625X0.322",
    "category": "sections",
    "rule": "HSS8.625X0.322 — section properties (AISC)",
-   "value": "28.58 lb/ft; depth d = 8.63 in; area A = 7.85 in²",
+   "value": "28.58 lb/ft; OD = 8.63 in; area A = 7.85 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34276,7 +34282,7 @@
    "id": "section.HSS8.625X0.250",
    "category": "sections",
    "rule": "HSS8.625X0.250 — section properties (AISC)",
-   "value": "22.38 lb/ft; depth d = 8.63 in; area A = 6.14 in²",
+   "value": "22.38 lb/ft; OD = 8.63 in; area A = 6.14 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34294,7 +34300,7 @@
    "id": "section.HSS8.625X0.188",
    "category": "sections",
    "rule": "HSS8.625X0.188 — section properties (AISC)",
-   "value": "16.96 lb/ft; depth d = 8.63 in; area A = 4.62 in²",
+   "value": "16.96 lb/ft; OD = 8.63 in; area A = 4.62 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34312,7 +34318,7 @@
    "id": "section.HSS7.625X0.375",
    "category": "sections",
    "rule": "HSS7.625X0.375 — section properties (AISC)",
-   "value": "29.06 lb/ft; depth d = 7.63 in; area A = 7.98 in²",
+   "value": "29.06 lb/ft; OD = 7.63 in; area A = 7.98 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34330,7 +34336,7 @@
    "id": "section.HSS7.625X0.328",
    "category": "sections",
    "rule": "HSS7.625X0.328 — section properties (AISC)",
-   "value": "25.59 lb/ft; depth d = 7.63 in; area A = 7.01 in²",
+   "value": "25.59 lb/ft; OD = 7.63 in; area A = 7.01 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34348,7 +34354,7 @@
    "id": "section.HSS7.500X0.500",
    "category": "sections",
    "rule": "HSS7.500X0.500 — section properties (AISC)",
-   "value": "37.42 lb/ft; depth d = 7.5 in; area A = 10.3 in²",
+   "value": "37.42 lb/ft; OD = 7.5 in; area A = 10.3 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34366,7 +34372,7 @@
    "id": "section.HSS7.500X0.375",
    "category": "sections",
    "rule": "HSS7.500X0.375 — section properties (AISC)",
-   "value": "28.56 lb/ft; depth d = 7.5 in; area A = 7.84 in²",
+   "value": "28.56 lb/ft; OD = 7.5 in; area A = 7.84 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34384,7 +34390,7 @@
    "id": "section.HSS7.500X0.312",
    "category": "sections",
    "rule": "HSS7.500X0.312 — section properties (AISC)",
-   "value": "23.97 lb/ft; depth d = 7.5 in; area A = 6.59 in²",
+   "value": "23.97 lb/ft; OD = 7.5 in; area A = 6.59 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34402,7 +34408,7 @@
    "id": "section.HSS7.500X0.250",
    "category": "sections",
    "rule": "HSS7.500X0.250 — section properties (AISC)",
-   "value": "19.38 lb/ft; depth d = 7.5 in; area A = 5.32 in²",
+   "value": "19.38 lb/ft; OD = 7.5 in; area A = 5.32 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34420,7 +34426,7 @@
    "id": "section.HSS7.500X0.188",
    "category": "sections",
    "rule": "HSS7.500X0.188 — section properties (AISC)",
-   "value": "14.7 lb/ft; depth d = 7.5 in; area A = 4 in²",
+   "value": "14.7 lb/ft; OD = 7.5 in; area A = 4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34438,7 +34444,7 @@
    "id": "section.HSS7.000X0.500",
    "category": "sections",
    "rule": "HSS7.000X0.500 — section properties (AISC)",
-   "value": "34.74 lb/ft; depth d = 7 in; area A = 9.55 in²",
+   "value": "34.74 lb/ft; OD = 7 in; area A = 9.55 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34456,7 +34462,7 @@
    "id": "section.HSS7.000X0.375",
    "category": "sections",
    "rule": "HSS7.000X0.375 — section properties (AISC)",
-   "value": "26.56 lb/ft; depth d = 7 in; area A = 7.29 in²",
+   "value": "26.56 lb/ft; OD = 7 in; area A = 7.29 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34474,7 +34480,7 @@
    "id": "section.HSS7.000X0.312",
    "category": "sections",
    "rule": "HSS7.000X0.312 — section properties (AISC)",
-   "value": "22.31 lb/ft; depth d = 7 in; area A = 6.13 in²",
+   "value": "22.31 lb/ft; OD = 7 in; area A = 6.13 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34492,7 +34498,7 @@
    "id": "section.HSS7.000X0.250",
    "category": "sections",
    "rule": "HSS7.000X0.250 — section properties (AISC)",
-   "value": "18.04 lb/ft; depth d = 7 in; area A = 4.95 in²",
+   "value": "18.04 lb/ft; OD = 7 in; area A = 4.95 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34510,7 +34516,7 @@
    "id": "section.HSS7.000X0.188",
    "category": "sections",
    "rule": "HSS7.000X0.188 — section properties (AISC)",
-   "value": "13.69 lb/ft; depth d = 7 in; area A = 3.73 in²",
+   "value": "13.69 lb/ft; OD = 7 in; area A = 3.73 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34528,7 +34534,7 @@
    "id": "section.HSS7.000X0.125",
    "category": "sections",
    "rule": "HSS7.000X0.125 — section properties (AISC)",
-   "value": "9.19 lb/ft; depth d = 7 in; area A = 2.51 in²",
+   "value": "9.19 lb/ft; OD = 7 in; area A = 2.51 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34546,7 +34552,7 @@
    "id": "section.HSS6.875X0.500",
    "category": "sections",
    "rule": "HSS6.875X0.500 — section properties (AISC)",
-   "value": "34.07 lb/ft; depth d = 6.88 in; area A = 9.36 in²",
+   "value": "34.07 lb/ft; OD = 6.88 in; area A = 9.36 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34564,7 +34570,7 @@
    "id": "section.HSS6.875X0.375",
    "category": "sections",
    "rule": "HSS6.875X0.375 — section properties (AISC)",
-   "value": "26.06 lb/ft; depth d = 6.88 in; area A = 7.16 in²",
+   "value": "26.06 lb/ft; OD = 6.88 in; area A = 7.16 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34582,7 +34588,7 @@
    "id": "section.HSS6.875X0.312",
    "category": "sections",
    "rule": "HSS6.875X0.312 — section properties (AISC)",
-   "value": "21.89 lb/ft; depth d = 6.88 in; area A = 6.02 in²",
+   "value": "21.89 lb/ft; OD = 6.88 in; area A = 6.02 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34600,7 +34606,7 @@
    "id": "section.HSS6.875X0.250",
    "category": "sections",
    "rule": "HSS6.875X0.250 — section properties (AISC)",
-   "value": "17.71 lb/ft; depth d = 6.88 in; area A = 4.86 in²",
+   "value": "17.71 lb/ft; OD = 6.88 in; area A = 4.86 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34618,7 +34624,7 @@
    "id": "section.HSS6.875X0.188",
    "category": "sections",
    "rule": "HSS6.875X0.188 — section properties (AISC)",
-   "value": "13.44 lb/ft; depth d = 6.88 in; area A = 3.66 in²",
+   "value": "13.44 lb/ft; OD = 6.88 in; area A = 3.66 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34636,7 +34642,7 @@
    "id": "section.HSS6.625X0.500",
    "category": "sections",
    "rule": "HSS6.625X0.500 — section properties (AISC)",
-   "value": "32.74 lb/ft; depth d = 6.63 in; area A = 9 in²",
+   "value": "32.74 lb/ft; OD = 6.63 in; area A = 9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34654,7 +34660,7 @@
    "id": "section.HSS6.625X0.432",
    "category": "sections",
    "rule": "HSS6.625X0.432 — section properties (AISC)",
-   "value": "28.6 lb/ft; depth d = 6.63 in; area A = 7.86 in²",
+   "value": "28.6 lb/ft; OD = 6.63 in; area A = 7.86 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34672,7 +34678,7 @@
    "id": "section.HSS6.625X0.375",
    "category": "sections",
    "rule": "HSS6.625X0.375 — section properties (AISC)",
-   "value": "25.06 lb/ft; depth d = 6.63 in; area A = 6.88 in²",
+   "value": "25.06 lb/ft; OD = 6.63 in; area A = 6.88 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34690,7 +34696,7 @@
    "id": "section.HSS6.625X0.312",
    "category": "sections",
    "rule": "HSS6.625X0.312 — section properties (AISC)",
-   "value": "21.06 lb/ft; depth d = 6.63 in; area A = 5.79 in²",
+   "value": "21.06 lb/ft; OD = 6.63 in; area A = 5.79 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34708,7 +34714,7 @@
    "id": "section.HSS6.625X0.280",
    "category": "sections",
    "rule": "HSS6.625X0.280 — section properties (AISC)",
-   "value": "18.99 lb/ft; depth d = 6.63 in; area A = 5.2 in²",
+   "value": "18.99 lb/ft; OD = 6.63 in; area A = 5.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34726,7 +34732,7 @@
    "id": "section.HSS6.625X0.250",
    "category": "sections",
    "rule": "HSS6.625X0.250 — section properties (AISC)",
-   "value": "17.04 lb/ft; depth d = 6.63 in; area A = 4.68 in²",
+   "value": "17.04 lb/ft; OD = 6.63 in; area A = 4.68 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34744,7 +34750,7 @@
    "id": "section.HSS6.625X0.188",
    "category": "sections",
    "rule": "HSS6.625X0.188 — section properties (AISC)",
-   "value": "12.94 lb/ft; depth d = 6.63 in; area A = 3.53 in²",
+   "value": "12.94 lb/ft; OD = 6.63 in; area A = 3.53 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34762,7 +34768,7 @@
    "id": "section.HSS6.625X0.125",
    "category": "sections",
    "rule": "HSS6.625X0.125 — section properties (AISC)",
-   "value": "8.69 lb/ft; depth d = 6.63 in; area A = 2.37 in²",
+   "value": "8.69 lb/ft; OD = 6.63 in; area A = 2.37 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34780,7 +34786,7 @@
    "id": "section.HSS6.000X0.500",
    "category": "sections",
    "rule": "HSS6.000X0.500 — section properties (AISC)",
-   "value": "29.4 lb/ft; depth d = 6 in; area A = 8.09 in²",
+   "value": "29.4 lb/ft; OD = 6 in; area A = 8.09 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34798,7 +34804,7 @@
    "id": "section.HSS6.000X0.375",
    "category": "sections",
    "rule": "HSS6.000X0.375 — section properties (AISC)",
-   "value": "22.55 lb/ft; depth d = 6 in; area A = 6.2 in²",
+   "value": "22.55 lb/ft; OD = 6 in; area A = 6.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34816,7 +34822,7 @@
    "id": "section.HSS6.000X0.312",
    "category": "sections",
    "rule": "HSS6.000X0.312 — section properties (AISC)",
-   "value": "18.97 lb/ft; depth d = 6 in; area A = 5.22 in²",
+   "value": "18.97 lb/ft; OD = 6 in; area A = 5.22 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34834,7 +34840,7 @@
    "id": "section.HSS6.000X0.280",
    "category": "sections",
    "rule": "HSS6.000X0.280 — section properties (AISC)",
-   "value": "17.12 lb/ft; depth d = 6 in; area A = 4.69 in²",
+   "value": "17.12 lb/ft; OD = 6 in; area A = 4.69 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34852,7 +34858,7 @@
    "id": "section.HSS6.000X0.250",
    "category": "sections",
    "rule": "HSS6.000X0.250 — section properties (AISC)",
-   "value": "15.37 lb/ft; depth d = 6 in; area A = 4.22 in²",
+   "value": "15.37 lb/ft; OD = 6 in; area A = 4.22 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34870,7 +34876,7 @@
    "id": "section.HSS6.000X0.188",
    "category": "sections",
    "rule": "HSS6.000X0.188 — section properties (AISC)",
-   "value": "11.68 lb/ft; depth d = 6 in; area A = 3.18 in²",
+   "value": "11.68 lb/ft; OD = 6 in; area A = 3.18 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34888,7 +34894,7 @@
    "id": "section.HSS6.000X0.125",
    "category": "sections",
    "rule": "HSS6.000X0.125 — section properties (AISC)",
-   "value": "7.85 lb/ft; depth d = 6 in; area A = 2.14 in²",
+   "value": "7.85 lb/ft; OD = 6 in; area A = 2.14 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34906,7 +34912,7 @@
    "id": "section.HSS5.563X0.500",
    "category": "sections",
    "rule": "HSS5.563X0.500 — section properties (AISC)",
-   "value": "27.06 lb/ft; depth d = 5.56 in; area A = 7.45 in²",
+   "value": "27.06 lb/ft; OD = 5.56 in; area A = 7.45 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34924,7 +34930,7 @@
    "id": "section.HSS5.563X0.375",
    "category": "sections",
    "rule": "HSS5.563X0.375 — section properties (AISC)",
-   "value": "20.8 lb/ft; depth d = 5.56 in; area A = 5.72 in²",
+   "value": "20.8 lb/ft; OD = 5.56 in; area A = 5.72 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34942,7 +34948,7 @@
    "id": "section.HSS5.563X0.258",
    "category": "sections",
    "rule": "HSS5.563X0.258 — section properties (AISC)",
-   "value": "14.63 lb/ft; depth d = 5.56 in; area A = 4.01 in²",
+   "value": "14.63 lb/ft; OD = 5.56 in; area A = 4.01 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34960,7 +34966,7 @@
    "id": "section.HSS5.563X0.188",
    "category": "sections",
    "rule": "HSS5.563X0.188 — section properties (AISC)",
-   "value": "10.8 lb/ft; depth d = 5.56 in; area A = 2.95 in²",
+   "value": "10.8 lb/ft; OD = 5.56 in; area A = 2.95 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34978,7 +34984,7 @@
    "id": "section.HSS5.563X0.134",
    "category": "sections",
    "rule": "HSS5.563X0.134 — section properties (AISC)",
-   "value": "7.78 lb/ft; depth d = 5.56 in; area A = 2.12 in²",
+   "value": "7.78 lb/ft; OD = 5.56 in; area A = 2.12 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -34996,7 +35002,7 @@
    "id": "section.HSS5.500X0.500",
    "category": "sections",
    "rule": "HSS5.500X0.500 — section properties (AISC)",
-   "value": "26.73 lb/ft; depth d = 5.5 in; area A = 7.36 in²",
+   "value": "26.73 lb/ft; OD = 5.5 in; area A = 7.36 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35014,7 +35020,7 @@
    "id": "section.HSS5.500X0.375",
    "category": "sections",
    "rule": "HSS5.500X0.375 — section properties (AISC)",
-   "value": "20.55 lb/ft; depth d = 5.5 in; area A = 5.65 in²",
+   "value": "20.55 lb/ft; OD = 5.5 in; area A = 5.65 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35032,7 +35038,7 @@
    "id": "section.HSS5.500X0.258",
    "category": "sections",
    "rule": "HSS5.500X0.258 — section properties (AISC)",
-   "value": "14.46 lb/ft; depth d = 5.5 in; area A = 3.97 in²",
+   "value": "14.46 lb/ft; OD = 5.5 in; area A = 3.97 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35050,7 +35056,7 @@
    "id": "section.HSS5.000X0.500",
    "category": "sections",
    "rule": "HSS5.000X0.500 — section properties (AISC)",
-   "value": "24.05 lb/ft; depth d = 5 in; area A = 6.62 in²",
+   "value": "24.05 lb/ft; OD = 5 in; area A = 6.62 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35068,7 +35074,7 @@
    "id": "section.HSS5.000X0.375",
    "category": "sections",
    "rule": "HSS5.000X0.375 — section properties (AISC)",
-   "value": "18.54 lb/ft; depth d = 5 in; area A = 5.1 in²",
+   "value": "18.54 lb/ft; OD = 5 in; area A = 5.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35086,7 +35092,7 @@
    "id": "section.HSS5.000X0.312",
    "category": "sections",
    "rule": "HSS5.000X0.312 — section properties (AISC)",
-   "value": "15.64 lb/ft; depth d = 5 in; area A = 4.3 in²",
+   "value": "15.64 lb/ft; OD = 5 in; area A = 4.3 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35104,7 +35110,7 @@
    "id": "section.HSS5.000X0.258",
    "category": "sections",
    "rule": "HSS5.000X0.258 — section properties (AISC)",
-   "value": "13.08 lb/ft; depth d = 5 in; area A = 3.59 in²",
+   "value": "13.08 lb/ft; OD = 5 in; area A = 3.59 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35122,7 +35128,7 @@
    "id": "section.HSS5.000X0.250",
    "category": "sections",
    "rule": "HSS5.000X0.250 — section properties (AISC)",
-   "value": "12.69 lb/ft; depth d = 5 in; area A = 3.49 in²",
+   "value": "12.69 lb/ft; OD = 5 in; area A = 3.49 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35140,7 +35146,7 @@
    "id": "section.HSS5.000X0.188",
    "category": "sections",
    "rule": "HSS5.000X0.188 — section properties (AISC)",
-   "value": "9.67 lb/ft; depth d = 5 in; area A = 2.64 in²",
+   "value": "9.67 lb/ft; OD = 5 in; area A = 2.64 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35158,7 +35164,7 @@
    "id": "section.HSS5.000X0.125",
    "category": "sections",
    "rule": "HSS5.000X0.125 — section properties (AISC)",
-   "value": "6.51 lb/ft; depth d = 5 in; area A = 1.78 in²",
+   "value": "6.51 lb/ft; OD = 5 in; area A = 1.78 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35176,7 +35182,7 @@
    "id": "section.HSS4.500X0.375",
    "category": "sections",
    "rule": "HSS4.500X0.375 — section properties (AISC)",
-   "value": "16.54 lb/ft; depth d = 4.5 in; area A = 4.55 in²",
+   "value": "16.54 lb/ft; OD = 4.5 in; area A = 4.55 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35194,7 +35200,7 @@
    "id": "section.HSS4.500X0.337",
    "category": "sections",
    "rule": "HSS4.500X0.337 — section properties (AISC)",
-   "value": "15 lb/ft; depth d = 4.5 in; area A = 4.12 in²",
+   "value": "15 lb/ft; OD = 4.5 in; area A = 4.12 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35212,7 +35218,7 @@
    "id": "section.HSS4.500X0.237",
    "category": "sections",
    "rule": "HSS4.500X0.237 — section properties (AISC)",
-   "value": "10.8 lb/ft; depth d = 4.5 in; area A = 2.96 in²",
+   "value": "10.8 lb/ft; OD = 4.5 in; area A = 2.96 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35230,7 +35236,7 @@
    "id": "section.HSS4.500X0.188",
    "category": "sections",
    "rule": "HSS4.500X0.188 — section properties (AISC)",
-   "value": "8.67 lb/ft; depth d = 4.5 in; area A = 2.36 in²",
+   "value": "8.67 lb/ft; OD = 4.5 in; area A = 2.36 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35248,7 +35254,7 @@
    "id": "section.HSS4.500X0.125",
    "category": "sections",
    "rule": "HSS4.500X0.125 — section properties (AISC)",
-   "value": "5.85 lb/ft; depth d = 4.5 in; area A = 1.6 in²",
+   "value": "5.85 lb/ft; OD = 4.5 in; area A = 1.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35266,7 +35272,7 @@
    "id": "section.HSS4.000X0.313",
    "category": "sections",
    "rule": "HSS4.000X0.313 — section properties (AISC)",
-   "value": "12.34 lb/ft; depth d = 4 in; area A = 3.39 in²",
+   "value": "12.34 lb/ft; OD = 4 in; area A = 3.39 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35284,7 +35290,7 @@
    "id": "section.HSS4.000X0.250",
    "category": "sections",
    "rule": "HSS4.000X0.250 — section properties (AISC)",
-   "value": "10 lb/ft; depth d = 4 in; area A = 2.76 in²",
+   "value": "10 lb/ft; OD = 4 in; area A = 2.76 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35302,7 +35308,7 @@
    "id": "section.HSS4.000X0.237",
    "category": "sections",
    "rule": "HSS4.000X0.237 — section properties (AISC)",
-   "value": "9.53 lb/ft; depth d = 4 in; area A = 2.61 in²",
+   "value": "9.53 lb/ft; OD = 4 in; area A = 2.61 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35320,7 +35326,7 @@
    "id": "section.HSS4.000X0.226",
    "category": "sections",
    "rule": "HSS4.000X0.226 — section properties (AISC)",
-   "value": "9.12 lb/ft; depth d = 4 in; area A = 2.5 in²",
+   "value": "9.12 lb/ft; OD = 4 in; area A = 2.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35338,7 +35344,7 @@
    "id": "section.HSS4.000X0.220",
    "category": "sections",
    "rule": "HSS4.000X0.220 — section properties (AISC)",
-   "value": "8.89 lb/ft; depth d = 4 in; area A = 2.44 in²",
+   "value": "8.89 lb/ft; OD = 4 in; area A = 2.44 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35356,7 +35362,7 @@
    "id": "section.HSS4.000X0.188",
    "category": "sections",
    "rule": "HSS4.000X0.188 — section properties (AISC)",
-   "value": "7.66 lb/ft; depth d = 4 in; area A = 2.09 in²",
+   "value": "7.66 lb/ft; OD = 4 in; area A = 2.09 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35374,7 +35380,7 @@
    "id": "section.HSS4.000X0.125",
    "category": "sections",
    "rule": "HSS4.000X0.125 — section properties (AISC)",
-   "value": "5.18 lb/ft; depth d = 4 in; area A = 1.42 in²",
+   "value": "5.18 lb/ft; OD = 4 in; area A = 1.42 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35392,7 +35398,7 @@
    "id": "section.HSS3.500X0.313",
    "category": "sections",
    "rule": "HSS3.500X0.313 — section properties (AISC)",
-   "value": "10.66 lb/ft; depth d = 3.5 in; area A = 2.93 in²",
+   "value": "10.66 lb/ft; OD = 3.5 in; area A = 2.93 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35410,7 +35416,7 @@
    "id": "section.HSS3.500X0.300",
    "category": "sections",
    "rule": "HSS3.500X0.300 — section properties (AISC)",
-   "value": "10.26 lb/ft; depth d = 3.5 in; area A = 2.82 in²",
+   "value": "10.26 lb/ft; OD = 3.5 in; area A = 2.82 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35428,7 +35434,7 @@
    "id": "section.HSS3.500X0.250",
    "category": "sections",
    "rule": "HSS3.500X0.250 — section properties (AISC)",
-   "value": "8.69 lb/ft; depth d = 3.5 in; area A = 2.39 in²",
+   "value": "8.69 lb/ft; OD = 3.5 in; area A = 2.39 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35446,7 +35452,7 @@
    "id": "section.HSS3.500X0.216",
    "category": "sections",
    "rule": "HSS3.500X0.216 — section properties (AISC)",
-   "value": "7.58 lb/ft; depth d = 3.5 in; area A = 2.08 in²",
+   "value": "7.58 lb/ft; OD = 3.5 in; area A = 2.08 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35464,7 +35470,7 @@
    "id": "section.HSS3.500X0.203",
    "category": "sections",
    "rule": "HSS3.500X0.203 — section properties (AISC)",
-   "value": "7.15 lb/ft; depth d = 3.5 in; area A = 1.97 in²",
+   "value": "7.15 lb/ft; OD = 3.5 in; area A = 1.97 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35482,7 +35488,7 @@
    "id": "section.HSS3.500X0.188",
    "category": "sections",
    "rule": "HSS3.500X0.188 — section properties (AISC)",
-   "value": "6.66 lb/ft; depth d = 3.5 in; area A = 1.82 in²",
+   "value": "6.66 lb/ft; OD = 3.5 in; area A = 1.82 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35500,7 +35506,7 @@
    "id": "section.HSS3.500X0.125",
    "category": "sections",
    "rule": "HSS3.500X0.125 — section properties (AISC)",
-   "value": "4.51 lb/ft; depth d = 3.5 in; area A = 1.23 in²",
+   "value": "4.51 lb/ft; OD = 3.5 in; area A = 1.23 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35518,7 +35524,7 @@
    "id": "section.HSS3.000X0.250",
    "category": "sections",
    "rule": "HSS3.000X0.250 — section properties (AISC)",
-   "value": "7.35 lb/ft; depth d = 3 in; area A = 2.03 in²",
+   "value": "7.35 lb/ft; OD = 3 in; area A = 2.03 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35536,7 +35542,7 @@
    "id": "section.HSS3.000X0.216",
    "category": "sections",
    "rule": "HSS3.000X0.216 — section properties (AISC)",
-   "value": "6.43 lb/ft; depth d = 3 in; area A = 1.77 in²",
+   "value": "6.43 lb/ft; OD = 3 in; area A = 1.77 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35554,7 +35560,7 @@
    "id": "section.HSS3.000X0.203",
    "category": "sections",
    "rule": "HSS3.000X0.203 — section properties (AISC)",
-   "value": "6.07 lb/ft; depth d = 3 in; area A = 1.67 in²",
+   "value": "6.07 lb/ft; OD = 3 in; area A = 1.67 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35572,7 +35578,7 @@
    "id": "section.HSS3.000X0.188",
    "category": "sections",
    "rule": "HSS3.000X0.188 — section properties (AISC)",
-   "value": "5.65 lb/ft; depth d = 3 in; area A = 1.54 in²",
+   "value": "5.65 lb/ft; OD = 3 in; area A = 1.54 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35590,7 +35596,7 @@
    "id": "section.HSS3.000X0.152",
    "category": "sections",
    "rule": "HSS3.000X0.152 — section properties (AISC)",
-   "value": "4.63 lb/ft; depth d = 3 in; area A = 1.27 in²",
+   "value": "4.63 lb/ft; OD = 3 in; area A = 1.27 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35608,7 +35614,7 @@
    "id": "section.HSS3.000X0.134",
    "category": "sections",
    "rule": "HSS3.000X0.134 — section properties (AISC)",
-   "value": "4.11 lb/ft; depth d = 3 in; area A = 1.12 in²",
+   "value": "4.11 lb/ft; OD = 3 in; area A = 1.12 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35626,7 +35632,7 @@
    "id": "section.HSS3.000X0.125",
    "category": "sections",
    "rule": "HSS3.000X0.125 — section properties (AISC)",
-   "value": "3.84 lb/ft; depth d = 3 in; area A = 1.05 in²",
+   "value": "3.84 lb/ft; OD = 3 in; area A = 1.05 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35644,7 +35650,7 @@
    "id": "section.HSS2.875X0.250",
    "category": "sections",
    "rule": "HSS2.875X0.250 — section properties (AISC)",
-   "value": "7.02 lb/ft; depth d = 2.88 in; area A = 1.93 in²",
+   "value": "7.02 lb/ft; OD = 2.88 in; area A = 1.93 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35662,7 +35668,7 @@
    "id": "section.HSS2.875X0.203",
    "category": "sections",
    "rule": "HSS2.875X0.203 — section properties (AISC)",
-   "value": "5.8 lb/ft; depth d = 2.88 in; area A = 1.59 in²",
+   "value": "5.8 lb/ft; OD = 2.88 in; area A = 1.59 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35680,7 +35686,7 @@
    "id": "section.HSS2.875X0.188",
    "category": "sections",
    "rule": "HSS2.875X0.188 — section properties (AISC)",
-   "value": "5.4 lb/ft; depth d = 2.88 in; area A = 1.48 in²",
+   "value": "5.4 lb/ft; OD = 2.88 in; area A = 1.48 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35698,7 +35704,7 @@
    "id": "section.HSS2.875X0.125",
    "category": "sections",
    "rule": "HSS2.875X0.125 — section properties (AISC)",
-   "value": "3.67 lb/ft; depth d = 2.88 in; area A = 1.01 in²",
+   "value": "3.67 lb/ft; OD = 2.88 in; area A = 1.01 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35716,7 +35722,7 @@
    "id": "section.HSS2.500X0.250",
    "category": "sections",
    "rule": "HSS2.500X0.250 — section properties (AISC)",
-   "value": "6.01 lb/ft; depth d = 2.5 in; area A = 1.66 in²",
+   "value": "6.01 lb/ft; OD = 2.5 in; area A = 1.66 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35734,7 +35740,7 @@
    "id": "section.HSS2.500X0.188",
    "category": "sections",
    "rule": "HSS2.500X0.188 — section properties (AISC)",
-   "value": "4.65 lb/ft; depth d = 2.5 in; area A = 1.27 in²",
+   "value": "4.65 lb/ft; OD = 2.5 in; area A = 1.27 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35752,7 +35758,7 @@
    "id": "section.HSS2.500X0.125",
    "category": "sections",
    "rule": "HSS2.500X0.125 — section properties (AISC)",
-   "value": "3.17 lb/ft; depth d = 2.5 in; area A = 0.869 in²",
+   "value": "3.17 lb/ft; OD = 2.5 in; area A = 0.869 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35770,7 +35776,7 @@
    "id": "section.HSS2.375X0.250",
    "category": "sections",
    "rule": "HSS2.375X0.250 — section properties (AISC)",
-   "value": "5.68 lb/ft; depth d = 2.38 in; area A = 1.57 in²",
+   "value": "5.68 lb/ft; OD = 2.38 in; area A = 1.57 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35788,7 +35794,7 @@
    "id": "section.HSS2.375X0.218",
    "category": "sections",
    "rule": "HSS2.375X0.218 — section properties (AISC)",
-   "value": "5.03 lb/ft; depth d = 2.38 in; area A = 1.39 in²",
+   "value": "5.03 lb/ft; OD = 2.38 in; area A = 1.39 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35806,7 +35812,7 @@
    "id": "section.HSS2.375X0.188",
    "category": "sections",
    "rule": "HSS2.375X0.188 — section properties (AISC)",
-   "value": "4.4 lb/ft; depth d = 2.38 in; area A = 1.2 in²",
+   "value": "4.4 lb/ft; OD = 2.38 in; area A = 1.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35824,7 +35830,7 @@
    "id": "section.HSS2.375X0.154",
    "category": "sections",
    "rule": "HSS2.375X0.154 — section properties (AISC)",
-   "value": "3.66 lb/ft; depth d = 2.38 in; area A = 1 in²",
+   "value": "3.66 lb/ft; OD = 2.38 in; area A = 1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35842,7 +35848,7 @@
    "id": "section.HSS2.375X0.125",
    "category": "sections",
    "rule": "HSS2.375X0.125 — section properties (AISC)",
-   "value": "3.01 lb/ft; depth d = 2.38 in; area A = 0.823 in²",
+   "value": "3.01 lb/ft; OD = 2.38 in; area A = 0.823 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35860,7 +35866,7 @@
    "id": "section.HSS1.900X0.188",
    "category": "sections",
    "rule": "HSS1.900X0.188 — section properties (AISC)",
-   "value": "3.44 lb/ft; depth d = 1.9 in; area A = 0.943 in²",
+   "value": "3.44 lb/ft; OD = 1.9 in; area A = 0.943 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35878,7 +35884,7 @@
    "id": "section.HSS1.900X0.145",
    "category": "sections",
    "rule": "HSS1.900X0.145 — section properties (AISC)",
-   "value": "2.72 lb/ft; depth d = 1.9 in; area A = 0.749 in²",
+   "value": "2.72 lb/ft; OD = 1.9 in; area A = 0.749 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35896,7 +35902,7 @@
    "id": "section.HSS1.900X0.120",
    "category": "sections",
    "rule": "HSS1.900X0.120 — section properties (AISC)",
-   "value": "2.28 lb/ft; depth d = 1.9 in; area A = 0.624 in²",
+   "value": "2.28 lb/ft; OD = 1.9 in; area A = 0.624 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35914,7 +35920,7 @@
    "id": "section.HSS1.660X0.140",
    "category": "sections",
    "rule": "HSS1.660X0.140 — section properties (AISC)",
-   "value": "2.27 lb/ft; depth d = 1.66 in; area A = 0.625 in²",
+   "value": "2.27 lb/ft; OD = 1.66 in; area A = 0.625 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "HSS",
@@ -35932,7 +35938,7 @@
    "id": "section.Pipe26STD",
    "category": "sections",
    "rule": "Pipe26STD — section properties (AISC)",
-   "value": "103 lb/ft; depth d = 26 in; area A = 28.2 in²",
+   "value": "103 lb/ft; OD = 26 in; area A = 28.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -35950,7 +35956,7 @@
    "id": "section.Pipe24STD",
    "category": "sections",
    "rule": "Pipe24STD — section properties (AISC)",
-   "value": "94.7 lb/ft; depth d = 24 in; area A = 26 in²",
+   "value": "94.7 lb/ft; OD = 24 in; area A = 26 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -35968,7 +35974,7 @@
    "id": "section.Pipe20STD",
    "category": "sections",
    "rule": "Pipe20STD — section properties (AISC)",
-   "value": "78.7 lb/ft; depth d = 20 in; area A = 21.6 in²",
+   "value": "78.7 lb/ft; OD = 20 in; area A = 21.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -35986,7 +35992,7 @@
    "id": "section.Pipe18STD",
    "category": "sections",
    "rule": "Pipe18STD — section properties (AISC)",
-   "value": "70.7 lb/ft; depth d = 18 in; area A = 19.4 in²",
+   "value": "70.7 lb/ft; OD = 18 in; area A = 19.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36004,7 +36010,7 @@
    "id": "section.Pipe16STD",
    "category": "sections",
    "rule": "Pipe16STD — section properties (AISC)",
-   "value": "62.6 lb/ft; depth d = 16 in; area A = 17.2 in²",
+   "value": "62.6 lb/ft; OD = 16 in; area A = 17.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36022,7 +36028,7 @@
    "id": "section.Pipe14STD",
    "category": "sections",
    "rule": "Pipe14STD — section properties (AISC)",
-   "value": "54.6 lb/ft; depth d = 14 in; area A = 15 in²",
+   "value": "54.6 lb/ft; OD = 14 in; area A = 15 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36040,7 +36046,7 @@
    "id": "section.Pipe12STD",
    "category": "sections",
    "rule": "Pipe12STD — section properties (AISC)",
-   "value": "49.6 lb/ft; depth d = 12.75 in; area A = 13.7 in²",
+   "value": "49.6 lb/ft; OD = 12.75 in; area A = 13.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36058,7 +36064,7 @@
    "id": "section.Pipe10STD",
    "category": "sections",
    "rule": "Pipe10STD — section properties (AISC)",
-   "value": "40.5 lb/ft; depth d = 10.75 in; area A = 11.5 in²",
+   "value": "40.5 lb/ft; OD = 10.75 in; area A = 11.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36076,7 +36082,7 @@
    "id": "section.Pipe8STD",
    "category": "sections",
    "rule": "Pipe8STD — section properties (AISC)",
-   "value": "28.6 lb/ft; depth d = 8.625 in; area A = 7.85 in²",
+   "value": "28.6 lb/ft; OD = 8.625 in; area A = 7.85 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36094,7 +36100,7 @@
    "id": "section.Pipe6STD",
    "category": "sections",
    "rule": "Pipe6STD — section properties (AISC)",
-   "value": "19 lb/ft; depth d = 6.625 in; area A = 5.2 in²",
+   "value": "19 lb/ft; OD = 6.625 in; area A = 5.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36112,7 +36118,7 @@
    "id": "section.Pipe5STD",
    "category": "sections",
    "rule": "Pipe5STD — section properties (AISC)",
-   "value": "14.6 lb/ft; depth d = 5.563 in; area A = 4.01 in²",
+   "value": "14.6 lb/ft; OD = 5.563 in; area A = 4.01 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36130,7 +36136,7 @@
    "id": "section.Pipe4STD",
    "category": "sections",
    "rule": "Pipe4STD — section properties (AISC)",
-   "value": "10.8 lb/ft; depth d = 4.5 in; area A = 2.96 in²",
+   "value": "10.8 lb/ft; OD = 4.5 in; area A = 2.96 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36148,7 +36154,7 @@
    "id": "section.Pipe3-1/2STD",
    "category": "sections",
    "rule": "Pipe3-1/2STD — section properties (AISC)",
-   "value": "9.12 lb/ft; depth d = 4 in; area A = 2.5 in²",
+   "value": "9.12 lb/ft; OD = 4 in; area A = 2.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36166,7 +36172,7 @@
    "id": "section.Pipe3STD",
    "category": "sections",
    "rule": "Pipe3STD — section properties (AISC)",
-   "value": "7.58 lb/ft; depth d = 3.5 in; area A = 2.07 in²",
+   "value": "7.58 lb/ft; OD = 3.5 in; area A = 2.07 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36184,7 +36190,7 @@
    "id": "section.Pipe2-1/2STD",
    "category": "sections",
    "rule": "Pipe2-1/2STD — section properties (AISC)",
-   "value": "5.8 lb/ft; depth d = 2.875 in; area A = 1.61 in²",
+   "value": "5.8 lb/ft; OD = 2.875 in; area A = 1.61 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36202,7 +36208,7 @@
    "id": "section.Pipe2STD",
    "category": "sections",
    "rule": "Pipe2STD — section properties (AISC)",
-   "value": "3.66 lb/ft; depth d = 2.375 in; area A = 1.02 in²",
+   "value": "3.66 lb/ft; OD = 2.375 in; area A = 1.02 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36220,7 +36226,7 @@
    "id": "section.Pipe1-1/2STD",
    "category": "sections",
    "rule": "Pipe1-1/2STD — section properties (AISC)",
-   "value": "2.72 lb/ft; depth d = 1.9 in; area A = 0.749 in²",
+   "value": "2.72 lb/ft; OD = 1.9 in; area A = 0.749 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36238,7 +36244,7 @@
    "id": "section.Pipe1-1/4STD",
    "category": "sections",
    "rule": "Pipe1-1/4STD — section properties (AISC)",
-   "value": "2.27 lb/ft; depth d = 1.66 in; area A = 0.625 in²",
+   "value": "2.27 lb/ft; OD = 1.66 in; area A = 0.625 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36256,7 +36262,7 @@
    "id": "section.Pipe1STD",
    "category": "sections",
    "rule": "Pipe1STD — section properties (AISC)",
-   "value": "1.68 lb/ft; depth d = 1.315 in; area A = 0.469 in²",
+   "value": "1.68 lb/ft; OD = 1.315 in; area A = 0.469 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36274,7 +36280,7 @@
    "id": "section.Pipe3/4STD",
    "category": "sections",
    "rule": "Pipe3/4STD — section properties (AISC)",
-   "value": "1.13 lb/ft; depth d = 1.05 in; area A = 0.312 in²",
+   "value": "1.13 lb/ft; OD = 1.05 in; area A = 0.312 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36292,7 +36298,7 @@
    "id": "section.Pipe1/2STD",
    "category": "sections",
    "rule": "Pipe1/2STD — section properties (AISC)",
-   "value": "0.85 lb/ft; depth d = 0.84 in; area A = 0.234 in²",
+   "value": "0.85 lb/ft; OD = 0.84 in; area A = 0.234 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36310,7 +36316,7 @@
    "id": "section.Pipe26XS",
    "category": "sections",
    "rule": "Pipe26XS — section properties (AISC)",
-   "value": "136 lb/ft; depth d = 26 in; area A = 36.1 in²",
+   "value": "136 lb/ft; OD = 26 in; area A = 36.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36328,7 +36334,7 @@
    "id": "section.Pipe24XS",
    "category": "sections",
    "rule": "Pipe24XS — section properties (AISC)",
-   "value": "126 lb/ft; depth d = 24 in; area A = 33.3 in²",
+   "value": "126 lb/ft; OD = 24 in; area A = 33.3 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36346,7 +36352,7 @@
    "id": "section.Pipe20XS",
    "category": "sections",
    "rule": "Pipe20XS — section properties (AISC)",
-   "value": "104 lb/ft; depth d = 20 in; area A = 27.6 in²",
+   "value": "104 lb/ft; OD = 20 in; area A = 27.6 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36364,7 +36370,7 @@
    "id": "section.Pipe18XS",
    "category": "sections",
    "rule": "Pipe18XS — section properties (AISC)",
-   "value": "93.5 lb/ft; depth d = 18 in; area A = 24.8 in²",
+   "value": "93.5 lb/ft; OD = 18 in; area A = 24.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36382,7 +36388,7 @@
    "id": "section.Pipe16XS",
    "category": "sections",
    "rule": "Pipe16XS — section properties (AISC)",
-   "value": "82.9 lb/ft; depth d = 16 in; area A = 22 in²",
+   "value": "82.9 lb/ft; OD = 16 in; area A = 22 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36400,7 +36406,7 @@
    "id": "section.Pipe14XS",
    "category": "sections",
    "rule": "Pipe14XS — section properties (AISC)",
-   "value": "72.2 lb/ft; depth d = 14 in; area A = 19.2 in²",
+   "value": "72.2 lb/ft; OD = 14 in; area A = 19.2 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36418,7 +36424,7 @@
    "id": "section.Pipe12XS",
    "category": "sections",
    "rule": "Pipe12XS — section properties (AISC)",
-   "value": "65.5 lb/ft; depth d = 12.75 in; area A = 17.5 in²",
+   "value": "65.5 lb/ft; OD = 12.75 in; area A = 17.5 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36436,7 +36442,7 @@
    "id": "section.Pipe10XS",
    "category": "sections",
    "rule": "Pipe10XS — section properties (AISC)",
-   "value": "54.8 lb/ft; depth d = 10.75 in; area A = 15.1 in²",
+   "value": "54.8 lb/ft; OD = 10.75 in; area A = 15.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36454,7 +36460,7 @@
    "id": "section.Pipe8XS",
    "category": "sections",
    "rule": "Pipe8XS — section properties (AISC)",
-   "value": "43.4 lb/ft; depth d = 8.625 in; area A = 11.9 in²",
+   "value": "43.4 lb/ft; OD = 8.625 in; area A = 11.9 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36472,7 +36478,7 @@
    "id": "section.Pipe6XS",
    "category": "sections",
    "rule": "Pipe6XS — section properties (AISC)",
-   "value": "28.6 lb/ft; depth d = 6.625 in; area A = 7.83 in²",
+   "value": "28.6 lb/ft; OD = 6.625 in; area A = 7.83 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36490,7 +36496,7 @@
    "id": "section.Pipe5XS",
    "category": "sections",
    "rule": "Pipe5XS — section properties (AISC)",
-   "value": "20.8 lb/ft; depth d = 5.563 in; area A = 5.73 in²",
+   "value": "20.8 lb/ft; OD = 5.563 in; area A = 5.73 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36508,7 +36514,7 @@
    "id": "section.Pipe4XS",
    "category": "sections",
    "rule": "Pipe4XS — section properties (AISC)",
-   "value": "15 lb/ft; depth d = 4.5 in; area A = 4.14 in²",
+   "value": "15 lb/ft; OD = 4.5 in; area A = 4.14 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36526,7 +36532,7 @@
    "id": "section.Pipe3-1/2XS",
    "category": "sections",
    "rule": "Pipe3-1/2XS — section properties (AISC)",
-   "value": "12.5 lb/ft; depth d = 4 in; area A = 3.43 in²",
+   "value": "12.5 lb/ft; OD = 4 in; area A = 3.43 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36544,7 +36550,7 @@
    "id": "section.Pipe3XS",
    "category": "sections",
    "rule": "Pipe3XS — section properties (AISC)",
-   "value": "10.3 lb/ft; depth d = 3.5 in; area A = 2.83 in²",
+   "value": "10.3 lb/ft; OD = 3.5 in; area A = 2.83 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36562,7 +36568,7 @@
    "id": "section.Pipe2-1/2XS",
    "category": "sections",
    "rule": "Pipe2-1/2XS — section properties (AISC)",
-   "value": "7.67 lb/ft; depth d = 2.875 in; area A = 2.1 in²",
+   "value": "7.67 lb/ft; OD = 2.875 in; area A = 2.1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36580,7 +36586,7 @@
    "id": "section.Pipe2XS",
    "category": "sections",
    "rule": "Pipe2XS — section properties (AISC)",
-   "value": "5.03 lb/ft; depth d = 2.375 in; area A = 1.4 in²",
+   "value": "5.03 lb/ft; OD = 2.375 in; area A = 1.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36598,7 +36604,7 @@
    "id": "section.Pipe1-1/2XS",
    "category": "sections",
    "rule": "Pipe1-1/2XS — section properties (AISC)",
-   "value": "3.63 lb/ft; depth d = 1.9 in; area A = 1 in²",
+   "value": "3.63 lb/ft; OD = 1.9 in; area A = 1 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36616,7 +36622,7 @@
    "id": "section.Pipe1-1/4XS",
    "category": "sections",
    "rule": "Pipe1-1/4XS — section properties (AISC)",
-   "value": "3 lb/ft; depth d = 1.66 in; area A = 0.837 in²",
+   "value": "3 lb/ft; OD = 1.66 in; area A = 0.837 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36634,7 +36640,7 @@
    "id": "section.Pipe1XS",
    "category": "sections",
    "rule": "Pipe1XS — section properties (AISC)",
-   "value": "2.17 lb/ft; depth d = 1.315 in; area A = 0.602 in²",
+   "value": "2.17 lb/ft; OD = 1.315 in; area A = 0.602 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36652,7 +36658,7 @@
    "id": "section.Pipe3/4XS",
    "category": "sections",
    "rule": "Pipe3/4XS — section properties (AISC)",
-   "value": "1.48 lb/ft; depth d = 1.05 in; area A = 0.407 in²",
+   "value": "1.48 lb/ft; OD = 1.05 in; area A = 0.407 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36670,7 +36676,7 @@
    "id": "section.Pipe1/2XS",
    "category": "sections",
    "rule": "Pipe1/2XS — section properties (AISC)",
-   "value": "1.09 lb/ft; depth d = 0.84 in; area A = 0.303 in²",
+   "value": "1.09 lb/ft; OD = 0.84 in; area A = 0.303 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36688,7 +36694,7 @@
    "id": "section.Pipe12XXS",
    "category": "sections",
    "rule": "Pipe12XXS — section properties (AISC)",
-   "value": "126 lb/ft; depth d = 12.75 in; area A = 35.4 in²",
+   "value": "126 lb/ft; OD = 12.75 in; area A = 35.4 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36706,7 +36712,7 @@
    "id": "section.Pipe10XXS",
    "category": "sections",
    "rule": "Pipe10XXS — section properties (AISC)",
-   "value": "104 lb/ft; depth d = 10.75 in; area A = 28.8 in²",
+   "value": "104 lb/ft; OD = 10.75 in; area A = 28.8 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36724,7 +36730,7 @@
    "id": "section.Pipe8XXS",
    "category": "sections",
    "rule": "Pipe8XXS — section properties (AISC)",
-   "value": "72.5 lb/ft; depth d = 8.625 in; area A = 20 in²",
+   "value": "72.5 lb/ft; OD = 8.625 in; area A = 20 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36742,7 +36748,7 @@
    "id": "section.Pipe6XXS",
    "category": "sections",
    "rule": "Pipe6XXS — section properties (AISC)",
-   "value": "53.2 lb/ft; depth d = 6.625 in; area A = 14.7 in²",
+   "value": "53.2 lb/ft; OD = 6.625 in; area A = 14.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36760,7 +36766,7 @@
    "id": "section.Pipe5XXS",
    "category": "sections",
    "rule": "Pipe5XXS — section properties (AISC)",
-   "value": "38.6 lb/ft; depth d = 5.563 in; area A = 10.7 in²",
+   "value": "38.6 lb/ft; OD = 5.563 in; area A = 10.7 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36778,7 +36784,7 @@
    "id": "section.Pipe4XXS",
    "category": "sections",
    "rule": "Pipe4XXS — section properties (AISC)",
-   "value": "27.6 lb/ft; depth d = 4.5 in; area A = 7.66 in²",
+   "value": "27.6 lb/ft; OD = 4.5 in; area A = 7.66 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36796,7 +36802,7 @@
    "id": "section.Pipe3XXS",
    "category": "sections",
    "rule": "Pipe3XXS — section properties (AISC)",
-   "value": "18.6 lb/ft; depth d = 3.5 in; area A = 5.17 in²",
+   "value": "18.6 lb/ft; OD = 3.5 in; area A = 5.17 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36814,7 +36820,7 @@
    "id": "section.Pipe2-1/2XXS",
    "category": "sections",
    "rule": "Pipe2-1/2XXS — section properties (AISC)",
-   "value": "13.7 lb/ft; depth d = 2.875 in; area A = 3.83 in²",
+   "value": "13.7 lb/ft; OD = 2.875 in; area A = 3.83 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",
@@ -36832,7 +36838,7 @@
    "id": "section.Pipe2XXS",
    "category": "sections",
    "rule": "Pipe2XXS — section properties (AISC)",
-   "value": "9.04 lb/ft; depth d = 2.375 in; area A = 2.51 in²",
+   "value": "9.04 lb/ft; OD = 2.375 in; area A = 2.51 in²",
    "units": "imperial (lb/ft, in, in²)",
    "properties": {
     "type": "PIPE",

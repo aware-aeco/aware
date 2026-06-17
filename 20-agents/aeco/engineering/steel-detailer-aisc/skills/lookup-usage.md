@@ -53,8 +53,10 @@ consumer reads machine values directly (not by parsing the `value` string):
 
 The rule `id` is `section.<AISC label>` (e.g. `section.HSS6X6X3/8`); uppercase the `x` in a
 drawing designation before the lookup. `wall_in` (HSS/pipe design wall) appears instead of
-`web_in`/`flange_in` for tubes. The bulk of weights/depths are *not* derivable from the
-designation (HSS, angles, pipe) — that is exactly why this lookup exists.
+`web_in`/`flange_in` for tubes; **`wall_in` and the HSS/pipe `weight_plf` are the AISC
+design-wall basis** (0.93× nominal for A500; nominal for A1085 — see `section-designations`).
+The bulk of weights/depths are *not* derivable from the designation (HSS, angles, pipe) —
+that is exactly why this lookup exists.
 
 ## Available categories
 
