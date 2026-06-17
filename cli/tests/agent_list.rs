@@ -65,8 +65,9 @@ fn json_output_returns_envelope() {
     //              → 69 (the `viewer-3d` builtin scene renderer — generic interactive 3D HTML).
     //              → 70 (the `ifc` builtin scene-to-IFC4 writer — host-free SPF export, sibling to viewer-3d).
     //              → 73 (the three `steel-detailer-{aisc,uk,eu}` curated knowledge agents, PR #232).
+    //              → 74 (the generic `file` filesystem agent — watch/read/write/write-csv, #240).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
-    assert_eq!(agents.len(), 73);
+    assert_eq!(agents.len(), 74);
     assert!(agents.iter().any(|a| a["id"] == "tekla"));
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));

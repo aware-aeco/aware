@@ -1,0 +1,179 @@
+agent:        file
+version:      1.0.0
+display-name: File System
+description: |
+  Generic filesystem primitive: watch a directory for changes (a long-running
+  event source), and read / write files. The substrate's portable bridge between
+  the outside filesystem and a composition — an app `watch`es an inbox folder and
+  fires downstream when a matching file lands, or `read`s an exported file into a
+  node, or `write`s a node's output to disk.
+
+  Lives under `_core/` because it is not tied to any AECO vertical — it is generic
+  file IO that any agent's command may compose with (the sibling of the `http`
+  primitive for the network and `shell` for the OS). OS-native and host-free.
+
+# Declared but not yet runnable (#240). The contract is published so apps can be
+# authored + validated against it (apps referencing it are rejected at
+# validate/compile, not at run with a confusing dispatch error). The in-process
+# runtime handler (a filesystem watcher for `watch`; plain IO for read/write) is
+# the planned implementation — same builtin model as `html-report`, not yet wired.
+status: planned
+
+stateful: true              # `watch` holds an open subscription (start/stop + stream)
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/file
+keywords: [aware, file, filesystem, watch, event-source, read, write, csv, io]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+
+requires:
+  filesystem:
+    - read: any              # watch a folder / read a file (path given per call)
+    - write: any             # write / write-csv (path given per call)
+
+# Runtime built-in (#240): handled in-process by the `aware` runtime — there is no
+# host binary to ship or install (these are OS primitives, not a vendor product).
+# Carried as an empty block; dispatch routes by agent id to the built-in handler.
+transport:
+  builtin: {}
+
+commands:
+  watch:
+    lifecycle: start
+    category: curated
+    mode: read
+    description: |
+      Subscribe to filesystem events under a folder and stream one record per
+      matching change. The event-source counterpart of `tekla.watch` for the plain
+      filesystem: point it at an inbox / export / log directory and fire downstream
+      nodes as files arrive or change. Continuous by default; `once` makes it an
+      event-driven one-shot.
+    inputs:
+      folder:
+        type: string
+        required: true
+        description: Directory to watch (absolute, or relative to the run's working dir). Alias `path`.
+      pattern:
+        type: string
+        default: '*'
+        description: Glob filter on the file name, e.g. '*.pdf', 'export-*.csv'. Alias - `filter`.
+      events:
+        type: string-or-list
+        default: [created, changed]
+        description: >
+          Which filesystem events to emit: created | changed | deleted | renamed,
+          or "all" for every kind. A list selects a subset (case-insensitive).
+      include-subdirs:
+        type: boolean
+        default: false
+        description: Recurse into sub-directories. Default watches the top level only.
+      once:
+        type: boolean
+        default: false
+        description: >
+          One-shot mode. false (default) = continuous: fire downstream on EVERY
+          matching event while the watch runs. true = fire on the FIRST matching
+          event, then unsubscribe and exit (an event-driven snapshot). Aliases:
+          `one_time`, `one-time`.
+    outputs:
+      type: stream
+      # One record per line, one per filesystem event. Live trigger state
+      # (subscribed -> fired) is observable from the run's NodeStart / NodeOutput
+      # events, not in-band, so a downstream node is never fired with an empty payload.
+      schema:
+        signal:    string    # "fired"
+        path:      string    # absolute path of the affected file
+        name:      string    # file name (basename) — for naming downstream artifacts
+        change:    string    # created | changed | deleted | renamed
+        timestamp: string    # ISO-8601 instant the event was observed
+
+  read:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: |
+      Read a file's contents. Returns the bytes as text (default) or base64 so a
+      downstream node can parse / transform them. The generic "pull a file into the
+      composition" verb (e.g. read an exported CSV before handing it to a parser).
+    inputs:
+      path:
+        type: string
+        required: true
+        description: File to read (absolute or relative to the run's working dir).
+      encoding:
+        type: enum
+        values: [text, base64]
+        default: text
+        description: text = decode as UTF-8; base64 = return raw bytes base64-encoded (for binary files).
+    outputs:
+      type: single
+      schema:
+        content: string      # the file contents (UTF-8 text, or base64 when encoding=base64)
+        bytes:   integer      # size read, in bytes
+        path:    string       # the resolved absolute path
+
+  write:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write content to a file, creating parent directories by default. The generic
+      "land a node's output on disk" verb (e.g. quarantine a malformed upload, or
+      persist a generated report next to the run). Overwrites an existing file.
+    inputs:
+      path:
+        type: string
+        required: true
+        description: Destination file path (absolute or relative to the run's working dir).
+      bytes:
+        required: true
+        description: >
+          Content to write. A string is written as UTF-8; a JSON value is serialized
+          to JSON text. (The input is named `bytes` for symmetry with `read`.)
+      create-dirs:
+        type: boolean
+        default: true
+        description: Create missing parent directories. Default true.
+    outputs:
+      type: single
+      schema:
+        path:          string   # the resolved absolute path written
+        bytes-written: integer   # number of bytes written
+
+  write-csv:
+    lifecycle: single
+    category: curated
+    mode: write
+    description: |
+      Write rows to a CSV file with an explicit column order and header. The
+      tabular counterpart of `write` — hand it a list of records and the columns to
+      keep, and it emits a well-formed, RFC-4180-quoted CSV (e.g. export an audit
+      table for a spreadsheet consumer).
+    inputs:
+      path:
+        type: string
+        required: true
+        description: Destination CSV path (absolute or relative to the run's working dir).
+      columns:
+        type: array
+        items: string
+        description: Column keys to write, in this exact order. Becomes the header row.
+      rows:
+        type: array
+        description: >
+          Rows to write — an array of objects (keyed by the column names) or an array
+          of arrays (positional, matching `columns`). Missing keys render as empty cells.
+    outputs:
+      type: single
+      schema:
+        path:      string    # the resolved absolute path written
+        row-count: integer    # number of data rows written (excluding the header)
+
+skills:
+  - watch-semantics.md
+  - read-write.md
