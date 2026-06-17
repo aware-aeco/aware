@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-17T07:14:58.860145500+00:00",
+  "updated-at": "2026-06-17T08:08:23.225437200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -4827,6 +4827,40 @@
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"
+            }
+          ]
+        }
+      }
+    },
+    "shell": {
+      "display-name": "Shell",
+      "vendor": "aware",
+      "keywords": [
+        "aware",
+        "shell",
+        "open",
+        "os",
+        "file-explorer",
+        "default-handler",
+        "reveal"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Generic OS primitive: open a file or folder with the operating system's default",
+          "status": "planned",
+          "stateful": false,
+          "transport": "builtin",
+          "command_count": 1,
+          "skills": [
+            "open-semantics"
+          ],
+          "commands": [
+            {
+              "name": "open",
+              "description": "Open a file or folder with the OS default handler — the programmatic equivalent",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
             }
           ]
         }

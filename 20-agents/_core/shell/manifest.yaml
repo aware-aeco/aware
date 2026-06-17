@@ -1,0 +1,69 @@
+agent:        shell
+version:      0.1.0
+display-name: Shell
+description: |
+  Generic OS primitive: open a file or folder with the operating system's default
+  handler — the same effect as double-clicking it (File Explorer for a folder, the
+  default app for a document, the browser for a URL). The safe, scoped complement to
+  an `exec` sandbox that blocks arbitrary process launches: a composition can take
+  the natural follow-up action (open the folder it just wrote to) without opening the
+  door to running arbitrary programs.
+
+  Deliberately narrow — only `open` semantics, never `exec`/`start`/`run` of a chosen
+  program with arguments. Lives under `_core/` because it is generic OS plumbing any
+  agent may compose with (the sibling of `file` for the filesystem and `http` for the
+  network). OS-native and host-free.
+
+# Declared but not yet runnable (#241). The contract is published so apps can be
+# authored + validated against it; apps referencing it are rejected at validate/compile
+# rather than at run. The in-process runtime handler (hand the path to the OS default
+# opener) is the planned implementation — same builtin model as `html-report` and the
+# `file` agent — not yet wired.
+status: planned
+
+stateful: false
+
+vendor:   aware
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/_core/shell
+keywords: [aware, shell, open, os, file-explorer, default-handler, reveal]
+
+provenance:
+  generated-by: hand-written
+  source:
+    type: hand-written
+
+requires:
+  filesystem:
+    - read: any              # resolves the path before handing it to the OS opener
+
+# Runtime built-in (#241): handled in-process by the `aware` runtime — there is no
+# host binary to ship (this is an OS primitive, not a vendor product). Carried as an
+# empty block; dispatch routes by agent id to the built-in handler.
+transport:
+  builtin: {}
+
+commands:
+  open:
+    lifecycle: single
+    category: curated
+    mode: read              # opening reveals/launches a path; it mutates no system of record
+    description: |
+      Open a file or folder with the OS default handler — the programmatic equivalent
+      of double-clicking it. A folder opens in the system file browser; a document opens
+      in its registered application. Declarative and scoped: the only verb is "open this
+      local path", so the runtime can validate and sandbox it (no process name, no
+      arguments, no shell string — that is `exec`'s job, which the sandbox blocks).
+    inputs:
+      path:
+        type: string
+        required: true
+        description: Local file or folder to open (absolute, or relative to the run's working dir).
+    outputs:
+      type: single
+      schema:
+        path:   string     # the resolved absolute path that was opened
+        opened: boolean     # true once the OS handler was launched for the path
+
+skills:
+  - open-semantics.md
