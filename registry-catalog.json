@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-16T14:40:27.164145600+00:00",
+  "updated-at": "2026-06-17T07:14:58.860145500+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1939,6 +1939,64 @@
               "description": "List named views in the host file. Read-only. Use to discover",
               "lifecycle": "single",
               "category": "curated"
+            }
+          ]
+        }
+      }
+    },
+    "file": {
+      "display-name": "File System",
+      "vendor": "aware",
+      "keywords": [
+        "aware",
+        "file",
+        "filesystem",
+        "watch",
+        "event-source",
+        "read",
+        "write",
+        "csv",
+        "io"
+      ],
+      "versions": {
+        "1.0.0": {
+          "description": "Generic filesystem primitive: watch a directory for changes (a long-running",
+          "status": "planned",
+          "stateful": true,
+          "transport": "builtin",
+          "command_count": 4,
+          "skills": [
+            "watch-semantics",
+            "read-write"
+          ],
+          "commands": [
+            {
+              "name": "read",
+              "description": "Read a file's contents. Returns the bytes as text (default) or base64 so a",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "read"
+            },
+            {
+              "name": "watch",
+              "description": "Subscribe to filesystem events under a folder and stream one record per",
+              "lifecycle": "start",
+              "category": "curated",
+              "mode": "read"
+            },
+            {
+              "name": "write",
+              "description": "Write content to a file, creating parent directories by default. The generic",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
+            },
+            {
+              "name": "write-csv",
+              "description": "Write rows to a CSV file with an explicit column order and header. The",
+              "lifecycle": "single",
+              "category": "curated",
+              "mode": "write"
             }
           ]
         }
