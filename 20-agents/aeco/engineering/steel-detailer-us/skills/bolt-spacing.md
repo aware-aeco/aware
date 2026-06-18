@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-bolt-spacing
+name: steel-detailer-us-bolt-spacing
 description: Use for US/AISC bolt spacing questions — minimum and maximum center-to-center distance between bolts (or bolt holes), the clear-distance floor, and preferred spacing. AISC 360-22.
 ---
 

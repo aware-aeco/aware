@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-section-designations
+name: steel-detailer-us-section-designations
 description: Use for US/AISC steel section type and naming questions — the shape families (W, HSS, C, L, WT, etc.), the size-naming convention, and the free AISC Shapes Database property source. AISC Manual / Shapes Database v16.
 ---
 

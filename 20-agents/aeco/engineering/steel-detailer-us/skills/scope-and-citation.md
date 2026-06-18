@@ -1,6 +1,6 @@
 ---
-name: steel-detailer-aisc-scope-and-citation
-description: Reference for what the steel-detailer-aisc agent covers, which authoritative US sources it draws from, how citations are formatted, and what is intentionally out of scope (and where to point the user instead). Apply when scoping an AISC connection question, formatting a citation, or deciding whether a question is answerable from this agent.
+name: steel-detailer-us-scope-and-citation
+description: Reference for what the steel-detailer-us agent covers, which authoritative US sources it draws from, how citations are formatted, and what is intentionally out of scope (and where to point the user instead). Apply when scoping an AISC connection question, formatting a citation, or deciding whether a question is answerable from this agent.
 ---
 
 # AISC advisor — scope, sources & citation format

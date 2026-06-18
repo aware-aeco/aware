@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-drawing-types-and-roles
+name: steel-detailer-us-drawing-types-and-roles
 description: Use for US/AISC questions about steel drawing types and who produces them — design documents/drawings, approval (shop/detail) drawings, erection drawings, embedment drawings — and what each conveys. AISC 303-22 Code of Standard Practice.
 ---
 

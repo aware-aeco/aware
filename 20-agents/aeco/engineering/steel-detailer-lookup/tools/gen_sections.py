@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Generate the AISC section-properties lookup rules from the AISC Shapes Database
-(US / imperial) CSV into the steel-detailer-aisc rules file `aisc-shapes-v15.json`.
+(US / imperial) CSV into the steel-detailer-us rules file `aisc-shapes-v15.json`.
 
 Each row becomes a deterministic, citation-backed `sections` rule consumed by the
-`aware-steel-detailer-aisc lookup` command — designation -> verified weight, depth,
+`aware-steel-detailer-us lookup` command — designation -> verified weight, depth,
 width, area, thicknesses. No engine logic here; this is a pure data transform so the
 import is reproducible and auditable.
 
@@ -14,7 +14,7 @@ import csv, hashlib, json, os, re
 HERE = os.path.dirname(os.path.abspath(__file__))
 CSV = os.path.normpath(os.path.join(HERE, "..", "data", "aisc-shapes-database-v15.0-us.csv"))
 OUT = os.path.normpath(os.path.join(
-    HERE, "..", "..", "steel-detailer-aisc", "rules", "aisc-shapes-v15.json"))
+    HERE, "..", "..", "steel-detailer-us", "rules", "aisc-shapes-v15.json"))
 
 
 _NA = {"", "-", "–", "—", "N/A", "n/a"}
@@ -142,7 +142,7 @@ def main():
                 f"ABORT: imperial sentinel {sid} mismatch (got {p}) — wrong/metric CSV?")
 
     db = {
-        "agent": "steel-detailer-aisc",
+        "agent": "steel-detailer-us",
         "dataset": "aisc-shapes-database-v15.0-us",
         "standard": "aisc-shapes-database",
         "version": "15.0",

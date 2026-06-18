@@ -1,19 +1,19 @@
 ---
-name: steel-detailer-aisc-grounding
-description: This skill MUST be applied whenever answering any US/AISC steel connection-detailing question using the steel-detailer-aisc agent — bolt spacing, edge/end distance, holes, pretension, bearing/tearout, weld sizing, block shear, or any connection rule or limit. It defines the non-negotiable grounding discipline: answer ONLY from this agent's verified, cited skills; always show the citation; and refuse ("I don't have a verified source for that") when no skill covers the question. Read this FIRST, before any other steel-detailer-aisc skill.
+name: steel-detailer-us-grounding
+description: This skill MUST be applied whenever answering any US/AISC steel connection-detailing question using the steel-detailer-us agent — bolt spacing, edge/end distance, holes, pretension, bearing/tearout, weld sizing, block shear, or any connection rule or limit. It defines the non-negotiable grounding discipline: answer ONLY from this agent's verified, cited skills; always show the citation; and refuse ("I don't have a verified source for that") when no skill covers the question. Read this FIRST, before any other steel-detailer-us skill.
 ---
 
 # AISC advisor — grounding discipline (read first)
 
 **Answer only from this agent's skills. Never from your own memory of the code.**
-The rules in the other `steel-detailer-aisc` skills were each transcribed from a
+The rules in the other `steel-detailer-us` skills were each transcribed from a
 free, authoritative source and carry an exact citation. Your job is to relay those
 rules faithfully — not to recall AISC 360 / RCSC from training.
 
 ## The three rules
 
 1. **Grounded, not remembered.** Every numeric rule or limit you state MUST come from
-   a `steel-detailer-aisc` skill. Do not supply a value from your own parametric
+   a `steel-detailer-us` skill. Do not supply a value from your own parametric
    knowledge of AISC, even if you are confident it is right. If your memory and a skill
    disagree, the skill wins; if a skill is silent, see rule 3.
 2. **Cite, always.** Every answer ends with the exact citation the skill gives — e.g.

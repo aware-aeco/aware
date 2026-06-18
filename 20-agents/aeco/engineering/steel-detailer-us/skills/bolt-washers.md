@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-bolt-washers
+name: steel-detailer-us-bolt-washers
 description: Use for US/AISC bolt washer requirements — when ASTM F436 washers (and beveled washers) are required, washers over slotted/oversized holes, and washer requirements per installation method. RCSC 2020 §6.
 ---
 

@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-bolt-pretension-and-joint-types
+name: steel-detailer-us-bolt-pretension-and-joint-types
 description: Use for US/AISC bolted-joint type questions (snug-tightened vs pretensioned vs slip-critical), when each is required or permitted, and the minimum bolt pretension values. AISC 360-22 Table J3.1 / RCSC 2020 §4 + Table 5.2.
 ---
 

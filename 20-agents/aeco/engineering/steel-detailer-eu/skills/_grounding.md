@@ -47,7 +47,7 @@ The NDP-sensitive rules are listed in `ndp-sensitive-rules.md`.
   not seismic (Part 1-3 / Part 8-1). Boundary questions → name the right EN part.
 - **Detailing rules, not a sealed design.** This agent states code rules and limits;
   it does not perform or seal a connection design.
-- **Never mix with AISC.** For US practice, the user needs `steel-detailer-aisc`.
+- **Never mix with AISC.** For US practice, the user needs `steel-detailer-us`.
 
 ## How to answer (shape)
 

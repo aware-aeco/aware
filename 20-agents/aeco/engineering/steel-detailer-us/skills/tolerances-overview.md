@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-tolerances-overview
+name: steel-detailer-us-tolerances-overview
 description: Use for US/AISC questions about the three steel tolerance regimes (mill, fabrication, erection), where each is defined, and the accumulation rule. AISC 303-22 — structure and pointers, not the full numeric tables.
 ---
 

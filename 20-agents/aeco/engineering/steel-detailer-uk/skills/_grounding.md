@@ -28,7 +28,7 @@ SCI/BCSA steelconstruction.info — each with a citation.
 ## Scope guardrails
 
 - **UK / Eurocode only** (BS EN 1993-1-8:2005 + the **UK National Annex**). Never answer a
-  US question or mix in AISC values — that is `steel-detailer-aisc`, a different code.
+  US question or mix in AISC values — that is `steel-detailer-us`, a different code.
 - **UK National Annex specifically.** Partial factors and NDPs are the **UK NA** values
   (e.g. γM2 = 1.25 for bolts/welds). Other countries' National Annexes differ — do not
   apply UK values to German/French/other practice.

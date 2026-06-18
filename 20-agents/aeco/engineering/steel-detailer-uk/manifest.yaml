@@ -17,7 +17,7 @@ description: |
   the UK NA partial factors, drawing & detailing conventions, materials/sections,
   and a deterministic lookup command backed by a 49-rule verified JSON database.
   UK/Eurocode only — never mix with US/AISC (that is the
-  separate steel-detailer-aisc agent and a different code).
+  separate steel-detailer-us agent and a different code).
 
 # Phase 4: deterministic lookup binary built (Rust, shared steel-detailer-lookup/);
 # users must build from Cargo.toml and place on PATH to compose lookup-command apps.

@@ -4,7 +4,7 @@ Deterministic clause lookup with **no LLM in the loop**. Given a rule selector, 
 exact AISC/RCSC clause, value, units and citation as typed JSON — or an explicit miss
 (`found: false`) so the caller refuses rather than guesses.
 
-**Status:** `planned`. The backing binary (`aware-steel-detailer-aisc`) is not shipped yet.
+**Status:** `planned`. The backing binary (`aware-steel-detailer-us`) is not shipped yet.
 Until then, the agent's value is its cited skills, read by the composing AI at compose/prompt
 time (see `skills/_grounding.md`).
 
@@ -35,7 +35,7 @@ complement to the skills' compose-time grounding.
 ## Example (intended shape)
 
 ```
-aware agent invoke steel-detailer-aisc lookup --inputs '{"rule":"minimum bolt spacing"}'
+aware agent invoke steel-detailer-us lookup --inputs '{"rule":"minimum bolt spacing"}'
 → {
     "rule": "minimum spacing between bolt centers",
     "value": "<the limit, from the verified store>",

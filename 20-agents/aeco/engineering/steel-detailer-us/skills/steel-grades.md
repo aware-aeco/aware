@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-steel-grades
+name: steel-detailer-us-steel-grades
 description: Use for US/AISC steel material-grade questions — which ASTM grade for W-shapes, HSS, plates, anchor rods, bolts and weld electrodes, and their Fy/Fu. AISC 360-22 Table A3.1 + ASTM designations.
 ---
 

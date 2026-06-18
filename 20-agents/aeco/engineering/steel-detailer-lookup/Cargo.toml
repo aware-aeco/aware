@@ -5,10 +5,10 @@ members = ["."]
 name = "steel-detailer-lookup"
 version = "0.1.0"
 edition = "2021"
-description = "Deterministic clause-lookup CLI for steel-detailer-aisc, steel-detailer-uk and steel-detailer-eu AWARE agents"
+description = "Deterministic clause-lookup CLI for steel-detailer-us, steel-detailer-uk and steel-detailer-eu AWARE agents"
 
 [[bin]]
-name = "aware-steel-detailer-aisc"
+name = "aware-steel-detailer-us"
 path = "src/main.rs"
 
 [[bin]]

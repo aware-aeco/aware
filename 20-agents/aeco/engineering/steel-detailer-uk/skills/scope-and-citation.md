@@ -33,7 +33,7 @@ secondary source). Always state the edition (2005) and that it is the **UK NA**.
 
 ## Out of scope — name the right source, don't guess
 
-- **US practice** → `steel-detailer-aisc` (different code).
+- **US practice** → `steel-detailer-us` (different code).
 - **Other national annexes** (DE/FR/…) → not UK; the NDPs differ.
 - **Fabrication / execution, tolerances, hole-making, weld procedure** → BS EN 1090-2 (paywalled).
 - **Bolt assemblies / specs** → BS EN 14399 (preloaded), BS EN 15048 (non-preloaded).

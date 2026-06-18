@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-drawing-approval-process
+name: steel-detailer-us-drawing-approval-process
 description: Use for US/AISC questions about the shop/erection drawing approval process — submittal, the 14-day return, "approved" vs "approved subject to corrections noted", and what approval does and does not mean. AISC 303-22 §4.4.
 ---
 

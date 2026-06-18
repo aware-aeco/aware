@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-marking-conventions
+name: steel-detailer-us-marking-conventions
 description: Use for US/AISC questions about piece/assembly marks and member marking on steel drawings — the shipping-piece basis, erection marks, drawing-number persistence, AESS mark visibility, and where mark-uniqueness rules actually live. AISC 303-22 (+ AISC 360 / NISD).
 ---
 

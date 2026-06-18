@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-weld-length-and-pjp
+name: steel-detailer-us-weld-length-and-pjp
 description: Use for US/AISC weld length and groove-weld questions — minimum fillet weld length, the long-weld length reduction factor, intermittent welds, and the minimum effective throat of partial-joint-penetration (PJP) groove welds. AISC 360-22 §J2.
 ---
 
