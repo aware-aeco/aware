@@ -2,6 +2,7 @@ use std::collections::BTreeMap;
 use std::io::Read;
 
 use serde::{Deserialize, Serialize};
+use sha2::{Digest, Sha256};
 
 use crate::error::AwareError;
 
@@ -37,6 +38,33 @@ impl Index {
         let mut s = String::new();
         r.read_to_string(&mut s)?;
         serde_json::from_str(&s).map_err(|e| AwareError::Validation(format!("registry index: {e}")))
+    }
+
+    /// A stable fingerprint of the index's *installable content* — everything that
+    /// determines what can be installed and from where (the schema `version`, the
+    /// `agents`, and the `bundles`), deliberately EXCLUDING the volatile
+    /// `updated-at` timestamp.
+    ///
+    /// This is the shared tarball cache key (#254). The original key trusted
+    /// `updated-at` to rotate on every registry update, but that field is
+    /// hand-maintained: it froze (2026-06-10) while `main` advanced, so an agent
+    /// added later (#232) was advertised by the catalog yet absent from the cached
+    /// `main` archive → `subdir not in tarball`, with no self-recovery. Keying on
+    /// the content itself removes the human from the loop: add / remove / repin an
+    /// agent and the fingerprint changes, busting the cache so a fresh archive is
+    /// fetched. `updated-at` is excluded so a cosmetic timestamp bump alone cannot
+    /// needlessly invalidate an otherwise-valid cache.
+    ///
+    /// Deterministic across runs and platforms: `agents`/`bundles` are `BTreeMap`s,
+    /// so their JSON serialization is key-sorted and stable.
+    pub fn content_fingerprint(&self) -> String {
+        let mut h = Sha256::new();
+        h.update(self.version.as_bytes());
+        h.update([0]); // domain-separate the fields so they can't run together
+        h.update(serde_json::to_vec(&self.agents).unwrap_or_default());
+        h.update([0]);
+        h.update(serde_json::to_vec(&self.bundles).unwrap_or_default());
+        format!("{:x}", h.finalize())
     }
 
     /// Resolve `<id>[@version]` → `(version, &VersionEntry)`. If version is `None`, return
@@ -167,5 +195,57 @@ mod tests {
         assert_eq!(idx.resolve_key("allplan"), None);
         // `<key>` followed by a non-dot char must not match (`allplan-2024x`).
         assert_eq!(idx.resolve_key("allplan-2024x"), None);
+    }
+
+    #[test]
+    fn content_fingerprint_ignores_updated_at_but_tracks_installable_set() {
+        // The #254 regression guard. The cache key derives from this fingerprint, so:
+        //
+        //  (a) a cosmetic `updated-at` change must NOT rotate it (the OLD key did, and
+        //      its staleness is exactly what stranded users), and
+        //  (b) ANY change to the installable set MUST rotate it (add an agent → fresh
+        //      download → the new agent's subdir is present).
+        let base = Index::parse(SAMPLE.as_bytes()).unwrap();
+        let fp = base.content_fingerprint();
+
+        // (a) Same installable content, different `updated-at` → SAME fingerprint.
+        let bumped = Index::parse(
+            SAMPLE
+                .replace("2026-05-16T00:00:00Z", "2099-01-01T00:00:00Z")
+                .as_bytes(),
+        )
+        .unwrap();
+        assert_eq!(
+            fp,
+            bumped.content_fingerprint(),
+            "a pure updated-at bump must not bust the cache (the root cause of #254)"
+        );
+
+        // (b1) An added agent (the literal #232 scenario) → DIFFERENT fingerprint.
+        let added = Index::parse(KEYED.as_bytes()).unwrap();
+        assert_ne!(
+            fp,
+            added.content_fingerprint(),
+            "a changed agent set must bust the cache"
+        );
+
+        // (b2) Repinning an existing agent's tarball/subdir → DIFFERENT fingerprint.
+        let repinned = Index::parse(
+            SAMPLE
+                .replace(
+                    "https://example/tekla.tar.gz",
+                    "https://example/tekla-v2.tar.gz",
+                )
+                .as_bytes(),
+        )
+        .unwrap();
+        assert_ne!(
+            fp,
+            repinned.content_fingerprint(),
+            "a changed tarball URL must bust the cache"
+        );
+
+        // Stable across runs for identical content.
+        assert_eq!(fp, base.content_fingerprint());
     }
 }
