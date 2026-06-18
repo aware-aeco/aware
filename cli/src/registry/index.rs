@@ -40,30 +40,30 @@ impl Index {
         serde_json::from_str(&s).map_err(|e| AwareError::Validation(format!("registry index: {e}")))
     }
 
-    /// A stable fingerprint of the index's *installable content* — everything that
-    /// determines what can be installed and from where (the schema `version`, the
-    /// `agents`, and the `bundles`), deliberately EXCLUDING the volatile
-    /// `updated-at` timestamp.
+    /// A stable fingerprint of the WHOLE index snapshot — every field that could
+    /// signal "the registry changed, refetch": the installable content (`version`,
+    /// `agents`, `bundles`) AND the declared `updated-at`.
     ///
     /// This is the shared tarball cache key (#254). The original key trusted
-    /// `updated-at` to rotate on every registry update, but that field is
+    /// `updated-at` *alone* to rotate on every registry update, but that field is
     /// hand-maintained: it froze (2026-06-10) while `main` advanced, so an agent
     /// added later (#232) was advertised by the catalog yet absent from the cached
-    /// `main` archive → `subdir not in tarball`, with no self-recovery. Keying on
-    /// the content itself removes the human from the loop: add / remove / repin an
-    /// agent and the fingerprint changes, busting the cache so a fresh archive is
-    /// fetched. `updated-at` is excluded so a cosmetic timestamp bump alone cannot
-    /// needlessly invalidate an otherwise-valid cache.
+    /// `main` archive → `subdir not in tarball`, with no self-recovery. Hashing the
+    /// installable content removes the human from the loop for the common case: add /
+    /// remove / repin an agent and the key rotates automatically, busting the cache.
     ///
-    /// Deterministic across runs and platforms: `agents`/`bundles` are `BTreeMap`s,
-    /// so their JSON serialization is key-sorted and stable.
-    pub fn content_fingerprint(&self) -> String {
+    /// `updated-at` is kept in the hash as the registry's *manual refresh lever*: the
+    /// tarball is a mutable `main` archive, so an existing agent's files can change
+    /// (a skill/manifest fix under the same version + subdir) WITHOUT any index-entry
+    /// change. Bumping `updated-at` then forces a refresh that the content hash alone
+    /// could not. Including it can only bust the cache *more*, never serve stale —
+    /// the safe direction for a bug that was about staleness.
+    ///
+    /// Deterministic across runs and platforms: `Index` serializes its fields in a
+    /// fixed order and `agents`/`bundles` are key-sorted `BTreeMap`s.
+    pub fn snapshot_fingerprint(&self) -> String {
         let mut h = Sha256::new();
-        h.update(self.version.as_bytes());
-        h.update([0]); // domain-separate the fields so they can't run together
-        h.update(serde_json::to_vec(&self.agents).unwrap_or_default());
-        h.update([0]);
-        h.update(serde_json::to_vec(&self.bundles).unwrap_or_default());
+        h.update(serde_json::to_vec(self).unwrap_or_default());
         format!("{:x}", h.finalize())
     }
 
@@ -198,38 +198,25 @@ mod tests {
     }
 
     #[test]
-    fn content_fingerprint_ignores_updated_at_but_tracks_installable_set() {
-        // The #254 regression guard. The cache key derives from this fingerprint, so:
-        //
-        //  (a) a cosmetic `updated-at` change must NOT rotate it (the OLD key did, and
-        //      its staleness is exactly what stranded users), and
-        //  (b) ANY change to the installable set MUST rotate it (add an agent → fresh
-        //      download → the new agent's subdir is present).
+    fn snapshot_fingerprint_busts_on_any_index_change() {
+        // The #254 regression guard. The cache key derives from this fingerprint,
+        // which must rotate on ANY signal that the registry changed — content OR the
+        // hand-bumped `updated-at` (the manual refresh lever for a mutable archive
+        // whose content advanced under an unchanged index entry).
         let base = Index::parse(SAMPLE.as_bytes()).unwrap();
-        let fp = base.content_fingerprint();
+        let fp = base.snapshot_fingerprint();
 
-        // (a) Same installable content, different `updated-at` → SAME fingerprint.
-        let bumped = Index::parse(
-            SAMPLE
-                .replace("2026-05-16T00:00:00Z", "2099-01-01T00:00:00Z")
-                .as_bytes(),
-        )
-        .unwrap();
-        assert_eq!(
-            fp,
-            bumped.content_fingerprint(),
-            "a pure updated-at bump must not bust the cache (the root cause of #254)"
-        );
-
-        // (b1) An added agent (the literal #232 scenario) → DIFFERENT fingerprint.
+        // (a) An added agent (the literal #232 scenario) → DIFFERENT fingerprint, even
+        //     with `updated-at` frozen. This is the bug: the old key, sha256(url +
+        //     updated_at), could NOT rotate while the timestamp was stale.
         let added = Index::parse(KEYED.as_bytes()).unwrap();
         assert_ne!(
             fp,
-            added.content_fingerprint(),
+            added.snapshot_fingerprint(),
             "a changed agent set must bust the cache"
         );
 
-        // (b2) Repinning an existing agent's tarball/subdir → DIFFERENT fingerprint.
+        // (b) Repinning an existing agent's tarball/subdir → DIFFERENT fingerprint.
         let repinned = Index::parse(
             SAMPLE
                 .replace(
@@ -241,11 +228,25 @@ mod tests {
         .unwrap();
         assert_ne!(
             fp,
-            repinned.content_fingerprint(),
+            repinned.snapshot_fingerprint(),
             "a changed tarball URL must bust the cache"
         );
 
-        // Stable across runs for identical content.
-        assert_eq!(fp, base.content_fingerprint());
+        // (c) A bare `updated-at` bump → DIFFERENT fingerprint: the registry's manual
+        //     lever to force a refresh when `main` advanced without an index change.
+        let bumped = Index::parse(
+            SAMPLE
+                .replace("2026-05-16T00:00:00Z", "2099-01-01T00:00:00Z")
+                .as_bytes(),
+        )
+        .unwrap();
+        assert_ne!(
+            fp,
+            bumped.snapshot_fingerprint(),
+            "an updated-at bump must bust the cache (the manual refresh lever)"
+        );
+
+        // Stable across runs for an identical index.
+        assert_eq!(fp, base.snapshot_fingerprint());
     }
 }

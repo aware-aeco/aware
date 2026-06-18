@@ -45,18 +45,19 @@ fn stage_agent_from_registry(
 
     let cache_dir = paths.cache_dir().join("agents");
     std::fs::create_dir_all(&cache_dir)?;
-    // Cache the downloaded tarball by its URL + the index's installable-content
-    // fingerprint, NOT the agent id: every agent in a substrate registry shares ONE
-    // tarball (the repo archive), so a per-agent key made each new agent re-download
-    // the same (often hundreds-of-MB) archive (#243). With this key all agents in one
-    // index snapshot share a single cached download — only the first install pays for
-    // it — and any change to the installable set (an agent added / removed / repinned)
-    // rotates the key so the cache can't go stale. The fingerprint replaces the index's
-    // `updated-at` here (#254): that field is hand-maintained and went stale, leaving a
-    // newly-added agent's subdir absent from the cached archive forever.
+    // Cache the downloaded tarball by its URL + the index's snapshot fingerprint,
+    // NOT the agent id: every agent in a substrate registry shares ONE tarball (the
+    // repo archive), so a per-agent key made each new agent re-download the same
+    // (often hundreds-of-MB) archive (#243). With this key all agents in one index
+    // snapshot share a single cached download — only the first install pays for it —
+    // and any change to the index (an agent added / removed / repinned, or a bumped
+    // `updated-at`) rotates the key so the cache can't go stale. The fingerprint
+    // replaces keying on `updated-at` ALONE here (#254): that field is hand-maintained
+    // and went stale, so a newly-added agent's subdir stayed absent from the cached
+    // archive forever — hashing the content too busts the cache regardless.
     let cache_file = cache_dir.join(tarball_cache_name(
         &entry.tarball,
-        &index.content_fingerprint(),
+        &index.snapshot_fingerprint(),
     ));
 
     if cache_file.is_file() {
@@ -92,12 +93,11 @@ fn stage_agent_from_registry(
     Ok((scratch, subdir))
 }
 
-/// Cache filename for a registry tarball, keyed by its URL + the index's
-/// installable-content fingerprint (`Index::content_fingerprint`). Agents sharing one
-/// tarball in one index snapshot share one cache file (#243); any change to the
-/// installable set rotates the key (#254). Hashed so any URL maps to a fixed-length,
-/// filesystem-safe name (SHA-256 is already a dependency and is stable across
-/// runs/platforms).
+/// Cache filename for a registry tarball, keyed by its URL + the index's snapshot
+/// fingerprint (`Index::snapshot_fingerprint`). Agents sharing one tarball in one index
+/// snapshot share one cache file (#243); any change to the index rotates the key (#254).
+/// Hashed so any URL maps to a fixed-length, filesystem-safe name (SHA-256 is already a
+/// dependency and is stable across runs/platforms).
 fn tarball_cache_name(tarball: &str, snapshot: &str) -> String {
     let mut h = Sha256::new();
     h.update(tarball.as_bytes());
@@ -493,11 +493,11 @@ mod tests {
             tarball_cache_name(&url, &v2.updated_at),
             "frozen updated-at: the old key could not bust the cache (the bug)"
         );
-        // The NEW key (content fingerprint) rotates the moment the set grows.
+        // The NEW key (snapshot fingerprint) rotates the moment the set grows.
         assert_ne!(
-            tarball_cache_name(&url, &v1.content_fingerprint()),
-            tarball_cache_name(&url, &v2.content_fingerprint()),
-            "the content fingerprint busts the cache when an agent is added (the fix)"
+            tarball_cache_name(&url, &v1.snapshot_fingerprint()),
+            tarball_cache_name(&url, &v2.snapshot_fingerprint()),
+            "the snapshot fingerprint busts the cache when an agent is added (the fix)"
         );
 
         // End to end: installing the newly-added agent now succeeds against the fresh
