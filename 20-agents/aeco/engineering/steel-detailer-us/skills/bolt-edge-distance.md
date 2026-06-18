@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-bolt-edge-distance
+name: steel-detailer-us-bolt-edge-distance
 description: Use for US/AISC bolt edge-distance / end-distance questions — minimum edge distance from a bolt hole to a part edge (by bolt diameter), the one-diameter absolute floor, and the maximum edge distance. AISC 360-22 Table J3.4.
 ---
 

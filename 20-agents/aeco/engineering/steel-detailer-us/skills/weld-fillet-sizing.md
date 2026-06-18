@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-weld-fillet-sizing
+name: steel-detailer-us-weld-fillet-sizing
 description: Use for US/AISC fillet weld sizing questions — minimum fillet weld size by material thickness, maximum fillet size along an edge, and effective throat. AISC 360-22 §J2.
 ---
 

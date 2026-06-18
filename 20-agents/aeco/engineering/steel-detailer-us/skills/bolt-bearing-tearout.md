@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-bolt-bearing-tearout
+name: steel-detailer-us-bolt-bearing-tearout
 description: Use for US/AISC bolt bearing and tearout (bolt-hole) strength questions — the nominal-strength equations at bolt holes, the deformation-considered vs not cases, and the clear-distance (lc) basis. AISC 360-22 §J3.11.
 ---
 

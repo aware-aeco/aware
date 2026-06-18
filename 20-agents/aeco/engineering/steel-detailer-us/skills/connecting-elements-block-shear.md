@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-connecting-elements-block-shear
+name: steel-detailer-us-connecting-elements-block-shear
 description: Use for US/AISC connecting-element strength questions — tensile yielding/rupture, shear yielding/rupture, and block shear rupture of gusset plates, gussets, shear tabs, angles and other connecting elements. AISC 360-22 §J4.
 ---
 

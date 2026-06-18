@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-checker-workflow
+name: steel-detailer-us-checker-workflow
 description: Use when the user wants to check a structural model or set of drawings against AISC detailing rules — explains the checker pattern, how to compose the lookup command with Tekla or drawings-to-scene workflows, and what a compliance report looks like.
 ---
 
@@ -7,7 +7,7 @@ description: Use when the user wants to check a structural model or set of drawi
 
 The checker is a **composed workflow** (an AWARE `.app`) that reads a structural model and checks it against the verified AISC rules database deterministically. It has no LLM in the run path.
 
-> **Status:** `steel-detailer-aisc` is `status: planned`. The `lookup` it builds on is a standalone deterministic CLI today (build it per `lookup-usage.md`); running it as a first-class node inside an AWARE `.app` is the planned target. The pattern below documents that target composition.
+> **Status:** `steel-detailer-us` is `status: planned`. The `lookup` it builds on is a standalone deterministic CLI today (build it per `lookup-usage.md`); running it as a first-class node inside an AWARE `.app` is the planned target. The pattern below documents that target composition.
 
 ## Workflow pattern
 
@@ -18,7 +18,7 @@ The checker is a **composed workflow** (an AWARE `.app`) that reads a structural
 [extract-connections]          (Tekla or Steel-from-Drawings read)
      │  list of connections with bolt diameters, spacings, edge distances, weld sizes
      ▼
-[lookup-rule per check]        (steel-detailer-aisc lookup command, once per rule)
+[lookup-rule per check]        (steel-detailer-us lookup command, once per rule)
      │  {rule, value, units, citation, found}
      ▼
 [compare]                      (model value vs rule value — model-free arithmetic)
@@ -54,7 +54,7 @@ When `found: false` for any rule, the checker reports "**rule not in verified da
 ```yaml
 # Example snippet for a bolt-spacing check
 node lookup-bolt-spacing {
-  agent: steel-detailer-aisc
+  agent: steel-detailer-us
   command: lookup
   input:
     rule: "bolt.spacing.min"
@@ -76,7 +76,7 @@ A `script` (model-free arithmetic) node compares `connection.spacing` against `r
 When the model comes from a drawings-to-scene reader (PDF → a `viewer-3d` scene), the scene JSON already contains member sizes and grid data. A checker `.app` can directly consume the baked scene:
 
 ```
-[drawings-to-scene/read]    →  [steel-detailer-aisc/lookup bolt.spacing.min]
+[drawings-to-scene/read]    →  [steel-detailer-us/lookup bolt.spacing.min]
                             →  [compare spacing vs 2.67d]
                             →  [report violations]
 ```
@@ -88,4 +88,4 @@ This makes the end-to-end flow: PDF drawing → structural model → compliance 
 ## Source
 
 - Checker pattern: decalog #9 (no LLM in the run path) + AWARE app-spec §4 (node composition).
-- Rule values: `20-agents/aeco/engineering/steel-detailer-aisc/rules/aisc-360-22.json` (66 verified rules, 2026-06-14).
+- Rule values: `20-agents/aeco/engineering/steel-detailer-us/rules/aisc-360-22.json` (66 verified rules, 2026-06-14).

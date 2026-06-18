@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-connection-design-responsibility
+name: steel-detailer-us-connection-design-responsibility
 description: Use for US/AISC questions about who is responsible for designing steel connections — the three AISC 303 options (EOR-designed, detailer-selected, or fabricator's licensed engineer), the EOR-supplied criteria, and substantiating connection information. AISC 303-22 §3.2.3.
 ---
 

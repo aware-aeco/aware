@@ -10,21 +10,21 @@ fn main() {
     let bin_name = env::current_exe()
         .ok()
         .and_then(|p| p.file_stem().map(|s| s.to_string_lossy().into_owned()))
-        .unwrap_or_else(|| "aware-steel-detailer-aisc".to_string());
+        .unwrap_or_else(|| "aware-steel-detailer-us".to_string());
 
     let (agent_id, rules_file) = if bin_name.contains("-uk") {
         ("steel-detailer-uk", "bs-en-1993-uk.json")
     } else if bin_name.contains("-eu") {
         ("steel-detailer-eu", "bs-en-1993-eu.json")
     } else {
-        ("steel-detailer-aisc", "aisc-360-22.json")
+        ("steel-detailer-us", "aisc-360-22.json")
     };
 
     // Optional section-properties dataset (designation -> weight / depth / area),
     // merged into the rule set under the `sections` category. AISC only today; the
     // UK/EU section tables land with their own files later.
     let shapes_file: Option<&str> = match agent_id {
-        "steel-detailer-aisc" => Some("aisc-shapes-v15.json"),
+        "steel-detailer-us" => Some("aisc-shapes-v15.json"),
         _ => None,
     };
 

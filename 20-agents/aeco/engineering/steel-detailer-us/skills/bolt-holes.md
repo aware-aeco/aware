@@ -1,5 +1,5 @@
 ---
-name: steel-detailer-aisc-bolt-holes
+name: steel-detailer-us-bolt-holes
 description: Use for US/AISC bolt hole questions — the four hole types (standard, oversized, short-slotted, long-slotted), their nominal dimensions by bolt diameter, and where each hole type is permitted. AISC 360-22 Table J3.3 / RCSC 2020 Table 3.1.
 ---
 

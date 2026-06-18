@@ -22,7 +22,7 @@ description: |
   steel-detailer-de applies the German NA, etc.).
 
 # Phase 5: EU recommended-values agent built.
-# Deterministic lookup binary shared with steel-detailer-aisc and steel-detailer-uk
+# Deterministic lookup binary shared with steel-detailer-us and steel-detailer-uk
 # (steel-detailer-lookup/ Cargo project); users must build from Cargo.toml.
 status: planned
 

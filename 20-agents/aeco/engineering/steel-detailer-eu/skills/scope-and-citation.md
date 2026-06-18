@@ -53,7 +53,7 @@ Whenever giving an EN recommended value that is an NDP, add:
 
 - **Country-specific NA values** → use the country agent (e.g. `steel-detailer-uk`
   for UK NA via P358). This agent gives EN recommended values only.
-- **US practice** → `steel-detailer-aisc` (different code entirely).
+- **US practice** → `steel-detailer-us` (different code entirely).
 - **Member / section design** (Part 1-1, buckling etc.) → not connections.
 - **Seismic connections** → EN 1998-1 / the dedicated country EN 8 agent.
 - **Fatigue** → EN 1993-1-9.

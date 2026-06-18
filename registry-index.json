@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-10T00:00:00Z",
+  "updated-at": "2026-06-18T13:49:07Z",
   "agents": {
     "tekla": {
       "versions": {
@@ -578,11 +578,11 @@
         }
       }
     },
-    "steel-detailer-aisc": {
+    "steel-detailer-us": {
       "versions": {
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
-          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-aisc"
+          "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-us"
         }
       }
     },
@@ -676,7 +676,7 @@
         "tekla-tedds-26@26.0.0",
         "bluebeam-v1@1.0.0",
         "solibri-26.4.1@26.4.1",
-        "steel-detailer-aisc@0.1.0",
+        "steel-detailer-us@0.1.0",
         "steel-detailer-uk@0.1.0",
         "steel-detailer-eu@0.1.0"
       ]

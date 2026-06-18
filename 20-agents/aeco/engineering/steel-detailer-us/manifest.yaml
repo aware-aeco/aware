@@ -1,4 +1,4 @@
-agent:        steel-detailer-aisc
+agent:        steel-detailer-us
 version:      0.2.0
 sdk-target:   aisc-360-22                 # the code edition these rules are sourced from
 display-name: Steel Detailer — US (AISC)
@@ -27,7 +27,7 @@ stateful: false
 
 vendor:   aware
 license:  Apache-2.0
-homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/steel-detailer-aisc
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/steel-detailer-us
 keywords: [aeco, engineering, structural, steel, detailing, connections, aisc, bolts, welds, us]
 
 provenance:
@@ -54,7 +54,7 @@ transport:
   # Planned deterministic-lookup binary (Phase 4). Declared so the contract is
   # published; not shipped yet — hence the agent-level `status: planned`.
   cli:
-    binary: aware-steel-detailer-aisc
+    binary: aware-steel-detailer-us
 
 commands:
   lookup:

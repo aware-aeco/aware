@@ -64,7 +64,8 @@ fn json_output_returns_envelope() {
     //              → 68 (the `vision.extract` curated runtime-extraction agent, RFC #223).
     //              → 69 (the `viewer-3d` builtin scene renderer — generic interactive 3D HTML).
     //              → 70 (the `ifc` builtin scene-to-IFC4 writer — host-free SPF export, sibling to viewer-3d).
-    //              → 73 (the three `steel-detailer-{aisc,uk,eu}` curated knowledge agents, PR #232).
+    //              → 73 (the three `steel-detailer-{us,uk,eu}` curated knowledge agents, PR #232;
+    //                    the US agent landed as `-aisc` and was renamed `-us` for region-consistency).
     //              → 74 (the generic `file` filesystem agent — watch/read/write/write-csv, #240).
     //              → 75 (the generic `shell` agent — open a path with the OS default handler, #241).
     // A strict equality keeps this honest — adjust it whenever an agent lands or retires.
@@ -73,5 +74,5 @@ fn json_output_returns_envelope() {
     assert!(agents.iter().any(|a| a["id"] == "vision"));
     assert!(agents.iter().any(|a| a["id"] == "viewer-3d"));
     assert!(agents.iter().any(|a| a["id"] == "ifc"));
-    assert!(agents.iter().any(|a| a["id"] == "steel-detailer-aisc"));
+    assert!(agents.iter().any(|a| a["id"] == "steel-detailer-us"));
 }
