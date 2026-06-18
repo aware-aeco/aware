@@ -45,13 +45,20 @@ fn stage_agent_from_registry(
 
     let cache_dir = paths.cache_dir().join("agents");
     std::fs::create_dir_all(&cache_dir)?;
-    // Cache the downloaded tarball by its URL + the index snapshot, NOT the agent id:
-    // every agent in a substrate registry shares ONE tarball (the repo archive), so a
-    // per-agent key made each new agent re-download the same (often hundreds-of-MB)
-    // archive (#243). With this key all agents in one snapshot share a single cached
-    // download — only the first install pays for it — and a registry update (a new
-    // `updated-at`) rotates the key so the cache can't go stale across versions.
-    let cache_file = cache_dir.join(tarball_cache_name(&entry.tarball, &index.updated_at));
+    // Cache the downloaded tarball by its URL + the index's snapshot fingerprint,
+    // NOT the agent id: every agent in a substrate registry shares ONE tarball (the
+    // repo archive), so a per-agent key made each new agent re-download the same
+    // (often hundreds-of-MB) archive (#243). With this key all agents in one index
+    // snapshot share a single cached download — only the first install pays for it —
+    // and any change to the index (an agent added / removed / repinned, or a bumped
+    // `updated-at`) rotates the key so the cache can't go stale. The fingerprint
+    // replaces keying on `updated-at` ALONE here (#254): that field is hand-maintained
+    // and went stale, so a newly-added agent's subdir stayed absent from the cached
+    // archive forever — hashing the content too busts the cache regardless.
+    let cache_file = cache_dir.join(tarball_cache_name(
+        &entry.tarball,
+        &index.snapshot_fingerprint(),
+    ));
 
     if cache_file.is_file() {
         std::fs::copy(&cache_file, &tarball_path)?;
@@ -86,15 +93,16 @@ fn stage_agent_from_registry(
     Ok((scratch, subdir))
 }
 
-/// Cache filename for a registry tarball, keyed by its URL + the index snapshot
-/// (`updated-at`). Agents sharing one tarball share one cache file (#243); a registry
-/// update rotates the key. Hashed so any URL maps to a fixed-length, filesystem-safe
-/// name (SHA-256 is already a dependency and is stable across runs/platforms).
-fn tarball_cache_name(tarball: &str, updated_at: &str) -> String {
+/// Cache filename for a registry tarball, keyed by its URL + the index's snapshot
+/// fingerprint (`Index::snapshot_fingerprint`). Agents sharing one tarball in one index
+/// snapshot share one cache file (#243); any change to the index rotates the key (#254).
+/// Hashed so any URL maps to a fixed-length, filesystem-safe name (SHA-256 is already a
+/// dependency and is stable across runs/platforms).
+fn tarball_cache_name(tarball: &str, snapshot: &str) -> String {
     let mut h = Sha256::new();
     h.update(tarball.as_bytes());
-    h.update([0]); // domain-separate URL from timestamp so a+b can't collide with a'+b'
-    h.update(updated_at.as_bytes());
+    h.update([0]); // domain-separate URL from snapshot so a+b can't collide with a'+b'
+    h.update(snapshot.as_bytes());
     format!("tarball-{:x}.tar.gz", h.finalize())
 }
 
@@ -242,10 +250,10 @@ mod tests {
             tarball_cache_name(url, "2026-06-16T00:00:00Z"),
             tarball_cache_name(url, "2026-06-16T00:00:00Z"),
         );
-        // A new registry snapshot (different `updated-at`) rotates the key → fresh download.
+        // A new index snapshot (different content fingerprint) rotates the key → fresh download.
         assert_ne!(
-            tarball_cache_name(url, "2026-06-16T00:00:00Z"),
-            tarball_cache_name(url, "2026-06-17T00:00:00Z"),
+            tarball_cache_name(url, "fingerprint-a"),
+            tarball_cache_name(url, "fingerprint-b"),
         );
         // A different tarball URL → a different cache file.
         assert_ne!(
@@ -372,5 +380,132 @@ mod tests {
         let installed = install_agent_from_registry("tekla", None, &paths, &index).unwrap();
         assert_eq!(installed, "tekla");
         assert!(aware.join("agents/tekla/manifest.yaml").is_file());
+    }
+
+    /// Build a `main`-archive-shaped tarball holding the named agents, each a copy of
+    /// the real tekla agent renamed and placed at `aware-main/20-agents/<name>` — close
+    /// enough to the substrate's monorepo archive to drive a real install + validation.
+    fn write_repo_tarball(path: &Path, agent_names: &[&str]) {
+        let enc = flate2::write::GzEncoder::new(
+            std::fs::File::create(path).unwrap(),
+            flate2::Compression::default(),
+        );
+        let mut tar = tar::Builder::new(enc);
+
+        let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .to_path_buf();
+        let tekla_manifest =
+            std::fs::read_to_string(repo.join("20-agents/aeco/engineering/tekla/manifest.yaml"))
+                .unwrap();
+        let agent: crate::manifest::Agent = serde_yaml::from_str(&tekla_manifest).unwrap();
+        let skills_src = repo.join("20-agents/aeco/engineering/tekla/skills");
+
+        let header = |len: usize| {
+            let mut h = tar::Header::new_gnu();
+            h.set_size(len as u64);
+            h.set_mode(0o644);
+            h.set_cksum();
+            h
+        };
+
+        for &name in agent_names {
+            // Rename the `agent:` value (line 1) so each subdir is a distinct, valid agent.
+            let mut lines: Vec<String> = tekla_manifest.lines().map(str::to_string).collect();
+            lines[0] = format!("agent: {name}");
+            let manifest = lines.join("\n") + "\n";
+            tar.append_data(
+                &mut header(manifest.len()),
+                format!("aware-main/20-agents/{name}/manifest.yaml"),
+                manifest.as_bytes(),
+            )
+            .unwrap();
+            for skill in &agent.skills {
+                let body = std::fs::read_to_string(skills_src.join(skill)).unwrap();
+                tar.append_data(
+                    &mut header(body.len()),
+                    format!("aware-main/20-agents/{name}/skills/{skill}"),
+                    body.as_bytes(),
+                )
+                .unwrap();
+            }
+        }
+        let mut file = tar.into_inner().unwrap().finish().unwrap();
+        file.flush().unwrap();
+    }
+
+    #[test]
+    fn install_busts_cache_when_index_grows_even_with_frozen_updated_at() {
+        // The #254 end-to-end regression. The shared `main` archive is a MUTABLE ref:
+        // its content changes when an agent merges, but the URL is constant. The old
+        // cache key was sha256(url + index.updated_at); once `updated-at` froze, a
+        // newly-added agent's subdir stayed absent from the cached archive forever →
+        // `subdir not in tarball`, no self-recovery. Keying on the index's content
+        // fingerprint busts the cache the instant the installable set grows.
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+
+        // One shared tarball file = the single `main` archive URL over time.
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+
+        let index_with = |names: &[&str], updated_at: &str| {
+            let mut agents = BTreeMap::new();
+            for n in names {
+                let mut versions = BTreeMap::new();
+                versions.insert(
+                    "1".to_string(),
+                    VersionEntry {
+                        tarball: url.clone(),
+                        subdir: format!("aware-main/20-agents/{n}"),
+                    },
+                );
+                agents.insert((*n).to_string(), IndexEntry { versions });
+            }
+            Index {
+                version: "1.0".into(),
+                updated_at: updated_at.into(),
+                agents,
+                bundles: BTreeMap::new(),
+            }
+        };
+
+        // v1: only `alpha` exists on main. Install it → caches the v1 archive.
+        write_repo_tarball(&archive, &["alpha"]);
+        let v1 = index_with(&["alpha"], "2026-06-10T00:00:00Z");
+        assert_eq!(
+            install_agent_from_registry("alpha", None, &paths, &v1).unwrap(),
+            "alpha"
+        );
+
+        // main advances: `beta` merges. The archive content changes; the URL does not;
+        // and (the bug) `updated-at` is left FROZEN at the v1 value.
+        write_repo_tarball(&archive, &["alpha", "beta"]);
+        let v2 = index_with(&["alpha", "beta"], "2026-06-10T00:00:00Z");
+
+        // The OLD key (updated_at) would NOT rotate — same value → stale cache reused.
+        assert_eq!(
+            tarball_cache_name(&url, &v1.updated_at),
+            tarball_cache_name(&url, &v2.updated_at),
+            "frozen updated-at: the old key could not bust the cache (the bug)"
+        );
+        // The NEW key (snapshot fingerprint) rotates the moment the set grows.
+        assert_ne!(
+            tarball_cache_name(&url, &v1.snapshot_fingerprint()),
+            tarball_cache_name(&url, &v2.snapshot_fingerprint()),
+            "the snapshot fingerprint busts the cache when an agent is added (the fix)"
+        );
+
+        // End to end: installing the newly-added agent now succeeds against the fresh
+        // archive instead of failing with `subdir not in tarball`.
+        assert_eq!(
+            install_agent_from_registry("beta", None, &paths, &v2).unwrap(),
+            "beta"
+        );
+        assert!(aware.join("agents/beta/manifest.yaml").is_file());
     }
 }
