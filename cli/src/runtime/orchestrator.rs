@@ -1853,6 +1853,43 @@ requires: []
     }
 
     #[tokio::test]
+    async fn frozen_node_skips_agent_in_streaming_path() {
+        // execute_and_chain (the streaming / propagate_from path) must honor `frozen:` too: emit
+        // the pinned value, skip the agent (the empty invoker errors if invoked), and forward it to
+        // the frontier so downstream nodes receive it.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: frzs
+version: 0.1.0
+description: x
+nodes:
+  - id: s
+    agent: ag-never-runs
+    command: read
+    frozen:
+      tag: streamed
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let node = app.nodes[0].clone();
+        let inv = Arc::new(MockInvoker::new()); // any invocation → NotFound
+        let (mut orch, _tmp, _log) = make_orchestrator(app, inv).await;
+        let mut frontier: Vec<(String, Value)> = Vec::new();
+        orch.execute_and_chain(&node, &serde_json::json!({}), &mut frontier)
+            .await
+            .unwrap();
+        assert_eq!(
+            frontier.len(),
+            1,
+            "frozen node must forward exactly its pinned output"
+        );
+        assert_eq!(frontier[0].0, "s");
+        assert_eq!(frontier[0].1, serde_json::json!({ "tag": "streamed" }));
+    }
+
+    #[tokio::test]
     async fn dry_run_honors_author_declared_read_mode_on_unknown_command() {
         // #165: an `exec` node (command absent from the agent manifest, so its
         // mode is unknowable) that declares `mode: read` must be treated as a

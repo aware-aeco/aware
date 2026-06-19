@@ -258,6 +258,11 @@ pub fn validate_app_safety(
     use crate::manifest::agent::Mode;
     let mut out = Vec::new();
     for node in &app.nodes {
+        // A frozen node never invokes its agent (the orchestrator emits its pinned output and
+        // skips dispatch), so it never writes — the write-mode safety contract does not apply.
+        if node.frozen.is_some() {
+            continue;
+        }
         let (Some(agent_id), Some(cmd_name)) = (node.agent.as_ref(), node.command.as_ref()) else {
             continue;
         };
@@ -312,6 +317,13 @@ fn check_node_agents(
 ) {
     use crate::manifest::agent::AgentStatus;
     for n in nodes {
+        // A frozen node never dispatches to its agent (it emits a pinned output and short-circuits),
+        // so agent/command availability does not gate it — and it needn't have its agent installed
+        // at all. Skip it (and its `do:` body, which likewise never runs while frozen).
+        if n.frozen.is_some() {
+            continue;
+        }
+
         // v0 no-recursion rule (self-reference): an `exposes-as-agent` app that
         // composes its own id recurses into itself. Catch it regardless of
         // catalogue state — on first install the synthesized agent does not
@@ -586,6 +598,49 @@ requires: []
         assert!(
             !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
             "issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn frozen_node_skips_planned_agent_gate() {
+        // A frozen node never dispatches to its agent, so a planned (not-yet-runnable) agent must
+        // NOT gate it — `frozen:` short-circuits the availability preflight (it needn't be installed).
+        let agents = vec![agent_with_status("status: planned\n")];
+        let app: App = serde_yaml::from_str(
+            "app: frz\nversion: 0.0.1\ndescription: |\n  frozen planned\n\
+             requires: []\nnodes:\n  - id: report\n    agent: html-report\n    command: render\n    frozen:\n      ok: true\n",
+        )
+        .unwrap();
+        let issues = validate_app_agents(&app, &agents);
+        assert!(
+            !issues.iter().any(|i| i.code == "E_APP_AGENT_UNAVAILABLE"),
+            "frozen node must skip the agent-availability gate; issues: {issues:?}"
+        );
+    }
+
+    #[test]
+    fn frozen_write_node_skips_safety_gate() {
+        // A frozen node never writes (it emits a pinned value), so the write-mode safety contract
+        // must not apply — a frozen write-mode node needs no `safety:` block.
+        let writer = crate::manifest::loader::DiscoveredAgent {
+            manifest: serde_yaml::from_str(
+                "agent: writer\nversion: 0.1.0\ndescription: x\nstateful: false\nlicense: MIT\n\
+                 transport:\n  cli:\n    binary: aware-writer\ncommands:\n  apply:\n    lifecycle: single\n    mode: write\n    description: x\n",
+            )
+            .unwrap(),
+            root: std::path::PathBuf::from("."),
+        };
+        let app: App = serde_yaml::from_str(
+            "app: frzw\nversion: 0.0.1\ndescription: |\n  frozen write\n\
+             requires: []\nnodes:\n  - id: w\n    agent: writer\n    command: apply\n    frozen:\n      done: true\n",
+        )
+        .unwrap();
+        let issues = validate_app_safety(&app, &[writer]);
+        assert!(
+            !issues
+                .iter()
+                .any(|i| i.code == "E_APP_WRITE_WITHOUT_SAFETY"),
+            "frozen write-mode node must skip the safety gate; issues: {issues:?}"
         );
     }
 

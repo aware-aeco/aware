@@ -205,7 +205,7 @@ Any node may carry a `frozen:` block — a pinned output that **short-circuits t
     plans: [ ... ]       # whatever the node last produced, kept verbatim
 ```
 
-While `frozen:` is present the node is **static** ("whatever's there is there") and downstream nodes consume the pinned value; remove it and the node runs normally again. The frozen value is part of the source, so it is covered by the source hash — changing it requires a recompile (the Run gate), exactly like any other edit.
+While `frozen:` is present the node is **static** ("whatever's there is there") and downstream nodes consume the pinned value; remove it and the node runs normally again. Because the agent never runs, a frozen node also bypasses the agent-availability and write-mode safety preflight — it needn't have its agent installed, and a frozen write-mode node needs no `safety:` block (it never writes). The frozen value is part of the source, so it is covered by the source hash — changing it requires a recompile (the Run gate), exactly like any other edit.
 
 ---
 
