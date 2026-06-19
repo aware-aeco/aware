@@ -104,6 +104,21 @@ pub enum AppCommand {
         #[arg(long)]
         run_id: Option<String>,
     },
+    /// Freeze a node: pin its last run output into the source as a `frozen:` block, so Run skips
+    /// it (emits the pinned value, never re-runs the agent) until unfrozen. Recompiles the lock.
+    Freeze {
+        /// The installed app.
+        app: String,
+        /// The node id to freeze.
+        node: String,
+    },
+    /// Unfreeze a node: remove its `frozen:` block so it runs normally again. Recompiles the lock.
+    Unfreeze {
+        /// The installed app.
+        app: String,
+        /// The node id to unfreeze.
+        node: String,
+    },
 }
 
 pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> {
@@ -148,6 +163,8 @@ pub async fn dispatch(cmd: AppCommand, ctx: &Context) -> Result<(), AwareError> 
             )
             .await
         }
+        AppCommand::Freeze { app, node } => freeze_cmd(ctx, &app, &node).await,
+        AppCommand::Unfreeze { app, node } => unfreeze_cmd(ctx, &app, &node),
     }
 }
 
@@ -627,6 +644,191 @@ fn print_lock_outcome(lock: crate::install::LockOutcome) {
     }
 }
 
+/// `aware app freeze <app> <node>` — pin the node's last run output as a `frozen:` block on the
+/// source, then recompile. The orchestrator then emits that value and skips the agent on Run.
+async fn freeze_cmd(ctx: &Context, app_id: &str, node_id: &str) -> Result<(), AwareError> {
+    use crate::runtime::provenance::{RunEvent, log_path_for, most_recent_run_id, read_run_events};
+
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
+        .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
+    let app = crate::manifest::loader::load_app(&manifest_path)?;
+    if !app.nodes.iter().any(|n| n.id == node_id) {
+        return Err(AwareError::NotFound(format!(
+            "node {node_id:?} not found in app {app_id:?}"
+        )));
+    }
+
+    // "Whatever's there" = the node's last output, from the most recent run trace.
+    let no_output = || {
+        AwareError::Validation(format!(
+            "node {node_id:?} has no recorded output \u{2014} run the app first, then freeze"
+        ))
+    };
+    let run_id =
+        most_recent_run_id(&ctx.paths.logs_dir(), app_id, "default").ok_or_else(no_output)?;
+    let log_path = log_path_for(&ctx.paths.logs_dir(), app_id, "default", &run_id);
+    let events = read_run_events(&log_path).await?;
+    let last_output = events
+        .iter()
+        .rev()
+        .find_map(|e| match e {
+            RunEvent::NodeOutput { node, data, .. } if node == node_id => Some(data.clone()),
+            _ => None,
+        })
+        .ok_or_else(no_output)?;
+
+    let value_yaml = serde_yaml::to_string(&last_output)
+        .map_err(|e| AwareError::Internal(format!("serialize frozen value: {e}")))?;
+    let source = std::fs::read_to_string(&manifest_path)
+        .map_err(|e| AwareError::Internal(format!("read {}: {e}", manifest_path.display())))?;
+    let edited = set_node_frozen(&source, node_id, &value_yaml)?;
+    std::fs::write(&manifest_path, edited)
+        .map_err(|e| AwareError::Internal(format!("write {}: {e}", manifest_path.display())))?;
+    println!(
+        "\u{2713} froze {app_id}/{node_id} \u{2014} Run emits its pinned output and skips the agent"
+    );
+    recompile_after_freeze(ctx, &manifest_path);
+    Ok(())
+}
+
+/// `aware app unfreeze <app> <node>` — remove the node's `frozen:` block, then recompile.
+fn unfreeze_cmd(ctx: &Context, app_id: &str, node_id: &str) -> Result<(), AwareError> {
+    let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
+    let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
+        .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
+    let source = std::fs::read_to_string(&manifest_path)
+        .map_err(|e| AwareError::Internal(format!("read {}: {e}", manifest_path.display())))?;
+    let edited = clear_node_frozen(&source, node_id)?;
+    if edited == source {
+        println!("node {node_id} is not frozen \u{2014} nothing to do");
+        return Ok(());
+    }
+    std::fs::write(&manifest_path, edited)
+        .map_err(|e| AwareError::Internal(format!("write {}: {e}", manifest_path.display())))?;
+    println!("\u{2713} unfroze {app_id}/{node_id} \u{2014} it runs normally again");
+    recompile_after_freeze(ctx, &manifest_path);
+    Ok(())
+}
+
+/// Recompile after a freeze/unfreeze edit so the lock matches the new source (the Run gate). A
+/// compile failure is surfaced as a warning — the source edit already landed.
+fn recompile_after_freeze(ctx: &Context, manifest_path: &std::path::Path) {
+    match crate::app_lock::compile_to_disk(manifest_path, &ctx.paths) {
+        Ok(_) => println!("  lock refreshed \u{2014} ready to run"),
+        Err(e) => println!(
+            "  \u{26a0} recompile failed ({e}) \u{2014} run `aware app compile` before running"
+        ),
+    }
+}
+
+// ── Comment-preserving `frozen:` text edits ───────────────────────────────────────────────────
+// serde_yaml (0.9) drops comments on round-trip, so we edit the source text in a line-targeted way
+// (mirrors install::rename's `app:` rewrite). Assumes the .flo's 2-space list indentation.
+
+fn leading_indent(line: &str) -> usize {
+    line.len() - line.trim_start().len()
+}
+
+/// Locate a node's `id:` line and its field indentation (the column where `id:` starts — where
+/// sibling fields like `agent:` / `frozen:` live). Matches both `- id: x` and own-line `id: x`.
+fn find_node_id_line(lines: &[&str], node_id: &str) -> Option<(usize, usize)> {
+    for (i, line) in lines.iter().enumerate() {
+        let t = line.trim_start();
+        let body = t.strip_prefix("- ").unwrap_or(t);
+        if let Some(rest) = body.strip_prefix("id:")
+            && rest.trim() == node_id
+        {
+            return Some((i, line.find("id:").unwrap_or(0)));
+        }
+    }
+    None
+}
+
+/// Remove a node's `frozen:` block (the `frozen:` line + its more-indented value lines). Returns the
+/// source unchanged if the node isn't found or isn't frozen. Comment-preserving.
+pub fn clear_node_frozen(source: &str, node_id: &str) -> Result<String, AwareError> {
+    let lines: Vec<&str> = source.lines().collect();
+    let Some((idx, indent)) = find_node_id_line(&lines, node_id) else {
+        return Ok(source.to_string());
+    };
+    let marker = indent.saturating_sub(2);
+    // Find `frozen:` at field indent within this node's block (stop at the node's dedent/next item).
+    let mut frozen_start = None;
+    let mut i = idx + 1;
+    while i < lines.len() {
+        let line = lines[i];
+        if !line.trim().is_empty() {
+            let li = leading_indent(line);
+            if li <= marker {
+                break; // next node or dedent out of this node
+            }
+            if li == indent && line.trim_start().starts_with("frozen:") {
+                frozen_start = Some(i);
+                break;
+            }
+        }
+        i += 1;
+    }
+    let Some(fs) = frozen_start else {
+        return Ok(source.to_string());
+    };
+    // The block is the `frozen:` line + following lines more-indented than the field indent.
+    let mut fe = fs + 1;
+    while fe < lines.len() {
+        let line = lines[fe];
+        if !line.trim().is_empty() && leading_indent(line) <= indent {
+            break;
+        }
+        fe += 1;
+    }
+    let kept: Vec<&str> = lines
+        .iter()
+        .enumerate()
+        .filter(|(j, _)| *j < fs || *j >= fe)
+        .map(|(_, l)| *l)
+        .collect();
+    let mut out = kept.join("\n");
+    if source.ends_with('\n') {
+        out.push('\n');
+    }
+    Ok(out)
+}
+
+/// Pin a node's output as a `frozen:` block (replacing any existing one), comment-preserving.
+/// `value_yaml` is the YAML serialization of the value (e.g. from `serde_yaml::to_string`).
+pub fn set_node_frozen(
+    source: &str,
+    node_id: &str,
+    value_yaml: &str,
+) -> Result<String, AwareError> {
+    let cleared = clear_node_frozen(source, node_id)?; // idempotent replace
+    let lines: Vec<&str> = cleared.lines().collect();
+    let (idx, indent) = find_node_id_line(&lines, node_id)
+        .ok_or_else(|| AwareError::NotFound(format!("node {node_id:?} not found in app source")))?;
+    let vpad = " ".repeat(indent + 2);
+    let mut block = format!("{}frozen:", " ".repeat(indent));
+    for vline in value_yaml.lines() {
+        block.push('\n');
+        if !vline.is_empty() {
+            block.push_str(&vpad);
+            block.push_str(vline);
+        }
+    }
+    let mut out: Vec<String> = Vec::with_capacity(lines.len() + 1);
+    for (i, l) in lines.iter().enumerate() {
+        out.push((*l).to_string());
+        if i == idx {
+            out.push(block.clone());
+        }
+    }
+    let mut joined = out.join("\n");
+    if source.ends_with('\n') {
+        joined.push('\n');
+    }
+    Ok(joined)
+}
+
 fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
     // Find .flo/.app in the dir
     let manifest_path = std::fs::read_dir(path)?
@@ -1064,4 +1266,65 @@ fn list(ctx: &Context) -> Result<(), AwareError> {
     }
     print!("{}", t.render());
     Ok(())
+}
+
+#[cfg(test)]
+mod freeze_tests {
+    use super::{clear_node_frozen, set_node_frozen};
+
+    const FLO: &str = "# top comment\napp: demo\nversion: 0.1.0\ndescription: x\nnodes:\n  - id: read\n    agent: tekla\n    command: exec\n    config:\n      code: return 1\n  - id: view\n    agent: viewer-3d\n    command: render\nconnections: []\nrequires: []\n";
+
+    #[test]
+    fn set_then_clear_round_trips_and_preserves_comments() {
+        let frozen = set_node_frozen(FLO, "read", "kept: true\nn: 7\n").unwrap();
+        assert!(frozen.contains("# top comment"), "comments preserved");
+        assert!(frozen.contains("    frozen:"), "frozen at the field indent");
+        assert!(
+            frozen.contains("      kept: true"),
+            "value indented under frozen"
+        );
+        // The frozen value parses back, and only the targeted node is frozen.
+        let app: crate::manifest::App = serde_yaml::from_str(&frozen).unwrap();
+        assert!(
+            app.nodes
+                .iter()
+                .find(|n| n.id == "read")
+                .unwrap()
+                .frozen
+                .is_some()
+        );
+        assert!(
+            app.nodes
+                .iter()
+                .find(|n| n.id == "view")
+                .unwrap()
+                .frozen
+                .is_none()
+        );
+        // Clearing returns the exact original (comment-preserving round-trip).
+        assert_eq!(clear_node_frozen(&frozen, "read").unwrap(), FLO);
+    }
+
+    #[test]
+    fn refreeze_replaces_not_duplicates() {
+        let once = set_node_frozen(FLO, "read", "a: 1\n").unwrap();
+        let twice = set_node_frozen(&once, "read", "b: 2\n").unwrap();
+        assert_eq!(
+            twice.matches("frozen:").count(),
+            1,
+            "one frozen block, replaced"
+        );
+        assert!(twice.contains("b: 2") && !twice.contains("a: 1"));
+    }
+
+    #[test]
+    fn clear_is_a_noop_when_not_frozen_or_unknown_node() {
+        assert_eq!(clear_node_frozen(FLO, "read").unwrap(), FLO);
+        assert_eq!(clear_node_frozen(FLO, "nope").unwrap(), FLO);
+    }
+
+    #[test]
+    fn set_unknown_node_errors() {
+        assert!(set_node_frozen(FLO, "nope", "a: 1\n").is_err());
+    }
 }
