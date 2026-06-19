@@ -697,6 +697,14 @@ fn unfreeze_cmd(ctx: &Context, app_id: &str, node_id: &str) -> Result<(), AwareE
     let app_dir = crate::manifest::loader::resolve_app_dir(&ctx.paths, app_id)?;
     let manifest_path = crate::manifest::loader::find_app_manifest(&app_dir)
         .ok_or_else(|| AwareError::Validation(format!("app {app_id} has no .flo/.app file")))?;
+    // Validate the node exists (catches typos + scopes the edit to a real top-level node), the same
+    // guard freeze applies.
+    let app = crate::manifest::loader::load_app(&manifest_path)?;
+    if !app.nodes.iter().any(|n| n.id == node_id) {
+        return Err(AwareError::NotFound(format!(
+            "node {node_id:?} not found in app {app_id:?}"
+        )));
+    }
     let source = std::fs::read_to_string(&manifest_path)
         .map_err(|e| AwareError::Internal(format!("read {}: {e}", manifest_path.display())))?;
     let edited = clear_node_frozen(&source, node_id)?;
@@ -730,6 +738,18 @@ fn leading_indent(line: &str) -> usize {
     line.len() - line.trim_start().len()
 }
 
+/// The value after `id:` on a node line, normalized: strip an inline `# comment` and surrounding
+/// quotes, so `id: read`, `id: "read"`, and `- id: read  # note` all yield `read` (node ids are
+/// slugs, so a `#` inside the value can't occur).
+fn parse_id_value(rest: &str) -> &str {
+    let no_comment = rest.find(" #").map_or(rest, |i| &rest[..i]);
+    let t = no_comment.trim();
+    t.strip_prefix('"')
+        .and_then(|s| s.strip_suffix('"'))
+        .or_else(|| t.strip_prefix('\'').and_then(|s| s.strip_suffix('\'')))
+        .unwrap_or(t)
+}
+
 /// Locate a node's `id:` line and its field indentation (the column where `id:` starts — where
 /// sibling fields like `agent:` / `frozen:` live). Matches both `- id: x` and own-line `id: x`.
 fn find_node_id_line(lines: &[&str], node_id: &str) -> Option<(usize, usize)> {
@@ -737,7 +757,7 @@ fn find_node_id_line(lines: &[&str], node_id: &str) -> Option<(usize, usize)> {
         let t = line.trim_start();
         let body = t.strip_prefix("- ").unwrap_or(t);
         if let Some(rest) = body.strip_prefix("id:")
-            && rest.trim() == node_id
+            && parse_id_value(rest) == node_id
         {
             return Some((i, line.find("id:").unwrap_or(0)));
         }
@@ -792,7 +812,17 @@ pub fn clear_node_frozen(source: &str, node_id: &str) -> Result<String, AwareErr
     if source.ends_with('\n') {
         out.push('\n');
     }
-    Ok(out)
+    Ok(restore_line_endings(out, source))
+}
+
+/// Re-apply CRLF line endings if the source used them — `lines()` strips `\r`, so the LF-rebuilt
+/// text would otherwise silently convert a CRLF-authored .flo to all-LF (a whole-file diff).
+fn restore_line_endings(lf: String, source: &str) -> String {
+    if source.contains("\r\n") {
+        lf.replace('\n', "\r\n")
+    } else {
+        lf
+    }
 }
 
 /// Pin a node's output as a `frozen:` block (replacing any existing one), comment-preserving.
@@ -826,7 +856,7 @@ pub fn set_node_frozen(
     if source.ends_with('\n') {
         joined.push('\n');
     }
-    Ok(joined)
+    Ok(restore_line_endings(joined, source))
 }
 
 fn validate_cmd(ctx: &Context, path: &std::path::Path) -> Result<(), AwareError> {
@@ -1326,5 +1356,31 @@ mod freeze_tests {
     #[test]
     fn set_unknown_node_errors() {
         assert!(set_node_frozen(FLO, "nope", "a: 1\n").is_err());
+    }
+
+    #[test]
+    fn matches_quoted_and_inline_comment_id_forms() {
+        let flo = "nodes:\n  - id: \"read\"  # the reader\n    agent: x\n";
+        let out = set_node_frozen(flo, "read", "k: 1\n").unwrap();
+        assert!(
+            out.contains("    frozen:"),
+            "matched a quoted id carrying an inline comment"
+        );
+    }
+
+    #[test]
+    fn preserves_crlf_line_endings() {
+        let flo = "nodes:\r\n  - id: read\r\n    agent: x\r\n";
+        let frozen = set_node_frozen(flo, "read", "k: 1\n").unwrap();
+        assert!(frozen.contains("\r\n"), "kept CRLF");
+        assert!(
+            !frozen.replace("\r\n", "").contains('\r'),
+            "no bare \\r left behind"
+        );
+        assert_eq!(
+            clear_node_frozen(&frozen, "read").unwrap(),
+            flo,
+            "CRLF set→clear round-trip"
+        );
     }
 }
