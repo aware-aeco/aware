@@ -476,6 +476,24 @@ impl Orchestrator {
         })
         .await?;
 
+        // ── Frozen node ───────────────────────────────────────────────────────
+        // Emit the pinned output and skip ALL dispatch (inline / for-each / compare / agent) —
+        // mirrors `execute_node` so the streaming/chained path honors `frozen:` for every node kind
+        // (app-spec § Frozen nodes). Forward the pinned value downstream like any other output.
+        if let Some(frozen) = &node.frozen {
+            let output = yaml_to_json(frozen.clone())?;
+            self.emit(RunEvent::NodeOutput {
+                ts: now_iso(),
+                run_id: self.run_id.clone(),
+                node: node.id.clone(),
+                data: output.clone(),
+            })
+            .await?;
+            self.ctx.record_output(&node.id, output.clone());
+            frontier.push((node.id.clone(), output));
+            return Ok(());
+        }
+
         // ── Inline predicate ─────────────────────────────────────────────────
         if let Some(inline) = &node.inline {
             if inline.kind == "predicate" {
