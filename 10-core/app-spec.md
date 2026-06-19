@@ -193,6 +193,20 @@ When `atom:` is set, `code:` MUST be omitted. The `inputs:` block under `inline:
 
 The substrate ships **33 atoms** in v0.20 — 20 cross-cutting (`is-newer-than`, `group-by`, `sort-by`, `unique`, `pluck`, `count`, `sum`, `avg`, `min`, `max`, `at-least`, `at-most`, `format-date`, `path-join`, `naming-template`, `kebab-to-pascal`, `pascal-to-kebab`, `csv-row-build`, `json-path`, `regex-match`) + 5 Tekla-specific + 8 Revit-specific. See `atoms/README.md` for authoring guidance.
 
+### Frozen nodes
+
+Any node may carry a `frozen:` block — a pinned output that **short-circuits the node on run**: the orchestrator emits the frozen value as the node's result and **skips invoking its agent entirely** (a frozen node need not even have its agent installed). Use it to keep an expensive or hand-curated result **static across runs** — e.g. a reader whose output the user has marked up, so Run never re-reads it and overwrites the edits.
+
+```yaml
+- id: read-takeoff
+  agent: steel-takeoff-us
+  command: read
+  frozen:                # ← the pinned output; while present, the agent never runs
+    plans: [ ... ]       # whatever the node last produced, kept verbatim
+```
+
+While `frozen:` is present the node is **static** ("whatever's there is there") and downstream nodes consume the pinned value; remove it and the node runs normally again. The frozen value is part of the source, so it is covered by the source hash — changing it requires a recompile (the Run gate), exactly like any other edit.
+
 ---
 
 ## Substrate primitives (v0.19)

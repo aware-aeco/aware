@@ -193,6 +193,14 @@ pub struct Node {
     #[serde(default)]
     pub panel: Option<PanelBlock>,
 
+    /// `frozen` — a pinned output that short-circuits this node on run: the orchestrator emits this
+    /// value as the node's result and SKIPS invoking its agent (a frozen node need not even have
+    /// its agent installed). Keeps an expensive or hand-curated result static across runs — e.g. a
+    /// steel-takeoff reader the user has marked up, so Run never re-reads it. Toggled by
+    /// `aware app freeze`/`unfreeze`. See `10-core/app-spec.md § Frozen nodes`.
+    #[serde(default)]
+    pub frozen: Option<Value>,
+
     /// Nested topology for `for-each`, `sweep`, `schedule`-scoped nodes.
     /// `do:` is the body that runs per-iteration.
     #[serde(default, rename = "do")]

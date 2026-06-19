@@ -746,6 +746,22 @@ impl Orchestrator {
         })
         .await?;
 
+        // Frozen node: emit the pinned output and SKIP the agent entirely — it need not even be
+        // installed. The pinned value keeps an expensive or hand-curated result static across runs
+        // (app-spec § Frozen nodes; toggled by `aware app freeze`/`unfreeze`). Checked before agent
+        // and inline dispatch so a frozen node short-circuits regardless of what it would have run.
+        if let Some(frozen) = &node.frozen {
+            let output = yaml_to_json(frozen.clone())?;
+            self.emit(RunEvent::NodeOutput {
+                ts: now_iso(),
+                run_id: self.run_id.clone(),
+                node: node.id.clone(),
+                data: output.clone(),
+            })
+            .await?;
+            return Ok(NodeResult::Output(output));
+        }
+
         if let Some(agent_id) = &node.agent {
             let command = node.command.as_deref().unwrap_or("");
             // Source params via the shared config:+inputs: merge rule, then
@@ -1767,6 +1783,50 @@ commands:
             .expect("read node must emit a synthesized NodeOutput");
         assert_eq!(output["path"], serde_json::json!("<simulated>"));
         assert_eq!(output["row-count"], serde_json::json!(0));
+        if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
+            assert_eq!(status, "ok");
+        } else {
+            panic!("run did not end cleanly");
+        }
+    }
+
+    #[tokio::test]
+    async fn frozen_node_emits_pinned_output_and_skips_the_agent() {
+        // A frozen node must NOT call its agent (the empty invoker would error if it did) and must
+        // emit its pinned `frozen:` value as the node's output. The agent is never installed,
+        // proving a frozen node needn't have a resolvable agent — it short-circuits.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: frz
+version: 0.1.0
+description: x
+nodes:
+  - id: r
+    agent: ag-never-runs
+    command: read
+    frozen:
+      path: kept.txt
+      count: 7
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new()); // any invocation → NotFound → run fails
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap(); // must succeed without ever calling the invoker
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let output = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "r" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("frozen node must emit its pinned value as NodeOutput");
+        assert_eq!(output["path"], serde_json::json!("kept.txt"));
+        assert_eq!(output["count"], serde_json::json!(7));
         if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
             assert_eq!(status, "ok");
         } else {
