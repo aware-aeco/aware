@@ -476,6 +476,24 @@ impl Orchestrator {
         })
         .await?;
 
+        // ── Frozen node ───────────────────────────────────────────────────────
+        // Emit the pinned output and skip ALL dispatch (inline / for-each / compare / agent) —
+        // mirrors `execute_node` so the streaming/chained path honors `frozen:` for every node kind
+        // (app-spec § Frozen nodes). Forward the pinned value downstream like any other output.
+        if let Some(frozen) = &node.frozen {
+            let output = yaml_to_json(frozen.clone())?;
+            self.emit(RunEvent::NodeOutput {
+                ts: now_iso(),
+                run_id: self.run_id.clone(),
+                node: node.id.clone(),
+                data: output.clone(),
+            })
+            .await?;
+            self.ctx.record_output(&node.id, output.clone());
+            frontier.push((node.id.clone(), output));
+            return Ok(());
+        }
+
         // ── Inline predicate ─────────────────────────────────────────────────
         if let Some(inline) = &node.inline {
             if inline.kind == "predicate" {
@@ -745,6 +763,22 @@ impl Orchestrator {
             command: node.command.clone(),
         })
         .await?;
+
+        // Frozen node: emit the pinned output and SKIP the agent entirely — it need not even be
+        // installed. The pinned value keeps an expensive or hand-curated result static across runs
+        // (app-spec § Frozen nodes; toggled by `aware app freeze`/`unfreeze`). Checked before agent
+        // and inline dispatch so a frozen node short-circuits regardless of what it would have run.
+        if let Some(frozen) = &node.frozen {
+            let output = yaml_to_json(frozen.clone())?;
+            self.emit(RunEvent::NodeOutput {
+                ts: now_iso(),
+                run_id: self.run_id.clone(),
+                node: node.id.clone(),
+                data: output.clone(),
+            })
+            .await?;
+            return Ok(NodeResult::Output(output));
+        }
 
         if let Some(agent_id) = &node.agent {
             let command = node.command.as_deref().unwrap_or("");
@@ -1772,6 +1806,87 @@ commands:
         } else {
             panic!("run did not end cleanly");
         }
+    }
+
+    #[tokio::test]
+    async fn frozen_node_emits_pinned_output_and_skips_the_agent() {
+        // A frozen node must NOT call its agent (the empty invoker would error if it did) and must
+        // emit its pinned `frozen:` value as the node's output. The agent is never installed,
+        // proving a frozen node needn't have a resolvable agent — it short-circuits.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: frz
+version: 0.1.0
+description: x
+nodes:
+  - id: r
+    agent: ag-never-runs
+    command: read
+    frozen:
+      path: kept.txt
+      count: 7
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+
+        let inv = Arc::new(MockInvoker::new()); // any invocation → NotFound → run fails
+        let (orch, _tmp, log_path) = make_orchestrator(app, inv).await;
+        orch.run_one_shot().await.unwrap(); // must succeed without ever calling the invoker
+
+        let events = read_run_events(&log_path).await.unwrap();
+        let output = events
+            .iter()
+            .find_map(|e| match e {
+                RunEvent::NodeOutput { node, data, .. } if node == "r" => Some(data.clone()),
+                _ => None,
+            })
+            .expect("frozen node must emit its pinned value as NodeOutput");
+        assert_eq!(output["path"], serde_json::json!("kept.txt"));
+        assert_eq!(output["count"], serde_json::json!(7));
+        if let RunEvent::RunEnd { status, .. } = events.last().unwrap() {
+            assert_eq!(status, "ok");
+        } else {
+            panic!("run did not end cleanly");
+        }
+    }
+
+    #[tokio::test]
+    async fn frozen_node_skips_agent_in_streaming_path() {
+        // execute_and_chain (the streaming / propagate_from path) must honor `frozen:` too: emit
+        // the pinned value, skip the agent (the empty invoker errors if invoked), and forward it to
+        // the frontier so downstream nodes receive it.
+        let app: App = serde_yaml::from_str(
+            r#"
+app: frzs
+version: 0.1.0
+description: x
+nodes:
+  - id: s
+    agent: ag-never-runs
+    command: read
+    frozen:
+      tag: streamed
+connections: []
+requires: []
+"#,
+        )
+        .unwrap();
+        let node = app.nodes[0].clone();
+        let inv = Arc::new(MockInvoker::new()); // any invocation → NotFound
+        let (mut orch, _tmp, _log) = make_orchestrator(app, inv).await;
+        let mut frontier: Vec<(String, Value)> = Vec::new();
+        orch.execute_and_chain(&node, &serde_json::json!({}), &mut frontier)
+            .await
+            .unwrap();
+        assert_eq!(
+            frontier.len(),
+            1,
+            "frozen node must forward exactly its pinned output"
+        );
+        assert_eq!(frontier[0].0, "s");
+        assert_eq!(frontier[0].1, serde_json::json!({ "tag": "streamed" }));
     }
 
     #[tokio::test]
