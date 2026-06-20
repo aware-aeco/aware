@@ -365,7 +365,13 @@ mod tests {
             },
         );
         let mut agents = BTreeMap::new();
-        agents.insert("tekla".into(), IndexEntry { versions });
+        agents.insert(
+            "tekla".into(),
+            IndexEntry {
+                versions,
+                ..Default::default()
+            },
+        );
         let index = Index {
             version: "1.0".into(),
             updated_at: "x".into(),
@@ -436,6 +442,100 @@ mod tests {
     }
 
     #[test]
+    fn update_migrates_an_aliased_rename_to_the_new_id() {
+        // #256, end to end through the real update path. An agent installed under its
+        // OLD id is renamed in the registry by keeping the old key as an `alias-of` the
+        // new id, with its subdir pointed at the new agent's payload. `aware agent
+        // update <old>` must then MIGRATE the install to the new id (old folder gone,
+        // new folder present) — exactly the option-2 behavior the issue relies on.
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+
+        let entry = |subdir: &str| {
+            let mut versions = BTreeMap::new();
+            versions.insert(
+                "0.1.0".to_string(),
+                VersionEntry {
+                    tarball: url.clone(),
+                    subdir: subdir.to_string(),
+                },
+            );
+            versions
+        };
+
+        // 1. Before the rename: install the agent under its OLD id.
+        write_repo_tarball(&archive, &["steel-detailer-aisc"]);
+        let mut before_agents = BTreeMap::new();
+        before_agents.insert(
+            "steel-detailer-aisc".to_string(),
+            IndexEntry {
+                versions: entry("aware-main/20-agents/steel-detailer-aisc"),
+                ..Default::default()
+            },
+        );
+        let before = Index {
+            version: "1.0".into(),
+            updated_at: "2026-06-18T00:00:00Z".into(),
+            agents: before_agents,
+            bundles: BTreeMap::new(),
+        };
+        assert_eq!(
+            install_agent_from_registry("steel-detailer-aisc", None, &paths, &before).unwrap(),
+            "steel-detailer-aisc"
+        );
+        assert!(
+            aware
+                .join("agents/steel-detailer-aisc/manifest.yaml")
+                .is_file()
+        );
+
+        // 2. The rename ships: the archive now carries the NEW agent, and the index
+        //    keeps the old key as an alias whose subdir points at the new payload.
+        write_repo_tarball(&archive, &["steel-detailer-us"]);
+        let mut after_agents = BTreeMap::new();
+        after_agents.insert(
+            "steel-detailer-us".to_string(),
+            IndexEntry {
+                versions: entry("aware-main/20-agents/steel-detailer-us"),
+                ..Default::default()
+            },
+        );
+        after_agents.insert(
+            "steel-detailer-aisc".to_string(),
+            IndexEntry {
+                versions: entry("aware-main/20-agents/steel-detailer-us"),
+                alias_of: Some("steel-detailer-us".to_string()),
+                deprecated: false,
+            },
+        );
+        let after = Index {
+            version: "1.0".into(),
+            updated_at: "2026-06-20T00:00:00Z".into(),
+            agents: after_agents,
+            bundles: BTreeMap::new(),
+        };
+
+        // 3. Updating the OLD install migrates it to the new id.
+        let migrated = update_agent_from_registry("steel-detailer-aisc", &paths, &after).unwrap();
+        assert_eq!(migrated, "steel-detailer-us");
+        assert!(
+            aware
+                .join("agents/steel-detailer-us/manifest.yaml")
+                .is_file(),
+            "the install now lives under the new id"
+        );
+        assert!(
+            !aware.join("agents/steel-detailer-aisc").exists(),
+            "the old id folder is gone — no duplicate install"
+        );
+    }
+
+    #[test]
     fn install_busts_cache_when_index_grows_even_with_frozen_updated_at() {
         // The #254 end-to-end regression. The shared `main` archive is a MUTABLE ref:
         // its content changes when an agent merges, but the URL is constant. The old
@@ -464,7 +564,13 @@ mod tests {
                         subdir: format!("aware-main/20-agents/{n}"),
                     },
                 );
-                agents.insert((*n).to_string(), IndexEntry { versions });
+                agents.insert(
+                    (*n).to_string(),
+                    IndexEntry {
+                        versions,
+                        ..Default::default()
+                    },
+                );
             }
             Index {
                 version: "1.0".into(),

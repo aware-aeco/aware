@@ -16,9 +16,44 @@ pub struct Index {
     pub bundles: BTreeMap<String, BundleEntry>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Default, Serialize, Deserialize)]
 pub struct IndexEntry {
     pub versions: BTreeMap<String, VersionEntry>,
+    /// A backward-compatible **rename alias** (#256). The key carrying this is the
+    /// agent's OLD id; its `versions[].subdir` points at the NEW agent (whose
+    /// `manifest.agent` is the new id). The entry stays resolvable for
+    /// `agent update` — so an existing install of the old id MIGRATES to the new id
+    /// (the folder swap in [`update_agent_from_registry`](crate::install::update_agent_from_registry)
+    /// already fires when the fetched manifest's id differs) — but it is EXCLUDED
+    /// from the generated catalog, so the old id is NOT listed as a duplicate of the
+    /// new one. That decouples "resolvable for update" from "listed in the catalog",
+    /// the clean rename path: new users see only the new id; existing installs
+    /// migrate automatically; the catalog stays deduplicated. `None` for an ordinary
+    /// entry.
+    #[serde(rename = "alias-of", default, skip_serializing_if = "Option::is_none")]
+    pub alias_of: Option<String>,
+    /// Retire this index key **without** a rename target (#256): still resolvable for
+    /// `agent update` (existing installs can keep pulling it) but hidden from the
+    /// catalog so it is no longer offered to new users — a soft sunset. `alias-of`
+    /// already implies hidden; set `deprecated` alone when there is no successor id.
+    #[serde(default, skip_serializing_if = "is_false")]
+    pub deprecated: bool,
+}
+
+/// serde `skip_serializing_if` predicate: omit a `false` boolean from the JSON so an
+/// ordinary index entry stays `{ "versions": … }` with no `deprecated` noise.
+fn is_false(b: &bool) -> bool {
+    !*b
+}
+
+impl IndexEntry {
+    /// Whether this entry must be omitted from the generated catalog. A rename alias
+    /// (`alias-of`) or a deprecated key stays resolvable for `agent update` but must
+    /// not surface in `agent catalog`/`search` or a downstream Agent Library —
+    /// otherwise a rename leaves a duplicate listing (#256).
+    pub fn hidden_from_catalog(&self) -> bool {
+        self.alias_of.is_some() || self.deprecated
+    }
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -195,6 +230,77 @@ mod tests {
         assert_eq!(idx.resolve_key("allplan"), None);
         // `<key>` followed by a non-dot char must not match (`allplan-2024x`).
         assert_eq!(idx.resolve_key("allplan-2024x"), None);
+    }
+
+    const ALIASED: &str = r#"{
+        "version": "1.0",
+        "updated-at": "2026-05-16T00:00:00Z",
+        "agents": {
+            "steel-detailer-us": { "versions": { "0.1.0": { "tarball": "t", "subdir": "us" } } },
+            "steel-detailer-aisc": {
+                "alias-of": "steel-detailer-us",
+                "versions": { "0.1.0": { "tarball": "t", "subdir": "us" } }
+            },
+            "old-sunset": {
+                "deprecated": true,
+                "versions": { "0.1.0": { "tarball": "t", "subdir": "sunset" } }
+            }
+        },
+        "bundles": {}
+    }"#;
+
+    #[test]
+    fn parses_alias_and_deprecated_flags() {
+        // #256: the new optional index-entry flags deserialize, default to absent, and
+        // the helper marks exactly the alias / deprecated keys as catalog-hidden.
+        let idx = Index::parse(ALIASED.as_bytes()).unwrap();
+
+        let plain = &idx.agents["steel-detailer-us"];
+        assert_eq!(plain.alias_of, None);
+        assert!(!plain.deprecated);
+        assert!(!plain.hidden_from_catalog(), "an ordinary entry is listed");
+
+        let alias = &idx.agents["steel-detailer-aisc"];
+        assert_eq!(alias.alias_of.as_deref(), Some("steel-detailer-us"));
+        assert!(alias.hidden_from_catalog(), "an alias is catalog-hidden");
+
+        let dep = &idx.agents["old-sunset"];
+        assert!(dep.deprecated);
+        assert!(
+            dep.hidden_from_catalog(),
+            "a deprecated key is catalog-hidden"
+        );
+    }
+
+    #[test]
+    fn alias_key_stays_resolvable_for_update() {
+        // The whole point of the alias (#256): the OLD id must still resolve so
+        // `agent update <old>` can fetch the new payload and migrate the install.
+        let idx = Index::parse(ALIASED.as_bytes()).unwrap();
+        assert_eq!(
+            idx.resolve_key("steel-detailer-aisc"),
+            Some("steel-detailer-aisc"),
+            "the alias key resolves for update"
+        );
+        let (ver, entry) = idx.resolve("steel-detailer-aisc", None).unwrap();
+        assert_eq!(ver, "0.1.0");
+        assert_eq!(
+            entry.subdir, "us",
+            "the alias points at the NEW agent's payload, so update migrates to it"
+        );
+    }
+
+    #[test]
+    fn ordinary_entry_serializes_without_flag_noise() {
+        // skip_serializing_if keeps an ordinary entry as `{"versions":…}` — no
+        // `alias-of` / `deprecated` keys leak into a freshly published index.
+        let entry = IndexEntry {
+            versions: BTreeMap::new(),
+            ..Default::default()
+        };
+        let json = serde_json::to_string(&entry).unwrap();
+        assert!(!json.contains("alias-of"), "no alias-of key: {json}");
+        assert!(!json.contains("deprecated"), "no deprecated key: {json}");
     }
 
     #[test]

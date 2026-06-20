@@ -266,6 +266,12 @@ where
     let mut agents: BTreeMap<String, CatalogAgent> = BTreeMap::new();
     let mut errors: Vec<(String, String)> = Vec::new();
     for (id, entry) in &index.agents {
+        // A rename alias / deprecated key stays resolvable for `agent update` (so
+        // existing installs migrate) but is excluded here so it isn't listed as a
+        // duplicate of the agent it points at (#256).
+        if entry.hidden_from_catalog() {
+            continue;
+        }
         let mut ca = CatalogAgent {
             display_name: None,
             vendor: None,
@@ -420,7 +426,13 @@ mod tests {
                     subdir: (*subdir).to_string(),
                 },
             );
-            agents.insert((*id).to_string(), IndexEntry { versions });
+            agents.insert(
+                (*id).to_string(),
+                IndexEntry {
+                    versions,
+                    ..Default::default()
+                },
+            );
         }
         Index {
             version: "1.0".to_string(),
@@ -454,6 +466,71 @@ mod tests {
             "9.9.9",
             "the entry records manifest.version separately from the index key"
         );
+    }
+
+    #[test]
+    fn build_catalog_excludes_alias_and_deprecated_entries() {
+        // #256: a rename alias (old id → new agent) and a deprecated key must stay
+        // OUT of the catalog so a rename leaves no duplicate listing — while the real
+        // target is present exactly once.
+        let mut index = index_with(&[("steel-detailer-us", "0.1.0", "us")]);
+        // `steel-detailer-aisc` is the OLD id, kept as an alias pointing at the new
+        // agent's subdir (so `agent update` migrates existing installs) but hidden.
+        let mut alias_versions = BTreeMap::new();
+        alias_versions.insert(
+            "0.1.0".to_string(),
+            VersionEntry {
+                tarball: "t".to_string(),
+                subdir: "us".to_string(),
+            },
+        );
+        index.agents.insert(
+            "steel-detailer-aisc".to_string(),
+            IndexEntry {
+                versions: alias_versions,
+                alias_of: Some("steel-detailer-us".to_string()),
+                deprecated: false,
+            },
+        );
+        // A separately-retired key with no successor (deprecated alone) is hidden too.
+        let mut dep_versions = BTreeMap::new();
+        dep_versions.insert(
+            "0.1.0".to_string(),
+            VersionEntry {
+                tarball: "t".to_string(),
+                subdir: "sunset".to_string(),
+            },
+        );
+        index.agents.insert(
+            "old-sunset".to_string(),
+            IndexEntry {
+                versions: dep_versions,
+                alias_of: None,
+                deprecated: true,
+            },
+        );
+
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            // The alias resolves to the new agent's manifest; if `load` were called for
+            // a hidden entry this would still succeed, so the assertion below is what
+            // proves the entry was skipped (not merely that its manifest loaded).
+            Ok(agent_from_yaml("steel-detailer-us", "us steel detailing"))
+        });
+
+        assert!(errs.is_empty());
+        assert!(
+            cat.agents.contains_key("steel-detailer-us"),
+            "the rename target is listed"
+        );
+        assert!(
+            !cat.agents.contains_key("steel-detailer-aisc"),
+            "the alias key must NOT appear (no duplicate listing)"
+        );
+        assert!(
+            !cat.agents.contains_key("old-sunset"),
+            "a deprecated key must NOT appear"
+        );
+        assert_eq!(cat.agents.len(), 1, "exactly one catalog entry survives");
     }
 
     #[test]
