@@ -285,6 +285,13 @@ where
                 Err(e) => errors.push((format!("{id}@{ver}"), e.to_string())),
             }
         }
+        // A rename alias / deprecated key is still LOADED above — so a broken one is
+        // reported by `reindex`/`reindex --check`, since it stays resolvable for
+        // `agent update` — but it is kept OUT of the catalog so it isn't listed as a
+        // duplicate of the agent it points at (#256).
+        if entry.hidden_from_catalog() {
+            continue;
+        }
         if !ca.versions.is_empty() {
             agents.insert(id.clone(), ca);
         }
@@ -420,7 +427,13 @@ mod tests {
                     subdir: (*subdir).to_string(),
                 },
             );
-            agents.insert((*id).to_string(), IndexEntry { versions });
+            agents.insert(
+                (*id).to_string(),
+                IndexEntry {
+                    versions,
+                    ..Default::default()
+                },
+            );
         }
         Index {
             version: "1.0".to_string(),
@@ -453,6 +466,115 @@ mod tests {
             a.versions.get("2025.0.1").unwrap().manifest_version,
             "9.9.9",
             "the entry records manifest.version separately from the index key"
+        );
+    }
+
+    #[test]
+    fn build_catalog_excludes_alias_and_deprecated_entries() {
+        // #256: a rename alias (old id → new agent) and a deprecated key must stay
+        // OUT of the catalog so a rename leaves no duplicate listing — while the real
+        // target is present exactly once.
+        let mut index = index_with(&[("steel-detailer-us", "0.1.0", "us")]);
+        // `steel-detailer-aisc` is the OLD id, kept as an alias pointing at the new
+        // agent's subdir (so `agent update` migrates existing installs) but hidden.
+        let mut alias_versions = BTreeMap::new();
+        alias_versions.insert(
+            "0.1.0".to_string(),
+            VersionEntry {
+                tarball: "t".to_string(),
+                subdir: "us".to_string(),
+            },
+        );
+        index.agents.insert(
+            "steel-detailer-aisc".to_string(),
+            IndexEntry {
+                versions: alias_versions,
+                alias_of: Some("steel-detailer-us".to_string()),
+                deprecated: false,
+            },
+        );
+        // A separately-retired key with no successor (deprecated alone) is hidden too.
+        let mut dep_versions = BTreeMap::new();
+        dep_versions.insert(
+            "0.1.0".to_string(),
+            VersionEntry {
+                tarball: "t".to_string(),
+                subdir: "sunset".to_string(),
+            },
+        );
+        index.agents.insert(
+            "old-sunset".to_string(),
+            IndexEntry {
+                versions: dep_versions,
+                alias_of: None,
+                deprecated: true,
+            },
+        );
+
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |_subdir| {
+            // The alias resolves to the new agent's manifest; if `load` were called for
+            // a hidden entry this would still succeed, so the assertion below is what
+            // proves the entry was skipped (not merely that its manifest loaded).
+            Ok(agent_from_yaml("steel-detailer-us", "us steel detailing"))
+        });
+
+        assert!(errs.is_empty());
+        assert!(
+            cat.agents.contains_key("steel-detailer-us"),
+            "the rename target is listed"
+        );
+        assert!(
+            !cat.agents.contains_key("steel-detailer-aisc"),
+            "the alias key must NOT appear (no duplicate listing)"
+        );
+        assert!(
+            !cat.agents.contains_key("old-sunset"),
+            "a deprecated key must NOT appear"
+        );
+        assert_eq!(cat.agents.len(), 1, "exactly one catalog entry survives");
+    }
+
+    #[test]
+    fn build_catalog_still_validates_hidden_entries() {
+        // #256 review (Codex P2): a hidden alias/deprecated entry stays resolvable for
+        // `agent update`, so a broken one must STILL be reported by reindex — it just
+        // mustn't appear in the catalog. Excluding it from `agents` must not also
+        // exclude it from the error list.
+        let mut index = index_with(&[("good", "1.0.0", "good")]);
+        let mut bad_versions = BTreeMap::new();
+        bad_versions.insert(
+            "1.0.0".to_string(),
+            VersionEntry {
+                tarball: "t".to_string(),
+                subdir: "broken".to_string(),
+            },
+        );
+        index.agents.insert(
+            "retired".to_string(),
+            IndexEntry {
+                versions: bad_versions,
+                alias_of: None,
+                deprecated: true, // hidden, but its broken manifest must still be flagged
+            },
+        );
+
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            if subdir == "broken" {
+                Err(AwareError::Validation("boom".to_string()))
+            } else {
+                Ok(agent_from_yaml("good", "fine"))
+            }
+        });
+
+        assert!(cat.agents.contains_key("good"));
+        assert!(
+            !cat.agents.contains_key("retired"),
+            "the hidden entry is not listed"
+        );
+        assert_eq!(errs.len(), 1, "but its broken manifest is still reported");
+        assert!(
+            errs[0].0.contains("retired"),
+            "the failure names the hidden entry: {errs:?}"
         );
     }
 
