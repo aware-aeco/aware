@@ -266,12 +266,6 @@ where
     let mut agents: BTreeMap<String, CatalogAgent> = BTreeMap::new();
     let mut errors: Vec<(String, String)> = Vec::new();
     for (id, entry) in &index.agents {
-        // A rename alias / deprecated key stays resolvable for `agent update` (so
-        // existing installs migrate) but is excluded here so it isn't listed as a
-        // duplicate of the agent it points at (#256).
-        if entry.hidden_from_catalog() {
-            continue;
-        }
         let mut ca = CatalogAgent {
             display_name: None,
             vendor: None,
@@ -290,6 +284,13 @@ where
                 }
                 Err(e) => errors.push((format!("{id}@{ver}"), e.to_string())),
             }
+        }
+        // A rename alias / deprecated key is still LOADED above — so a broken one is
+        // reported by `reindex`/`reindex --check`, since it stays resolvable for
+        // `agent update` — but it is kept OUT of the catalog so it isn't listed as a
+        // duplicate of the agent it points at (#256).
+        if entry.hidden_from_catalog() {
+            continue;
         }
         if !ca.versions.is_empty() {
             agents.insert(id.clone(), ca);
@@ -531,6 +532,50 @@ mod tests {
             "a deprecated key must NOT appear"
         );
         assert_eq!(cat.agents.len(), 1, "exactly one catalog entry survives");
+    }
+
+    #[test]
+    fn build_catalog_still_validates_hidden_entries() {
+        // #256 review (Codex P2): a hidden alias/deprecated entry stays resolvable for
+        // `agent update`, so a broken one must STILL be reported by reindex — it just
+        // mustn't appear in the catalog. Excluding it from `agents` must not also
+        // exclude it from the error list.
+        let mut index = index_with(&[("good", "1.0.0", "good")]);
+        let mut bad_versions = BTreeMap::new();
+        bad_versions.insert(
+            "1.0.0".to_string(),
+            VersionEntry {
+                tarball: "t".to_string(),
+                subdir: "broken".to_string(),
+            },
+        );
+        index.agents.insert(
+            "retired".to_string(),
+            IndexEntry {
+                versions: bad_versions,
+                alias_of: None,
+                deprecated: true, // hidden, but its broken manifest must still be flagged
+            },
+        );
+
+        let (cat, errs) = build_catalog(&index, "now".to_string(), |subdir| {
+            if subdir == "broken" {
+                Err(AwareError::Validation("boom".to_string()))
+            } else {
+                Ok(agent_from_yaml("good", "fine"))
+            }
+        });
+
+        assert!(cat.agents.contains_key("good"));
+        assert!(
+            !cat.agents.contains_key("retired"),
+            "the hidden entry is not listed"
+        );
+        assert_eq!(errs.len(), 1, "but its broken manifest is still reported");
+        assert!(
+            errs[0].0.contains("retired"),
+            "the failure names the hidden entry: {errs:?}"
+        );
     }
 
     #[test]
