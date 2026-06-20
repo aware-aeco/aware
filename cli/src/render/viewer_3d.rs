@@ -136,6 +136,9 @@ function frameBox(box, dir){
   const near=Math.max(dist/1000, maxDim/1000), far=dist*10+radius*6;
   perspCam.near=near; perspCam.far=far; perspCam.updateProjectionMatrix();
   orthoCam.near=near; orthoCam.far=far;
+  // A fit resets the ortho dolly-zoom (wheel zoom multiplies orthoCam.zoom, which the
+  // distance-based frustum below does not account for) so Fit/Home/views truly re-frame.
+  orthoCam.zoom=1;
   if(camera.isOrthographicCamera) reframeOrtho();
   controls.update();
 }
@@ -148,7 +151,7 @@ function setProjection(mode){
   const target=controls.target.clone(), pos=camera.position.clone();
   camera = mode==='ortho' ? orthoCam : perspCam;
   controls.object=camera; camera.up.set(0,1,0); camera.position.copy(pos); camera.lookAt(target);
-  if(camera.isOrthographicCamera) reframeOrtho(); else camera.updateProjectionMatrix();
+  if(camera.isOrthographicCamera){ orthoCam.zoom=1; reframeOrtho(); } else camera.updateProjectionMatrix();
   controls.update(); activate('#proj button','data-proj',mode);
 }
 function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes button','data-mode',m); }
@@ -308,7 +311,9 @@ const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let selected=null; c
 function setHint(){ readout.replaceChildren(document.createTextNode('Drag to orbit · scroll to zoom · '), el('b',null,'click an element'), document.createTextNode(' to inspect')); }
 renderer.domElement.addEventListener('pointerdown', e=>{
   mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
-  const hit=ray.intersectObjects(pickable,false)[0];
+  // Only pick VISIBLE meshes — a legend-hidden / soloed-out group in front must not
+  // swallow the click for the visible element behind it (the raycaster ignores `visible`).
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0];
   if(selected){ selected.material.emissive.setHex(0x000000); selected=null; }
   if(hit){ selected=hit.object; selected.material.emissive=new THREE.Color(0xf59e0b); selected.material.emissiveIntensity=0.6;
     const u=selected.userData; const parts=[el('b',null,u.id||'(element)')]; if(u.group) parts.push(document.createTextNode(' · '), el('span','pill',u.group));
@@ -474,6 +479,12 @@ mod tests {
         // CAD navigation: middle-mouse pan + Home/Alt+Z shortcuts.
         assert!(html.contains("MIDDLE:THREE.MOUSE.PAN"));
         assert!(html.contains("'Home'") && html.contains("e.altKey"));
+        // Review fixes: a fit resets the ortho dolly-zoom; picking ignores hidden meshes.
+        assert!(html.contains("orthoCam.zoom=1"), "ortho fit resets zoom");
+        assert!(
+            html.contains("pickable.filter(m=>m.visible)"),
+            "picking skips hidden meshes"
+        );
     }
 
     #[test]
