@@ -9,7 +9,8 @@ its data into this shape.
   "meta":   { "name": "string", "units": "mm|u|…", "up": "z|y" },
 
   // legend + per-element colour, keyed by `group`
-  "groups": [ { "key": "column", "label": "Columns", "color": "#60a5fa" } ],
+  "groups": [ { "key": "column", "label": "Columns", "color": "#60a5fa",
+                "opacity": 0.25 } ],   // optional 0..1; <1 makes the group translucent
 
   "elements": [
     {
@@ -20,6 +21,7 @@ its data into this shape.
       "at":   [x,y,z],                  // node: a point
       "section": { "w": 310, "d": 310 },// optional cross-section (units of meta.units)
       "size": 120,                      // optional node radius
+      "opacity": 0.3,                   // optional 0..1; overrides the group's opacity
       "meta": { "profile": "UC 305x305x97", "length": "6.00 m" }  // arbitrary; shown on click
     }
   ],
@@ -44,6 +46,22 @@ its data into this shape.
 - **`kind`:** `line`/`box` = an oriented bar `from`→`to` (optional `section` for thickness,
   else a hairline relative to scene size); `node` = a sphere at `at` (optional `size`).
 - **`camera`** is honoured when present, else auto-fit.
+- **`opacity`** (0..1) on a `group` makes that whole group translucent; on an `element` it
+  overrides the group value. Use it to reveal elements embedded inside others — e.g. render
+  the concrete group at `opacity: 0.25` so the rebar inside shows through (no edge-cage hack).
+
+## Viewer controls (no schema needed — built into the renderer)
+
+The rendered page is interactive beyond orbit/zoom:
+
+- **Navigation:** left-drag orbits, **middle-drag pans**, scroll (and ctrl+scroll) zooms.
+  **Home** fits the whole scene; **Alt+Z** zooms to the selected element.
+- **Named views:** a toolbar with Top / Front / Back / Left / Right / Iso buttons snaps the
+  camera to that orientation, framing the scene.
+- **Projection:** toggle **Persp** ↔ **Ortho** (orthographic is the CAD/elevation view).
+- **Display mode:** **Solid** / **Wire** (wireframe) / **X-ray** (translucent) — X-ray reveals
+  embedded elements globally without touching the scene.
+- **Interactive legend:** click a group row to hide/show it; double-click to isolate (solo) it.
 
 ## Output
 

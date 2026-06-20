@@ -41,7 +41,15 @@ const TEMPLATE: &str = r##"<!doctype html>
   th,td{text-align:left;padding:6px 4px;border-bottom:1px solid var(--border)} th{color:var(--muted);font-weight:600}
   td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
   .swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:7px;vertical-align:middle}
-  #legend{bottom:16px;left:16px;padding:12px 14px;font-size:12.5px} #legend .row{display:flex;align-items:center;gap:8px;margin:4px 0}
+  #legend{bottom:16px;left:16px;padding:12px 14px;font-size:12.5px} #legend .row{display:flex;align-items:center;gap:8px;margin:2px 0}
+  #legend .legend-hint{color:var(--muted);font-size:11px;margin:0 0 6px}
+  #legend .row{cursor:pointer;user-select:none;border-radius:5px;padding:2px 5px} #legend .row:hover{background:rgba(51,65,85,.5)}
+  #legend .row.off{opacity:.4} #legend .row.off .swatch{filter:grayscale(1)}
+  #toolbar{top:74px;left:16px;padding:7px 9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;max-width:calc(100% - 372px)}
+  #toolbar .tb-grp{display:flex;gap:4px} #toolbar .tb-sep{width:1px;height:20px;background:var(--border-2);margin:0 2px}
+  #toolbar button{background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;line-height:1}
+  #toolbar button:hover{background:rgba(51,65,85,.85);border-color:var(--accent)}
+  #toolbar button.on{background:var(--accent);color:#06121f;border-color:var(--accent);font-weight:600}
   #readout{bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
 </style>
@@ -49,9 +57,24 @@ const TEMPLATE: &str = r##"<!doctype html>
 <body>
 <div id="app"></div>
 <div id="topbar" class="panel"><div class="brand"><b>AWARE</b> · viewer-3d</div><div class="sub" id="sceneName">—</div></div>
+<div id="toolbar" class="panel">
+  <div class="tb-grp" id="views" title="Named views">
+    <button data-view="top">Top</button><button data-view="front">Front</button><button data-view="back">Back</button><button data-view="left">Left</button><button data-view="right">Right</button><button data-view="iso">Iso</button>
+  </div>
+  <div class="tb-sep"></div>
+  <div class="tb-grp" id="proj" title="Camera projection">
+    <button data-proj="persp" class="on">Persp</button><button data-proj="ortho">Ortho</button>
+  </div>
+  <div class="tb-sep"></div>
+  <div class="tb-grp" id="modes" title="Display mode">
+    <button data-mode="solid" class="on">Solid</button><button data-mode="wire">Wire</button><button data-mode="xray">X-ray</button>
+  </div>
+  <div class="tb-sep"></div>
+  <button id="fit" title="Fit all (Home)">Fit</button>
+</div>
 <div id="side" class="panel"><h2 id="sideTitle">—</h2><p class="note" id="sideNote"></p><div id="panels"></div></div>
 <div id="legend" class="panel"></div>
-<div id="readout" class="panel">Drag to orbit · scroll to zoom · <b>click an element</b> to inspect</div>
+<div id="readout" class="panel">Drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selected</div>
 <script>
   // Loading handshake for an embedding client (generic — a client may listen, or ignore it
   // entirely when opened standalone): a failed CDN/module load or a runtime error posts
@@ -75,12 +98,82 @@ const SCENE = __SCENE_JSON__;
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
 
 const scene=new THREE.Scene(); scene.background=new THREE.Color(0x0a0f1a);
-const camera=new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.01, 1e7);
+// Two cameras share one position/target so the projection can be toggled live.
+const perspCam=new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.01, 1e7);
+const orthoCam=new THREE.OrthographicCamera(-1,1,1,-1,0.01,1e7);
+let camera=perspCam;
 const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
 document.getElementById('app').appendChild(renderer.domElement);
 const controls=new OrbitControls(camera, renderer.domElement); controls.enableDamping=true; controls.dampingFactor=0.08;
+// CAD-style mouse map: left orbit, MIDDLE pan, right pan; wheel (incl. ctrl+wheel) zooms.
+controls.mouseButtons={ LEFT:THREE.MOUSE.ROTATE, MIDDLE:THREE.MOUSE.PAN, RIGHT:THREE.MOUSE.PAN };
 let content=new THREE.Group(); scene.add(content); let pickable=[];
 const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vector3(P[0],P[1],P[2]);
+
+// ---- view state: scene bounds + display/visibility, driven by the toolbar + legend ----
+let sceneBox=new THREE.Box3(); let maxDim=1;
+const groupHidden=new Set(); let soloGroup=null; let displayMode='solid'; let legendClickT=null;
+
+// Recompute the orthographic frustum so its on-screen scale matches the perspective
+// camera's at the target plane (keeps zoom continuous across a projection toggle / resize).
+function reframeOrtho(){
+  const dist=camera.position.distanceTo(controls.target)||maxDim;
+  const h=Math.tan(THREE.MathUtils.degToRad(perspCam.fov)*0.5)*dist, aspect=innerWidth/innerHeight||1;
+  orthoCam.left=-h*aspect; orthoCam.right=h*aspect; orthoCam.top=h; orthoCam.bottom=-h; orthoCam.updateProjectionMatrix();
+}
+// Frame `box` from direction `dir` (target→camera); `dir` omitted keeps the current view angle.
+function frameBox(box, dir){
+  if(!box || box.isEmpty()) return;
+  const c=box.getCenter(new THREE.Vector3()), sz=box.getSize(new THREE.Vector3());
+  const radius=Math.max(sz.length()*0.5, maxDim*0.02)||1;
+  let v = dir ? dir.clone() : camera.position.clone().sub(controls.target);
+  if(v.lengthSq()<1e-9) v=new THREE.Vector3(1,0.8,1);
+  v.normalize();
+  const dist=radius/Math.sin(THREE.MathUtils.degToRad(perspCam.fov)*0.5)*1.1;
+  controls.target.copy(c);
+  const pos=c.clone().add(v.multiplyScalar(dist));
+  perspCam.position.copy(pos); orthoCam.position.copy(pos);
+  const near=Math.max(dist/1000, maxDim/1000), far=dist*10+radius*6;
+  perspCam.near=near; perspCam.far=far; perspCam.updateProjectionMatrix();
+  orthoCam.near=near; orthoCam.far=far;
+  // A fit resets the ortho dolly-zoom (wheel zoom multiplies orthoCam.zoom, which the
+  // distance-based frustum below does not account for) so Fit/Home/views truly re-frame.
+  orthoCam.zoom=1;
+  if(camera.isOrthographicCamera) reframeOrtho();
+  controls.update();
+}
+// Named views (Top/Front/Back/Left/Right/Iso). A view-cube gizmo is a planned follow-on;
+// named-view buttons cover the "see it from the front/back/…" need with far less code.
+const VIEWS={ top:[0,1,1e-4], bottom:[0,-1,1e-4], front:[0,0,1], back:[0,0,-1], right:[1,0,0], left:[-1,0,0], iso:[1,0.8,1] };
+function applyView(name){ const d=VIEWS[name]; if(d) frameBox(sceneBox, new THREE.Vector3(d[0],d[1],d[2])); }
+
+function setProjection(mode){
+  const target=controls.target.clone(), pos=camera.position.clone();
+  camera = mode==='ortho' ? orthoCam : perspCam;
+  controls.object=camera; camera.up.set(0,1,0); camera.position.copy(pos); camera.lookAt(target);
+  if(camera.isOrthographicCamera){ orthoCam.zoom=1; reframeOrtho(); } else camera.updateProjectionMatrix();
+  controls.update(); activate('#proj button','data-proj',mode);
+}
+function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes button','data-mode',m); }
+// solid → honour each material's base opacity; wire → wireframe; xray → translucent, no depth write.
+function applyDisplayMode(){
+  for(const mesh of pickable){ const mat=mesh.material; if(!mat) continue;
+    const base=(mat.userData&&mat.userData.baseOpacity!=null)?mat.userData.baseOpacity:1;
+    if(displayMode==='wire'){ mat.wireframe=true; mat.transparent=false; mat.opacity=1; mat.depthWrite=true; }
+    else if(displayMode==='xray'){ mat.wireframe=false; mat.transparent=true; mat.opacity=Math.min(base,0.25); mat.depthWrite=false; }
+    else { mat.wireframe=false; mat.opacity=base; mat.transparent=base<1; mat.depthWrite=true; }
+    mat.needsUpdate=true;
+  }
+}
+function applyGroupVisibility(){
+  for(const m of pickable){ const k=m.userData&&m.userData.group;
+    m.visible = !groupHidden.has(k) && (soloGroup===null || soloGroup===k); }
+}
+function toggleGroup(k){ if(groupHidden.has(k)) groupHidden.delete(k); else groupHidden.add(k); soloGroup=null; applyGroupVisibility(); refreshLegend(); }
+function soloToggle(k){ soloGroup = soloGroup===k ? null : k; if(soloGroup) groupHidden.clear(); applyGroupVisibility(); refreshLegend(); }
+function refreshLegend(){ document.querySelectorAll('#legend .row').forEach(r=>{ const k=r.dataset.key;
+  r.classList.toggle('off', groupHidden.has(k) || (soloGroup!==null && soloGroup!==k)); }); }
+function activate(sel,attr,val){ document.querySelectorAll(sel).forEach(b=>b.classList.toggle('on', b.getAttribute(attr)===val)); }
 
 function clearContent(){ scene.remove(content);
   content.traverse(o=>{ if(o.geometry)o.geometry.dispose(); if(o.material)o.material.dispose(); });
@@ -144,12 +237,13 @@ function orientMember(mesh, dir){
 function renderScene(S){
   clearContent();
   const up=(S.meta&&S.meta.up)||'z';
-  const colorOf={}; (S.groups||[]).forEach(g=>colorOf[g.key]=g.color);
+  const colorOf={}, opacityOf={}; (S.groups||[]).forEach(g=>{ colorOf[g.key]=g.color; if(typeof g.opacity==='number') opacityOf[g.key]=g.opacity; });
+  groupHidden.clear(); soloGroup=null;
   const box=new THREE.Box3();
   for(const e of (S.elements||[])){ if(Array.isArray(e.from))box.expandByPoint(conv(e.from,up)); if(Array.isArray(e.to))box.expandByPoint(conv(e.to,up)); if(Array.isArray(e.at))box.expandByPoint(conv(e.at,up)); }
   if(box.isEmpty()) box.set(new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1));
   const size=box.getSize(new THREE.Vector3()), center=box.getCenter(new THREE.Vector3());
-  const maxDim=Math.max(size.x,size.y,size.z)||1; const thick=maxDim*0.006;
+  maxDim=Math.max(size.x,size.y,size.z)||1; sceneBox=box.clone(); const thick=maxDim*0.006;
 
   content.add(new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95));
   const key=new THREE.DirectionalLight(0xffffff,1.3); key.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(key);
@@ -160,7 +254,11 @@ function renderScene(S){
   for(const e of (S.elements||[])){
     if(!e || (e.kind==='node' ? !Array.isArray(e.at) : (!Array.isArray(e.from)||!Array.isArray(e.to)))) continue;
     const col=colorOf[e.group] || 0xffffff;
-    const mat=new THREE.MeshStandardMaterial({color:col, metalness:0.5, roughness:0.5}); let mesh;
+    // Opacity: per-element overrides per-group; <1 makes the material translucent so
+    // elements embedded in others (e.g. rebar inside concrete) can be revealed (#258).
+    const op = typeof e.opacity==='number' ? e.opacity : (typeof opacityOf[e.group]==='number' ? opacityOf[e.group] : 1);
+    const mat=new THREE.MeshStandardMaterial({color:col, metalness:0.5, roughness:0.5, transparent:op<1, opacity:op});
+    mat.userData={baseOpacity:op}; let mesh;
     if(e.kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
@@ -170,9 +268,16 @@ function renderScene(S){
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
 
-  if(S.camera&&Array.isArray(S.camera.eye)&&Array.isArray(S.camera.target)){ camera.position.copy(conv(S.camera.eye,up)); controls.target.copy(conv(S.camera.target,up)); }
-  else { const dist=maxDim*1.7; camera.position.copy(center).add(new THREE.Vector3(dist,dist*0.8,dist)); controls.target.copy(center); }
-  camera.near=maxDim/500; camera.far=maxDim*40; camera.updateProjectionMatrix();
+  if(S.camera&&Array.isArray(S.camera.eye)&&Array.isArray(S.camera.target)){
+    const eye=conv(S.camera.eye,up), tgt=conv(S.camera.target,up);
+    perspCam.position.copy(eye); orthoCam.position.copy(eye); controls.target.copy(tgt);
+    const near=maxDim/500, far=maxDim*40;
+    perspCam.near=near; perspCam.far=far; perspCam.updateProjectionMatrix();
+    orthoCam.near=near; orthoCam.far=far;
+    if(camera.isOrthographicCamera) reframeOrtho();
+    controls.update();
+  } else { frameBox(sceneBox, new THREE.Vector3(1,0.8,1)); }
+  applyDisplayMode(); applyGroupVisibility();
 
   buildSidePanels(S); buildLegend(S); setHint();
   document.getElementById('sceneName').textContent=(S.meta&&S.meta.name)||'';
@@ -191,13 +296,27 @@ function buildSidePanels(S){
   });
 }
 function buildLegend(S){ const host=document.getElementById('legend'); host.replaceChildren();
-  (S.groups||[]).forEach(g=>{ const row=el('div','row'); const sw=el('span','swatch'); sw.style.background=g.color; row.append(sw, document.createTextNode(g.label)); host.append(row); }); }
+  const groups=(S.groups||[]); if(!groups.length){ host.style.display='none'; return; } host.style.display='';
+  host.append(el('div','legend-hint','click: hide/show · dbl-click: isolate'));
+  groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
+    const sw=el('span','swatch'); sw.style.background=g.color;
+    row.append(sw, document.createTextNode(g.label));
+    row.title='click to hide/show · double-click to isolate';
+    // Defer the single-click toggle so a double-click can cancel it — otherwise the two
+    // clicks preceding `dblclick` would clear soloGroup and isolate would never toggle off.
+    row.addEventListener('click', ()=>{ clearTimeout(legendClickT); legendClickT=setTimeout(()=>toggleGroup(g.key), 220); });
+    row.addEventListener('dblclick', e=>{ e.preventDefault(); clearTimeout(legendClickT); soloToggle(g.key); });
+    host.append(row); });
+  refreshLegend(); }
 
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let selected=null; const readout=document.getElementById('readout');
 function setHint(){ readout.replaceChildren(document.createTextNode('Drag to orbit · scroll to zoom · '), el('b',null,'click an element'), document.createTextNode(' to inspect')); }
 renderer.domElement.addEventListener('pointerdown', e=>{
+  if(e.button!==0) return;   // pick on primary button only — middle-drag pan must not change selection
   mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
-  const hit=ray.intersectObjects(pickable,false)[0];
+  // Only pick VISIBLE meshes — a legend-hidden / soloed-out group in front must not
+  // swallow the click for the visible element behind it (the raycaster ignores `visible`).
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0];
   if(selected){ selected.material.emissive.setHex(0x000000); selected=null; }
   if(hit){ selected=hit.object; selected.material.emissive=new THREE.Color(0xf59e0b); selected.material.emissiveIntensity=0.6;
     const u=selected.userData; const parts=[el('b',null,u.id||'(element)')]; if(u.group) parts.push(document.createTextNode(' · '), el('span','pill',u.group));
@@ -206,12 +325,30 @@ renderer.domElement.addEventListener('pointerdown', e=>{
   } else setHint();
 });
 
-addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth,innerHeight); });
+addEventListener('resize',()=>{
+  perspCam.aspect=innerWidth/innerHeight; perspCam.updateProjectionMatrix();
+  if(camera.isOrthographicCamera) reframeOrtho();
+  renderer.setSize(innerWidth,innerHeight);
+});
+addEventListener('keydown',e=>{
+  if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
+  else if((e.key==='z'||e.key==='Z') && e.altKey){ if(selected) frameBox(new THREE.Box3().setFromObject(selected)); e.preventDefault(); } // zoom selected
+});
+
+// Toolbar wiring.
+document.querySelectorAll('#views button').forEach(b=>b.addEventListener('click',()=>applyView(b.dataset.view)));
+document.querySelectorAll('#proj button').forEach(b=>b.addEventListener('click',()=>setProjection(b.dataset.proj)));
+document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>setDisplayMode(b.dataset.mode)));
+document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
+
 (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
 
 renderScene(SCENE);
 window.__viewerReady=true; if(window.__viewerPost) window.__viewerPost('viewer-ready');
-window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.name)||'' };
+window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.name)||'',
+  projection:()=>camera.isOrthographicCamera?'ortho':'persp', mode:()=>displayMode,
+  hidden:()=>[...groupHidden], solo:()=>soloGroup, visibleCount:()=>pickable.filter(m=>m.visible).length,
+  setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox) };
 </script>
 </body>
 </html>
@@ -317,6 +454,76 @@ mod tests {
         assert!(!html.contains("__SCENE_JSON__")); // placeholder fully substituted
         assert!(out["bytes"].as_u64().unwrap() > 0);
         assert!(out.get("output-path").is_none()); // none given → not written
+    }
+
+    #[test]
+    fn ships_the_interactive_controls() {
+        // #258: the viewer gains a toolbar + interactions. Assert each capability is
+        // wired into the rendered document (the renderer is static, so presence of the
+        // wiring is the contract a headless browser then exercises).
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        // Orthographic projection toggle (both cameras + the switch).
+        assert!(html.contains("OrthographicCamera"), "ortho camera");
+        assert!(html.contains("data-proj=\"ortho\"") && html.contains("function setProjection"));
+        // Named views (front/back/etc).
+        assert!(html.contains("data-view=\"front\"") && html.contains("data-view=\"back\""));
+        assert!(html.contains("const VIEWS="));
+        // Display modes: solid / wireframe / x-ray.
+        assert!(html.contains("data-mode=\"wire\"") && html.contains("data-mode=\"xray\""));
+        assert!(html.contains("function applyDisplayMode"));
+        // Interactive legend (hide / solo) + per-group opacity from the schema.
+        assert!(html.contains("function toggleGroup") && html.contains("function soloToggle"));
+        assert!(html.contains("opacityOf[e.group]"));
+        // CAD navigation: middle-mouse pan + Home/Alt+Z shortcuts.
+        assert!(html.contains("MIDDLE:THREE.MOUSE.PAN"));
+        assert!(html.contains("'Home'") && html.contains("e.altKey"));
+        // Review fixes: a fit resets the ortho dolly-zoom; picking ignores hidden meshes;
+        // pick on the primary button only; double-click cancels the deferred single click.
+        assert!(html.contains("orthoCam.zoom=1"), "ortho fit resets zoom");
+        assert!(
+            html.contains("pickable.filter(m=>m.visible)"),
+            "picking skips hidden meshes"
+        );
+        assert!(
+            html.contains("e.button!==0) return"),
+            "middle-drag pan keeps selection"
+        );
+        assert!(
+            html.contains("clearTimeout(legendClickT)"),
+            "dbl-click cancels the single-click toggle"
+        );
+    }
+
+    #[test]
+    fn per_element_and_per_group_opacity_round_trip() {
+        // A producer can reveal embedded elements (rebar in concrete) by making a group
+        // translucent — the schema's `opacity` is carried into the injected scene and the
+        // renderer applies it (`transparent:op<1`).
+        let scene = json!({
+            "meta": { "name": "embedded" },
+            "groups": [
+                { "key": "concrete", "label": "Concrete", "color": "#94a3b8", "opacity": 0.25 },
+                { "key": "rebar", "label": "Rebar", "color": "#ef4444" }
+            ],
+            "elements": [
+                { "id": "C1", "group": "concrete", "kind": "box", "from": [0,0,0], "to": [0,0,3000], "section": {"w":400,"d":400} },
+                { "id": "R1", "group": "rebar", "kind": "line", "from": [0,0,0], "to": [0,0,3000], "opacity": 1 }
+            ]
+        });
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        // The group opacity is injected into the scene JSON the page renders.
+        assert!(html.contains("\"opacity\":0.25"), "group opacity injected");
+        // And the renderer wires opacity onto the material.
+        assert!(
+            html.contains("transparent:op<1, opacity:op"),
+            "material honours opacity"
+        );
     }
 
     #[test]
