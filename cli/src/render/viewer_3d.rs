@@ -112,7 +112,7 @@ const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vec
 
 // ---- view state: scene bounds + display/visibility, driven by the toolbar + legend ----
 let sceneBox=new THREE.Box3(); let maxDim=1;
-const groupHidden=new Set(); let soloGroup=null; let displayMode='solid';
+const groupHidden=new Set(); let soloGroup=null; let displayMode='solid'; let legendClickT=null;
 
 // Recompute the orthographic frustum so its on-screen scale matches the perspective
 // camera's at the target plane (keeps zoom continuous across a projection toggle / resize).
@@ -302,14 +302,17 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
     row.title='click to hide/show · double-click to isolate';
-    row.addEventListener('click', ()=>toggleGroup(g.key));
-    row.addEventListener('dblclick', e=>{ e.preventDefault(); soloToggle(g.key); });
+    // Defer the single-click toggle so a double-click can cancel it — otherwise the two
+    // clicks preceding `dblclick` would clear soloGroup and isolate would never toggle off.
+    row.addEventListener('click', ()=>{ clearTimeout(legendClickT); legendClickT=setTimeout(()=>toggleGroup(g.key), 220); });
+    row.addEventListener('dblclick', e=>{ e.preventDefault(); clearTimeout(legendClickT); soloToggle(g.key); });
     host.append(row); });
   refreshLegend(); }
 
 const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let selected=null; const readout=document.getElementById('readout');
 function setHint(){ readout.replaceChildren(document.createTextNode('Drag to orbit · scroll to zoom · '), el('b',null,'click an element'), document.createTextNode(' to inspect')); }
 renderer.domElement.addEventListener('pointerdown', e=>{
+  if(e.button!==0) return;   // pick on primary button only — middle-drag pan must not change selection
   mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
   // Only pick VISIBLE meshes — a legend-hidden / soloed-out group in front must not
   // swallow the click for the visible element behind it (the raycaster ignores `visible`).
@@ -479,11 +482,20 @@ mod tests {
         // CAD navigation: middle-mouse pan + Home/Alt+Z shortcuts.
         assert!(html.contains("MIDDLE:THREE.MOUSE.PAN"));
         assert!(html.contains("'Home'") && html.contains("e.altKey"));
-        // Review fixes: a fit resets the ortho dolly-zoom; picking ignores hidden meshes.
+        // Review fixes: a fit resets the ortho dolly-zoom; picking ignores hidden meshes;
+        // pick on the primary button only; double-click cancels the deferred single click.
         assert!(html.contains("orthoCam.zoom=1"), "ortho fit resets zoom");
         assert!(
             html.contains("pickable.filter(m=>m.visible)"),
             "picking skips hidden meshes"
+        );
+        assert!(
+            html.contains("e.button!==0) return"),
+            "middle-drag pan keeps selection"
+        );
+        assert!(
+            html.contains("clearTimeout(legendClickT)"),
+            "dbl-click cancels the single-click toggle"
         );
     }
 
