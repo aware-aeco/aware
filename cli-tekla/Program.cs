@@ -1377,27 +1377,29 @@ internal static class Program
         // Best-effort: if no Tekla is running (smoke-test path), pid stays null.
         int? hostPid = null;
         string? hostVersion = version;
+        // A running Tekla instance is version-locked: the Open API can only connect to the
+        // instance that is actually open, so DLL resolution must bind to ITS version, not the
+        // requested one (#264) — otherwise a request for a non-running major can never connect
+        // ("No live Tekla model …") even with a model open. The requested `version` is only a
+        // fallback for the no-instance (smoke-test) path. `resolveVersion` carries the chosen
+        // version out of the try.
+        string? resolveVersion = version;
         try
         {
-            var instances = EnumerateRunningTeklas();
-            TeklaInstance? match = null;
-            if (!string.IsNullOrEmpty(version))
-            {
-                match = instances.FirstOrDefault(i => i.Version == version);
-            }
-            match ??= instances.FirstOrDefault();
+            var match = PickHostInstance(version, EnumerateRunningTeklas());
             if (match is not null)
             {
                 hostPid = match.Pid;
                 hostVersion = match.Version;
+                resolveVersion = match.Version;
             }
         }
-        catch { /* enumeration failure is non-fatal; pid stays null */ }
+        catch { /* enumeration failure is non-fatal; pid stays null, requested version stands */ }
 
-        // Resolve Tekla install dir for the requested version (registry +
-        // standard path). Missing-install is non-fatal: the script may not
-        // reference Tekla types (smoke-test path returns primitives).
-        string? hostInstall = string.IsNullOrEmpty(version) ? null : DiscoverTeklaInstall(version!);
+        // Resolve the Tekla install dir for the version we'll connect to (the running instance
+        // when one is open, else the requested version). Standard path + registry. Missing-install
+        // is non-fatal: the script may not reference Tekla types (smoke-test path returns primitives).
+        string? hostInstall = string.IsNullOrEmpty(resolveVersion) ? null : DiscoverTeklaInstall(resolveVersion!);
         var (probedReferences, probedDir) = ResolveTeklaReferences(hostInstall);
 
         // Wire AssemblyResolve so Roslyn can load Tekla DLLs at script-runtime
@@ -2149,6 +2151,19 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
             }
         }
         return result;
+    }
+
+    // The running Tekla instance a live op will actually connect to, given the caller's requested
+    // version: prefer an exact version match, else the first running instance, else null (nothing
+    // running). The Open API is version-locked to whatever instance is open, so this instance's
+    // version — not the requested one — must drive DLL resolution (#264). Pure + internal so it is
+    // unit-tested without a live Tekla.
+    internal static TeklaInstance? PickHostInstance(string? requestedVersion, IReadOnlyList<TeklaInstance> instances)
+    {
+        TeklaInstance? match = null;
+        if (!string.IsNullOrEmpty(requestedVersion))
+            match = instances.FirstOrDefault(i => i.Version == requestedVersion);
+        return match ?? instances.FirstOrDefault();
     }
 
     internal static string? ExtractVersionFromPath(string path)
