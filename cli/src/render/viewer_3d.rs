@@ -52,16 +52,15 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar button.on{background:var(--accent);color:#06121f;border-color:var(--accent);font-weight:600}
   #readout{bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
+  #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
+  #viewcube{position:absolute;right:16px;bottom:16px;width:104px;height:104px;cursor:pointer;z-index:5}
+  #viewcube canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div id="topbar" class="panel"><div class="brand"><b>AWARE</b> · viewer-3d</div><div class="sub" id="sceneName">—</div></div>
 <div id="toolbar" class="panel">
-  <div class="tb-grp" id="views" title="Named views">
-    <button data-view="top">Top</button><button data-view="front">Front</button><button data-view="back">Back</button><button data-view="left">Left</button><button data-view="right">Right</button><button data-view="iso">Iso</button>
-  </div>
-  <div class="tb-sep"></div>
   <div class="tb-grp" id="proj" title="Camera projection">
     <button data-proj="persp" class="on">Persp</button><button data-proj="ortho">Ortho</button>
   </div>
@@ -74,7 +73,9 @@ const TEMPLATE: &str = r##"<!doctype html>
 </div>
 <div id="side" class="panel"><h2 id="sideTitle">—</h2><p class="note" id="sideNote"></p><div id="panels"></div></div>
 <div id="legend" class="panel"></div>
-<div id="readout" class="panel">Drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selected</div>
+<div id="readout" class="panel">Left-drag box-select · right-drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selection</div>
+<div id="rubber"></div>
+<div id="viewcube" title="Click a face for that view · right-drag the scene to orbit"></div>
 <script>
   // Loading handshake for an embedding client (generic — a client may listen, or ignore it
   // entirely when opened standalone): a failed CDN/module load or a runtime error posts
@@ -105,8 +106,10 @@ let camera=perspCam;
 const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
 document.getElementById('app').appendChild(renderer.domElement);
 const controls=new OrbitControls(camera, renderer.domElement); controls.enableDamping=true; controls.dampingFactor=0.08;
-// CAD-style mouse map: left orbit, MIDDLE pan, right pan; wheel (incl. ctrl+wheel) zooms.
-controls.mouseButtons={ LEFT:THREE.MOUSE.ROTATE, MIDDLE:THREE.MOUSE.PAN, RIGHT:THREE.MOUSE.PAN };
+// CAD-style mouse map (#258): LEFT = box/area multi-select (handled below — NOT orbit),
+// RIGHT-drag orbits, MIDDLE-drag pans; wheel (incl. ctrl+wheel) zooms. LEFT:-1 disables
+// OrbitControls' left handling so the left button is free for picking + rubber-band select.
+controls.mouseButtons={ LEFT:-1, MIDDLE:THREE.MOUSE.PAN, RIGHT:THREE.MOUSE.ROTATE };
 let content=new THREE.Group(); scene.add(content); let pickable=[];
 const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vector3(P[0],P[1],P[2]);
 
@@ -142,8 +145,8 @@ function frameBox(box, dir){
   if(camera.isOrthographicCamera) reframeOrtho();
   controls.update();
 }
-// Named views (Top/Front/Back/Left/Right/Iso). A view-cube gizmo is a planned follow-on;
-// named-view buttons cover the "see it from the front/back/…" need with far less code.
+// Named views (Top/Bottom/Front/Back/Left/Right/Iso), driven by the toolbar buttons AND the
+// interactive ViewCube below (a clicked cube face calls applyView with the matching name).
 const VIEWS={ top:[0,1,1e-4], bottom:[0,-1,1e-4], front:[0,0,1], back:[0,0,-1], right:[1,0,0], left:[-1,0,0], iso:[1,0.8,1] };
 function applyView(name){ const d=VIEWS[name]; if(d) frameBox(sceneBox, new THREE.Vector3(d[0],d[1],d[2])); }
 
@@ -309,21 +312,48 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
     host.append(row); });
   refreshLegend(); }
 
-const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); let selected=null; const readout=document.getElementById('readout');
-function setHint(){ readout.replaceChildren(document.createTextNode('Drag to orbit · scroll to zoom · '), el('b',null,'click an element'), document.createTextNode(' to inspect')); }
-renderer.domElement.addEventListener('pointerdown', e=>{
-  if(e.button!==0) return;   // pick on primary button only — middle-drag pan must not change selection
-  mouse.x=(e.clientX/innerWidth)*2-1; mouse.y=-(e.clientY/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
-  // Only pick VISIBLE meshes — a legend-hidden / soloed-out group in front must not
-  // swallow the click for the visible element behind it (the raycaster ignores `visible`).
-  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0];
-  if(selected){ selected.material.emissive.setHex(0x000000); selected=null; }
-  if(hit){ selected=hit.object; selected.material.emissive=new THREE.Color(0xf59e0b); selected.material.emissiveIntensity=0.6;
-    const u=selected.userData; const parts=[el('b',null,u.id||'(element)')]; if(u.group) parts.push(document.createTextNode(' · '), el('span','pill',u.group));
+const ray=new THREE.Raycaster(), mouse=new THREE.Vector2(); const readout=document.getElementById('readout');
+function setHint(){ readout.replaceChildren(document.createTextNode('Left-drag to box-select · right-drag to orbit · '), el('b',null,'click an element'), document.createTextNode(' to inspect')); }
+
+// ---- selection: a left click picks one element; a left-drag rubber-bands a multi-select (#258) ----
+let selection=[];
+function clearHighlight(){ for(const m of selection){ const mat=m.material; if(mat&&mat.emissive) mat.emissive.setHex(0x000000); } }
+function setSelection(meshes){
+  clearHighlight(); selection=meshes||[];
+  for(const m of selection){ const mat=m.material; if(mat){ mat.emissive=new THREE.Color(0xf59e0b); mat.emissiveIntensity=0.6; } }
+  if(selection.length===0){ setHint(); return; }
+  if(selection.length===1){ const u=selection[0].userData; const parts=[el('b',null,u.id||'(element)')];
+    if(u.group) parts.push(document.createTextNode(' · '), el('span','pill',u.group));
     for(const [k,v] of Object.entries(u.meta||{})) parts.push(document.createTextNode(` · ${k}: ${v}`));
-    readout.replaceChildren(...parts);
-  } else setHint();
-});
+    readout.replaceChildren(...parts); return; }
+  readout.replaceChildren(el('b',null,String(selection.length)), document.createTextNode(' elements selected'));
+}
+// Raycast a single element at a screen point. Only VISIBLE meshes — a legend-hidden / soloed-out
+// group in front must not swallow the click for the visible element behind it (raycaster ignores `visible`).
+function pickAt(cx,cy){ mouse.x=(cx/innerWidth)*2-1; mouse.y=-(cy/innerHeight)*2+1; ray.setFromCamera(mouse,camera);
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; setSelection(hit?[hit.object]:[]); }
+// Project a mesh centre to screen px (null when behind / clipped beyond the far plane).
+function screenOf(obj){ const v=obj.getWorldPosition(new THREE.Vector3()).project(camera);
+  return (v.z>1) ? null : { x:(v.x+1)*0.5*innerWidth, y:(-v.y+1)*0.5*innerHeight }; }
+// Window select: every visible element whose centre falls inside the drag rectangle.
+// ponytail: centre-point hit-test; upgrade to a projected-bbox test if partial members must catch.
+function meshesInRect(x0,y0,x1,y1){ const lo={x:Math.min(x0,x1),y:Math.min(y0,y1)}, hi={x:Math.max(x0,x1),y:Math.max(y0,y1)};
+  const out=[]; for(const m of pickable){ if(!m.visible) continue; const s=screenOf(m);
+    if(s && s.x>=lo.x && s.x<=hi.x && s.y>=lo.y && s.y<=hi.y) out.push(m); } return out; }
+
+// Left button drives selection (orbit moved to the right button, #258): a drag rubber-bands a
+// multi-select; a click (movement under DRAG_PX) picks the single element under the cursor.
+const rubber=document.getElementById('rubber'); let boxStart=null; const DRAG_PX=5;
+renderer.domElement.addEventListener('pointerdown', e=>{ if(e.button!==0) return; boxStart={x:e.clientX,y:e.clientY}; });
+renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
+  const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; if(Math.hypot(dx,dy)<DRAG_PX) return;
+  rubber.style.display='block'; rubber.style.left=Math.min(e.clientX,boxStart.x)+'px'; rubber.style.top=Math.min(e.clientY,boxStart.y)+'px';
+  rubber.style.width=Math.abs(dx)+'px'; rubber.style.height=Math.abs(dy)+'px'; });
+renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
+  const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
+  if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
+  else pickAt(e.clientX,e.clientY);
+  boxStart=null; });
 
 addEventListener('resize',()=>{
   perspCam.aspect=innerWidth/innerHeight; perspCam.updateProjectionMatrix();
@@ -332,22 +362,62 @@ addEventListener('resize',()=>{
 });
 addEventListener('keydown',e=>{
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
-  else if((e.key==='z'||e.key==='Z') && e.altKey){ if(selected) frameBox(new THREE.Box3().setFromObject(selected)); e.preventDefault(); } // zoom selected
+  else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
+    if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
 });
 
-// Toolbar wiring.
-document.querySelectorAll('#views button').forEach(b=>b.addEventListener('click',()=>applyView(b.dataset.view)));
+// Toolbar wiring (named views now live on the ViewCube — see below — not duplicate buttons).
 document.querySelectorAll('#proj button').forEach(b=>b.addEventListener('click',()=>setProjection(b.dataset.proj)));
 document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>setDisplayMode(b.dataset.mode)));
 document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
 
-(function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera); })();
+// ---- ViewCube (#258): a small labelled cube, bottom-right, mirroring the camera orientation.
+// Clicking a face snaps to that ortho view; an edge/corner snaps to an iso view — it fully
+// replaces the old named-view buttons (the "cubix with planes" from the QA note). ----
+const CUBE_PX=104;
+const cubeRenderer=new THREE.WebGLRenderer({antialias:true, alpha:true});
+cubeRenderer.setPixelRatio(Math.min(devicePixelRatio,2)); cubeRenderer.setSize(CUBE_PX,CUBE_PX);
+document.getElementById('viewcube').appendChild(cubeRenderer.domElement);
+const cubeScene=new THREE.Scene();
+const cubeCam=new THREE.PerspectiveCamera(40,1,0.1,20); cubeCam.position.set(0,0,5);
+function faceTexture(label){ const c=document.createElement('canvas'); c.width=c.height=128; const g=c.getContext('2d');
+  g.fillStyle='#eef2f7'; g.fillRect(0,0,128,128); g.strokeStyle='#94a3b8'; g.lineWidth=6; g.strokeRect(4,4,120,120);
+  g.fillStyle='#334155'; g.font='bold 20px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle';
+  g.fillText(label,64,64); return new THREE.CanvasTexture(c); }
+// BoxGeometry material order is +X,-X,+Y,-Y,+Z,-Z. World up=Y, front=+Z, right=+X.
+const CUBE_FACES=[ {label:'RIGHT',view:'right'}, {label:'LEFT',view:'left'}, {label:'TOP',view:'top'},
+                   {label:'BOTTOM',view:'bottom'}, {label:'FRONT',view:'front'}, {label:'BACK',view:'back'} ];
+const cubeMesh=new THREE.Mesh(new THREE.BoxGeometry(1.9,1.9,1.9), CUBE_FACES.map(f=>new THREE.MeshBasicMaterial({map:faceTexture(f.label)})));
+cubeMesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(cubeMesh.geometry), new THREE.LineBasicMaterial({color:0x64748b})));
+cubeScene.add(cubeMesh);
+const cubeRay=new THREE.Raycaster(), cubeMouse=new THREE.Vector2();
+cubeRenderer.domElement.addEventListener('pointerdown', e=>{ e.preventDefault();
+  const r=cubeRenderer.domElement.getBoundingClientRect();
+  cubeMouse.x=((e.clientX-r.left)/r.width)*2-1; cubeMouse.y=-((e.clientY-r.top)/r.height)*2+1;
+  cubeRay.setFromCamera(cubeMouse,cubeCam);
+  const hit=cubeRay.intersectObject(cubeMesh,false)[0]; if(!hit||!hit.face) return;
+  // Snap the local hit point to the nearest face / edge / corner. A centre hit gives that ortho
+  // view (the gimbal-safe named direction); an edge/corner hit gives an iso-style view from that
+  // world direction — so the cube covers everything the removed named-view buttons did, incl. Iso.
+  const p=cubeMesh.worldToLocal(hit.point.clone()), snap=x=>Math.abs(x)>0.6?Math.sign(x):0;
+  const d=new THREE.Vector3(snap(p.x),snap(p.y),snap(p.z));
+  if(Math.abs(d.x)+Math.abs(d.y)+Math.abs(d.z)<=1){ const f=CUBE_FACES[hit.face.materialIndex]; if(f) applyView(f.view); }
+  else frameBox(sceneBox, d); });
+// Mirror the scene from the main camera's direction: orient the cube by the inverse of the
+// camera's world rotation (front view → the FRONT face turns toward the viewer, and so on).
+function syncCube(){ cubeMesh.quaternion.copy(camera.quaternion).invert(); }
+
+(function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera);
+  syncCube(); cubeRenderer.render(cubeScene,cubeCam); })();
 
 renderScene(SCENE);
 window.__viewerReady=true; if(window.__viewerPost) window.__viewerPost('viewer-ready');
 window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.name)||'',
   projection:()=>camera.isOrthographicCamera?'ortho':'persp', mode:()=>displayMode,
   hidden:()=>[...groupHidden], solo:()=>soloGroup, visibleCount:()=>pickable.filter(m=>m.visible).length,
+  selectionCount:()=>selection.length, cubeFaces:()=>CUBE_FACES.map(f=>f.view),
+  camDir:()=>camera.position.clone().sub(controls.target).normalize().toArray(),
+  selectInRect:(x0,y0,x1,y1)=>{ setSelection(meshesInRect(x0,y0,x1,y1)); return selection.length; },
   setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox) };
 </script>
 </body>
@@ -470,9 +540,12 @@ mod tests {
         // Orthographic projection toggle (both cameras + the switch).
         assert!(html.contains("OrthographicCamera"), "ortho camera");
         assert!(html.contains("data-proj=\"ortho\"") && html.contains("function setProjection"));
-        // Named views (front/back/etc).
-        assert!(html.contains("data-view=\"front\"") && html.contains("data-view=\"back\""));
+        // Named views live on the ViewCube now; the duplicate toolbar buttons were removed (#258 QA).
         assert!(html.contains("const VIEWS="));
+        assert!(
+            !html.contains("data-view="),
+            "named-view toolbar buttons removed — the ViewCube replaces them"
+        );
         // Display modes: solid / wireframe / x-ray.
         assert!(html.contains("data-mode=\"wire\"") && html.contains("data-mode=\"xray\""));
         assert!(html.contains("function applyDisplayMode"));
@@ -496,6 +569,64 @@ mod tests {
         assert!(
             html.contains("clearTimeout(legendClickT)"),
             "dbl-click cancels the single-click toggle"
+        );
+    }
+
+    #[test]
+    fn ships_boxselect_and_viewcube() {
+        // #258 rework (qa-rejected): left mouse must area/box-select (not orbit), orbit moves to
+        // the right button, and an interactive ViewCube ("cubix with planes") is added. Assert
+        // each capability is wired into the rendered document.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        // Left no longer orbits; right-drag orbits, middle-drag still pans.
+        assert!(
+            html.contains("LEFT:-1, MIDDLE:THREE.MOUSE.PAN, RIGHT:THREE.MOUSE.ROTATE"),
+            "left disabled for orbit; right orbits"
+        );
+        // Left-drag rubber-band multi-select + left-click single pick.
+        assert!(
+            html.contains("id=\"rubber\""),
+            "rubber-band overlay element"
+        );
+        assert!(
+            html.contains("function meshesInRect") && html.contains("function setSelection"),
+            "box-select + selection model"
+        );
+        assert!(
+            html.contains("function pickAt"),
+            "left-click still picks one element"
+        );
+        // Interactive ViewCube with six clickable faces mapped to named views.
+        assert!(html.contains("id=\"viewcube\""), "viewcube host element");
+        assert!(html.contains("const CUBE_FACES="), "cube faces table");
+        assert!(
+            html.contains("{label:'FRONT',view:'front'}")
+                && html.contains("{label:'RIGHT',view:'right'}"),
+            "labelled cube faces map to named views"
+        );
+        assert!(
+            html.contains("function syncCube"),
+            "cube mirrors camera orientation"
+        );
+        assert!(
+            html.contains("cubeRenderer.render(cubeScene,cubeCam)"),
+            "cube rendered each frame"
+        );
+        // The cube fully replaces the named-view buttons: a face press → ortho view, an edge/corner
+        // press → iso-style view (so Iso stays reachable without a toolbar button).
+        assert!(
+            html.contains("cubeMesh.worldToLocal(hit.point.clone())"),
+            "cube edge/corner picking yields iso views"
+        );
+        // Alt+Z now frames the whole selection (not just one element).
+        assert!(
+            html.contains("for(const m of selection) b.expandByObject(m)"),
+            "alt+z zooms the selection"
         );
     }
 
