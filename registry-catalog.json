@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-18T13:49:40.433387+00:00",
+  "updated-at": "2026-06-25T16:27:03.360361200+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1984,7 +1984,7 @@
       "versions": {
         "1.0.0": {
           "description": "Generic filesystem primitive: watch a directory for changes (a long-running",
-          "status": "planned",
+          "status": "available",
           "manifest-version": "1.0.0",
           "stateful": true,
           "transport": "builtin",

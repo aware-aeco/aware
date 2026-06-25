@@ -9,7 +9,8 @@ output on disk" verb — persist a report, quarantine a bad upload, dump a JSON 
 | Field | Type | Default | Description |
 |---|---|---|---|
 | `path` | string (required) | — | Destination path (absolute or relative to the run's working dir). |
-| `bytes` | string \| JSON (required) | — | Content to write. A string is written as UTF-8; a JSON value is serialized to JSON text. Named `bytes` for symmetry with `read`. |
+| `bytes` | string \| JSON (required) | — | Content to write. A string is written per `encoding`; a non-string JSON value is serialized to compact JSON text. Named `bytes` for symmetry with `read`. |
+| `encoding` | `text` \| `base64` | `text` | How a string `bytes` is interpreted: `text` = UTF-8; `base64` = decode to raw bytes first, so a pre-generated binary artifact (a `.xlsx`, an image, a zip) can be landed through this verb. Ignored for a non-string `bytes`. |
 | `create-dirs` | bool | `true` | Create missing parent directories. |
 
 ## Outputs (single)
