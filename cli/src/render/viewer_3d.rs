@@ -360,10 +360,14 @@ addEventListener('resize',()=>{
   if(camera.isOrthographicCamera) reframeOrtho();
   renderer.setSize(innerWidth,innerHeight);
 });
+// Single-key view shortcuts mirror the ViewCube faces (lower- or upper-case).
+const VIEW_KEYS={ t:'top', f:'front', r:'right', b:'back', l:'left' };
 addEventListener('keydown',e=>{
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
     if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
+  else if(!e.altKey && !e.ctrlKey && !e.metaKey && VIEW_KEYS[e.key.toLowerCase()]){     // T/F/R/B/L → named views
+    applyView(VIEW_KEYS[e.key.toLowerCase()]); e.preventDefault(); }
 });
 
 // Toolbar wiring (named views now live on the ViewCube — see below — not duplicate buttons).
@@ -627,6 +631,15 @@ mod tests {
         assert!(
             html.contains("for(const m of selection) b.expandByObject(m)"),
             "alt+z zooms the selection"
+        );
+        // Single-key view shortcuts mirror the cube faces (T/F/R/B/L, any case).
+        assert!(
+            html.contains("const VIEW_KEYS={ t:'top', f:'front', r:'right', b:'back', l:'left' }"),
+            "T/F/R/B/L map to named views"
+        );
+        assert!(
+            html.contains("VIEW_KEYS[e.key.toLowerCase()]"),
+            "view keys are case-insensitive and skip when a modifier is held"
         );
     }
 
