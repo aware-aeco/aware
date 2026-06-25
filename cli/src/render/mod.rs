@@ -1,3 +1,4 @@
+pub mod file;
 pub mod html_report;
 pub mod ifc;
 pub mod table;

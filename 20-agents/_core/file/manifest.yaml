@@ -12,12 +12,12 @@ description: |
   file IO that any agent's command may compose with (the sibling of the `http`
   primitive for the network and `shell` for the OS). OS-native and host-free.
 
-# Declared but not yet runnable (#240). The contract is published so apps can be
-# authored + validated against it (apps referencing it are rejected at
-# validate/compile, not at run with a confusing dispatch error). The in-process
-# runtime handler (a filesystem watcher for `watch`; plain IO for read/write) is
-# the planned implementation — same builtin model as `html-report`, not yet wired.
-status: planned
+# Runnable: the single-shot IO verbs `read` / `write` / `write-csv` are wired in-process
+# (#268, render/file.rs — same builtin model as `html-report`/`ifc`). The streaming `watch`
+# event source (a filesystem watcher, #240) is not yet wired, so it carries a per-command
+# `status: planned` (apps using `file/watch` are rejected at validate/compile until it lands);
+# `read`/`write`/`write-csv` are `available` (the default) and dispatch today.
+status: available
 
 stateful: true              # `watch` holds an open subscription (start/stop + stream)
 
@@ -46,6 +46,9 @@ commands:
   watch:
     lifecycle: start
     category: curated
+    # Per-command gate (#199): the filesystem watcher (#240) is not wired yet, so a `file/watch`
+    # node is rejected at validate/compile (not at run) while read/write/write-csv are runnable.
+    status: planned
     mode: read
     description: |
       Subscribe to filesystem events under a folder and stream one record per
@@ -120,6 +123,10 @@ commands:
   write:
     lifecycle: single
     category: curated
+    # Write-mode: unlike `ifc.write` (a single declared domain export), this generic verb can
+    # overwrite an ARBITRARY path with arbitrary bytes, so it mutates external state like `http.post`
+    # — a consuming app must declare a `safety:` block on the node (the explicit "this writes to
+    # disk" acknowledgment; a frozen node skips it). The write is gated to a real run.
     mode: write
     description: |
       Write content to a file, creating parent directories by default. The generic
@@ -133,8 +140,17 @@ commands:
       bytes:
         required: true
         description: >
-          Content to write. A string is written as UTF-8; a JSON value is serialized
-          to JSON text. (The input is named `bytes` for symmetry with `read`.)
+          Content to write. A string is written per `encoding` (UTF-8 text, or base64-decoded to
+          raw bytes); a non-string JSON value is serialized to compact JSON text. (The input is
+          named `bytes` for symmetry with `read`.)
+      encoding:
+        type: enum
+        values: [text, base64]
+        default: text
+        description: >
+          How a string `bytes` is interpreted. text = write the string as UTF-8; base64 = decode
+          the string to raw bytes first, so a pre-generated binary artifact (a .xlsx, an image, a
+          zip) can be landed through this verb. Ignored when `bytes` is a non-string JSON value.
       create-dirs:
         type: boolean
         default: true
@@ -148,6 +164,8 @@ commands:
   write-csv:
     lifecycle: single
     category: curated
+    # Write-mode, like `write` (it lands an arbitrary-path file): a consuming app declares a
+    # `safety:` block on the node. The write is gated to a real run.
     mode: write
     description: |
       Write rows to a CSV file with an explicit column order and header. The
@@ -162,12 +180,14 @@ commands:
       columns:
         type: array
         items: string
+        required: true
         description: Column keys to write, in this exact order. Becomes the header row.
       rows:
         type: array
         description: >
           Rows to write — an array of objects (keyed by the column names) or an array
-          of arrays (positional, matching `columns`). Missing keys render as empty cells.
+          of arrays (positional, matching `columns`). Missing keys render as empty cells; a
+          positional row with MORE cells than columns is rejected (no silent truncation).
     outputs:
       type: single
       schema:

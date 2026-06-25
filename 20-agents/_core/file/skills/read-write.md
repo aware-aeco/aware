@@ -26,8 +26,10 @@ being carried through the JSON envelope intact.
 
 `write` overwrites the destination and, by default, creates missing parent directories
 (`create-dirs: true`) — so a node can write to `./out/sub/report.json` without a prior
-mkdir step. A string is written as UTF-8; a structured value is serialized to JSON. The
-input is named `bytes` (not `content`) for symmetry with `read`.
+mkdir step. A string is written per `encoding` (`text` = UTF-8, the default; `base64` =
+decode the string to raw bytes first, for landing a pre-generated binary artifact like an
+`.xlsx`); a structured value is serialized to JSON. The input is named `bytes` (not
+`content`) for symmetry with `read`.
 
 ## write-csv
 
