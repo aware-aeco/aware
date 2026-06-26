@@ -70,18 +70,18 @@ fn stage_agent_from_registry(
 
     if cache_file.is_file() && cache_is_fresh(&cache_file) {
         std::fs::copy(&cache_file, &tarball_path)?;
-    } else if let Some(path) = entry.tarball.strip_prefix("file://") {
-        std::fs::copy(path, &tarball_path)?;
-        let _ = std::fs::copy(&tarball_path, &cache_file);
-    } else {
-        let resp = ureq::get(&entry.tarball)
-            .timeout(std::time::Duration::from_secs(60))
-            .call()
-            .map_err(|e| AwareError::Network(format!("GET {}: {e}", entry.tarball)))?;
-        let mut reader = resp.into_reader();
-        let mut file = std::fs::File::create(&tarball_path)?;
-        std::io::copy(&mut reader, &mut file)?;
-        let _ = std::fs::copy(&tarball_path, &cache_file);
+    } else if let Err(refresh_err) = refresh_tarball(&entry.tarball, &tarball_path, &cache_file) {
+        // Refresh failed (offline, timeout, a vanished `file://` source). A TTL means
+        // "prefer fresh", not "refuse stale when fresh is unreachable": a stale-but-present
+        // cache still satisfies the install, so fall back to it rather than failing — exactly
+        // as `fetch_index` falls back to a stale index on a network error. Only a COLD cache
+        // (nothing to fall back to) propagates the error.
+        if cache_file.is_file() {
+            eprintln!("warning: tarball refresh failed, using stale cache: {refresh_err}");
+            std::fs::copy(&cache_file, &tarball_path)?;
+        } else {
+            return Err(refresh_err);
+        }
     }
 
     // Extract ONLY the agent's subtree, not the whole archive: the substrate tarball is
@@ -127,6 +127,27 @@ fn cache_is_fresh(cache_file: &Path) -> bool {
         .ok()
         .and_then(|modified| SystemTime::now().duration_since(modified).ok())
         .is_some_and(|age| age < CACHE_TTL)
+}
+
+/// (Re)download the registry tarball into `dest` and refresh the shared cache file.
+/// `tarball` is a `file://` path or an HTTP(S) URL. Any failure (offline, timeout, a
+/// missing `file://` source) is returned so the caller can fall back to a stale cache
+/// rather than failing the install (#270). Updating `cache_file` resets its mtime, so a
+/// successful refresh re-arms the TTL.
+fn refresh_tarball(tarball: &str, dest: &Path, cache_file: &Path) -> Result<(), AwareError> {
+    if let Some(path) = tarball.strip_prefix("file://") {
+        std::fs::copy(path, dest)?;
+    } else {
+        let resp = ureq::get(tarball)
+            .timeout(std::time::Duration::from_secs(60))
+            .call()
+            .map_err(|e| AwareError::Network(format!("GET {tarball}: {e}")))?;
+        let mut reader = resp.into_reader();
+        let mut file = std::fs::File::create(dest)?;
+        std::io::copy(&mut reader, &mut file)?;
+    }
+    let _ = std::fs::copy(dest, cache_file);
+    Ok(())
 }
 
 /// Atomically update an installed agent to the latest registry version.
@@ -620,6 +641,33 @@ mod tests {
         file.flush().unwrap();
     }
 
+    /// A registry index carrying a single `alpha` agent backed by `url`. Used to prove
+    /// cache behavior across archive states that leave the index byte-identical (#270).
+    fn single_alpha_index(url: &str) -> Index {
+        let mut versions = BTreeMap::new();
+        versions.insert(
+            "1".to_string(),
+            VersionEntry {
+                tarball: url.to_string(),
+                subdir: "aware-main/20-agents/alpha".to_string(),
+            },
+        );
+        let mut agents = BTreeMap::new();
+        agents.insert(
+            "alpha".to_string(),
+            IndexEntry {
+                versions,
+                ..Default::default()
+            },
+        );
+        Index {
+            version: "1.0".into(),
+            updated_at: "2026-06-25T00:00:00Z".into(),
+            agents,
+            bundles: BTreeMap::new(),
+        }
+    }
+
     #[test]
     fn stale_tarball_cache_self_refreshes_after_ttl_even_when_index_unchanged() {
         // #270: a manifest change made INSIDE the rolling `main.tar.gz` that leaves
@@ -642,30 +690,7 @@ mod tests {
         let url = format!("file://{}", archive.display());
 
         // An index that does NOT change between the two archive states → identical fingerprint.
-        let index = {
-            let mut versions = BTreeMap::new();
-            versions.insert(
-                "1".to_string(),
-                VersionEntry {
-                    tarball: url.clone(),
-                    subdir: "aware-main/20-agents/alpha".to_string(),
-                },
-            );
-            let mut agents = BTreeMap::new();
-            agents.insert(
-                "alpha".to_string(),
-                IndexEntry {
-                    versions,
-                    ..Default::default()
-                },
-            );
-            Index {
-                version: "1.0".into(),
-                updated_at: "2026-06-25T00:00:00Z".into(),
-                agents,
-                bundles: BTreeMap::new(),
-            }
-        };
+        let index = single_alpha_index(&url);
 
         let cache_file = paths
             .cache_dir()
@@ -712,6 +737,56 @@ mod tests {
                 .unwrap()
                 .contains("DISPLAY-V2"),
             "#270: once the tarball cache ages past CACHE_TTL it self-refreshes despite an unchanged index"
+        );
+    }
+
+    #[test]
+    fn stale_tarball_cache_is_reused_when_refresh_fails_offline() {
+        // Codex review of #270: a TTL that SKIPS a present cache must not turn a
+        // transient-network / offline install into a hard failure. When the tarball is
+        // stale AND the source is unreachable, fall back to the stale cache (as
+        // `fetch_index` does for the index) rather than erroring — a stale install beats
+        // no install.
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        let index = single_alpha_index(&url);
+
+        // Warm the cache from the live source.
+        write_alpha_archive(&archive, "DISPLAY-V1");
+        let (_g1, _s1) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+
+        // Age the cache past the TTL AND make the source unreachable (offline).
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+        std::fs::remove_file(&archive).unwrap();
+
+        // The install still succeeds, served from the stale-but-present cache.
+        let (_g2, s2) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(s2.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V1"),
+            "offline + stale cache: fall back to the cache instead of failing the install"
         );
     }
 
