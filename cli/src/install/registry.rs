@@ -90,42 +90,43 @@ fn stage_agent_from_registry(
         }
     }
 
-    // Extract ONLY the agent's subtree, not the whole archive: the substrate tarball is
-    // the entire monorepo, so unpacking all of it (tens of thousands of files) to reach
-    // one agent dominated install time — #243. We still stream through the gzip (it isn't
-    // seekable) but write only the matching entries.
+    // Extract the agent's subtree and confirm it landed. A refreshed archive can be unusable
+    // two ways: truncated/corrupt (a transient bad body, or a local archive caught mid-write)
+    // so extraction ERRORS, or advanced PAST our cached (1h-TTL) index to a snapshot where the
+    // subdir MOVED so it is absent. Both are handled identically — a prior cache was consistent
+    // with the cached index, so fall back to it rather than failing the install (#270 / Codex
+    // review). A cold cache (nothing to fall back to) propagates the error.
     let extract_root = scratch.path().join("extract");
-    extract_subdir(&tarball_path, &extract_root, &entry.subdir)?;
-    let mut subdir = extract_root.join(&entry.subdir);
-
-    if !subdir.is_dir() && downloaded && cache_file.is_file() {
-        // A TTL-triggered re-download pulled the rolling `main.tar.gz` at a snapshot that has
-        // advanced PAST our (cached, 1h-TTL) index to one where this agent's subdir moved, so
-        // the fresh archive no longer carries `entry.subdir`. The prior cache was consistent
-        // with the cached index — fall back to it rather than failing the install (#270 / Codex
-        // review). `downloaded` stays implicitly true so we still avoid caching the raced
-        // archive; we just don't surface it as the install source.
-        eprintln!(
-            "warning: refreshed archive no longer carries {}; using prior cache",
-            entry.subdir
-        );
-        downloaded = false;
-        std::fs::copy(&cache_file, &tarball_path)?;
-        let retry_root = scratch.path().join("extract-cached");
-        extract_subdir(&tarball_path, &retry_root, &entry.subdir)?;
-        subdir = retry_root.join(&entry.subdir);
-    }
-
-    if !subdir.is_dir() {
-        return Err(AwareError::Validation(format!(
-            "registry entry {key}@{resolved_version}: subdir {} not in tarball",
-            entry.subdir,
-        )));
-    }
+    let subdir = match extract_agent_subdir(
+        &tarball_path,
+        &extract_root,
+        &entry.subdir,
+        key,
+        resolved_version,
+    ) {
+        Ok(dir) => dir,
+        Err(_) if downloaded && cache_file.is_file() => {
+            eprintln!(
+                "warning: refreshed archive unusable for {}; using prior cache",
+                entry.subdir
+            );
+            downloaded = false;
+            std::fs::copy(&cache_file, &tarball_path)?;
+            let retry_root = scratch.path().join("extract-cached");
+            extract_agent_subdir(
+                &tarball_path,
+                &retry_root,
+                &entry.subdir,
+                key,
+                resolved_version,
+            )?
+        }
+        Err(err) => return Err(err),
+    };
 
     // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
-    // agent (re-arming the TTL). Caching post-extraction means a download that raced past our
-    // index — and so lacks the requested subdir — can never poison the snapshot's cache file.
+    // agent (re-arming the TTL). Caching post-extraction means a download that was corrupt or
+    // raced past our index can never poison the snapshot's cache file.
     if downloaded {
         let _ = std::fs::copy(&tarball_path, &cache_file);
     }
@@ -275,6 +276,29 @@ pub fn update_agent_from_registry(
     // Atomic move into place (same filesystem).
     std::fs::rename(&staging, &final_dir)?;
     Ok(new_name)
+}
+
+/// Extract `subdir` from `tarball` into a fresh dir under `extract_root` and return the
+/// agent's source dir. Fails if the archive can't be read (truncated / corrupt gzip or tar)
+/// OR does not carry `subdir`. Callers treat both failures identically: a refreshed archive
+/// that is corrupt or has advanced past the cached index is replaced by a prior,
+/// index-consistent cache when one exists (#270).
+fn extract_agent_subdir(
+    tarball: &Path,
+    extract_root: &Path,
+    subdir: &str,
+    key: &str,
+    version: &str,
+) -> Result<PathBuf, AwareError> {
+    extract_subdir(tarball, extract_root, subdir)?;
+    let dir = extract_root.join(subdir);
+    if dir.is_dir() {
+        Ok(dir)
+    } else {
+        Err(AwareError::Validation(format!(
+            "registry entry {key}@{version}: subdir {subdir} not in tarball"
+        )))
+    }
 }
 
 /// Extract only the entries under `subdir` (the agent's own subtree) from the tarball
@@ -878,6 +902,55 @@ mod tests {
                 .unwrap()
                 .contains("DISPLAY-V1"),
             "the raced archive must not overwrite the snapshot's good cache file"
+        );
+    }
+
+    #[test]
+    fn ttl_refresh_falls_back_to_prior_cache_when_refresh_is_corrupt() {
+        // Codex review of #270: a TTL refresh whose source returns a truncated/garbage body
+        // (a transient bad response, or a local archive caught mid-write) must not fail an
+        // install a prior cache could satisfy — an extraction error falls back to the cache
+        // just like a moved subdir does.
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        let index = single_alpha_index(&url);
+
+        // Warm the cache from a good archive.
+        write_alpha_archive(&archive, "DISPLAY-V1");
+        let (_g1, _s1) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+
+        // The source is now garbage (not a valid gzip stream); age the cache to force a refresh.
+        std::fs::write(&archive, b"not a gzip stream").unwrap();
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+
+        // The install still succeeds, served from the prior cache instead of erroring.
+        let (_g2, s2) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(s2.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V1"),
+            "corrupt refresh: fall back to the prior cache, don't fail the install"
         );
     }
 
