@@ -16,8 +16,10 @@ pub const DEFAULT_REGISTRY_URL: &str =
 pub const DEFAULT_CATALOG_URL: &str =
     "https://raw.githubusercontent.com/aware-aeco/aware/main/registry-catalog.json";
 
-/// Cache TTL — 1 hour. Re-fetch happens after this expires.
-const CACHE_TTL: Duration = Duration::from_secs(60 * 60);
+/// Cache TTL — 1 hour. Re-fetch happens after this expires. Shared with the
+/// install tarball cache (`install::registry`) so the index, catalog, and the
+/// rolling `main.tar.gz` all carry the same 1h freshness lever (#270).
+pub(crate) const CACHE_TTL: Duration = Duration::from_secs(60 * 60);
 
 pub fn registry_source() -> String {
     std::env::var("AWARE_REGISTRY").unwrap_or_else(|_| DEFAULT_REGISTRY_URL.to_string())

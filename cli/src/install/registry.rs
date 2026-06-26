@@ -3,6 +3,7 @@
 //! off to `local::install_agent_from_path`.
 
 use std::path::{Path, PathBuf};
+use std::time::SystemTime;
 
 use flate2::read::GzDecoder;
 use sha2::{Digest, Sha256};
@@ -13,6 +14,7 @@ use crate::install::local::{copy_dir_recursive, install_agent_from_path};
 use crate::manifest::loader::load_agent;
 use crate::paths::Paths;
 use crate::registry::Index;
+use crate::registry::fetch::CACHE_TTL;
 use crate::validate::{Severity, has_errors, validate_agent_on_disk};
 
 pub fn install_agent_from_registry(
@@ -55,12 +57,18 @@ fn stage_agent_from_registry(
     // replaces keying on `updated-at` ALONE here (#254): that field is hand-maintained
     // and went stale, so a newly-added agent's subdir stayed absent from the cached
     // archive forever — hashing the content too busts the cache regardless.
+    //
+    // The fingerprint busts the cache the instant `registry-index.json` changes, but a
+    // manifest edit made INSIDE the rolling `main.tar.gz` (a `status:` flip, a keyword
+    // fix) that leaves the index byte-identical never rotates it — so the cache also
+    // carries the same 1h TTL the index/catalog use (`fetch::CACHE_TTL`), bounding that
+    // residual staleness to one self-healing re-download per snapshot (#270).
     let cache_file = cache_dir.join(tarball_cache_name(
         &entry.tarball,
         &index.snapshot_fingerprint(),
     ));
 
-    if cache_file.is_file() {
+    if cache_file.is_file() && cache_is_fresh(&cache_file) {
         std::fs::copy(&cache_file, &tarball_path)?;
     } else if let Some(path) = entry.tarball.strip_prefix("file://") {
         std::fs::copy(path, &tarball_path)?;
@@ -104,6 +112,21 @@ fn tarball_cache_name(tarball: &str, snapshot: &str) -> String {
     h.update([0]); // domain-separate URL from snapshot so a+b can't collide with a'+b'
     h.update(snapshot.as_bytes());
     format!("tarball-{:x}.tar.gz", h.finalize())
+}
+
+/// The cached tarball is fresh if it was (re)written within `CACHE_TTL`. The snapshot
+/// fingerprint busts the cache the instant `registry-index.json` changes, but a manifest
+/// edit made INSIDE the rolling `main.tar.gz` that leaves the index byte-identical never
+/// rotates the fingerprint — so without a TTL that change would be served stale forever
+/// (#270). This mirrors the index/catalog 1h TTL (`fetch::CACHE_TTL`): a warm cache
+/// self-refreshes within an hour, bounded to one re-download per snapshot (not per agent).
+/// Any failure to read the mtime falls to `false` (re-download) — prefer fresh over stale.
+fn cache_is_fresh(cache_file: &Path) -> bool {
+    std::fs::metadata(cache_file)
+        .and_then(|m| m.modified())
+        .ok()
+        .and_then(|modified| SystemTime::now().duration_since(modified).ok())
+        .is_some_and(|age| age < CACHE_TTL)
 }
 
 /// Atomically update an installed agent to the latest registry version.
@@ -532,6 +555,163 @@ mod tests {
         assert!(
             !aware.join("agents/steel-detailer-aisc").exists(),
             "the old id folder is gone — no duplicate install"
+        );
+    }
+
+    /// Like `write_repo_tarball` but for a single `alpha` agent whose `display-name`
+    /// carries a caller-chosen marker, so a test can tell one archive *state* from
+    /// another while the registry index stays byte-identical (same fingerprint).
+    fn write_alpha_archive(path: &Path, display_marker: &str) {
+        let enc = flate2::write::GzEncoder::new(
+            std::fs::File::create(path).unwrap(),
+            flate2::Compression::default(),
+        );
+        let mut tar = tar::Builder::new(enc);
+
+        let repo = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .parent()
+            .unwrap()
+            .to_path_buf();
+        let tekla_manifest =
+            std::fs::read_to_string(repo.join("20-agents/aeco/engineering/tekla/manifest.yaml"))
+                .unwrap();
+        let agent: crate::manifest::Agent = serde_yaml::from_str(&tekla_manifest).unwrap();
+        let skills_src = repo.join("20-agents/aeco/engineering/tekla/skills");
+
+        let header = |len: usize| {
+            let mut h = tar::Header::new_gnu();
+            h.set_size(len as u64);
+            h.set_mode(0o644);
+            h.set_cksum();
+            h
+        };
+
+        // Rename `agent:` → alpha and stamp `display-name:` with the marker (both single lines).
+        let manifest = tekla_manifest
+            .lines()
+            .map(|l| {
+                if l.starts_with("agent:") {
+                    "agent: alpha".to_string()
+                } else if l.starts_with("display-name:") {
+                    format!("display-name: {display_marker}")
+                } else {
+                    l.to_string()
+                }
+            })
+            .collect::<Vec<_>>()
+            .join("\n")
+            + "\n";
+        tar.append_data(
+            &mut header(manifest.len()),
+            "aware-main/20-agents/alpha/manifest.yaml",
+            manifest.as_bytes(),
+        )
+        .unwrap();
+        for skill in &agent.skills {
+            let body = std::fs::read_to_string(skills_src.join(skill)).unwrap();
+            tar.append_data(
+                &mut header(body.len()),
+                format!("aware-main/20-agents/alpha/skills/{skill}"),
+                body.as_bytes(),
+            )
+            .unwrap();
+        }
+        let mut file = tar.into_inner().unwrap().finish().unwrap();
+        file.flush().unwrap();
+    }
+
+    #[test]
+    fn stale_tarball_cache_self_refreshes_after_ttl_even_when_index_unchanged() {
+        // #270: a manifest change made INSIDE the rolling `main.tar.gz` that leaves
+        // `registry-index.json` byte-identical does not rotate the snapshot fingerprint,
+        // so the fingerprint key alone can never bust the tarball cache. The cache has no
+        // per-agent re-download budget (that is the #243 optimization), so without a TTL
+        // the stale archive is served forever. This proves the tarball cache self-refreshes
+        // once it ages past CACHE_TTL — the same 1h lever the index/catalog already pull.
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+
+        // One archive file = the single mutable `main` archive URL over time.
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+
+        // An index that does NOT change between the two archive states → identical fingerprint.
+        let index = {
+            let mut versions = BTreeMap::new();
+            versions.insert(
+                "1".to_string(),
+                VersionEntry {
+                    tarball: url.clone(),
+                    subdir: "aware-main/20-agents/alpha".to_string(),
+                },
+            );
+            let mut agents = BTreeMap::new();
+            agents.insert(
+                "alpha".to_string(),
+                IndexEntry {
+                    versions,
+                    ..Default::default()
+                },
+            );
+            Index {
+                version: "1.0".into(),
+                updated_at: "2026-06-25T00:00:00Z".into(),
+                agents,
+                bundles: BTreeMap::new(),
+            }
+        };
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+
+        // v1 of the archive: alpha carries marker DISPLAY-V1. Stage it → caches v1.
+        write_alpha_archive(&archive, "DISPLAY-V1");
+        let (_g1, sub1) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(sub1.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V1")
+        );
+        assert!(cache_file.is_file(), "the tarball was cached");
+
+        // The manifest inside the SAME archive flips, but the index is byte-identical.
+        write_alpha_archive(&archive, "DISPLAY-V2");
+
+        // Within TTL the warm cache is still served (bounded staleness, by design — the
+        // fingerprint key cannot see a change that lives inside the archive).
+        let (_g2, sub2) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(sub2.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V1"),
+            "a fresh cache is reused — the fingerprint key cannot bust an in-archive change"
+        );
+
+        // Age the cache past the TTL → the next stage must re-pull the now-current archive.
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+
+        let (_g3, sub3) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(sub3.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V2"),
+            "#270: once the tarball cache ages past CACHE_TTL it self-refreshes despite an unchanged index"
         );
     }
 
