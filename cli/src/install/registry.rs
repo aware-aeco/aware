@@ -68,19 +68,25 @@ fn stage_agent_from_registry(
         &index.snapshot_fingerprint(),
     ));
 
+    // Obtain the archive into `tarball_path`. Track whether it came from a live (re)download
+    // (vs the warm/stale cache) so we only commit a download to the shared cache AFTER it has
+    // served this agent — never before extraction.
+    let mut downloaded = false;
     if cache_file.is_file() && cache_is_fresh(&cache_file) {
         std::fs::copy(&cache_file, &tarball_path)?;
-    } else if let Err(refresh_err) = refresh_tarball(&entry.tarball, &tarball_path, &cache_file) {
-        // Refresh failed (offline, timeout, a vanished `file://` source). A TTL means
-        // "prefer fresh", not "refuse stale when fresh is unreachable": a stale-but-present
-        // cache still satisfies the install, so fall back to it rather than failing — exactly
-        // as `fetch_index` falls back to a stale index on a network error. Only a COLD cache
-        // (nothing to fall back to) propagates the error.
-        if cache_file.is_file() {
-            eprintln!("warning: tarball refresh failed, using stale cache: {refresh_err}");
-            std::fs::copy(&cache_file, &tarball_path)?;
-        } else {
-            return Err(refresh_err);
+    } else {
+        match download_tarball(&entry.tarball, &tarball_path) {
+            Ok(()) => downloaded = true,
+            // Refresh failed (offline, timeout, a vanished `file://` source). A TTL means
+            // "prefer fresh", not "refuse stale when fresh is unreachable": a stale-but-present
+            // cache still satisfies the install, so fall back to it rather than failing — as
+            // `fetch_index` falls back to a stale index on a network error. We do NOT re-arm
+            // the TTL here, so the next install retries the source. A COLD cache propagates.
+            Err(refresh_err) if cache_file.is_file() => {
+                eprintln!("warning: tarball refresh failed, using stale cache: {refresh_err}");
+                std::fs::copy(&cache_file, &tarball_path)?;
+            }
+            Err(refresh_err) => return Err(refresh_err),
         }
     }
 
@@ -90,13 +96,38 @@ fn stage_agent_from_registry(
     // seekable) but write only the matching entries.
     let extract_root = scratch.path().join("extract");
     extract_subdir(&tarball_path, &extract_root, &entry.subdir)?;
+    let mut subdir = extract_root.join(&entry.subdir);
 
-    let subdir = extract_root.join(&entry.subdir);
+    if !subdir.is_dir() && downloaded && cache_file.is_file() {
+        // A TTL-triggered re-download pulled the rolling `main.tar.gz` at a snapshot that has
+        // advanced PAST our (cached, 1h-TTL) index to one where this agent's subdir moved, so
+        // the fresh archive no longer carries `entry.subdir`. The prior cache was consistent
+        // with the cached index — fall back to it rather than failing the install (#270 / Codex
+        // review). `downloaded` stays implicitly true so we still avoid caching the raced
+        // archive; we just don't surface it as the install source.
+        eprintln!(
+            "warning: refreshed archive no longer carries {}; using prior cache",
+            entry.subdir
+        );
+        downloaded = false;
+        std::fs::copy(&cache_file, &tarball_path)?;
+        let retry_root = scratch.path().join("extract-cached");
+        extract_subdir(&tarball_path, &retry_root, &entry.subdir)?;
+        subdir = retry_root.join(&entry.subdir);
+    }
+
     if !subdir.is_dir() {
         return Err(AwareError::Validation(format!(
             "registry entry {key}@{resolved_version}: subdir {} not in tarball",
             entry.subdir,
         )));
+    }
+
+    // Commit a freshly-downloaded archive to the shared cache ONLY now that it has served this
+    // agent (re-arming the TTL). Caching post-extraction means a download that raced past our
+    // index — and so lacks the requested subdir — can never poison the snapshot's cache file.
+    if downloaded {
+        let _ = std::fs::copy(&tarball_path, &cache_file);
     }
     Ok((scratch, subdir))
 }
@@ -129,12 +160,12 @@ fn cache_is_fresh(cache_file: &Path) -> bool {
         .is_some_and(|age| age < CACHE_TTL)
 }
 
-/// (Re)download the registry tarball into `dest` and refresh the shared cache file.
-/// `tarball` is a `file://` path or an HTTP(S) URL. Any failure (offline, timeout, a
-/// missing `file://` source) is returned so the caller can fall back to a stale cache
-/// rather than failing the install (#270). Updating `cache_file` resets its mtime, so a
-/// successful refresh re-arms the TTL.
-fn refresh_tarball(tarball: &str, dest: &Path, cache_file: &Path) -> Result<(), AwareError> {
+/// (Re)download the registry tarball into `dest`. `tarball` is a `file://` path or an
+/// HTTP(S) URL. Any failure (offline, timeout, a missing `file://` source) is returned so
+/// the caller can fall back to a stale cache rather than failing the install (#270). The
+/// caller commits `dest` to the shared cache only after a successful extraction, so a
+/// download that raced past the cached index can't poison the snapshot's cache file.
+fn download_tarball(tarball: &str, dest: &Path) -> Result<(), AwareError> {
     if let Some(path) = tarball.strip_prefix("file://") {
         std::fs::copy(path, dest)?;
     } else {
@@ -146,7 +177,6 @@ fn refresh_tarball(tarball: &str, dest: &Path, cache_file: &Path) -> Result<(), 
         let mut file = std::fs::File::create(dest)?;
         std::io::copy(&mut reader, &mut file)?;
     }
-    let _ = std::fs::copy(dest, cache_file);
     Ok(())
 }
 
@@ -787,6 +817,67 @@ mod tests {
                 .unwrap()
                 .contains("DISPLAY-V1"),
             "offline + stale cache: fall back to the cache instead of failing the install"
+        );
+    }
+
+    #[test]
+    fn ttl_refresh_falls_back_to_prior_cache_when_archive_outran_the_index() {
+        // Codex review of #270: installs resolve against a CACHED index (1h TTL). A TTL
+        // tarball refresh can pull the rolling `main.tar.gz` at a snapshot that advanced PAST
+        // that cached index — to one where this agent's subdir moved — so the fresh archive no
+        // longer carries `entry.subdir`. That must NOT fail the install (the prior cache was
+        // consistent with the cached index) and must NOT poison the snapshot's cache file.
+        use crate::registry::fetch::CACHE_TTL;
+        use std::time::{Duration, SystemTime};
+
+        let tmp = tempfile::tempdir().unwrap();
+        let aware = tmp.path().join("aware");
+        let paths = Paths {
+            aware_home: aware.clone(),
+        };
+        let archive = tmp.path().join("main.tar.gz");
+        let url = format!("file://{}", archive.display());
+        // The cached index keeps alpha at its original subdir (fingerprint frozen).
+        let index = single_alpha_index(&url);
+
+        // Warm the cache from an archive that carries alpha.
+        write_alpha_archive(&archive, "DISPLAY-V1");
+        let (_g1, _s1) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+
+        let cache_file = paths
+            .cache_dir()
+            .join("agents")
+            .join(tarball_cache_name(&url, &index.snapshot_fingerprint()));
+
+        // The rolling archive advances PAST the cached index: alpha's subdir is gone (only an
+        // unrelated `beta` remains). Age the tarball cache so a refresh is triggered.
+        write_repo_tarball(&archive, &["beta"]);
+        let stale = SystemTime::now()
+            .checked_sub(CACHE_TTL + Duration::from_secs(60))
+            .unwrap();
+        std::fs::File::options()
+            .write(true)
+            .open(&cache_file)
+            .unwrap()
+            .set_modified(stale)
+            .unwrap();
+
+        // The install still succeeds, served from the prior (index-consistent) cache.
+        let (_g2, s2) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(s2.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V1"),
+            "archive outran the index: fall back to the prior cache, don't fail the install"
+        );
+
+        // The cache was NOT poisoned with the alpha-less archive — alpha is still installable.
+        let (_g3, s3) = stage_agent_from_registry("alpha", None, &paths, &index).unwrap();
+        assert!(
+            std::fs::read_to_string(s3.join("manifest.yaml"))
+                .unwrap()
+                .contains("DISPLAY-V1"),
+            "the raced archive must not overwrite the snapshot's good cache file"
         );
     }
 
