@@ -21,13 +21,14 @@ installed, it achieves **sufficient thread engagement** with the nut. Length is 
 - **Washers add to the grip *for length selection*** (even though washers are not part of the grip
   itself): add **5/32 in. per ASTM F436 flat washer** and **5/16 in. per beveled washer** to the grip
   before selecting the length.
-- **Where the orderable-length table lives:** the add-to-grip values are **RCSC Table C-2.2** (free, in
-  the RCSC 2020 Commentary). A *more extensive* bolt-length-selection table is the **AISC *Steel
-  Construction Manual*, Table 7-18** (Carter, 1996) — **paid; cite by reference, do not reproduce.** Both
-  encode the same grip-based rule.
+- **Where the add-to-grip table lives:** the per-diameter add-to-grip values are in **RCSC 2020
+  Table C-2.2** (free, in the RCSC Commentary). RCSC itself points to a *more extensive* selection table —
+  **Carter (1996)**, *"Specifying Bolt Length for High-Strength Bolts,"* AISC *Engineering Journal*,
+  2nd Qtr. 1996 (free, and RCSC's own cited reference). The AISC *Steel Construction Manual* has
+  historically tabulated the same selection (paid — reference only, never reproduced).
 
 This agent gives the **rule + grip concept**, not the tabulated length values — read Table C-2.2 in the
-free RCSC PDF (or AISC Manual Table 7-18) for the per-diameter add-to-grip numbers.
+free RCSC PDF (or Carter, 1996) for the per-diameter add-to-grip numbers.
 
 > **Rule** → length develops the bolt only with sufficient thread engagement. **Condition** → every
 > high-strength bolt; length = grip (+ washer thicknesses) + Table C-2.2 allowance, rounded. **Source** ↓.
@@ -48,6 +49,9 @@ free RCSC PDF (or AISC Manual Table 7-18) for the per-diameter add-to-grip numbe
   each beveled washer, add 5/16 in. … The length determined by the use of Table C-2.2 should be adjusted
   to the nearest ¼-in. increment (or ½-in. increment for lengths exceeding 6 in.). A more extensive table
   for bolt length selection based upon these rules is available (Carter, 1996 …)."*
-- The "more extensive table (Carter, 1996)" is the **AISC *Steel Construction Manual*, Table 7-18** —
-  paid; cited by reference only, never reproduced.
+- RCSC's *"more extensive table … (Carter, 1996)"* is **Carter, C.J., *"Specifying Bolt Length for
+  High-Strength Bolts,"* AISC *Engineering Journal*, Vol. 33, No. 2 (2nd Qtr. 1996)** — the free,
+  canonical bolt-length-selection reference. (The AISC *Steel Construction Manual* also tabulates this
+  selection — paid; reference only, never reproduced. Edition numbering varies, so it is not cited to a
+  specific table number here.)
 - Verified against the genuine RCSC 2020 PDF. Verify free at boltcouncil.org.

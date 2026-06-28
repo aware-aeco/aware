@@ -335,7 +335,7 @@
       "category": "bolts",
       "rule": "Bolt length must achieve sufficient thread engagement",
       "value": "Length chosen so the installed bolt end is at least flush with (or beyond) the outer face of the nut — develops the bolt's strength",
-      "units": "—",
+      "units": "dimensionless",
       "citation": "RCSC 2020 §2.7; Glossary (\"Sufficient Thread Engagement\")",
       "source_quote": "The bolt length used shall be such that, when installed, sufficient thread engagement (as defined in the Glossary) is achieved. [Glossary:] … the available bolt threads extending beyond or at least flush with the outer face of the nut; a condition that develops the strength of the bolt.",
       "found": true
@@ -346,7 +346,7 @@
       "rule": "Selecting bolt length from grip",
       "value": "length = grip + add-to-grip value (RCSC Table C-2.2), rounded to nearest ¼ in. (½ in. for lengths over 6 in.)",
       "units": "in.",
-      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2 (more extensive: AISC Manual Table 7-18)",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2 (more extensive: Carter 1996, AISC Engineering Journal 2Q)",
       "source_quote": "To determine the required bolt length, the value shown in Table C-2.2 should be added to the grip … The length determined by the use of Table C-2.2 should be adjusted to the nearest ¼-in. increment (or ½-in. increment for lengths exceeding 6 in.). A more extensive table … is available (Carter, 1996).",
       "found": true
     },
