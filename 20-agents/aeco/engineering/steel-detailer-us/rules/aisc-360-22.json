@@ -1,8 +1,8 @@
 {
   "agent": "steel-detailer-us",
   "standard": "aisc-360-22",
-  "version": "1.0.0",
-  "last_verified": "2026-06-14",
+  "version": "1.1.0",
+  "last_verified": "2026-06-28",
   "sources": [
     "AISC 360-22 (free — aisc.org/standards)",
     "RCSC 2020 (free — boltcouncil.org)",
@@ -318,6 +318,46 @@
       "units": "kips",
       "citation": "RCSC 2020 Table 5.2 footnote",
       "source_quote": "The specified minimum pretensions … are based on 70 percent of the tensile strength … rounded to the nearest kip",
+      "found": true
+    },
+    {
+      "id": "bolt.length.grip",
+      "category": "bolts",
+      "rule": "Grip (basis for bolt-length selection)",
+      "value": "Total thickness of the connected plies the bolt passes through, EXCLUDING washers and direct-tension indicators (DTIs)",
+      "units": "in.",
+      "citation": "RCSC 2020 Glossary (\"Grip\")",
+      "source_quote": "Grip. The total thickness of material a bolt passes through, exclusive of washers or direct-tension indicators.",
+      "found": true
+    },
+    {
+      "id": "bolt.length.engagement",
+      "category": "bolts",
+      "rule": "Bolt length must achieve sufficient thread engagement",
+      "value": "Length chosen so the installed bolt end is at least flush with (or beyond) the outer face of the nut — develops the bolt's strength",
+      "units": "dimensionless",
+      "citation": "RCSC 2020 §2.7; Glossary (\"Sufficient Thread Engagement\")",
+      "source_quote": "The bolt length used shall be such that, when installed, sufficient thread engagement (as defined in the Glossary) is achieved. [Glossary:] … the available bolt threads extending beyond or at least flush with the outer face of the nut; a condition that develops the strength of the bolt.",
+      "found": true
+    },
+    {
+      "id": "bolt.length.select",
+      "category": "bolts",
+      "rule": "Selecting bolt length from grip",
+      "value": "length = grip + add-to-grip value (RCSC Table C-2.2), rounded to nearest ¼ in. (½ in. for lengths over 6 in.)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2 (more extensive: Carter 1996, AISC Engineering Journal 2Q)",
+      "source_quote": "To determine the required bolt length, the value shown in Table C-2.2 should be added to the grip … The length determined by the use of Table C-2.2 should be adjusted to the nearest ¼-in. increment (or ½-in. increment for lengths exceeding 6 in.). A more extensive table … is available (Carter, 1996).",
+      "found": true
+    },
+    {
+      "id": "bolt.length.washer.add",
+      "category": "bolts",
+      "rule": "Washer thickness added to grip when selecting bolt length",
+      "value": "+5/32 in. per ASTM F436 flat washer; +5/16 in. per beveled washer (added to grip before length selection)",
+      "units": "in.",
+      "citation": "RCSC 2020 Commentary §2.7, Table C-2.2",
+      "source_quote": "For each ASTM F436 washer that is used, add 5/32 in.; for each beveled washer, add 5/16 in.",
       "found": true
     },
     {
