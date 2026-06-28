@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-25T16:27:03.360361200+00:00",
+  "updated-at": "2026-06-28T19:39:12.729750800+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -5514,7 +5514,7 @@
         "0.1.0": {
           "description": "Verified, citation-backed US steel connection-detailing rules (AISC). A",
           "status": "planned",
-          "manifest-version": "0.2.0",
+          "manifest-version": "0.3.0",
           "stateful": false,
           "sdk-target": "aisc-360-22",
           "transport": "cli",
@@ -5528,6 +5528,7 @@
             "bolt-bearing-tearout",
             "bolt-pretension-and-joint-types",
             "bolt-washers",
+            "bolt-length-and-grip",
             "weld-fillet-sizing",
             "weld-length-and-pjp",
             "connecting-elements-block-shear",
