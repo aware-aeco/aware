@@ -1,5 +1,5 @@
 agent:        steel-detailer-us
-version:      0.2.0
+version:      0.3.0
 sdk-target:   aisc-360-22                 # the code edition these rules are sourced from
 display-name: Steel Detailer — US (AISC)
 
@@ -14,7 +14,7 @@ description: |
   ("no verified source") rather than guessing. Covers bolted + welded connection
   geometry and the governing limit states (edge distance, spacing, hole types,
   weld sizing, block shear), drawing & detailing conventions (AISC 303),
-  materials/sections, and a deterministic lookup command backed by a 66-rule
+  materials/sections, and a deterministic lookup command backed by a 70-rule
   verified JSON database. US/AISC only — never mix with Eurocode (that is the
   separate steel-detailer-uk agent).
 
@@ -93,6 +93,7 @@ skills:
   - bolt-bearing-tearout.md
   - bolt-pretension-and-joint-types.md
   - bolt-washers.md
+  - bolt-length-and-grip.md
   - weld-fillet-sizing.md
   - weld-length-and-pjp.md
   - connecting-elements-block-shear.md
