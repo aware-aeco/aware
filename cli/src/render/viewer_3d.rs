@@ -50,6 +50,16 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar button{background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;line-height:1}
   #toolbar button:hover{background:rgba(51,65,85,.85);border-color:var(--accent)}
   #toolbar button.on{background:var(--accent);color:#06121f;border-color:var(--accent);font-weight:600}
+  #toolbar .tb-menu{position:relative}
+  #toolbar .tb-menu>.menu{position:absolute;top:calc(100% + 6px);left:0;min-width:172px;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:8px;padding:5px;display:none;flex-direction:column;gap:2px;box-shadow:0 12px 32px rgba(0,0,0,.55);z-index:7}
+  #toolbar .tb-menu.open>.menu{display:flex}
+  #toolbar .menu button{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px 9px}
+  #toolbar .menu button:hover{background:rgba(51,65,85,.85);border-color:transparent}
+  #toolbar .menu button.danger:hover{background:rgba(127,29,29,.55)}
+  #toolbar .menu hr{border:0;border-top:1px solid var(--border);margin:4px 2px}
+  /* Themed tooltip — replaces native title= so no OS-default tooltip leaks the dark theme. */
+  #tooltip{position:fixed;z-index:50;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:6px;padding:5px 8px;font-size:11.5px;line-height:1.35;color:var(--text);pointer-events:none;max-width:260px;box-shadow:0 8px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s}
+  #tooltip.show{opacity:1}
   #readout{bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
   #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
@@ -61,21 +71,44 @@ const TEMPLATE: &str = r##"<!doctype html>
 <div id="app"></div>
 <div id="topbar" class="panel"><div class="brand"><b>AWARE</b> · viewer-3d</div><div class="sub" id="sceneName">—</div></div>
 <div id="toolbar" class="panel">
-  <div class="tb-grp" id="proj" title="Camera projection">
-    <button data-proj="persp" class="on">Persp</button><button data-proj="ortho">Ortho</button>
+  <!-- Camera: projection + fit -->
+  <div class="tb-grp" id="proj">
+    <button data-proj="persp" class="on" data-tip="Perspective view — natural depth">Persp</button><button data-proj="ortho" data-tip="Orthographic — true scale, no perspective">Ortho</button>
+  </div>
+  <button id="fit" data-tip="Fit all to view (Home)">Fit</button>
+  <div class="tb-sep"></div>
+  <!-- Display mode -->
+  <div class="tb-grp" id="modes">
+    <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button><button data-mode="wire" data-tip="Wireframe — edges only">Wire</button><button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button>
   </div>
   <div class="tb-sep"></div>
-  <div class="tb-grp" id="modes" title="Display mode">
-    <button data-mode="solid" class="on">Solid</button><button data-mode="wire">Wire</button><button data-mode="xray">X-ray</button>
+  <!-- Section: clip planes/boxes + work area -->
+  <div class="tb-grp" id="section">
+    <div class="tb-menu" id="clipMenu">
+      <button id="clip" data-tip="Clip planes and boxes — section to see inside a connection">Clip ▾</button>
+      <div class="menu" role="menu">
+        <button data-clip="plane" data-tip="Click a model face to cut the view there">Add clip plane</button>
+        <button data-clip="box" data-tip="Section a box around the selection (or whole model)">Add clip box</button>
+        <hr>
+        <button data-clip="clear" class="danger" data-tip="Remove every clip">Clear all clips</button>
+      </div>
+    </div>
+    <div class="tb-menu" id="workMenu">
+      <button id="work" data-tip="Working area — bound the view to a box (Tekla-style)">Work area ▾</button>
+      <div class="menu" role="menu">
+        <button data-wa="all" data-tip="Bound the work area to the whole model">Set to all objects</button>
+        <button data-wa="sel" data-tip="Bound the work area to the current selection">Define from selection</button>
+        <hr>
+        <button data-wa="clear" class="danger" data-tip="Remove the work area">Clear work area</button>
+      </div>
+    </div>
   </div>
-  <div class="tb-sep"></div>
-  <button id="fit" title="Fit all (Home)">Fit</button>
 </div>
 <div id="side" class="panel"><h2 id="sideTitle">—</h2><p class="note" id="sideNote"></p><div id="panels"></div></div>
 <div id="legend" class="panel"></div>
 <div id="readout" class="panel">Left-drag box-select · right-drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selection</div>
 <div id="rubber"></div>
-<div id="viewcube" title="Click a face for that view · right-drag the scene to orbit"></div>
+<div id="viewcube" data-tip="Click a face for that view · right-drag to orbit"></div>
 <script>
   // Loading handshake for an embedding client (generic — a client may listen, or ignore it
   // entirely when opened standalone): a failed CDN/module load or a runtime error posts
@@ -327,7 +360,7 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
   groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
-    row.title='click to hide/show · double-click to isolate';
+    row.setAttribute('data-tip','Click to hide/show · double-click to isolate');
     // Defer the single-click toggle so a double-click can cancel it — otherwise the two
     // clicks preceding `dblclick` would clear soloGroup and isolate would never toggle off.
     row.addEventListener('click', ()=>{ clearTimeout(legendClickT); legendClickT=setTimeout(()=>toggleGroup(g.key), 220); });
@@ -449,6 +482,28 @@ addEventListener('keydown',e=>{
 document.querySelectorAll('#proj button').forEach(b=>b.addEventListener('click',()=>setProjection(b.dataset.proj)));
 document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>setDisplayMode(b.dataset.mode)));
 document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
+
+// ---- Section dropdowns (Clip / Work area) ----
+function closeMenus(){ document.querySelectorAll('#toolbar .tb-menu.open').forEach(m=>m.classList.remove('open')); }
+function toggleMenu(id){ const m=document.getElementById(id), open=m.classList.contains('open'); closeMenus(); if(!open) m.classList.add('open'); }
+document.getElementById('clip').addEventListener('click', e=>{ e.stopPropagation(); if(clipMode){ setClipMode(null); return; } toggleMenu('clipMenu'); });
+document.getElementById('work').addEventListener('click', e=>{ e.stopPropagation(); toggleMenu('workMenu'); });
+document.querySelectorAll('#clipMenu [data-clip]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
+  const a=b.dataset.clip; if(a==='plane') setClipMode('plane'); else if(a==='box') addClipBox(); else if(a==='clear') clearClips(); }));
+document.querySelectorAll('#workMenu [data-wa]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
+  const a=b.dataset.wa; if(a==='all') workAreaSetAll(); else if(a==='sel') workAreaFromSelection(); else if(a==='clear') clearWorkArea(); }));
+document.addEventListener('pointerdown', e=>{ if(!e.target.closest('#toolbar')) closeMenus(); }, true); // click outside the toolbar closes a menu
+
+// ---- Themed tooltips (replaces native title=): one shared element, shown on data-tip hover ----
+const tooltip=document.createElement('div'); tooltip.id='tooltip'; document.body.appendChild(tooltip); let tipT=null;
+function showTip(t){ const txt=t.getAttribute('data-tip'); if(!txt) return; tooltip.textContent=txt; tooltip.classList.add('show');
+  const r=t.getBoundingClientRect(), tw=tooltip.offsetWidth, th=tooltip.offsetHeight;
+  let x=Math.max(6,Math.min(r.left+r.width/2-tw/2, innerWidth-tw-6)), y=r.bottom+6; if(y+th>innerHeight-6) y=r.top-th-6;
+  tooltip.style.left=x+'px'; tooltip.style.top=y+'px'; }
+function hideTip(){ clearTimeout(tipT); tooltip.classList.remove('show'); }
+document.addEventListener('pointerover', e=>{ const t=e.target.closest('[data-tip]'); if(!t) return; clearTimeout(tipT); tipT=setTimeout(()=>showTip(t),400); });
+document.addEventListener('pointerout', e=>{ if(e.target.closest('[data-tip]')) hideTip(); });
+document.addEventListener('pointerdown', hideTip, true); // a click hides the tip immediately
 
 // ---- ViewCube (#258): a small labelled cube, bottom-right, mirroring the camera orientation.
 // Clicking a face snaps to that ortho view; an edge/corner snaps to an iso view — it fully
@@ -787,6 +842,42 @@ mod tests {
         assert!(
             html.contains("renderer.autoClear=false"),
             "2nd unclipped pass keeps the work-area wireframe visible"
+        );
+    }
+
+    #[test]
+    fn ships_grouped_toolbar_and_themed_tooltips() {
+        // The toolbar groups into Camera | Display | Section, the Section cluster drives the clip /
+        // work-area engine via dropdowns, and every control carries a themed tooltip (data-tip) —
+        // no native title= leaking the OS default against the dark theme.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("id=\"clip\"") && html.contains("id=\"work\""),
+            "Section cluster: Clip + Work area buttons"
+        );
+        assert!(
+            html.contains("data-clip=\"plane\"") && html.contains("data-clip=\"box\""),
+            "clip dropdown items"
+        );
+        assert!(
+            html.contains("data-wa=\"all\"") && html.contains("data-wa=\"sel\""),
+            "work-area dropdown items"
+        );
+        // Themed tooltip element + data-tip on controls; the toolbar's native title= are gone.
+        assert!(
+            html.contains("#tooltip{")
+                && html.contains("tooltip.id='tooltip'")
+                && html.contains("data-tip=\"Fit all to view (Home)\""),
+            "themed tooltip (CSS + driver) + data-tip on Fit"
+        );
+        assert!(
+            !html.contains("id=\"fit\" title=") && !html.contains("id=\"proj\" title="),
+            "native title= replaced by data-tip on the toolbar"
         );
     }
 
