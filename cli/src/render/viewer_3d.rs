@@ -104,6 +104,7 @@ const perspCam=new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.01, 1e7
 const orthoCam=new THREE.OrthographicCamera(-1,1,1,-1,0.01,1e7);
 let camera=perspCam;
 const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+renderer.localClippingEnabled=true; // enable clip planes/boxes + the work area (Tekla-style sectioning) — driven via renderer.clippingPlanes (applyClips)
 document.getElementById('app').appendChild(renderer.domElement);
 const controls=new OrbitControls(camera, renderer.domElement);
 // CAD feel (parity with floless steel-3d-view): rotate/pan stop dead on release — NO post-release
@@ -374,8 +375,59 @@ renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
 renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
   const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
   if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
+  else if(clipMode==='plane') addClipPlaneAtScreen(e.clientX,e.clientY); // armed → a click drops a clip plane on the picked face
   else pickAt(e.clientX,e.clientY);
   boxStart=null; });
+
+// ---- clip planes / boxes + work area (Tekla-style sectioning) ----
+// Sectioning lives in renderer.clippingPlanes (GLOBAL), so it clips the grid + every element like
+// Tekla and survives a re-render. A clip PLANE keeps the camera-far side (1 plane); a clip BOX and
+// the work area keep INSIDE (6 inward planes). The ViewCube has its own renderer → never clipped.
+const EMPTY_CLIPS=Object.freeze([]);
+let clips=[]; let workArea=null; let clipMode=null; let clipSeq=0;
+const overlayScene=new THREE.Scene(); let workAreaHelper=null; // work-area wireframe → 2nd UNCLIPPED pass
+function boxToPlanes(b){ return [
+  new THREE.Plane(new THREE.Vector3(-1,0,0), b.max.x), new THREE.Plane(new THREE.Vector3(1,0,0), -b.min.x),
+  new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
+  new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
+function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
+  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; }
+function selBox(pad){ const box=new THREE.Box3();
+  for(const m of selection){ if(m.visible) box.expandByObject(m); }
+  if(box.isEmpty()) box.copy(sceneBox); if(box.isEmpty()) return null;
+  return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }
+// A clip plane from a clicked face (screen px): keep the camera-FAR side so the cut reveals the section.
+function addClipPlaneAtScreen(cx,cy){
+  const ndc=new THREE.Vector2((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1); ray.setFromCamera(ndc,camera);
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; if(!hit||!hit.face) return null;
+  const n=hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+  if(n.dot(camera.position.clone().sub(hit.point))>0) n.negate();
+  clips.push({ id:'clip'+(++clipSeq), kind:'plane', planes:[new THREE.Plane().setFromNormalAndCoplanarPoint(n,hit.point)] });
+  applyClips(); return clips[clips.length-1].id; }
+// A clip box around the current selection (or the whole model when nothing is selected).
+function addClipBox(pad){ const box=selBox(pad); if(!box) return null;
+  clips.push({ id:'clip'+(++clipSeq), kind:'box', planes:boxToPlanes(box) }); applyClips(); return clips[clips.length-1].id; }
+function clearClips(){ clips=[]; applyClips(); }
+function clipCount(){ return clips.length; }
+// Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
+function setClipMode(m){ clipMode=m==='plane'?'plane':null;
+  renderer.domElement.style.cursor=clipMode?'crosshair':'default';
+  const btn=document.getElementById('clip'); if(btn) btn.classList.toggle('on',!!clipMode);
+  if(clipMode) readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel'));
+  else setHint();
+  return clipMode; }
+// Work area: one box that bounds (and sections) the view, shown as an always-visible wireframe.
+function renderWorkArea(){ if(workAreaHelper){ overlayScene.remove(workAreaHelper); workAreaHelper.geometry.dispose(); workAreaHelper.material.dispose(); workAreaHelper=null; }
+  if(!workArea || workArea.box.isEmpty()) return;
+  workAreaHelper=new THREE.Box3Helper(workArea.box, new THREE.Color(0x60a5fa));
+  workAreaHelper.material.depthTest=false; workAreaHelper.renderOrder=995; overlayScene.add(workAreaHelper); }
+function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false; workArea={ box:box.clone(), planes:boxToPlanes(box) }; applyClips(); renderWorkArea(); return true; }
+function workAreaSetAll(){ return setWorkAreaBox(sceneBox.clone()); }
+function workAreaFromSelection(pad){ const box=new THREE.Box3();
+  for(const m of selection){ if(m.visible) box.expandByObject(m); }
+  if(box.isEmpty()) return false; box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); return setWorkAreaBox(box); }
+function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); }
+function workAreaOn(){ return !!workArea; }
 
 addEventListener('resize',()=>{
   perspCam.aspect=innerWidth/innerHeight; perspCam.updateProjectionMatrix();
@@ -385,6 +437,7 @@ addEventListener('resize',()=>{
 // Single-key view shortcuts mirror the ViewCube faces (lower- or upper-case).
 const VIEW_KEYS={ t:'top', f:'front', r:'right', b:'back', l:'left' };
 addEventListener('keydown',e=>{
+  if(e.key==='Escape' && clipMode){ setClipMode(null); e.preventDefault(); return; } // cancel an armed clip-plane pick
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
     if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
@@ -434,6 +487,9 @@ cubeRenderer.domElement.addEventListener('pointerdown', e=>{ e.preventDefault();
 function syncCube(){ cubeMesh.quaternion.copy(camera.quaternion).invert(); }
 
 (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera);
+  // 2nd UNCLIPPED pass: the work-area wireframe must stay visible through any clip (autoClear off so
+  // it draws on top of the clipped main pass; clipping planes cleared so it is never sectioned).
+  if(overlayScene.children.length){ const saved=renderer.clippingPlanes; renderer.autoClear=false; renderer.clippingPlanes=EMPTY_CLIPS; renderer.render(overlayScene,camera); renderer.clippingPlanes=saved; renderer.autoClear=true; }
   syncCube(); cubeRenderer.render(cubeScene,cubeCam); })();
 
 renderScene(SCENE);
@@ -444,7 +500,10 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   selectionCount:()=>selection.length, cubeFaces:()=>CUBE_FACES.map(f=>f.view),
   camDir:()=>camera.position.clone().sub(controls.target).normalize().toArray(),
   selectInRect:(x0,y0,x1,y1)=>{ setSelection(meshesInRect(x0,y0,x1,y1)); return selection.length; },
-  setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox) };
+  setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
+  clipCount, addClipBox, clearClips, setClipMode, addClipPlaneAtScreen,
+  workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
+  clipPlanes:()=>(renderer.clippingPlanes||[]).length };
 </script>
 </body>
 </html>
@@ -691,6 +750,43 @@ mod tests {
         assert!(
             html.contains("controls.addEventListener('start', repivotToCursor)"),
             "re-pivot wired to every gesture start"
+        );
+    }
+
+    #[test]
+    fn ships_clip_planes_boxes_and_work_area() {
+        // The viewer can section the model (Tekla-style): clip planes from a clicked face, clip
+        // boxes (6 inward planes), and a work-area box — all driven through renderer.clippingPlanes,
+        // with the work-area wireframe drawn in a 2nd unclipped pass so a clip never hides it.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("renderer.localClippingEnabled=true"),
+            "renderer-level clipping enabled"
+        );
+        assert!(
+            html.contains("function applyClips") && html.contains("renderer.clippingPlanes="),
+            "global clip planes driven by applyClips"
+        );
+        assert!(
+            html.contains("function addClipPlaneAtScreen") && html.contains("function boxToPlanes"),
+            "clip plane from a face + box → 6 inward planes"
+        );
+        assert!(
+            html.contains("function addClipBox") && html.contains("function clearClips"),
+            "add clip box + clear"
+        );
+        assert!(
+            html.contains("function workAreaSetAll") && html.contains("Box3Helper"),
+            "work-area box with a wireframe"
+        );
+        assert!(
+            html.contains("renderer.autoClear=false"),
+            "2nd unclipped pass keeps the work-area wireframe visible"
         );
     }
 
