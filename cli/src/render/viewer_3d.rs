@@ -420,6 +420,10 @@ renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStar
 const EMPTY_CLIPS=Object.freeze([]);
 let clips=[]; let workArea=null; let clipMode=null; let clipSeq=0;
 const overlayScene=new THREE.Scene(); let workAreaHelper=null; // work-area wireframe → 2nd UNCLIPPED pass
+// three.js convention: a material is KEPT where distanceToPoint(p) = normal·p + constant >= 0 (the
+// side the normal points toward) and discarded on the negative side. So INWARD normals + these
+// constants keep the box interior (e.g. normal -X, constant max.x → keep x<=max.x). Verified live
+// (a whole-model box keeps the model visible) — do not "reverse" these signs.
 function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(-1,0,0), b.max.x), new THREE.Plane(new THREE.Vector3(1,0,0), -b.min.x),
   new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
