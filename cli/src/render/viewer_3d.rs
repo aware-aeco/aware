@@ -166,6 +166,7 @@ function repivotToCursor(){
 }
 controls.addEventListener('start', repivotToCursor);
 renderer.domElement.addEventListener('wheel', onWheelHover, {capture:true, passive:true});
+renderer.domElement.addEventListener('pointermove', e=>{ lastHoverXY=[e.clientX,e.clientY]; }); // track the cursor for the gesture-start re-pivot on orbit/pan too (not just wheel) — parity with floless
 let content=new THREE.Group(); scene.add(content); let pickable=[];
 const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vector3(P[0],P[1],P[2]);
 
@@ -408,7 +409,7 @@ renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
 renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
   const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
   if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
-  else if(clipMode==='plane') addClipPlaneAtScreen(e.clientX,e.clientY); // armed → a click drops a clip plane on the picked face
+  else if(clipMode==='plane'){ if(addClipPlaneAtScreen(e.clientX,e.clientY)) setClipMode(null); } // armed → a click drops a plane on the picked face, then back to selecting (a miss stays armed)
   else pickAt(e.clientX,e.clientY);
   boxStart=null; });
 
@@ -425,9 +426,8 @@ function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
 function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
   renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; }
-function selBox(pad){ const box=new THREE.Box3();
-  for(const m of selection){ if(m.visible) box.expandByObject(m); }
-  if(box.isEmpty()) box.copy(sceneBox); if(box.isEmpty()) return null;
+function meshBox(meshes){ const b=new THREE.Box3(); for(const m of meshes){ if(m.visible) b.expandByObject(m); } return b; } // real mesh bounds incl. section width (sceneBox is centreline-only)
+function selBox(pad){ let box=meshBox(selection); if(box.isEmpty()) box=meshBox(pickable); if(box.isEmpty()) return null;
   return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }
 // A clip plane from a clicked face (screen px): keep the camera-FAR side so the cut reveals the section.
 function addClipPlaneAtScreen(cx,cy){
@@ -455,7 +455,7 @@ function renderWorkArea(){ if(workAreaHelper){ overlayScene.remove(workAreaHelpe
   workAreaHelper=new THREE.Box3Helper(workArea.box, new THREE.Color(0x60a5fa));
   workAreaHelper.material.depthTest=false; workAreaHelper.renderOrder=995; overlayScene.add(workAreaHelper); }
 function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false; workArea={ box:box.clone(), planes:boxToPlanes(box) }; applyClips(); renderWorkArea(); return true; }
-function workAreaSetAll(){ return setWorkAreaBox(sceneBox.clone()); }
+function workAreaSetAll(){ const box=meshBox(pickable); return box.isEmpty() ? false : setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
 function workAreaFromSelection(pad){ const box=new THREE.Box3();
   for(const m of selection){ if(m.visible) box.expandByObject(m); }
   if(box.isEmpty()) return false; box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); return setWorkAreaBox(box); }
