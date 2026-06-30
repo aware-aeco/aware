@@ -105,11 +105,33 @@ const orthoCam=new THREE.OrthographicCamera(-1,1,1,-1,0.01,1e7);
 let camera=perspCam;
 const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
 document.getElementById('app').appendChild(renderer.domElement);
-const controls=new OrbitControls(camera, renderer.domElement); controls.enableDamping=true; controls.dampingFactor=0.08;
+const controls=new OrbitControls(camera, renderer.domElement);
+// CAD feel (parity with floless steel-3d-view): rotate/pan stop dead on release — NO post-release
+// inertia/drift; the wheel zooms toward the cursor; the orbit pivot re-centres under the cursor
+// on every gesture (repivotToCursor below). zoomSpeed bumped so the wheel reaches a detail faster.
+controls.enableDamping=false; controls.zoomSpeed=1.3; controls.zoomToCursor=true;
 // CAD-style mouse map (#258): LEFT = box/area multi-select (handled below — NOT orbit),
 // RIGHT-drag orbits, MIDDLE-drag pans; wheel (incl. ctrl+wheel) zooms. LEFT:-1 disables
 // OrbitControls' left handling so the left button is free for picking + rubber-band select.
 controls.mouseButtons={ LEFT:-1, MIDDLE:THREE.MOUSE.PAN, RIGHT:THREE.MOUSE.ROTATE };
+// CAD re-pivot: on every orbit/zoom/pan START (OrbitControls fires 'start' for all three, incl. the
+// wheel, BEFORE applying the gesture) move the orbit target to the DEPTH of whatever visible element
+// is under the cursor, kept ON the view axis so the view never jumps — only the pivot depth changes.
+// That makes the wheel converge on a detail in a few ticks and orbit/pan scale to it, instead of
+// pivoting around a stale framed centre. Empty space → keep the current pivot (Fit/Home re-centre).
+let lastHoverXY=null;
+const onWheelHover=e=>{ lastHoverXY=[e.clientX,e.clientY]; }; // capture-phase → fresh cursor before OrbitControls' wheel handler
+function repivotToCursor(){
+  if(!lastHoverXY) return;
+  const ndc=new THREE.Vector2((lastHoverXY[0]/innerWidth)*2-1, -(lastHoverXY[1]/innerHeight)*2+1);
+  ray.setFromCamera(ndc,camera);
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; if(!hit) return;
+  const fwd=camera.getWorldDirection(new THREE.Vector3());
+  const depth=hit.point.clone().sub(camera.position).dot(fwd);   // hit distance along the view axis
+  if(depth>1e-3) controls.target.copy(camera.position).addScaledVector(fwd,depth);
+}
+controls.addEventListener('start', repivotToCursor);
+renderer.domElement.addEventListener('wheel', onWheelHover, {capture:true, passive:true});
 let content=new THREE.Group(); scene.add(content); let pickable=[];
 const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vector3(P[0],P[1],P[2]);
 
@@ -640,6 +662,35 @@ mod tests {
         assert!(
             html.contains("VIEW_KEYS[e.key.toLowerCase()]"),
             "view keys are case-insensitive and skip when a modifier is held"
+        );
+    }
+
+    #[test]
+    fn cad_camera_zoom_to_cursor_and_repivot() {
+        // The viewer's camera matches the floless steel-3d-view CAD feel: no orbit inertia,
+        // wheel zooms toward the cursor, and the orbit pivot re-centres under the cursor on
+        // every gesture (raycast → on-axis depth, so the view never jumps).
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("controls.enableDamping=false"),
+            "no post-release inertia"
+        );
+        assert!(
+            html.contains("controls.zoomToCursor=true"),
+            "wheel zooms toward the cursor"
+        );
+        assert!(
+            html.contains("function repivotToCursor"),
+            "cursor re-pivot present"
+        );
+        assert!(
+            html.contains("controls.addEventListener('start', repivotToCursor)"),
+            "re-pivot wired to every gesture start"
         );
     }
 
