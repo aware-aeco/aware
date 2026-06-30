@@ -409,7 +409,7 @@ renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
 renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
   const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
   if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
-  else if(clipMode==='plane'){ if(addClipPlaneAtScreen(e.clientX,e.clientY)) setClipMode(null); } // armed → a click drops a plane on the picked face, then back to selecting (a miss stays armed)
+  else if(clipMode==='plane') addClipPlaneAtScreen(e.clientX,e.clientY); // armed → a click drops a clip plane on the picked face; STAYS armed (crosshair + lit button + Esc/Clip to cancel) — parity with floless
   else pickAt(e.clientX,e.clientY);
   boxStart=null; });
 
