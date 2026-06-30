@@ -50,6 +50,16 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar button{background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;line-height:1}
   #toolbar button:hover{background:rgba(51,65,85,.85);border-color:var(--accent)}
   #toolbar button.on{background:var(--accent);color:#06121f;border-color:var(--accent);font-weight:600}
+  #toolbar .tb-menu{position:relative}
+  #toolbar .tb-menu>.menu{position:absolute;top:calc(100% + 6px);left:0;min-width:172px;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:8px;padding:5px;display:none;flex-direction:column;gap:2px;box-shadow:0 12px 32px rgba(0,0,0,.55);z-index:7}
+  #toolbar .tb-menu.open>.menu{display:flex}
+  #toolbar .menu button{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px 9px}
+  #toolbar .menu button:hover{background:rgba(51,65,85,.85);border-color:transparent}
+  #toolbar .menu button.danger:hover{background:rgba(127,29,29,.55)}
+  #toolbar .menu hr{border:0;border-top:1px solid var(--border);margin:4px 2px}
+  /* Themed tooltip — replaces native title= so no OS-default tooltip leaks the dark theme. */
+  #tooltip{position:fixed;z-index:50;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:6px;padding:5px 8px;font-size:11.5px;line-height:1.35;color:var(--text);pointer-events:none;max-width:260px;box-shadow:0 8px 22px rgba(0,0,0,.5);opacity:0;transition:opacity .12s}
+  #tooltip.show{opacity:1}
   #readout{bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
   #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
@@ -61,21 +71,44 @@ const TEMPLATE: &str = r##"<!doctype html>
 <div id="app"></div>
 <div id="topbar" class="panel"><div class="brand"><b>AWARE</b> · viewer-3d</div><div class="sub" id="sceneName">—</div></div>
 <div id="toolbar" class="panel">
-  <div class="tb-grp" id="proj" title="Camera projection">
-    <button data-proj="persp" class="on">Persp</button><button data-proj="ortho">Ortho</button>
+  <!-- Camera: projection + fit -->
+  <div class="tb-grp" id="proj">
+    <button data-proj="persp" class="on" data-tip="Perspective view — natural depth">Persp</button><button data-proj="ortho" data-tip="Orthographic — true scale, no perspective">Ortho</button>
+  </div>
+  <button id="fit" data-tip="Fit all to view (Home)">Fit</button>
+  <div class="tb-sep"></div>
+  <!-- Display mode -->
+  <div class="tb-grp" id="modes">
+    <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button><button data-mode="wire" data-tip="Wireframe — edges only">Wire</button><button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button>
   </div>
   <div class="tb-sep"></div>
-  <div class="tb-grp" id="modes" title="Display mode">
-    <button data-mode="solid" class="on">Solid</button><button data-mode="wire">Wire</button><button data-mode="xray">X-ray</button>
+  <!-- Section: clip planes/boxes + work area -->
+  <div class="tb-grp" id="section">
+    <div class="tb-menu" id="clipMenu">
+      <button id="clip" data-tip="Clip planes and boxes — section to see inside a connection">Clip ▾</button>
+      <div class="menu" role="menu">
+        <button data-clip="plane" data-tip="Click a model face to cut the view there">Add clip plane</button>
+        <button data-clip="box" data-tip="Section a box around the selection (or whole model)">Add clip box</button>
+        <hr>
+        <button data-clip="clear" class="danger" data-tip="Remove every clip">Clear all clips</button>
+      </div>
+    </div>
+    <div class="tb-menu" id="workMenu">
+      <button id="work" data-tip="Working area — bound the view to a box (Tekla-style)">Work area ▾</button>
+      <div class="menu" role="menu">
+        <button data-wa="all" data-tip="Bound the work area to the whole model">Set to all objects</button>
+        <button data-wa="sel" data-tip="Bound the work area to the current selection">Define from selection</button>
+        <hr>
+        <button data-wa="clear" class="danger" data-tip="Remove the work area">Clear work area</button>
+      </div>
+    </div>
   </div>
-  <div class="tb-sep"></div>
-  <button id="fit" title="Fit all (Home)">Fit</button>
 </div>
 <div id="side" class="panel"><h2 id="sideTitle">—</h2><p class="note" id="sideNote"></p><div id="panels"></div></div>
 <div id="legend" class="panel"></div>
 <div id="readout" class="panel">Left-drag box-select · right-drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selection</div>
 <div id="rubber"></div>
-<div id="viewcube" title="Click a face for that view · right-drag the scene to orbit"></div>
+<div id="viewcube" data-tip="Click a face for that view · right-drag to orbit"></div>
 <script>
   // Loading handshake for an embedding client (generic — a client may listen, or ignore it
   // entirely when opened standalone): a failed CDN/module load or a runtime error posts
@@ -104,12 +137,36 @@ const perspCam=new THREE.PerspectiveCamera(50, innerWidth/innerHeight, 0.01, 1e7
 const orthoCam=new THREE.OrthographicCamera(-1,1,1,-1,0.01,1e7);
 let camera=perspCam;
 const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+renderer.localClippingEnabled=true; // enable clip planes/boxes + the work area (Tekla-style sectioning) — driven via renderer.clippingPlanes (applyClips)
 document.getElementById('app').appendChild(renderer.domElement);
-const controls=new OrbitControls(camera, renderer.domElement); controls.enableDamping=true; controls.dampingFactor=0.08;
+const controls=new OrbitControls(camera, renderer.domElement);
+// CAD feel (parity with floless steel-3d-view): rotate/pan stop dead on release — NO post-release
+// inertia/drift; the wheel zooms toward the cursor; the orbit pivot re-centres under the cursor
+// on every gesture (repivotToCursor below). zoomSpeed bumped so the wheel reaches a detail faster.
+controls.enableDamping=false; controls.zoomSpeed=1.3; controls.zoomToCursor=true;
 // CAD-style mouse map (#258): LEFT = box/area multi-select (handled below — NOT orbit),
 // RIGHT-drag orbits, MIDDLE-drag pans; wheel (incl. ctrl+wheel) zooms. LEFT:-1 disables
 // OrbitControls' left handling so the left button is free for picking + rubber-band select.
 controls.mouseButtons={ LEFT:-1, MIDDLE:THREE.MOUSE.PAN, RIGHT:THREE.MOUSE.ROTATE };
+// CAD re-pivot: on every orbit/zoom/pan START (OrbitControls fires 'start' for all three, incl. the
+// wheel, BEFORE applying the gesture) move the orbit target to the DEPTH of whatever visible element
+// is under the cursor, kept ON the view axis so the view never jumps — only the pivot depth changes.
+// That makes the wheel converge on a detail in a few ticks and orbit/pan scale to it, instead of
+// pivoting around a stale framed centre. Empty space → keep the current pivot (Fit/Home re-centre).
+let lastHoverXY=null;
+const onWheelHover=e=>{ lastHoverXY=[e.clientX,e.clientY]; }; // capture-phase → fresh cursor before OrbitControls' wheel handler
+function repivotToCursor(){
+  if(!lastHoverXY) return;
+  const ndc=new THREE.Vector2((lastHoverXY[0]/innerWidth)*2-1, -(lastHoverXY[1]/innerHeight)*2+1);
+  ray.setFromCamera(ndc,camera);
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; if(!hit) return;
+  const fwd=camera.getWorldDirection(new THREE.Vector3());
+  const depth=hit.point.clone().sub(camera.position).dot(fwd);   // hit distance along the view axis
+  if(depth>1e-3) controls.target.copy(camera.position).addScaledVector(fwd,depth);
+}
+controls.addEventListener('start', repivotToCursor);
+renderer.domElement.addEventListener('wheel', onWheelHover, {capture:true, passive:true});
+renderer.domElement.addEventListener('pointermove', e=>{ lastHoverXY=[e.clientX,e.clientY]; }); // track the cursor for the gesture-start re-pivot on orbit/pan too (not just wheel) — parity with floless
 let content=new THREE.Group(); scene.add(content); let pickable=[];
 const conv=(P,up)=> up==='z' ? new THREE.Vector3(P[0],P[2],P[1]) : new THREE.Vector3(P[0],P[1],P[2]);
 
@@ -304,7 +361,7 @@ function buildLegend(S){ const host=document.getElementById('legend'); host.repl
   groups.forEach(g=>{ const row=el('div','row'); row.dataset.key=g.key;
     const sw=el('span','swatch'); sw.style.background=g.color;
     row.append(sw, document.createTextNode(g.label));
-    row.title='click to hide/show · double-click to isolate';
+    row.setAttribute('data-tip','Click to hide/show · double-click to isolate');
     // Defer the single-click toggle so a double-click can cancel it — otherwise the two
     // clicks preceding `dblclick` would clear soloGroup and isolate would never toggle off.
     row.addEventListener('click', ()=>{ clearTimeout(legendClickT); legendClickT=setTimeout(()=>toggleGroup(g.key), 220); });
@@ -352,8 +409,62 @@ renderer.domElement.addEventListener('pointermove', e=>{ if(!boxStart) return;
 renderer.domElement.addEventListener('pointerup', e=>{ if(e.button!==0||!boxStart) return;
   const dx=e.clientX-boxStart.x, dy=e.clientY-boxStart.y; rubber.style.display='none';
   if(Math.hypot(dx,dy)>=DRAG_PX) setSelection(meshesInRect(boxStart.x,boxStart.y,e.clientX,e.clientY));
+  else if(clipMode==='plane') addClipPlaneAtScreen(e.clientX,e.clientY); // armed → a click drops a clip plane on the picked face; STAYS armed (crosshair + lit button + Esc/Clip to cancel) — parity with floless
   else pickAt(e.clientX,e.clientY);
   boxStart=null; });
+
+// ---- clip planes / boxes + work area (Tekla-style sectioning) ----
+// Sectioning lives in renderer.clippingPlanes (GLOBAL), so it clips the grid + every element like
+// Tekla and survives a re-render. A clip PLANE keeps the camera-far side (1 plane); a clip BOX and
+// the work area keep INSIDE (6 inward planes). The ViewCube has its own renderer → never clipped.
+const EMPTY_CLIPS=Object.freeze([]);
+let clips=[]; let workArea=null; let clipMode=null; let clipSeq=0;
+const overlayScene=new THREE.Scene(); let workAreaHelper=null; // work-area wireframe → 2nd UNCLIPPED pass
+// three.js convention: a material is KEPT where distanceToPoint(p) = normal·p + constant >= 0 (the
+// side the normal points toward) and discarded on the negative side. So INWARD normals + these
+// constants keep the box interior (e.g. normal -X, constant max.x → keep x<=max.x). Verified live
+// (a whole-model box keeps the model visible) — do not "reverse" these signs.
+function boxToPlanes(b){ return [
+  new THREE.Plane(new THREE.Vector3(-1,0,0), b.max.x), new THREE.Plane(new THREE.Vector3(1,0,0), -b.min.x),
+  new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
+  new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
+function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
+  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; }
+function meshBox(meshes){ const b=new THREE.Box3(); for(const m of meshes){ if(m.visible) b.expandByObject(m); } return b; } // real mesh bounds incl. section width (sceneBox is centreline-only)
+function selBox(pad){ let box=meshBox(selection); if(box.isEmpty()) box=meshBox(pickable); if(box.isEmpty()) return null;
+  return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }
+// A clip plane from a clicked face (screen px): keep the camera-FAR side so the cut reveals the section.
+function addClipPlaneAtScreen(cx,cy){
+  const ndc=new THREE.Vector2((cx/innerWidth)*2-1, -(cy/innerHeight)*2+1); ray.setFromCamera(ndc,camera);
+  const hit=ray.intersectObjects(pickable.filter(m=>m.visible),false)[0]; if(!hit||!hit.face) return null;
+  const n=hit.face.normal.clone().transformDirection(hit.object.matrixWorld).normalize();
+  if(n.dot(camera.position.clone().sub(hit.point))>0) n.negate();
+  clips.push({ id:'clip'+(++clipSeq), kind:'plane', planes:[new THREE.Plane().setFromNormalAndCoplanarPoint(n,hit.point)] });
+  applyClips(); return clips[clips.length-1].id; }
+// A clip box around the current selection (or the whole model when nothing is selected).
+function addClipBox(pad){ const box=selBox(pad); if(!box) return null;
+  clips.push({ id:'clip'+(++clipSeq), kind:'box', planes:boxToPlanes(box) }); applyClips(); return clips[clips.length-1].id; }
+function clearClips(){ clips=[]; applyClips(); }
+function clipCount(){ return clips.length; }
+// Arm/disarm the face-pick: 'plane' → next left-click on a face drops a plane; null → back to selecting.
+function setClipMode(m){ clipMode=m==='plane'?'plane':null;
+  renderer.domElement.style.cursor=clipMode?'crosshair':'default';
+  const btn=document.getElementById('clip'); if(btn) btn.classList.toggle('on',!!clipMode);
+  if(clipMode) readout.replaceChildren(el('b',null,'Click a face'), document.createTextNode(' to cut the view there · Esc to cancel'));
+  else setHint();
+  return clipMode; }
+// Work area: one box that bounds (and sections) the view, shown as an always-visible wireframe.
+function renderWorkArea(){ if(workAreaHelper){ overlayScene.remove(workAreaHelper); workAreaHelper.geometry.dispose(); workAreaHelper.material.dispose(); workAreaHelper=null; }
+  if(!workArea || workArea.box.isEmpty()) return;
+  workAreaHelper=new THREE.Box3Helper(workArea.box, new THREE.Color(0x60a5fa));
+  workAreaHelper.material.depthTest=false; workAreaHelper.renderOrder=995; overlayScene.add(workAreaHelper); }
+function setWorkAreaBox(box){ if(!box||box.isEmpty()) return false; workArea={ box:box.clone(), planes:boxToPlanes(box) }; applyClips(); renderWorkArea(); return true; }
+function workAreaSetAll(){ const box=meshBox(pickable); return box.isEmpty() ? false : setWorkAreaBox(box); } // bound the whole model by its rendered mesh bounds (not centrelines)
+function workAreaFromSelection(pad){ const box=new THREE.Box3();
+  for(const m of selection){ if(m.visible) box.expandByObject(m); }
+  if(box.isEmpty()) return false; box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); return setWorkAreaBox(box); }
+function clearWorkArea(){ workArea=null; applyClips(); renderWorkArea(); }
+function workAreaOn(){ return !!workArea; }
 
 addEventListener('resize',()=>{
   perspCam.aspect=innerWidth/innerHeight; perspCam.updateProjectionMatrix();
@@ -363,6 +474,7 @@ addEventListener('resize',()=>{
 // Single-key view shortcuts mirror the ViewCube faces (lower- or upper-case).
 const VIEW_KEYS={ t:'top', f:'front', r:'right', b:'back', l:'left' };
 addEventListener('keydown',e=>{
+  if(e.key==='Escape' && clipMode){ setClipMode(null); e.preventDefault(); return; } // cancel an armed clip-plane pick
   if(e.key==='Home'){ frameBox(sceneBox); e.preventDefault(); }                       // fit all
   else if((e.key==='z'||e.key==='Z') && e.altKey){                                     // zoom the current selection
     if(selection.length){ const b=new THREE.Box3(); for(const m of selection) b.expandByObject(m); frameBox(b); } e.preventDefault(); }
@@ -374,6 +486,28 @@ addEventListener('keydown',e=>{
 document.querySelectorAll('#proj button').forEach(b=>b.addEventListener('click',()=>setProjection(b.dataset.proj)));
 document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>setDisplayMode(b.dataset.mode)));
 document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
+
+// ---- Section dropdowns (Clip / Work area) ----
+function closeMenus(){ document.querySelectorAll('#toolbar .tb-menu.open').forEach(m=>m.classList.remove('open')); }
+function toggleMenu(id){ const m=document.getElementById(id), open=m.classList.contains('open'); closeMenus(); if(!open) m.classList.add('open'); }
+document.getElementById('clip').addEventListener('click', e=>{ e.stopPropagation(); if(clipMode){ setClipMode(null); return; } toggleMenu('clipMenu'); });
+document.getElementById('work').addEventListener('click', e=>{ e.stopPropagation(); toggleMenu('workMenu'); });
+document.querySelectorAll('#clipMenu [data-clip]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
+  const a=b.dataset.clip; if(a==='plane') setClipMode('plane'); else if(a==='box') addClipBox(); else if(a==='clear') clearClips(); }));
+document.querySelectorAll('#workMenu [data-wa]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus();
+  const a=b.dataset.wa; if(a==='all') workAreaSetAll(); else if(a==='sel') workAreaFromSelection(); else if(a==='clear') clearWorkArea(); }));
+document.addEventListener('pointerdown', e=>{ if(!e.target.closest('#toolbar')) closeMenus(); }, true); // click outside the toolbar closes a menu
+
+// ---- Themed tooltips (replaces native title=): one shared element, shown on data-tip hover ----
+const tooltip=document.createElement('div'); tooltip.id='tooltip'; document.body.appendChild(tooltip); let tipT=null;
+function showTip(t){ const txt=t.getAttribute('data-tip'); if(!txt) return; tooltip.textContent=txt; tooltip.classList.add('show');
+  const r=t.getBoundingClientRect(), tw=tooltip.offsetWidth, th=tooltip.offsetHeight;
+  let x=Math.max(6,Math.min(r.left+r.width/2-tw/2, innerWidth-tw-6)), y=r.bottom+6; if(y+th>innerHeight-6) y=r.top-th-6;
+  tooltip.style.left=x+'px'; tooltip.style.top=y+'px'; }
+function hideTip(){ clearTimeout(tipT); tooltip.classList.remove('show'); }
+document.addEventListener('pointerover', e=>{ const t=e.target.closest('[data-tip]'); if(!t) return; clearTimeout(tipT); tipT=setTimeout(()=>showTip(t),400); });
+document.addEventListener('pointerout', e=>{ if(e.target.closest('[data-tip]')) hideTip(); });
+document.addEventListener('pointerdown', hideTip, true); // a click hides the tip immediately
 
 // ---- ViewCube (#258): a small labelled cube, bottom-right, mirroring the camera orientation.
 // Clicking a face snaps to that ortho view; an edge/corner snaps to an iso view — it fully
@@ -412,6 +546,9 @@ cubeRenderer.domElement.addEventListener('pointerdown', e=>{ e.preventDefault();
 function syncCube(){ cubeMesh.quaternion.copy(camera.quaternion).invert(); }
 
 (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera);
+  // 2nd UNCLIPPED pass: the work-area wireframe must stay visible through any clip (autoClear off so
+  // it draws on top of the clipped main pass; clipping planes cleared so it is never sectioned).
+  if(overlayScene.children.length){ const saved=renderer.clippingPlanes; renderer.autoClear=false; renderer.clippingPlanes=EMPTY_CLIPS; renderer.render(overlayScene,camera); renderer.clippingPlanes=saved; renderer.autoClear=true; }
   syncCube(); cubeRenderer.render(cubeScene,cubeCam); })();
 
 renderScene(SCENE);
@@ -422,7 +559,10 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   selectionCount:()=>selection.length, cubeFaces:()=>CUBE_FACES.map(f=>f.view),
   camDir:()=>camera.position.clone().sub(controls.target).normalize().toArray(),
   selectInRect:(x0,y0,x1,y1)=>{ setSelection(meshesInRect(x0,y0,x1,y1)); return selection.length; },
-  setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox) };
+  setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
+  clipCount, addClipBox, clearClips, setClipMode, addClipPlaneAtScreen,
+  workAreaSetAll, workAreaFromSelection, clearWorkArea, workAreaOn,
+  clipPlanes:()=>(renderer.clippingPlanes||[]).length };
 </script>
 </body>
 </html>
@@ -640,6 +780,108 @@ mod tests {
         assert!(
             html.contains("VIEW_KEYS[e.key.toLowerCase()]"),
             "view keys are case-insensitive and skip when a modifier is held"
+        );
+    }
+
+    #[test]
+    fn cad_camera_zoom_to_cursor_and_repivot() {
+        // The viewer's camera matches the floless steel-3d-view CAD feel: no orbit inertia,
+        // wheel zooms toward the cursor, and the orbit pivot re-centres under the cursor on
+        // every gesture (raycast → on-axis depth, so the view never jumps).
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("controls.enableDamping=false"),
+            "no post-release inertia"
+        );
+        assert!(
+            html.contains("controls.zoomToCursor=true"),
+            "wheel zooms toward the cursor"
+        );
+        assert!(
+            html.contains("function repivotToCursor"),
+            "cursor re-pivot present"
+        );
+        assert!(
+            html.contains("controls.addEventListener('start', repivotToCursor)"),
+            "re-pivot wired to every gesture start"
+        );
+    }
+
+    #[test]
+    fn ships_clip_planes_boxes_and_work_area() {
+        // The viewer can section the model (Tekla-style): clip planes from a clicked face, clip
+        // boxes (6 inward planes), and a work-area box — all driven through renderer.clippingPlanes,
+        // with the work-area wireframe drawn in a 2nd unclipped pass so a clip never hides it.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("renderer.localClippingEnabled=true"),
+            "renderer-level clipping enabled"
+        );
+        assert!(
+            html.contains("function applyClips") && html.contains("renderer.clippingPlanes="),
+            "global clip planes driven by applyClips"
+        );
+        assert!(
+            html.contains("function addClipPlaneAtScreen") && html.contains("function boxToPlanes"),
+            "clip plane from a face + box → 6 inward planes"
+        );
+        assert!(
+            html.contains("function addClipBox") && html.contains("function clearClips"),
+            "add clip box + clear"
+        );
+        assert!(
+            html.contains("function workAreaSetAll") && html.contains("Box3Helper"),
+            "work-area box with a wireframe"
+        );
+        assert!(
+            html.contains("renderer.autoClear=false"),
+            "2nd unclipped pass keeps the work-area wireframe visible"
+        );
+    }
+
+    #[test]
+    fn ships_grouped_toolbar_and_themed_tooltips() {
+        // The toolbar groups into Camera | Display | Section, the Section cluster drives the clip /
+        // work-area engine via dropdowns, and every control carries a themed tooltip (data-tip) —
+        // no native title= leaking the OS default against the dark theme.
+        let out = viewer_3d_render(
+            &json!({ "scene": { "meta": {"name":"x"}, "elements": [] } }),
+            true,
+        )
+        .unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(
+            html.contains("id=\"clip\"") && html.contains("id=\"work\""),
+            "Section cluster: Clip + Work area buttons"
+        );
+        assert!(
+            html.contains("data-clip=\"plane\"") && html.contains("data-clip=\"box\""),
+            "clip dropdown items"
+        );
+        assert!(
+            html.contains("data-wa=\"all\"") && html.contains("data-wa=\"sel\""),
+            "work-area dropdown items"
+        );
+        // Themed tooltip element + data-tip on controls; the toolbar's native title= are gone.
+        assert!(
+            html.contains("#tooltip{")
+                && html.contains("tooltip.id='tooltip'")
+                && html.contains("data-tip=\"Fit all to view (Home)\""),
+            "themed tooltip (CSS + driver) + data-tip on Fit"
+        );
+        assert!(
+            !html.contains("id=\"fit\" title=") && !html.contains("id=\"proj\" title="),
+            "native title= replaced by data-tip on the toolbar"
         );
     }
 
