@@ -45,7 +45,7 @@ const TEMPLATE: &str = r##"<!doctype html>
   #legend .legend-hint{color:var(--muted);font-size:11px;margin:0 0 6px}
   #legend .row{cursor:pointer;user-select:none;border-radius:5px;padding:2px 5px} #legend .row:hover{background:rgba(51,65,85,.5)}
   #legend .row.off{opacity:.4} #legend .row.off .swatch{filter:grayscale(1)}
-  #toolbar{top:74px;left:16px;padding:7px 9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;max-width:calc(100% - 372px)}
+  #toolbar{top:74px;left:16px;padding:7px 9px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;max-width:calc(100% - 492px)}  /* clears the side panel AND the ViewCube now sharing the top row */
   #toolbar .tb-grp{display:flex;gap:4px} #toolbar .tb-sep{width:1px;height:20px;background:var(--border-2);margin:0 2px}
   #toolbar button{background:rgba(30,41,59,.6);color:var(--text);border:1px solid var(--border-2);border-radius:7px;padding:5px 9px;font-size:12px;cursor:pointer;line-height:1}
   #toolbar button:hover{background:rgba(51,65,85,.85);border-color:var(--accent)}
@@ -63,8 +63,12 @@ const TEMPLATE: &str = r##"<!doctype html>
   #readout{bottom:16px;left:50%;transform:translateX(-50%);padding:10px 16px;font-size:13px;color:var(--muted);white-space:nowrap;max-width:60vw;overflow:hidden;text-overflow:ellipsis}
   #readout b{color:var(--text)} #readout .pill{color:var(--accent)}
   #rubber{position:absolute;border:1px solid var(--accent);background:rgba(96,165,250,.16);pointer-events:none;display:none;z-index:6}
-  #viewcube{position:absolute;right:16px;bottom:16px;width:104px;height:104px;cursor:pointer;z-index:5}
+  #viewcube{position:absolute;right:352px;top:74px;width:104px;height:104px;cursor:pointer;z-index:5}  /* top-right, left of the side panel (16+320+16) */
   #viewcube canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
+  /* World-axis triad, bottom-right (Tekla-style). Passive readout — pointer-events:none so it can
+     never swallow an orbit gesture; orientation CHANGES stay on the ViewCube. */
+  #axestriad{position:absolute;right:16px;bottom:16px;width:72px;height:72px;z-index:5;pointer-events:none}
+  #axestriad canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
 </style>
 </head>
 <body>
@@ -109,6 +113,7 @@ const TEMPLATE: &str = r##"<!doctype html>
 <div id="readout" class="panel">Left-drag box-select · right-drag orbit · middle-drag pan · scroll zoom · <b>click an element</b> · Home fits · Alt+Z zooms selection</div>
 <div id="rubber"></div>
 <div id="viewcube" data-tip="Click a face for that view · right-drag to orbit"></div>
+<div id="axestriad"></div>
 <script>
   // Loading handshake for an embedding client (generic — a client may listen, or ignore it
   // entirely when opened standalone): a failed CDN/module load or a runtime error posts
@@ -509,7 +514,7 @@ document.addEventListener('pointerover', e=>{ const t=e.target.closest('[data-ti
 document.addEventListener('pointerout', e=>{ if(e.target.closest('[data-tip]')) hideTip(); });
 document.addEventListener('pointerdown', hideTip, true); // a click hides the tip immediately
 
-// ---- ViewCube (#258): a small labelled cube, bottom-right, mirroring the camera orientation.
+// ---- ViewCube (#258): a small labelled cube, top-right, mirroring the camera orientation.
 // Clicking a face snaps to that ortho view; an edge/corner snaps to an iso view — it fully
 // replaces the old named-view buttons (the "cubix with planes" from the QA note). ----
 const CUBE_PX=104;
@@ -545,11 +550,39 @@ cubeRenderer.domElement.addEventListener('pointerdown', e=>{ e.preventDefault();
 // camera's world rotation (front view → the FRONT face turns toward the viewer, and so on).
 function syncCube(){ cubeMesh.quaternion.copy(camera.quaternion).invert(); }
 
+// ---- World-axis triad: a passive bottom-right gizmo (Tekla-style) showing where the SCENE's
+// X/Y/Z point. The cube OWNS orientation changes; this only reads out (pointer-events:none).
+// Axes go through the same up-conversion as the geometry (conv), so the labels mean the
+// PRODUCER's axes — a Z-up steel scene shows Z where its Z really points. X red, Y green,
+// Z blue is the CAD convention.
+const TRIAD_PX=72;
+const triadRenderer=new THREE.WebGLRenderer({antialias:true, alpha:true});
+triadRenderer.setPixelRatio(Math.min(devicePixelRatio,2)); triadRenderer.setSize(TRIAD_PX,TRIAD_PX);
+document.getElementById('axestriad').appendChild(triadRenderer.domElement);
+const triadScene=new THREE.Scene();
+const triadCam=new THREE.OrthographicCamera(-1.85,1.85,1.85,-1.85,0.1,20); triadCam.position.set(0,0,5);
+const triadGroup=new THREE.Group();
+function triadTip(label,color,pos){ // letter on a colored disc — legible over any geometry behind it
+  const c=document.createElement('canvas'); c.width=c.height=64; const g=c.getContext('2d');
+  g.fillStyle=color; g.beginPath(); g.arc(32,32,30,0,Math.PI*2); g.fill();
+  g.fillStyle='#fff'; g.font='bold 42px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(label,32,34);
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c)})); s.position.copy(pos); s.scale.setScalar(0.95); return s; }
+{ const up=(SCENE.meta&&SCENE.meta.up)||'z', AXIS_Y=new THREE.Vector3(0,1,0);
+  for(const [label,color,axis] of [['X','#ef4444',[1,0,0]],['Y','#22c55e',[0,1,0]],['Z','#3b82f6',[0,0,1]]]){
+    const d=conv(axis,up).normalize();
+    const shaft=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.055,1.05,8), new THREE.MeshBasicMaterial({color}));
+    shaft.quaternion.setFromUnitVectors(AXIS_Y,d); shaft.position.copy(d).multiplyScalar(0.525);
+    triadGroup.add(shaft, triadTip(label,color,d.clone().multiplyScalar(1.38))); }
+  triadGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.12,12,8), new THREE.MeshBasicMaterial({color:0xe2e8f0}))); // origin ball
+  triadScene.add(triadGroup); }
+function syncTriad(){ triadGroup.quaternion.copy(camera.quaternion).invert(); }
+
 (function loop(){ requestAnimationFrame(loop); controls.update(); renderer.render(scene,camera);
   // 2nd UNCLIPPED pass: the work-area wireframe must stay visible through any clip (autoClear off so
   // it draws on top of the clipped main pass; clipping planes cleared so it is never sectioned).
   if(overlayScene.children.length){ const saved=renderer.clippingPlanes; renderer.autoClear=false; renderer.clippingPlanes=EMPTY_CLIPS; renderer.render(overlayScene,camera); renderer.clippingPlanes=saved; renderer.autoClear=true; }
-  syncCube(); cubeRenderer.render(cubeScene,cubeCam); })();
+  syncCube(); cubeRenderer.render(cubeScene,cubeCam);
+  syncTriad(); triadRenderer.render(triadScene,triadCam); })();
 
 renderScene(SCENE);
 window.__viewerReady=true; if(window.__viewerPost) window.__viewerPost('viewer-ready');
@@ -760,6 +793,18 @@ mod tests {
         assert!(
             html.contains("cubeRenderer.render(cubeScene,cubeCam)"),
             "cube rendered each frame"
+        );
+        // World-axis triad (bottom-right): a passive readout of the scene's X/Y/Z, rendered and
+        // camera-synced each frame like the cube, with the axes run through the up-conversion.
+        assert!(html.contains("id=\"axestriad\""), "axes triad host element");
+        assert!(
+            html.contains("function syncTriad")
+                && html.contains("triadRenderer.render(triadScene,triadCam)"),
+            "triad mirrors the camera and renders each frame"
+        );
+        assert!(
+            html.contains("conv(axis,up)"),
+            "triad axes use the scene up-conversion (labels mean the producer's axes)"
         );
         // The cube fully replaces the named-view buttons: a face press → ortho view, an edge/corner
         // press → iso-style view (so Iso stays reachable without a toolbar button).
