@@ -67,7 +67,7 @@ const TEMPLATE: &str = r##"<!doctype html>
   #viewcube canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
   /* World-axis triad, bottom-right (Tekla-style). Passive readout — pointer-events:none so it can
      never swallow an orbit gesture; orientation CHANGES stay on the ViewCube. */
-  #axestriad{position:absolute;right:16px;bottom:16px;width:72px;height:72px;z-index:5;pointer-events:none}
+  #axestriad{position:absolute;right:16px;bottom:16px;width:92px;height:92px;z-index:5;pointer-events:none}
   #axestriad canvas{display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
 </style>
 </head>
@@ -555,25 +555,28 @@ function syncCube(){ cubeMesh.quaternion.copy(camera.quaternion).invert(); }
 // Axes go through the same up-conversion as the geometry (conv), so the labels mean the
 // PRODUCER's axes — a Z-up steel scene shows Z where its Z really points. X red, Y green,
 // Z blue is the CAD convention.
-const TRIAD_PX=72;
+const TRIAD_PX=92;
 const triadRenderer=new THREE.WebGLRenderer({antialias:true, alpha:true});
 triadRenderer.setPixelRatio(Math.min(devicePixelRatio,2)); triadRenderer.setSize(TRIAD_PX,TRIAD_PX);
 document.getElementById('axestriad').appendChild(triadRenderer.domElement);
 const triadScene=new THREE.Scene();
-const triadCam=new THREE.OrthographicCamera(-1.85,1.85,1.85,-1.85,0.1,20); triadCam.position.set(0,0,5);
+const triadCam=new THREE.OrthographicCamera(-2.1,2.1,2.1,-2.1,0.1,20); triadCam.position.set(0,0,5);
 const triadGroup=new THREE.Group();
-function triadTip(label,color,pos){ // letter on a colored disc — legible over any geometry behind it
+function triadTip(label,color,pos){ // free-standing colored letter with a dark halo — legible over any geometry, no disc
   const c=document.createElement('canvas'); c.width=c.height=64; const g=c.getContext('2d');
-  g.fillStyle=color; g.beginPath(); g.arc(32,32,30,0,Math.PI*2); g.fill();
-  g.fillStyle='#fff'; g.font='bold 42px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle'; g.fillText(label,32,34);
-  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c)})); s.position.copy(pos); s.scale.setScalar(0.95); return s; }
+  g.font='bold 46px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.textBaseline='middle';
+  g.lineWidth=8; g.lineJoin='round'; g.strokeStyle='rgba(2,8,23,.9)'; g.strokeText(label,32,34);
+  g.fillStyle=color; g.fillText(label,32,34);
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c)})); s.position.copy(pos); s.scale.setScalar(0.85); return s; }
 { const up=(SCENE.meta&&SCENE.meta.up)||'z', AXIS_Y=new THREE.Vector3(0,1,0);
   for(const [label,color,axis] of [['X','#ef4444',[1,0,0]],['Y','#22c55e',[0,1,0]],['Z','#3b82f6',[0,0,1]]]){
-    const d=conv(axis,up).normalize();
-    const shaft=new THREE.Mesh(new THREE.CylinderGeometry(0.055,0.055,1.05,8), new THREE.MeshBasicMaterial({color}));
+    const d=conv(axis,up).normalize(), mat=new THREE.MeshBasicMaterial({color});
+    const shaft=new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06,1.05,8), mat);
     shaft.quaternion.setFromUnitVectors(AXIS_Y,d); shaft.position.copy(d).multiplyScalar(0.525);
-    triadGroup.add(shaft, triadTip(label,color,d.clone().multiplyScalar(1.38))); }
-  triadGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.12,12,8), new THREE.MeshBasicMaterial({color:0xe2e8f0}))); // origin ball
+    const head=new THREE.Mesh(new THREE.ConeGeometry(0.16,0.34,12), mat); // arrowhead at the shaft end
+    head.quaternion.copy(shaft.quaternion); head.position.copy(d).multiplyScalar(1.22);
+    triadGroup.add(shaft, head, triadTip(label,color,d.clone().multiplyScalar(1.62))); }
+  triadGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.1,12,8), new THREE.MeshBasicMaterial({color:0xe2e8f0}))); // origin dot
   triadScene.add(triadGroup); }
 function syncTriad(){ triadGroup.quaternion.copy(camera.quaternion).invert(); }
 
