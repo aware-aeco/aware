@@ -1,0 +1,78 @@
+agent:        connection-reader
+version:      0.1.0
+display-name: Connection Reader (IFC → mesh)
+description: |
+  Extract a steel connection from an IFC file as tessellated geometry, so a connection designed in
+  any tool (IDEA StatiCa, Tekla, …) can be imported into a model instead of re-modelled by hand.
+  Drives the bundled web-ifc WASM parser to tessellate, groups elements into connection units (one
+  per IfcElementAssembly that carries plate/bolt/weld hardware), and returns AWARE's generic
+  kind:"mesh" scene primitive (positions+indices) in canonical millimetres. It never re-implements
+  an IFC geometry kernel — parsing stays in web-ifc; this agent only groups + maps.
+
+  Persona (steel detailer): "I checked this connection in IDEA StatiCa and exported IFC — I want to
+  drop it onto the matching joint in my model, not re-model it. Give me its plates/bolts/welds as
+  geometry I can place." Pairs with `ifc` (write the scene back out) and `viewer-3d` (render it).
+
+stateful: false
+
+vendor:   aware-aeco
+license:  Apache-2.0
+homepage: https://github.com/aware-aeco/aware/tree/main/20-agents/aeco/engineering/connection-reader
+keywords: [aware, ifc, steel, connection, import, mesh, tessellation, web-ifc, detailing]
+
+provenance:
+  generated-by:      hand-curated
+  generator-version: 0.13.0
+  refined-by:        [pawellisowski]
+
+requires:
+  filesystem:
+    - read: '*.ifc,*.ifczip'
+
+# CLI transport: a Node bridge (bundling web-ifc WASM) shipped as a downloadable asset and fetched
+# with `aware sidecar install connection-reader`. Not builtin — the tessellator is web-ifc, not Rust.
+transport:
+  cli:
+    binary: aware-connection-reader
+
+commands:
+
+  list:
+    lifecycle: single
+    category: curated
+    description: |
+      List the connection candidates in an IFC WITHOUT tessellating — fast. One candidate per
+      IfcElementAssembly that carries connection hardware (plates / bolts / welds), with per-type
+      counts. This is what a UI shows as the "which connection do you want?" picker. Read-only.
+    inputs:
+      ifc-path:
+        type: string
+        description: Absolute or workspace-relative path to the .ifc / .ifczip file.
+    outputs:
+      type: single
+      schema:
+        connections: array # [{ id: GlobalId, name, type, plates: int, bolts: int, welds: int, members: int }]
+
+  extract:
+    lifecycle: single
+    category: curated
+    description: |
+      Tessellate ONE connection — identified by its IfcElementAssembly GlobalId (from `list`) —
+      into mesh scene parts: each plate / bolt / weld becomes a kind:"mesh" element (positions +
+      indices) in canonical millimetres, ready to bake into a scene, render (`viewer-3d`), or write
+      back out (`ifc`). Deterministic for a given (file, id), so the result is content-hash cached.
+      Read-only.
+    inputs:
+      ifc-path:
+        type: string
+        description: Absolute or workspace-relative path to the .ifc / .ifczip file.
+      id:
+        type: string
+        description: The connection's IfcElementAssembly GlobalId, taken from a `list` result.
+    outputs:
+      type: single
+      schema:
+        connection: object # { id, name, type, members: [GlobalId], parts: [{ id, role, positions: [mm], indices }] }
+
+skills:
+  - what-this-agent-does.md

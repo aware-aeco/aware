@@ -41,6 +41,11 @@ jobs:
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
+      - name: Install Node (for the connection-reader SEA bridge build)
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
       - name: Install .NET SDKs (8 / 9 / 10)
         uses: actions/setup-dotnet@v5
         with:
@@ -225,6 +230,23 @@ jobs:
             -DestinationPath "aware-revit-${version}-win-x64.zip" -Force
           Write-Host "DONE: aware-revit-${version}-win-x64.zip"
 
+          # 5. aware-connection-reader (Node SEA exe + web-ifc WASM → zip)
+          #    A single-file exe built from cli-connection-reader (esbuild bundle → Node SEA), with
+          #    web-ifc's .wasm shipped alongside (read at run time via SetWasmPath). Flat zip so it
+          #    extracts straight into ~/.aware/bridges/ (see cli/src/commands/sidecar.rs extract_zip).
+          Write-Host "--- aware-connection-reader (Node SEA) ---"
+          Push-Location cli-connection-reader
+          npm ci
+          npm run build
+          Pop-Location
+          $crStage = "bridge-connection-reader"
+          New-Item -ItemType Directory -Path $crStage -Force | Out-Null
+          Copy-Item "cli-connection-reader/dist/aware-connection-reader.exe" "$crStage/"
+          Copy-Item "cli-connection-reader/dist/web-ifc-node.wasm" "$crStage/"
+          Compress-Archive -Path "$crStage/*" `
+            -DestinationPath "aware-connection-reader-${version}-win-x64.zip" -Force
+          Write-Host "DONE: aware-connection-reader-${version}-win-x64.zip"
+
       - name: Upload bridge artifacts (Windows only)
         if: matrix.os == 'windows-latest'
         uses: actions/upload-artifact@v7
@@ -235,6 +257,7 @@ jobs:
             aware-rhino-${{ env.VERSION }}-win-x64.exe
             aware-sketchup-${{ env.VERSION }}-win-x64.zip
             aware-revit-${{ env.VERSION }}-win-x64.zip
+            aware-connection-reader-${{ env.VERSION }}-win-x64.zip
 
   release:
     needs: build

@@ -16,9 +16,11 @@ its data into this shape.
     {
       "id":   "COL-A1",                 // unique; shown on click
       "group":"column",                 // → colour + legend (optional)
-      "kind": "line | box | node",
+      "kind": "line | box | node | mesh",
       "from": [x,y,z], "to": [x,y,z],   // line/box: the member axis a→b
       "at":   [x,y,z],                  // node: a point
+      "positions": [x,y,z, …],          // mesh: flat vertex coordinates (units of meta.units)
+      "indices":   [i,j,k, …],          // mesh: 0-based triangle vertex refs (triples)
       "section": { "w": 310, "d": 310 },// optional cross-section (units of meta.units)
       "size": 120,                      // optional node radius
       "opacity": 0.3,                   // optional 0..1; overrides the group's opacity
@@ -44,7 +46,10 @@ its data into this shape.
   screen-up; `up:"y"` is passthrough. The camera/grid/lights **auto-fit** the element bounding
   box, so a 20 m building and a unitless bar chart both frame correctly with no tuning.
 - **`kind`:** `line`/`box` = an oriented bar `from`→`to` (optional `section` for thickness,
-  else a hairline relative to scene size); `node` = a sphere at `at` (optional `size`).
+  else a hairline relative to scene size); `node` = a sphere at `at` (optional `size`); `mesh` = a
+  tessellated triangle soup (`positions` flat xyz + `indices` 0-based triangles) for imported or
+  free-form geometry with no parametric section — rendered double-sided (winding-agnostic) and
+  written to IFC as an `IfcTriangulatedFaceSet` on an `IfcBuildingElementProxy`.
 - **`camera`** is honoured when present, else auto-fit.
 - **`opacity`** (0..1) on a `group` makes that whole group translucent; on an `element` it
   overrides the group value. Use it to reveal elements embedded inside others — e.g. render

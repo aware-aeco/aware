@@ -305,7 +305,7 @@ function renderScene(S){
   const colorOf={}, opacityOf={}; (S.groups||[]).forEach(g=>{ colorOf[g.key]=g.color; if(typeof g.opacity==='number') opacityOf[g.key]=g.opacity; });
   groupHidden.clear(); soloGroup=null;
   const box=new THREE.Box3();
-  for(const e of (S.elements||[])){ if(Array.isArray(e.from))box.expandByPoint(conv(e.from,up)); if(Array.isArray(e.to))box.expandByPoint(conv(e.to,up)); if(Array.isArray(e.at))box.expandByPoint(conv(e.at,up)); }
+  for(const e of (S.elements||[])){ if(Array.isArray(e.from))box.expandByPoint(conv(e.from,up)); if(Array.isArray(e.to))box.expandByPoint(conv(e.to,up)); if(Array.isArray(e.at))box.expandByPoint(conv(e.at,up)); if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)box.expandByPoint(conv([e.positions[i],e.positions[i+1],e.positions[i+2]],up)); }
   if(box.isEmpty()) box.set(new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1));
   const size=box.getSize(new THREE.Vector3()), center=box.getCenter(new THREE.Vector3());
   maxDim=Math.max(size.x,size.y,size.z)||1; sceneBox=box.clone(); const thick=maxDim*0.006;
@@ -317,14 +317,22 @@ function renderScene(S){
 
   const upY=new THREE.Vector3(0,1,0);
   for(const e of (S.elements||[])){
-    if(!e || (e.kind==='node' ? !Array.isArray(e.at) : (!Array.isArray(e.from)||!Array.isArray(e.to)))) continue;
+    if(!e) continue;
+    // A tessellated mesh (positions[]+indices[], e.g. an imported connection) has no from/to/at.
+    const isMesh = e.kind==='mesh' || (Array.isArray(e.positions)&&Array.isArray(e.indices));
+    if(!isMesh && (e.kind==='node' ? !Array.isArray(e.at) : (!Array.isArray(e.from)||!Array.isArray(e.to)))) continue;
     const col=colorOf[e.group] || 0xffffff;
     // Opacity: per-element overrides per-group; <1 makes the material translucent so
     // elements embedded in others (e.g. rebar inside concrete) can be revealed (#258).
     const op = typeof e.opacity==='number' ? e.opacity : (typeof opacityOf[e.group]==='number' ? opacityOf[e.group] : 1);
-    const mat=new THREE.MeshStandardMaterial({color:col, metalness:0.5, roughness:0.5, transparent:op<1, opacity:op});
+    // Imported meshes may have inconsistent winding — DoubleSide avoids black back-faces.
+    const mat=new THREE.MeshStandardMaterial({color:col, metalness:0.5, roughness:0.5, transparent:op<1, opacity:op, side:isMesh?THREE.DoubleSide:THREE.FrontSide});
     mat.userData={baseOpacity:op}; let mesh;
-    if(e.kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
+    if(isMesh){ const g=new THREE.BufferGeometry(), P=e.positions, arr=new Float32Array(P.length);
+      for(let i=0;i+2<P.length;i+=3){ const v=conv([P[i],P[i+1],P[i+2]],up); arr[i]=v.x; arr[i+1]=v.y; arr[i+2]=v.z; }
+      g.setAttribute('position', new THREE.BufferAttribute(arr,3)); g.setIndex(e.indices); g.computeVertexNormals();
+      mesh=new THREE.Mesh(g, mat); }
+    else if(e.kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
@@ -704,6 +712,26 @@ mod tests {
         assert!(!html.contains("__SCENE_JSON__")); // placeholder fully substituted
         assert!(out["bytes"].as_u64().unwrap() > 0);
         assert!(out.get("output-path").is_none()); // none given → not written
+    }
+
+    #[test]
+    fn renders_a_tessellated_mesh_element() {
+        // A kind:"mesh" element (imported connection geometry) rides through as positions+indices,
+        // and the renderer ships the BufferGeometry path that draws it.
+        let scene = json!({
+            "meta": { "name": "Conn", "units": "mm", "up": "z" },
+            "elements": [
+                { "id": "PL-1", "kind": "mesh", "group": "connection",
+                  "positions": [0,0,0, 100,0,0, 100,100,0, 0,100,0],
+                  "indices": [0,1,2, 0,2,3] }
+            ]
+        });
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(html.contains("\"PL-1\"")); // the mesh element was injected
+        assert!(html.contains("\"positions\"")); // its tessellation rode through
+        assert!(html.contains("BufferGeometry")); // the renderer ships mesh support
+        assert!(html.contains("setIndex"));
     }
 
     #[test]

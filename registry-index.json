@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-26T08:00:00Z",
+  "updated-at": "2026-07-03T16:54:19.341261900+00:00",
   "agents": {
     "tekla": {
       "versions": {
@@ -599,6 +599,14 @@
         "0.1.0": {
           "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
           "subdir": "aware-main/20-agents/aeco/engineering/steel-detailer-eu"
+        }
+      }
+    },
+    "connection-reader": {
+      "versions": {
+        "0.1.0": {
+          "tarball": "https://github.com/aware-aeco/aware/archive/refs/heads/main.tar.gz",
+          "subdir": "aware-main/20-agents/aeco/engineering/connection-reader"
         }
       }
     }

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-06-28T19:39:12.729750800+00:00",
+  "updated-at": "2026-07-03T16:54:19.542837+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -1377,6 +1377,48 @@
             "bluebeam-studioapi-projects-models",
             "bluebeam-studioapi-sessions",
             "bluebeam-studioapi-sessions-models"
+          ]
+        }
+      }
+    },
+    "connection-reader": {
+      "display-name": "Connection Reader (IFC → mesh)",
+      "vendor": "aware-aeco",
+      "keywords": [
+        "aware",
+        "ifc",
+        "steel",
+        "connection",
+        "import",
+        "mesh",
+        "tessellation",
+        "web-ifc",
+        "detailing"
+      ],
+      "versions": {
+        "0.1.0": {
+          "description": "Extract a steel connection from an IFC file as tessellated geometry, so a connection designed in",
+          "status": "available",
+          "manifest-version": "0.1.0",
+          "stateful": false,
+          "transport": "cli",
+          "command_count": 2,
+          "skills": [
+            "what-this-agent-does"
+          ],
+          "commands": [
+            {
+              "name": "extract",
+              "description": "Tessellate ONE connection — identified by its IfcElementAssembly GlobalId (from `list`) —",
+              "lifecycle": "single",
+              "category": "curated"
+            },
+            {
+              "name": "list",
+              "description": "List the connection candidates in an IFC WITHOUT tessellating — fast. One candidate per",
+              "lifecycle": "single",
+              "category": "curated"
+            }
           ]
         }
       }
