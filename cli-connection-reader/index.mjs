@@ -20,6 +20,7 @@
 
 import { readFileSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
+import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
@@ -41,8 +42,22 @@ function strOf(v) {
   return v && typeof v === 'object' && 'value' in v ? v.value : v;
 }
 
+// Pull the first *.ifc entry out of an .ifczip (a ZIP container) as raw bytes.
+function unzipInnerIfc(zipBytes, ifcPath) {
+  const files = unzipSync(zipBytes);
+  const name = Object.keys(files).find((n) => /\.ifc$/i.test(n));
+  if (!name) throw new Error(`${ifcPath}: .ifczip archive contains no .ifc entry`);
+  return files[name];
+}
+
 async function openModel(api, ifcPath) {
-  const bytes = new Uint8Array(readFileSync(ifcPath));
+  let bytes = new Uint8Array(readFileSync(ifcPath));
+  // An .ifczip is a ZIP holding the .ifc; web-ifc's OpenModel wants raw IFC SPF bytes, so unzip and
+  // hand it the inner .ifc. Detect by the ZIP magic ("PK\x03\x04") rather than the extension, since a
+  // caller's path casing/extension can't be trusted.
+  if (bytes[0] === 0x50 && bytes[1] === 0x4b && bytes[2] === 0x03 && bytes[3] === 0x04) {
+    bytes = unzipInnerIfc(bytes, ifcPath);
+  }
   // COORDINATE_TO_ORIGIN:false keeps model coordinates (we place the connection ourselves);
   // USE_FAST_BOOLS lets web-ifc resolve the IfcBooleanClippingResult copes.
   return api.OpenModel(bytes, { COORDINATE_TO_ORIGIN: false, USE_FAST_BOOLS: true });

@@ -11,6 +11,7 @@
     "build": "node build.mjs"
   },
   "dependencies": {
+    "fflate": "^0.8.3",
     "web-ifc": "0.0.77"
   },
   "devDependencies": {
