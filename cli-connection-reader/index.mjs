@@ -19,6 +19,7 @@
 //             Tessellate ONE candidate (by its IfcElementAssembly GlobalId) into mesh scene parts.
 
 import { readFileSync } from 'node:fs';
+import { dirname, basename, sep } from 'node:path';
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
@@ -185,6 +186,12 @@ async function main() {
   process.stdout.write = process.stderr.write.bind(process.stderr);
 
   const api = new WebIFC.IfcAPI();
+  // When packaged as a single-file exe (Node SEA), web-ifc can't auto-locate its .wasm relative to a
+  // real module on disk — point it at the .wasm shipped alongside the exe. Plain `node index.mjs`
+  // (dev) runs from node.exe, so the basename starts with "node" → skip and let web-ifc auto-locate.
+  if (!basename(process.execPath).toLowerCase().startsWith('node')) {
+    api.SetWasmPath(dirname(process.execPath) + sep, true);
+  }
   await api.Init();
   try {
     if (WebIFC.LogLevel && typeof api.SetLogLevel === 'function') {

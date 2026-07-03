@@ -106,9 +106,9 @@ pub enum SidecarCommand {
     ///
     /// Downloads from the GitHub release matching the current `aware` version
     /// and installs into `~/.aware/bridges/` (persistent across CLI upgrades).
-    /// Accepted host IDs: tekla, rhino, sketchup, revit.
+    /// Accepted IDs: tekla, rhino, sketchup, revit, connection-reader.
     Install {
-        /// Host bridge ID: `tekla`, `rhino`, `sketchup`, or `revit`.
+        /// Bridge ID: `tekla`, `rhino`, `sketchup`, `revit`, or `connection-reader`.
         host: String,
     },
 
@@ -486,6 +486,8 @@ mod tests {
         assert!(lookup_bridge("rhino").is_ok());
         assert!(lookup_bridge("sketchup").is_ok());
         assert!(lookup_bridge("revit").is_ok());
+        // Headless data bridge (Node + web-ifc), installable like the host bridges.
+        assert!(lookup_bridge("connection-reader").is_ok());
     }
 
     #[test]
