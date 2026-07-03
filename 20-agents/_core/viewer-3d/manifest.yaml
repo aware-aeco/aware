@@ -50,7 +50,7 @@ commands:
         description: |
           The 3D scene to render (object). Shape:
           `{ meta:{name,units,up}, groups:[{key,label,color}],
-             elements:[{id,group,kind:"line|box|node",from,to,at,section:{w,d},size,meta}],
+             elements:[{id,group,kind:"line|box|node|mesh",from,to,at,positions,indices,section:{w,d},size,meta}],
              grids:[{label,at}], panels:[{title,note,columns,rows}], camera:{eye,target} }`.
           The producer owns all domain meaning; the renderer is generic. See `scene-schema.md`.
       output-path:

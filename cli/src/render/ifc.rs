@@ -4,6 +4,9 @@
 //! (members as `from`->`to` boxes with an optional cross-section + a `group`) and emits an IFC4
 //! STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded rectangular sections placed on
 //! the member axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine.
+//! A `kind:"mesh"` element (tessellated `positions`+`indices`, e.g. an imported connection) is
+//! written as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy — so free-form geometry
+//! that has no parametric section still round-trips into the exported model.
 //! Host-free (no Tekla/Revit): pure serialization + an optional file write, so any composition
 //! that produces a scene can export a universal model to open in Tekla, SDS2, Revit or Navisworks.
 //!
@@ -148,11 +151,67 @@ impl Spf {
     }
 }
 
+/// Emit a tessellated `kind:"mesh"` element as an IfcTriangulatedFaceSet on an
+/// IfcBuildingElementProxy, placed at `place` (an identity local placement, so the mesh's
+/// `positions` are absolute world mm). Returns the proxy's entity id, or `None` when
+/// `positions`/`indices` are missing or malformed (flat xyz triples + whole triangles, every
+/// index in range). IFC coordinate indices are **1-based**, so each 0-based input index is +1'd.
+fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64) -> Option<i64> {
+    let pos = el.get("positions").and_then(Value::as_array)?;
+    let idx = el.get("indices").and_then(Value::as_array)?;
+    let npts = pos.len() / 3;
+    if npts < 3 || pos.len() % 3 != 0 || idx.len() < 3 || idx.len() % 3 != 0 {
+        return None;
+    }
+    let mut pts = String::new();
+    for i in 0..npts {
+        if i > 0 {
+            pts.push(',');
+        }
+        let _ = write!(
+            pts,
+            "({},{},{})",
+            r(num(pos.get(i * 3))),
+            r(num(pos.get(i * 3 + 1))),
+            r(num(pos.get(i * 3 + 2)))
+        );
+    }
+    let mut tris = String::new();
+    for t in 0..(idx.len() / 3) {
+        let a = idx.get(t * 3).and_then(Value::as_i64)?;
+        let b = idx.get(t * 3 + 1).and_then(Value::as_i64)?;
+        let c = idx.get(t * 3 + 2).and_then(Value::as_i64)?;
+        if a < 0 || b < 0 || c < 0 || a as usize >= npts || b as usize >= npts || c as usize >= npts
+        {
+            return None; // an out-of-range index would make the SPF invalid — reject the element
+        }
+        if t > 0 {
+            tris.push(',');
+        }
+        let _ = write!(tris, "({},{},{})", a + 1, b + 1, c + 1); // IFC CoordIndex is 1-based
+    }
+    let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST3D(({pts}))"));
+    // IfcTriangulatedFaceSet(Coordinates, Normals, Closed, CoordIndex, PnIndex).
+    let tfs = spf.emit(&format!("IFCTRIANGULATEDFACESET(#{plist},$,$,({tris}),$)"));
+    let shape = spf.emit(&format!(
+        "IFCSHAPEREPRESENTATION(#{ctx},'Body','Tessellation',(#{tfs}))"
+    ));
+    let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
+    let name = el.get("id").and_then(Value::as_str).unwrap_or("Mesh");
+    let g = guid(spf.id);
+    Some(spf.emit(&format!(
+        "IFCBUILDINGELEMENTPROXY({},$,{},$,$,#{place},#{pds},$,$)",
+        s_lit(&g),
+        s_lit(name)
+    )))
+}
+
 /// Build the full IFC4 SPF document from a scene object. Returns `(ifc_text, members, columns,
-/// beams, profiles)`. Pure (no IO) so it is directly unit-testable. `members` is the count of
-/// placed elements; `columns`/`beams` are per-group sub-counts (braces count toward neither);
-/// `profiles` is a profile-string -> count breakdown for the caller's report.
-fn build_ifc(scene: &Value) -> (String, usize, i64, i64, BTreeMap<String, i64>) {
+/// beams, meshes, profiles)`. Pure (no IO) so it is directly unit-testable. `members` is the count
+/// of placed elements (mesh proxies included); `columns`/`beams` are per-group sub-counts (braces
+/// count toward neither), `meshes` counts tessellated `kind:"mesh"` elements; `profiles` is a
+/// profile-string -> count breakdown for the caller's report.
+fn build_ifc(scene: &Value) -> (String, usize, i64, i64, i64, BTreeMap<String, i64>) {
     let proj_name = scene
         .get("meta")
         .and_then(Value::as_object)
@@ -225,10 +284,31 @@ fn build_ifc(scene: &Value) -> (String, usize, i64, i64, BTreeMap<String, i64>) 
     let mut elem_ids: Vec<i64> = Vec::new();
     let mut columns = 0i64;
     let mut beams = 0i64;
+    let mut meshes = 0i64;
     let mut profile_counts: BTreeMap<String, i64> = BTreeMap::new();
 
     if let Some(elements) = scene.get("elements").and_then(Value::as_array) {
         for el in elements {
+            // A tessellated mesh element (e.g. an imported connection): `positions`+`indices`, no
+            // parametric section. Emit it as an IfcTriangulatedFaceSet proxy and move on — it never
+            // falls through to the extruded-box path below.
+            let is_mesh = el.get("kind").and_then(Value::as_str) == Some("mesh")
+                || el.get("positions").is_some();
+            if is_mesh {
+                if let Some(elem) = emit_mesh(&mut spf, el, bldg_place, ctx) {
+                    elem_ids.push(elem);
+                    meshes += 1;
+                    let profile = el
+                        .get("meta")
+                        .and_then(Value::as_object)
+                        .and_then(|m| m.get("profile"))
+                        .and_then(Value::as_str)
+                        .unwrap_or("MESH")
+                        .to_string();
+                    *profile_counts.entry(profile).or_insert(0) += 1;
+                }
+                continue;
+            }
             let from = el.get("from").and_then(Value::as_array);
             let to = el.get("to").and_then(Value::as_array);
             let (from, to) = match (from, to) {
@@ -371,7 +451,7 @@ fn build_ifc(scene: &Value) -> (String, usize, i64, i64, BTreeMap<String, i64>) 
     doc.push_str("ENDSEC;\n");
     doc.push_str("END-ISO-10303-21;\n");
 
-    (doc, elem_ids.len(), columns, beams, profile_counts)
+    (doc, elem_ids.len(), columns, beams, meshes, profile_counts)
 }
 
 /// `ifc.write` — write a generic 3D scene to an IFC4 file. Mirrors `viewer-3d.render`'s contract:
@@ -394,13 +474,14 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
         }
     };
 
-    let (ifc, members, columns, beams, profiles) = build_ifc(scene);
+    let (ifc, members, columns, beams, meshes, profiles) = build_ifc(scene);
 
     let mut out = serde_json::Map::new();
     out.insert("bytes".into(), Value::from(ifc.len() as u64));
     out.insert("members".into(), Value::from(members as u64));
     out.insert("columns".into(), Value::from(columns));
     out.insert("beams".into(), Value::from(beams));
+    out.insert("meshes".into(), Value::from(meshes));
     out.insert(
         "profiles".into(),
         Value::Object(
@@ -470,10 +551,11 @@ mod tests {
 
     #[test]
     fn writes_ifc4_with_a_column_and_a_beam() {
-        let (ifc, members, columns, beams, profiles) = build_ifc(&sample_scene());
+        let (ifc, members, columns, beams, meshes, profiles) = build_ifc(&sample_scene());
         assert_eq!(members, 2);
         assert_eq!(columns, 1);
         assert_eq!(beams, 1);
+        assert_eq!(meshes, 0);
         assert_eq!(profiles.get("UC305x305x97"), Some(&1));
         assert_eq!(profiles.get("W10x33"), Some(&1));
         assert!(ifc.starts_with("ISO-10303-21;"));
@@ -510,7 +592,7 @@ mod tests {
                   "section": { "w": 90, "d": 90 }, "meta": { "profile": "L90" } }
             ]
         });
-        let (ifc, members, columns, beams, profiles) = build_ifc(&scene);
+        let (ifc, members, columns, beams, _meshes, profiles) = build_ifc(&scene);
         assert_eq!(members, 1);
         assert_eq!(columns, 0);
         assert_eq!(beams, 0);
@@ -528,9 +610,51 @@ mod tests {
                 { "id": "OK", "group": "beam", "from": [0,0,0], "to": [1000,0,0] }
             ]
         });
-        let (_ifc, members, _c, beams, _profiles) = build_ifc(&scene);
+        let (_ifc, members, _c, beams, _m, _profiles) = build_ifc(&scene);
         assert_eq!(members, 1);
         assert_eq!(beams, 1);
+    }
+
+    #[test]
+    fn writes_a_triangulated_mesh_element() {
+        // A single tetra-ish mesh: 4 points, 2 triangles (0-based indices become 1-based in IFC).
+        let scene = json!({
+            "meta": { "name": "conn" },
+            "elements": [
+                { "id": "PL-1", "kind": "mesh", "group": "connection",
+                  "positions": [0.0,0.0,0.0, 100.0,0.0,0.0, 100.0,100.0,0.0, 0.0,100.0,0.0],
+                  "indices": [0,1,2, 0,2,3],
+                  "meta": { "profile": "PLATE" } }
+            ]
+        });
+        let (ifc, members, columns, beams, meshes, profiles) = build_ifc(&scene);
+        assert_eq!(members, 1); // the proxy is a placed element
+        assert_eq!(columns, 0);
+        assert_eq!(beams, 0);
+        assert_eq!(meshes, 1);
+        assert_eq!(profiles.get("PLATE"), Some(&1));
+        assert_eq!(ifc.matches("IFCTRIANGULATEDFACESET(").count(), 1);
+        assert_eq!(ifc.matches("IFCCARTESIANPOINTLIST3D(").count(), 1);
+        assert_eq!(ifc.matches("IFCBUILDINGELEMENTPROXY(").count(), 1);
+        // CoordIndex is 1-based: input triangle (0,1,2) -> (1,2,3), (0,2,3) -> (1,3,4).
+        assert!(ifc.contains("((1,2,3),(1,3,4))"));
+        assert!(ifc.contains("'Tessellation'"));
+    }
+
+    #[test]
+    fn malformed_mesh_is_skipped_not_emitted() {
+        let scene = json!({
+            "meta": { "name": "x" },
+            "elements": [
+                { "id": "BAD-COUNT", "kind": "mesh", "positions": [0,0,0, 1,0,0], "indices": [0,1,2] }, // <3 pts
+                { "id": "OOR", "kind": "mesh",
+                  "positions": [0,0,0, 1,0,0, 1,1,0], "indices": [0,1,9] } // index 9 out of range
+            ]
+        });
+        let (ifc, members, _c, _b, meshes, _p) = build_ifc(&scene);
+        assert_eq!(members, 0);
+        assert_eq!(meshes, 0);
+        assert_eq!(ifc.matches("IFCTRIANGULATEDFACESET(").count(), 0);
     }
 
     #[test]

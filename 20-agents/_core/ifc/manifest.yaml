@@ -44,7 +44,9 @@ commands:
       Write a generic 3D scene to a universal IFC4 file. The scene is domain-agnostic: `elements`
       are members (`from`->`to`) with an optional `section:{w,d}` and a `group` (column/beam/brace
       -> IfcColumn/IfcBeam/IfcMember); `meta.profile` names the section. Geometry is an extruded
-      rectangle on the member axis. Output is deterministic (identical scene -> identical bytes).
+      rectangle on the member axis. A `kind:"mesh"` element (`positions`+`indices`, e.g. imported
+      connection geometry) is written as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy.
+      Output is deterministic (identical scene -> identical bytes).
     inputs:
       scene:
         type: object
@@ -66,4 +68,5 @@ commands:
         members: int        # number of elements written
         columns:  int       # IfcColumn count (group=column)
         beams:    int       # IfcBeam count (everything not column/brace)
+        meshes:   int       # IfcTriangulatedFaceSet proxy count (kind:"mesh" elements)
         profiles: object    # profile-string -> count breakdown (for the caller's report)
