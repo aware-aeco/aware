@@ -62,6 +62,15 @@ const BRIDGES: &[Bridge] = &[
         description: "Revit 2026 (net8 sidecar + IExternalApplication add-in)",
         note: Some("Register the Revit add-in: run `pwsh \"{dir}/install-addin.ps1\"`"),
     },
+    Bridge {
+        // Headless data bridge (not a live-host bridge): a Node exe bundling the web-ifc WASM
+        // parser, used by the `connection-reader` agent to tessellate steel connections from IFC.
+        id: "connection-reader",
+        binary: "aware-connection-reader",
+        asset_kind: AssetKind::Zip,
+        description: "Connection Reader (Node + web-ifc WASM; extract steel connections from IFC)",
+        note: None,
+    },
 ];
 
 #[derive(Debug)]
