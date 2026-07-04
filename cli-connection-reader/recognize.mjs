@@ -77,6 +77,13 @@ export function recognizeBasePlate(parts, members) {
   const tol = 10; // mm — merge near-coincident grid lines
   const boltCols = Math.max(1, cluster1d(bolts.map((x) => x.b.ctr[a]), tol).length);
   const boltRows = Math.max(1, cluster1d(bolts.map((x) => x.b.ctr[c]), tol).length);
+  // Only a COMPLETE axis-aligned rectangular grid is a confident fit. A plate ROTATED about the vertical
+  // axis (and its grid) clusters on the world X/Z axes into more cells than there are bolts, and its AABB
+  // over-reads the plate (a 45° 400×200 plate AABBs to ~424×424) — so an off-axis base plate would recognize
+  // with WRONG dims. Reject those (cols×rows ≠ bolt count) to the faithful custom-mesh fallback rather than
+  // emit a wrong recipe. (A future 2D-OBB fit in the plate's OWN axes could recognize rotated plates too —
+  // grow that when a real skewed-column case lands; the common orthogonal-grid case is correct here.)
+  if (boltCols * boltRows !== bolts.length) return null;
   const boltDia = round1(median(bolts.map((x) => Math.min(x.b.ext[a], x.b.ext[c]))));
   const offA = Math.max(...bolts.map((x) => Math.abs(x.b.ctr[a] - plate.ctr[a])));
   const offC = Math.max(...bolts.map((x) => Math.abs(x.b.ctr[c] - plate.ctr[c])));
