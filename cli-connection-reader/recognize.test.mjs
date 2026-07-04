@@ -173,6 +173,14 @@ test('rejects a fin plate skewed about the vertical axis (AABB thickness would o
   assert.equal(recognizeShearPlate(parts, ['B']), null);
 });
 
+test('rejects a fin plate whose single bolt line is off-centre along the beam (engine re-centres it)', () => {
+  // Bolts shifted +40 mm along the beam (uAx) on a 120 mm plate: still pierce the plate with a positive side
+  // margin, but the engine would rebuild the line ~centred → reject to faithful mesh instead of moving bolts.
+  const parts = [box('plate', 0, 0, 0, 10, 210, 120),
+    cylX('bolt', 0, -70, 40, 20, 60), cylX('bolt', 0, 0, 40, 20, 60), cylX('bolt', 0, 70, 40, 20, 60)];
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
 test('rejects a non-uniform vertical pitch (single-pitch model cannot reproduce it)', () => {
   const parts = [box('plate', 0, 0, 0, 10, 260, 120),
     cylX('bolt', 0, -80, 0, 20, 60), cylX('bolt', 0, 0, 0, 20, 60), cylX('bolt', 0, 100, 0, 20, 60)];

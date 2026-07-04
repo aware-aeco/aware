@@ -205,12 +205,26 @@ export function recognizeShearPlate(parts, members) {
   const boltPitch = Math.round(median(gaps));
   const offV = Math.max(...bolts.map((x) => Math.abs(x.m.cc - plate.ctr[vAx])));
   const offU = Math.max(...bolts.map((x) => Math.abs(x.m.ca - plate.ctr[uAx])));
-  const edgeDist = Math.round(Math.max(0, Math.min(plateHeight / 2 - offV, plateWidth / 2 - offU)));
+  // Two independent margins. edgeDist is the VERTICAL (top/bottom) margin — the one expandShearPlate's
+  // vertical placement and the reproduction gate below actually control. The horizontal side margin is kept
+  // SEPARATE (it drives the centred-line gate, not edgeDist): folding both into a single edgeDist would let
+  // an off-centre bolt line pass carrying the wrong number.
+  const edgeVMargin = plateHeight / 2 - offV;
+  const edgeUMargin = plateWidth / 2 - offU;
+  const edgeDist = Math.round(Math.max(0, edgeVMargin));
 
-  // Plausibility gate — reject a fit outside real fin-plate fabrication ranges (mm). edgeDist must be > 0:
-  // a 0 means a bolt sits on the plate edge (half off it), i.e. not a real bolt-through-plate pattern.
+  // Plausibility gate — reject a fit outside real fin-plate fabrication ranges (mm). Both margins must be > 0
+  // (bolts fully inside the plate on both axes); a 0 means a bolt sits on the plate edge, not a real pattern.
   if (!(plateThickness > 3 && plateThickness < 60) || !(plateHeight > 40) || !(plateWidth > 40)
-    || !(boltDia > 4 && boltDia < 60) || !(boltPitch > 20) || !(edgeDist > 0)) return null;
+    || !(boltDia > 4 && boltDia < 60) || !(boltPitch > 20) || !(edgeVMargin > 0) || !(edgeUMargin > 0)) return null;
+
+  // Horizontal (along-beam) reproduction gate: expandShearPlate derives the single column's along-beam
+  // position from the plate width + erection clearance — near the plate's horizontal CENTRE, and NOT steerable
+  // by any recipe param — so a recognized recipe can only faithfully rebuild a fin plate whose bolt line is
+  // ~centred on the plate width. An off-centre line would be rebuilt at the centre (bolts moved sideways), so
+  // reject it to faithful mesh rather than emit a recipe that distorts the geometry. (The residual along-beam
+  // offset for a centred line follows the engine's fabrication convention — a re-derivation, not a replica.)
+  if (offU > 0.1 * plateWidth) return null;
 
   // Reproduction gate (VERTICAL axis — the one the engine centres): the consumer's expandShearPlate places
   // bolts on a SYMMETRIC, centred vertical line with ONE pitch. Emit the recipe only if that model actually
