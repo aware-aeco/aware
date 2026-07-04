@@ -113,7 +113,9 @@ for i, dz in enumerate([-0.070, 0.0, 0.070]):
 
 asm = f.create_entity("IfcElementAssembly", GlobalId=gid(), Name="SHEARPLATE SP1", ObjectPlacement=placement(bldg_plc, 0, 0, 0),
                       AssemblyPlace="FACTORY")
-f.create_entity("IfcRelAggregates", GlobalId=gid(), RelatingObject=asm, RelatedObjects=[beam, col, plate] + bolts)
+# Column FIRST, beam second — so members[0] is the support column, not the supported beam: the fin plate's
+# advisory `main` must still resolve to the BEAM by IFC type (exercises the members-ordering fix).
+f.create_entity("IfcRelAggregates", GlobalId=gid(), RelatingObject=asm, RelatedObjects=[col, beam, plate] + bolts)
 f.create_entity("IfcRelContainedInSpatialStructure", GlobalId=gid(), RelatingStructure=bldg, RelatedElements=[asm])
 
 f.write(OUT)

@@ -83,10 +83,13 @@ function assemblyChildren(api, modelID) {
   return byAssembly;
 }
 
-// Classify one assembly's children into hardware (plate/bolt/weld) + member references.
+// Classify one assembly's children into hardware (plate/bolt/weld) + member references. `beamMembers` is
+// the members that are NOT columns — a fin plate hangs off the supported BEAM, and IfcRelAggregates ordering
+// isn't reliably beam-first, so recognizeShearPlate's advisory `main` is corrected from this by IFC type.
 function classify(api, modelID, childIds) {
   const hardware = []; // { expressID, role }
   const members = []; // member GlobalId strings
+  const beamMembers = []; // member GlobalIds that aren't columns (the supported member a shear plate hangs off)
   for (const cid of childIds) {
     const t = api.GetLineType(modelID, cid);
     const role = HARDWARE.get(t);
@@ -94,10 +97,12 @@ function classify(api, modelID, childIds) {
       hardware.push({ expressID: cid, role });
     } else if (MEMBER_TYPES.has(t)) {
       const line = api.GetLine(modelID, cid);
-      members.push(strOf(line.GlobalId));
+      const gid = strOf(line.GlobalId);
+      members.push(gid);
+      if (t !== WebIFC.IFCCOLUMN) beamMembers.push(gid);
     }
   }
-  return { hardware, members };
+  return { hardware, members, beamMembers };
 }
 
 // Human label for an assembly. Tekla stamps Name = the family (COLUMN/BEAM/ANGLE) and Tag = the
@@ -176,12 +181,16 @@ function extractConnection(api, modelID, guid) {
     const aid = asmIds.get(i);
     const asm = api.GetLine(modelID, aid);
     if (strOf(asm.GlobalId) !== guid) continue;
-    const { hardware, members } = classify(api, modelID, kids.get(aid) || []);
+    const { hardware, members, beamMembers } = classify(api, modelID, kids.get(aid) || []);
     const wantById = new Map(hardware.map((h) => [h.expressID, h.role]));
     const parts = tessellate(api, modelID, wantById);
     // Try each supported type; the recognizers are mutually exclusive (base plate = vertical anchors, shear
     // plate = horizontal bolts), so order is safe — base-plate first is just a cheap deterministic default.
     const recipe = recognizeBasePlate(parts, members) || recognizeShearPlate(parts, members);
+    // `main` is advisory (the consumer overrides it with the member it applies the connection to). A fin plate
+    // hangs off the supported BEAM — set it by IFC type rather than trust members[0], which could be the
+    // support column when IfcRelAggregates lists it first.
+    if (recipe && recipe.kind === 'shear-plate' && beamMembers.length) recipe.main = beamMembers[0];
     return {
       connection: {
         id: guid,
