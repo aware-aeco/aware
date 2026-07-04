@@ -8,7 +8,8 @@
     "aware-connection-reader": "./index.mjs"
   },
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "test": "node --test"
   },
   "dependencies": {
     "fflate": "^0.8.3",

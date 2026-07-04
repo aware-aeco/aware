@@ -61,7 +61,12 @@ commands:
       into mesh scene parts: each plate / bolt / weld becomes a kind:"mesh" element (positions +
       indices) in canonical millimetres, ready to bake into a scene, render (`viewer-3d`), or write
       back out (`ifc`). Deterministic for a given (file, id), so the result is content-hash cached.
-      Read-only.
+
+      When the parts match a supported pattern — currently a base plate (a horizontal plate with a
+      vertical anchor-bolt grid) — it ALSO fits a parametric `recipe` (kind + dimensions in mm) so a
+      consumer can import the connection as an EDITABLE recipe instance rather than opaque mesh. The
+      mesh `parts` are always returned as the fallback; `recipe` is present only when recognition is
+      confident. Read-only.
     inputs:
       ifc-path:
         type: string
@@ -72,7 +77,7 @@ commands:
     outputs:
       type: single
       schema:
-        connection: object # { id, name, type, members: [GlobalId], parts: [{ id, role, positions: [mm], indices }] }
+        connection: object # { id, name, type, members: [GlobalId], parts: [{ id, role, positions: [mm], indices }], recipe?: { kind, params, main } }
 
 skills:
   - what-this-agent-does.md

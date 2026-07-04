@@ -26,10 +26,24 @@ connection:
       role:      string     # "plate" | "bolt" | "weld"
       positions: [number]   # flat x,y,z world coordinates in MILLIMETRES
       indices:   [number]   # 0-based triangle vertex refs (triples)
+  recipe:                   # OPTIONAL — present ONLY when the connection is recognized (see below)
+    kind:   string          # the recognized type, e.g. "base-plate"
+    params: object          # the fitted dimensions in mm (plate size + thickness, anchor grid, bolt Ø, edge distance)
+    main:   string          # the column member GlobalId the plate sits on (advisory)
 ```
 
 Each part is exactly the shape of a `kind:"mesh"` scene element — hand `positions`/`indices`
 straight to `viewer-3d.render` or `ifc.write`.
+
+## Recognition (optional `recipe`)
+When the tessellated parts match a **supported pattern** — currently a **base plate**: a horizontal
+plate with a grid of vertical anchor bolts passing through it — `extract` also **fits a parametric
+`recipe`** (the plate's width/depth/thickness, the anchor grid cols×rows, the bolt diameter and edge
+distance, all in millimetres). A consumer can then import the connection as an **editable recipe
+instance** instead of opaque geometry, and re-derive it on its own column. The mesh `parts` are
+**always** returned as the fallback; `recipe` appears **only when recognition is confident**, so an
+unrecognized connection (a welded gusset, a shear tab, anything unfamiliar) simply comes back as mesh
+with no `recipe`. Recognition grows one supported type at a time.
 
 ## Under the hood
 Drives the bundled **web-ifc** WASM engine: `OpenModel` → tessellate the assembly's plate/bolt/weld
