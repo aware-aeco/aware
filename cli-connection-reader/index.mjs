@@ -25,7 +25,7 @@ import { readFileSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
-import { recognizeBasePlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
+import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
 const M_TO_MM = 1000;
@@ -179,7 +179,9 @@ function extractConnection(api, modelID, guid) {
     const { hardware, members } = classify(api, modelID, kids.get(aid) || []);
     const wantById = new Map(hardware.map((h) => [h.expressID, h.role]));
     const parts = tessellate(api, modelID, wantById);
-    const recipe = recognizeBasePlate(parts, members);
+    // Try each supported type; the recognizers are mutually exclusive (base plate = vertical anchors, shear
+    // plate = horizontal bolts), so order is safe — base-plate first is just a cheap deterministic default.
+    const recipe = recognizeBasePlate(parts, members) || recognizeShearPlate(parts, members);
     return {
       connection: {
         id: guid,
