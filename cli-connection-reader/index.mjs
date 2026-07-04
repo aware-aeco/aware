@@ -15,13 +15,17 @@
 //   list      inputs { ifc-path }                    -> { connections: [ {id,name,type,plates,bolts,welds,members} ] }
 //             Fast: enumerate connection candidates (one per IfcElementAssembly that carries
 //             connection hardware) WITHOUT tessellating — this backs the "which connection?" picker.
-//   extract   inputs { ifc-path, id }                -> { connection: {id,name,type,members,parts:[mesh…]} }
-//             Tessellate ONE candidate (by its IfcElementAssembly GlobalId) into mesh scene parts.
+//   extract   inputs { ifc-path, id }                -> { connection: {id,name,type,members,parts:[mesh…],recipe?} }
+//             Tessellate ONE candidate (by its IfcElementAssembly GlobalId) into mesh scene parts, AND —
+//             when the parts match a supported pattern (a base plate with a vertical anchor grid) — fit a
+//             parametric `recipe:{kind,params}` so the consumer can import it as an EDITABLE recipe rather
+//             than opaque mesh. `parts` is always returned as the fallback; `recipe` only when confident.
 
 import { readFileSync } from 'node:fs';
 import { dirname, basename, sep } from 'node:path';
 import { unzipSync } from 'fflate'; // tiny pure-JS unzip for .ifczip inputs
 import * as WebIFC from 'web-ifc'; // package export resolves to the node build (auto-locates its .wasm)
+import { recognizeBasePlate } from './recognize.mjs'; // fit a parametric recipe from the tessellated parts
 
 // web-ifc returns geometry in metres (SI base unit); AWARE scenes are canonical millimetres.
 const M_TO_MM = 1000;
@@ -175,6 +179,7 @@ function extractConnection(api, modelID, guid) {
     const { hardware, members } = classify(api, modelID, kids.get(aid) || []);
     const wantById = new Map(hardware.map((h) => [h.expressID, h.role]));
     const parts = tessellate(api, modelID, wantById);
+    const recipe = recognizeBasePlate(parts, members);
     return {
       connection: {
         id: guid,
@@ -182,6 +187,7 @@ function extractConnection(api, modelID, guid) {
         type: strOf(asm.ObjectType) || null,
         members,
         parts,
+        ...(recipe ? { recipe } : {}),
       },
     };
   }
