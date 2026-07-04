@@ -158,6 +158,21 @@ test('rejects a double-column fin plate (cols>1 not faithfully reproducible)', (
   assert.equal(recognizeShearPlate(parts, ['B']), null);
 });
 
+// Rotate a part's positions about the VERTICAL axis (axis 1) by `deg` degrees (in-plane skew).
+function rotV(part, deg) {
+  const a = (deg * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a), p = part.positions, out = [];
+  for (let i = 0; i + 2 < p.length; i += 3) {
+    const x = p[i], y = p[i + 1], z = p[i + 2];
+    out.push(x * c - z * s, y, x * s + z * c);
+  }
+  return { role: part.role, positions: out, indices: [] };
+}
+
+test('rejects a fin plate skewed about the vertical axis (AABB thickness would over-read)', () => {
+  const parts = finParts().map((p) => rotV(p, 10)); // a 10° in-plane skew inflates plate.ext[n] to ~31 mm
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
 test('rejects a non-uniform vertical pitch (single-pitch model cannot reproduce it)', () => {
   const parts = [box('plate', 0, 0, 0, 10, 260, 120),
     cylX('bolt', 0, -80, 0, 20, 60), cylX('bolt', 0, 0, 0, 20, 60), cylX('bolt', 0, 100, 0, 20, 60)];

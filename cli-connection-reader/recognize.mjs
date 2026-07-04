@@ -162,6 +162,13 @@ export function recognizeShearPlate(parts, members) {
   const uAx = [0, 1, 2].find((k) => k !== n && k !== VERTICAL); // the in-plate horizontal (along the beam)
   for (const x of bolts) x.m = boltCentreDia(x.p, uAx, vAx);    // circle centre (ca=uAx, cc=vAx) + true Ø
 
+  // Each bolt must run cleanly ALONG axis n: its cross-section (the two in-plate axes) must be near-circular
+  // (both ≈ Ø). The bolts pass perpendicular through the plate, so a fin plate skewed a few degrees about the
+  // vertical axis tilts them — inflating the in-plane cross extent, and equally inflating the plate's AABB
+  // thin axis so `plate.ext[n]` would over-read the thickness. Reject a skewed group to faithful mesh (real
+  // tessellation keeps the cross-section within ~4% of round; the base plate likewise rejects rotated grids).
+  if (!bolts.every((x) => Math.max(x.b.ext[uAx], x.b.ext[vAx]) <= 1.15 * Math.min(x.b.ext[uAx], x.b.ext[vAx]))) return null;
+
   // Fin plate = a flat plate thin on the bolt axis `n`, its two large extents VERTICAL + along the beam.
   // Largest such plate if several (a doubler/washer is smaller). A plate not ⟂ the bolts → not the fin plate.
   const flats = plates.filter((x) => argMin(x.b.ext) === n
