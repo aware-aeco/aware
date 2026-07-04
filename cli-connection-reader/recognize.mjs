@@ -12,7 +12,6 @@
 // output frame, this one constant is the single knob to turn.
 export const VERTICAL = 1;
 
-const round1 = (x) => Math.round(x * 10) / 10;
 function median(a) {
   const s = [...a].sort((x, y) => x - y);
   const m = s.length >> 1;
@@ -47,6 +46,20 @@ function cluster1d(vals, tol) {
   return out.map((g) => g.mean);
 }
 
+// True horizontal centre + diameter of a tessellated cylindrical bolt. web-ifc polygonises a circular
+// profile with vertices at slightly varying radii (its edges neither perfectly inscribe nor circumscribe
+// the circle: an M24 anchor's AABB flat-to-flat under-reads to ~23.5, its circumradius over-reads to
+// ~24.5), so the robust true radius is the MEAN vertex distance from the centroid (~24.0) — and it is
+// convention-independent (no standard-size snapping, so imperial anchors fit too).
+function boltCentreDia(p, a, c) {
+  let sa = 0, sc = 0, n = 0;
+  for (let i = 0; i + 2 < p.positions.length; i += 3) { sa += p.positions[i + a]; sc += p.positions[i + c]; n++; }
+  const ca = sa / n, cc = sc / n;
+  let sr = 0;
+  for (let i = 0; i + 2 < p.positions.length; i += 3) sr += Math.hypot(p.positions[i + a] - ca, p.positions[i + c] - cc);
+  return { ca, cc, dia: (2 * sr) / n }; // mean vertex radius × 2
+}
+
 // Recognize a base plate from tessellated parts: a horizontal plate with a VERTICAL anchor-bolt grid
 // passing through it. Returns { kind:'base-plate', params, main } when confident, else null (the consumer
 // then keeps it as opaque `custom` mesh — Slice B behaviour).
@@ -59,6 +72,7 @@ export function recognizeBasePlate(parts, members) {
   // bolts run horizontal → rejected here, never mis-read as a base plate.
   if (!bolts.every((x) => argMax(x.b.ext) === VERTICAL)) return null;
   const [a, c] = [0, 2]; // the two horizontal (in-plane) axes
+  for (const x of bolts) x.m = boltCentreDia(x.p, a, c); // true circle centre + Ø (not the polygon AABB)
 
   // Base plate = a flat plate thin in the vertical axis (⟂ the anchors), largest horizontal footprint if
   // several (washer plates are smaller). A plate not ⟂ the anchors → not the base plate.
@@ -73,19 +87,21 @@ export function recognizeBasePlate(parts, members) {
   // grid (off to the side, or above/below) would still fit a bogus base-plate recipe; reject those to the
   // faithful mesh fallback.
   const overlapsV = (x) => x.b.min[VERTICAL] <= plate.max[VERTICAL] && x.b.max[VERTICAL] >= plate.min[VERTICAL];
-  const insidePlate = (x) => Math.abs(x.b.ctr[a] - plate.ctr[a]) <= plate.ext[a] / 2
-    && Math.abs(x.b.ctr[c] - plate.ctr[c]) <= plate.ext[c] / 2;
+  const insidePlate = (x) => Math.abs(x.m.ca - plate.ctr[a]) <= plate.ext[a] / 2
+    && Math.abs(x.m.cc - plate.ctr[c]) <= plate.ext[c] / 2;
   if (!bolts.every((x) => overlapsV(x) && insidePlate(x))) return null;
 
-  const thickness = round1(plate.ext[VERTICAL]);
-  const plateWidth = round1(plate.ext[a]);
-  const plateDepth = round1(plate.ext[c]);
+  // Emitted dimensions are rounded to whole millimetres — these are FITTED, editable starting values (a
+  // detailer specs whole-mm plates/anchors, not the tessellation's sub-mm noise); the consumer can adjust.
+  const thickness = Math.round(plate.ext[VERTICAL]);
+  const plateWidth = Math.round(plate.ext[a]);
+  const plateDepth = Math.round(plate.ext[c]);
 
   // Anchor grid: cluster the bolt centroids on each horizontal axis → cols × rows; bolt Ø from the bolt's
   // horizontal extent; edge distance from the outermost bolt to the nearest plate edge.
   const tol = 10; // mm — merge near-coincident grid lines
-  const boltCols = Math.max(1, cluster1d(bolts.map((x) => x.b.ctr[a]), tol).length);
-  const boltRows = Math.max(1, cluster1d(bolts.map((x) => x.b.ctr[c]), tol).length);
+  const boltCols = Math.max(1, cluster1d(bolts.map((x) => x.m.ca), tol).length);
+  const boltRows = Math.max(1, cluster1d(bolts.map((x) => x.m.cc), tol).length);
   // Only a COMPLETE axis-aligned rectangular grid is a confident fit. A plate ROTATED about the vertical
   // axis (and its grid) clusters on the world X/Z axes into more cells than there are bolts, and its AABB
   // over-reads the plate (a 45° 400×200 plate AABBs to ~424×424) — so an off-axis base plate would recognize
@@ -93,10 +109,10 @@ export function recognizeBasePlate(parts, members) {
   // emit a wrong recipe. (A future 2D-OBB fit in the plate's OWN axes could recognize rotated plates too —
   // grow that when a real skewed-column case lands; the common orthogonal-grid case is correct here.)
   if (boltCols * boltRows !== bolts.length) return null;
-  const boltDia = round1(median(bolts.map((x) => Math.min(x.b.ext[a], x.b.ext[c]))));
-  const offA = Math.max(...bolts.map((x) => Math.abs(x.b.ctr[a] - plate.ctr[a])));
-  const offC = Math.max(...bolts.map((x) => Math.abs(x.b.ctr[c] - plate.ctr[c])));
-  const edgeDist = round1(Math.max(0, Math.min(plateWidth / 2 - offA, plateDepth / 2 - offC)));
+  const boltDia = Math.round(median(bolts.map((x) => x.m.dia)));
+  const offA = Math.max(...bolts.map((x) => Math.abs(x.m.ca - plate.ctr[a])));
+  const offC = Math.max(...bolts.map((x) => Math.abs(x.m.cc - plate.ctr[c])));
+  const edgeDist = Math.round(Math.max(0, Math.min(plateWidth / 2 - offA, plateDepth / 2 - offC)));
 
   // Plausibility gate — reject a fit outside real base-plate fabrication ranges (mm). edgeDist must be > 0:
   // a 0 means an anchor sits on the plate edge (half off it), i.e. not a real anchor-through-plate pattern.

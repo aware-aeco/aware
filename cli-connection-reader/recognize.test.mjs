@@ -11,15 +11,20 @@ function box(role, cx, cy, cz, ex, ey, ez) {
   for (const sx of [-1, 1]) for (const sy of [-1, 1]) for (const sz of [-1, 1]) pos.push(cx + sx * h[0], cy + sy * h[1], cz + sz * h[2]);
   return { role, positions: pos, indices: [] };
 }
+// A vertical cylinder (like a real anchor): `sides` vertices ON the circle at top+bottom, so the circle
+// fit recovers the true diameter — matching how web-ifc tessellates a circular profile.
+function cyl(role, cx, cy, cz, dia, height, sides = 16) {
+  const r = dia / 2, pos = [];
+  for (const sy of [-1, 1]) for (let k = 0; k < sides; k++) {
+    const t = (2 * Math.PI * k) / sides;
+    pos.push(cx + r * Math.cos(t), cy + sy * height / 2, cz + r * Math.sin(t));
+  }
+  return { role, positions: pos, indices: [] };
+}
 
 test('recognizes a base plate with a 2×2 vertical anchor grid', () => {
-  const parts = [
-    box('plate', 0, 100, 0, 400, 25, 400),      // horizontal 400×400×25 (thin in Y)
-    box('bolt', -120, 100, -120, 24, 250, 24),  // vertical anchors (long in Y) on a 240×240 grid
-    box('bolt', 120, 100, -120, 24, 250, 24),
-    box('bolt', -120, 100, 120, 24, 250, 24),
-    box('bolt', 120, 100, 120, 24, 250, 24),
-  ];
+  const parts = [box('plate', 0, 100, 0, 400, 25, 400)]; // horizontal 400×400×25 (thin in Y)
+  for (const x of [-120, 120]) for (const z of [-120, 120]) parts.push(cyl('bolt', x, 100, z, 24, 250)); // M24 anchors on a 240×240 grid
   const r = recognizeBasePlate(parts, ['COL-GUID', 'X']);
   assert.ok(r, 'should recognize a base plate');
   assert.equal(r.kind, 'base-plate');
