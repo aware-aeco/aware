@@ -2,7 +2,7 @@
 // frame (vertical = axis 1). `node --test`.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { recognizeBasePlate } from './recognize.mjs';
+import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs';
 
 // An axis-aligned box part centred at (cx,cy,cz) with extents (ex,ey,ez). Only positions matter to
 // recognition (it AABBs them); indices are irrelevant here.
@@ -105,4 +105,94 @@ test('rejects a tiny fit outside base-plate fabrication ranges', () => {
     box('bolt', 0, 0, 10, 6, 60, 6),
   ];
   assert.equal(recognizeBasePlate(parts, ['D']), null);
+});
+
+// --- Shear / fin-plate recognition (recognizeShearPlate) ---------------------------------------------
+
+// A cylinder whose LONG axis is X (axis 0) — a horizontal shear/fin-plate bolt. `sides` vertices ON the
+// circle at each end cap (the circle lies in the Y-Z plane), mirroring how web-ifc tessellates a circle.
+function cylX(role, cx, cy, cz, dia, len, sides = 16) {
+  const r = dia / 2, pos = [];
+  for (const sx of [-1, 1]) for (let k = 0; k < sides; k++) {
+    const t = (2 * Math.PI * k) / sides;
+    pos.push(cx + sx * len / 2, cy + r * Math.cos(t), cz + r * Math.sin(t));
+  }
+  return { role, positions: pos, indices: [] };
+}
+// A canonical fin plate: vertical plate thin in X (n=0), 210 tall (Y), 120 wide along the beam (Z), with a
+// single vertical line of 3 M20 bolts (rows on Y at pitch 70, one col on Z), all piercing the plate.
+function finParts() {
+  return [
+    box('plate', 0, 0, 0, 10, 210, 120),
+    cylX('bolt', 0, -70, 0, 20, 60), cylX('bolt', 0, 0, 0, 20, 60), cylX('bolt', 0, 70, 0, 20, 60),
+  ];
+}
+
+test('recognizes a vertical fin plate with a 1×3 horizontal-bolt line', () => {
+  const r = recognizeShearPlate(finParts(), ['BEAM-GUID']);
+  assert.ok(r, 'should recognize');
+  assert.equal(r.kind, 'shear-plate');
+  assert.deepEqual(r.params, {
+    plateThickness: 10, plateHeight: 210, plateWidth: 120,
+    boltDia: 20, boltCols: 1, boltRows: 3, boltPitch: 70, edgeDist: 35,
+  });
+});
+
+test('shear-plate recognition rejects a base plate (vertical anchors) — mutually exclusive', () => {
+  const base = [box('plate', 0, 0, 0, 400, 25, 400),
+    cyl('bolt', -120, 0, -120, 24, 250), cyl('bolt', 120, 0, -120, 24, 250),
+    cyl('bolt', -120, 0, 120, 24, 250), cyl('bolt', 120, 0, 120, 24, 250)];
+  assert.equal(recognizeShearPlate(base, ['X']), null);
+});
+
+test('rejects bolts that do not pierce the fin plate (off to the side)', () => {
+  const parts = [box('plate', 0, 0, 0, 10, 210, 120),
+    cylX('bolt', 0, -70, 400, 20, 60), cylX('bolt', 0, 0, 400, 20, 60), cylX('bolt', 0, 70, 400, 20, 60)];
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('rejects a double-column fin plate (cols>1 not faithfully reproducible)', () => {
+  const parts = [box('plate', 0, 0, 0, 10, 210, 200),
+    cylX('bolt', 0, -70, -40, 20, 60), cylX('bolt', 0, 0, -40, 20, 60), cylX('bolt', 0, 70, -40, 20, 60),
+    cylX('bolt', 0, -70, 40, 20, 60), cylX('bolt', 0, 0, 40, 20, 60), cylX('bolt', 0, 70, 40, 20, 60)];
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+// Rotate a part's positions about the VERTICAL axis (axis 1) by `deg` degrees (in-plane skew).
+function rotV(part, deg) {
+  const a = (deg * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a), p = part.positions, out = [];
+  for (let i = 0; i + 2 < p.length; i += 3) {
+    const x = p[i], y = p[i + 1], z = p[i + 2];
+    out.push(x * c - z * s, y, x * s + z * c);
+  }
+  return { role: part.role, positions: out, indices: [] };
+}
+
+test('rejects a fin plate skewed about the vertical axis (AABB thickness would over-read)', () => {
+  const parts = finParts().map((p) => rotV(p, 10)); // a 10° in-plane skew inflates plate.ext[n] to ~31 mm
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('rejects a fin plate whose single bolt line is off-centre along the beam (engine re-centres it)', () => {
+  // Bolts shifted +40 mm along the beam (uAx) on a 120 mm plate: still pierce the plate with a positive side
+  // margin, but the engine would rebuild the line ~centred → reject to faithful mesh instead of moving bolts.
+  const parts = [box('plate', 0, 0, 0, 10, 210, 120),
+    cylX('bolt', 0, -70, 40, 20, 60), cylX('bolt', 0, 0, 40, 20, 60), cylX('bolt', 0, 70, 40, 20, 60)];
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('rejects a non-uniform vertical pitch (single-pitch model cannot reproduce it)', () => {
+  const parts = [box('plate', 0, 0, 0, 10, 260, 120),
+    cylX('bolt', 0, -80, 0, 20, 60), cylX('bolt', 0, 0, 0, 20, 60), cylX('bolt', 0, 100, 0, 20, 60)];
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('rejects a tiny fit outside fin-plate fabrication ranges', () => {
+  const parts = [box('plate', 0, 0, 0, 2, 30, 30),
+    cylX('bolt', 0, -8, 0, 3, 20), cylX('bolt', 0, 8, 0, 3, 20)];
+  assert.equal(recognizeShearPlate(parts, ['D']), null);
+});
+
+test('base-plate recognition still rejects a fin plate (horizontal bolts) — mutually exclusive', () => {
+  assert.equal(recognizeBasePlate(finParts(), ['B']), null);
 });
