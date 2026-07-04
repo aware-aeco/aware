@@ -58,11 +58,29 @@ test('rejects a base plate rotated about the vertical axis (would fit wrong dims
   assert.equal(recognizeBasePlate(parts, ['C']), null);
 });
 
+test('rejects vertical bolts that do not pierce the plate (off to the side)', () => {
+  const parts = [
+    box('plate', 0, 100, 0, 400, 25, 400),      // plate footprint x,z ∈ [-200,200]
+    box('bolt', 600, 100, 0, 24, 250, 24),       // grid off to the side, outside the footprint
+    box('bolt', 700, 100, 0, 24, 250, 24),
+  ];
+  assert.equal(recognizeBasePlate(parts, ['C']), null);
+});
+
+test('rejects vertical bolts that clear the plate (entirely above it)', () => {
+  const parts = [
+    box('plate', 0, 0, 0, 400, 25, 400),         // plate vertical band y ∈ [-12.5,12.5]
+    box('bolt', -120, 400, -120, 24, 250, 24),   // bolts y ∈ [275,525] — never overlap the plate
+    box('bolt', 120, 400, 120, 24, 250, 24),
+  ];
+  assert.equal(recognizeBasePlate(parts, ['C']), null);
+});
+
 test('rejects a tiny fit outside base-plate fabrication ranges', () => {
   const parts = [
-    box('plate', 0, 0, 0, 40, 5, 40),      // 40×40 — too small for a base plate
-    box('bolt', -10, 0, -10, 6, 60, 6),
-    box('bolt', 10, 0, 10, 6, 60, 6),
+    box('plate', 0, 0, 0, 40, 5, 40),      // 40×40 — too small for a base plate (< 60 mm)
+    box('bolt', 0, 0, -10, 6, 60, 6),      // clean 1×2 grid so it reaches the fabrication-range gate
+    box('bolt', 0, 0, 10, 6, 60, 6),
   ];
   assert.equal(recognizeBasePlate(parts, ['D']), null);
 });

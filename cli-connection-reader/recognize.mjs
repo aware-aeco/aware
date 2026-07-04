@@ -68,6 +68,15 @@ export function recognizeBasePlate(parts, members) {
   flats.sort((x, y) => (y.b.ext[a] * y.b.ext[c]) - (x.b.ext[a] * x.b.ext[c]));
   const plate = flats[0].b;
 
+  // Every anchor must actually PIERCE this plate — its centroid inside the plate footprint AND its vertical
+  // span overlapping the plate's thickness band. Without this, a flat plate plus an unrelated vertical bolt
+  // grid (off to the side, or above/below) would still fit a bogus base-plate recipe; reject those to the
+  // faithful mesh fallback.
+  const overlapsV = (x) => x.b.min[VERTICAL] <= plate.max[VERTICAL] && x.b.max[VERTICAL] >= plate.min[VERTICAL];
+  const insidePlate = (x) => Math.abs(x.b.ctr[a] - plate.ctr[a]) <= plate.ext[a] / 2
+    && Math.abs(x.b.ctr[c] - plate.ctr[c]) <= plate.ext[c] / 2;
+  if (!bolts.every((x) => overlapsV(x) && insidePlate(x))) return null;
+
   const thickness = round1(plate.ext[VERTICAL]);
   const plateWidth = round1(plate.ext[a]);
   const plateDepth = round1(plate.ext[c]);
@@ -89,8 +98,9 @@ export function recognizeBasePlate(parts, members) {
   const offC = Math.max(...bolts.map((x) => Math.abs(x.b.ctr[c] - plate.ctr[c])));
   const edgeDist = round1(Math.max(0, Math.min(plateWidth / 2 - offA, plateDepth / 2 - offC)));
 
-  // Plausibility gate — reject a fit outside real base-plate fabrication ranges (mm).
-  if (!(thickness > 3 && thickness < 200) || !(plateWidth > 60) || !(plateDepth > 60) || !(boltDia > 4 && boltDia < 120)) return null;
+  // Plausibility gate — reject a fit outside real base-plate fabrication ranges (mm). edgeDist must be > 0:
+  // a 0 means an anchor sits on the plate edge (half off it), i.e. not a real anchor-through-plate pattern.
+  if (!(thickness > 3 && thickness < 200) || !(plateWidth > 60) || !(plateDepth > 60) || !(boltDia > 4 && boltDia < 120) || !(edgeDist > 0)) return null;
 
   // The column member a base plate hangs off (exactly one) — advisory: the consumer overrides `main` with
   // the column the user applies the connection to in their own model.
