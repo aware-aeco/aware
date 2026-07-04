@@ -81,6 +81,23 @@ test('rejects vertical bolts that clear the plate (entirely above it)', () => {
   assert.equal(recognizeBasePlate(parts, ['C']), null);
 });
 
+test('rejects a rectangular grid with unequal per-axis margins (single edge cannot reproduce)', () => {
+  // 500×300 plate, 300×150 grid → X margin 100, Y margin 75. expandBasePlate's single edge distance would
+  // re-derive the X bolts at ±175 instead of ±150, so recognition must decline (→ faithful mesh).
+  const parts = [box('plate', 0, 100, 0, 500, 25, 300)];
+  for (const x of [-150, 150]) for (const z of [-75, 75]) parts.push(cyl('bolt', x, 100, z, 24, 250));
+  assert.equal(recognizeBasePlate(parts, ['C']), null);
+});
+
+test('recognizes a rectangular plate whose symmetric grid IS reproducible', () => {
+  // 500×300 plate with equal 80 mm margins both axes: X bolts ±170, Y bolts ±70 → single edge 80 rebuilds it.
+  const parts = [box('plate', 0, 100, 0, 500, 25, 300)];
+  for (const x of [-170, 170]) for (const z of [-70, 70]) parts.push(cyl('bolt', x, 100, z, 24, 250));
+  const r = recognizeBasePlate(parts, ['C']);
+  assert.ok(r, 'equal-margin rectangular grid should recognize');
+  assert.deepEqual(r.params, { thickness: 25, plateWidth: 500, plateDepth: 300, boltDia: 24, boltCols: 2, boltRows: 2, edgeDist: 80 });
+});
+
 test('rejects a tiny fit outside base-plate fabrication ranges', () => {
   const parts = [
     box('plate', 0, 0, 0, 40, 5, 40),      // 40×40 — too small for a base plate (< 60 mm)

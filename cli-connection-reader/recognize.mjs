@@ -118,6 +118,25 @@ export function recognizeBasePlate(parts, members) {
   // a 0 means an anchor sits on the plate edge (half off it), i.e. not a real anchor-through-plate pattern.
   if (!(thickness > 3 && thickness < 200) || !(plateWidth > 60) || !(plateDepth > 60) || !(boltDia > 4 && boltDia < 120) || !(edgeDist > 0)) return null;
 
+  // Reproduction gate: the consumer's expandBasePlate places anchors on a SYMMETRIC, centred grid with
+  // ONE edge distance (outer offset = half-plate − edge on BOTH axes, evenly spread). Emit the recipe only
+  // if that model actually rebuilds the observed grid to within a few mm — so a grid it CAN'T reproduce
+  // (unequal per-axis margins, off-centre, or non-uniform pitch — e.g. a 500×300 plate with a 300×150 grid)
+  // falls back to faithful mesh instead of re-deriving with moved bolts. (A richer per-axis-pitch recipe
+  // could recognize those later.)
+  const spread = (nn, half) => (nn <= 1 ? [0] : Array.from({ length: nn }, (_, i) => -half + (2 * half * i) / (nn - 1)));
+  const expected = [];
+  for (const ox of spread(boltCols, Math.max(0, plateWidth / 2 - edgeDist))) {
+    for (const oy of spread(boltRows, Math.max(0, plateDepth / 2 - edgeDist))) expected.push([plate.ctr[a] + ox, plate.ctr[c] + oy]);
+  }
+  const gridTol = 3; // mm — absorb tessellation + whole-mm rounding
+  const used = new Array(expected.length).fill(false);
+  for (const x of bolts) {
+    const hit = expected.findIndex((e, i) => !used[i] && Math.abs(x.m.ca - e[0]) <= gridTol && Math.abs(x.m.cc - e[1]) <= gridTol);
+    if (hit < 0) return null; // a bolt the symmetric single-edge model can't place → not reproducible
+    used[hit] = true;
+  }
+
   // The column member a base plate hangs off (exactly one) — advisory: the consumer overrides `main` with
   // the column the user applies the connection to in their own model.
   const main = members.length ? members[0] : null;
