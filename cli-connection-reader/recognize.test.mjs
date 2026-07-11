@@ -2,7 +2,7 @@
 // frame (vertical = axis 1). `node --test`.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { recognizeBasePlate, recognizeShearPlate } from './recognize.mjs';
+import { recognizeBasePlate, recognizeShearPlate, convexHull2d, minAreaRectAngle, rotateAboutVertical } from './recognize.mjs';
 
 // An axis-aligned box part centred at (cx,cy,cz) with extents (ex,ey,ez). Only positions matter to
 // recognition (it AABBs them); indices are irrelevant here.
@@ -151,11 +151,14 @@ test('rejects bolts that do not pierce the fin plate (off to the side)', () => {
   assert.equal(recognizeShearPlate(parts, ['B']), null);
 });
 
-test('rejects a double-column fin plate (cols>1 not faithfully reproducible)', () => {
+test('recognizes a double-column fin plate (per-axis boltColPitch)', () => {
+  // 2 columns (Z=±40 → 80 mm apart) × 3 rows (Y pitch 70) on a 200-wide plate — the multi-column ceiling.
   const parts = [box('plate', 0, 0, 0, 10, 210, 200),
     cylX('bolt', 0, -70, -40, 20, 60), cylX('bolt', 0, 0, -40, 20, 60), cylX('bolt', 0, 70, -40, 20, 60),
     cylX('bolt', 0, -70, 40, 20, 60), cylX('bolt', 0, 0, 40, 20, 60), cylX('bolt', 0, 70, 40, 20, 60)];
-  assert.equal(recognizeShearPlate(parts, ['B']), null);
+  const r = recognizeShearPlate(parts, ['B']);
+  assert.ok(r, 'a reproducible 2-column fin plate should recognize');
+  assert.deepEqual(r.params, { plateThickness: 10, plateHeight: 210, plateWidth: 200, boltDia: 20, boltCols: 2, boltRows: 3, boltPitch: 70, edgeDist: 35, boltColPitch: 80 });
 });
 
 // Rotate a part's positions about the VERTICAL axis (axis 1) by `deg` degrees (in-plane skew).
@@ -168,9 +171,11 @@ function rotV(part, deg) {
   return { role: part.role, positions: out, indices: [] };
 }
 
-test('rejects a fin plate skewed about the vertical axis (AABB thickness would over-read)', () => {
-  const parts = finParts().map((p) => rotV(p, 10)); // a 10° in-plane skew inflates plate.ext[n] to ~31 mm
-  assert.equal(recognizeShearPlate(parts, ['B']), null);
+test('recognizes a fin plate YAWED 10° about the vertical axis (OBB, was the ceiling)', () => {
+  const parts = finParts().map((p) => rotV(p, 10)); // a rigid 10° yaw — OBB removes it, recipe is unchanged
+  const r = recognizeShearPlate(parts, ['B']);
+  assert.ok(r, 'a rigidly yawed fin plate should now recognize');
+  assert.deepEqual(r.params, { plateThickness: 10, plateHeight: 210, plateWidth: 120, boltDia: 20, boltCols: 1, boltRows: 3, boltPitch: 70, edgeDist: 35 });
 });
 
 test('rejects a fin plate whose single bolt line is off-centre along the beam (engine re-centres it)', () => {
@@ -195,4 +200,170 @@ test('rejects a tiny fit outside fin-plate fabrication ranges', () => {
 
 test('base-plate recognition still rejects a fin plate (horizontal bolts) — mutually exclusive', () => {
   assert.equal(recognizeBasePlate(finParts(), ['B']), null);
+});
+
+// --- Oriented-fit geometry helpers (convexHull2d / minAreaRectAngle / rotateAboutVertical) ------------
+
+const rot2 = (x, z, deg) => { const a = (deg * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a); return [x * c - z * s, x * s + z * c]; };
+// The 4 corners of a `w`×`d` rectangle centred at origin, yawed `deg` in the plane.
+const rectCorners = (w, d, deg) => [[-w / 2, -d / 2], [w / 2, -d / 2], [w / 2, d / 2], [-w / 2, d / 2]].map(([x, z]) => rot2(x, z, deg));
+
+test('convexHull2d drops interior points and needs 3 non-collinear', () => {
+  const h = convexHull2d([[0, 0], [10, 0], [10, 10], [0, 10], [5, 5]]); // 4 corners + centre
+  assert.equal(h.length, 4);
+  assert.equal(convexHull2d([[0, 0], [1, 1]]), null);                    // < 3
+  assert.equal(convexHull2d([[0, 0], [1, 1], [2, 2], [3, 3]]), null);    // collinear
+});
+
+test('minAreaRectAngle is ~0 for an axis-aligned rectangle', () => {
+  assert.ok(Math.abs(minAreaRectAngle(rectCorners(400, 200, 0))) < 1e-6);
+});
+
+test('minAreaRectAngle recovers a 30° yaw (mod 90°, into ±45°)', () => {
+  assert.ok(Math.abs(minAreaRectAngle(rectCorners(400, 200, 30)) - Math.PI / 6) < 1e-6);
+});
+
+test('minAreaRectAngle maps 44°/46°/90°/135° into the canonical quarter-turn', () => {
+  const near = (a, b) => Math.abs(a - b) < 1e-6;
+  assert.ok(near(minAreaRectAngle(rectCorners(400, 200, 44)), 44 * Math.PI / 180));
+  assert.ok(near(minAreaRectAngle(rectCorners(400, 200, 46)), -44 * Math.PI / 180)); // 46° → −44° (perp edge)
+  assert.ok(Math.abs(minAreaRectAngle(rectCorners(400, 200, 90))) < 1e-6);           // 90° ≡ aligned
+  assert.ok(near(minAreaRectAngle(rectCorners(400, 200, 135)), 45 * Math.PI / 180)); // 135° ≡ 45°
+});
+
+test('rotateAboutVertical(−θ) axis-aligns a yawed plate part (extents recover the true rectangle)', () => {
+  const yaw = 30;
+  const part = box('plate', 0, 100, 0, 400, 25, 200); // aligned 400(x)×25(y)×200(z)
+  const yawed = rotateAboutVertical([part], (yaw * Math.PI) / 180, 1)[0];
+  const back = rotateAboutVertical([yawed], -(yaw * Math.PI) / 180, 1)[0];
+  const b = partBoxLocal(back.positions);
+  assert.ok(Math.abs(b.ext[0] - 400) < 1e-6 && Math.abs(b.ext[2] - 200) < 1e-6, 'round-trips to the aligned extents');
+  // and a real recognizer would derive θ from the yawed footprint then undo it:
+  const yb = partBoxLocal(yawed.positions);
+  assert.ok(yb.ext[0] > 400 && yb.ext[2] > 200, 'the yawed world-AABB over-reads (why OBB is needed)');
+  const theta = minAreaRectAngle(footprintXZ(yawed.positions));
+  const aligned = rotateAboutVertical([yawed], -theta, 1)[0];
+  const ab = partBoxLocal(aligned.positions);
+  assert.ok(Math.abs(ab.ext[0] - 400) < 1e-3 && Math.abs(ab.ext[2] - 200) < 1e-3, 'OBB-derived θ re-aligns to true dims');
+});
+
+// local helpers for the geometry tests (avoid importing the non-exported partBox)
+function partBoxLocal(pos) {
+  const min = [Infinity, Infinity, Infinity], max = [-Infinity, -Infinity, -Infinity];
+  for (let i = 0; i + 2 < pos.length; i += 3) for (let k = 0; k < 3; k++) { const v = pos[i + k]; if (v < min[k]) min[k] = v; if (v > max[k]) max[k] = v; }
+  return { ext: [max[0] - min[0], max[1] - min[1], max[2] - min[2]] };
+}
+function footprintXZ(pos) { const out = []; for (let i = 0; i + 2 < pos.length; i += 3) out.push([pos[i], pos[i + 2]]); return out; }
+
+// --- Indexed-mesh helpers (exercise the boundary-loop rectangularity path) ----------------------------
+// Ear-clip a simple CCW polygon → triangles (index-triples into the polygon).
+function earClip(poly) {
+  const area2 = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]);
+  const inTri = (p, a, b, c) => { const d1 = area2(p, a, b), d2 = area2(p, b, c), d3 = area2(p, c, a); return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0)); };
+  const idx = [...poly.keys()], tris = [];
+  let guard = 0;
+  while (idx.length > 3 && guard++ < 4000) {
+    let clipped = false;
+    for (let i = 0; i < idx.length; i++) {
+      const pa = idx[(i - 1 + idx.length) % idx.length], pb = idx[i], pc = idx[(i + 1) % idx.length];
+      const a = poly[pa], b = poly[pb], c = poly[pc];
+      if (area2(a, b, c) <= 0) continue; // reflex/collinear ear
+      let ok = true;
+      for (const pj of idx) { if (pj === pa || pj === pb || pj === pc) continue; if (inTri(poly[pj], a, b, c)) { ok = false; break; } }
+      if (ok) { tris.push([pa, pb, pc]); idx.splice(i, 1); clipped = true; break; }
+    }
+    if (!clipped) break;
+  }
+  if (idx.length === 3) tris.push([idx[0], idx[1], idx[2]]);
+  return tris;
+}
+// A closed thin prism from a CCW face outline [[A,C]…] (in the two non-`thinAxis` axes), extruded ±t/2 along
+// `thinAxis`, centred at `ctr`=[x,y,z]. Real positions + indices → drives the boundary-loop gate.
+function platePrism(role, outline, thinAxis, t, ctr = [0, 0, 0]) {
+  const [a, c] = [0, 1, 2].filter((k) => k !== thinAxis);
+  const N = outline.length, positions = [];
+  const vert = (A, C, s) => { const p = [ctr[0], ctr[1], ctr[2]]; p[a] += A; p[c] += C; p[thinAxis] += s * t / 2; positions.push(p[0], p[1], p[2]); };
+  for (const [A, C] of outline) vert(A, C, +1);  // top vertices 0..N-1
+  for (const [A, C] of outline) vert(A, C, -1);  // bottom vertices N..2N-1
+  const indices = [];
+  for (const [i, j, k] of earClip(outline)) { indices.push(i, j, k); indices.push(N + i, N + k, N + j); }
+  for (let i = 0; i < N; i++) { const j = (i + 1) % N; indices.push(i, j, N + j, i, N + j, N + i); }
+  return { role, positions, indices };
+}
+const rectOutline = (w, d) => [[-w / 2, -d / 2], [w / 2, -d / 2], [w / 2, d / 2], [-w / 2, d / 2]];
+
+// --- OBB: a rotated base plate now recognizes (the ceiling this slice lifts) ---------------------------
+
+test('recognizes a base plate YAWED 30° about the vertical axis (OBB, equal margins)', () => {
+  const parts = [box('plate', 0, 100, 0, 400, 25, 200)];        // 400×200, thin in Y
+  for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(cyl('bolt', x, 100, z, 24, 250)); // equal 60 margins
+  const yawed = rotateAboutVertical(parts, (30 * Math.PI) / 180, 1);
+  const r = recognizeBasePlate(yawed, ['COL', 'X']);
+  assert.ok(r, 'a rotated base plate should recognize (was the ceiling)');
+  assert.deepEqual(r.params, { thickness: 25, plateWidth: 400, plateDepth: 200, boltDia: 24, boltCols: 2, boltRows: 2, edgeDist: 60 });
+});
+
+// --- Adversarial cases the Codex plan-review demanded (rectangularity / selection / fabrication) --------
+
+const baseAnchors = () => { const p = []; for (const x of [-140, 140]) for (const z of [-40, 40]) p.push(cyl('bolt', x, 0, z, 24, 250)); return p; };
+
+test('recognizes a clean INDEXED base plate (boundary-loop path, ~0 deviation)', () => {
+  const parts = [platePrism('plate', rectOutline(400, 200), 1, 25), ...baseAnchors()];
+  const r = recognizeBasePlate(parts, ['COL']);
+  assert.ok(r, 'a clean indexed plate must pass the boundary-loop gate');
+  assert.deepEqual(r.params, { thickness: 25, plateWidth: 400, plateDepth: 200, boltDia: 24, boltCols: 2, boltRows: 2, edgeDist: 60 });
+});
+
+test('rejects a PARALLELOGRAM base plate (sheared 40 mm — corner residual)', () => {
+  const skew = [[-220, -100], [180, -100], [220, 100], [-180, 100]]; // 400×200 sheared 40 mm, no indices → hull fallback
+  const parts = [{ role: 'plate', positions: platePrism('plate', skew, 1, 25).positions, indices: [] }, ...baseAnchors()];
+  assert.equal(recognizeBasePlate(parts, ['C']), null);
+});
+
+test('rejects a base plate with a thin deep EDGE SLOT (10×150 — boundary loop, not area)', () => {
+  const slot = [[-200, -100], [200, -100], [200, 100], [5, 100], [5, -50], [-5, -50], [-5, 100], [-200, 100]];
+  const parts = [platePrism('plate', slot, 1, 25), ...baseAnchors()];
+  assert.equal(recognizeBasePlate(parts, ['C']), null); // 1.9% area lost but 150 mm inward → reject
+});
+
+test('rejects a base plate with a large 40 mm corner CHAMFER (continuous, not vertex-sampled)', () => {
+  const cham = [[-200, -100], [200, -100], [200, 100], [-160, 100], [-200, 60]]; // TL corner chamfered 40 mm
+  const parts = [platePrism('plate', cham, 1, 25), ...baseAnchors()];
+  assert.equal(recognizeBasePlate(parts, ['C']), null); // endpoints ON the edges; midpoint ~28 mm in → reject
+});
+
+test('base recipe is INVARIANT across yaw quadrants 0/44/46/90/135°', () => {
+  const base = [box('plate', 0, 100, 0, 400, 25, 200)];
+  for (const x of [-140, 140]) for (const z of [-40, 40]) base.push(cyl('bolt', x, 100, z, 24, 250));
+  const recipeAt = (deg) => recognizeBasePlate(rotateAboutVertical(base, (deg * Math.PI) / 180, 1), ['C']).params;
+  const ref = recipeAt(0);
+  for (const deg of [44, 46, 90, 135]) assert.deepEqual(recipeAt(deg), ref, `yaw ${deg}° must give the same recipe`);
+});
+
+test('base candidate iteration skips a larger UNPIERCED cover plate', () => {
+  const parts = [box('plate', 0, 500, 0, 600, 25, 600), box('plate', 0, 100, 0, 400, 25, 200)]; // cover above, base below
+  for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(cyl('bolt', x, 100, z, 24, 250)); // pierce only the base
+  const r = recognizeBasePlate(parts, ['C']);
+  assert.ok(r && r.params.plateWidth === 400, 'should fit the pierced base, not the larger cover');
+});
+
+test('rejects a near-coincident 2-column fin plate (< 2·boltDia — bolts overlap)', () => {
+  const parts = [box('plate', 0, 0, 0, 10, 210, 120)];
+  for (const y of [-70, 0, 70]) for (const z of [-5.5, 5.5]) parts.push(cylX('bolt', 0, y, z, 20, 60)); // 11 mm apart < 40
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('fin θ comes from the bolts — an orthogonal larger doubler does not hijack the frame', () => {
+  const parts = [box('plate', 0, 0, 0, 10, 210, 120),                 // the fin: thin in X (n=0)
+    box('plate', 300, 0, 0, 260, 260, 10),                            // a LARGER doubler thin in Z (⟂ the fin)
+    cylX('bolt', 0, -70, 0, 20, 60), cylX('bolt', 0, 0, 0, 20, 60), cylX('bolt', 0, 70, 0, 20, 60)];
+  const r = recognizeShearPlate(parts, ['B']);
+  assert.ok(r && r.params.plateWidth === 120 && r.params.boltRows === 3, 'the fin recognizes, not the doubler');
+});
+
+test('rejects a fin plate whose bolts are TILTED 20° from horizontal', () => {
+  const rotZ = (p, deg) => { const a = (deg * Math.PI) / 180, c = Math.cos(a), s = Math.sin(a), o = []; for (let i = 0; i + 2 < p.positions.length; i += 3) { const x = p.positions[i], y = p.positions[i + 1]; o.push(x * c - y * s, x * s + y * c, p.positions[i + 2]); } return { role: p.role, positions: o, indices: [] }; };
+  const parts = [box('plate', 0, 0, 0, 10, 210, 120),
+    ...[-70, 0, 70].map((y) => rotZ(cylX('bolt', 0, y, 0, 20, 60), 20))]; // tilt each bolt 20° about Z
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
 });
