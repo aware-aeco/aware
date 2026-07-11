@@ -291,6 +291,15 @@ function platePrism(role, outline, thinAxis, t, ctr = [0, 0, 0]) {
   return { role, positions, indices };
 }
 const rectOutline = (w, d) => [[-w / 2, -d / 2], [w / 2, -d / 2], [w / 2, d / 2], [-w / 2, d / 2]];
+// De-index a mesh so every triangle owns its 3 vertices (no shared indices) — exactly how web-ifc emits
+// geometry. The rectangularity gate must match shared edges by POSITION, not vertex index, to survive this.
+function deindex(part) {
+  const pos = [], idx = [];
+  for (let t = 0; t + 2 < part.indices.length; t += 3) for (let e = 0; e < 3; e++) {
+    const vi = part.indices[t + e]; pos.push(part.positions[vi * 3], part.positions[vi * 3 + 1], part.positions[vi * 3 + 2]); idx.push(idx.length);
+  }
+  return { role: part.role, positions: pos, indices: idx };
+}
 
 // --- OBB: a rotated base plate now recognizes (the ceiling this slice lifts) ---------------------------
 
@@ -366,4 +375,14 @@ test('rejects a fin plate whose bolts are TILTED 20° from horizontal', () => {
   const parts = [box('plate', 0, 0, 0, 10, 210, 120),
     ...[-70, 0, 70].map((y) => rotZ(cylX('bolt', 0, y, 0, 20, 60), 20))]; // tilt each bolt 20° about Z
   assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('boundary-loop gate survives web-ifc-style DE-INDEXED meshes (edges matched by position)', () => {
+  // web-ifc duplicates vertices per triangle, so no two triangles share an index — the gate must key edges
+  // by position or every edge looks like a boundary (this exact bug fell out of the real 2-col fin fixture).
+  const clean = [deindex(platePrism('plate', rectOutline(400, 200), 1, 25)), ...baseAnchors()];
+  assert.ok(recognizeBasePlate(clean, ['C']), 'a clean de-indexed plate must still recognize');
+  const slot = [[-200, -100], [200, -100], [200, 100], [5, 100], [5, -50], [-5, -50], [-5, 100], [-200, 100]];
+  const notched = [deindex(platePrism('plate', slot, 1, 25)), ...baseAnchors()];
+  assert.equal(recognizeBasePlate(notched, ['C']), null, 'a de-indexed slotted plate must still reject');
 });

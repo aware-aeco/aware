@@ -160,15 +160,21 @@ function majorFaceLoop(part, va) {
   for (let i = 0; i + 2 < pos.length; i += 3) { const v = pos[i + va]; if (v > vmax) vmax = v; if (v < vmin) vmin = v; }
   const band = Math.max(1e-6, (vmax - vmin) * 0.05);
   const onTop = (vi) => Math.abs(pos[vi * 3 + va] - vmax) <= band;
-  const ek = (u, w) => (u < w ? u + '_' + w : w + '_' + u);
+  // web-ifc DUPLICATES vertices per triangle (no index sharing), so two geometrically-adjacent triangles use
+  // DIFFERENT indices for a shared edge → an index-keyed edge would never match. Key vertices by quantised
+  // face POSITION instead, so a shared edge is detected and only the true outer edges are boundary.
+  const q = (vi) => `${Math.round(pos[vi * 3 + a] * 100)}_${Math.round(pos[vi * 3 + c] * 100)}`;
+  const ptOf = new Map();
+  const ek = (u, w) => (u < w ? u + '|' + w : w + '|' + u);
   const count = new Map();
   for (let t = 0; t + 2 < idx.length; t += 3) {
     const tri = [idx[t], idx[t + 1], idx[t + 2]];
     if (!(onTop(tri[0]) && onTop(tri[1]) && onTop(tri[2]))) continue;
-    for (let e = 0; e < 3; e++) { const k = ek(tri[e], tri[(e + 1) % 3]); count.set(k, (count.get(k) || 0) + 1); }
+    const k = tri.map(q);
+    for (let e = 0; e < 3; e++) { ptOf.set(k[e], [pos[tri[e] * 3 + a], pos[tri[e] * 3 + c]]); const key = ek(k[e], k[(e + 1) % 3]); count.set(key, (count.get(key) || 0) + 1); }
   }
   const boundary = [];
-  for (const [k, n] of count) if (n === 1) boundary.push(k.split('_').map(Number));
+  for (const [key, m] of count) if (m === 1) boundary.push(key.split('|'));
   if (boundary.length < 3) return null;
   const adj = new Map();
   const push = (u, w) => { if (!adj.has(u)) adj.set(u, []); adj.get(u).push(w); };
@@ -180,15 +186,15 @@ function majorFaceLoop(part, va) {
     const loop = [u0]; let prev = u0, cur = w0;
     while (cur !== u0 && loop.length <= boundary.length) {
       loop.push(cur);
-      let nxt = -1;
+      let nxt = null;
       for (const nb of adj.get(cur) || []) if (nb !== prev && !used.has(ek(cur, nb))) { nxt = nb; break; }
-      if (nxt < 0) break;
+      if (nxt === null) break;
       used.add(ek(cur, nxt)); prev = cur; cur = nxt;
     }
     if (cur === u0 && loop.length >= 3) loops.push(loop);
   }
   if (!loops.length) return null;
-  const asPts = (loop) => loop.map((vi) => [pos[vi * 3 + a], pos[vi * 3 + c]]);
+  const asPts = (loop) => loop.map((key) => ptOf.get(key));
   loops.sort((x, y) => polyArea(asPts(y)) - polyArea(asPts(x)));
   return asPts(loops[0]);
 }
