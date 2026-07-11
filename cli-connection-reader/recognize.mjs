@@ -222,9 +222,11 @@ function loopInwardDeviation(pts, rect) {
   return maxDev;
 }
 
-// The allowed inward deviation for a fitted rectangle of shorter edge `s` (mm): a small absolute floor, a 5%
-// scale term, and a 10 mm hard cap so a large plate can't permit a large defect.
-const rectTol = (s) => Math.min(10, Math.max(3, 0.05 * s));
+// Allowed inward deviation of a plate outline from its fitted rectangle (mm). A true rectangle tessellates
+// EXACTLY (its corners are exact), so this only absorbs tessellation + the 0.01 mm position quantisation —
+// NOT a real contour feature. Any notch / cope / snipe / chamfer beyond this → faithful mesh (the recipe
+// would otherwise fill it with solid steel). Deliberately tight (2 mm), per the post-code review.
+const RECT_DEV_TOL = 2;
 
 // Is an ALIGNED plate's face (normal = `va`) a clean-enough rectangle? Fits the rectangle as the aligned
 // AABB on the two non-`va` axes, then measures the plate's true outline inward deviation from it: the
@@ -234,20 +236,21 @@ function rectOK(alignedPlate, va) {
   const b = partBox(alignedPlate);
   const [a, c] = [0, 1, 2].filter((k) => k !== va);
   const rect = { minA: b.min[a], maxA: b.max[a], minC: b.min[c], maxC: b.max[c] };
-  const shorter = Math.min(rect.maxA - rect.minA, rect.maxC - rect.minC);
   const loop = majorFaceLoop(alignedPlate, va);
-  let dev;
-  if (loop) dev = loopInwardDeviation(loop, rect);
-  else {
-    const pts = [];
-    for (let i = 0; i + 2 < alignedPlate.positions.length; i += 3) pts.push([alignedPlate.positions[i + a], alignedPlate.positions[i + c]]);
-    const hull = convexHull2d(pts);
-    if (!hull) return false;
-    const corners = [[rect.minA, rect.minC], [rect.maxA, rect.minC], [rect.maxA, rect.maxC], [rect.minA, rect.maxC]];
-    dev = 0;
-    for (const cor of corners) { let best = Infinity; for (const hp of hull) best = Math.min(best, Math.hypot(hp[0] - cor[0], hp[1] - cor[1])); if (best > dev) dev = best; }
-  }
-  return dev <= rectTol(shorter);
+  if (loop) return loopInwardDeviation(loop, rect) <= RECT_DEV_TOL;
+  // No clean outer major-face loop. For REAL indexed geometry this is a red flag (a plate tilted out of plane,
+  // warped, or degenerate — no complete face sits in the extreme band), so FAIL CLOSED → faithful mesh; the
+  // convex-hull path can't see a concave defect and must not be trusted for production meshes. The hull
+  // corner-residual is only for synthetic parts with no indices (unit-test clean boxes).
+  if (alignedPlate.indices && alignedPlate.indices.length >= 3) return false;
+  const pts = [];
+  for (let i = 0; i + 2 < alignedPlate.positions.length; i += 3) pts.push([alignedPlate.positions[i + a], alignedPlate.positions[i + c]]);
+  const hull = convexHull2d(pts);
+  if (!hull) return false;
+  const corners = [[rect.minA, rect.minC], [rect.maxA, rect.minC], [rect.maxA, rect.maxC], [rect.minA, rect.maxC]];
+  let dev = 0;
+  for (const cor of corners) { let best = Infinity; for (const hp of hull) best = Math.min(best, Math.hypot(hp[0] - cor[0], hp[1] - cor[1])); if (best > dev) dev = best; }
+  return dev <= RECT_DEV_TOL;
 }
 
 // ── Bolt-axis yaw for a fin plate (3D, doubler-immune) ─────────────────────────────────────────────
@@ -271,7 +274,12 @@ function dominantAxis(pos) {
   let xx = 0, xy = 0, xz = 0, yy = 0, yz = 0, zz = 0;
   for (let i = 0; i + 2 < pos.length; i += 3) { const dx = pos[i] - cx, dy = pos[i + 1] - cy, dz = pos[i + 2] - cz; xx += dx * dx; xy += dx * dy; xz += dx * dz; yy += dy * dy; yz += dy * dz; zz += dz * dz; }
   const C = [[xx / n, xy / n, xz / n], [xy / n, yy / n, yz / n], [xz / n, yz / n, zz / n]];
-  const e1 = powerEig(C, [0.5773, 0.5774, 0.5775]);
+  // Seed power iteration with the COLUMN of C for the max-variance axis — it is dominated by the largest
+  // eigenvector, so it can never be exactly orthogonal to it (a fixed [1,1,1]-style seed can, and would then
+  // stall in the radial eigenspace and wrongly reject a valid bolt).
+  const diag = [C[0][0], C[1][1], C[2][2]];
+  const mi = diag[0] >= diag[1] && diag[0] >= diag[2] ? 0 : diag[1] >= diag[2] ? 1 : 2;
+  const e1 = powerEig(C, [C[0][mi], C[1][mi], C[2][mi]]);
   const C2 = C.map((row, i) => row.map((x, j) => x - e1.val * e1.vec[i] * e1.vec[j])); // deflate
   const e2 = powerEig(C2, [e1.vec[1], -e1.vec[0], 0.001]);
   return { dir: e1.vec, ratio: e2.val > 1e-9 ? e1.val / e2.val : Infinity };
@@ -352,26 +360,35 @@ function fitBasePlate(parts, candidatePlate, members) {
   if (!bolts.every((x) => overlapsV(x) && inside(x))) return null;
 
   const thickness = Math.round(plate.ext[VERTICAL]);
+  const tol = 10; // mm — merge near-coincident grid lines
+  const clA = cluster1d(bolts.map((x) => x.m.ca), tol).length;
+  const clC = cluster1d(bolts.map((x) => x.m.cc), tol).length;
   // CANONICAL ordering — longer aligned horizontal extent = plateWidth (+ its bolt-line count = boltCols),
-  // swapped together, so the SAME physical plate at any yaw quadrant yields ONE recipe.
-  const wAxis = plate.ext[a] >= plate.ext[c] ? a : c;
+  // swapped together, so the SAME physical plate at any yaw quadrant yields ONE recipe. For a SQUARE plate
+  // (extents equal within tol) "longer" can't disambiguate, so tie-break by the grid: fewer lines = cols
+  // (a 400×400 2×3 and its 90°-yaw copy are then one recipe, not 2×3 vs 3×2).
+  const square = Math.abs(plate.ext[a] - plate.ext[c]) <= tol;
+  const wAxis = square ? (clA <= clC ? a : c) : (plate.ext[a] > plate.ext[c] ? a : c);
   const dAxis = wAxis === a ? c : a;
   const cAlong = (m, ax) => (ax === a ? m.ca : m.cc);
   const bw = bolts.map((x) => ({ w: cAlong(x.m, wAxis) - plate.ctr[wAxis], d: cAlong(x.m, dAxis) - plate.ctr[dAxis], dia: x.m.dia }));
   const plateWidth = Math.round(plate.ext[wAxis]);
   const plateDepth = Math.round(plate.ext[dAxis]);
-  const tol = 10; // mm — merge near-coincident grid lines
   const boltCols = Math.max(1, cluster1d(bw.map((x) => x.w), tol).length);
   const boltRows = Math.max(1, cluster1d(bw.map((x) => x.d), tol).length);
   if (boltCols * boltRows !== bolts.length) return null; // complete rectangular grid only
   const boltDia = Math.round(median(bw.map((x) => x.dia)));
+  // Uniform anchor Ø — a mixed-diameter grid (e.g. [24,24,24,30]) isn't one fitted anchor kit; the median
+  // would silently homogenise it into a wrong recipe, so reject to faithful mesh.
+  if (!bw.every((x) => Math.abs(x.dia - boltDia) <= Math.max(2, 0.1 * boltDia))) return null;
   const offW = Math.max(...bw.map((x) => Math.abs(x.w)));
   const offD = Math.max(...bw.map((x) => Math.abs(x.d)));
   const edgeDist = Math.round(Math.max(0, Math.min(plateWidth / 2 - offW, plateDepth / 2 - offD)));
 
-  // Plausibility gate — reject a fit outside real base-plate fabrication ranges (mm). edgeDist > 0: a 0 means
-  // an anchor sits on the plate edge (half off it), not a real anchor-through-plate pattern.
-  if (!(thickness > 3 && thickness < 200) || !(plateWidth > 60) || !(plateDepth > 60) || !(boltDia > 4 && boltDia < 120) || !(edgeDist > 0)) return null;
+  // Plausibility gate — real base-plate fabrication ranges (mm). edgeDist must clear the HOLE, not just the
+  // bolt CENTRE: require ≥ boltDia/2 + 2 so the drilled hole sits fully on the plate (a centre-only "inside"
+  // test would pass an anchor whose hole hangs off the edge).
+  if (!(thickness > 3 && thickness < 200) || !(plateWidth > 60) || !(plateDepth > 60) || !(boltDia > 4 && boltDia < 120) || !(edgeDist >= boltDia / 2 + 2)) return null;
 
   // Reproduction gate: the consumer's expandBasePlate places anchors on a SYMMETRIC, centred grid with ONE
   // edge distance (evenly spread from half-plate − edge on BOTH axes). Emit only if that model rebuilds the
@@ -466,6 +483,9 @@ function fitShearPlate(rbolts, cand, n, uAx, vAx, members) {
   if (!cell.every((k) => k === 1)) return null;
 
   const boltDia = Math.round(median(bolts.map((x) => x.m.dia)));
+  // Uniform Ø — a mixed-diameter bolt group isn't one fitted kit; the median would silently homogenise it
+  // into a wrong recipe, so reject to faithful mesh.
+  if (!bolts.every((x) => Math.abs(x.m.dia - boltDia) <= Math.max(2, 0.1 * boltDia))) return null;
   const vGaps = vLines.slice(1).map((v, i) => v - vLines[i]);
   const boltPitch = Math.round(median(vGaps));
   const offV = Math.max(...bolts.map((x) => Math.abs(x.m.cc - plate.ctr[vAx])));
@@ -482,9 +502,11 @@ function fitShearPlate(rbolts, cand, n, uAx, vAx, members) {
     if (boltColPitch < 2 * boltDia) return null; // fabrication non-overlap gate (bolts/holes can't overlap)
   }
 
-  // Plausibility gate — real fin-plate fabrication ranges (mm). Both margins > 0 (bolts fully inside).
+  // Plausibility gate — real fin-plate fabrication ranges (mm). Each margin must clear the HOLE (≥ boltDia/2
+  // + 2), not just the bolt CENTRE — a centre-only test passes a bolt whose hole hangs off the plate edge.
+  const edgeMin = boltDia / 2 + 2;
   if (!(plateThickness > 3 && plateThickness < 60) || !(plateHeight > 40) || !(plateWidth > 40)
-    || !(boltDia > 4 && boltDia < 60) || !(boltPitch > 20) || !(edgeVMargin > 0) || !(edgeUMargin > 0)) return null;
+    || !(boltDia > 4 && boltDia < 60) || !(boltPitch > 20) || !(edgeVMargin >= edgeMin) || !(edgeUMargin >= edgeMin)) return null;
 
   // Vertical reproduction: expandShearPlate places rows on a SYMMETRIC, centred single-pitch line. Each row
   // line must match that model within a few mm (off-centre / non-uniform pitch → mesh).
@@ -492,22 +514,27 @@ function fitShearPlate(rbolts, cand, n, uAx, vAx, members) {
   const expectedV = Array.from({ length: rows }, (_, i) => plate.ctr[vAx] - half + i * boltPitch);
   if (!vLines.every((v, i) => Math.abs(v - expectedV[i]) <= 3)) return null;
 
-  // Horizontal reproduction (engine-relative, clamp-aware). expandShearPlate places the column group at a
+  // Horizontal reproduction (engine-relative, clamp-aware). expandShearPlate seats the column group at a
   // fabrication-derived cU (NOT recipe-steerable) and spreads cols at pU=min(boltColPitch, region/(cols−1)).
-  // The along-beam POSITION is re-derived (the recognizer can't observe the beam direction), so we bound only
-  // the observable magnitude: the group's offset-from-plate-centre must match the engine's within one
-  // clearance, and (cols>1) the observed pitch must not be clamped.
+  // The along-beam GROUP POSITION is deliberately RE-DERIVED — the recognizer can't observe which way the beam
+  // runs, and the user applies the connection to a DIFFERENT beam whose clearance sets it (this matches the
+  // shipped single-column behaviour), so we bound the group's distance-FROM-CENTRE (not its absolute place)
+  // AND require the RELATIVE column pattern to reproduce exactly.
   const clearance = 12.7; // engine default
   const edgeU = Math.min(edgeDist, plateWidth * 0.4);
   const regHi = Math.max(edgeU, plateWidth - edgeU);
   const regLo = Math.min(clearance + edgeU, regHi);
   const cU = (regLo + regHi) / 2;
-  const cDispl = Math.abs(cU - plateWidth / 2);            // engine's intrinsic group offset from centre
-  const offUGroup = Math.abs((uLines.reduce((s, u) => s + u, 0) / cols) - plate.ctr[uAx]);
+  const cDispl = Math.abs(cU - plateWidth / 2);            // engine's intrinsic group offset from plate centre
+  const uMean = uLines.reduce((s, u) => s + u, 0) / cols;
+  const offUGroup = Math.abs(uMean - plate.ctr[uAx]);
   if (Math.abs(offUGroup - cDispl) > Math.max(3, cDispl)) return null; // group too far from where the engine seats it
   if (cols > 1) {
-    const pU = Math.min(boltColPitch, (regHi - regLo) / (cols - 1));
-    if (Math.abs(boltColPitch - pU) > 3) return null; // the engine would clamp the pitch → distorted → mesh
+    const pU = Math.min(boltColPitch, (regHi - regLo) / (cols - 1)); // the engine's actual (possibly clamped) pitch
+    // Every observed column (relative to the group centroid) must match the engine's UNIFORM pU layout within
+    // the reproduction tolerance: a non-uniform grid whose gaps merely AVERAGE to boltColPitch (so the loose
+    // cluster-tol uniformity check would pass) is rejected here, and a clamped pitch (pU<boltColPitch) fails.
+    for (let j = 0; j < cols; j++) if (Math.abs((uLines[j] - uMean) - (j - (cols - 1) / 2) * pU) > 3) return null;
   }
 
   // The beam a fin plate hangs off (advisory — the consumer overrides `main` with the beam the user applies

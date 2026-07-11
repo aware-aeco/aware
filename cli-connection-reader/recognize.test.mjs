@@ -377,6 +377,34 @@ test('rejects a fin plate whose bolts are TILTED 20° from horizontal', () => {
   assert.equal(recognizeShearPlate(parts, ['B']), null);
 });
 
+test('base recipe stays canonical for a SQUARE plate under yaw (grid tie-break, cols≠rows)', () => {
+  const base = [box('plate', 0, 100, 0, 400, 25, 400)];
+  for (const x of [-140, 140]) for (const z of [-140, 0, 140]) base.push(cyl('bolt', x, 100, z, 24, 250)); // 2 cols × 3 rows, equal 60 margins
+  const at = (deg) => recognizeBasePlate(rotateAboutVertical(base, (deg * Math.PI) / 180, 1), ['C']).params;
+  const ref = at(0);
+  assert.ok(ref && ref.boltCols === 2 && ref.boltRows === 3, 'square 2×3 recognizes');
+  for (const deg of [90, 180, 270]) assert.deepEqual(at(deg), ref, `square plate at ${deg}° must give the same cols×rows`);
+});
+
+test('rejects a base plate whose anchor HOLE hangs off the edge (centre-only "inside" would pass)', () => {
+  const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
+  for (const x of [-199, 199]) for (const z of [-99, 99]) parts.push(cyl('bolt', x, 100, z, 24, 250)); // centres 1 mm from edge
+  assert.equal(recognizeBasePlate(parts, ['C']), null); // edgeDist 1 < boltDia/2+2 → mesh
+});
+
+test('rejects a base grid with MIXED anchor diameters (median would silently homogenise)', () => {
+  const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
+  for (const [x, z] of [[-140, -40], [140, -40], [-140, 40]]) parts.push(cyl('bolt', x, 100, z, 24, 250));
+  parts.push(cyl('bolt', 140, 100, 40, 30, 250)); // one M30 among three M24
+  assert.equal(recognizeBasePlate(parts, ['C']), null);
+});
+
+test('rejects a NON-UNIFORM 3-column fin plate (gaps average to a pitch but the grid is irregular)', () => {
+  const parts = [box('plate', 0, 0, 0, 10, 210, 300)]; // columns 40/60 apart → median 50 passes the loose cluster tol
+  for (const z of [-40.317, -0.317, 59.683]) for (const y of [-70, 0, 70]) parts.push(cylX('bolt', 0, y, z, 20, 60));
+  assert.equal(recognizeShearPlate(parts, ['B']), null); // engine-relative pattern gate catches the moved middle column
+});
+
 test('boundary-loop gate survives web-ifc-style DE-INDEXED meshes (edges matched by position)', () => {
   // web-ifc duplicates vertices per triangle, so no two triangles share an index — the gate must key edges
   // by position or every edge looks like a boundary (this exact bug fell out of the real 2-col fin fixture).
