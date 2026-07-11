@@ -411,7 +411,7 @@ test('measures the SHANK Ø of a HEADED fastener, not the head (axial-slice min 
   function anchorHead(cx, cz) {
     const pos = [], rs = 12, rh = 20, rt = 8, h = 250, s = 16;
     for (const sy of [-1, 1]) for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rs * Math.cos(t), 100 + sy * h / 2, cz + rs * Math.sin(t)); }
-    for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rh * Math.cos(t), 100 + h / 2 + 12, cz + rh * Math.sin(t)); }   // Ø40 head ring
+    for (const dy of [12, 15, 18, 21]) for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rh * Math.cos(t), 100 + h / 2 + dy, cz + rh * Math.sin(t)); } // Ø40 head — FOUR rings (more verts than the shank; span must still win)
     for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rt * Math.cos(t), 100 - h / 2 - 8, cz + rt * Math.sin(t)); }   // Ø16 chamfered tip
     pos.push(cx, 100 + h / 2, cz, cx, 100 - h / 2, cz); // triangulated cap-centre vertices (r≈0)
     return { role: 'bolt', positions: pos, indices: [] };

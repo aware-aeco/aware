@@ -126,19 +126,25 @@ function boltCentreDia(p, a, c) {
   let sa = 0, sc = 0, n = 0;
   for (let i = 0; i + 2 < pos.length; i += 3) { sa += pos[i + a]; sc += pos[i + c]; n++; }
   const ca = sa / n, cc = sc / n;
-  // SHANK diameter = the PERSISTENT (modal) vertex radius — robust to a larger round head/washer at one end
-  // (over-reads a mean), a chamfered/threaded tip (under-reads a minimum), and triangulated cap-CENTRE
-  // vertices at r≈0. Histogram the vertex radii (dropping near-axis cap centres), and take the busiest bin's
-  // mean: the shank cylinder owns the most vertices, so its radius wins regardless of head/tip/cap artefacts.
-  const radii = [];
+  // SHANK diameter = the radius that persists over the greatest AXIAL SPAN — robust to a larger round
+  // head/washer (over-reads a mean), a chamfered/threaded tip (under-reads a minimum), triangulated cap-CENTRE
+  // vertices at r≈0, AND a finely-tessellated short head (out-votes a raw vertex-COUNT mode). Bin the vertices
+  // by radius; for each bin track the axial extent it covers along the bolt axis; the shank is the bin spanning
+  // the longest run of the bolt (a head/tip is short regardless of how densely it is meshed).
+  const ax = [0, 1, 2].find((k) => k !== a && k !== c);
   let rmax = 0;
-  for (let i = 0; i + 2 < pos.length; i += 3) { const r = Math.hypot(pos[i + a] - ca, pos[i + c] - cc); radii.push(r); if (r > rmax) rmax = r; }
+  for (let i = 0; i + 2 < pos.length; i += 3) { const r = Math.hypot(pos[i + a] - ca, pos[i + c] - cc); if (r > rmax) rmax = r; }
   if (!(rmax > 0)) return { ca, cc, dia: 0 };
-  const NB = 16, hc = new Array(NB).fill(0), hs = new Array(NB).fill(0);
-  for (const r of radii) { if (r <= 0.15 * rmax) continue; const b = Math.min(NB - 1, Math.floor((r / rmax) * NB)); hc[b]++; hs[b] += r; }
-  let mb = -1;
-  for (let b = 0; b < NB; b++) if (hc[b] > (mb < 0 ? 0 : hc[mb])) mb = b;
-  return { ca, cc, dia: mb < 0 ? 2 * rmax : (2 * hs[mb]) / hc[mb] };
+  const NB = 16, rSum = new Array(NB).fill(0), rCnt = new Array(NB).fill(0), aMin = new Array(NB).fill(Infinity), aMax = new Array(NB).fill(-Infinity);
+  for (let i = 0; i + 2 < pos.length; i += 3) {
+    const r = Math.hypot(pos[i + a] - ca, pos[i + c] - cc);
+    if (r <= 0.15 * rmax) continue; // drop near-axis cap-centre artefacts
+    const b = Math.min(NB - 1, Math.floor((r / rmax) * NB)), av = pos[i + ax];
+    rSum[b] += r; rCnt[b]++; if (av < aMin[b]) aMin[b] = av; if (av > aMax[b]) aMax[b] = av;
+  }
+  let mb = -1, mSpan = -1;
+  for (let b = 0; b < NB; b++) if (rCnt[b]) { const span = aMax[b] - aMin[b]; if (span > mSpan) { mSpan = span; mb = b; } }
+  return { ca, cc, dia: mb < 0 ? 2 * rmax : (2 * rSum[mb]) / rCnt[mb] };
 }
 
 // ── Rectangularity gate (reject parallelograms / trapezoids / notches / slots / copes) ──────────────
