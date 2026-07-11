@@ -122,12 +122,26 @@ export function rotateAboutVertical(parts, theta, va) {
 // ~24.5), so the robust true radius is the MEAN vertex distance from the centroid (~24.0) — and it is
 // convention-independent (no standard-size snapping, so imperial anchors fit too).
 function boltCentreDia(p, a, c) {
+  const pos = p.positions;
   let sa = 0, sc = 0, n = 0;
-  for (let i = 0; i + 2 < p.positions.length; i += 3) { sa += p.positions[i + a]; sc += p.positions[i + c]; n++; }
+  for (let i = 0; i + 2 < pos.length; i += 3) { sa += pos[i + a]; sc += pos[i + c]; n++; }
   const ca = sa / n, cc = sc / n;
-  let sr = 0;
-  for (let i = 0; i + 2 < p.positions.length; i += 3) sr += Math.hypot(p.positions[i + a] - ca, p.positions[i + c] - cc);
-  return { ca, cc, dia: (2 * sr) / n }; // mean vertex radius × 2
+  // SHANK diameter, not the whole-part mean. A real fastener may be a thin shank PLUS a larger round head or
+  // washer at one end; averaging every vertex radius over-reads the Ø (an M20 shank + Ø32 head → ~Ø26). Slice
+  // along the bolt AXIS (the third axis), take each slice's mean radius, and use the MINIMUM populated slice —
+  // the shank is the thinnest run; the head/washer is a short fatter segment that no longer contaminates it.
+  const ax = [0, 1, 2].find((k) => k !== a && k !== c);
+  let amin = Infinity, amax = -Infinity;
+  for (let i = 0; i + 2 < pos.length; i += 3) { const v = pos[i + ax]; if (v < amin) amin = v; if (v > amax) amax = v; }
+  const NB = 8, span = (amax - amin) || 1, sum = new Array(NB).fill(0), cnt = new Array(NB).fill(0);
+  for (let i = 0; i + 2 < pos.length; i += 3) {
+    const b = Math.min(NB - 1, Math.max(0, Math.floor(((pos[i + ax] - amin) / span) * NB)));
+    sum[b] += Math.hypot(pos[i + a] - ca, pos[i + c] - cc); cnt[b]++;
+  }
+  let r = Infinity;
+  for (let b = 0; b < NB; b++) if (cnt[b] >= 3) r = Math.min(r, sum[b] / cnt[b]);
+  if (!isFinite(r)) r = sum.reduce((s, x) => s + x, 0) / n; // degenerate (< 3 verts/slice) → whole-part mean
+  return { ca, cc, dia: 2 * r };
 }
 
 // ── Rectangularity gate (reject parallelograms / trapezoids / notches / slots / copes) ──────────────

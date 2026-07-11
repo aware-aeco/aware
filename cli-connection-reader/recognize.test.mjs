@@ -405,6 +405,21 @@ test('rejects a NON-UNIFORM 3-column fin plate (gaps average to a pitch but the 
   assert.equal(recognizeShearPlate(parts, ['B']), null); // engine-relative pattern gate catches the moved middle column
 });
 
+test('measures the SHANK Ø of a HEADED fastener, not the head (axial-slice min radius)', () => {
+  // Ø24 shank + a larger Ø40 head at the top — averaging every vertex would emit ~M32; the recipe must be M24.
+  function anchorHead(cx, cz) {
+    const pos = [], rs = 12, rh = 20, h = 250, s = 16;
+    for (const sy of [-1, 1]) for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rs * Math.cos(t), 100 + sy * h / 2, cz + rs * Math.sin(t)); }
+    for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rh * Math.cos(t), 100 + h / 2 + 12, cz + rh * Math.sin(t)); } // head ring
+    return { role: 'bolt', positions: pos, indices: [] };
+  }
+  const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
+  for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(anchorHead(x, z));
+  const r = recognizeBasePlate(parts, ['C']);
+  assert.ok(r, 'a headed anchor grid should recognize');
+  assert.equal(r.params.boltDia, 24, 'boltDia is the shank Ø, not contaminated by the head');
+});
+
 test('rejects SQUARE-prism anchors posing as round bolts (a regular polygon fools a vertex-radius check)', () => {
   const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
   for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(box('bolt', x, 100, z, 24, 250, 24)); // 24×24 SQUARE prism, vertical
