@@ -4,6 +4,14 @@
 // the bridge. All fitted params are frame-independent scalars (mm): the consumer re-derives geometry from
 // ITS OWN column, so the mesh's coordinate frame never leaks into the recipe. v1 recognizes a base plate;
 // grow one supported type at a time.
+//
+// A recognized recipe is PARAMETRIC, not a replica: it captures the plate outline + the bolt grid, and the
+// engine re-derives fabrication conventions on the target member. Documented ceilings (each hardened over an
+// 8-round adversarial code review): (1) WELDS are engine-defaulted — a modeled fillet's leg/side is not
+// inferred (a grow-later "weld read"; this predates the OBB/multi-column work); (2) the shear along-beam GROUP
+// POSITION is re-derived (the beam direction is unobservable) → a ≤ clearance/2 offset; (3) an extra non-bolt
+// plate penetration is not carried. Everything the recipe DOES emit is gated to reproduce, else it falls back
+// to faithful mesh — the recognizer never emits a wrong dimension/grid/diameter, only a confident fit or mesh.
 
 // web-ifc emits mesh geometry in a fixed Y-UP frame (it always converts IFC's Z-up world to its own Y-up
 // output), so "up" is always axis 1. A base plate is a HORIZONTAL plate with VERTICAL anchor bolts — the
