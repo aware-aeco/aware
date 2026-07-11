@@ -144,7 +144,14 @@ function boltCentreDia(p, a, c) {
   }
   let mb = -1, mSpan = -1;
   for (let b = 0; b < NB; b++) if (rCnt[b]) { const span = aMax[b] - aMin[b]; if (span > mSpan) { mSpan = span; mb = b; } }
-  return { ca, cc, dia: mb < 0 ? 2 * rmax : (2 * rSum[mb]) / rCnt[mb] };
+  if (mb < 0) return { ca, cc, dia: 2 * rmax, ambiguous: false };
+  // FAIL SAFE on ambiguity: if ANY other radius bin has a comparable global span, the shank can't be
+  // distinguished from a washer/sleeve present at BOTH ends (whose two short end segments make its min→max
+  // look full-length). Rather than risk a wrong Ø, flag it so the consumer keeps faithful mesh. This closes
+  // the wrong-diameter class entirely — the result is a confident shank Ø or a mesh fallback, never a guess.
+  let ambiguous = false;
+  for (let b = 0; b < NB; b++) if (b !== mb && rCnt[b] && aMax[b] - aMin[b] >= 0.8 * mSpan) ambiguous = true;
+  return { ca, cc, dia: (2 * rSum[mb]) / rCnt[mb], ambiguous };
 }
 
 // ── Rectangularity gate (reject parallelograms / trapezoids / notches / slots / copes) ──────────────
@@ -417,6 +424,7 @@ function fitBasePlate(parts, candidatePlate, members) {
   const bolts = [];
   for (let bi = 0; bi < parts.length; bi++) if (parts[bi].role === 'bolt') bolts.push({ b: partBox(R[bi]), m: boltCentreDia(R[bi], a, c) });
   if (bolts.length < 2) return null;
+  if (bolts.some((x) => x.m.ambiguous)) return null; // a fastener whose shank Ø can't be pinned down → faithful mesh
 
   // Pierce: every anchor centroid inside the plate footprint AND its vertical span overlapping the plate
   // thickness band (an unrelated grid off to the side / above / below → rejected to faithful mesh).
@@ -528,6 +536,7 @@ function fitShearPlate(rbolts, cand, n, uAx, vAx, members) {
   // Each bolt a real tessellated CIRCLE in cross-section (rejects a square/hex/elliptical prism whose diagonal
   // would read as the diameter). A rigid yaw is already undone by the alignment, so this guards real distortion.
   if (!bolts.every((x) => crossSectionCircular(x.rp.positions, uAx, vAx))) return null;
+  if (bolts.some((x) => x.m.ambiguous)) return null; // a fastener whose shank Ø can't be pinned down → faithful mesh
 
   // Rectangularity of the plate's (u,v) FACE (normal = n) — rejects a parallelogram / trapezoid / notch.
   if (!rectOK(cand.rp, n)) return null;

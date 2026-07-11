@@ -423,6 +423,18 @@ test('measures the SHANK Ø of a HEADED fastener, not the head (axial-slice min 
   assert.equal(r.params.boltDia, 24, 'boltDia is the shank Ø, not contaminated by the head');
 });
 
+test('rejects a fastener with equal washers at BOTH ends — shank Ø ambiguous → faithful mesh', () => {
+  function bothWashers(cx, cz) {
+    const pos = [], rs = 10, rw = 20, h = 250, s = 16;
+    for (const sy of [-1, 1]) for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rs * Math.cos(t), 100 + sy * h / 2, cz + rs * Math.sin(t)); }             // shank ends
+    for (const sy of [-1, 1]) for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rw * Math.cos(t), 100 + sy * (h / 2 + 8), cz + rw * Math.sin(t)); }     // a washer at EACH end
+    return { role: 'bolt', positions: pos, indices: [] };
+  }
+  const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
+  for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(bothWashers(x, z));
+  assert.equal(recognizeBasePlate(parts, ['C']), null); // shank (Ø20) vs washer (Ø40) both span the length → mesh
+});
+
 test('rejects SQUARE-prism anchors posing as round bolts (a regular polygon fools a vertex-radius check)', () => {
   const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
   for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(box('bolt', x, 100, z, 24, 250, 24)); // 24×24 SQUARE prism, vertical
