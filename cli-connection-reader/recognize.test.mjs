@@ -406,11 +406,14 @@ test('rejects a NON-UNIFORM 3-column fin plate (gaps average to a pitch but the 
 });
 
 test('measures the SHANK Ø of a HEADED fastener, not the head (axial-slice min radius)', () => {
-  // Ø24 shank + a larger Ø40 head at the top — averaging every vertex would emit ~M32; the recipe must be M24.
+  // Ø24 shank + a larger Ø40 head + a chamfered Ø16 tip + triangulated cap-CENTRE vertices: a mean over-reads,
+  // a minimum under-reads — the modal (persistent) radius must still emit M24.
   function anchorHead(cx, cz) {
-    const pos = [], rs = 12, rh = 20, h = 250, s = 16;
+    const pos = [], rs = 12, rh = 20, rt = 8, h = 250, s = 16;
     for (const sy of [-1, 1]) for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rs * Math.cos(t), 100 + sy * h / 2, cz + rs * Math.sin(t)); }
-    for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rh * Math.cos(t), 100 + h / 2 + 12, cz + rh * Math.sin(t)); } // head ring
+    for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rh * Math.cos(t), 100 + h / 2 + 12, cz + rh * Math.sin(t)); }   // Ø40 head ring
+    for (let k = 0; k < s; k++) { const t = 2 * Math.PI * k / s; pos.push(cx + rt * Math.cos(t), 100 - h / 2 - 8, cz + rt * Math.sin(t)); }   // Ø16 chamfered tip
+    pos.push(cx, 100 + h / 2, cz, cx, 100 - h / 2, cz); // triangulated cap-centre vertices (r≈0)
     return { role: 'bolt', positions: pos, indices: [] };
   }
   const parts = [box('plate', 0, 100, 0, 400, 25, 200)];

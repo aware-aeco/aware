@@ -126,22 +126,19 @@ function boltCentreDia(p, a, c) {
   let sa = 0, sc = 0, n = 0;
   for (let i = 0; i + 2 < pos.length; i += 3) { sa += pos[i + a]; sc += pos[i + c]; n++; }
   const ca = sa / n, cc = sc / n;
-  // SHANK diameter, not the whole-part mean. A real fastener may be a thin shank PLUS a larger round head or
-  // washer at one end; averaging every vertex radius over-reads the Ø (an M20 shank + Ø32 head → ~Ø26). Slice
-  // along the bolt AXIS (the third axis), take each slice's mean radius, and use the MINIMUM populated slice —
-  // the shank is the thinnest run; the head/washer is a short fatter segment that no longer contaminates it.
-  const ax = [0, 1, 2].find((k) => k !== a && k !== c);
-  let amin = Infinity, amax = -Infinity;
-  for (let i = 0; i + 2 < pos.length; i += 3) { const v = pos[i + ax]; if (v < amin) amin = v; if (v > amax) amax = v; }
-  const NB = 8, span = (amax - amin) || 1, sum = new Array(NB).fill(0), cnt = new Array(NB).fill(0);
-  for (let i = 0; i + 2 < pos.length; i += 3) {
-    const b = Math.min(NB - 1, Math.max(0, Math.floor(((pos[i + ax] - amin) / span) * NB)));
-    sum[b] += Math.hypot(pos[i + a] - ca, pos[i + c] - cc); cnt[b]++;
-  }
-  let r = Infinity;
-  for (let b = 0; b < NB; b++) if (cnt[b] >= 3) r = Math.min(r, sum[b] / cnt[b]);
-  if (!isFinite(r)) r = sum.reduce((s, x) => s + x, 0) / n; // degenerate (< 3 verts/slice) → whole-part mean
-  return { ca, cc, dia: 2 * r };
+  // SHANK diameter = the PERSISTENT (modal) vertex radius — robust to a larger round head/washer at one end
+  // (over-reads a mean), a chamfered/threaded tip (under-reads a minimum), and triangulated cap-CENTRE
+  // vertices at r≈0. Histogram the vertex radii (dropping near-axis cap centres), and take the busiest bin's
+  // mean: the shank cylinder owns the most vertices, so its radius wins regardless of head/tip/cap artefacts.
+  const radii = [];
+  let rmax = 0;
+  for (let i = 0; i + 2 < pos.length; i += 3) { const r = Math.hypot(pos[i + a] - ca, pos[i + c] - cc); radii.push(r); if (r > rmax) rmax = r; }
+  if (!(rmax > 0)) return { ca, cc, dia: 0 };
+  const NB = 16, hc = new Array(NB).fill(0), hs = new Array(NB).fill(0);
+  for (const r of radii) { if (r <= 0.15 * rmax) continue; const b = Math.min(NB - 1, Math.floor((r / rmax) * NB)); hc[b]++; hs[b] += r; }
+  let mb = -1;
+  for (let b = 0; b < NB; b++) if (hc[b] > (mb < 0 ? 0 : hc[mb])) mb = b;
+  return { ca, cc, dia: mb < 0 ? 2 * rmax : (2 * hs[mb]) / hc[mb] };
 }
 
 // ── Rectangularity gate (reject parallelograms / trapezoids / notches / slots / copes) ──────────────
