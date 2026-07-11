@@ -405,6 +405,12 @@ test('rejects a NON-UNIFORM 3-column fin plate (gaps average to a pitch but the 
   assert.equal(recognizeShearPlate(parts, ['B']), null); // engine-relative pattern gate catches the moved middle column
 });
 
+test('rejects SQUARE-prism anchors posing as round bolts (a regular polygon fools a vertex-radius check)', () => {
+  const parts = [box('plate', 0, 100, 0, 400, 25, 200)];
+  for (const x of [-140, 140]) for (const z of [-40, 40]) parts.push(box('bolt', x, 100, z, 24, 250, 24)); // 24×24 SQUARE prism, vertical
+  assert.equal(recognizeBasePlate(parts, ['C']), null); // crossSectionCircular: 4 hull corners < 8 sides → mesh
+});
+
 test('rejects a TAPERED base plate (frustum — one-face validation would emit a full prism)', () => {
   // top face 400×200, bottom 300×100, thin in Y — a valid 2×2 anchor grid; must fall back to mesh.
   const pos = [];

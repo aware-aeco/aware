@@ -246,9 +246,11 @@ function prismUniform(part, va) {
     for (let i = 0; i + 2 < pos.length; i += 3) { const v = pos[i + va]; if (v >= lo && v <= hi) { cnt++; const A = pos[i + a], C = pos[i + c]; if (A < na) na = A; if (A > xa) xa = A; if (C < nc) nc = C; if (C > xc) xc = C; } }
     return cnt ? [xa - na, xc - nc] : null;
   };
-  const top = faceBox(vmax - band, vmax), bot = faceBox(vmin, vmin + band);
-  if (!top || !bot) return true;
-  return Math.abs(top[0] - bot[0]) <= 2 && Math.abs(top[1] - bot[1]) <= 2;
+  const mc = (vmin + vmax) / 2;
+  const top = faceBox(vmax - band, vmax), bot = faceBox(vmin, vmin + band), mid = faceBox(mc - band / 2, mc + band / 2);
+  if (!top || !bot || !mid) return true;
+  const near = (x, y) => Math.abs(x[0] - y[0]) <= 2 && Math.abs(x[1] - y[1]) <= 2;
+  return near(top, bot) && near(top, mid); // also the MIDDLE — catches a waisted/necked plate the two extremes miss
 }
 function rectOK(alignedPlate, va) {
   const b = partBox(alignedPlate);
@@ -285,6 +287,14 @@ function powerEig(M, seed) {
   const Mv = matVec(M, v);
   return { vec: v, val: v[0] * Mv[0] + v[1] * Mv[1] + v[2] * Mv[2] };
 }
+// Dominant eigenpair of a symmetric 3×3: run power iteration from ALL THREE basis seeds and keep the largest
+// Rayleigh quotient. The dominant eigenvector is non-orthogonal to at least one basis vector, so this never
+// stalls on a minor eigenvector (a single fixed seed can, for a specific elliptical covariance).
+function powerEigBest(M) {
+  let best = null;
+  for (const seed of [[1, 0, 0], [0, 1, 0], [0, 0, 1]]) { const e = powerEig(M, seed); if (!best || e.val > best.val) best = e; }
+  return best;
+}
 // Dominant axis (unit vec) + anisotropy ratio λ1/λ2 of a point set's covariance.
 function dominantAxis(pos) {
   let cx = 0, cy = 0, cz = 0, n = 0;
@@ -293,30 +303,28 @@ function dominantAxis(pos) {
   let xx = 0, xy = 0, xz = 0, yy = 0, yz = 0, zz = 0;
   for (let i = 0; i + 2 < pos.length; i += 3) { const dx = pos[i] - cx, dy = pos[i + 1] - cy, dz = pos[i + 2] - cz; xx += dx * dx; xy += dx * dy; xz += dx * dz; yy += dy * dy; yz += dy * dz; zz += dz * dz; }
   const C = [[xx / n, xy / n, xz / n], [xy / n, yy / n, yz / n], [xz / n, yz / n, zz / n]];
-  // Seed power iteration with the COLUMN of C for the max-variance axis — it is dominated by the largest
-  // eigenvector, so it can never be exactly orthogonal to it (a fixed [1,1,1]-style seed can, and would then
-  // stall in the radial eigenspace and wrongly reject a valid bolt).
-  const diag = [C[0][0], C[1][1], C[2][2]];
-  const mi = diag[0] >= diag[1] && diag[0] >= diag[2] ? 0 : diag[1] >= diag[2] ? 1 : 2;
-  const e1 = powerEig(C, [C[0][mi], C[1][mi], C[2][mi]]);
+  const e1 = powerEigBest(C);
   const C2 = C.map((row, i) => row.map((x, j) => x - e1.val * e1.vec[i] * e1.vec[j])); // deflate
-  // Seed e2 from the max-variance column of the DEFLATED matrix (not a fixed ⟂-ish seed, which can lie on
-  // the minor eigenvector for a specific elliptical cross-section and over-report λ2).
-  const d2 = [C2[0][0], C2[1][1], C2[2][2]];
-  const mi2 = d2[0] >= d2[1] && d2[0] >= d2[2] ? 0 : d2[1] >= d2[2] ? 1 : 2;
-  const e2 = powerEig(C2, [C2[0][mi2], C2[1][mi2], C2[2][mi2]]);
+  const e2 = powerEigBest(C2);
   return { dir: e1.vec, ratio: e2.val > 1e-9 ? e1.val / e2.val : Infinity };
 }
-// Radial roundness of a part's cross-section in the (a,c) plane: max/min vertex distance from the centroid.
-// A tessellated circle is ~1.0–1.05; a square reads ~1.41 (corner vs edge-midpoint). Rejects square/elliptical
-// prisms masquerading as bolts.
-function radialRoundness(pos, a, c) {
-  let sa = 0, sc = 0, n = 0;
-  for (let i = 0; i + 2 < pos.length; i += 3) { sa += pos[i + a]; sc += pos[i + c]; n++; }
-  const ca = sa / n, cc = sc / n;
-  let mn = Infinity, mx = 0;
-  for (let i = 0; i + 2 < pos.length; i += 3) { const r = Math.hypot(pos[i + a] - ca, pos[i + c] - cc); if (r < mn) mn = r; if (r > mx) mx = r; }
-  return mn > 1e-6 ? mx / mn : Infinity;
+// Is a part's cross-section in the (a,c) plane a real tessellated CIRCLE (not a square/hex/elliptical prism)?
+// Vertex-radius spread can't tell — every regular polygon has equidistant vertices — so we test the convex
+// hull's RESOLUTION (≥ 8 sides) and how fully it fills the equal-area circle (a square hull fills ~0.64, a
+// hexagon ~0.83, an octagon ~0.90, a real ≥16-gon bolt ~0.99). Gate ≥ 0.85 + ≥ 8 sides.
+function crossSectionCircular(pos, a, c) {
+  const pts = [];
+  for (let i = 0; i + 2 < pos.length; i += 3) pts.push([pos[i + a], pos[i + c]]);
+  const hull = convexHull2d(pts);
+  if (!hull || hull.length < 8) return false;
+  const area = polyArea(hull);
+  let cx = 0, cc2 = 0;
+  for (const p of hull) { cx += p[0]; cc2 += p[1]; }
+  cx /= hull.length; cc2 /= hull.length;
+  let sr = 0;
+  for (const p of hull) sr += Math.hypot(p[0] - cx, p[1] - cc2);
+  const r = sr / hull.length;
+  return r > 1e-6 && area >= 0.85 * Math.PI * r * r;
 }
 // Yaw (rad, about vertical) of the coherent bolt group, or null if the bolts aren't clean horizontal
 // cylinders sharing one axis. Rotating parts by −yaw aligns the bolt axis to a world horizontal axis.
@@ -351,7 +359,7 @@ export function recognizeBasePlate(parts, members) {
   const [ha, hc] = [0, 2];
   if (!bolts.every((p) => {
     const { dir, ratio } = dominantAxis(p.positions);
-    return Math.abs(dir[VERTICAL]) >= 0.996 && ratio >= 3 && radialRoundness(p.positions, ha, hc) < 1.25;
+    return Math.abs(dir[VERTICAL]) >= 0.996 && ratio >= 3 && crossSectionCircular(p.positions, ha, hc);
   })) return null;
   // Try each plate as the frame-defining candidate, largest CONVEX-HULL area first (rotation-invariant — a
   // yaw doesn't change it, so a real base plate still outranks a washer/doubler). Accept the first that fits
@@ -499,10 +507,10 @@ function fitShearPlate(rbolts, cand, n, uAx, vAx, members) {
   const plate = cand.b;
   // Flat plate thin on `n`, both large extents ≥ 3× thickness.
   if (!(plate.ext[vAx] > 3 * plate.ext[n] && plate.ext[uAx] > 3 * plate.ext[n])) return null;
-  const bolts = rbolts.map((rp) => ({ b: partBox(rp), m: boltCentreDia(rp, uAx, vAx) }));
-  // Each bolt near-circular in cross-section (a genuinely non-round bolt → mesh). A rigid yaw is already
-  // undone by the alignment, so this now guards real distortion, not the rotation.
-  if (!bolts.every((x) => Math.max(x.b.ext[uAx], x.b.ext[vAx]) <= 1.15 * Math.min(x.b.ext[uAx], x.b.ext[vAx]))) return null;
+  const bolts = rbolts.map((rp) => ({ rp, b: partBox(rp), m: boltCentreDia(rp, uAx, vAx) }));
+  // Each bolt a real tessellated CIRCLE in cross-section (rejects a square/hex/elliptical prism whose diagonal
+  // would read as the diameter). A rigid yaw is already undone by the alignment, so this guards real distortion.
+  if (!bolts.every((x) => crossSectionCircular(x.rp.positions, uAx, vAx))) return null;
 
   // Rectangularity of the plate's (u,v) FACE (normal = n) — rejects a parallelogram / trapezoid / notch.
   if (!rectOK(cand.rp, n)) return null;
@@ -576,9 +584,11 @@ function fitShearPlate(rbolts, cand, n, uAx, vAx, members) {
   // PER-BOLT reproduction — every bolt's (u,v) must match its engine-expanded cell (row = expectedV[i];
   // column, relative to the group centroid, = (j−(cols−1)/2)·pU), not merely the clustered LINE MEANS. A
   // zigzag whose per-row/column means still average out (Codex) is caught here, as is a clamped pitch.
+  // 2 mm tolerance (was 3): the engine's bolt hole has only ~1 mm radial clearance, so a bolt that reproduces
+  // >2 mm off its cell can prevent assembly. 2 mm still absorbs tessellation + whole-mm pitch rounding.
   for (const x of bolts) {
     const irow = nearIdx(x.m.cc, vLines), jcol = nearIdx(x.m.ca, uLines);
-    if (Math.abs(x.m.cc - expectedV[irow]) > 3 || Math.abs((x.m.ca - uMean) - (jcol - (cols - 1) / 2) * pU) > 3) return null;
+    if (Math.abs(x.m.cc - expectedV[irow]) > 2 || Math.abs((x.m.ca - uMean) - (jcol - (cols - 1) / 2) * pU) > 2) return null;
   }
 
   // The beam a fin plate hangs off (advisory — the consumer overrides `main` with the beam the user applies
