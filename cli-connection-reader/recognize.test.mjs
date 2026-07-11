@@ -405,6 +405,32 @@ test('rejects a NON-UNIFORM 3-column fin plate (gaps average to a pitch but the 
   assert.equal(recognizeShearPlate(parts, ['B']), null); // engine-relative pattern gate catches the moved middle column
 });
 
+test('rejects a TAPERED base plate (frustum — one-face validation would emit a full prism)', () => {
+  // top face 400×200, bottom 300×100, thin in Y — a valid 2×2 anchor grid; must fall back to mesh.
+  const pos = [];
+  for (const [w, d, sy] of [[400, 200, 1], [300, 100, -1]]) for (const sx of [-1, 1]) for (const sz of [-1, 1]) pos.push(sx * w / 2, sy * 12.5, sz * d / 2);
+  const parts = [{ role: 'plate', positions: pos, indices: [] }];
+  for (const x of [-100, 100]) for (const z of [-30, 30]) parts.push(cyl('bolt', x, 0, z, 24, 250));
+  assert.equal(recognizeBasePlate(parts, ['C']), null);
+});
+
+test('rejects a ZIGZAG fin grid whose row/column MEANS still average out (per-bolt reproduction)', () => {
+  // 2 cols × 3 rows, but left column 5 mm low and right column 5 mm high — cluster means stay [-70,0,70]
+  // and every cell is occupied, yet each bolt is 5 mm off its engine cell → reject (was accepted on means).
+  const parts = [box('plate', 0, 0, 0, 10, 210, 200)];
+  for (const [z, dv] of [[-40, -5], [40, 5]]) for (const y of [-70, 0, 70]) parts.push(cylX('bolt', 0, y + dv, z, 20, 60));
+  assert.equal(recognizeShearPlate(parts, ['B']), null);
+});
+
+test('base recipe stays canonical for a NEAR-square plate (400×395) under 90° yaw', () => {
+  const base = [box('plate', 0, 100, 0, 400, 25, 395)];
+  for (const x of [-140, 140]) for (const z of [-137, 137]) base.push(cyl('bolt', x, 100, z, 24, 250)); // 2×2, equal-ish margins
+  const at = (deg) => { const r = recognizeBasePlate(rotateAboutVertical(base, (deg * Math.PI) / 180, 1), ['C']); return r && r.params; };
+  const ref = at(0);
+  assert.ok(ref, 'near-square recognizes');
+  assert.deepEqual(at(90), ref, 'near-square at 90° must give the same width/depth (not flipped)');
+});
+
 test('boundary-loop gate survives web-ifc-style DE-INDEXED meshes (edges matched by position)', () => {
   // web-ifc duplicates vertices per triangle, so no two triangles share an index — the gate must key edges
   // by position or every edge looks like a boundary (this exact bug fell out of the real 2-col fin fixture).
