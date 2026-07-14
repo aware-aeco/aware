@@ -1501,8 +1501,13 @@ if (elements != null) foreach (var eo in elements) {
     string profileRaw = em != null && em.TryGetValue("profile", out var pv) && pv != null ? pv.ToString() : "";
     string profile = string.IsNullOrWhiteSpace(profileRaw) ? "" : profileRaw.ToUpperInvariant().Replace('×','X');
     string group = el.TryGetValue("group", out var gv) && gv != null ? gv.ToString().ToLowerInvariant() : "";
-    string nm  = group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM";
-    string cls = group == "column" ? "2" : group == "brace" ? "4" : "3";
+    // Optional per-element Tekla hints (class/material/name) — the app's own scheme, decided
+    // upstream (e.g. FloLess role->class + profile->material). Honor them when present; else fall
+    // back to the group-based defaults (column->2, brace->4, else beam->3; no material set).
+    var tk = el.TryGetValue("tekla", out var tkv) ? tkv as IDictionary<string,object> : null;
+    string nm  = tk != null && tk.TryGetValue("name",     out var nmh) && nmh != null ? nmh.ToString() : (group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM");
+    string cls = tk != null && tk.TryGetValue("class",    out var clh) && clh != null ? clh.ToString() : (group == "column" ? "2" : group == "brace" ? "4" : "3");
+    string mat = tk != null && tk.TryGetValue("material", out var mth) && mth != null ? mth.ToString() : "";
     string paramProfile = ((int)Math.Round(sw)) + "*" + ((int)Math.Round(sd));
 
     Func<string,bool> tryInsert = ps => {
@@ -1510,6 +1515,7 @@ if (elements != null) foreach (var eo in elements) {
             var b = new Beam(p1, p2);
             b.Profile.ProfileString = ps;
             b.Name = nm; b.Class = cls;
+            if (!string.IsNullOrEmpty(mat)) b.Material.MaterialString = mat;
             b.Position.Depth = Position.DepthEnum.MIDDLE;
             b.Position.Plane = Position.PlaneEnum.MIDDLE;
             b.Position.Rotation = Position.RotationEnum.TOP;
@@ -1520,7 +1526,7 @@ if (elements != null) foreach (var eo in elements) {
     bool inserted = false; string used = profile;
     if (!string.IsNullOrEmpty(profile) && tryInsert(profile)) { inserted = true; native++; }
     else if (tryInsert(paramProfile)) { inserted = true; used = paramProfile + " (placeholder)"; placeholder++; }
-    if (inserted) { created++; if (group == "column") columns++; else if (group != "brace") beams++; profileCounts[used] = (profileCounts.TryGetValue(used, out var pc) ? pc : 0) + 1; }
+    if (inserted) { created++; if (nm == "COLUMN") columns++; else if (nm != "BRACE") beams++; profileCounts[used] = (profileCounts.TryGetValue(used, out var pc) ? pc : 0) + 1; }
     else failed++;
 }
 
