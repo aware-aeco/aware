@@ -1501,13 +1501,15 @@ if (elements != null) foreach (var eo in elements) {
     string profileRaw = em != null && em.TryGetValue("profile", out var pv) && pv != null ? pv.ToString() : "";
     string profile = string.IsNullOrWhiteSpace(profileRaw) ? "" : profileRaw.ToUpperInvariant().Replace('×','X');
     string group = el.TryGetValue("group", out var gv) && gv != null ? gv.ToString().ToLowerInvariant() : "";
-    // Optional per-element Tekla hints (class/material/name) — the app's own scheme, decided
+    // Neutral per-element hints (role / material / teklaClass) — the app's own scheme, decided
     // upstream (e.g. FloLess role->class + profile->material). Honor them when present; else fall
-    // back to the group-based defaults (column->2, brace->4, else beam->3; no material set).
-    var tk = el.TryGetValue("tekla", out var tkv) ? tkv as IDictionary<string,object> : null;
-    string nm  = tk != null && tk.TryGetValue("name",     out var nmh) && nmh != null ? nmh.ToString() : (group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM");
-    string cls = tk != null && tk.TryGetValue("class",    out var clh) && clh != null ? clh.ToString() : (group == "column" ? "2" : group == "brace" ? "4" : "3");
-    string mat = tk != null && tk.TryGetValue("material", out var mth) && mth != null ? mth.ToString() : "";
+    // back to the legacy group-based defaults (column->2, brace->4, else beam->3; no material set).
+    string role = el.TryGetValue("role", out var rlv) && rlv != null ? rlv.ToString().ToLowerInvariant() : "";
+    string nm  = role == "column" ? "COLUMN" : role == "brace" ? "BRACE" : role == "beam" ? "BEAM"
+               : (group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM");
+    string cls = el.TryGetValue("teklaClass", out var tcv) && tcv != null ? tcv.ToString()
+               : (group == "column" ? "2" : group == "brace" ? "4" : "3");
+    string mat = el.TryGetValue("material", out var mtv) && mtv != null ? mtv.ToString() : "";
     string paramProfile = ((int)Math.Round(sw)) + "*" + ((int)Math.Round(sd));
 
     Func<string,bool> tryInsert = ps => {

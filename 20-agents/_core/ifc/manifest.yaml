@@ -41,19 +41,25 @@ commands:
     # needs no `safety:` block. When `output-path` is given the runtime writes that artifact on a
     # real run only (skipped under --dry-run / --simulate), so a preview never touches disk.
     description: |
-      Write a generic 3D scene to a universal IFC4 file. The scene is domain-agnostic: `elements`
-      are members (`from`->`to`) with an optional `section:{w,d}` and a `group` (column/beam/brace
-      -> IfcColumn/IfcBeam/IfcMember); `meta.profile` names the section. Geometry is an extruded
-      rectangle on the member axis. A `kind:"mesh"` element (`positions`+`indices`, e.g. imported
-      connection geometry) is written as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy.
-      Output is deterministic (identical scene -> identical bytes).
+      Write a generic 3D scene to a universal IFC4 file (DesignTransferView). The scene is
+      domain-agnostic: `elements` are members (`from`->`to`) placed on the member axis. Each may carry
+      an `xsection` descriptor (i / channel / angle / rhs / chs / rect) -> the matching parametric
+      IfcProfileDef (falling back to a rectangle for a missing/invalid descriptor); a neutral `role`
+      (column/beam/brace -> IfcColumn/IfcBeam/IfcMember, else the legacy `group`); a `material` grade
+      -> an IfcMaterial association; and the element's `group` colour -> an IfcStyledItem. A
+      `kind:"mesh"` element (`positions`+`indices`) is written as an IfcTriangulatedFaceSet on an
+      IfcBuildingElementProxy. The writer is GENERIC — it applies whatever descriptor the scene
+      carries (the domain owns the meaning). Output is deterministic (identical scene -> identical bytes).
     inputs:
       scene:
         type: object
         description: |
           The 3D scene to export (object) — the SAME schema `viewer-3d` renders. Shape:
           `{ meta:{name,units,up}, groups:[{key,label,color}],
-             elements:[{id,group,kind,from,to,section:{w,d},meta:{profile}}], grids, panels }`.
+             elements:[{id,group,kind,from,to,section:{w,d},meta:{profile},
+                        role?,material?,xsection?,rot?}], grids, panels }`.
+          `xsection` (all mm) is one of: {shape:i,d,bf,tw,tf} | {shape:channel,d,bf,tw,tf} |
+          {shape:angle,d,b,t} | {shape:rhs,d,b,t} | {shape:chs,od,t} | {shape:rect,w,d}.
           The producer owns all domain meaning; the writer is generic. This is the same scene
           `viewer-3d` renders — see its `scene-schema.md` for the canonical, shared contract.
       output-path:
@@ -70,3 +76,4 @@ commands:
         beams:    int       # IfcBeam count (everything not column/brace)
         meshes:   int       # IfcTriangulatedFaceSet proxy count (kind:"mesh" elements)
         profiles: object    # profile-string -> count breakdown (for the caller's report)
+        warnings: array     # [{id,reason}] for elements whose present xsection was rejected -> rectangle fallback

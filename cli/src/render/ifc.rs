@@ -1,24 +1,22 @@
 //! `ifc.write` — write a generic 3D **scene** to a universal **IFC4** file (builtin transport).
 //!
 //! The file-writing sibling of `viewer-3d.render`: it consumes the SAME domain-agnostic scene
-//! (members as `from`->`to` boxes with an optional cross-section + a `group`) and emits an IFC4
-//! STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded rectangular sections placed on
-//! the member axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine.
-//! A `kind:"mesh"` element (tessellated `positions`+`indices`, e.g. an imported connection) is
-//! written as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy — so free-form geometry
-//! that has no parametric section still round-trips into the exported model.
-//! Host-free (no Tekla/Revit): pure serialization + an optional file write, so any composition
-//! that produces a scene can export a universal model to open in Tekla, SDS2, Revit or Navisworks.
+//! (members as `from`->`to` axes with an optional parametric cross-section + a `group`) and emits an
+//! IFC4 STEP (SPF) document — IfcColumn/IfcBeam/IfcMember as extruded profiles placed on the member
+//! axis, under an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Each element may
+//! carry an `xsection` (i/channel/angle/rhs/chs/rect) → the matching parametric IfcProfileDef; a
+//! neutral `role` → the element type; a `material` → an IfcMaterial association; and its `group`'s
+//! colour → an IfcStyledItem. A `kind:"mesh"` element (tessellated `positions`+`indices`) is written
+//! as an IfcTriangulatedFaceSet on an IfcBuildingElementProxy. The writer stays GENERIC: it applies
+//! whatever descriptor the scene carries (the domain — e.g. floless steel — owns the meaning) and
+//! falls back to a rectangle for a missing/invalid `xsection`.
 //!
-//! Output mirrors `viewer-3d.render`: `{ path?, bytes, members, columns, beams }`, with the
-//! `output-path` write gated to a real run (skipped under --dry-run / --simulate). The producer
-//! owns domain meaning AND the output path; the writer stays generic. (Companion to `viewer-3d`,
-//! which renders the same scene to interactive HTML — one scene, two outputs.)
+//! MVD: parametric profile defs are Design Transfer View content, so the header declares
+//! `DesignTransferView_V1.0`.
 //!
-//! Determinism: identical `scene` input -> identical IFC bytes. GlobalIds come from an entity
-//! counter (no randomness), reals use a fixed invariant format, and the SPF stamp is fixed — no
-//! clock, no environment. Proven against the floless `steel-to-ifc` reference (ifcopenshell loads
-//! it: columns vertical, beams horizontal).
+//! Determinism: identical `scene` input -> identical IFC bytes. GlobalIds come from an entity counter
+//! (no randomness), shared colour/material entities are emitted in sorted (BTreeMap) order before the
+//! elements, reals use a fixed invariant format, and the SPF stamp is fixed — no clock, no environment.
 
 use crate::error::AwareError;
 use serde_json::Value;
@@ -27,6 +25,9 @@ use std::fmt::Write as _;
 
 /// Base-64-ish charset for IFC GlobalIds (valid IFC GUID alphabet).
 const B64: &[u8] = b"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_$";
+
+/// A member axis whose horizontal component is within this (squared) tolerance is treated as vertical.
+const VERTICAL_EPSILON_SQ: f64 = 1e-6;
 
 /// A deterministic 22-char IFC GlobalId from an integer counter (no randomness, no clock).
 fn guid(n: i64) -> String {
@@ -101,10 +102,17 @@ fn num(v: Option<&Value>) -> f64 {
     v.and_then(Value::as_f64).unwrap_or(0.0)
 }
 
-/// A deterministic, scene-derived ascii filename for the SPF `FILE_NAME` metadata field (NOT the
-/// on-disk path — the caller owns that via `output-path`). Drops a trailing "(...)" qualifier,
-/// then lowercases ascii alphanumerics joining the rest with single hyphens. Mirrors the proven
-/// reference so the same scene name yields the same in-file metadata.
+/// A finite, strictly-positive f64 from a JSON field, else None (guards profile-def validity).
+fn pos(v: Option<&Value>) -> Option<f64> {
+    v.and_then(Value::as_f64).filter(|x| x.is_finite() && *x > 0.0)
+}
+
+/// 3-vector cross product.
+fn cross(a: (f64, f64, f64), b: (f64, f64, f64)) -> (f64, f64, f64) {
+    (a.1 * b.2 - a.2 * b.1, a.2 * b.0 - a.0 * b.2, a.0 * b.1 - a.1 * b.0)
+}
+
+/// A deterministic, scene-derived ascii filename for the SPF `FILE_NAME` metadata field.
 fn file_name_meta(name: &str) -> String {
     let base = match name.find('(') {
         Some(i) => &name[..i],
@@ -129,6 +137,36 @@ fn file_name_meta(name: &str) -> String {
     format!("{out}.ifc")
 }
 
+/// Parse a `#RRGGBB` hex colour to r,g,b in 0..1. Only 6-digit hex is accepted (anything else → None,
+/// i.e. no style rather than a fabricated colour).
+fn parse_hex(s: &str) -> Option<(f64, f64, f64)> {
+    let h = s.trim().strip_prefix('#')?;
+    if h.len() != 6 || !h.bytes().all(|b| b.is_ascii_hexdigit()) {
+        return None;
+    }
+    let c = |a: usize| u8::from_str_radix(&h[a..a + 2], 16).ok().map(|v| v as f64 / 255.0);
+    Some((c(0)?, c(2)?, c(4)?))
+}
+
+/// Resolve an element's colour via its `group` → the scene `groups` colour map. Returns the
+/// normalized hex key (upper) + the rgb, or None when the group has no valid `#RRGGBB` colour.
+fn resolve_color(el: &Value, group_colors: &BTreeMap<String, String>) -> Option<(String, (f64, f64, f64))> {
+    let g = el.get("group").and_then(Value::as_str)?;
+    let hex = group_colors.get(g)?;
+    let rgb = parse_hex(hex)?;
+    Some((hex.trim().to_uppercase(), rgb))
+}
+
+/// Resolve an element's material to (dedupe key, display name), or None when empty. Dedupe on a
+/// trim+upper key; keep the trimmed original as the display name.
+fn resolve_material(el: &Value) -> Option<(String, String)> {
+    let m = el.get("material").and_then(Value::as_str)?.trim();
+    if m.is_empty() {
+        return None;
+    }
+    Some((m.to_uppercase(), m.to_string()))
+}
+
 /// SPF entity emitter: assigns sequential `#ids` and accumulates the DATA section.
 struct Spf {
     id: i64,
@@ -151,16 +189,104 @@ impl Spf {
     }
 }
 
+/// Emit the parametric profile for a member's `xsection`, positioned at `pos2d`. Falls back to an
+/// `IfcRectangleProfileDef(w,d)` for a missing / unknown / IFC-WHERE-invalid descriptor. Returns the
+/// profile entity id + an optional neutral warning reason (set only when a *present* xsection was
+/// rejected). The generic writer never emits a schema-invalid profile.
+fn emit_profile(
+    spf: &mut Spf,
+    xsection: Option<&Value>,
+    w: f64,
+    d: f64,
+    name: &str,
+    pos2d: i64,
+) -> (i64, Option<String>) {
+    let rect = |spf: &mut Spf, ww: f64, dd: f64| {
+        spf.emit(&format!(
+            "IFCRECTANGLEPROFILEDEF(.AREA.,{},#{pos2d},{},{})",
+            s_lit(name),
+            r(ww),
+            r(dd)
+        ))
+    };
+    let xs = match xsection.and_then(Value::as_object) {
+        Some(o) => o,
+        None => return (rect(spf, w, d), None), // no descriptor → today's rectangle (backward compat)
+    };
+    let f = |k: &str| pos(xs.get(k));
+    let bad = |reason: &str| Some(format!("{name}: {reason} — rectangle fallback"));
+    match xs.get("shape").and_then(Value::as_str).unwrap_or("") {
+        "i" | "channel" => {
+            let (d0, bf, tw, tf) = (f("d"), f("bf"), f("tw"), f("tf"));
+            if let (Some(d0), Some(bf), Some(tw), Some(tf)) = (d0, bf, tw, tf) {
+                if 2.0 * tf < d0 && tw < bf {
+                    let ent = if xs.get("shape").and_then(Value::as_str) == Some("i") {
+                        // IfcIShapeProfileDef(_,_,Position,OverallWidth,OverallDepth,WebThk,FlangeThk,Fillet,FlangeEdge,FlangeSlope)
+                        format!("IFCISHAPEPROFILEDEF(.AREA.,{},#{pos2d},{},{},{},{},$,$,$)", s_lit(name), r(bf), r(d0), r(tw), r(tf))
+                    } else {
+                        // IfcUShapeProfileDef(_,_,Position,Depth,FlangeWidth,WebThk,FlangeThk,Fillet,EdgeRadius,FlangeSlope)
+                        format!("IFCUSHAPEPROFILEDEF(.AREA.,{},#{pos2d},{},{},{},{},$,$,$)", s_lit(name), r(d0), r(bf), r(tw), r(tf))
+                    };
+                    return (spf.emit(&ent), None);
+                }
+            }
+            (rect(spf, w, d), bad("invalid I/channel dims"))
+        }
+        "angle" => {
+            if let (Some(d0), Some(b), Some(t)) = (f("d"), f("b"), f("t")) {
+                if t < d0 && t < b {
+                    // IfcLShapeProfileDef(_,_,Position,Depth,Width,Thickness,Fillet,EdgeRadius,LegSlope)
+                    return (
+                        spf.emit(&format!("IFCLSHAPEPROFILEDEF(.AREA.,{},#{pos2d},{},{},{},$,$,$)", s_lit(name), r(d0), r(b), r(t))),
+                        None,
+                    );
+                }
+            }
+            (rect(spf, w, d), bad("invalid angle dims"))
+        }
+        "rhs" => {
+            if let (Some(d0), Some(b), Some(t)) = (f("d"), f("b"), f("t")) {
+                if t < 0.5 * d0.min(b) {
+                    // IfcRectangleHollowProfileDef(_,_,Position,XDim,YDim,WallThickness,InnerFillet,OuterFillet)
+                    return (
+                        spf.emit(&format!("IFCRECTANGLEHOLLOWPROFILEDEF(.AREA.,{},#{pos2d},{},{},{},$,$)", s_lit(name), r(b), r(d0), r(t))),
+                        None,
+                    );
+                }
+            }
+            (rect(spf, w, d), bad("invalid rhs dims"))
+        }
+        "chs" => {
+            if let (Some(od), Some(t)) = (f("od"), f("t")) {
+                let radius = od / 2.0;
+                if t < radius {
+                    // IfcCircleHollowProfileDef(_,_,Position,Radius,WallThickness)
+                    return (
+                        spf.emit(&format!("IFCCIRCLEHOLLOWPROFILEDEF(.AREA.,{},#{pos2d},{},{})", s_lit(name), r(radius), r(t))),
+                        None,
+                    );
+                }
+            }
+            (rect(spf, w, d), bad("invalid chs dims"))
+        }
+        "rect" => {
+            let ww = f("w").unwrap_or(w);
+            let dd = f("d").unwrap_or(d);
+            (rect(spf, ww, dd), None)
+        }
+        other => (rect(spf, w, d), bad(&format!("unknown xsection shape '{other}'"))),
+    }
+}
+
 /// Emit a tessellated `kind:"mesh"` element as an IfcTriangulatedFaceSet on an
-/// IfcBuildingElementProxy, placed at `place` (an identity local placement, so the mesh's
-/// `positions` are absolute world mm). Returns the proxy's entity id, or `None` when
-/// `positions`/`indices` are missing or malformed (flat xyz triples + whole triangles, every
-/// index in range). IFC coordinate indices are **1-based**, so each 0-based input index is +1'd.
-fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64) -> Option<i64> {
-    let pos = el.get("positions").and_then(Value::as_array)?;
+/// IfcBuildingElementProxy at `place` (identity local placement → absolute world mm). Attaches an
+/// `IfcStyledItem` to the face set when `style` resolves. Returns the proxy id, or None when
+/// positions/indices are missing/malformed.
+fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64, style: Option<i64>) -> Option<i64> {
+    let posarr = el.get("positions").and_then(Value::as_array)?;
     let idx = el.get("indices").and_then(Value::as_array)?;
-    let npts = pos.len() / 3;
-    if npts < 3 || pos.len() % 3 != 0 || idx.len() < 3 || idx.len() % 3 != 0 {
+    let npts = posarr.len() / 3;
+    if npts < 3 || posarr.len() % 3 != 0 || idx.len() < 3 || idx.len() % 3 != 0 {
         return None;
     }
     let mut pts = String::new();
@@ -171,9 +297,9 @@ fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64) -> Option<i64> {
         let _ = write!(
             pts,
             "({},{},{})",
-            r(num(pos.get(i * 3))),
-            r(num(pos.get(i * 3 + 1))),
-            r(num(pos.get(i * 3 + 2)))
+            r(num(posarr.get(i * 3))),
+            r(num(posarr.get(i * 3 + 1))),
+            r(num(posarr.get(i * 3 + 2)))
         );
     }
     let mut tris = String::new();
@@ -181,8 +307,7 @@ fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64) -> Option<i64> {
         let a = idx.get(t * 3).and_then(Value::as_i64)?;
         let b = idx.get(t * 3 + 1).and_then(Value::as_i64)?;
         let c = idx.get(t * 3 + 2).and_then(Value::as_i64)?;
-        if a < 0 || b < 0 || c < 0 || a as usize >= npts || b as usize >= npts || c as usize >= npts
-        {
+        if a < 0 || b < 0 || c < 0 || a as usize >= npts || b as usize >= npts || c as usize >= npts {
             return None; // an out-of-range index would make the SPF invalid — reject the element
         }
         if t > 0 {
@@ -191,11 +316,11 @@ fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64) -> Option<i64> {
         let _ = write!(tris, "({},{},{})", a + 1, b + 1, c + 1); // IFC CoordIndex is 1-based
     }
     let plist = spf.emit(&format!("IFCCARTESIANPOINTLIST3D(({pts}))"));
-    // IfcTriangulatedFaceSet(Coordinates, Normals, Closed, CoordIndex, PnIndex).
     let tfs = spf.emit(&format!("IFCTRIANGULATEDFACESET(#{plist},$,$,({tris}),$)"));
-    let shape = spf.emit(&format!(
-        "IFCSHAPEREPRESENTATION(#{ctx},'Body','Tessellation',(#{tfs}))"
-    ));
+    if let Some(st) = style {
+        spf.emit(&format!("IFCSTYLEDITEM(#{tfs},(#{st}),$)"));
+    }
+    let shape = spf.emit(&format!("IFCSHAPEREPRESENTATION(#{ctx},'Body','Tessellation',(#{tfs}))"));
     let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
     let name = el.get("id").and_then(Value::as_str).unwrap_or("Mesh");
     let g = guid(spf.id);
@@ -206,12 +331,21 @@ fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64) -> Option<i64> {
     )))
 }
 
-/// Build the full IFC4 SPF document from a scene object. Returns `(ifc_text, members, columns,
-/// beams, meshes, profiles)`. Pure (no IO) so it is directly unit-testable. `members` is the count
-/// of placed elements (mesh proxies included); `columns`/`beams` are per-group sub-counts (braces
-/// count toward neither), `meshes` counts tessellated `kind:"mesh"` elements; `profiles` is a
-/// profile-string -> count breakdown for the caller's report.
-fn build_ifc(scene: &Value) -> (String, usize, i64, i64, i64, BTreeMap<String, i64>) {
+/// The result of building an IFC document (pure — no IO).
+struct BuildResult {
+    doc: String,
+    members: usize,
+    columns: i64,
+    beams: i64,
+    meshes: i64,
+    profiles: BTreeMap<String, i64>,
+    /// Neutral, deterministic (scene-order) warnings for elements whose PRESENT `xsection` was
+    /// rejected and fell back to a rectangle. Empty for generic/rect scenes.
+    warnings: Vec<(String, String)>,
+}
+
+/// Build the full IFC4 SPF document from a scene object. Pure (no IO) so it is directly unit-testable.
+fn build_ifc(scene: &Value) -> BuildResult {
     let proj_name = scene
         .get("meta")
         .and_then(Value::as_object)
@@ -221,216 +355,231 @@ fn build_ifc(scene: &Value) -> (String, usize, i64, i64, i64, BTreeMap<String, i
 
     let mut spf = Spf::new();
 
-    // ── shared geometry primitives + the spatial spine ──
+    // ── Phase 1: shared geometry primitives + the spatial spine ──
     let origin3d = spf.emit("IFCCARTESIANPOINT((0.,0.,0.))");
     let dir_z = spf.emit("IFCDIRECTION((0.,0.,1.))");
     let dir_x = spf.emit("IFCDIRECTION((1.,0.,0.))");
-    let world_axes = spf.emit(&format!(
-        "IFCAXIS2PLACEMENT3D(#{origin3d},#{dir_z},#{dir_x})"
-    ));
-    let ctx = spf.emit(&format!(
-        "IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.0E-5,#{world_axes},$)"
-    ));
+    let world_axes = spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{origin3d},#{dir_z},#{dir_x})"));
+    let ctx = spf.emit(&format!("IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.0E-5,#{world_axes},$)"));
     let origin2d = spf.emit("IFCCARTESIANPOINT((0.,0.))");
     let pos2d = spf.emit(&format!("IFCAXIS2PLACEMENT2D(#{origin2d},$)"));
     let extrude_pos = spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{origin3d},$,$)"));
     let unit_l = spf.emit("IFCSIUNIT(*,.LENGTHUNIT.,.MILLI.,.METRE.)");
     let unit_a = spf.emit("IFCSIUNIT(*,.AREAUNIT.,$,.SQUARE_METRE.)");
     let unit_v = spf.emit("IFCSIUNIT(*,.VOLUMEUNIT.,$,.CUBIC_METRE.)");
-    let units = spf.emit(&format!(
-        "IFCUNITASSIGNMENT((#{unit_l},#{unit_a},#{unit_v}))"
-    ));
+    let units = spf.emit(&format!("IFCUNITASSIGNMENT((#{unit_l},#{unit_a},#{unit_v}))"));
     let world_place = spf.emit(&format!("IFCLOCALPLACEMENT($,#{world_axes})"));
     let g = guid(spf.id);
-    let project = spf.emit(&format!(
-        "IFCPROJECT({},$,{},$,$,$,$,(#{ctx}),#{units})",
-        s_lit(&g),
-        s_lit(proj_name)
-    ));
+    let project = spf.emit(&format!("IFCPROJECT({},$,{},$,$,$,$,(#{ctx}),#{units})", s_lit(&g), s_lit(proj_name)));
     let g = guid(spf.id);
-    let site = spf.emit(&format!(
-        "IFCSITE({},$,'Site',$,$,#{world_place},$,$,.ELEMENT.,$,$,$,$,$)",
-        s_lit(&g)
-    ));
+    let site = spf.emit(&format!("IFCSITE({},$,'Site',$,$,#{world_place},$,$,.ELEMENT.,$,$,$,$,$)", s_lit(&g)));
     let site_place = spf.emit(&format!("IFCLOCALPLACEMENT(#{world_place},#{world_axes})"));
     let g = guid(spf.id);
-    let building = spf.emit(&format!(
-        "IFCBUILDING({},$,'Building',$,$,#{site_place},$,$,.ELEMENT.,$,$,$)",
-        s_lit(&g)
-    ));
+    let building = spf.emit(&format!("IFCBUILDING({},$,'Building',$,$,#{site_place},$,$,.ELEMENT.,$,$,$)", s_lit(&g)));
     let bldg_place = spf.emit(&format!("IFCLOCALPLACEMENT(#{site_place},#{world_axes})"));
     let g = guid(spf.id);
-    let storey = spf.emit(&format!(
-        "IFCBUILDINGSTOREY({},$,'Storey',$,$,#{bldg_place},$,$,.ELEMENT.,0.)",
-        s_lit(&g)
-    ));
+    let storey = spf.emit(&format!("IFCBUILDINGSTOREY({},$,'Storey',$,$,#{bldg_place},$,$,.ELEMENT.,0.)", s_lit(&g)));
     let g = guid(spf.id);
-    spf.emit(&format!(
-        "IFCRELAGGREGATES({},$,$,$,#{project},(#{site}))",
-        s_lit(&g)
-    ));
+    spf.emit(&format!("IFCRELAGGREGATES({},$,$,$,#{project},(#{site}))", s_lit(&g)));
     let g = guid(spf.id);
-    spf.emit(&format!(
-        "IFCRELAGGREGATES({},$,$,$,#{site},(#{building}))",
-        s_lit(&g)
-    ));
+    spf.emit(&format!("IFCRELAGGREGATES({},$,$,$,#{site},(#{building}))", s_lit(&g)));
     let g = guid(spf.id);
-    spf.emit(&format!(
-        "IFCRELAGGREGATES({},$,$,$,#{building},(#{storey}))",
-        s_lit(&g)
-    ));
+    spf.emit(&format!("IFCRELAGGREGATES({},$,$,$,#{building},(#{storey}))", s_lit(&g)));
 
-    // ── one IFC element per scene element ──
+    // group -> colour (first-seen wins on a duplicate key).
+    let mut group_colors: BTreeMap<String, String> = BTreeMap::new();
+    if let Some(groups) = scene.get("groups").and_then(Value::as_array) {
+        for go in groups {
+            if let (Some(k), Some(c)) = (go.get("key").and_then(Value::as_str), go.get("color").and_then(Value::as_str)) {
+                group_colors.entry(k.to_string()).or_insert_with(|| c.to_string());
+            }
+        }
+    }
+
+    let empty: Vec<Value> = Vec::new();
+    let elements = scene.get("elements").and_then(Value::as_array).unwrap_or(&empty);
+
+    // Pre-scan for the distinct colours + materials actually used (deterministic BTreeMap order).
+    let mut colors: BTreeMap<String, (f64, f64, f64)> = BTreeMap::new();
+    let mut materials: BTreeMap<String, String> = BTreeMap::new();
+    for el in elements {
+        if let Some((hk, rgb)) = resolve_color(el, &group_colors) {
+            colors.entry(hk).or_insert(rgb);
+        }
+        if let Some((mk, disp)) = resolve_material(el) {
+            materials.entry(mk).or_insert(disp);
+        }
+    }
+
+    // ── Phase 2a: shared, deduped colour styles ──
+    let mut color_style: BTreeMap<String, i64> = BTreeMap::new();
+    for (hk, (cr, cg, cb)) in &colors {
+        let rgb = spf.emit(&format!("IFCCOLOURRGB($,{},{},{})", r(*cr), r(*cg), r(*cb)));
+        let shade = spf.emit(&format!("IFCSURFACESTYLESHADING(#{rgb},$)"));
+        let style = spf.emit(&format!("IFCSURFACESTYLE($,.BOTH.,(#{shade}))"));
+        color_style.insert(hk.clone(), style);
+    }
+    // ── Phase 2b: shared, deduped materials ──
+    let mut mat_id: BTreeMap<String, i64> = BTreeMap::new();
+    for (mk, disp) in &materials {
+        let mid = spf.emit(&format!("IFCMATERIAL({},$,$)", s_lit(disp)));
+        mat_id.insert(mk.clone(), mid);
+    }
+
+    // ── Phase 3: one IFC element per scene element ──
     let mut elem_ids: Vec<i64> = Vec::new();
     let mut columns = 0i64;
     let mut beams = 0i64;
     let mut meshes = 0i64;
     let mut profile_counts: BTreeMap<String, i64> = BTreeMap::new();
+    let mut mat_members: BTreeMap<String, Vec<i64>> = BTreeMap::new();
+    let mut warnings: Vec<(String, String)> = Vec::new();
 
-    if let Some(elements) = scene.get("elements").and_then(Value::as_array) {
-        for el in elements {
-            // A tessellated mesh element (e.g. an imported connection): `positions`+`indices`, no
-            // parametric section. Emit it as an IfcTriangulatedFaceSet proxy and move on — it never
-            // falls through to the extruded-box path below.
-            let is_mesh = el.get("kind").and_then(Value::as_str) == Some("mesh")
-                || el.get("positions").is_some();
-            if is_mesh {
-                if let Some(elem) = emit_mesh(&mut spf, el, bldg_place, ctx) {
-                    elem_ids.push(elem);
-                    meshes += 1;
-                    let profile = el
-                        .get("meta")
-                        .and_then(Value::as_object)
-                        .and_then(|m| m.get("profile"))
-                        .and_then(Value::as_str)
-                        .unwrap_or("MESH")
-                        .to_string();
-                    *profile_counts.entry(profile).or_insert(0) += 1;
+    for el in elements {
+        let elid = el.get("id").and_then(Value::as_str).unwrap_or("").to_string();
+        let style = resolve_color(el, &group_colors).and_then(|(hk, _)| color_style.get(&hk).copied());
+        let matkey = resolve_material(el).map(|(mk, _)| mk);
+
+        // A tessellated mesh element (e.g. an imported connection).
+        let is_mesh = el.get("kind").and_then(Value::as_str) == Some("mesh") || el.get("positions").is_some();
+        if is_mesh {
+            if let Some(elem) = emit_mesh(&mut spf, el, bldg_place, ctx, style) {
+                elem_ids.push(elem);
+                meshes += 1;
+                let profile = el
+                    .get("meta")
+                    .and_then(Value::as_object)
+                    .and_then(|m| m.get("profile"))
+                    .and_then(Value::as_str)
+                    .unwrap_or("MESH")
+                    .to_string();
+                *profile_counts.entry(profile).or_insert(0) += 1;
+                if let Some(mk) = matkey {
+                    mat_members.entry(mk).or_default().push(elem);
                 }
-                continue;
             }
-            let from = el.get("from").and_then(Value::as_array);
-            let to = el.get("to").and_then(Value::as_array);
-            let (from, to) = match (from, to) {
-                (Some(f), Some(t)) if f.len() >= 3 && t.len() >= 3 => (f, t),
-                _ => continue,
-            };
-            let (x1, y1, z1) = (num(from.first()), num(from.get(1)), num(from.get(2)));
-            let (x2, y2, z2) = (num(to.first()), num(to.get(1)), num(to.get(2)));
-            let (dx, dy, dz) = (x2 - x1, y2 - y1, z2 - z1);
-            let len = (dx * dx + dy * dy + dz * dz).sqrt();
-            if len < 1e-6 {
-                continue; // degenerate member
-            }
-            let (zx, zy, zz) = (dx / len, dy / len, dz / len);
-            // a stable perpendicular (local X): cross(ref, Z), ref = global Z unless ~parallel.
-            let (rx, ry, rz) = if zz.abs() > 0.9 {
-                (1.0, 0.0, 0.0)
-            } else {
-                (0.0, 0.0, 1.0)
-            };
-            let (mut xx, mut xy, mut xz) =
-                (ry * zz - rz * zy, rz * zx - rx * zz, rx * zy - ry * zx);
-            let xl = (xx * xx + xy * xy + xz * xz).sqrt();
-            if xl < 1e-9 {
-                xx = 1.0;
-                xy = 0.0;
-                xz = 0.0;
-            } else {
-                xx /= xl;
-                xy /= xl;
-                xz /= xl;
-            }
+            continue;
+        }
 
-            let sec = el.get("section").and_then(Value::as_object);
-            let mut w = sec
-                .and_then(|s| s.get("w"))
-                .and_then(Value::as_f64)
-                .unwrap_or(100.0);
-            let mut d = sec
-                .and_then(|s| s.get("d"))
-                .and_then(Value::as_f64)
-                .unwrap_or(100.0);
-            if w <= 0.0 {
-                w = 100.0;
-            }
-            if d <= 0.0 {
-                d = 100.0;
-            }
-            let profile = el
-                .get("meta")
-                .and_then(Value::as_object)
-                .and_then(|m| m.get("profile"))
-                .and_then(Value::as_str)
-                .unwrap_or("RECT")
-                .to_string();
-            let group = el
-                .get("group")
-                .and_then(Value::as_str)
-                .unwrap_or("")
-                .to_lowercase();
-            let name = el
-                .get("id")
-                .and_then(Value::as_str)
-                .unwrap_or(&profile)
-                .to_string();
+        let from = el.get("from").and_then(Value::as_array);
+        let to = el.get("to").and_then(Value::as_array);
+        let (from, to) = match (from, to) {
+            (Some(f), Some(t)) if f.len() >= 3 && t.len() >= 3 => (f, t),
+            _ => continue,
+        };
+        let (x1, y1, z1) = (num(from.first()), num(from.get(1)), num(from.get(2)));
+        let (x2, y2, z2) = (num(to.first()), num(to.get(1)), num(to.get(2)));
+        let (dx, dy, dz) = (x2 - x1, y2 - y1, z2 - z1);
+        let len = (dx * dx + dy * dy + dz * dz).sqrt();
+        if len < 1e-6 {
+            continue; // degenerate member
+        }
+        let (zx, zy, zz) = (dx / len, dy / len, dz / len);
+        // Local frame: Z = member axis; profile Y (= Z × X) = world-up, so an I-shape web is vertical
+        // for beams and columns take a fixed +Y-depth orientation (matches the FloLess 3D viewer).
+        let (xx, xy, xz) = if zx * zx + zy * zy <= VERTICAL_EPSILON_SQ {
+            // Near-vertical: seed local X = world +X (Y = Z × X is right-handed for both +Z and −Z).
+            (1.0, 0.0, 0.0)
+        } else {
+            // General: local Y = normalize(world-up projected onto the ⟂-Z plane); local X = Y × Z.
+            let dot = zz; // up·z
+            let (mut yx, mut yy, mut yz) = (-dot * zx, -dot * zy, 1.0 - dot * zz);
+            let yl = (yx * yx + yy * yy + yz * yz).sqrt();
+            yx /= yl;
+            yy /= yl;
+            yz /= yl;
+            cross((yx, yy, yz), (zx, zy, zz)) // x = y × z
+        };
 
-            let p1 = spf.emit(&format!(
-                "IFCCARTESIANPOINT(({},{},{}))",
-                r(x1),
-                r(y1),
-                r(z1)
-            ));
-            let az = spf.emit(&format!("IFCDIRECTION(({},{},{}))", r(zx), r(zy), r(zz)));
-            let ax = spf.emit(&format!("IFCDIRECTION(({},{},{}))", r(xx), r(xy), r(xz)));
-            let a2p = spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{p1},#{az},#{ax})"));
-            let place = spf.emit(&format!("IFCLOCALPLACEMENT(#{bldg_place},#{a2p})"));
-            let prof = spf.emit(&format!(
-                "IFCRECTANGLEPROFILEDEF(.AREA.,{},#{pos2d},{},{})",
-                s_lit(&profile),
-                r(w),
-                r(d)
-            ));
-            let solid = spf.emit(&format!(
-                "IFCEXTRUDEDAREASOLID(#{prof},#{extrude_pos},#{dir_z},{})",
-                r(len)
-            ));
-            let shape = spf.emit(&format!(
-                "IFCSHAPEREPRESENTATION(#{ctx},'Body','SweptSolid',(#{solid}))"
-            ));
-            let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
-            let g = guid(spf.id);
-            let (ifc_type, pdt) = if group == "column" {
-                columns += 1;
-                ("IFCCOLUMN", ".COLUMN.")
-            } else if group == "brace" {
-                ("IFCMEMBER", ".BRACE.")
-            } else {
-                beams += 1;
-                ("IFCBEAM", ".BEAM.")
-            };
-            *profile_counts.entry(profile.clone()).or_insert(0) += 1;
-            let elem = spf.emit(&format!(
-                "{ifc_type}({},$,{},$,{},#{place},#{pds},$,{pdt})",
-                s_lit(&g),
-                s_lit(&name),
-                s_lit(&profile)
-            ));
-            elem_ids.push(elem);
+        let sec = el.get("section").and_then(Value::as_object);
+        let mut w = sec.and_then(|s| s.get("w")).and_then(Value::as_f64).unwrap_or(100.0);
+        let mut d = sec.and_then(|s| s.get("d")).and_then(Value::as_f64).unwrap_or(100.0);
+        if w <= 0.0 {
+            w = 100.0;
+        }
+        if d <= 0.0 {
+            d = 100.0;
+        }
+        let profile = el
+            .get("meta")
+            .and_then(Value::as_object)
+            .and_then(|m| m.get("profile"))
+            .and_then(Value::as_str)
+            .unwrap_or("RECT")
+            .to_string();
+        let group = el.get("group").and_then(Value::as_str).unwrap_or("").to_lowercase();
+        let role = el.get("role").and_then(Value::as_str).unwrap_or("").to_lowercase();
+        let name = el.get("id").and_then(Value::as_str).unwrap_or(&profile).to_string();
+
+        let p1 = spf.emit(&format!("IFCCARTESIANPOINT(({},{},{}))", r(x1), r(y1), r(z1)));
+        let az = spf.emit(&format!("IFCDIRECTION(({},{},{}))", r(zx), r(zy), r(zz)));
+        let ax = spf.emit(&format!("IFCDIRECTION(({},{},{}))", r(xx), r(xy), r(xz)));
+        let a2p = spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{p1},#{az},#{ax})"));
+        let place = spf.emit(&format!("IFCLOCALPLACEMENT(#{bldg_place},#{a2p})"));
+
+        // Section roll: `rot` is scene-space degrees (already reflection-corrected upstream). Apply
+        // ONCE, positive, via the profile's 2D RefDirection. rot 0/absent → the shared identity pos2d.
+        let rot = el.get("rot").and_then(Value::as_f64).unwrap_or(0.0);
+        let prof_pos = if rot.abs() > 1e-9 {
+            let th = rot.to_radians();
+            let rd = spf.emit(&format!("IFCDIRECTION(({},{}))", r(th.cos()), r(th.sin())));
+            spf.emit(&format!("IFCAXIS2PLACEMENT2D(#{origin2d},#{rd})"))
+        } else {
+            pos2d
+        };
+
+        let (prof, warn) = emit_profile(&mut spf, el.get("xsection"), w, d, &profile, prof_pos);
+        if let Some(reason) = warn {
+            warnings.push((elid.clone(), reason));
+        }
+        let solid = spf.emit(&format!("IFCEXTRUDEDAREASOLID(#{prof},#{extrude_pos},#{dir_z},{})", r(len)));
+        if let Some(st) = style {
+            spf.emit(&format!("IFCSTYLEDITEM(#{solid},(#{st}),$)"));
+        }
+        let shape = spf.emit(&format!("IFCSHAPEREPRESENTATION(#{ctx},'Body','SweptSolid',(#{solid}))"));
+        let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
+        let g = guid(spf.id);
+        // Element type from the neutral `role`; fall back to the legacy `group` when role is absent.
+        let is_col = if role.is_empty() { group == "column" } else { role == "column" };
+        let is_brace = if role.is_empty() { group == "brace" } else { role == "brace" };
+        let (ifc_type, pdt) = if is_col {
+            columns += 1;
+            ("IFCCOLUMN", ".COLUMN.")
+        } else if is_brace {
+            ("IFCMEMBER", ".BRACE.")
+        } else {
+            beams += 1;
+            ("IFCBEAM", ".BEAM.")
+        };
+        *profile_counts.entry(profile.clone()).or_insert(0) += 1;
+        let elem = spf.emit(&format!(
+            "{ifc_type}({},$,{},$,{},#{place},#{pds},$,{pdt})",
+            s_lit(&g),
+            s_lit(&name),
+            s_lit(&profile)
+        ));
+        elem_ids.push(elem);
+        if let Some(mk) = matkey {
+            mat_members.entry(mk).or_default().push(elem);
         }
     }
 
+    // ── Phase 4: spatial containment ──
     if !elem_ids.is_empty() {
-        let refs = elem_ids
-            .iter()
-            .map(|i| format!("#{i}"))
-            .collect::<Vec<_>>()
-            .join(",");
+        let refs = elem_ids.iter().map(|i| format!("#{i}")).collect::<Vec<_>>().join(",");
         let g = guid(spf.id);
-        spf.emit(&format!(
-            "IFCRELCONTAINEDINSPATIALSTRUCTURE({},$,$,$,({refs}),#{storey})",
-            s_lit(&g)
-        ));
+        spf.emit(&format!("IFCRELCONTAINEDINSPATIALSTRUCTURE({},$,$,$,({refs}),#{storey})", s_lit(&g)));
+    }
+
+    // ── Phase 5: material associations (from emitted products only; never an empty RelatedObjects) ──
+    for (mk, members) in &mat_members {
+        if members.is_empty() {
+            continue;
+        }
+        let Some(mid) = mat_id.get(mk) else { continue };
+        let refs = members.iter().map(|i| format!("#{i}")).collect::<Vec<_>>().join(",");
+        let g = guid(spf.id);
+        spf.emit(&format!("IFCRELASSOCIATESMATERIAL({},$,$,$,({refs}),#{mid})", s_lit(&g)));
     }
 
     // ── assemble the SPF document ──
@@ -438,12 +587,9 @@ fn build_ifc(scene: &Value) -> (String, usize, i64, i64, i64, BTreeMap<String, i
     let mut doc = String::new();
     doc.push_str("ISO-10303-21;\n");
     doc.push_str("HEADER;\n");
-    doc.push_str("FILE_DESCRIPTION(('ViewDefinition [ReferenceView_V1.2]'),'2;1');\n");
-    // Fixed stamp: deterministic output (no clock in determinism-sensitive content).
-    let _ = writeln!(
-        doc,
-        "FILE_NAME('{fname}','1970-01-01T00:00:00',(''),(''),'AWARE ifc','AWARE','');"
-    );
+    // DesignTransferView: the profile defs are parametric geometry (outside Reference View).
+    doc.push_str("FILE_DESCRIPTION(('ViewDefinition [DesignTransferView_V1.0]'),'2;1');\n");
+    let _ = writeln!(doc, "FILE_NAME('{fname}','1970-01-01T00:00:00',(''),(''),'AWARE ifc','AWARE','');");
     doc.push_str("FILE_SCHEMA(('IFC4'));\n");
     doc.push_str("ENDSEC;\n");
     doc.push_str("DATA;\n");
@@ -451,14 +597,21 @@ fn build_ifc(scene: &Value) -> (String, usize, i64, i64, i64, BTreeMap<String, i
     doc.push_str("ENDSEC;\n");
     doc.push_str("END-ISO-10303-21;\n");
 
-    (doc, elem_ids.len(), columns, beams, meshes, profile_counts)
+    BuildResult {
+        doc,
+        members: elem_ids.len(),
+        columns,
+        beams,
+        meshes,
+        profiles: profile_counts,
+        warnings,
+    }
 }
 
 /// `ifc.write` — write a generic 3D scene to an IFC4 file. Mirrors `viewer-3d.render`'s contract:
-/// `{ path?, bytes, members, columns, beams, profiles }`, with the `output-path` write gated to a
-/// real run.
+/// `{ path?, bytes, members, columns, beams, meshes, profiles, warnings }`, with the `output-path`
+/// write gated to a real run.
 pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
-    // The scene is the payload; require an object so there is something to serialize.
     let scene = match args.get("scene") {
         Some(v @ Value::Object(_)) => v,
         None | Some(Value::Null) => {
@@ -474,20 +627,30 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
         }
     };
 
-    let (ifc, members, columns, beams, meshes, profiles) = build_ifc(scene);
+    let built = build_ifc(scene);
 
     let mut out = serde_json::Map::new();
-    out.insert("bytes".into(), Value::from(ifc.len() as u64));
-    out.insert("members".into(), Value::from(members as u64));
-    out.insert("columns".into(), Value::from(columns));
-    out.insert("beams".into(), Value::from(beams));
-    out.insert("meshes".into(), Value::from(meshes));
+    out.insert("bytes".into(), Value::from(built.doc.len() as u64));
+    out.insert("members".into(), Value::from(built.members as u64));
+    out.insert("columns".into(), Value::from(built.columns));
+    out.insert("beams".into(), Value::from(built.beams));
+    out.insert("meshes".into(), Value::from(built.meshes));
     out.insert(
         "profiles".into(),
-        Value::Object(
-            profiles
+        Value::Object(built.profiles.into_iter().map(|(k, v)| (k, Value::from(v))).collect()),
+    );
+    out.insert(
+        "warnings".into(),
+        Value::Array(
+            built
+                .warnings
                 .into_iter()
-                .map(|(k, v)| (k, Value::from(v)))
+                .map(|(id, reason)| {
+                    let mut m = serde_json::Map::new();
+                    m.insert("id".into(), Value::String(id));
+                    m.insert("reason".into(), Value::String(reason));
+                    Value::Object(m)
+                })
                 .collect(),
         ),
     );
@@ -498,17 +661,14 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
         .map(str::trim)
         .filter(|s| !s.is_empty())
     {
-        // Real run only: a preview (--dry-run / --simulate) returns the counts + would-be path
-        // but never touches disk (same contract as viewer-3d / html-report).
         if !dry_run {
             if let Some(parent) = std::path::Path::new(path).parent()
                 && !parent.as_os_str().is_empty()
             {
-                std::fs::create_dir_all(parent).map_err(|e| {
-                    AwareError::Internal(format!("ifc: create {}: {e}", parent.display()))
-                })?;
+                std::fs::create_dir_all(parent)
+                    .map_err(|e| AwareError::Internal(format!("ifc: create {}: {e}", parent.display())))?;
             }
-            std::fs::write(path, ifc.as_bytes())
+            std::fs::write(path, built.doc.as_bytes())
                 .map_err(|e| AwareError::Internal(format!("ifc: write {path}: {e}")))?;
         }
         out.insert("output-path".into(), Value::String(path.to_string()));
@@ -551,26 +711,113 @@ mod tests {
 
     #[test]
     fn writes_ifc4_with_a_column_and_a_beam() {
-        let (ifc, members, columns, beams, meshes, profiles) = build_ifc(&sample_scene());
-        assert_eq!(members, 2);
-        assert_eq!(columns, 1);
-        assert_eq!(beams, 1);
-        assert_eq!(meshes, 0);
-        assert_eq!(profiles.get("UC305x305x97"), Some(&1));
-        assert_eq!(profiles.get("W10x33"), Some(&1));
-        assert!(ifc.starts_with("ISO-10303-21;"));
-        assert!(ifc.contains("FILE_SCHEMA(('IFC4'));"));
-        assert_eq!(ifc.matches("IFCCOLUMN(").count(), 1);
-        assert_eq!(ifc.matches("IFCBEAM(").count(), 1);
-        assert_eq!(ifc.matches("IFCRELCONTAINEDINSPATIALSTRUCTURE(").count(), 1);
-        assert!(ifc.trim_end().ends_with("END-ISO-10303-21;"));
+        let b = build_ifc(&sample_scene());
+        assert_eq!(b.members, 2);
+        assert_eq!(b.columns, 1);
+        assert_eq!(b.beams, 1);
+        assert_eq!(b.meshes, 0);
+        assert_eq!(b.profiles.get("UC305x305x97"), Some(&1));
+        assert_eq!(b.profiles.get("W10x33"), Some(&1));
+        assert!(b.doc.starts_with("ISO-10303-21;"));
+        assert!(b.doc.contains("FILE_SCHEMA(('IFC4'));"));
+        assert!(b.doc.contains("DesignTransferView_V1.0"));
+        assert_eq!(b.doc.matches("IFCCOLUMN(").count(), 1);
+        assert_eq!(b.doc.matches("IFCBEAM(").count(), 1);
+        // No xsection on the sample → rectangle fallback, no warning.
+        assert_eq!(b.doc.matches("IFCRECTANGLEPROFILEDEF(").count(), 2);
+        assert!(b.warnings.is_empty());
+        assert_eq!(b.doc.matches("IFCRELCONTAINEDINSPATIALSTRUCTURE(").count(), 1);
+        assert!(b.doc.trim_end().ends_with("END-ISO-10303-21;"));
     }
 
     #[test]
     fn is_deterministic() {
-        let (a, ..) = build_ifc(&sample_scene());
-        let (b, ..) = build_ifc(&sample_scene());
-        assert_eq!(a, b, "identical scene must yield identical IFC bytes");
+        assert_eq!(build_ifc(&sample_scene()).doc, build_ifc(&sample_scene()).doc);
+    }
+
+    #[test]
+    fn deterministic_with_materials_and_colors() {
+        // Repeated + distinct materials/colours: iteration must be sorted, GlobalIds stable.
+        let scene = json!({
+            "meta": { "name": "m" },
+            "groups": [
+                { "key": "W16X26", "color": "#3b82f6" },
+                { "key": "HSS6X6", "color": "#f59e0b" }
+            ],
+            "elements": [
+                { "id": "b1", "group": "W16X26", "role": "beam", "material": "A992",
+                  "from": [0,0,0], "to": [3000,0,0], "section": { "w": 140, "d": 400 },
+                  "meta": { "profile": "W16X26" },
+                  "xsection": { "shape": "i", "d": 400, "bf": 140, "tw": 6, "tf": 9 } },
+                { "id": "b2", "group": "W16X26", "role": "beam", "material": "a992",
+                  "from": [0,500,0], "to": [3000,500,0], "section": { "w": 140, "d": 400 },
+                  "meta": { "profile": "W16X26" },
+                  "xsection": { "shape": "i", "d": 400, "bf": 140, "tw": 6, "tf": 9 } },
+                { "id": "c1", "group": "HSS6X6", "role": "column", "material": "A500-GR.B",
+                  "from": [0,0,0], "to": [0,0,3000], "section": { "w": 152, "d": 152 },
+                  "meta": { "profile": "HSS6X6X3/8" },
+                  "xsection": { "shape": "rhs", "d": 152, "b": 152, "t": 9 } }
+            ]
+        });
+        let a = build_ifc(&scene);
+        let b = build_ifc(&scene);
+        assert_eq!(a.doc, b.doc, "identical scene → identical bytes");
+        // "A992" and "a992" normalize to ONE material; A500-GR.B is a second.
+        assert_eq!(a.doc.matches("IFCMATERIAL(").count(), 2);
+        assert_eq!(a.doc.matches("IFCRELASSOCIATESMATERIAL(").count(), 2);
+        // Two distinct colours → two surface styles; three elements → three styled items.
+        assert_eq!(a.doc.matches("IFCSURFACESTYLE(").count(), 2);
+        assert_eq!(a.doc.matches("IFCSTYLEDITEM(").count(), 3);
+        assert_eq!(a.doc.matches("IFCISHAPEPROFILEDEF(").count(), 2);
+        assert_eq!(a.doc.matches("IFCRECTANGLEHOLLOWPROFILEDEF(").count(), 1);
+    }
+
+    #[test]
+    fn real_profiles_by_shape() {
+        let mk = |xs: Value, prof: &str| {
+            json!({ "meta": { "name": "x" }, "elements": [
+                { "id": "e", "group": "beam", "role": "beam",
+                  "from": [0,0,0], "to": [3000,0,0], "section": { "w": 100, "d": 300 },
+                  "meta": { "profile": prof }, "xsection": xs }
+            ]})
+        };
+        assert!(build_ifc(&mk(json!({"shape":"i","d":400,"bf":140,"tw":6,"tf":9}), "W16X26")).doc.contains("IFCISHAPEPROFILEDEF("));
+        assert!(build_ifc(&mk(json!({"shape":"channel","d":152,"bf":48,"tw":5,"tf":8}), "C6X8.2")).doc.contains("IFCUSHAPEPROFILEDEF("));
+        assert!(build_ifc(&mk(json!({"shape":"angle","d":102,"b":102,"t":9}), "L4X4X3/8")).doc.contains("IFCLSHAPEPROFILEDEF("));
+        assert!(build_ifc(&mk(json!({"shape":"rhs","d":152,"b":152,"t":9}), "HSS6X6")).doc.contains("IFCRECTANGLEHOLLOWPROFILEDEF("));
+        assert!(build_ifc(&mk(json!({"shape":"chs","od":168,"t":7}), "HSS6.625")).doc.contains("IFCCIRCLEHOLLOWPROFILEDEF("));
+    }
+
+    #[test]
+    fn invalid_xsection_falls_back_to_rectangle_with_warning() {
+        // tf too large (2·tf >= d) → invalid I-shape → rectangle + one warning.
+        let scene = json!({ "meta": { "name": "x" }, "elements": [
+            { "id": "bad", "group": "beam", "role": "beam",
+              "from": [0,0,0], "to": [3000,0,0], "section": { "w": 100, "d": 200 },
+              "meta": { "profile": "W" }, "xsection": { "shape": "i", "d": 200, "bf": 100, "tw": 6, "tf": 120 } }
+        ]});
+        let b = build_ifc(&scene);
+        assert!(b.doc.contains("IFCRECTANGLEPROFILEDEF("));
+        assert!(!b.doc.contains("IFCISHAPEPROFILEDEF("));
+        assert_eq!(b.warnings.len(), 1);
+        assert_eq!(b.warnings[0].0, "bad");
+    }
+
+    #[test]
+    fn role_types_brace_as_member_and_column_as_column() {
+        let scene = json!({ "meta": { "name": "x" }, "elements": [
+            { "id": "br", "group": "W12X19", "role": "brace",
+              "from": [0,0,0], "to": [3000,0,3000], "section": { "w": 100, "d": 300 },
+              "meta": { "profile": "W12X19" } },
+            { "id": "co", "group": "W14X193", "role": "column",
+              "from": [0,0,0], "to": [0,0,3000], "section": { "w": 400, "d": 400 },
+              "meta": { "profile": "W14X193" } }
+        ]});
+        let b = build_ifc(&scene);
+        assert_eq!(b.doc.matches("IFCMEMBER(").count(), 1); // brace
+        assert_eq!(b.doc.matches("IFCCOLUMN(").count(), 1);
+        assert_eq!(b.columns, 1);
+        assert_eq!(b.beams, 0);
     }
 
     #[test]
@@ -580,11 +827,12 @@ mod tests {
         assert_eq!(out["columns"].as_u64().unwrap(), 1);
         assert_eq!(out["beams"].as_u64().unwrap(), 1);
         assert!(out["bytes"].as_u64().unwrap() > 0);
-        assert!(out.get("path").is_none()); // no output-path given -> nothing written
+        assert!(out["warnings"].as_array().unwrap().is_empty());
+        assert!(out.get("path").is_none());
     }
 
     #[test]
-    fn brace_counts_toward_neither_column_nor_beam() {
+    fn brace_group_fallback_when_no_role() {
         let scene = json!({
             "meta": { "name": "x" },
             "elements": [
@@ -592,12 +840,12 @@ mod tests {
                   "section": { "w": 90, "d": 90 }, "meta": { "profile": "L90" } }
             ]
         });
-        let (ifc, members, columns, beams, _meshes, profiles) = build_ifc(&scene);
-        assert_eq!(members, 1);
-        assert_eq!(columns, 0);
-        assert_eq!(beams, 0);
-        assert_eq!(ifc.matches("IFCMEMBER(").count(), 1);
-        assert_eq!(profiles.get("L90"), Some(&1));
+        let b = build_ifc(&scene);
+        assert_eq!(b.members, 1);
+        assert_eq!(b.columns, 0);
+        assert_eq!(b.beams, 0);
+        assert_eq!(b.doc.matches("IFCMEMBER(").count(), 1);
+        assert_eq!(b.profiles.get("L90"), Some(&1));
     }
 
     #[test]
@@ -605,19 +853,18 @@ mod tests {
         let scene = json!({
             "meta": { "name": "x" },
             "elements": [
-                { "id": "ZERO", "group": "beam", "from": [0,0,0], "to": [0,0,0] }, // zero length
-                { "id": "SHORT", "group": "beam", "from": [0,0], "to": [1,1] },      // <3 coords
+                { "id": "ZERO", "group": "beam", "from": [0,0,0], "to": [0,0,0] },
+                { "id": "SHORT", "group": "beam", "from": [0,0], "to": [1,1] },
                 { "id": "OK", "group": "beam", "from": [0,0,0], "to": [1000,0,0] }
             ]
         });
-        let (_ifc, members, _c, beams, _m, _profiles) = build_ifc(&scene);
-        assert_eq!(members, 1);
-        assert_eq!(beams, 1);
+        let b = build_ifc(&scene);
+        assert_eq!(b.members, 1);
+        assert_eq!(b.beams, 1);
     }
 
     #[test]
     fn writes_a_triangulated_mesh_element() {
-        // A single tetra-ish mesh: 4 points, 2 triangles (0-based indices become 1-based in IFC).
         let scene = json!({
             "meta": { "name": "conn" },
             "elements": [
@@ -627,34 +874,28 @@ mod tests {
                   "meta": { "profile": "PLATE" } }
             ]
         });
-        let (ifc, members, columns, beams, meshes, profiles) = build_ifc(&scene);
-        assert_eq!(members, 1); // the proxy is a placed element
-        assert_eq!(columns, 0);
-        assert_eq!(beams, 0);
-        assert_eq!(meshes, 1);
-        assert_eq!(profiles.get("PLATE"), Some(&1));
-        assert_eq!(ifc.matches("IFCTRIANGULATEDFACESET(").count(), 1);
-        assert_eq!(ifc.matches("IFCCARTESIANPOINTLIST3D(").count(), 1);
-        assert_eq!(ifc.matches("IFCBUILDINGELEMENTPROXY(").count(), 1);
-        // CoordIndex is 1-based: input triangle (0,1,2) -> (1,2,3), (0,2,3) -> (1,3,4).
-        assert!(ifc.contains("((1,2,3),(1,3,4))"));
-        assert!(ifc.contains("'Tessellation'"));
+        let b = build_ifc(&scene);
+        assert_eq!(b.members, 1);
+        assert_eq!(b.meshes, 1);
+        assert_eq!(b.profiles.get("PLATE"), Some(&1));
+        assert_eq!(b.doc.matches("IFCTRIANGULATEDFACESET(").count(), 1);
+        assert!(b.doc.contains("((1,2,3),(1,3,4))"));
+        assert!(b.doc.contains("'Tessellation'"));
     }
 
     #[test]
-    fn malformed_mesh_is_skipped_not_emitted() {
-        let scene = json!({
-            "meta": { "name": "x" },
-            "elements": [
-                { "id": "BAD-COUNT", "kind": "mesh", "positions": [0,0,0, 1,0,0], "indices": [0,1,2] }, // <3 pts
-                { "id": "OOR", "kind": "mesh",
-                  "positions": [0,0,0, 1,0,0, 1,1,0], "indices": [0,1,9] } // index 9 out of range
-            ]
-        });
-        let (ifc, members, _c, _b, meshes, _p) = build_ifc(&scene);
-        assert_eq!(members, 0);
-        assert_eq!(meshes, 0);
-        assert_eq!(ifc.matches("IFCTRIANGULATEDFACESET(").count(), 0);
+    fn styled_and_unstyled_mesh() {
+        // A mesh with a valid group colour gets a styled item; one without gets none.
+        let styled = json!({ "meta": { "name": "x" }, "groups": [{ "key": "c", "color": "#abcdef" }], "elements": [
+            { "id": "m", "kind": "mesh", "group": "c",
+              "positions": [0,0,0, 1,0,0, 1,1,0], "indices": [0,1,2] }
+        ]});
+        let plain = json!({ "meta": { "name": "x" }, "elements": [
+            { "id": "m", "kind": "mesh", "group": "c",
+              "positions": [0,0,0, 1,0,0, 1,1,0], "indices": [0,1,2] }
+        ]});
+        assert_eq!(build_ifc(&styled).doc.matches("IFCSTYLEDITEM(").count(), 1);
+        assert_eq!(build_ifc(&plain).doc.matches("IFCSTYLEDITEM(").count(), 0);
     }
 
     #[test]
@@ -672,9 +913,8 @@ mod tests {
     #[test]
     fn s_lit_applies_part21_escaping() {
         assert_eq!(s_lit("plain text"), "'plain text'");
-        assert_eq!(s_lit("a'b"), "'a''b'"); // apostrophe doubled
-        assert_eq!(s_lit("a\\b"), "'a\\\\b'"); // backslash (Part 21 escape char) doubled
-        // non-ASCII (em-dash U+2014) → a \X2\<utf-16>\X0\ block
+        assert_eq!(s_lit("a'b"), "'a''b'");
+        assert_eq!(s_lit("a\\b"), "'a\\\\b'");
         assert_eq!(s_lit("a\u{2014}b"), "'a\\X2\\2014\\X0\\b'");
     }
 }
