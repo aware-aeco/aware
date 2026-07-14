@@ -221,12 +221,15 @@ fn emit_profile(
             r(dd)
         ))
     };
-    let xs = match xsection.and_then(Value::as_object) {
-        Some(o) => o,
-        None => return (rect(spf, w, d), None), // no descriptor → today's rectangle (backward compat)
+    let bad = |reason: &str| Some(format!("{name}: {reason} — rectangle fallback"));
+    let xs = match xsection {
+        // Absent (or explicit null) → today's rectangle, silently (backward compat).
+        None | Some(Value::Null) => return (rect(spf, w, d), None),
+        Some(Value::Object(o)) => o,
+        // Present but not an object (string/array/number) → rectangle WITH a warning.
+        Some(_) => return (rect(spf, w, d), bad("xsection is not an object")),
     };
     let f = |k: &str| pos(xs.get(k));
-    let bad = |reason: &str| Some(format!("{name}: {reason} — rectangle fallback"));
     match xs.get("shape").and_then(Value::as_str).unwrap_or("") {
         "i" | "channel" => {
             let (d0, bf, tw, tf) = (f("d"), f("bf"), f("tw"), f("tf"));
@@ -989,6 +992,26 @@ mod tests {
         assert!(!b.doc.contains("IFCISHAPEPROFILEDEF("));
         assert_eq!(b.warnings.len(), 1);
         assert_eq!(b.warnings[0].0, "bad");
+    }
+
+    #[test]
+    fn malformed_xsection_non_object_warns_absent_does_not() {
+        // A present-but-non-object xsection → rectangle + warning; an absent one → rectangle, no warning.
+        let el = |xs: Value| {
+            json!({ "meta": { "name": "x" }, "elements": [
+                { "id": "m", "group": "beam", "role": "beam", "from": [0,0,0], "to": [3000,0,0],
+                  "section": { "w": 100, "d": 200 }, "meta": { "profile": "W" }, "xsection": xs }
+            ]})
+        };
+        let bad = build_ifc(&el(json!("not-an-object")));
+        assert_eq!(bad.warnings.len(), 1);
+        assert_eq!(bad.warnings[0].0, "m");
+        assert!(bad.doc.contains("IFCRECTANGLEPROFILEDEF("));
+        // Absent xsection → no warning (backward compat).
+        let absent = build_ifc(&json!({ "meta": { "name": "x" }, "elements": [
+            { "id": "m", "group": "beam", "from": [0,0,0], "to": [3000,0,0], "section": { "w": 100, "d": 200 } }
+        ]}));
+        assert!(absent.warnings.is_empty());
     }
 
     #[test]

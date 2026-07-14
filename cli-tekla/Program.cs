@@ -1508,6 +1508,7 @@ if (elements != null) foreach (var eo in elements) {
     string nm  = role == "column" ? "COLUMN" : role == "brace" ? "BRACE" : role == "beam" ? "BEAM"
                : (group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM");
     string cls = el.TryGetValue("teklaClass", out var tcv) && tcv != null ? tcv.ToString()
+               : role == "column" ? "2" : role == "brace" ? "4" : role == "beam" ? "3"
                : (group == "column" ? "2" : group == "brace" ? "4" : "3");
     string mat = el.TryGetValue("material", out var mtv) && mtv != null ? mtv.ToString() : "";
     string paramProfile = ((int)Math.Round(sw)) + "*" + ((int)Math.Round(sd));

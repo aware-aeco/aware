@@ -60,8 +60,11 @@ commands:
                         role?,material?,xsection?,rot?}], grids, panels }`.
           `xsection` (all mm) is one of: {shape:i,d,bf,tw,tf} | {shape:channel,d,bf,tw,tf} |
           {shape:angle,d,b,t} | {shape:rhs,d,b,t} | {shape:chs,od,t} | {shape:rect,w,d}.
-          The producer owns all domain meaning; the writer is generic. This is the same scene
-          `viewer-3d` renders — see its `scene-schema.md` for the canonical, shared contract.
+          `role`/`material`/`xsection`/`rot` are EXPORT hints this writer consumes for exact
+          geometry/typing; `viewer-3d` shares the base scene but renders shape from `section` +
+          `meta.profile` (it does not read `xsection`/`rot`), so its preview is a close approximation,
+          not byte-identical to the exported profile. The producer owns all domain meaning; the writer
+          is generic. See `viewer-3d`'s `scene-schema.md` for the canonical base scene contract.
       output-path:
         type: string
         description: Optional file path; when given, the IFC is written there (caller owns the path).
