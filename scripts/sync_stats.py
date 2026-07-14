@@ -23,9 +23,14 @@ For files where HTML comments can't hide (Mermaid `.mmd`), a small ANCHOR_RULES
 list does a single targeted regex replacement instead.
 
 Usage (run from the repo root):
-    python scripts/sync_stats.py --check     # verify; exit 1 + diff if stale
-    python scripts/sync_stats.py --write      # rewrite the docs in place
-    python scripts/sync_stats.py --selftest   # unit-test the pure logic
+    python scripts/sync_stats.py --check       # verify; exit 1 + diff if stale
+    python scripts/sync_stats.py --write        # rewrite the docs in place
+    python scripts/sync_stats.py --bump 0.89.0  # set cli/Cargo.toml version + sync docs
+    python scripts/sync_stats.py --selftest     # unit-test the pure logic
+
+`--bump` is the release seam: it welds the version bump and the doc mirror into
+one command, so a release can't land the Cargo.toml bump while leaving the
+`cli_version` doc stat stale (which is exactly what turns the Stats CI red).
 """
 
 from __future__ import annotations
@@ -46,6 +51,10 @@ MANAGED_FILES = [
 ]
 
 MARKER_RE = re.compile(r"<!--stat:([a-z_]+)-->(.*?)<!--/stat-->", re.DOTALL)
+
+# --bump guard: refuse anything that isn't a plain semver, so a fat-fingered
+# arg can never be written into Cargo.toml.
+SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+([-+.][0-9A-Za-z.-]+)?$")
 
 # Files where invisible HTML markers aren't possible (Mermaid renders them
 # literally). Each rule replaces the single capture group with the stat value.
@@ -265,6 +274,38 @@ def apply_writes(stats: dict[str, str]) -> list[str]:
     return changed
 
 
+def bump_package_version(cargo_text: str, new_version: str) -> str:
+    """Return cli/Cargo.toml text with the [package] version set to new_version.
+
+    Only the line-start `version = "..."` is rewritten. Dependency versions are
+    inline (`{ version = ... }`) and never match `^version`, so they're safe —
+    this is the same anchor compute_stats() reads the version through. Exactly
+    one line-start version must exist, else we fail loudly rather than bump the
+    wrong line. Pure.
+    """
+    new, n = re.subn(
+        r'(?m)^(version\s*=\s*")[^"]+(")',
+        lambda m: f"{m.group(1)}{new_version}{m.group(2)}",
+        cargo_text,
+    )
+    if n != 1:
+        raise ValueError(f"expected exactly one [package] version line, found {n}")
+    return new
+
+
+def run_bump(version: str) -> int:
+    """Set the CLI version in Cargo.toml, then --write so the cli_version doc
+    stat lands in the same breath. Cargo.lock is refreshed by the caller's
+    `cargo build`; this owns only the version + doc mirror."""
+    if not SEMVER_RE.match(version):
+        print(f"sync_stats: --bump needs a semver version like 0.89.0 (got '{version}')")
+        return 2
+    path = REPO / "cli" / "Cargo.toml"
+    _write(path, bump_package_version(_read(path), version))
+    print(f"sync_stats: bumped cli/Cargo.toml → {version}")
+    return run(write=True)
+
+
 def _report(mismatches: list[tuple]) -> None:
     for path, key, current, expected in mismatches:
         print(f"  {path}: stat:{key} is '{current}' but should be '{expected}'")
@@ -359,6 +400,27 @@ def run_selftest() -> int:
             self.assertEqual(new, text)
             self.assertEqual(len(mm), 1)
 
+        def test_bump_touches_only_package_version(self):
+            cargo = (
+                "[package]\n"
+                'version     = "0.88.0"\n\n'
+                "[dependencies]\n"
+                'clap = { version = "4.5", features = ["derive"] }\n'
+            )
+            new = bump_package_version(cargo, "0.89.0")
+            self.assertIn('version     = "0.89.0"', new)
+            self.assertIn('clap = { version = "4.5"', new)  # dep untouched
+
+        def test_bump_requires_exactly_one_package_version(self):
+            with self.assertRaises(ValueError):
+                bump_package_version('[dependencies]\nx = 1\n', "0.89.0")
+
+        def test_semver_guard(self):
+            self.assertTrue(SEMVER_RE.match("0.89.0"))
+            self.assertTrue(SEMVER_RE.match("1.0.0-rc.1"))
+            self.assertFalse(SEMVER_RE.match("v0.89"))
+            self.assertFalse(SEMVER_RE.match(""))
+
         def test_compute_stats_shape(self):
             s = compute_stats()
             for key in (
@@ -377,9 +439,13 @@ def run_selftest() -> int:
 
 
 def main() -> int:
-    args = set(sys.argv[1:])
+    argv = sys.argv[1:]
+    args = set(argv)
     if "--selftest" in args:
         return run_selftest()
+    if "--bump" in args:
+        i = argv.index("--bump")
+        return run_bump(argv[i + 1] if i + 1 < len(argv) else "")
     if "--write" in args:
         return run(write=True)
     # default + explicit --check

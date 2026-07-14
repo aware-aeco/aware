@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-03T16:54:19.542837+00:00",
+  "updated-at": "2026-07-14T14:03:39.138857600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2567,7 +2567,7 @@
           "commands": [
             {
               "name": "write",
-              "description": "Write a generic 3D scene to a universal IFC4 file. The scene is domain-agnostic: `elements`",
+              "description": "Write a generic 3D scene to a universal IFC4 file (DesignTransferView). The scene is",
               "lifecycle": "single",
               "category": "curated"
             }
