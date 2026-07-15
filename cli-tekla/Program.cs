@@ -1707,7 +1707,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
         return modelInstance;
     }
 
-    static (IReadOnlyList<MetadataReference> refs, string? probedDir) ResolveTeklaReferences(string? hostInstall)
+    internal static (IReadOnlyList<MetadataReference> refs, string? probedDir) ResolveTeklaReferences(string? hostInstall)
     {
         if (hostInstall is null) return (Array.Empty<MetadataReference>(), null);
 
@@ -1717,27 +1717,31 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
             return (Array.Empty<MetadataReference>(), null);
 
         var probePaths = new[] { Path.Combine(binDir, "Net48Runtime"), binDir };
-        var wanted = new[]
-        {
-            "Tekla.Structures.dll",
-            "Tekla.Structures.Model.dll",
-            "Tekla.Structures.Datatype.dll",
-            "Tekla.Structures.Drawing.dll",
-            "Tekla.Structures.Geometry3d.Compatibility.dll",
-        };
-
         var found = new List<MetadataReference>();
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var name in wanted)
+        foreach (var probe in probePaths)
         {
-            foreach (var probe in probePaths)
+            if (!Directory.Exists(probe)) continue;
+
+            foreach (var path in Directory
+                .EnumerateFiles(probe, "Tekla.Structures*.dll", SearchOption.TopDirectoryOnly)
+                .OrderBy(Path.GetFileName, StringComparer.OrdinalIgnoreCase))
             {
-                var p = Path.Combine(probe, name);
-                if (File.Exists(p) && seen.Add(name))
+                var name = Path.GetFileName(path);
+                if (seen.Contains(name)) continue;
+
+                try
                 {
-                    found.Add(MetadataReference.CreateFromFile(p));
-                    break;
+                    // Tekla's bin also contains native helpers such as
+                    // Tekla.Structures.Native.DbvDatabase.dll. Roslyn can only consume
+                    // managed PE metadata, so validate before admitting a reference.
+                    _ = AssemblyName.GetAssemblyName(path);
+                    found.Add(MetadataReference.CreateFromFile(path));
+                    seen.Add(name);
                 }
+                catch (BadImageFormatException) { /* native DLL — not a Roslyn reference */ }
+                catch (FileLoadException) { /* invalid or unsupported managed image */ }
+                catch (IOException) { /* raced/missing/unreadable install file */ }
             }
         }
 
