@@ -13,7 +13,7 @@ namespace AwareTekla.Tests;
 // hooks. These tests drive the helpers headlessly (no Tekla references).
 public class StaExecTests
 {
-    static object? Run(string code) =>
+    static System.Text.Json.Nodes.JsonNode? Run(string code) =>
         Program.RunScriptOnStaThread(
             code,
             Array.Empty<MetadataReference>(),
@@ -26,13 +26,25 @@ public class StaExecTests
     {
         var apartment = Run(
             "return System.Threading.Thread.CurrentThread.GetApartmentState().ToString();");
-        Assert.Equal("STA", apartment);
+        Assert.Equal("STA", apartment!.GetValue<string>());
+    }
+
+    [Fact]
+    public void Awaited_Continuation_Stays_On_Sta_Thread()
+    {
+        // Without a pumping SynchronizationContext the continuation of a
+        // top-level await resumes on the MTA thread pool — exactly the
+        // vendor-fatal shape the STA thread exists to prevent.
+        var apartment = Run(
+            "await System.Threading.Tasks.Task.Delay(25);\n" +
+            "return System.Threading.Thread.CurrentThread.GetApartmentState().ToString();");
+        Assert.Equal("STA", apartment!.GetValue<string>());
     }
 
     [Fact]
     public void Script_Return_Value_Marshals_Back()
     {
-        Assert.Equal(3, Run("return 1 + 2;"));
+        Assert.Equal(3, Run("return 1 + 2;")!.GetValue<int>());
     }
 
     [Fact]

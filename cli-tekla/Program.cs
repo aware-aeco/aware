@@ -131,9 +131,16 @@ internal static class Program
                 ex?.StackTrace ?? "");
         };
         AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+        {
+            // Environment.Exit(0) from vendor/script code would read as
+            // SUCCESS to the aware CLI despite the fail receipt — force a
+            // failing status, preserving a deliberate non-zero code.
+            if (_lastResortArmed == 1 && Environment.ExitCode == 0)
+                Environment.ExitCode = 2;
             EmitLastResortReceipt(
                 "sidecar exited during script execution (vendor code called exit?)",
                 "");
+        };
 
         try
         {
@@ -1543,13 +1550,12 @@ internal static class Program
         ArmLastResortReceipt(verb, hostVersion, hostPid);
         try
         {
-            var result = RunScriptOnStaThread(
+            var resultNode = RunScriptOnStaThread(
                 code!,
                 probedReferences,
                 argsNode,
                 probedDir,
                 commitPolicy ?? CommitPolicyForVerb(verb));
-            var resultNode = SerializeResult(result);
             DisarmLastResortReceipt();
             if (ScriptResultReportsFailure(verb, resultNode))
             {
@@ -1584,22 +1590,28 @@ internal static class Program
     // written for STA standalone apps (the watch path already runs its loop
     // STA + pumped, see RunWatchLoopOnStaThread); catalogue calls
     // (CatalogHandler, #283) have terminated the whole process when driven
-    // from the default MTA main thread. No message pump here — exec scripts
-    // are synchronous; if a vendor call still needs one on some setups, pump
-    // the way the watch path does.
+    // from the default MTA main thread. Serialization happens ON the STA
+    // thread too — a lazy Tekla enumerable serialized after the join would
+    // call back into Tekla from the MTA caller. No Win32 message pump here —
+    // if a vendor call turns out to need one, pump the way the watch path
+    // does; awaited continuations stay on-thread via PumpUntilComplete.
     [MethodImpl(MethodImplOptions.NoInlining)]
-    internal static object? RunScriptOnStaThread(
+    internal static JsonNode? RunScriptOnStaThread(
         string code,
         IReadOnlyList<MetadataReference> teklaReferences,
         JsonObject? argsNode,
         string? teklaBinDir,
         ScriptCommitPolicy commitPolicy)
     {
-        object? result = null;
+        JsonNode? result = null;
         Exception? fault = null;
         var t = new System.Threading.Thread(() =>
         {
-            try { result = RunScript(code, teklaReferences, argsNode, teklaBinDir, commitPolicy); }
+            try
+            {
+                result = SerializeResult(
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, commitPolicy));
+            }
             catch (Exception e) { fault = e; }
         })
         {
@@ -1614,6 +1626,49 @@ internal static class Program
             // carries it so an AI caller can re-draft against the real frame.
             System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(fault).Throw();
         return result;
+    }
+
+    // Keep awaited continuations of a top-level `await` on the calling (STA)
+    // thread — without a SynchronizationContext they resume on the MTA thread
+    // pool, reintroducing the vendor thread-affinity failures the STA thread
+    // exists to prevent (#283). The AsyncPump pattern: continuations post to
+    // a single-consumer queue pumped on the current thread until the script's
+    // task completes.
+    static T PumpUntilComplete<T>(Func<System.Threading.Tasks.Task<T>> start)
+    {
+        var prior = System.Threading.SynchronizationContext.Current;
+        var ctx = new SingleThreadSynchronizationContext();
+        System.Threading.SynchronizationContext.SetSynchronizationContext(ctx);
+        try
+        {
+            var task = start();
+            task.ContinueWith(
+                _ => ctx.Complete(),
+                System.Threading.Tasks.TaskScheduler.Default);
+            ctx.RunOnCurrentThread();
+            return task.GetAwaiter().GetResult();
+        }
+        finally
+        {
+            System.Threading.SynchronizationContext.SetSynchronizationContext(prior);
+        }
+    }
+
+    sealed class SingleThreadSynchronizationContext : System.Threading.SynchronizationContext
+    {
+        readonly System.Collections.Concurrent.BlockingCollection<
+            (System.Threading.SendOrPostCallback Callback, object? State)> _queue = new();
+
+        public override void Post(System.Threading.SendOrPostCallback d, object? state)
+            => _queue.Add((d, state));
+
+        public void RunOnCurrentThread()
+        {
+            foreach (var item in _queue.GetConsumingEnumerable())
+                item.Callback(item.State);
+        }
+
+        public void Complete() => _queue.CompleteAdding();
     }
 
     // The canonical scene materializer is shipped with the bridge but isolated in
@@ -1708,8 +1763,9 @@ internal static class Program
             options: options,
             globalsType: typeof(ExecGlobals));
 
-        // Compile + execute.
-        var state = script.RunAsync(globals).GetAwaiter().GetResult();
+        // Compile + execute. PumpUntilComplete keeps the continuations of any
+        // top-level `await` on THIS (STA) thread instead of the MTA pool.
+        var state = PumpUntilComplete(() => script.RunAsync(globals));
         var returnValue = state.ReturnValue;
 
         // Tekla "transaction-commit" — flush changes to the database. We
