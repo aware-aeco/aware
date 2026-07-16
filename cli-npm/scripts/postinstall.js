@@ -64,10 +64,19 @@ function download(srcUrl, dest, depth = 0) {
     // bsdtar handles both .zip and .tar.gz, exits non-zero on real failures, and
     // (unlike PS 5.1 Expand-Archive) never half-extracts silently (#287). Use the
     // System32 copy on Windows — a GNU tar earlier on PATH (Git Bash) can't read zip.
-    const tar = process.platform === 'win32'
-      ? path.join(process.env.WINDIR || 'C:\\Windows', 'System32', 'tar.exe')
-      : 'tar';
-    execFileSync(tar, ['-xf', tmpFile, '-C', binariesDir], { stdio: 'inherit' });
+    const winTar = path.join(process.env.WINDIR || 'C:\\Windows', 'System32', 'tar.exe');
+    if (process.platform === 'win32' && !fs.existsSync(winTar)) {
+      // Server 2016 / Win10 <1803 ship no inbox bsdtar — fall back to
+      // Expand-Archive. Its silent half-extraction mode is defused by the
+      // shim-target check below, which turns it into a loud failure (#287).
+      execFileSync('powershell', [
+        '-NoProfile', '-Command',
+        `Expand-Archive -LiteralPath '${tmpFile}' -DestinationPath '${binariesDir}' -Force`,
+      ], { stdio: 'inherit' });
+    } else {
+      const tar = process.platform === 'win32' ? winTar : 'tar';
+      execFileSync(tar, ['-xf', tmpFile, '-C', binariesDir], { stdio: 'inherit' });
+    }
     // Cleanup is cosmetic — an AV scan holding the fresh archive must not abort
     // an install that already extracted successfully (#287).
     try { fs.unlinkSync(tmpFile); } catch { /* locked archive; leave it */ }
