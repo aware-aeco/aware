@@ -78,7 +78,9 @@ function download(srcUrl, dest, depth = 0) {
       ], { stdio: 'inherit' });
     } else {
       const tar = process.platform === 'win32' ? winTar : 'tar';
-      execFileSync(tar, ['-xf', tmpFile, '-C', binariesDir], { stdio: 'inherit' });
+      // Explicit -z for tar.gz: minimal POSIX tar builds don't autodetect gzip.
+      const flags = target.archive === 'zip' ? '-xf' : '-xzf';
+      execFileSync(tar, [flags, tmpFile, '-C', binariesDir], { stdio: 'inherit' });
     }
     // Cleanup is cosmetic — an AV scan holding the fresh archive must not abort
     // an install that already extracted successfully (#287).
