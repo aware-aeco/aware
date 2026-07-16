@@ -4,6 +4,7 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const PKG_VERSION = require('../../package.json').version;
+const { requiredFiles } = require('../payload');
 const binaryName = process.platform === 'win32' ? 'aware.exe' : 'aware';
 const binariesDir = path.join(__dirname, '..', '..', 'binaries');
 let binary = path.join(binariesDir, binaryName);
@@ -16,11 +17,8 @@ if (!fs.existsSync(binary)) {
   // companions next to the executable, so a half-extracted folder would run
   // but fail confusingly later.
   const exeSuffix = process.platform === 'win32' ? '.exe' : '';
-  const complete = (dir) => [
-    binaryName,
-    `aware-sidecar${exeSuffix}`,
-    path.join('aware-roslyn', `aware-roslyn${exeSuffix}`),
-  ].every((f) => fs.existsSync(path.join(dir, f)));
+  const complete = (dir) =>
+    requiredFiles(exeSuffix).every((f) => fs.existsSync(path.join(dir, f)));
   const candidate = fs.existsSync(binariesDir)
     ? fs.readdirSync(binariesDir)
         .filter((name) => name.startsWith(`aware-${PKG_VERSION}-`))

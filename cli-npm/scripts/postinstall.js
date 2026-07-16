@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { execFileSync } = require('child_process');
+const { requiredFiles } = require('./payload');
 
 const PKG_VERSION = require('../package.json').version;
 const REPO = 'aware-aeco/aware';
@@ -122,13 +123,7 @@ function download(srcUrl, dest, depth = 0) {
     // install — fail loudly here instead of letting every later `aware` call
     // exit 1 in silence (#287). Also catches Expand-Archive's silent
     // half-extraction on the no-inbox-tar fallback path.
-    const required = [
-      `aware${target.ext}`,
-      `aware-sidecar${target.ext}`,
-      // The roslyn HOST executable, not just its folder — Expand-Archive can
-      // create the folder and then fail on its contents.
-      path.join('aware-roslyn', `aware-roslyn${target.ext}`),
-    ];
+    const required = requiredFiles(target.ext);
     const missing = required.filter((f) => !fs.existsSync(path.join(binariesDir, f)));
     if (missing.length) {
       throw new Error(`extraction finished but ${missing.join(', ')} missing from ${binariesDir}`);
