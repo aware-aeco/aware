@@ -2,7 +2,7 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 const PKG_VERSION = require('../package.json').version;
 const REPO = 'aware-aeco/aware';
@@ -61,20 +61,35 @@ function download(srcUrl, dest, depth = 0) {
     await download(url, tmpFile);
 
     console.log('[aware-npm] extracting...');
-    if (target.archive === 'zip') {
-      execSync(`powershell -NoProfile -Command "Expand-Archive -Path '${tmpFile}' -DestinationPath '${binariesDir}' -Force"`, { stdio: 'inherit' });
-    } else {
-      execSync(`tar -xzf "${tmpFile}" -C "${binariesDir}"`, { stdio: 'inherit' });
-    }
-    fs.unlinkSync(tmpFile);
+    // bsdtar handles both .zip and .tar.gz, exits non-zero on real failures, and
+    // (unlike PS 5.1 Expand-Archive) never half-extracts silently (#287). Use the
+    // System32 copy on Windows — a GNU tar earlier on PATH (Git Bash) can't read zip.
+    const tar = process.platform === 'win32'
+      ? path.join(process.env.WINDIR || 'C:\\Windows', 'System32', 'tar.exe')
+      : 'tar';
+    execFileSync(tar, ['-xf', tmpFile, '-C', binariesDir], { stdio: 'inherit' });
+    // Cleanup is cosmetic — an AV scan holding the fresh archive must not abort
+    // an install that already extracted successfully (#287).
+    try { fs.unlinkSync(tmpFile); } catch { /* locked archive; leave it */ }
 
     // Promote binaries from <binariesDir>/aware-<version>-<rid>/ to <binariesDir>/
     const extractedDir = path.join(binariesDir, `aware-${PKG_VERSION}-${target.rid}`);
     if (fs.existsSync(extractedDir)) {
       for (const file of fs.readdirSync(extractedDir)) {
-        fs.renameSync(path.join(extractedDir, file), path.join(binariesDir, file));
+        const dest = path.join(binariesDir, file);
+        // Overwrite-safe: a re-run over a partial install must not EPERM on rename.
+        fs.rmSync(dest, { recursive: true, force: true });
+        fs.renameSync(path.join(extractedDir, file), dest);
       }
       fs.rmdirSync(extractedDir);
+    }
+
+    // The shim resolves <binariesDir>/aware(.exe); anything else is a broken
+    // install — fail loudly here instead of letting every later `aware` call
+    // exit 1 in silence (#287).
+    const shimTarget = path.join(binariesDir, `aware${target.ext}`);
+    if (!fs.existsSync(shimTarget)) {
+      throw new Error(`extraction finished but ${shimTarget} is missing`);
     }
 
     if (process.platform !== 'win32') {
