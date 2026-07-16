@@ -63,6 +63,43 @@ internal static class Program
         w.Flush(); // the receipt must hit the pipe even if we exit right after
     }
 
+    // ── last-resort receipts (#283) ──────────────────────────────────────────
+    // Vendor/native code driven by an exec script can take this process down
+    // without unwinding managed frames (CatalogHandler on some Tekla setups
+    // terminated the sidecar outright). While a script is in flight these
+    // fields are "armed"; the AppDomain hooks wired in Main then emit a
+    // structured fail receipt as a last resort so the bridge protocol never
+    // just goes silent. Interlocked guarantees at most one such receipt
+    // (UnhandledException and ProcessExit can both fire on the way down).
+    // Hard kills (TerminateProcess, FailFast, stack overflow) remain
+    // unreportable from in-process — the aware CLI labels those
+    // "terminated without emitting a receipt".
+    static int _lastResortArmed; // 0 = disarmed, 1 = armed
+    static string _lastResortVerb = "exec";
+    static string? _lastResortHostVersion;
+    static int? _lastResortHostPid;
+
+    internal static void ArmLastResortReceipt(string verb, string? hostVersion, int? hostPid)
+    {
+        _lastResortVerb = verb;
+        _lastResortHostVersion = hostVersion;
+        _lastResortHostPid = hostPid;
+        System.Threading.Interlocked.Exchange(ref _lastResortArmed, 1);
+    }
+
+    internal static void DisarmLastResortReceipt()
+        => System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0);
+
+    internal static void EmitLastResortReceipt(string message, string stack)
+    {
+        if (System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0) != 1) return;
+        try
+        {
+            EmitExecFail(message, stack, _lastResortVerb, _lastResortHostVersion, _lastResortHostPid);
+        }
+        catch { /* the process is dying; nothing safer to do */ }
+    }
+
     static int Main(string[] args)
     {
         // Force UTF-8 on stdin/stdout — .NET Framework defaults to the
@@ -79,6 +116,24 @@ internal static class Program
         // recreates Console.Out) and BEFORE any Tekla/Roslyn interaction.
         _protocol = Console.Out;
         Console.SetOut(Console.Error);
+
+        // Last-resort receipt hooks (#283) — no-ops unless a script is in
+        // flight (see ArmLastResortReceipt). UnhandledException covers vendor
+        // exceptions on background threads and corrupted-state exceptions
+        // (access violations); ProcessExit covers vendor code calling exit.
+        AppDomain.CurrentDomain.UnhandledException += (_, ue) =>
+        {
+            var ex = ue.ExceptionObject as Exception;
+            EmitLastResortReceipt(
+                $"{ex?.GetType().Name ?? "UnhandledException"}: " +
+                $"{ex?.Message ?? "unknown non-CLR exception"} " +
+                "(vendor/native failure during script execution)",
+                ex?.StackTrace ?? "");
+        };
+        AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+            EmitLastResortReceipt(
+                "sidecar exited during script execution (vendor code called exit?)",
+                "");
 
         try
         {
@@ -1483,15 +1538,19 @@ internal static class Program
         // JIT can't pre-resolve Tekla types before AssemblyResolve is wired.
         // (See skills/runtime-bridge-dotnet-framework.md for why this matters
         // for any code that touches Tekla types.)
+        // Armed: if vendor/native code kills the process mid-script, the
+        // AppDomain hooks in Main still emit a fail receipt (#283).
+        ArmLastResortReceipt(verb, hostVersion, hostPid);
         try
         {
-            var result = RunScript(
+            var result = RunScriptOnStaThread(
                 code!,
                 probedReferences,
                 argsNode,
                 probedDir,
                 commitPolicy ?? CommitPolicyForVerb(verb));
             var resultNode = SerializeResult(result);
+            DisarmLastResortReceipt();
             if (ScriptResultReportsFailure(verb, resultNode))
             {
                 EmitExecResultFail(resultNode, verb, hostVersion, hostPid);
@@ -1502,6 +1561,7 @@ internal static class Program
         }
         catch (CompilationErrorException ce)
         {
+            DisarmLastResortReceipt();
             // Script failed to compile — surface diagnostics so the caller
             // (likely an AI) can re-draft.
             var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
@@ -1510,6 +1570,7 @@ internal static class Program
         }
         catch (Exception e)
         {
+            DisarmLastResortReceipt();
             var root = e;
             while (root is TargetInvocationException && root.InnerException is not null)
                 root = root.InnerException;
@@ -1517,6 +1578,42 @@ internal static class Program
                          verb, hostVersion, hostPid);
             return 2;
         }
+    }
+
+    // Run the Roslyn script on a dedicated STA thread. Tekla's Open API is
+    // written for STA standalone apps (the watch path already runs its loop
+    // STA + pumped, see RunWatchLoopOnStaThread); catalogue calls
+    // (CatalogHandler, #283) have terminated the whole process when driven
+    // from the default MTA main thread. No message pump here — exec scripts
+    // are synchronous; if a vendor call still needs one on some setups, pump
+    // the way the watch path does.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    internal static object? RunScriptOnStaThread(
+        string code,
+        IReadOnlyList<MetadataReference> teklaReferences,
+        JsonObject? argsNode,
+        string? teklaBinDir,
+        ScriptCommitPolicy commitPolicy)
+    {
+        object? result = null;
+        Exception? fault = null;
+        var t = new System.Threading.Thread(() =>
+        {
+            try { result = RunScript(code, teklaReferences, argsNode, teklaBinDir, commitPolicy); }
+            catch (Exception e) { fault = e; }
+        })
+        {
+            IsBackground = false,
+            Name = "aware-tekla-exec",
+        };
+        t.SetApartmentState(System.Threading.ApartmentState.STA);
+        t.Start();
+        t.Join();
+        if (fault is not null)
+            // Preserve the script's original stack trace — the exec receipt
+            // carries it so an AI caller can re-draft against the real frame.
+            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(fault).Throw();
+        return result;
     }
 
     // The canonical scene materializer is shipped with the bridge but isolated in
