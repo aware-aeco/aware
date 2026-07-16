@@ -244,24 +244,38 @@ commands:
   bake-scene:
     lifecycle: single
     category: curated
-    mode: write              # creates native model objects (Beams) + commits
+    mode: write
     mode-overridable: false  # the bridge ships the script; a node can't override to read
     description: |
-      Create native Tekla members from a generic 3D scene — a Beam per element
-      (column/beam/brace -> Name + colour Class), placed on the member axis, with the
-      drawing's catalogue profile or a sized "w*d" parametric section fallback. The
-      bridge-shipped, first-class form of the steel "bake into Tekla" operation: needs
-      Tekla OPEN with a model. Auto-commits; Tekla Undo reverts the whole bake. The
-      producer owns domain meaning (the SAME scene viewer-3d renders and the ifc agent
-      writes); this creates the live objects. Returns structured counts; client renders.
+      Materialize a canonical millimetre scene as source-owned native Tekla objects.
+      Exact-profile members, ContourPlate plates and hex solids, circular/annular
+      fasteners, independent Boolean openings, BoltArray, PolygonWeld, BooleanPart,
+      Grid, and grid axes/levels are supported. BoltArray-realized children and hole
+      effects share the native operation GUID instead of becoming duplicate parts.
+
+      Every record needs a stable unique id. scene.meta.sourceId and sceneHash are
+      mandatory. The bridge stages a replacement, writes ownership UDAs only after
+      Insert (pre-insert UDA writes are not durable in Tekla), verifies GUID/tag
+      read-back, deletes only the prior set owned by that source, then performs one
+      explicit CommitChanges. Before prior-set retirement starts, failure reverse-
+      deletes staging and commits cleanup while retaining the previous complete set.
+      Tekla has no rollback API: if deletion/CommitChanges itself fails after retirement
+      starts, the receipt reports `commit-state-uncertain`, issues no further commit,
+      and requires a source-reconciliation retry. Unlike exec, this verb owns its
+      commit boundary. No catalogue handler or 100*100 fallback is used:
+      candidate profiles are proved by exact Insert + GUID read-back.
     inputs:
       scene:
         type: object
         required: true
         description: |
-          The 3D scene to bake (object) — the same schema viewer-3d renders and the ifc
-          agent writes: `{ meta:{name}, elements:[{id,group,from,to,section:{w,d},
-          meta:{profile}}] }`. Each element becomes one Tekla Beam.
+          Canonical scene object. meta is `{name?, units?:"mm", sourceId, sceneHash}`.
+          Top-level collections are `elements`, `operations`, and `referenceSystems`.
+          Supported physical kinds are exact-profile legacy members, plate, rod,
+          bolt-shank, washer, nut, and bolt-head. Supported operations are bolt-array,
+          weld, and finite cylindrical boolean-cut. Structural grids include stable-id
+          X/Y axes and elevation levels. Missing units means legacy millimetres;
+          explicit non-mm units fail before mutation.
       version:
         type: string
         required: false
@@ -273,7 +287,7 @@ commands:
       type: single
       schema:
         ok:           boolean
-        result:       object  # { created, columns, beams, native, placeholder, failed, skipped, model, scene_name, profiles }
+        result:       object  # identity hashes + attemptId + legacy counts + nested emitted/failed/unsupported/warnings arrays
         error:        string  # only when ok=false
         stack:        string  # only when ok=false
         delivered_at: string

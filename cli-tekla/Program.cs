@@ -118,7 +118,7 @@ internal static class Program
             }
             // Strip leading UTF-8 BOM (U+FEFF) that some PowerShell versions
             // prepend when piping strings to native executables.
-            buf = buf.TrimStart('﻿');
+            buf = TrimJsonBom(buf);
             JsonNode? peeked;
             try { peeked = JsonNode.Parse(buf); }
             catch (Exception e)
@@ -187,7 +187,7 @@ internal static class Program
         {
             try
             {
-                var input = JsonNode.Parse(Console.In.ReadToEnd());
+                var input = JsonNode.Parse(TrimJsonBom(Console.In.ReadToEnd()));
                 acknowledgeDataLoss = input?["force"]?.GetValue<bool>() ?? false;
                 if (string.IsNullOrEmpty(args.Version))
                     args.Version = input?["version"]?.GetValue<string>();
@@ -519,7 +519,7 @@ internal static class Program
                 Console.Error.WriteLine($"aware-tekla watch: stdin not readable: {e.Message}");
                 return 2;
             }
-            raw = raw.TrimStart('﻿');
+            raw = TrimJsonBom(raw);
             if (!string.IsNullOrWhiteSpace(raw))
             {
                 JsonNode? input;
@@ -1316,7 +1316,7 @@ internal static class Program
             return 2;
         }
 
-        string stdin = Console.In.ReadToEnd();
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
         JsonNode? input;
         try { input = JsonNode.Parse(stdin); }
         catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
@@ -1330,7 +1330,7 @@ internal static class Program
             return 2;
         }
 
-        return ExecuteResolvedScript("exec", code!, version, argsNode);
+        return ExecuteResolvedScript("exec", code!, version, argsNode, ScriptCommitPolicy.Automatic);
     }
 
     // ── bake-scene ─────────────────────────────────────────────────────────────
@@ -1347,7 +1347,7 @@ internal static class Program
             return 2;
         }
 
-        string stdin = Console.In.ReadToEnd();
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
         JsonNode? input;
         try { input = JsonNode.Parse(stdin); }
         catch (Exception e) { EmitExecError($"stdin not JSON: {e.Message}"); return 2; }
@@ -1361,14 +1361,57 @@ internal static class Program
         string? version = input?["version"]?.GetValue<string>() ?? args.Version;
 
         // Hand the scene to the embedded bake script as the `args.scene` global.
-        var argsNode = new JsonObject { ["scene"] = scene.DeepClone() };
-        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, argsNode);
+        var argsNode = new JsonObject
+        {
+            ["scene"] = scene.DeepClone(),
+        };
+        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
+
+    internal static string TrimJsonBom(string input) => input.TrimStart('\uFEFF');
+
+    internal static string ComputeBakeMaterializationHash(JsonNode scene, string? version)
+    {
+        var payload = "tekla-connection-materializer-v1\0"
+            + (version ?? "running-host")
+            + "\0"
+            + scene.ToJsonString(new JsonSerializerOptions { WriteIndented = false });
+        using var sha = System.Security.Cryptography.SHA256.Create();
+        var digest = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(payload));
+        return string.Concat(digest.Select(b => b.ToString("x2", System.Globalization.CultureInfo.InvariantCulture)));
+    }
+
+    internal enum ScriptCommitPolicy
+    {
+        Automatic,
+        ScriptOwned,
+    }
+
+    internal enum BakeFailureDisposition
+    {
+        DeleteStagingAndCommitCleanup,
+        LeaveStateForSourceReconciliation,
+    }
+
+    internal static BakeFailureDisposition FailureDisposition(bool priorSetRetirementStarted) =>
+        priorSetRetirementStarted
+            ? BakeFailureDisposition.LeaveStateForSourceReconciliation
+            : BakeFailureDisposition.DeleteStagingAndCommitCleanup;
+
+    internal static ScriptCommitPolicy CommitPolicyForVerb(string verb) =>
+        string.Equals(verb, "bake-scene", StringComparison.Ordinal)
+            ? ScriptCommitPolicy.ScriptOwned
+            : ScriptCommitPolicy.Automatic;
 
     // Shared core for the script-running verbs (`exec`, `bake-scene`): resolve the
     // Tekla host for `version`, wire the assembly resolver, run `code` via Roslyn with
     // `argsNode` exposed as the `args` global, and emit the standard exec receipt.
-    static int ExecuteResolvedScript(string verb, string code, string? version, JsonObject? argsNode)
+    static int ExecuteResolvedScript(
+        string verb,
+        string code,
+        string? version,
+        JsonObject? argsNode,
+        ScriptCommitPolicy? commitPolicy = null)
     {
 
         // Find the running Tekla instance (if any) to populate host_pid and
@@ -1395,6 +1438,15 @@ internal static class Program
             }
         }
         catch { /* enumeration failure is non-fatal; pid stays null, requested version stands */ }
+
+        if (string.Equals(verb, "bake-scene", StringComparison.Ordinal)
+            && argsNode?["scene"] is JsonNode bakeScene)
+        {
+            // Hash against the resolved running host version, not the caller's stale
+            // request. The canonical scene includes every requested profile/operation/
+            // grid input, so exact Insert/read-back selects one deterministic result.
+            argsNode["materializationHash"] = ComputeBakeMaterializationHash(bakeScene, hostVersion);
+        }
 
         // Resolve the Tekla install dir for the version we'll connect to (the running instance
         // when one is open, else the requested version). Standard path + registry. Missing-install
@@ -1433,8 +1485,19 @@ internal static class Program
         // for any code that touches Tekla types.)
         try
         {
-            var result = RunScript(code!, probedReferences, argsNode, probedDir);
-            EmitExecOk(result, verb, hostVersion, hostPid);
+            var result = RunScript(
+                code!,
+                probedReferences,
+                argsNode,
+                probedDir,
+                commitPolicy ?? CommitPolicyForVerb(verb));
+            var resultNode = SerializeResult(result);
+            if (ScriptResultReportsFailure(verb, resultNode))
+            {
+                EmitExecResultFail(resultNode, verb, hostVersion, hostPid);
+                return 2;
+            }
+            EmitExecOk(resultNode, verb, hostVersion, hostPid);
             return 0;
         }
         catch (CompilationErrorException ce)
@@ -1456,94 +1519,17 @@ internal static class Program
         }
     }
 
-    // The canonical "scene -> native Tekla members" bake script, shipped WITH the
-    // bridge (single source of truth; was previously inlined in the steel-to-tekla
-    // FloLess app). Reads `args.scene`, creates a Beam per element via the Open API
-    // (the drawing profile, else a sized "w*d" parametric section), and returns
-    // structured counts — the client renders any report. ExecuteResolvedScript /
-    // RunScript performs the post-script CommitChanges() when the model is connected.
-    const string BakeSceneCode = """
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using Tekla.Structures.Model;
-using Tekla.Structures.Geometry3d;
-
-var inv = CultureInfo.InvariantCulture;
-Func<object,double> num = o => { if (o == null) return 0; if (o is double dd) return dd; if (o is long ll) return ll; if (o is int ii) return ii; double.TryParse(o.ToString(), NumberStyles.Any, inv, out var r); return r; };
-
-var m = model as Model;
-if (m == null || !m.GetConnectionStatus())
-    return new { ok = false, error = "No live Tekla model — open a model in Tekla Structures, then run this again." };
-
-var scene = args != null && args.TryGetValue("scene", out var sv) ? sv as IDictionary<string,object> : null;
-if (scene == null) return new { ok = false, error = "no scene object in args" };
-var smeta = scene.TryGetValue("meta", out var mv) ? mv as IDictionary<string,object> : null;
-string sceneName = smeta != null && smeta.TryGetValue("name", out var nmv) && nmv != null ? nmv.ToString() : "Steel from Drawings";
-var elements = scene.TryGetValue("elements", out var ev) ? ev as IEnumerable : null;
-
-int created = 0, columns = 0, beams = 0, failed = 0, native = 0, placeholder = 0, skipped = 0;
-var profileCounts = new Dictionary<string,int>();
-if (elements != null) foreach (var eo in elements) {
-    var el = eo as IDictionary<string,object>; if (el == null) { skipped++; continue; }
-    var from = el.TryGetValue("from", out var fo) ? fo as IList : null;
-    var to   = el.TryGetValue("to",   out var to2) ? to2 as IList : null;
-    if (from == null || to == null || from.Count < 3 || to.Count < 3) { skipped++; continue; }
-    var p1 = new Point(num(from[0]), num(from[1]), num(from[2]));
-    var p2 = new Point(num(to[0]),   num(to[1]),   num(to[2]));
-    if (Distance.PointToPoint(p1, p2) < 1.0) { skipped++; continue; }
-
-    var sec = el.TryGetValue("section", out var so) ? so as IDictionary<string,object> : null;
-    double sw = sec != null && sec.TryGetValue("w", out var wv) ? num(wv) : 100; if (sw <= 0) sw = 100;
-    double sd = sec != null && sec.TryGetValue("d", out var dv) ? num(dv) : 100; if (sd <= 0) sd = 100;
-    var em = el.TryGetValue("meta", out var emo) ? emo as IDictionary<string,object> : null;
-    string profileRaw = em != null && em.TryGetValue("profile", out var pv) && pv != null ? pv.ToString() : "";
-    string profile = string.IsNullOrWhiteSpace(profileRaw) ? "" : profileRaw.ToUpperInvariant().Replace('×','X');
-    string group = el.TryGetValue("group", out var gv) && gv != null ? gv.ToString().ToLowerInvariant() : "";
-    // Neutral per-element hints (role / material / teklaClass) — the app's own scheme, decided
-    // upstream (e.g. FloLess role->class + profile->material). Honor them when present; else fall
-    // back to the legacy group-based defaults (column->2, brace->4, else beam->3; no material set).
-    string role = el.TryGetValue("role", out var rlv) && rlv != null ? rlv.ToString().ToLowerInvariant() : "";
-    string nm  = role == "column" ? "COLUMN" : role == "brace" ? "BRACE" : role == "beam" ? "BEAM"
-               : (group == "column" ? "COLUMN" : group == "brace" ? "BRACE" : "BEAM");
-    string cls = el.TryGetValue("teklaClass", out var tcv) && tcv != null ? tcv.ToString()
-               : role == "column" ? "2" : role == "brace" ? "4" : role == "beam" ? "3"
-               : (group == "column" ? "2" : group == "brace" ? "4" : "3");
-    string mat = el.TryGetValue("material", out var mtv) && mtv != null ? mtv.ToString() : "";
-    string paramProfile = ((int)Math.Round(sw)) + "*" + ((int)Math.Round(sd));
-
-    Func<string,bool> tryInsert = ps => {
-        try {
-            var b = new Beam(p1, p2);
-            b.Profile.ProfileString = ps;
-            b.Name = nm; b.Class = cls;
-            if (!string.IsNullOrEmpty(mat)) b.Material.MaterialString = mat;
-            b.Position.Depth = Position.DepthEnum.MIDDLE;
-            b.Position.Plane = Position.PlaneEnum.MIDDLE;
-            b.Position.Rotation = Position.RotationEnum.TOP;
-            return b.Insert();
-        } catch { return false; }
-    };
-
-    bool inserted = false; string used = profile;
-    if (!string.IsNullOrEmpty(profile) && tryInsert(profile)) { inserted = true; native++; }
-    else if (tryInsert(paramProfile)) { inserted = true; used = paramProfile + " (placeholder)"; placeholder++; }
-    if (inserted) { created++; if (nm == "COLUMN") columns++; else if (nm != "BRACE") beams++; profileCounts[used] = (profileCounts.TryGetValue(used, out var pc) ? pc : 0) + 1; }
-    else failed++;
-}
-
-string modelName; try { modelName = m.GetInfo().ModelName; } catch { modelName = "Tekla model"; }
-
-return new { ok = true, scene_name = sceneName, model = modelName, created, columns, beams, native, placeholder, failed, skipped, profiles = profileCounts };
-""";
+    // The canonical scene materializer is shipped with the bridge but isolated in
+    // BakeSceneScript so its source-owned staging and commit boundary stay reviewable.
+    static readonly string BakeSceneCode = BakeSceneScript.Code;
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     static object? RunScript(
         string code,
         IReadOnlyList<MetadataReference> teklaReferences,
         JsonObject? argsNode,
-        string? teklaBinDir)
+        string? teklaBinDir,
+        ScriptCommitPolicy commitPolicy)
     {
         // Standard usings — enough for catalog-style snippets to stay
         // boilerplate-free. The script writer can add `using ...;` lines of
@@ -1633,7 +1619,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
         // only do this if a real Model was constructed AND the connection is
         // live (Tekla running, model open). Without the connection check
         // CommitChanges throws into the dead remoting channel.
-        if (modelInstance is not null)
+        if (commitPolicy == ScriptCommitPolicy.Automatic && modelInstance is not null)
         {
             var modelType = modelInstance.GetType();
             var getStatus = modelType.GetMethod("GetConnectionStatus");
@@ -1813,12 +1799,37 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
         return null;
     }
 
-    static void EmitExecOk(object? result, string verb, string? hostVersion = null, int? hostPid = null)
+    internal static bool ScriptResultReportsFailure(string verb, JsonNode? result)
+    {
+        return string.Equals(verb, "bake-scene", StringComparison.Ordinal)
+            && result is JsonObject resultObject
+            && resultObject["ok"] is JsonValue okValue
+            && okValue.TryGetValue<bool>(out var ok)
+            && !ok;
+    }
+
+    static void EmitExecOk(JsonNode? result, string verb, string? hostVersion = null, int? hostPid = null)
     {
         var receipt = new JsonObject
         {
             ["ok"] = true,
-            ["result"] = SerializeResult(result),
+            ["result"] = result,
+            ["host"] = "tekla",
+            ["host_version"] = hostVersion,
+            ["host_pid"] = hostPid,
+            ["verb"] = verb,
+            ["delivered_at"] = DateTime.UtcNow.ToString("o"),
+        };
+        WriteProtocolLine(receipt.ToJsonString());
+    }
+
+    static void EmitExecResultFail(JsonNode? result, string verb, string? hostVersion = null, int? hostPid = null)
+    {
+        var receipt = new JsonObject
+        {
+            ["ok"] = false,
+            ["error"] = $"{verb} returned ok:false; inspect the structured result receipt",
+            ["result"] = result,
             ["host"] = "tekla",
             ["host_version"] = hostVersion,
             ["host_pid"] = hostPid,
@@ -1942,7 +1953,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
             Console.Error.WriteLine("aware-tekla: launch requires --json-stdin");
             return 2;
         }
-        string stdin = Console.In.ReadToEnd();
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
         JsonNode? input;
         try { input = JsonNode.Parse(stdin); }
         catch (Exception e) { Console.Error.WriteLine($"aware-tekla: stdin not JSON: {e.Message}"); return 2; }
@@ -2066,7 +2077,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
               launch           Start a Tekla instance via Bypass.ini (headless)
               close            Save + clean-shutdown a Tekla instance (Open API + ModelSave event)
               exec             Compile + run an ad-hoc C# script against the active model
-              bake-scene       Create native Tekla members from a 3D scene (write; needs a model open)
+              bake-scene       Materialize source-owned native parts, operations, and grids (write)
               watch            Stream ModelObjectChanged events as newline-delimited JSON (lifecycle: start)
 
             Flags:
@@ -2224,7 +2235,7 @@ return new { ok = true, scene_name = sceneName, model = modelName, created, colu
             Console.Error.WriteLine("aware-tekla: send-status requires --json-stdin");
             return 2;
         }
-        string stdin = Console.In.ReadToEnd();
+        string stdin = TrimJsonBom(Console.In.ReadToEnd());
         JsonNode? input;
         try
         {

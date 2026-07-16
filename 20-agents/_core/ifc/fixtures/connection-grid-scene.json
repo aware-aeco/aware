@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "name": "IFC connection and grid fixture",
+    "units": "mm",
+    "sourceId": "ifc-fixture",
+    "sceneHash": "sha256:ifc-fixture"
+  },
+  "elements": [
+    {
+      "id": "BEAM-1",
+      "kind": "member",
+      "role": "beam",
+      "from": [0, 0, 0],
+      "to": [3000, 0, 0],
+      "section": { "w": 200, "d": 400 }
+    },
+    {
+      "id": "PL-1",
+      "kind": "plate",
+      "material": "S355",
+      "frame": {
+        "origin": [100, 0, 0],
+        "uDir": [1, 0, 0],
+        "vDir": [0, 1, 0],
+        "normal": [0, 0, 1]
+      },
+      "outline": [[-100, -150], [100, -150], [100, 150], [-100, 150]],
+      "thicknessMm": 12,
+      "holes": [
+        { "id": "PL-1-H-INDEPENDENT", "center": [0, 100], "diameterMm": 22 }
+      ]
+    },
+    {
+      "id": "SHANK-1",
+      "kind": "bolt-shank",
+      "axis": { "from": [100, 0, -20], "to": [100, 0, 20] },
+      "diameterMm": 20,
+      "fastener": { "role": "shear-bolt" }
+    },
+    {
+      "id": "HEAD-1",
+      "kind": "bolt-head",
+      "center": [100, 0, 24],
+      "axis": [0, 0, 1],
+      "acrossFlatsMm": 30,
+      "thicknessMm": 8
+    },
+    {
+      "id": "NUT-1",
+      "kind": "nut",
+      "center": [100, 0, -24],
+      "axis": [0, 0, 1],
+      "acrossFlatsMm": 30,
+      "thicknessMm": 10,
+      "fastener": { "role": "nut" }
+    },
+    {
+      "id": "WASHER-1",
+      "kind": "washer",
+      "center": [100, 0, -16],
+      "axis": [0, 0, 1],
+      "outerDiameterMm": 36,
+      "innerDiameterMm": 22,
+      "thicknessMm": 3
+    }
+  ],
+  "operations": [
+    {
+      "id": "BA-1",
+      "kind": "bolt-array",
+      "partToBoltTo": "PL-1",
+      "partToBeBolted": "BEAM-1",
+      "frame": {
+        "origin": [100, 0, 0],
+        "uDir": [1, 0, 0],
+        "vDir": [0, 1, 0],
+        "normal": [0, 0, 1]
+      },
+      "uOffsetsMm": [0],
+      "vOffsetsMm": [0],
+      "diameterMm": 20,
+      "toleranceMm": 2,
+      "standard": "A325N",
+      "boltType": "shop",
+      "threadInMaterial": false,
+      "components": {
+        "bolt": true,
+        "nut": true,
+        "washer": true
+      },
+      "instances": [
+        {
+          "id": "BA-1-I1",
+          "point": [100, 0, 0],
+          "shankId": "SHANK-1",
+          "headId": "HEAD-1",
+          "nutIds": ["NUT-1"],
+          "washerIds": ["WASHER-1"],
+          "holeEffects": [
+            {
+              "id": "BA-1-H-PL",
+              "targetId": "PL-1",
+              "center": [100, 0, 0],
+              "axis": [0, 0, 1],
+              "diameterMm": 22
+            },
+            {
+              "id": "BA-1-H-BEAM",
+              "targetId": "BEAM-1",
+              "center": [100, 0, 0],
+              "axis": [0, 0, 1],
+              "diameterMm": 22
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "WELD-1",
+      "kind": "weld",
+      "mainId": "BEAM-1",
+      "secondaryId": "PL-1",
+      "path": [[0, 0, 0], [0, 100, 0]],
+      "weldType": "fillet",
+      "sizeMm": 6,
+      "around": false,
+      "shop": true
+    },
+    {
+      "id": "CUT-1",
+      "kind": "boolean-cut",
+      "targetId": "BEAM-1",
+      "tool": {
+        "kind": "cylinder",
+        "axis": { "from": [0, 0, -10], "to": [0, 0, 10] },
+        "diameterMm": 20
+      }
+    }
+  ],
+  "referenceSystems": [
+    {
+      "id": "GRID-1",
+      "kind": "structural-grid",
+      "name": "Main grid",
+      "origin": [0, 0, 0],
+      "axes": [
+        { "id": "GRID-X-A", "direction": "x", "offsetMm": 0, "label": "A" },
+        { "id": "GRID-Y-1", "direction": "y", "offsetMm": 0, "label": "1" }
+      ],
+      "levels": [
+        { "id": "LEVEL-0", "elevationMm": 0, "label": "TOS 0" }
+      ],
+      "bounds": {
+        "minX": -1000,
+        "maxX": 4000,
+        "minY": -2000,
+        "maxY": 2000
+      }
+    }
+  ]
+}

@@ -20,7 +20,8 @@
 
 use crate::error::AwareError;
 use serde_json::Value;
-use std::collections::BTreeMap;
+use sha2::{Digest, Sha256};
+use std::collections::{BTreeMap, BTreeSet};
 use std::fmt::Write as _;
 
 /// Base-64-ish charset for IFC GlobalIds (valid IFC GUID alphabet).
@@ -39,6 +40,26 @@ fn guid(n: i64) -> String {
     }
     // ASCII by construction.
     String::from_utf8(out.to_vec()).unwrap_or_default()
+}
+
+/// A stable IFC GlobalId derived from a scene record id. Unlike the legacy entity-counter ids,
+/// this survives unrelated scene insertions and re-ordering. The four leading pad bits required by
+/// the 22-character IFC encoding keep the first character in `0..3`.
+fn record_guid(namespace: &str, id: &str) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(namespace.as_bytes());
+    hasher.update([0]);
+    hasher.update(id.as_bytes());
+    let digest = hasher.finalize();
+    let mut bytes = [0u8; 16];
+    bytes.copy_from_slice(&digest[..16]);
+    let value = u128::from_be_bytes(bytes);
+    let mut out = String::with_capacity(22);
+    out.push(B64[((value >> 126) & 0x03) as usize] as char);
+    for shift in (0..=120).rev().step_by(6) {
+        out.push(B64[((value >> shift) & 0x3f) as usize] as char);
+    }
+    out
 }
 
 /// An IFC (ISO 10303-21) string literal: single-quoted, with Part 21 escaping. Apostrophe and
@@ -377,12 +398,402 @@ fn emit_mesh(spf: &mut Spf, el: &Value, place: i64, ctx: i64, style: Option<i64>
     ));
     let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
     let name = el.get("id").and_then(Value::as_str).unwrap_or("Mesh");
-    let g = guid(spf.id);
+    let g = record_guid("element", name);
     Some(spf.emit(&format!(
         "IFCBUILDINGELEMENTPROXY({},$,{},$,$,#{place},#{pds},$,$)",
         s_lit(&g),
         s_lit(name)
     )))
+}
+
+type Vec3 = (f64, f64, f64);
+type Vec2 = (f64, f64);
+
+fn vec2(v: Option<&Value>) -> Option<(f64, f64)> {
+    let a = v?.as_array()?;
+    if a.len() != 2 {
+        return None;
+    }
+    let p = (a.first()?.as_f64()?, a.get(1)?.as_f64()?);
+    (p.0.is_finite() && p.1.is_finite()).then_some(p)
+}
+
+fn polygon_edges2(polygon: &[Vec2]) -> impl Iterator<Item = (Vec2, Vec2)> + '_ {
+    polygon
+        .iter()
+        .copied()
+        .zip(polygon.iter().copied().cycle().skip(1))
+        .take(polygon.len())
+}
+
+fn point_in_polygon2(point: Vec2, polygon: &[Vec2]) -> bool {
+    let mut inside = false;
+    for (a, b) in polygon_edges2(polygon) {
+        if (a.1 > point.1) != (b.1 > point.1)
+            && point.0 < (b.0 - a.0) * (point.1 - a.1) / (b.1 - a.1) + a.0
+        {
+            inside = !inside;
+        }
+    }
+    inside
+}
+
+fn point_segment_distance2(point: Vec2, a: Vec2, b: Vec2) -> f64 {
+    let delta = (b.0 - a.0, b.1 - a.1);
+    let length_sq = delta.0 * delta.0 + delta.1 * delta.1;
+    if length_sq <= 1.0e-18 {
+        return ((point.0 - a.0).powi(2) + (point.1 - a.1).powi(2)).sqrt();
+    }
+    let t = (((point.0 - a.0) * delta.0 + (point.1 - a.1) * delta.1) / length_sq).clamp(0.0, 1.0);
+    let nearest = (a.0 + t * delta.0, a.1 + t * delta.1);
+    ((point.0 - nearest.0).powi(2) + (point.1 - nearest.1).powi(2)).sqrt()
+}
+
+fn cross2(a: Vec2, b: Vec2, c: Vec2) -> f64 {
+    (b.0 - a.0) * (c.1 - a.1) - (b.1 - a.1) * (c.0 - a.0)
+}
+
+fn segments_intersect2(a: Vec2, b: Vec2, c: Vec2, d: Vec2) -> bool {
+    const EPS: f64 = 1.0e-9;
+    let on_segment = |p: Vec2, q: Vec2, r: Vec2| {
+        cross2(p, q, r).abs() <= EPS
+            && r.0 >= p.0.min(q.0) - EPS
+            && r.0 <= p.0.max(q.0) + EPS
+            && r.1 >= p.1.min(q.1) - EPS
+            && r.1 <= p.1.max(q.1) + EPS
+    };
+    let (ab_c, ab_d, cd_a, cd_b) = (
+        cross2(a, b, c),
+        cross2(a, b, d),
+        cross2(c, d, a),
+        cross2(c, d, b),
+    );
+    (ab_c.signum() != ab_d.signum() && cd_a.signum() != cd_b.signum())
+        || on_segment(a, b, c)
+        || on_segment(a, b, d)
+        || on_segment(c, d, a)
+        || on_segment(c, d, b)
+}
+
+fn polygon_is_simple_nonzero2(polygon: &[Vec2]) -> bool {
+    const EPS: f64 = 1.0e-9;
+    if polygon.len() < 3
+        || polygon_edges2(polygon).any(|(a, b)| (a.0 - b.0).hypot(a.1 - b.1) <= EPS)
+    {
+        return false;
+    }
+    let twice_area = polygon_edges2(polygon)
+        .map(|(a, b)| a.0 * b.1 - b.0 * a.1)
+        .sum::<f64>();
+    if twice_area.abs() <= EPS {
+        return false;
+    }
+    let n = polygon.len();
+    for i in 0..n {
+        let a = polygon[i];
+        let b = polygon[(i + 1) % n];
+        for j in (i + 1)..n {
+            if j == i || j == (i + 1) % n || (j + 1) % n == i {
+                continue;
+            }
+            if segments_intersect2(a, b, polygon[j], polygon[(j + 1) % n]) {
+                return false;
+            }
+        }
+    }
+    true
+}
+
+fn vec3(v: Option<&Value>) -> Option<Vec3> {
+    let a = v?.as_array()?;
+    if a.len() != 3 {
+        return None;
+    }
+    let p = (
+        a.first()?.as_f64()?,
+        a.get(1)?.as_f64()?,
+        a.get(2)?.as_f64()?,
+    );
+    (p.0.is_finite() && p.1.is_finite() && p.2.is_finite()).then_some(p)
+}
+
+fn add3(a: Vec3, b: Vec3) -> Vec3 {
+    (a.0 + b.0, a.1 + b.1, a.2 + b.2)
+}
+
+fn scale3(a: Vec3, s: f64) -> Vec3 {
+    (a.0 * s, a.1 * s, a.2 * s)
+}
+
+fn normalize3(a: Vec3) -> Option<Vec3> {
+    let n = (a.0 * a.0 + a.1 * a.1 + a.2 * a.2).sqrt();
+    (n.is_finite() && n > 1e-9).then_some((a.0 / n, a.1 / n, a.2 / n))
+}
+
+fn dot3(a: Vec3, b: Vec3) -> f64 {
+    a.0 * b.0 + a.1 * b.1 + a.2 * b.2
+}
+
+fn cross3(a: Vec3, b: Vec3) -> Vec3 {
+    (
+        a.1 * b.2 - a.2 * b.1,
+        a.2 * b.0 - a.0 * b.2,
+        a.0 * b.1 - a.1 * b.0,
+    )
+}
+
+fn distance3(a: Vec3, b: Vec3) -> f64 {
+    ((a.0 - b.0).powi(2) + (a.1 - b.1).powi(2) + (a.2 - b.2).powi(2)).sqrt()
+}
+
+fn length3(a: Vec3) -> f64 {
+    dot3(a, a).sqrt()
+}
+
+fn label(el: &Value) -> &str {
+    el.get("meta")
+        .and_then(Value::as_object)
+        .and_then(|m| m.get("label"))
+        .and_then(Value::as_str)
+        .or_else(|| el.get("name").and_then(Value::as_str))
+        .or_else(|| el.get("id").and_then(Value::as_str))
+        .unwrap_or("Element")
+}
+
+fn emit_axis_placement(spf: &mut Spf, origin: Vec3, axis: Vec3, ref_dir: Vec3, parent: i64) -> i64 {
+    let a = emit_axis2_placement3d(spf, origin, axis, ref_dir);
+    spf.emit(&format!("IFCLOCALPLACEMENT(#{parent},#{a})"))
+}
+
+fn emit_axis2_placement3d(spf: &mut Spf, origin: Vec3, axis: Vec3, ref_dir: Vec3) -> i64 {
+    let p = spf.emit(&format!(
+        "IFCCARTESIANPOINT(({},{},{}))",
+        r(origin.0),
+        r(origin.1),
+        r(origin.2)
+    ));
+    let z = spf.emit(&format!(
+        "IFCDIRECTION(({},{},{}))",
+        r(axis.0),
+        r(axis.1),
+        r(axis.2)
+    ));
+    let x = spf.emit(&format!(
+        "IFCDIRECTION(({},{},{}))",
+        r(ref_dir.0),
+        r(ref_dir.1),
+        r(ref_dir.2)
+    ));
+    spf.emit(&format!("IFCAXIS2PLACEMENT3D(#{p},#{z},#{x})"))
+}
+
+fn axis_ref_dir(axis: Vec3) -> Vec3 {
+    let seed = if axis.2.abs() < 0.9 {
+        (0.0, 0.0, 1.0)
+    } else {
+        (1.0, 0.0, 0.0)
+    };
+    normalize3(cross(seed, axis)).unwrap_or((1.0, 0.0, 0.0))
+}
+
+fn emit_polyline2(spf: &mut Spf, points: &[(f64, f64)], close: bool) -> i64 {
+    let mut ids = Vec::with_capacity(points.len() + 1);
+    for &(x, y) in points {
+        ids.push(spf.emit(&format!("IFCCARTESIANPOINT(({},{}))", r(x), r(y))));
+    }
+    if close && points.first() != points.last() && !ids.is_empty() {
+        ids.push(ids[0]);
+    }
+    let refs = ids
+        .iter()
+        .map(|id| format!("#{id}"))
+        .collect::<Vec<_>>()
+        .join(",");
+    spf.emit(&format!("IFCPOLYLINE(({refs}))"))
+}
+
+fn emit_body(
+    spf: &mut Spf,
+    profile: i64,
+    length: f64,
+    ctx: i64,
+    extrude_pos: i64,
+    dir_z: i64,
+    style: Option<i64>,
+) -> i64 {
+    let solid = spf.emit(&format!(
+        "IFCEXTRUDEDAREASOLID(#{profile},#{extrude_pos},#{dir_z},{})",
+        r(length)
+    ));
+    if let Some(st) = style {
+        spf.emit(&format!("IFCSTYLEDITEM(#{solid},(#{st}),$)"));
+    }
+    let shape = spf.emit(&format!(
+        "IFCSHAPEREPRESENTATION(#{ctx},'Body','SweptSolid',(#{solid}))"
+    ));
+    spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"))
+}
+
+struct FastenerSweep {
+    start: Vec3,
+    axis: Vec3,
+    length: f64,
+    bounding_diagonal: f64,
+    profile: i64,
+}
+
+fn emit_fastener_sweep(spf: &mut Spf, el: &Value, pos2d: i64) -> Option<FastenerSweep> {
+    let kind = el.get("kind").and_then(Value::as_str)?;
+    let (start, axis, length, cross_section_diameter, profile) =
+        if matches!(kind, "rod" | "bolt-shank") {
+            let axis_obj = el.get("axis")?.as_object()?;
+            let from = vec3(axis_obj.get("from"))?;
+            let to = vec3(axis_obj.get("to"))?;
+            let delta = (to.0 - from.0, to.1 - from.1, to.2 - from.2);
+            let axis = normalize3(delta)?;
+            let length = (delta.0 * delta.0 + delta.1 * delta.1 + delta.2 * delta.2).sqrt();
+            let diameter = pos(el.get("diameterMm"))?;
+            let circle = spf.emit(&format!("IFCCIRCLE(#{pos2d},{})", r(diameter / 2.0)));
+            let profile = spf.emit(&format!(
+                "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{circle})",
+                s_lit(label(el))
+            ));
+            (from, axis, length, diameter, profile)
+        } else {
+            let center = vec3(el.get("center"))?;
+            let axis = vec3(el.get("axis")).and_then(normalize3)?;
+            let length = pos(el.get("thicknessMm"))?;
+            let start = add3(center, scale3(axis, -length / 2.0));
+            if kind == "washer" {
+                let outer_d = pos(el.get("outerDiameterMm"))?;
+                let inner_d = pos(el.get("innerDiameterMm"))?;
+                if inner_d >= outer_d {
+                    return None;
+                }
+                let outer = spf.emit(&format!("IFCCIRCLE(#{pos2d},{})", r(outer_d / 2.0)));
+                let inner = spf.emit(&format!("IFCCIRCLE(#{pos2d},{})", r(inner_d / 2.0)));
+                let profile = spf.emit(&format!(
+                    "IFCARBITRARYPROFILEDEFWITHVOIDS(.AREA.,{},#{outer},(#{inner}))",
+                    s_lit(label(el))
+                ));
+                (start, axis, length, outer_d, profile)
+            } else {
+                let af = pos(el.get("acrossFlatsMm"))?;
+                let phase = el.get("phaseRad").and_then(Value::as_f64).unwrap_or(0.0);
+                let radius = af / 3.0_f64.sqrt();
+                let points = (0..6)
+                    .map(|i| {
+                        let a = phase + i as f64 * std::f64::consts::PI / 3.0;
+                        (radius * a.cos(), radius * a.sin())
+                    })
+                    .collect::<Vec<_>>();
+                let outer = emit_polyline2(spf, &points, true);
+                let profile = spf.emit(&format!(
+                    "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{outer})",
+                    s_lit(label(el))
+                ));
+                (start, axis, length, radius * 2.0, profile)
+            }
+        };
+    Some(FastenerSweep {
+        start,
+        axis,
+        length,
+        bounding_diagonal: (length.powi(2) + 2.0 * cross_section_diameter.powi(2)).sqrt(),
+        profile,
+    })
+}
+
+fn mesh_bounding_diagonal(el: &Value) -> Option<f64> {
+    let positions = el.get("positions")?.as_array()?;
+    let mut min = [f64::INFINITY; 3];
+    let mut max = [f64::NEG_INFINITY; 3];
+    for point in positions.chunks_exact(3) {
+        for axis in 0..3 {
+            let value = point[axis].as_f64()?;
+            min[axis] = min[axis].min(value);
+            max[axis] = max[axis].max(value);
+        }
+    }
+    Some(
+        (0..3)
+            .map(|axis| (max[axis] - min[axis]).powi(2))
+            .sum::<f64>()
+            .sqrt(),
+    )
+}
+
+fn emit_positioned_sweep(
+    spf: &mut Spf,
+    sweep: &FastenerSweep,
+    dir_z: i64,
+    style: Option<i64>,
+) -> i64 {
+    let position = emit_axis2_placement3d(spf, sweep.start, sweep.axis, axis_ref_dir(sweep.axis));
+    let solid = spf.emit(&format!(
+        "IFCEXTRUDEDAREASOLID(#{},#{position},#{dir_z},{})",
+        sweep.profile,
+        r(sweep.length)
+    ));
+    if let Some(st) = style {
+        spf.emit(&format!("IFCSTYLEDITEM(#{solid},(#{st}),$)"));
+    }
+    solid
+}
+
+fn receipt_row(id: &str, kind: &str, status: &str) -> serde_json::Map<String, Value> {
+    let mut row = serde_json::Map::new();
+    row.insert("id".into(), Value::String(id.to_string()));
+    row.insert("kind".into(), Value::String(kind.to_string()));
+    row.insert("status".into(), Value::String(status.to_string()));
+    row
+}
+
+fn bolt_component_ids(instance: &Value) -> Vec<&str> {
+    let mut ids = Vec::new();
+    for field in ["shankId", "headId"] {
+        if let Some(id) = instance.get(field).and_then(Value::as_str) {
+            ids.push(id);
+        }
+    }
+    for field in ["nutIds", "washerIds"] {
+        if let Some(values) = instance.get(field).and_then(Value::as_array) {
+            ids.extend(values.iter().filter_map(Value::as_str));
+        }
+    }
+    ids
+}
+
+fn mechanical_semantics(el: &Value) -> (String, &'static str) {
+    let role = el
+        .get("fastener")
+        .or_else(|| el.get("fastenerSemantics"))
+        .or_else(|| el.get("profile"))
+        .and_then(Value::as_object)
+        .and_then(|o| o.get("role"))
+        .and_then(Value::as_str)
+        .unwrap_or("")
+        .to_ascii_lowercase();
+    let kind = el.get("kind").and_then(Value::as_str).unwrap_or("");
+    match kind {
+        "washer" => ("Washer".into(), ".USERDEFINED."),
+        "bolt-head" => ("Bolt head".into(), ".USERDEFINED."),
+        "nut" => match role.as_str() {
+            "leveling-nut" | "leveling nut" => ("Leveling nut".into(), ".USERDEFINED."),
+            "anchor-nut" | "anchor nut" => ("Anchor nut".into(), ".USERDEFINED."),
+            "nut" => ("Nut".into(), ".USERDEFINED."),
+            _ => ("Hex fastener".into(), ".USERDEFINED."),
+        },
+        "rod" | "bolt-shank" => match role.as_str() {
+            "anchor" | "anchor-rod" | "anchor-bolt" | "anchorbolt" => {
+                ("Anchor bolt".into(), ".ANCHORBOLT.")
+            }
+            "bolt" | "shear-bolt" | "shear bolt" | "bolt-shank" => ("Bolt".into(), ".BOLT."),
+            _ if kind == "bolt-shank" => ("Bolt".into(), ".BOLT."),
+            _ => ("Round fastener".into(), ".NOTDEFINED."),
+        },
+        _ => ("Mechanical fastener".into(), ".NOTDEFINED."),
+    }
 }
 
 /// The result of building an IFC document (pure — no IO).
@@ -396,6 +807,9 @@ struct BuildResult {
     /// Neutral, deterministic (scene-order) warnings for elements whose PRESENT `xsection` was
     /// rejected and fell back to a rectangle. Empty for generic/rect scenes.
     warnings: Vec<(String, String)>,
+    emitted: Vec<Value>,
+    failed: Vec<Value>,
+    unsupported: Vec<Value>,
 }
 
 /// Build the full IFC4 SPF document from a scene object. Pure (no IO) so it is directly unit-testable.
@@ -488,6 +902,32 @@ fn build_ifc(scene: &Value) -> BuildResult {
         .get("elements")
         .and_then(Value::as_array)
         .unwrap_or(&empty);
+    let element_by_id = elements
+        .iter()
+        .filter_map(|element| {
+            element
+                .get("id")
+                .and_then(Value::as_str)
+                .map(|id| (id.to_string(), element))
+        })
+        .collect::<BTreeMap<_, _>>();
+    let mut grouped_fastener_component_ids = BTreeSet::new();
+    if let Some(operations) = scene.get("operations").and_then(Value::as_array) {
+        for op in operations
+            .iter()
+            .filter(|op| op.get("kind").and_then(Value::as_str) == Some("bolt-array"))
+        {
+            if let Some(instances) = op.get("instances").and_then(Value::as_array) {
+                for instance in instances {
+                    grouped_fastener_component_ids.extend(
+                        bolt_component_ids(instance)
+                            .into_iter()
+                            .map(ToOwned::to_owned),
+                    );
+                }
+            }
+        }
+    }
 
     // Pre-scan for the distinct colours + materials actually used (deterministic BTreeMap order).
     let mut colors: BTreeMap<String, (f64, f64, f64)> = BTreeMap::new();
@@ -524,6 +964,14 @@ fn build_ifc(scene: &Value) -> BuildResult {
     let mut profile_counts: BTreeMap<String, i64> = BTreeMap::new();
     let mut mat_members: BTreeMap<String, Vec<i64>> = BTreeMap::new();
     let mut warnings: Vec<(String, String)> = Vec::new();
+    let mut emitted: Vec<Value> = Vec::new();
+    let failed: Vec<Value> = Vec::new();
+    let mut unsupported: Vec<Value> = Vec::new();
+    let mut product_by_id: BTreeMap<String, i64> = BTreeMap::new();
+    // Conservative maximum distance from an authored hole centre to any point
+    // on the target. Opening solids use twice this span so oblique axes still
+    // pass completely through the product.
+    let mut product_half_span_by_id: BTreeMap<String, f64> = BTreeMap::new();
 
     for el in elements {
         let elid = el
@@ -535,12 +983,199 @@ fn build_ifc(scene: &Value) -> BuildResult {
             resolve_color(el, &group_colors).and_then(|(hk, _)| color_style.get(&hk).copied());
         let matkey = resolve_material(el).map(|(mk, _)| mk);
 
+        let kind = el.get("kind").and_then(Value::as_str).unwrap_or("member");
+        if grouped_fastener_component_ids.contains(&elid) {
+            continue;
+        }
+        if !matches!(
+            kind,
+            "member"
+                | "line"
+                | "box"
+                | "plate"
+                | "rod"
+                | "bolt-shank"
+                | "washer"
+                | "nut"
+                | "bolt-head"
+                | "mesh"
+        ) {
+            let mut row = receipt_row(&elid, kind, "unsupported");
+            row.insert(
+                "code".into(),
+                Value::String("unsupported-element-kind".into()),
+            );
+            row.insert(
+                "message".into(),
+                Value::String(format!(
+                    "element kind '{kind}' is not supported by ifc.write"
+                )),
+            );
+            unsupported.push(Value::Object(row));
+            continue;
+        }
+        if kind == "plate" {
+            let Some(frame) = el.get("frame").and_then(Value::as_object) else {
+                continue;
+            };
+            let Some(origin) = vec3(frame.get("origin")) else {
+                continue;
+            };
+            let Some(u) = vec3(frame.get("uDir")).and_then(normalize3) else {
+                continue;
+            };
+            let Some(_v) = vec3(frame.get("vDir")).and_then(normalize3) else {
+                continue;
+            };
+            let Some(normal) = vec3(frame.get("normal")).and_then(normalize3) else {
+                continue;
+            };
+            let Some(thickness) = pos(el.get("thicknessMm")) else {
+                continue;
+            };
+            let Some(outline) = el.get("outline").and_then(Value::as_array) else {
+                continue;
+            };
+            let outline = outline
+                .iter()
+                .filter_map(|point| vec2(Some(point)))
+                .collect::<Vec<_>>();
+            if outline.len() < 3 {
+                continue;
+            }
+            let outer = emit_polyline2(&mut spf, &outline, true);
+            let mut inner_curves = Vec::new();
+            if let Some(holes) = el.get("holes").and_then(Value::as_array) {
+                for hole in holes {
+                    let Some((x, y)) = vec2(hole.get("center")) else {
+                        continue;
+                    };
+                    let Some(diameter) = pos(hole.get("diameterMm")) else {
+                        continue;
+                    };
+                    let hp = spf.emit(&format!("IFCCARTESIANPOINT(({},{}))", r(x), r(y)));
+                    let ha = spf.emit(&format!("IFCAXIS2PLACEMENT2D(#{hp},$)"));
+                    inner_curves.push(spf.emit(&format!("IFCCIRCLE(#{ha},{})", r(diameter / 2.0))));
+                }
+            }
+            let profile_name = format!("{} profile", label(el));
+            let profile = if inner_curves.is_empty() {
+                spf.emit(&format!(
+                    "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{outer})",
+                    s_lit(&profile_name)
+                ))
+            } else {
+                let refs = inner_curves
+                    .iter()
+                    .map(|id| format!("#{id}"))
+                    .collect::<Vec<_>>()
+                    .join(",");
+                spf.emit(&format!(
+                    "IFCARBITRARYPROFILEDEFWITHVOIDS(.AREA.,{},#{outer},({refs}))",
+                    s_lit(&profile_name)
+                ))
+            };
+            let start = add3(origin, scale3(normal, -thickness / 2.0));
+            let place = emit_axis_placement(&mut spf, start, normal, u, bldg_place);
+            let pds = emit_body(&mut spf, profile, thickness, ctx, extrude_pos, dir_z, style);
+            let gid = record_guid("element", &elid);
+            let elem = spf.emit(&format!(
+                "IFCPLATE({},$,{},$,$,#{place},#{pds},$,$)",
+                s_lit(&gid),
+                s_lit(label(el))
+            ));
+            elem_ids.push(elem);
+            product_by_id.insert(elid.clone(), elem);
+            let (min_x, max_x, min_y, max_y) = outline.iter().fold(
+                (
+                    f64::INFINITY,
+                    f64::NEG_INFINITY,
+                    f64::INFINITY,
+                    f64::NEG_INFINITY,
+                ),
+                |(min_x, max_x, min_y, max_y), (x, y)| {
+                    (min_x.min(*x), max_x.max(*x), min_y.min(*y), max_y.max(*y))
+                },
+            );
+            product_half_span_by_id.insert(
+                elid.clone(),
+                ((max_x - min_x).powi(2) + (max_y - min_y).powi(2) + thickness.powi(2)).sqrt(),
+            );
+            *profile_counts.entry("PLATE".into()).or_insert(0) += 1;
+            if let Some(mk) = matkey {
+                mat_members.entry(mk).or_default().push(elem);
+            }
+            let mut row = receipt_row(&elid, kind, "emitted");
+            row.insert("ifcGuid".into(), Value::String(gid.clone()));
+            row.insert("entityType".into(), Value::String("IfcPlate".into()));
+            emitted.push(Value::Object(row));
+            if let Some(holes) = el.get("holes").and_then(Value::as_array) {
+                for hole in holes {
+                    let hid = hole.get("id").and_then(Value::as_str).unwrap_or("");
+                    let mut row = receipt_row(hid, "hole", "emitted");
+                    row.insert("realizedBy".into(), Value::String(elid.clone()));
+                    row.insert("ifcGuid".into(), Value::String(gid.clone()));
+                    emitted.push(Value::Object(row));
+                }
+            }
+            continue;
+        }
+
+        if matches!(kind, "rod" | "bolt-shank" | "washer" | "nut" | "bolt-head") {
+            let Some(sweep) = emit_fastener_sweep(&mut spf, el, pos2d) else {
+                continue;
+            };
+            let place = emit_axis_placement(
+                &mut spf,
+                sweep.start,
+                sweep.axis,
+                axis_ref_dir(sweep.axis),
+                bldg_place,
+            );
+            let pds = emit_body(
+                &mut spf,
+                sweep.profile,
+                sweep.length,
+                ctx,
+                extrude_pos,
+                dir_z,
+                style,
+            );
+            let (object_type, predefined) = mechanical_semantics(el);
+            let gid = record_guid("element", &elid);
+            let elem = spf.emit(&format!(
+                "IFCMECHANICALFASTENER({},$,{},$,{},#{place},#{pds},$,$,$,{predefined})",
+                s_lit(&gid),
+                s_lit(label(el)),
+                s_lit(&object_type)
+            ));
+            elem_ids.push(elem);
+            product_by_id.insert(elid.clone(), elem);
+            product_half_span_by_id.insert(elid.clone(), sweep.bounding_diagonal.max(1.0));
+            *profile_counts.entry(kind.to_ascii_uppercase()).or_insert(0) += 1;
+            if let Some(mk) = matkey {
+                mat_members.entry(mk).or_default().push(elem);
+            }
+            let mut row = receipt_row(&elid, kind, "emitted");
+            row.insert("ifcGuid".into(), Value::String(gid));
+            row.insert(
+                "entityType".into(),
+                Value::String("IfcMechanicalFastener".into()),
+            );
+            emitted.push(Value::Object(row));
+            continue;
+        }
+
         // A tessellated mesh element (e.g. an imported connection).
         let is_mesh =
             el.get("kind").and_then(Value::as_str) == Some("mesh") || el.get("positions").is_some();
         if is_mesh {
             if let Some(elem) = emit_mesh(&mut spf, el, bldg_place, ctx, style) {
                 elem_ids.push(elem);
+                product_by_id.insert(elid.clone(), elem);
+                if let Some(diagonal) = mesh_bounding_diagonal(el) {
+                    product_half_span_by_id.insert(elid.clone(), diagonal.max(1.0));
+                }
                 meshes += 1;
                 let profile = el
                     .get("meta")
@@ -553,6 +1188,14 @@ fn build_ifc(scene: &Value) -> BuildResult {
                 if let Some(mk) = matkey {
                     mat_members.entry(mk).or_default().push(elem);
                 }
+                let gid = record_guid("element", &elid);
+                let mut row = receipt_row(&elid, "mesh", "emitted");
+                row.insert("ifcGuid".into(), Value::String(gid));
+                row.insert(
+                    "entityType".into(),
+                    Value::String("IfcBuildingElementProxy".into()),
+                );
+                emitted.push(Value::Object(row));
             }
             continue;
         }
@@ -662,7 +1305,7 @@ fn build_ifc(scene: &Value) -> BuildResult {
             "IFCSHAPEREPRESENTATION(#{ctx},'Body','SweptSolid',(#{solid}))"
         ));
         let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
-        let g = guid(spf.id);
+        let g = record_guid("element", &elid);
         // Element type from the neutral `role`; fall back to the legacy `group` when role is absent.
         let is_col = if role.is_empty() {
             group == "column"
@@ -691,12 +1334,399 @@ fn build_ifc(scene: &Value) -> BuildResult {
             s_lit(&profile)
         ));
         elem_ids.push(elem);
+        product_by_id.insert(elid.clone(), elem);
+        product_half_span_by_id.insert(elid.clone(), (len * len + w * w + d * d).sqrt());
         if let Some(mk) = matkey {
             mat_members.entry(mk).or_default().push(elem);
         }
+        let mut row = receipt_row(&elid, kind, "emitted");
+        row.insert("ifcGuid".into(), Value::String(g));
+        row.insert(
+            "entityType".into(),
+            Value::String(
+                match ifc_type {
+                    "IFCCOLUMN" => "IfcColumn",
+                    "IFCMEMBER" => "IfcMember",
+                    _ => "IfcBeam",
+                }
+                .into(),
+            ),
+        );
+        emitted.push(Value::Object(row));
     }
 
     // ── Phase 4: spatial containment ──
+    // Native-operation intent creates one selectable IFC product per bolt array. The authored
+    // heads, shanks, washers, and nuts remain exact solids inside that shared product.
+    if let Some(operations) = scene.get("operations").and_then(Value::as_array) {
+        for op in operations {
+            let op_id = op.get("id").and_then(Value::as_str).unwrap_or("");
+            let op_kind = op.get("kind").and_then(Value::as_str).unwrap_or("unknown");
+            if op_kind != "bolt-array" {
+                let mut row = receipt_row(op_id, op_kind, "unsupported");
+                row.insert(
+                    "code".into(),
+                    Value::String("ifc-relationship-unsupported".into()),
+                );
+                row.insert(
+                    "message".into(),
+                    Value::String(format!(
+                        "IFC4 mapping for {op_kind} relationships is not supported"
+                    )),
+                );
+                unsupported.push(Value::Object(row));
+                continue;
+            }
+
+            let group_gid = record_guid("bolt-array", op_id);
+            let mut solid_ids = Vec::new();
+            let mut component_rows = Vec::new();
+            let mut group_material = None;
+            let mut shank_length = None;
+            if let Some(instances) = op.get("instances").and_then(Value::as_array) {
+                for instance in instances {
+                    for component_id in bolt_component_ids(instance) {
+                        let Some(component) = element_by_id.get(component_id).copied() else {
+                            continue;
+                        };
+                        let style = resolve_color(component, &group_colors)
+                            .and_then(|(key, _)| color_style.get(&key).copied());
+                        let Some(sweep) = emit_fastener_sweep(&mut spf, component, pos2d) else {
+                            continue;
+                        };
+                        if matches!(
+                            component.get("kind").and_then(Value::as_str),
+                            Some("rod" | "bolt-shank")
+                        ) && shank_length.is_none()
+                        {
+                            shank_length = Some(sweep.length);
+                        }
+                        solid_ids.push(emit_positioned_sweep(&mut spf, &sweep, dir_z, style));
+                        if group_material.is_none() {
+                            group_material = resolve_material(component).map(|(key, _)| key);
+                        }
+                        let component_kind = component
+                            .get("kind")
+                            .and_then(Value::as_str)
+                            .unwrap_or("mechanical-fastener");
+                        *profile_counts
+                            .entry(component_kind.to_ascii_uppercase())
+                            .or_insert(0) += 1;
+                        let mut row = receipt_row(component_id, component_kind, "emitted");
+                        row.insert("ifcGuid".into(), Value::String(group_gid.clone()));
+                        row.insert("realizedBy".into(), Value::String(op_id.to_string()));
+                        row.insert(
+                            "entityType".into(),
+                            Value::String("IfcMechanicalFastener".into()),
+                        );
+                        component_rows.push(Value::Object(row));
+                    }
+                }
+            }
+            let solid_refs = solid_ids
+                .iter()
+                .map(|id| format!("#{id}"))
+                .collect::<Vec<_>>()
+                .join(",");
+            let shape = spf.emit(&format!(
+                "IFCSHAPEREPRESENTATION(#{ctx},'Body','SweptSolid',({solid_refs}))"
+            ));
+            let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{shape}))"));
+            let group_place = emit_axis_placement(
+                &mut spf,
+                (0.0, 0.0, 0.0),
+                (0.0, 0.0, 1.0),
+                (1.0, 0.0, 0.0),
+                bldg_place,
+            );
+            let standard = op.get("standard").and_then(Value::as_str).unwrap_or("");
+            let name = op
+                .get("name")
+                .and_then(Value::as_str)
+                .map(ToOwned::to_owned)
+                .unwrap_or_else(|| {
+                    if standard.is_empty() {
+                        format!("Bolt array {op_id}")
+                    } else {
+                        format!("Bolt array {op_id} - {standard}")
+                    }
+                });
+            let diameter = pos(op.get("diameterMm"))
+                .map(r)
+                .unwrap_or_else(|| "$".into());
+            let nominal_length = shank_length.map(r).unwrap_or_else(|| "$".into());
+            let fastener = spf.emit(&format!(
+                "IFCMECHANICALFASTENER({},$,{},$,'Bolt array',#{group_place},#{pds},$,{diameter},{nominal_length},.BOLT.)",
+                s_lit(&group_gid),
+                s_lit(&name)
+            ));
+            elem_ids.push(fastener);
+            product_by_id.insert(op_id.to_string(), fastener);
+            if let Some(material) = group_material {
+                mat_members.entry(material).or_default().push(fastener);
+            }
+            let mut op_row = receipt_row(op_id, op_kind, "emitted");
+            op_row.insert("ifcGuid".into(), Value::String(group_gid.clone()));
+            op_row.insert(
+                "entityType".into(),
+                Value::String("IfcMechanicalFastener".into()),
+            );
+            emitted.push(Value::Object(op_row));
+            emitted.extend(component_rows);
+            if let Some(instances) = op.get("instances").and_then(Value::as_array) {
+                for instance in instances {
+                    let instance_id = instance.get("id").and_then(Value::as_str).unwrap_or("");
+                    let mut instance_row = receipt_row(instance_id, "bolt-instance", "emitted");
+                    instance_row.insert("ifcGuid".into(), Value::String(group_gid.clone()));
+                    instance_row.insert("realizedBy".into(), Value::String(op_id.to_string()));
+                    emitted.push(Value::Object(instance_row));
+                    if let Some(effects) = instance.get("holeEffects").and_then(Value::as_array) {
+                        for effect in effects {
+                            let effect_id = effect.get("id").and_then(Value::as_str).unwrap_or("");
+                            let target_id =
+                                effect.get("targetId").and_then(Value::as_str).unwrap_or("");
+                            let Some(target) = product_by_id.get(target_id).copied() else {
+                                continue;
+                            };
+                            let Some(center) = vec3(effect.get("center")) else {
+                                continue;
+                            };
+                            let Some(axis) = vec3(effect.get("axis")).and_then(normalize3) else {
+                                continue;
+                            };
+                            let Some(diameter) = pos(effect.get("diameterMm")) else {
+                                continue;
+                            };
+                            let depth = product_half_span_by_id
+                                .get(target_id)
+                                .copied()
+                                .unwrap_or(diameter * 4.0)
+                                * 2.0
+                                + 2.0;
+                            let circle =
+                                spf.emit(&format!("IFCCIRCLE(#{pos2d},{})", r(diameter / 2.0)));
+                            let profile = spf.emit(&format!(
+                                "IFCARBITRARYCLOSEDPROFILEDEF(.AREA.,{},#{circle})",
+                                s_lit(effect_id)
+                            ));
+                            let start = add3(center, scale3(axis, -depth / 2.0));
+                            let place = emit_axis_placement(
+                                &mut spf,
+                                start,
+                                axis,
+                                axis_ref_dir(axis),
+                                bldg_place,
+                            );
+                            let pds =
+                                emit_body(&mut spf, profile, depth, ctx, extrude_pos, dir_z, None);
+                            let gid = record_guid("opening", effect_id);
+                            let opening = spf.emit(&format!(
+                                "IFCOPENINGELEMENT({},$,{},$,$,#{place},#{pds},$,.OPENING.)",
+                                s_lit(&gid),
+                                s_lit(effect_id)
+                            ));
+                            let rel_gid =
+                                record_guid("void-relation", &format!("{target_id}\0{effect_id}"));
+                            spf.emit(&format!(
+                                "IFCRELVOIDSELEMENT({},$,$,$,#{target},#{opening})",
+                                s_lit(&rel_gid)
+                            ));
+                            let mut row = receipt_row(effect_id, "hole-effect", "emitted");
+                            row.insert("ifcGuid".into(), Value::String(gid));
+                            row.insert("realizedBy".into(), Value::String(op_id.to_string()));
+                            row.insert("targetId".into(), Value::String(target_id.to_string()));
+                            row.insert(
+                                "entityType".into(),
+                                Value::String("IfcOpeningElement".into()),
+                            );
+                            emitted.push(Value::Object(row));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    let scene_element_count = elem_ids.len();
+
+    // Structural reference systems: IfcGrid/IfcGridAxis for plan axes and a rooted IfcAnnotation
+    // with curve geometry for every Z datum (never a fabricated building storey).
+    if let Some(reference_systems) = scene.get("referenceSystems").and_then(Value::as_array) {
+        for grid in reference_systems {
+            let grid_id = grid.get("id").and_then(Value::as_str).unwrap_or("");
+            let grid_kind = grid
+                .get("kind")
+                .and_then(Value::as_str)
+                .unwrap_or("unknown");
+            if grid_kind != "structural-grid" {
+                let mut row = receipt_row(grid_id, grid_kind, "unsupported");
+                row.insert(
+                    "code".into(),
+                    Value::String("unsupported-reference-system".into()),
+                );
+                row.insert(
+                    "message".into(),
+                    Value::String(format!(
+                        "reference-system kind '{grid_kind}' is not supported"
+                    )),
+                );
+                unsupported.push(Value::Object(row));
+                for (collection, child_kind) in
+                    [("axes", "grid-axis"), ("levels", "elevation-datum")]
+                {
+                    if let Some(children) = grid.get(collection).and_then(Value::as_array) {
+                        for child in children {
+                            let child_id = child.get("id").and_then(Value::as_str).unwrap_or("");
+                            let mut child_row = receipt_row(child_id, child_kind, "unsupported");
+                            child_row
+                                .insert("code".into(), Value::String("unsupported-parent".into()));
+                            child_row.insert("parentId".into(), Value::String(grid_id.into()));
+                            child_row.insert(
+                                "message".into(),
+                                Value::String(format!(
+                                    "parent reference-system kind '{grid_kind}' is not supported"
+                                )),
+                            );
+                            unsupported.push(Value::Object(child_row));
+                        }
+                    }
+                }
+                continue;
+            }
+            let Some(origin) = vec3(grid.get("origin")) else {
+                continue;
+            };
+            let Some(bounds) = grid.get("bounds").and_then(Value::as_object) else {
+                continue;
+            };
+            let (min_x, max_x, min_y, max_y) = (
+                num(bounds.get("minX")),
+                num(bounds.get("maxX")),
+                num(bounds.get("minY")),
+                num(bounds.get("maxY")),
+            );
+            let grid_place = emit_axis_placement(
+                &mut spf,
+                origin,
+                (0.0, 0.0, 1.0),
+                (1.0, 0.0, 0.0),
+                bldg_place,
+            );
+            let mut u_axes = Vec::new();
+            let mut v_axes = Vec::new();
+            let mut axis_rows = Vec::new();
+            if let Some(axes) = grid.get("axes").and_then(Value::as_array) {
+                for axis in axes {
+                    let axis_id = axis.get("id").and_then(Value::as_str).unwrap_or("");
+                    let direction = axis.get("direction").and_then(Value::as_str).unwrap_or("");
+                    let offset = num(axis.get("offsetMm"));
+                    let start = axis.get("startMm").and_then(Value::as_f64);
+                    let end = axis.get("endMm").and_then(Value::as_f64);
+                    let points = if direction == "x" {
+                        vec![
+                            (offset, start.unwrap_or(min_y)),
+                            (offset, end.unwrap_or(max_y)),
+                        ]
+                    } else {
+                        vec![
+                            (start.unwrap_or(min_x), offset),
+                            (end.unwrap_or(max_x), offset),
+                        ]
+                    };
+                    let curve = emit_polyline2(&mut spf, &points, false);
+                    let tag = axis.get("label").and_then(Value::as_str).unwrap_or(axis_id);
+                    let axis_ent = spf.emit(&format!("IFCGRIDAXIS({},#{curve},.T.)", s_lit(tag)));
+                    if direction == "x" {
+                        u_axes.push(axis_ent);
+                    } else {
+                        v_axes.push(axis_ent);
+                    }
+                    let mut row = receipt_row(axis_id, "grid-axis", "emitted");
+                    row.insert("realizedBy".into(), Value::String(grid_id.to_string()));
+                    row.insert("entityType".into(), Value::String("IfcGridAxis".into()));
+                    axis_rows.push(Value::Object(row));
+                }
+            }
+            let entity_refs = |ids: &[i64]| {
+                ids.iter()
+                    .map(|id| format!("#{id}"))
+                    .collect::<Vec<_>>()
+                    .join(",")
+            };
+            let grid_gid = record_guid("reference-system", grid_id);
+            let grid_name = grid.get("name").and_then(Value::as_str).unwrap_or(grid_id);
+            let grid_ent = spf.emit(&format!(
+                "IFCGRID({},$,{},$,$,#{grid_place},$,({}),({}),$,$)",
+                s_lit(&grid_gid),
+                s_lit(grid_name),
+                entity_refs(&u_axes),
+                entity_refs(&v_axes)
+            ));
+            elem_ids.push(grid_ent);
+            let mut grid_row = receipt_row(grid_id, grid_kind, "emitted");
+            grid_row.insert("ifcGuid".into(), Value::String(grid_gid));
+            grid_row.insert("entityType".into(), Value::String("IfcGrid".into()));
+            emitted.push(Value::Object(grid_row));
+            emitted.extend(axis_rows);
+
+            if let Some(levels) = grid.get("levels").and_then(Value::as_array) {
+                for level in levels {
+                    let level_id = level.get("id").and_then(Value::as_str).unwrap_or("");
+                    let elevation = num(level.get("elevationMm"));
+                    let level_name = level
+                        .get("label")
+                        .and_then(Value::as_str)
+                        .unwrap_or(level_id);
+                    let level_place = emit_axis_placement(
+                        &mut spf,
+                        (origin.0, origin.1, elevation),
+                        (0.0, 0.0, 1.0),
+                        (1.0, 0.0, 0.0),
+                        bldg_place,
+                    );
+                    let p1 = spf.emit(&format!(
+                        "IFCCARTESIANPOINT(({},{},0.))",
+                        r(min_x),
+                        r((min_y + max_y) / 2.0)
+                    ));
+                    let p2 = spf.emit(&format!(
+                        "IFCCARTESIANPOINT(({},{},0.))",
+                        r(max_x),
+                        r((min_y + max_y) / 2.0)
+                    ));
+                    let p3 = spf.emit(&format!(
+                        "IFCCARTESIANPOINT(({},{},0.))",
+                        r((min_x + max_x) / 2.0),
+                        r(min_y)
+                    ));
+                    let p4 = spf.emit(&format!(
+                        "IFCCARTESIANPOINT(({},{},0.))",
+                        r((min_x + max_x) / 2.0),
+                        r(max_y)
+                    ));
+                    let line_x = spf.emit(&format!("IFCPOLYLINE((#{p1},#{p2}))"));
+                    let line_y = spf.emit(&format!("IFCPOLYLINE((#{p3},#{p4}))"));
+                    let curves = spf.emit(&format!("IFCGEOMETRICCURVESET((#{line_x},#{line_y}))"));
+                    let rep = spf.emit(&format!(
+                        "IFCSHAPEREPRESENTATION(#{ctx},'Annotation','GeometricCurveSet',(#{curves}))"
+                    ));
+                    let pds = spf.emit(&format!("IFCPRODUCTDEFINITIONSHAPE($,$,(#{rep}))"));
+                    let level_gid = record_guid("level", level_id);
+                    let annotation = spf.emit(&format!(
+                        "IFCANNOTATION({},$,{},$,'Elevation datum',#{level_place},#{pds})",
+                        s_lit(&level_gid),
+                        s_lit(level_name)
+                    ));
+                    elem_ids.push(annotation);
+                    let mut row = receipt_row(level_id, "elevation-datum", "emitted");
+                    row.insert("ifcGuid".into(), Value::String(level_gid));
+                    row.insert("realizedBy".into(), Value::String(grid_id.to_string()));
+                    row.insert("entityType".into(), Value::String("IfcAnnotation".into()));
+                    emitted.push(Value::Object(row));
+                }
+            }
+        }
+    }
+
     if !elem_ids.is_empty() {
         let refs = elem_ids
             .iter()
@@ -748,18 +1778,926 @@ fn build_ifc(scene: &Value) -> BuildResult {
 
     BuildResult {
         doc,
-        members: elem_ids.len(),
+        members: scene_element_count,
         columns,
         beams,
         meshes,
         profiles: profile_counts,
         warnings,
+        emitted,
+        failed,
+        unsupported,
     }
 }
 
 /// `ifc.write` — write a generic 3D scene to an IFC4 file. Mirrors `viewer-3d.render`'s contract:
 /// `{ path?, bytes, members, columns, beams, meshes, profiles, warnings }`, with the `output-path`
 /// write gated to a real run.
+fn require_id<'a>(
+    record: &'a Value,
+    path: &str,
+    seen: &mut BTreeSet<String>,
+) -> Result<&'a str, AwareError> {
+    let raw_id = record
+        .get("id")
+        .and_then(Value::as_str)
+        .ok_or_else(|| AwareError::Validation(format!("ifc write: `{path}.id` is required")))?;
+    if raw_id != raw_id.trim() {
+        return Err(AwareError::Validation(format!(
+            "ifc write: `{path}.id` must not have leading or trailing whitespace"
+        )));
+    }
+    let id = raw_id;
+    if id.is_empty() || id.len() > 256 || id.chars().any(|ch| (ch as u32) <= 0x1f || ch == '\u{7f}')
+    {
+        return Err(AwareError::Validation(format!(
+            "ifc write: `{path}.id` must be 1..256 UTF-8 bytes with no C0/DEL controls"
+        )));
+    }
+    if !seen.insert(id.to_string()) {
+        return Err(AwareError::Validation(format!(
+            "ifc write: duplicate scene record id `{id}`"
+        )));
+    }
+    Ok(id)
+}
+
+fn require_positive(record: &Value, field: &str, path: &str) -> Result<f64, AwareError> {
+    pos(record.get(field)).ok_or_else(|| {
+        AwareError::Validation(format!(
+            "ifc write: `{path}.{field}` must be a finite positive number"
+        ))
+    })
+}
+
+fn optional_nonnegative(record: &Value, field: &str, path: &str) -> Result<f64, AwareError> {
+    match record.get(field) {
+        None | Some(Value::Null) => Ok(0.0),
+        Some(value) => value
+            .as_f64()
+            .filter(|number| number.is_finite() && *number >= 0.0)
+            .ok_or_else(|| {
+                AwareError::Validation(format!(
+                    "ifc write: `{path}.{field}` must be a finite nonnegative number"
+                ))
+            }),
+    }
+}
+
+fn is_physical_kind(kind: &str) -> bool {
+    matches!(
+        kind,
+        "member"
+            | "line"
+            | "box"
+            | "plate"
+            | "rod"
+            | "bolt-shank"
+            | "washer"
+            | "nut"
+            | "bolt-head"
+            | "mesh"
+    )
+}
+
+fn validate_scene(scene: &Value) -> Result<(), AwareError> {
+    if let Some(units) = scene
+        .get("meta")
+        .and_then(Value::as_object)
+        .and_then(|meta| meta.get("units"))
+    {
+        let units = units.as_str().ok_or_else(|| {
+            AwareError::Validation(
+                "ifc write: scene `meta.units` must be the string `mm` when present".into(),
+            )
+        })?;
+        if units != "mm" {
+            return Err(AwareError::Validation(format!(
+                "ifc write: unsupported scene units `{units}`; only `mm` is accepted"
+            )));
+        }
+    }
+
+    let mut seen = BTreeSet::new();
+    let mut element_ids = BTreeSet::new();
+    let mut element_kinds = BTreeMap::new();
+    let mut element_by_id = BTreeMap::new();
+    if let Some(value) = scene.get("elements")
+        && !value.is_array()
+    {
+        return Err(AwareError::Validation(
+            "ifc write: `scene.elements` must be an array".into(),
+        ));
+    }
+    if let Some(elements) = scene.get("elements").and_then(Value::as_array) {
+        for (index, el) in elements.iter().enumerate() {
+            let path = format!("scene.elements[{index}]");
+            let id = require_id(el, &path, &mut seen)?;
+            element_ids.insert(id.to_string());
+            element_by_id.insert(id.to_string(), el);
+            let kind = el.get("kind").and_then(Value::as_str).unwrap_or_else(|| {
+                if el.get("positions").is_some() {
+                    "mesh"
+                } else {
+                    "member"
+                }
+            });
+            element_kinds.insert(id.to_string(), kind.to_string());
+            match kind {
+                "plate" => {
+                    let frame = el.get("frame").and_then(Value::as_object).ok_or_else(|| {
+                        AwareError::Validation(format!("ifc write: `{path}.frame` is required"))
+                    })?;
+                    if vec3(frame.get("origin")).is_none() {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.frame.origin` must be Vec3"
+                        )));
+                    }
+                    let u = vec3(frame.get("uDir"))
+                        .and_then(normalize3)
+                        .ok_or_else(|| {
+                            AwareError::Validation(format!(
+                                "ifc write: `{path}.frame.uDir` must be a nonzero Vec3"
+                            ))
+                        })?;
+                    let v = vec3(frame.get("vDir"))
+                        .and_then(normalize3)
+                        .ok_or_else(|| {
+                            AwareError::Validation(format!(
+                                "ifc write: `{path}.frame.vDir` must be a nonzero Vec3"
+                            ))
+                        })?;
+                    let normal =
+                        vec3(frame.get("normal"))
+                            .and_then(normalize3)
+                            .ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{path}.frame.normal` must be a nonzero Vec3"
+                                ))
+                            })?;
+                    let uv = normalize3(cross(u, v)).ok_or_else(|| {
+                        AwareError::Validation(format!(
+                            "ifc write: `{path}.frame` axes are collinear"
+                        ))
+                    })?;
+                    let agreement = dot3(uv, normal);
+                    if dot3(u, v).abs() > 1.0e-6 || agreement < 1.0 - 1.0e-6 {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.frame` must be right-handed and orthonormal"
+                        )));
+                    }
+                    require_positive(el, "thicknessMm", &path)?;
+                    let outline = el.get("outline").and_then(Value::as_array).ok_or_else(|| {
+                        AwareError::Validation(format!("ifc write: `{path}.outline` is required"))
+                    })?;
+                    let polygon = outline
+                        .iter()
+                        .map(|point| vec2(Some(point)))
+                        .collect::<Option<Vec<_>>>();
+                    let Some(polygon) =
+                        polygon.filter(|polygon| polygon_is_simple_nonzero2(polygon))
+                    else {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.outline` must be a finite, nonzero, simple polygon"
+                        )));
+                    };
+                    if el
+                        .get("holes")
+                        .is_some_and(|holes| !holes.is_null() && !holes.is_array())
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.holes` must be an array"
+                        )));
+                    }
+                    if let Some(holes) = el.get("holes").and_then(Value::as_array) {
+                        let mut circles: Vec<(Vec2, f64)> = Vec::with_capacity(holes.len());
+                        for (hole_index, hole) in holes.iter().enumerate() {
+                            let hole_path = format!("{path}.holes[{hole_index}]");
+                            require_id(hole, &hole_path, &mut seen)?;
+                            let Some(center) = vec2(hole.get("center")) else {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{hole_path}.center` must be Vec2"
+                                )));
+                            };
+                            let diameter = require_positive(hole, "diameterMm", &hole_path)?;
+                            if !point_in_polygon2(center, &polygon)
+                                || polygon_edges2(&polygon).any(|(a, b)| {
+                                    point_segment_distance2(center, a, b) + 1.0e-9 < diameter / 2.0
+                                })
+                            {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{hole_path}` must lie wholly inside the plate outline"
+                                )));
+                            }
+                            if circles.iter().any(|(other, other_diameter)| {
+                                let distance = ((center.0 - other.0).powi(2)
+                                    + (center.1 - other.1).powi(2))
+                                .sqrt();
+                                distance <= (diameter + *other_diameter) / 2.0 + 1.0e-9
+                            }) {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{hole_path}` must not overlap or touch another hole"
+                                )));
+                            }
+                            circles.push((center, diameter));
+                        }
+                    }
+                }
+                "member" | "line" | "box" => {
+                    let from = vec3(el.get("from"));
+                    let to = vec3(el.get("to"));
+                    if !matches!((from, to), (Some(a), Some(b)) if normalize3((b.0-a.0,b.1-a.1,b.2-a.2)).is_some())
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}` requires distinct finite from/to Vec3 points"
+                        )));
+                    }
+                }
+                "rod" | "bolt-shank" => {
+                    let axis = el.get("axis").and_then(Value::as_object).ok_or_else(|| {
+                        AwareError::Validation(format!("ifc write: `{path}.axis` is required"))
+                    })?;
+                    let from = vec3(axis.get("from"));
+                    let to = vec3(axis.get("to"));
+                    let valid_axis = match (from, to) {
+                        (Some(from), Some(to)) => {
+                            normalize3((to.0 - from.0, to.1 - from.1, to.2 - from.2)).is_some()
+                        }
+                        _ => false,
+                    };
+                    if !valid_axis {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.axis` must contain distinct finite from/to Vec3 points"
+                        )));
+                    }
+                    require_positive(el, "diameterMm", &path)?;
+                }
+                "washer" => {
+                    if vec3(el.get("center")).is_none()
+                        || vec3(el.get("axis")).and_then(normalize3).is_none()
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}` requires finite center and nonzero axis Vec3"
+                        )));
+                    }
+                    let outer = require_positive(el, "outerDiameterMm", &path)?;
+                    let inner = require_positive(el, "innerDiameterMm", &path)?;
+                    require_positive(el, "thicknessMm", &path)?;
+                    if inner >= outer {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.innerDiameterMm` must be smaller than outerDiameterMm"
+                        )));
+                    }
+                }
+                "nut" | "bolt-head" => {
+                    if vec3(el.get("center")).is_none()
+                        || vec3(el.get("axis")).and_then(normalize3).is_none()
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}` requires finite center and nonzero axis Vec3"
+                        )));
+                    }
+                    require_positive(el, "acrossFlatsMm", &path)?;
+                    require_positive(el, "thicknessMm", &path)?;
+                    if el
+                        .get("phaseRad")
+                        .is_some_and(|v| v.as_f64().is_none_or(|phase| !phase.is_finite()))
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.phaseRad` must be finite"
+                        )));
+                    }
+                }
+                "mesh" => {
+                    let positions =
+                        el.get("positions")
+                            .and_then(Value::as_array)
+                            .ok_or_else(|| {
+                                AwareError::Validation(format!(
+                                    "ifc write: `{path}.positions` must be an array"
+                                ))
+                            })?;
+                    if positions.len() < 9
+                        || positions.len() % 3 != 0
+                        || positions
+                            .iter()
+                            .any(|value| value.as_f64().is_none_or(|number| !number.is_finite()))
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.positions` must contain finite xyz triples for at least one triangle"
+                        )));
+                    }
+                    let indices = el.get("indices").and_then(Value::as_array).ok_or_else(|| {
+                        AwareError::Validation(format!(
+                            "ifc write: `{path}.indices` must be an array"
+                        ))
+                    })?;
+                    let vertex_count = positions.len() / 3;
+                    if indices.is_empty()
+                        || indices.len() % 3 != 0
+                        || indices.iter().any(|value| {
+                            value
+                                .as_u64()
+                                .is_none_or(|index| index as usize >= vertex_count)
+                        })
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.indices` must contain valid triangle index triples"
+                        )));
+                    }
+                }
+                _ => {}
+            }
+        }
+    }
+
+    if let Some(value) = scene.get("operations")
+        && !value.is_array()
+    {
+        return Err(AwareError::Validation(
+            "ifc write: `scene.operations` must be an array".into(),
+        ));
+    }
+    let realized_bolt_components = scene
+        .get("operations")
+        .and_then(Value::as_array)
+        .into_iter()
+        .flatten()
+        .filter(|op| op.get("kind").and_then(Value::as_str) == Some("bolt-array"))
+        .filter_map(|op| op.get("instances").and_then(Value::as_array))
+        .flatten()
+        .flat_map(|instance| {
+            let mut ids = Vec::new();
+            for field in ["shankId", "headId"] {
+                if let Some(id) = instance.get(field).and_then(Value::as_str) {
+                    ids.push(id);
+                }
+            }
+            for field in ["nutIds", "washerIds"] {
+                if let Some(children) = instance.get(field).and_then(Value::as_array) {
+                    ids.extend(children.iter().filter_map(Value::as_str));
+                }
+            }
+            ids
+        })
+        .collect::<BTreeSet<_>>();
+    let mut claimed_bolt_components = BTreeSet::new();
+    if let Some(operations) = scene.get("operations").and_then(Value::as_array) {
+        for (op_index, op) in operations.iter().enumerate() {
+            let path = format!("scene.operations[{op_index}]");
+            require_id(op, &path, &mut seen)?;
+            let op_kind = op.get("kind").and_then(Value::as_str).unwrap_or("");
+            if op_kind == "bolt-array" {
+                let mut participants = Vec::with_capacity(2);
+                for field in ["partToBoltTo", "partToBeBolted"] {
+                    let target = op.get(field).and_then(Value::as_str).unwrap_or("");
+                    if !element_kinds
+                        .get(target)
+                        .is_some_and(|kind| is_physical_kind(kind))
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must reference a physical element (got `{target}`)"
+                        )));
+                    }
+                    if realized_bolt_components.contains(target) {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must reference an independently materialized physical element, not bolt-array component `{target}`"
+                        )));
+                    }
+                    participants.push(target);
+                }
+                if participants[0] == participants[1] {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}` bolt participants must be distinct elements"
+                    )));
+                }
+                let frame = op.get("frame").and_then(Value::as_object).ok_or_else(|| {
+                    AwareError::Validation(format!("ifc write: `{path}.frame` is required"))
+                })?;
+                for field in ["origin", "uDir", "vDir", "normal"] {
+                    if vec3(frame.get(field)).is_none()
+                        || (field != "origin"
+                            && vec3(frame.get(field)).and_then(normalize3).is_none())
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.frame.{field}` must be a valid Vec3"
+                        )));
+                    }
+                }
+                let origin = vec3(frame.get("origin")).unwrap();
+                let u = normalize3(vec3(frame.get("uDir")).unwrap()).unwrap();
+                let v = normalize3(vec3(frame.get("vDir")).unwrap()).unwrap();
+                let normal = normalize3(vec3(frame.get("normal")).unwrap()).unwrap();
+                if dot3(u, v).abs() > 1.0e-6
+                    || dot3(normalize3(cross3(u, v)).unwrap(), normal) < 1.0 - 1.0e-6
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.frame` must be right-handed and orthonormal"
+                    )));
+                }
+                let mut offsets = Vec::with_capacity(2);
+                for field in ["uOffsetsMm", "vOffsetsMm"] {
+                    let values = op.get(field).and_then(Value::as_array).ok_or_else(|| {
+                        AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must be an array"
+                        ))
+                    })?;
+                    if values.is_empty()
+                        || values
+                            .iter()
+                            .any(|value| value.as_f64().is_none_or(|number| !number.is_finite()))
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must contain finite offsets"
+                        )));
+                    }
+                    let parsed = values
+                        .iter()
+                        .map(|value| value.as_f64().unwrap())
+                        .collect::<Vec<_>>();
+                    if parsed
+                        .iter()
+                        .enumerate()
+                        .any(|(index, value)| parsed[..index].contains(value))
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must contain unique offsets"
+                        )));
+                    }
+                    offsets.push(parsed);
+                }
+                let diameter = require_positive(op, "diameterMm", &path)?;
+                if op
+                    .get("standard")
+                    .and_then(Value::as_str)
+                    .is_none_or(|standard| standard.trim().is_empty())
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.standard` must be a non-empty string"
+                    )));
+                }
+                let tolerance = optional_nonnegative(op, "toleranceMm", &path)?;
+                if !matches!(
+                    op.get("boltType").and_then(Value::as_str),
+                    Some("shop" | "site")
+                ) {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.boltType` must be `shop` or `site`"
+                    )));
+                }
+                let components =
+                    op.get("components")
+                        .and_then(Value::as_object)
+                        .ok_or_else(|| {
+                            AwareError::Validation(format!(
+                                "ifc write: `{path}.components` must be an object"
+                            ))
+                        })?;
+                for field in ["bolt", "nut", "washer"] {
+                    if components
+                        .get(field)
+                        .is_some_and(|value| !value.is_boolean())
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.components.{field}` must be boolean"
+                        )));
+                    }
+                }
+                if components.get("bolt").and_then(Value::as_bool) == Some(false) {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.components.bolt` must be true when instances author shankId and headId"
+                    )));
+                }
+                let instances = op
+                    .get("instances")
+                    .and_then(Value::as_array)
+                    .ok_or_else(|| {
+                        AwareError::Validation(format!("ifc write: `{path}.instances` is required"))
+                    })?;
+                let mut bolt_materials = BTreeSet::new();
+                if instances.len() != offsets[0].len() * offsets[1].len() {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.instances` must match the Cartesian offset count"
+                    )));
+                }
+                let mut expected_points = offsets[0]
+                    .iter()
+                    .flat_map(|u_offset| {
+                        offsets[1].iter().map(move |v_offset| {
+                            add3(add3(origin, scale3(u, *u_offset)), scale3(v, *v_offset))
+                        })
+                    })
+                    .collect::<Vec<_>>();
+                for (instance_index, instance) in instances.iter().enumerate() {
+                    let instance_path = format!("{path}.instances[{instance_index}]");
+                    require_id(instance, &instance_path, &mut seen)?;
+                    let Some(instance_point) = vec3(instance.get("point")) else {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{instance_path}.point` must be Vec3"
+                        )));
+                    };
+                    let Some(point_index) = expected_points
+                        .iter()
+                        .position(|expected| distance3(*expected, instance_point) <= 0.1)
+                    else {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{instance_path}.point` must uniquely match an authored Cartesian offset position"
+                        )));
+                    };
+                    expected_points.remove(point_index);
+                    for (field, expected) in [
+                        ("shankId", &["rod", "bolt-shank"][..]),
+                        ("headId", &["bolt-head"][..]),
+                    ] {
+                        let child = instance.get(field).and_then(Value::as_str).unwrap_or("");
+                        if !element_kinds
+                            .get(child)
+                            .is_some_and(|kind| expected.contains(&kind.as_str()))
+                        {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{instance_path}.{field}` references wrong or unknown physical kind `{child}`"
+                            )));
+                        }
+                        if !claimed_bolt_components.insert(child.to_string()) {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{instance_path}.{field}` reuses bolt component `{child}`"
+                            )));
+                        }
+                        let child_element = element_by_id[child];
+                        if let Some((material, _)) = resolve_material(child_element) {
+                            bolt_materials.insert(material);
+                        }
+                        if field == "shankId" {
+                            let axis = child_element
+                                .get("axis")
+                                .and_then(Value::as_object)
+                                .ok_or_else(|| {
+                                    AwareError::Validation(format!(
+                                        "ifc write: `{instance_path}.{field}` requires an axis object"
+                                    ))
+                                })?;
+                            let from = vec3(axis.get("from")).unwrap();
+                            let to = vec3(axis.get("to")).unwrap();
+                            let direction =
+                                normalize3((to.0 - from.0, to.1 - from.1, to.2 - from.2)).unwrap();
+                            let offset = (
+                                instance_point.0 - from.0,
+                                instance_point.1 - from.1,
+                                instance_point.2 - from.2,
+                            );
+                            let child_diameter = child_element
+                                .get("diameterMm")
+                                .and_then(Value::as_f64)
+                                .unwrap();
+                            if (dot3(direction, normal).abs() - 1.0).abs() > 1.0e-6
+                                || length3(cross3(offset, direction)) > 0.1
+                                || (child_diameter - diameter).abs() > 0.1
+                            {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` shank axis and diameter must match the bolt instance"
+                                )));
+                            }
+                        } else {
+                            let center = vec3(child_element.get("center")).unwrap();
+                            let child_axis = vec3(child_element.get("axis"))
+                                .and_then(normalize3)
+                                .unwrap();
+                            let offset = (
+                                center.0 - instance_point.0,
+                                center.1 - instance_point.1,
+                                center.2 - instance_point.2,
+                            );
+                            if (dot3(child_axis, normal).abs() - 1.0).abs() > 1.0e-6
+                                || length3(cross3(offset, normal)) > 0.1
+                            {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` must be centered and aligned on the bolt instance axis"
+                                )));
+                            }
+                        }
+                    }
+                    for (field, expected) in [("nutIds", "nut"), ("washerIds", "washer")] {
+                        let children =
+                            instance
+                                .get(field)
+                                .and_then(Value::as_array)
+                                .ok_or_else(|| {
+                                    AwareError::Validation(format!(
+                                        "ifc write: `{instance_path}.{field}` must be an array"
+                                    ))
+                                })?;
+                        for child in children {
+                            let child = child.as_str().unwrap_or("");
+                            if element_kinds.get(child).map(String::as_str) != Some(expected) {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` references wrong or unknown physical kind `{child}`"
+                                )));
+                            }
+                            if !claimed_bolt_components.insert(child.to_string()) {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` reuses bolt component `{child}`"
+                                )));
+                            }
+                            let child_element = element_by_id[child];
+                            if let Some((material, _)) = resolve_material(child_element) {
+                                bolt_materials.insert(material);
+                            }
+                            let center = vec3(child_element.get("center")).unwrap();
+                            let child_axis = vec3(child_element.get("axis"))
+                                .and_then(normalize3)
+                                .unwrap();
+                            let offset = (
+                                center.0 - instance_point.0,
+                                center.1 - instance_point.1,
+                                center.2 - instance_point.2,
+                            );
+                            if (dot3(child_axis, normal).abs() - 1.0).abs() > 1.0e-6
+                                || length3(cross3(offset, normal)) > 0.1
+                            {
+                                return Err(AwareError::Validation(format!(
+                                    "ifc write: `{instance_path}.{field}` child `{child}` must be centered and aligned on the bolt instance axis"
+                                )));
+                            }
+                        }
+                    }
+                    let effects = instance
+                        .get("holeEffects")
+                        .and_then(Value::as_array)
+                        .ok_or_else(|| {
+                            AwareError::Validation(format!(
+                                "ifc write: `{instance_path}.holeEffects` must be an array"
+                            ))
+                        })?;
+                    if effects.len() != 2 {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{instance_path}.holeEffects` must contain exactly one effect per participant"
+                        )));
+                    }
+                    let mut effect_targets = BTreeSet::new();
+                    for (effect_index, effect) in effects.iter().enumerate() {
+                        let effect_path = format!("{instance_path}.holeEffects[{effect_index}]");
+                        require_id(effect, &effect_path, &mut seen)?;
+                        let target = effect.get("targetId").and_then(Value::as_str).unwrap_or("");
+                        if !participants.contains(&target) || !effect_targets.insert(target) {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.targetId` must uniquely reference a bolt participant"
+                            )));
+                        }
+                        let Some(center) = vec3(effect.get("center")) else {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.center` must be a finite Vec3"
+                            )));
+                        };
+                        if distance3(center, instance_point) > 0.1 {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.center` must match the bolt instance point"
+                            )));
+                        }
+                        let Some(effect_axis) = vec3(effect.get("axis")).and_then(normalize3)
+                        else {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.axis` must be a nonzero Vec3"
+                            )));
+                        };
+                        if (dot3(effect_axis, normal).abs() - 1.0).abs() > 1.0e-6 {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.axis` must align with the bolt frame normal"
+                            )));
+                        }
+                        let effect_diameter = require_positive(effect, "diameterMm", &effect_path)?;
+                        if (effect_diameter - (diameter + tolerance)).abs() > 0.1 {
+                            return Err(AwareError::Validation(format!(
+                                "ifc write: `{effect_path}.diameterMm` must equal bolt diameter plus tolerance"
+                            )));
+                        }
+                    }
+                    if effect_targets.len() != participants.len() {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{instance_path}.holeEffects` must cover both bolt participants"
+                        )));
+                    }
+                }
+                if !expected_points.is_empty() {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.instances` must exhaust the authored Cartesian offset positions"
+                    )));
+                }
+                if bolt_materials.len() > 1 {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.instances` bolt components must use one normalized material because the grouped IfcMechanicalFastener has one material association"
+                    )));
+                }
+            } else if op_kind == "weld" {
+                for field in ["mainId", "secondaryId"] {
+                    let target = op.get(field).and_then(Value::as_str).unwrap_or("");
+                    if !element_kinds
+                        .get(target)
+                        .is_some_and(|kind| is_physical_kind(kind))
+                    {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must reference a physical element"
+                        )));
+                    }
+                }
+                let weld_path = op.get("path").and_then(Value::as_array).ok_or_else(|| {
+                    AwareError::Validation(format!("ifc write: `{path}.path` must be an array"))
+                })?;
+                if weld_path.len() < 2 || weld_path.iter().any(|point| vec3(Some(point)).is_none())
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.path` must contain at least two Vec3 points"
+                    )));
+                }
+                if op.get("weldType").and_then(Value::as_str) != Some("fillet") {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.weldType` must be `fillet`"
+                    )));
+                }
+                require_positive(op, "sizeMm", &path)?;
+                for field in ["around", "shop"] {
+                    if !op.get(field).is_some_and(Value::is_boolean) {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{path}.{field}` must be boolean"
+                        )));
+                    }
+                }
+            } else if op_kind == "boolean-cut" {
+                let target = op.get("targetId").and_then(Value::as_str).unwrap_or("");
+                if !element_kinds
+                    .get(target)
+                    .is_some_and(|kind| is_physical_kind(kind))
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.targetId` must reference a physical element"
+                    )));
+                }
+                let tool = op.get("tool").and_then(Value::as_object).ok_or_else(|| {
+                    AwareError::Validation(format!("ifc write: `{path}.tool` is required"))
+                })?;
+                if tool.get("kind").and_then(Value::as_str) != Some("cylinder") {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.tool.kind` must be `cylinder`"
+                    )));
+                }
+                let axis = tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
+                    AwareError::Validation(format!("ifc write: `{path}.tool.axis` is required"))
+                })?;
+                let from = vec3(axis.get("from"));
+                let to = vec3(axis.get("to"));
+                if !matches!((from, to), (Some(from), Some(to)) if normalize3((to.0-from.0,to.1-from.1,to.2-from.2)).is_some())
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{path}.tool.axis` must contain distinct from/to Vec3 points"
+                    )));
+                }
+                require_positive(
+                    &Value::Object(tool.clone()),
+                    "diameterMm",
+                    &format!("{path}.tool"),
+                )?;
+            }
+        }
+    }
+
+    if let Some(value) = scene.get("referenceSystems")
+        && !value.is_array()
+    {
+        return Err(AwareError::Validation(
+            "ifc write: `scene.referenceSystems` must be an array".into(),
+        ));
+    }
+    if let Some(grids) = scene.get("referenceSystems").and_then(Value::as_array) {
+        for (grid_index, grid) in grids.iter().enumerate() {
+            let path = format!("scene.referenceSystems[{grid_index}]");
+            require_id(grid, &path, &mut seen)?;
+            if grid.get("kind").and_then(Value::as_str) != Some("structural-grid") {
+                for collection in ["axes", "levels"] {
+                    if let Some(children) = grid.get(collection).and_then(Value::as_array) {
+                        for (child_index, child) in children.iter().enumerate() {
+                            require_id(
+                                child,
+                                &format!("{path}.{collection}[{child_index}]"),
+                                &mut seen,
+                            )?;
+                        }
+                    }
+                }
+                continue;
+            }
+            if vec3(grid.get("origin")).is_none() {
+                return Err(AwareError::Validation(format!(
+                    "ifc write: `{path}.origin` must be Vec3"
+                )));
+            }
+            let bounds = grid
+                .get("bounds")
+                .and_then(Value::as_object)
+                .ok_or_else(|| {
+                    AwareError::Validation(format!("ifc write: `{path}.bounds` is required"))
+                })?;
+            let finite_bound = |field: &str| {
+                bounds
+                    .get(field)
+                    .and_then(Value::as_f64)
+                    .filter(|value| value.is_finite())
+                    .ok_or_else(|| {
+                        AwareError::Validation(format!(
+                            "ifc write: `{path}.bounds.{field}` must be finite"
+                        ))
+                    })
+            };
+            let (min_x, max_x, min_y, max_y) = (
+                finite_bound("minX")?,
+                finite_bound("maxX")?,
+                finite_bound("minY")?,
+                finite_bound("maxY")?,
+            );
+            if min_x >= max_x || min_y >= max_y {
+                return Err(AwareError::Validation(format!(
+                    "ifc write: `{path}.bounds` must have positive X and Y spans"
+                )));
+            }
+            let axes = grid.get("axes").and_then(Value::as_array).ok_or_else(|| {
+                AwareError::Validation(format!("ifc write: `{path}.axes` must be an array"))
+            })?;
+            let mut has_x = false;
+            let mut has_y = false;
+            for (axis_index, axis) in axes.iter().enumerate() {
+                let axis_path = format!("{path}.axes[{axis_index}]");
+                require_id(axis, &axis_path, &mut seen)?;
+                if axis.get("label").and_then(Value::as_str).is_none() {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{axis_path}.label` must be a string"
+                    )));
+                }
+                match axis.get("direction").and_then(Value::as_str) {
+                    Some("x") => has_x = true,
+                    Some("y") => has_y = true,
+                    _ => {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{axis_path}.direction` must be `x` or `y`"
+                        )));
+                    }
+                }
+                if axis
+                    .get("offsetMm")
+                    .and_then(Value::as_f64)
+                    .is_none_or(|value| !value.is_finite())
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{axis_path}.offsetMm` must be finite"
+                    )));
+                }
+                for field in ["startMm", "endMm"] {
+                    if axis.get(field).is_some_and(|value| {
+                        value.as_f64().is_none_or(|number| !number.is_finite())
+                    }) {
+                        return Err(AwareError::Validation(format!(
+                            "ifc write: `{axis_path}.{field}` must be finite when present"
+                        )));
+                    }
+                }
+            }
+            if !has_x || !has_y {
+                return Err(AwareError::Validation(format!(
+                    "ifc write: `{path}.axes` must include both x and y families"
+                )));
+            }
+            let levels = grid
+                .get("levels")
+                .and_then(Value::as_array)
+                .ok_or_else(|| {
+                    AwareError::Validation(format!("ifc write: `{path}.levels` must be an array"))
+                })?;
+            if levels.is_empty() {
+                return Err(AwareError::Validation(format!(
+                    "ifc write: `{path}.levels` must contain at least one elevation datum"
+                )));
+            }
+            for (level_index, level) in levels.iter().enumerate() {
+                let level_path = format!("{path}.levels[{level_index}]");
+                require_id(level, &level_path, &mut seen)?;
+                if level.get("label").and_then(Value::as_str).is_none() {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{level_path}.label` must be a string"
+                    )));
+                }
+                if level
+                    .get("elevationMm")
+                    .and_then(Value::as_f64)
+                    .is_none_or(|value| !value.is_finite())
+                {
+                    return Err(AwareError::Validation(format!(
+                        "ifc write: `{level_path}.elevationMm` must be finite"
+                    )));
+                }
+            }
+        }
+    }
+
+    Ok(())
+}
+
 pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     let scene = match args.get("scene") {
         Some(v @ Value::Object(_)) => v,
@@ -776,9 +2714,11 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
         }
     };
 
+    validate_scene(scene)?;
     let built = build_ifc(scene);
 
     let mut out = serde_json::Map::new();
+    out.insert("ok".into(), Value::Bool(true));
     out.insert("bytes".into(), Value::from(built.doc.len() as u64));
     out.insert("members".into(), Value::from(built.members as u64));
     out.insert("columns".into(), Value::from(built.columns));
@@ -794,6 +2734,9 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
                 .collect(),
         ),
     );
+    out.insert("emitted".into(), Value::Array(built.emitted));
+    out.insert("failed".into(), Value::Array(built.failed));
+    out.insert("unsupported".into(), Value::Array(built.unsupported));
     out.insert(
         "warnings".into(),
         Value::Array(
@@ -804,6 +2747,9 @@ pub fn ifc_write(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
                     let mut m = serde_json::Map::new();
                     m.insert("id".into(), Value::String(id));
                     m.insert("reason".into(), Value::String(reason));
+                    m.insert("status".into(), Value::String("warning".into()));
+                    m.insert("kind".into(), Value::String("element".into()));
+                    m.insert("code".into(), Value::String("profile-fallback".into()));
                     Value::Object(m)
                 })
                 .collect(),
@@ -1127,5 +3073,469 @@ mod tests {
         assert_eq!(s_lit("a'b"), "'a''b'");
         assert_eq!(s_lit("a\\b"), "'a\\\\b'");
         assert_eq!(s_lit("a\u{2014}b"), "'a\\X2\\2014\\X0\\b'");
+    }
+
+    #[test]
+    fn polyline_emitter_only_closes_profile_boundaries() {
+        let mut open = Spf::new();
+        emit_polyline2(&mut open, &[(0.0, 0.0), (1.0, 0.0)], false);
+        assert!(open.buf.contains("IFCPOLYLINE((#1,#2))"));
+
+        let mut closed = Spf::new();
+        emit_polyline2(&mut closed, &[(0.0, 0.0), (1.0, 0.0)], true);
+        assert!(closed.buf.contains("IFCPOLYLINE((#1,#2,#1))"));
+    }
+
+    fn connection_scene() -> Value {
+        json!({
+            "meta": { "name": "Connection and grid", "units": "mm", "sourceId": "takeoff-1", "sceneHash": "sha256:test" },
+            "elements": [
+                { "id": "BEAM-1", "kind": "member", "role": "beam",
+                  "from": [0,0,0], "to": [3000,0,0], "section": { "w": 200, "d": 400 } },
+                { "id": "PL-1", "kind": "plate", "material": "S355",
+                  "frame": { "origin": [100,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1] },
+                  "outline": [[-100,-150],[100,-150],[100,150],[-100,150]], "thicknessMm": 12,
+                  "holes": [{ "id": "PL-1-H-INDEPENDENT", "center": [0,100], "diameterMm": 22 }] },
+                { "id": "SHANK-1", "kind": "bolt-shank", "axis": { "from": [100,0,-20], "to": [100,0,20] },
+                  "diameterMm": 20, "fastener": { "role": "shear-bolt" } },
+                { "id": "HEAD-1", "kind": "bolt-head", "center": [100,0,24], "axis": [0,0,1],
+                  "acrossFlatsMm": 30, "thicknessMm": 8 },
+                { "id": "NUT-1", "kind": "nut", "center": [100,0,-24], "axis": [0,0,1],
+                  "acrossFlatsMm": 30, "thicknessMm": 10, "fastener": { "role": "nut" } },
+                { "id": "WASHER-1", "kind": "washer", "center": [100,0,-16], "axis": [0,0,1],
+                  "outerDiameterMm": 36, "innerDiameterMm": 22, "thicknessMm": 3 }
+            ],
+            "operations": [
+                { "id": "BA-1", "kind": "bolt-array", "partToBoltTo": "PL-1", "partToBeBolted": "BEAM-1",
+                  "frame": { "origin": [100,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1] },
+                  "uOffsetsMm": [0], "vOffsetsMm": [0], "diameterMm": 20, "standard": "A325N", "toleranceMm": 2,
+                  "boltType": "shop", "components": { "bolt": true, "nut": true, "washer": true },
+                  "instances": [{ "id": "BA-1-I1", "point": [100,0,0], "shankId": "SHANK-1", "headId": "HEAD-1",
+                    "nutIds": ["NUT-1"], "washerIds": ["WASHER-1"],
+                    "holeEffects": [
+                      { "id": "BA-1-H-PL", "targetId": "PL-1", "center": [100,0,0], "axis": [0,0,1], "diameterMm": 22 },
+                      { "id": "BA-1-H-BEAM", "targetId": "BEAM-1", "center": [100,0,0], "axis": [0,0,1], "diameterMm": 22 }
+                    ] }] },
+                { "id": "WELD-1", "kind": "weld", "mainId": "BEAM-1", "secondaryId": "PL-1",
+                  "path": [[0,0,0],[0,100,0]], "weldType": "fillet", "sizeMm": 6, "around": false, "shop": true },
+                { "id": "CUT-1", "kind": "boolean-cut", "targetId": "BEAM-1",
+                  "tool": { "kind": "cylinder", "axis": { "from": [0,0,-10], "to": [0,0,10] }, "diameterMm": 20 } }
+            ],
+            "referenceSystems": [{
+                "id": "GRID-1", "kind": "structural-grid", "name": "Main grid", "origin": [0,0,0],
+                "axes": [
+                  { "id": "GRID-X-A", "direction": "x", "offsetMm": 0, "label": "A" },
+                  { "id": "GRID-Y-1", "direction": "y", "offsetMm": 0, "label": "1" }
+                ],
+                "levels": [{ "id": "LEVEL-0", "elevationMm": 0, "label": "TOS 0" }],
+                "bounds": { "minX": -1000, "maxX": 4000, "minY": -2000, "maxY": 2000 }
+            }]
+        })
+    }
+
+    #[test]
+    fn writes_connection_products_voids_grid_and_exhaustive_receipt() {
+        let scene = connection_scene();
+        validate_scene(&scene).unwrap();
+        let built = build_ifc(&scene);
+        assert_eq!(built.doc.matches("IFCPLATE(").count(), 1);
+        assert_eq!(built.doc.matches("IFCMECHANICALFASTENER(").count(), 1);
+        assert_eq!(built.doc.matches("IFCOPENINGELEMENT(").count(), 2);
+        assert_eq!(built.doc.matches("IFCRELVOIDSELEMENT(").count(), 2);
+        assert_eq!(built.doc.matches("IFCGRID(").count(), 1);
+        assert_eq!(built.doc.matches("IFCGRIDAXIS(").count(), 2);
+        assert_eq!(built.doc.matches("IFCANNOTATION(").count(), 1);
+        assert_eq!(built.profiles.get("BOLT-SHANK"), Some(&1));
+        assert_eq!(built.profiles.get("BOLT-HEAD"), Some(&1));
+        assert_eq!(built.profiles.get("NUT"), Some(&1));
+        assert_eq!(built.profiles.get("WASHER"), Some(&1));
+        assert!(built.doc.contains("'Elevation datum'"));
+        assert!(built.doc.contains(".BOLT."));
+        let fastener_line = built
+            .doc
+            .lines()
+            .find(|line| line.contains("IFCMECHANICALFASTENER("))
+            .unwrap();
+        assert!(
+            fastener_line.contains(",$,20.0,40.0,.BOLT.);"),
+            "the grouped array carries bolt semantics and nominal dimensions"
+        );
+        let grouped_shape_line = built
+            .doc
+            .lines()
+            .find(|line| {
+                line.contains("IFCSHAPEREPRESENTATION(")
+                    && line.contains("'Body','SweptSolid'")
+                    && line.matches('#').count() == 6
+            })
+            .expect("one grouped body shape must contain four fastener solids");
+        assert_eq!(
+            grouped_shape_line.matches('#').count(),
+            6,
+            "entity id, context, and four physical component solids"
+        );
+        assert_eq!(built.unsupported.len(), 2);
+        assert_eq!(built.emitted.len(), 15);
+        assert!(built.failed.is_empty());
+        let ids = built
+            .emitted
+            .iter()
+            .filter_map(|row| row.get("id").and_then(Value::as_str))
+            .collect::<BTreeSet<_>>();
+        assert_eq!(
+            ids.len(),
+            built.emitted.len(),
+            "every receipt row is unique"
+        );
+        let receipt_ids = built
+            .emitted
+            .iter()
+            .filter_map(|row| row.get("id").and_then(Value::as_str))
+            .collect::<Vec<_>>();
+        let position = |id| {
+            receipt_ids
+                .iter()
+                .position(|candidate| *candidate == id)
+                .unwrap()
+        };
+        assert!(position("GRID-1") < position("GRID-X-A"));
+        assert!(position("GRID-X-A") < position("GRID-Y-1"));
+        assert!(position("GRID-Y-1") < position("LEVEL-0"));
+        assert!(
+            built
+                .doc
+                .contains("IFCCARTESIANPOINT((17.32050807569,0.0))"),
+            "phaseRad=0 places the first hex vertex on local +u"
+        );
+        let group_guid = record_guid("bolt-array", "BA-1");
+        for id in ["BA-1", "BA-1-I1", "SHANK-1", "HEAD-1", "NUT-1", "WASHER-1"] {
+            let row = built
+                .emitted
+                .iter()
+                .find(|row| row.get("id").and_then(Value::as_str) == Some(id))
+                .unwrap();
+            assert_eq!(
+                row.get("ifcGuid").and_then(Value::as_str),
+                Some(group_guid.as_str()),
+                "{id} must resolve to the selectable bolt-array product"
+            );
+        }
+    }
+
+    #[test]
+    fn record_global_id_is_stable_and_pinned() {
+        assert_eq!(record_guid("element", "PL-1"), "0YATHppfuyHQeKy4B2inuk");
+        let before = build_ifc(&connection_scene()).doc;
+        let mut after_scene = connection_scene();
+        after_scene["elements"].as_array_mut().unwrap().insert(
+            0,
+            json!({ "id": "UNRELATED", "kind": "member", "from": [0,0,0], "to": [0,0,1000] }),
+        );
+        let after = build_ifc(&after_scene).doc;
+        let gid = record_guid("element", "PL-1");
+        assert!(before.contains(&s_lit(&gid)));
+        assert!(after.contains(&s_lit(&gid)));
+    }
+
+    #[test]
+    fn rejects_duplicate_ids_and_explicit_non_mm_units() {
+        let mut duplicate = connection_scene();
+        duplicate["referenceSystems"][0]["levels"][0]["id"] = json!("PL-1");
+        let err = ifc_write(&json!({ "scene": duplicate }), true).unwrap_err();
+        assert!(err.to_string().contains("duplicate scene record id `PL-1`"));
+
+        let mut metres = connection_scene();
+        metres["meta"]["units"] = json!("m");
+        let err = ifc_write(&json!({ "scene": metres }), true).unwrap_err();
+        assert!(err.to_string().contains("only `mm` is accepted"));
+
+        let mut numeric = connection_scene();
+        numeric["meta"]["units"] = json!(1);
+        let err = ifc_write(&json!({ "scene": numeric }), true).unwrap_err();
+        assert!(err.to_string().contains("must be the string `mm`"));
+    }
+
+    #[test]
+    fn connection_validation_accepts_zero_tolerance_and_line_participants() {
+        let mut scene = connection_scene();
+        scene["elements"][0]["kind"] = json!("line");
+        scene["operations"].as_array_mut().unwrap().remove(2);
+        scene["operations"][0]["toleranceMm"] = json!(0);
+        for effect in scene["operations"][0]["instances"][0]["holeEffects"]
+            .as_array_mut()
+            .unwrap()
+        {
+            effect["diameterMm"] = json!(20);
+        }
+
+        validate_scene(&scene).unwrap();
+        let built = build_ifc(&scene);
+        assert_eq!(built.doc.matches("IFCOPENINGELEMENT(").count(), 2);
+        assert!(built.failed.is_empty());
+    }
+
+    #[test]
+    fn connection_validation_rejects_non_cartesian_instance_counts() {
+        let mut scene = connection_scene();
+        scene["operations"][0]["uOffsetsMm"] = json!([0, 100]);
+        let err = validate_scene(&scene).unwrap_err();
+        assert!(err.to_string().contains("Cartesian offset count"));
+
+        let mut duplicate = connection_scene();
+        duplicate["operations"][0]["uOffsetsMm"] = json!([0, 0]);
+        let err = validate_scene(&duplicate).unwrap_err();
+        assert!(err.to_string().contains("unique offsets"));
+    }
+
+    #[test]
+    fn connection_validation_rejects_disabled_or_non_boolean_bolt_components() {
+        let mut disabled = connection_scene();
+        disabled["operations"][0]["components"]["bolt"] = json!(false);
+        let err = validate_scene(&disabled).unwrap_err();
+        assert!(err.to_string().contains("components.bolt` must be true"));
+
+        let mut non_boolean = connection_scene();
+        non_boolean["operations"][0]["components"]["washer"] = json!("yes");
+        let err = validate_scene(&non_boolean).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("components.washer` must be boolean")
+        );
+    }
+
+    #[test]
+    fn connection_validation_requires_bolt_standard_and_grid_labels_and_levels() {
+        let mut no_standard = connection_scene();
+        no_standard["operations"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("standard");
+        let err = validate_scene(&no_standard).unwrap_err();
+        assert!(err.to_string().contains("standard"));
+
+        let mut no_axis_label = connection_scene();
+        no_axis_label["referenceSystems"][0]["axes"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("label");
+        let err = validate_scene(&no_axis_label).unwrap_err();
+        assert!(err.to_string().contains("axes[0].label"));
+
+        let mut no_level_label = connection_scene();
+        no_level_label["referenceSystems"][0]["levels"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("label");
+        let err = validate_scene(&no_level_label).unwrap_err();
+        assert!(err.to_string().contains("levels[0].label"));
+
+        let mut empty_levels = connection_scene();
+        empty_levels["referenceSystems"][0]["levels"] = json!([]);
+        let err = validate_scene(&empty_levels).unwrap_err();
+        assert!(err.to_string().contains("at least one elevation datum"));
+    }
+
+    #[test]
+    fn connection_validation_rejects_plate_holes_outside_or_overlapping() {
+        let mut outside = connection_scene();
+        outside["elements"][1]["holes"][0]["center"] = json!([95, 100]);
+        let err = validate_scene(&outside).unwrap_err();
+        assert!(err.to_string().contains("wholly inside the plate outline"));
+
+        let mut overlap = connection_scene();
+        overlap["elements"][1]["holes"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({ "id": "PL-1-H-OVERLAP", "center": [0,110], "diameterMm": 22 }));
+        let err = validate_scene(&overlap).unwrap_err();
+        assert!(err.to_string().contains("must not overlap or touch"));
+
+        let mut bowtie = connection_scene();
+        bowtie["elements"][1]["outline"] =
+            json!([[-100, -150], [100, 150], [-100, 150], [100, -150]]);
+        let err = validate_scene(&bowtie).unwrap_err();
+        assert!(err.to_string().contains("nonzero, simple polygon"));
+    }
+
+    #[test]
+    fn connection_openings_use_a_conservative_through_product_span() {
+        let built = build_ifc(&connection_scene());
+        let conservative_depth =
+            2.0 * (200.0_f64.powi(2) + 300.0_f64.powi(2) + 12.0_f64.powi(2)).sqrt() + 2.0;
+        assert!(
+            built.doc.contains(&format!(",{});", r(conservative_depth))),
+            "plate opening must span oblique axes, not only plate thickness"
+        );
+    }
+
+    #[test]
+    fn connection_openings_cover_fastener_and_mesh_participants() {
+        let mut fastener = connection_scene();
+        fastener["elements"].as_array_mut().unwrap().push(json!({
+            "id": "TARGET-ROD",
+            "kind": "rod",
+            "axis": { "from": [95,0,0], "to": [105,0,0] },
+            "diameterMm": 1000
+        }));
+        fastener["operations"][0]["partToBeBolted"] = json!("TARGET-ROD");
+        fastener["operations"][0]["instances"][0]["holeEffects"][1]["targetId"] =
+            json!("TARGET-ROD");
+        validate_scene(&fastener).unwrap();
+        let built = build_ifc(&fastener);
+        let fastener_depth = 2.0 * (10.0_f64.powi(2) + 2.0 * 1000.0_f64.powi(2)).sqrt() + 2.0;
+        assert!(
+            built.doc.contains(&format!(",{});", r(fastener_depth))),
+            "transverse openings must span the complete standalone fastener"
+        );
+
+        let mut mesh = connection_scene();
+        mesh["elements"][0] = json!({
+            "id": "BEAM-1",
+            "kind": "mesh",
+            "positions": [0,0,-500, 1000,0,500, 0,1000,500],
+            "indices": [0,1,2]
+        });
+        validate_scene(&mesh).unwrap();
+        let built = build_ifc(&mesh);
+        let mesh_depth =
+            2.0 * (1000.0_f64.powi(2) + 1000.0_f64.powi(2) + 1000.0_f64.powi(2)).sqrt() + 2.0;
+        assert!(
+            built.doc.contains(&format!(",{});", r(mesh_depth))),
+            "mesh openings must span the complete authored mesh bounds"
+        );
+    }
+
+    #[test]
+    fn grouped_bolt_array_rejects_mixed_authored_materials() {
+        let mut scene = connection_scene();
+        scene["elements"][2]["material"] = json!("A325");
+        scene["elements"][3]["material"] = json!("A490");
+
+        let err = validate_scene(&scene).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("bolt components must use one normalized material"),
+            "{err}"
+        );
+    }
+
+    #[test]
+    fn connection_preflight_rejects_degenerate_legacy_and_mesh_geometry() {
+        let mut member = connection_scene();
+        member["elements"][0]["to"] = member["elements"][0]["from"].clone();
+        let err = validate_scene(&member).unwrap_err();
+        assert!(err.to_string().contains("distinct finite from/to"), "{err}");
+
+        let mut mesh = connection_scene();
+        mesh["elements"].as_array_mut().unwrap().push(json!({
+            "id": "BAD-MESH", "kind": "mesh",
+            "positions": [0,0,0, 1,0,0, 1,1,0], "indices": [0,1,3]
+        }));
+        let err = validate_scene(&mesh).unwrap_err();
+        assert!(err.to_string().contains("valid triangle index triples"));
+
+        let mut skewed_plate = connection_scene();
+        skewed_plate["elements"][1]["frame"]["vDir"] = json!([0.5, 1, 0]);
+        let err = validate_scene(&skewed_plate).unwrap_err();
+        assert!(err.to_string().contains("right-handed and orthonormal"));
+    }
+
+    #[test]
+    fn connection_preflight_preserves_implicit_mesh_detection() {
+        let scene = json!({
+            "elements": [{
+                "id": "LEGACY-MESH",
+                "positions": [0,0,0, 1,0,0, 0,1,0],
+                "indices": [0,1,2]
+            }]
+        });
+
+        validate_scene(&scene).unwrap();
+        let built = build_ifc(&scene);
+        assert_eq!(built.meshes, 1);
+        assert!(built.emitted.iter().any(|row| row["id"] == "LEGACY-MESH"));
+    }
+
+    #[test]
+    fn bolt_participants_must_be_independently_materialized_products() {
+        let mut scene = connection_scene();
+        scene["operations"][0]["partToBoltTo"] = json!("SHANK-1");
+
+        let err = validate_scene(&scene).unwrap_err();
+        assert!(
+            err.to_string()
+                .contains("independently materialized physical element")
+        );
+    }
+
+    #[test]
+    fn bolt_children_must_match_their_authored_instance_geometry() {
+        let mut displaced = connection_scene();
+        displaced["elements"][2]["axis"]["from"] = json!([200, 0, -20]);
+        displaced["elements"][2]["axis"]["to"] = json!([200, 0, 20]);
+        let err = validate_scene(&displaced).unwrap_err();
+        assert!(err.to_string().contains("shank axis and diameter"));
+
+        let mut wrong_diameter = connection_scene();
+        wrong_diameter["elements"][2]["diameterMm"] = json!(16);
+        let err = validate_scene(&wrong_diameter).unwrap_err();
+        assert!(err.to_string().contains("shank axis and diameter"));
+
+        let mut displaced_nut = connection_scene();
+        displaced_nut["elements"][4]["center"] = json!([200, 0, -24]);
+        let err = validate_scene(&displaced_nut).unwrap_err();
+        assert!(err.to_string().contains("centered and aligned"));
+    }
+
+    #[test]
+    fn grid_axis_optional_extents_must_be_finite_when_present() {
+        let mut scene = connection_scene();
+        scene["referenceSystems"][0]["axes"][0]["startMm"] = json!("not-a-number");
+
+        let err = validate_scene(&scene).unwrap_err();
+        assert!(err.to_string().contains("startMm` must be finite"));
+    }
+
+    #[test]
+    fn boolean_cut_preflight_accepts_every_physical_target_kind() {
+        let mut scene = connection_scene();
+        scene["operations"][2]["targetId"] = json!("SHANK-1");
+        validate_scene(&scene).unwrap();
+        let built = build_ifc(&scene);
+        assert!(built.unsupported.iter().any(|row| row["id"] == "CUT-1"));
+    }
+
+    #[test]
+    fn unsupported_element_kinds_are_exhaustively_reported() {
+        let mut scene = connection_scene();
+        scene["elements"].as_array_mut().unwrap().push(json!({
+            "id": "FUTURE-1", "kind": "future-native-part"
+        }));
+        scene["referenceSystems"]
+            .as_array_mut()
+            .unwrap()
+            .push(json!({
+                "id": "FUTURE-GRID", "kind": "future-reference",
+                "axes": [{"id":"FUTURE-AXIS"}], "levels": [{"id":"FUTURE-LEVEL"}]
+            }));
+        validate_scene(&scene).unwrap();
+        let built = build_ifc(&scene);
+        let row = built
+            .unsupported
+            .iter()
+            .find(|row| row["id"] == "FUTURE-1")
+            .expect("unsupported record must be receipted");
+        assert_eq!(row["code"], "unsupported-element-kind");
+        for id in ["FUTURE-GRID", "FUTURE-AXIS", "FUTURE-LEVEL"] {
+            assert!(built.unsupported.iter().any(|row| row["id"] == id));
+        }
+        assert_eq!(
+            built
+                .unsupported
+                .iter()
+                .find(|row| row["id"] == "FUTURE-AXIS")
+                .unwrap()["code"],
+            "unsupported-parent"
+        );
     }
 }

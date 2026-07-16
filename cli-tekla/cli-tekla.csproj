@@ -12,6 +12,11 @@
     <Nullable>enable</Nullable>
     <RootNamespace>AwareTekla</RootNamespace>
     <AssemblyName>aware-tekla</AssemblyName>
+    <!-- Tekla Structures 2026 supports only x64 Open API applications. Keep
+         the bridge architecture explicit so SDK defaults cannot emit an x86
+         PE that loads types but cannot establish the remoting channel. -->
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
 
     <!-- The unit-test project lives under Tests/; keep its sources out of the
          exe build (the SDK would otherwise glob them into this compile). -->

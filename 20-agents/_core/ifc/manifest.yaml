@@ -2,10 +2,10 @@ agent:        ifc
 version:      0.1.0
 display-name: IFC Writer
 description: |
-  Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc) —
-  IfcColumn/IfcBeam/IfcMember as extruded rectangular sections placed on the member axis, under
-  an IfcProject -> IfcSite -> IfcBuilding -> IfcBuildingStorey spine. Host-free: pure
-  serialization, no Tekla/Revit needed to export.
+  Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).
+  Members, exact plates and grouped mechanical fasteners, per-product opening effects, structural grids,
+  and elevation datums are rooted under an IfcProject -> IfcSite -> IfcBuilding ->
+  IfcBuildingStorey spine. Host-free: pure serialization, no Tekla/Revit needed to export.
 
   The portable IFC sink of AWARE compositions, and the file-writing companion to `viewer-3d`:
   hand both the SAME domain-agnostic scene (elements as `from`->`to` boxes with a cross-section +
@@ -41,23 +41,27 @@ commands:
     # needs no `safety:` block. When `output-path` is given the runtime writes that artifact on a
     # real run only (skipped under --dry-run / --simulate), so a preview never touches disk.
     description: |
-      Write a generic 3D scene to a universal IFC4 file (DesignTransferView). The scene is
-      domain-agnostic: `elements` are members (`from`->`to`) placed on the member axis. Each may carry
+      Write a generic 3D scene to a universal IFC4 file (DesignTransferView). Legacy members may carry
       an `xsection` descriptor (i / channel / angle / rhs / chs / rect) -> the matching parametric
       IfcProfileDef (falling back to a rectangle for a missing/invalid descriptor); a neutral `role`
       (column/beam/brace -> IfcColumn/IfcBeam/IfcMember, else the legacy `group`); a `material` grade
       -> an IfcMaterial association; and the element's `group` colour -> an IfcStyledItem. A
       `kind:"mesh"` element (`positions`+`indices`) is written as an IfcTriangulatedFaceSet on an
-      IfcBuildingElementProxy. The writer is GENERIC — it applies whatever descriptor the scene
+      IfcBuildingElementProxy. Exact plates become IfcPlate. Standalone rods and fasteners become
+      individual IfcMechanicalFastener products; every canonical bolt array becomes one selectable
+      IfcMechanicalFastener whose body contains all authored shank, head, washer, and nut solids,
+      matching IFC's native multi-fastener occurrence semantics. Bolt hole effects become distinct
+      IfcOpeningElement/IfcRelVoidsElement pairs. Structural grids become IfcGrid/IfcGridAxis and
+      Z datums become IfcAnnotation crosshairs. Weld and Boolean relationships are explicitly
+      unsupported until an exact IFC mapping is reviewed. The writer is GENERIC — it applies whatever descriptor the scene
       carries (the domain owns the meaning). Output is deterministic (identical scene -> identical bytes).
     inputs:
       scene:
         type: object
         description: |
           The 3D scene to export (object) — the SAME schema `viewer-3d` renders. Shape:
-          `{ meta:{name,units,up}, groups:[{key,label,color}],
-             elements:[{id,group,kind,from,to,section:{w,d},meta:{profile},
-                        role?,material?,xsection?,rot?}], grids, panels }`.
+          `{ meta:{name,units:"mm",up}, groups:[...], elements:[...], operations:[...],
+             referenceSystems:[...], grids, panels }`.
           `xsection` (all mm) is one of: {shape:i,d,bf,tw,tf} | {shape:channel,d,bf,tw,tf} |
           {shape:angle,d,b,t} | {shape:rhs,d,b,t} | {shape:chs,od,t} | {shape:rect,w,d}.
           `role`/`material`/`xsection`/`rot` are EXPORT hints this writer consumes for exact
@@ -79,4 +83,7 @@ commands:
         beams:    int       # IfcBeam count (everything not column/brace)
         meshes:   int       # IfcTriangulatedFaceSet proxy count (kind:"mesh" elements)
         profiles: object    # profile-string -> count breakdown (for the caller's report)
-        warnings: array     # [{id,reason}] for elements whose present xsection was rejected -> rectangle fallback
+        emitted: array      # exhaustive successful identity rows with stable IFC GUIDs
+        failed: array       # empty on success; malformed supported input fails before file output
+        unsupported: array  # every intentionally unsupported identity
+        warnings: array     # geometry-preserving legacy profile qualifications

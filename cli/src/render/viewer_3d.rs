@@ -18,6 +18,7 @@
 
 use crate::error::AwareError;
 use serde_json::Value;
+use std::collections::{HashMap, HashSet};
 
 /// The renderer shell. `__SCENE_JSON__` is replaced with the serialized scene. Every `{`/`}`
 /// here is literal (we substitute with `str::replace`, not `format!`). Proven against the
@@ -27,6 +28,7 @@ const TEMPLATE: &str = r##"<!doctype html>
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:," />
 <title>AWARE · viewer-3d</title>
 <style>
   :root{--bg:#0a0f1a;--panel:rgba(15,23,42,.82);--border:#1e293b;--border-2:#334155;--text:#e2e8f0;--muted:#94a3b8;--accent:#60a5fa;--accent-2:#38bdf8}
@@ -299,13 +301,69 @@ function orientMember(mesh, dir){
   mesh.quaternion.copy(q);
 }
 
+function vec3(P){ return Array.isArray(P)&&P.length===3 ? P : null; }
+function axisEnds(e){ const a=e&&e.axis;
+  if(a&&Array.isArray(a.from)&&Array.isArray(a.to)) return [a.from,a.to];
+  if(Array.isArray(a)&&a.length===2&&Array.isArray(a[0])&&Array.isArray(a[1])) return a;
+  return Array.isArray(e.from)&&Array.isArray(e.to) ? [e.from,e.to] : null;
+}
+function frameOf(e,up){ const f=e.frame||{}, o=conv(f.origin,up), u=conv(f.uDir,up).normalize(), v=conv(f.vDir,up).normalize();
+  // The legacy Z-up conversion swaps Y/Z and is therefore reflective. A quaternion cannot
+  // carry that reflection, so rebuild the render normal from the converted in-plane axes.
+  const n=u.clone().cross(v).normalize(); return {o,u,v,n}; }
+function applyFrame(mesh,F){ const M=new THREE.Matrix4().makeBasis(F.u,F.v,F.n); mesh.quaternion.setFromRotationMatrix(M); mesh.position.copy(F.o); }
+function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.group]||0xffffff;
+  const op=typeof e.opacity==='number'?e.opacity:(typeof opacityOf[e.group]==='number'?opacityOf[e.group]:1);
+  const mat=new THREE.MeshStandardMaterial({color:col,metalness:0.5,roughness:0.5,transparent:op<1, opacity:op,side:doubleSided?THREE.DoubleSide:THREE.FrontSide});
+  mat.userData={baseOpacity:op}; return mat; }
+function cylinderBetween(a,b,r,mat,segments){ const d=b.clone().sub(a), len=d.length();
+  const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,segments||32,1,false),mat);
+  mesh.position.copy(a).add(b).multiplyScalar(0.5); mesh.quaternion.setFromUnitVectors(_YA,d.normalize()); return mesh; }
+function plateMesh(e,up,mat){ const outline=e.outline, shape=new THREE.Shape();
+  outline.forEach((p,i)=>i?shape.lineTo(p[0],p[1]):shape.moveTo(p[0],p[1])); shape.closePath();
+  for(const h of (e.holes||[])){ const c=h.center||h.uv, path=new THREE.Path(); path.absarc(c[0],c[1],h.diameterMm/2,0,Math.PI*2,false); shape.holes.push(path); }
+  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
+  const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,frameOf(e,up)); return mesh; }
+function orientedProfileMesh(e,up,mat,shape){
+  const g=new THREE.ExtrudeGeometry(shape,{depth:e.thicknessMm,bevelEnabled:false,curveSegments:48}); g.translate(0,0,-e.thicknessMm/2);
+  const sourceN=new THREE.Vector3(...e.axis).normalize(), sourceSeed=Math.abs(sourceN.z)<0.9?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
+  const sourceU=sourceSeed.cross(sourceN).normalize(), n=conv(e.axis,up).normalize(), u=conv([sourceU.x,sourceU.y,sourceU.z],up).normalize(), v=n.clone().cross(u).normalize();
+  const mesh=new THREE.Mesh(g,mat); applyFrame(mesh,{o:conv(e.center,up),u,v,n}); return mesh; }
+function annulusMesh(e,up,mat){ const s=new THREE.Shape(); s.absarc(0,0,e.outerDiameterMm/2,0,Math.PI*2,false);
+  const h=new THREE.Path(); h.absarc(0,0,e.innerDiameterMm/2,0,Math.PI*2,true); s.holes.push(h); return orientedProfileMesh(e,up,mat,s); }
+function hexMesh(e,up,mat){ const R=e.acrossFlatsMm/Math.sqrt(3), phase=Number(e.phaseRad||0)*(up==='z'?-1:1), s=new THREE.Shape();
+  for(let i=0;i<6;i++){ const q=phase+i*Math.PI/3, x=R*Math.cos(q), y=R*Math.sin(q); i?s.lineTo(x,y):s.moveTo(x,y); } s.closePath(); return orientedProfileMesh(e,up,mat,s); }
+function expandSceneBounds(box,S,up){ const add=P=>{if(vec3(P))box.expandByPoint(conv(P,up));};
+  const addRadius=(P,r)=>{if(!vec3(P)||!Number.isFinite(r))return; for(const dx of [-r,r])for(const dy of [-r,r])for(const dz of [-r,r])add([P[0]+dx,P[1]+dy,P[2]+dz]);};
+  for(const e of (S.elements||[])){ if(!e)continue; add(e.from);add(e.to);add(e.at);add(e.center); const A=axisEnds(e);if(A){const r=(e.diameterMm||0)/2;addRadius(A[0],r);addRadius(A[1],r);}
+    if(e.kind==='washer')addRadius(e.center,Math.max(e.outerDiameterMm/2,e.thicknessMm/2));
+    if(e.kind==='nut'||e.kind==='bolt-head')addRadius(e.center,Math.max(e.acrossFlatsMm/Math.sqrt(3),e.thicknessMm/2));
+    if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)add([e.positions[i],e.positions[i+1],e.positions[i+2]]);
+    if(e.kind==='plate'&&e.frame&&Array.isArray(e.outline)){ const F=frameOf(e,up), z=e.thicknessMm/2; for(const p of e.outline)for(const dz of [-z,z])box.expandByPoint(F.o.clone().addScaledVector(F.u,p[0]).addScaledVector(F.v,p[1]).addScaledVector(F.n,dz)); }
+  }
+  for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue; const o=R.origin,b=R.bounds||{}, x0=Number(b.minX),x1=Number(b.maxX),y0=Number(b.minY),y1=Number(b.maxY); if(vec3(o)&&[x0,x1,y0,y1].every(Number.isFinite)){add([o[0]+x0,o[1]+y0,o[2]]);add([o[0]+x1,o[1]+y1,o[2]]); for(const l of (R.levels||[])){add([o[0]+x0,o[1]+y0,l.elevationMm]);add([o[0]+x1,o[1]+y1,l.elevationMm]);}} }
+  for(const op of (S.operations||[])){ if(op&&op.kind==='weld'&&Array.isArray(op.path))for(const p of op.path)add(p); }
+}
+function addReferenceSystems(S,up){ for(const R of (S.referenceSystems||[])){ if(!R||R.kind!=='structural-grid')continue;
+  const o=R.origin,b=R.bounds||{}, x0=b.minX,x1=b.maxX,y0=b.minY,y1=b.maxY, baseMat=new THREE.LineBasicMaterial({color:0x60a5fa,transparent:true,opacity:0.7});
+  const line=(A,B)=>{const g=new THREE.BufferGeometry().setFromPoints([conv(A,up),conv(B,up)]);content.add(new THREE.Line(g,baseMat.clone()));};
+  for(const a of (R.axes||[])){ const start=Number.isFinite(a.startMm)?a.startMm:(a.direction==='x'?y0:x0), end=Number.isFinite(a.endMm)?a.endMm:(a.direction==='x'?y1:x1);
+    const A=a.direction==='x'?[o[0]+a.offsetMm,o[1]+start,o[2]]:[o[0]+start,o[1]+a.offsetMm,o[2]], B=a.direction==='x'?[o[0]+a.offsetMm,o[1]+end,o[2]]:[o[0]+end,o[1]+a.offsetMm,o[2]]; line(A,B); content.add(makeLabel(a.label,conv(B,up),maxDim)); }
+  for(const l of (R.levels||[])){ const z=l.elevationMm,c=[o[0]+(x0+x1)/2,o[1]+(y0+y1)/2,z]; line([o[0]+x0,c[1],z],[o[0]+x1,c[1],z]); line([c[0],o[1]+y0,z],[c[0],o[1]+y1,z]); content.add(makeLabel(l.label,conv([o[0]+x1,c[1],z],up),maxDim)); }
+} }
+function addOperations(S,up){ for(const op of (S.operations||[])){ if(!op||op.kind!=='weld'||!Array.isArray(op.path))continue;
+  const points=op.path.map(p=>conv(p,up)); if(points.length<2)continue;
+  const geometry=new THREE.BufferGeometry().setFromPoints(points);
+  const material=new THREE.LineBasicMaterial({color:0xf59e0b,transparent:true,opacity:0.95});
+  const weld=new THREE.Line(geometry,material); weld.userData=op; content.add(weld);
+} }
+
 function renderScene(S){
   clearContent();
   const up=(S.meta&&S.meta.up)||'z';
   const colorOf={}, opacityOf={}; (S.groups||[]).forEach(g=>{ colorOf[g.key]=g.color; if(typeof g.opacity==='number') opacityOf[g.key]=g.opacity; });
   groupHidden.clear(); soloGroup=null;
-  const box=new THREE.Box3();
-  for(const e of (S.elements||[])){ if(Array.isArray(e.from))box.expandByPoint(conv(e.from,up)); if(Array.isArray(e.to))box.expandByPoint(conv(e.to,up)); if(Array.isArray(e.at))box.expandByPoint(conv(e.at,up)); if(Array.isArray(e.positions))for(let i=0;i+2<e.positions.length;i+=3)box.expandByPoint(conv([e.positions[i],e.positions[i+1],e.positions[i+2]],up)); }
+  const box=new THREE.Box3(); expandSceneBounds(box,S,up);
   if(box.isEmpty()) box.set(new THREE.Vector3(-1,-1,-1), new THREE.Vector3(1,1,1));
   const size=box.getSize(new THREE.Vector3()), center=box.getCenter(new THREE.Vector3());
   maxDim=Math.max(size.x,size.y,size.z)||1; sceneBox=box.clone(); const thick=maxDim*0.006;
@@ -319,20 +377,23 @@ function renderScene(S){
   for(const e of (S.elements||[])){
     if(!e) continue;
     // A tessellated mesh (positions[]+indices[], e.g. an imported connection) has no from/to/at.
-    const isMesh = e.kind==='mesh' || (Array.isArray(e.positions)&&Array.isArray(e.indices));
-    if(!isMesh && (e.kind==='node' ? !Array.isArray(e.at) : (!Array.isArray(e.from)||!Array.isArray(e.to)))) continue;
-    const col=colorOf[e.group] || 0xffffff;
+    const kind=e.kind||((Array.isArray(e.positions)&&Array.isArray(e.indices))?'mesh':(Array.isArray(e.at)?'node':'member'));
+    const isMesh = kind==='mesh';
+    if(!['mesh','plate','rod','bolt-shank','washer','nut','bolt-head','node','line','box','member'].includes(kind)) continue;
+    const A=axisEnds(e);
     // Opacity: per-element overrides per-group; <1 makes the material translucent so
     // elements embedded in others (e.g. rebar inside concrete) can be revealed (#258).
-    const op = typeof e.opacity==='number' ? e.opacity : (typeof opacityOf[e.group]==='number' ? opacityOf[e.group] : 1);
     // Imported meshes may have inconsistent winding — DoubleSide avoids black back-faces.
-    const mat=new THREE.MeshStandardMaterial({color:col, metalness:0.5, roughness:0.5, transparent:op<1, opacity:op, side:isMesh?THREE.DoubleSide:THREE.FrontSide});
-    mat.userData={baseOpacity:op}; let mesh;
+    const mat=solidMaterial(e,colorOf,opacityOf,isMesh); let mesh;
     if(isMesh){ const g=new THREE.BufferGeometry(), P=e.positions, arr=new Float32Array(P.length);
       for(let i=0;i+2<P.length;i+=3){ const v=conv([P[i],P[i+1],P[i+2]],up); arr[i]=v.x; arr[i+1]=v.y; arr[i+2]=v.z; }
       g.setAttribute('position', new THREE.BufferAttribute(arr,3)); g.setIndex(e.indices); g.computeVertexNormals();
       mesh=new THREE.Mesh(g, mat); }
-    else if(e.kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
+    else if(kind==='plate') mesh=plateMesh(e,up,mat);
+    else if(kind==='rod'||kind==='bolt-shank') mesh=cylinderBetween(conv(A[0],up),conv(A[1],up),e.diameterMm/2,mat,32);
+    else if(kind==='washer') mesh=annulusMesh(e,up,mat);
+    else if(kind==='nut'||kind==='bolt-head') mesh=hexMesh(e,up,mat);
+    else if(kind==='node'){ const r=(e.size||maxDim*0.012); mesh=new THREE.Mesh(new THREE.SphereGeometry(r,20,16), mat); mesh.position.copy(conv(e.at,up)); }
     else { const a=conv(e.from,up), b=conv(e.to,up), dir=b.clone().sub(a), len=dir.length()||thick;
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
@@ -340,6 +401,8 @@ function renderScene(S){
     mesh.userData=e; content.add(mesh); pickable.push(mesh);
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
+  addReferenceSystems(S,up);
+  addOperations(S,up);
 
   if(S.camera&&Array.isArray(S.camera.eye)&&Array.isArray(S.camera.target)){
     const eye=conv(S.camera.eye,up), tgt=conv(S.camera.target,up);
@@ -614,6 +677,1173 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
 
 /// `viewer-3d.render` — render a generic 3D scene into a self-contained interactive HTML page.
 /// Mirrors `ui.render`'s contract: `{ html, bytes, output-path? }`, write gated to a real run.
+#[derive(Default)]
+struct SceneReceipt {
+    emitted: Vec<Value>,
+    unsupported: Vec<Value>,
+    warnings: Vec<Value>,
+}
+
+fn scene_error(path: &str, message: &str) -> AwareError {
+    AwareError::Validation(format!("viewer-3d render: `{path}` {message}"))
+}
+
+fn object_array<'a>(scene: &'a Value, key: &str) -> Result<&'a [Value], AwareError> {
+    match scene.get(key) {
+        None => Ok(&[]),
+        Some(Value::Array(values)) => Ok(values),
+        Some(other) => Err(scene_error(
+            key,
+            &format!("must be an array (got {})", json_type(other)),
+        )),
+    }
+}
+
+fn object_at<'a>(
+    value: &'a Value,
+    path: &str,
+) -> Result<&'a serde_json::Map<String, Value>, AwareError> {
+    value
+        .as_object()
+        .ok_or_else(|| scene_error(path, "must be an object"))
+}
+
+fn record_id(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+    ids: &mut HashSet<String>,
+) -> Result<String, AwareError> {
+    let raw = object
+        .get("id")
+        .and_then(Value::as_str)
+        .ok_or_else(|| scene_error(&format!("{path}.id"), "must be a non-empty string"))?;
+    let id = raw.trim();
+    if id.is_empty()
+        || id != raw
+        || id.len() > 256
+        || id
+            .chars()
+            .any(|character| character <= '\u{1f}' || character == '\u{7f}')
+    {
+        return Err(scene_error(
+            &format!("{path}.id"),
+            "must be trimmed, 1-256 UTF-8 bytes, and contain no control characters",
+        ));
+    }
+    if !ids.insert(id.to_owned()) {
+        return Err(scene_error(
+            &format!("{path}.id"),
+            "must be globally unique",
+        ));
+    }
+    Ok(id.to_owned())
+}
+
+fn finite_number(value: Option<&Value>, path: &str) -> Result<f64, AwareError> {
+    value
+        .and_then(Value::as_f64)
+        .filter(|number| number.is_finite())
+        .ok_or_else(|| scene_error(path, "must be a finite number"))
+}
+
+fn positive_number(value: Option<&Value>, path: &str) -> Result<f64, AwareError> {
+    let number = finite_number(value, path)?;
+    if number <= 0.0 {
+        return Err(scene_error(path, "must be greater than zero"));
+    }
+    Ok(number)
+}
+
+fn vector<const N: usize>(value: Option<&Value>, path: &str) -> Result<[f64; N], AwareError> {
+    let values = value
+        .and_then(Value::as_array)
+        .filter(|values| values.len() == N)
+        .ok_or_else(|| scene_error(path, &format!("must be an array of {N} numbers")))?;
+    let mut result = [0.0; N];
+    for (index, value) in values.iter().enumerate() {
+        result[index] = finite_number(Some(value), &format!("{path}[{index}]"))?;
+    }
+    Ok(result)
+}
+
+fn length3(value: [f64; 3]) -> f64 {
+    value
+        .iter()
+        .map(|component| component * component)
+        .sum::<f64>()
+        .sqrt()
+}
+
+fn dot3(a: [f64; 3], b: [f64; 3]) -> f64 {
+    (0..3).map(|index| a[index] * b[index]).sum()
+}
+
+fn normalized3(value: [f64; 3]) -> Option<[f64; 3]> {
+    let length = length3(value);
+    (length > 1.0e-9).then(|| value.map(|component| component / length))
+}
+
+fn distance3(a: [f64; 3], b: [f64; 3]) -> f64 {
+    length3([a[0] - b[0], a[1] - b[1], a[2] - b[2]])
+}
+
+fn cross3(a: [f64; 3], b: [f64; 3]) -> [f64; 3] {
+    [
+        a[1] * b[2] - a[2] * b[1],
+        a[2] * b[0] - a[0] * b[2],
+        a[0] * b[1] - a[1] * b[0],
+    ]
+}
+
+fn scene_element<'a>(scene: &'a Value, id: &str) -> Option<&'a serde_json::Map<String, Value>> {
+    scene
+        .get("elements")
+        .and_then(Value::as_array)?
+        .iter()
+        .find(|element| element.get("id").and_then(Value::as_str) == Some(id))
+        .and_then(Value::as_object)
+}
+
+fn axis(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+) -> Result<([f64; 3], [f64; 3]), AwareError> {
+    let (from, to) = if let Some(axis) = object.get("axis") {
+        if let Some(axis) = axis.as_object() {
+            (
+                vector(axis.get("from"), &format!("{path}.axis.from"))?,
+                vector(axis.get("to"), &format!("{path}.axis.to"))?,
+            )
+        } else if let Some(axis) = axis.as_array().filter(|axis| axis.len() == 2) {
+            (
+                vector(axis.first(), &format!("{path}.axis[0]"))?,
+                vector(axis.get(1), &format!("{path}.axis[1]"))?,
+            )
+        } else {
+            return Err(scene_error(&format!("{path}.axis"), "must be `{from,to}`"));
+        }
+    } else {
+        (
+            vector(object.get("from"), &format!("{path}.from"))?,
+            vector(object.get("to"), &format!("{path}.to"))?,
+        )
+    };
+    let length_sq = (0..3).map(|i| (to[i] - from[i]).powi(2)).sum::<f64>();
+    if length_sq <= 1.0e-18 {
+        return Err(scene_error(
+            &format!("{path}.axis"),
+            "must have nonzero length",
+        ));
+    }
+    Ok((from, to))
+}
+
+fn direction(object: &serde_json::Map<String, Value>, path: &str) -> Result<[f64; 3], AwareError> {
+    let axis = vector::<3>(object.get("axis"), &format!("{path}.axis"))?;
+    if axis.iter().map(|value| value * value).sum::<f64>() <= 1.0e-18 {
+        return Err(scene_error(
+            &format!("{path}.axis"),
+            "must have nonzero length",
+        ));
+    }
+    Ok(axis)
+}
+
+fn polygon_edges(polygon: &[[f64; 2]]) -> impl Iterator<Item = ([f64; 2], [f64; 2])> + '_ {
+    polygon
+        .iter()
+        .copied()
+        .zip(polygon.iter().copied().cycle().skip(1))
+        .take(polygon.len())
+}
+
+fn point_in_polygon(point: [f64; 2], polygon: &[[f64; 2]]) -> bool {
+    let mut inside = false;
+    for (a, b) in polygon_edges(polygon) {
+        if (a[1] > point[1]) != (b[1] > point[1])
+            && point[0] < (b[0] - a[0]) * (point[1] - a[1]) / (b[1] - a[1]) + a[0]
+        {
+            inside = !inside;
+        }
+    }
+    inside
+}
+
+fn point_segment_distance(point: [f64; 2], a: [f64; 2], b: [f64; 2]) -> f64 {
+    let delta = [b[0] - a[0], b[1] - a[1]];
+    let length_sq = delta[0] * delta[0] + delta[1] * delta[1];
+    if length_sq <= 1.0e-18 {
+        return ((point[0] - a[0]).powi(2) + (point[1] - a[1]).powi(2)).sqrt();
+    }
+    let t =
+        (((point[0] - a[0]) * delta[0] + (point[1] - a[1]) * delta[1]) / length_sq).clamp(0.0, 1.0);
+    let nearest = [a[0] + t * delta[0], a[1] + t * delta[1]];
+    ((point[0] - nearest[0]).powi(2) + (point[1] - nearest[1]).powi(2)).sqrt()
+}
+
+fn cross2(a: [f64; 2], b: [f64; 2], c: [f64; 2]) -> f64 {
+    (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+}
+
+fn segments_intersect(a: [f64; 2], b: [f64; 2], c: [f64; 2], d: [f64; 2]) -> bool {
+    const EPS: f64 = 1.0e-9;
+    let on_segment = |p: [f64; 2], q: [f64; 2], r: [f64; 2]| {
+        cross2(p, q, r).abs() <= EPS
+            && r[0] >= p[0].min(q[0]) - EPS
+            && r[0] <= p[0].max(q[0]) + EPS
+            && r[1] >= p[1].min(q[1]) - EPS
+            && r[1] <= p[1].max(q[1]) + EPS
+    };
+    let (ab_c, ab_d, cd_a, cd_b) = (
+        cross2(a, b, c),
+        cross2(a, b, d),
+        cross2(c, d, a),
+        cross2(c, d, b),
+    );
+    (ab_c.signum() != ab_d.signum() && cd_a.signum() != cd_b.signum())
+        || on_segment(a, b, c)
+        || on_segment(a, b, d)
+        || on_segment(c, d, a)
+        || on_segment(c, d, b)
+}
+
+fn polygon_is_simple_nonzero(polygon: &[[f64; 2]]) -> bool {
+    const EPS: f64 = 1.0e-9;
+    if polygon.len() < 3
+        || polygon_edges(polygon)
+            .any(|(a, b)| ((a[0] - b[0]).powi(2) + (a[1] - b[1]).powi(2)).sqrt() <= EPS)
+    {
+        return false;
+    }
+    let twice_area = polygon_edges(polygon)
+        .map(|(a, b)| a[0] * b[1] - b[0] * a[1])
+        .sum::<f64>();
+    if twice_area.abs() <= EPS {
+        return false;
+    }
+    let n = polygon.len();
+    for i in 0..n {
+        for j in (i + 1)..n {
+            if j == (i + 1) % n || (j + 1) % n == i {
+                continue;
+            }
+            if segments_intersect(
+                polygon[i],
+                polygon[(i + 1) % n],
+                polygon[j],
+                polygon[(j + 1) % n],
+            ) {
+                return false;
+            }
+        }
+    }
+    true
+}
+
+fn validate_plate(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+    parent_id: &str,
+    ids: &mut HashSet<String>,
+) -> Result<Vec<Value>, AwareError> {
+    let frame = object_at(
+        object
+            .get("frame")
+            .ok_or_else(|| scene_error(&format!("{path}.frame"), "is required"))?,
+        &format!("{path}.frame"),
+    )?;
+    vector::<3>(frame.get("origin"), &format!("{path}.frame.origin"))?;
+    let u = vector::<3>(frame.get("uDir"), &format!("{path}.frame.uDir"))?;
+    let v = vector::<3>(frame.get("vDir"), &format!("{path}.frame.vDir"))?;
+    let n = vector::<3>(frame.get("normal"), &format!("{path}.frame.normal"))?;
+    let length = |a: [f64; 3]| a.iter().map(|x| x * x).sum::<f64>().sqrt();
+    let (ul, vl, nl) = (length(u), length(v), length(n));
+    if ul <= 1.0e-9 || vl <= 1.0e-9 || nl <= 1.0e-9 {
+        return Err(scene_error(
+            &format!("{path}.frame"),
+            "directions must be nonzero",
+        ));
+    }
+    let dot = |a: [f64; 3], b: [f64; 3]| (0..3).map(|i| a[i] * b[i]).sum::<f64>();
+    if (dot(u, v) / (ul * vl)).abs() > 1.0e-6 {
+        return Err(scene_error(
+            &format!("{path}.frame"),
+            "uDir and vDir must be orthogonal",
+        ));
+    }
+    let cross = [
+        u[1] * v[2] - u[2] * v[1],
+        u[2] * v[0] - u[0] * v[2],
+        u[0] * v[1] - u[1] * v[0],
+    ];
+    if dot(cross, n) / (length(cross) * nl) < 1.0 - 1.0e-6 {
+        return Err(scene_error(
+            &format!("{path}.frame.normal"),
+            "must align with the right-handed uDir cross vDir normal",
+        ));
+    }
+    positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
+    let outline = object
+        .get("outline")
+        .and_then(Value::as_array)
+        .filter(|outline| outline.len() >= 3)
+        .ok_or_else(|| {
+            scene_error(
+                &format!("{path}.outline"),
+                "must contain at least three points",
+            )
+        })?;
+    let polygon = outline
+        .iter()
+        .enumerate()
+        .map(|(index, point)| vector(Some(point), &format!("{path}.outline[{index}]")))
+        .collect::<Result<Vec<[f64; 2]>, _>>()?;
+    if !polygon_is_simple_nonzero(&polygon) {
+        return Err(scene_error(
+            &format!("{path}.outline"),
+            "must be a nonzero simple polygon",
+        ));
+    }
+    let holes = match object.get("holes") {
+        None | Some(Value::Null) => &[][..],
+        Some(Value::Array(holes)) => holes.as_slice(),
+        Some(_) => {
+            return Err(scene_error(&format!("{path}.holes"), "must be an array"));
+        }
+    };
+    let mut circles = Vec::with_capacity(holes.len());
+    let mut rows = Vec::with_capacity(holes.len());
+    for (index, hole) in holes.iter().enumerate() {
+        let hole_path = format!("{path}.holes[{index}]");
+        let hole = object_at(hole, &hole_path)?;
+        let id = record_id(hole, &hole_path, ids)?;
+        let center = vector(
+            hole.get("center").or_else(|| hole.get("uv")),
+            &format!("{hole_path}.center"),
+        )?;
+        let diameter = positive_number(hole.get("diameterMm"), &format!("{hole_path}.diameterMm"))?;
+        if !point_in_polygon(center, &polygon)
+            || polygon_edges(&polygon)
+                .any(|(a, b)| point_segment_distance(center, a, b) + 1.0e-9 < diameter / 2.0)
+        {
+            return Err(scene_error(
+                &hole_path,
+                "must lie wholly inside the plate outline",
+            ));
+        }
+        if circles
+            .iter()
+            .any(|(other, other_diameter): &([f64; 2], f64)| {
+                let distance =
+                    ((center[0] - other[0]).powi(2) + (center[1] - other[1]).powi(2)).sqrt();
+                distance <= (diameter + *other_diameter) / 2.0 + 1.0e-9
+            })
+        {
+            return Err(scene_error(
+                &hole_path,
+                "must not overlap or touch another hole",
+            ));
+        }
+        circles.push((center, diameter));
+        rows.push(serde_json::json!({
+            "id": id,
+            "status": "emitted",
+            "kind": "hole",
+            "parentId": parent_id,
+            "renderedKind": "plate-hole"
+        }));
+    }
+    Ok(rows)
+}
+
+fn classify_scene(scene: &Value) -> Result<SceneReceipt, AwareError> {
+    if let Some(units) = scene.get("meta").and_then(|meta| meta.get("units"))
+        && units.as_str() != Some("mm")
+    {
+        return Err(scene_error("meta.units", "must be `mm` when present"));
+    }
+    let mut ids = HashSet::new();
+    let mut physical = HashMap::new();
+    let mut receipt = SceneReceipt::default();
+    for (index, element) in object_array(scene, "elements")?.iter().enumerate() {
+        let path = format!("elements[{index}]");
+        let object = object_at(element, &path)?;
+        let id = record_id(object, &path, &mut ids)?;
+        let kind = object
+            .get("kind")
+            .and_then(Value::as_str)
+            .filter(|kind| !kind.is_empty())
+            .map(str::to_owned)
+            .unwrap_or_else(|| {
+                if object.contains_key("positions") || object.contains_key("indices") {
+                    "mesh".to_owned()
+                } else if object.contains_key("at") {
+                    "node".to_owned()
+                } else {
+                    "member".to_owned()
+                }
+            });
+        let mut nested_rows = Vec::new();
+        match kind.as_str() {
+            "line" | "box" | "member" => {
+                let from = vector::<3>(object.get("from"), &format!("{path}.from"))?;
+                let to = vector::<3>(object.get("to"), &format!("{path}.to"))?;
+                if from == to {
+                    return Err(scene_error(&path, "member axis must have nonzero length"));
+                }
+            }
+            "node" => {
+                vector::<3>(object.get("at"), &format!("{path}.at"))?;
+                if object.contains_key("size") {
+                    positive_number(object.get("size"), &format!("{path}.size"))?;
+                }
+            }
+            "mesh" => validate_mesh(object, &path)?,
+            "plate" => nested_rows = validate_plate(object, &path, &id, &mut ids)?,
+            "rod" | "bolt-shank" => {
+                axis(object, &path)?;
+                positive_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
+            }
+            "washer" => {
+                direction(object, &path)?;
+                vector::<3>(object.get("center"), &format!("{path}.center"))?;
+                let outer = positive_number(
+                    object.get("outerDiameterMm"),
+                    &format!("{path}.outerDiameterMm"),
+                )?;
+                let inner = positive_number(
+                    object.get("innerDiameterMm"),
+                    &format!("{path}.innerDiameterMm"),
+                )?;
+                if inner >= outer {
+                    return Err(scene_error(
+                        &path,
+                        "innerDiameterMm must be smaller than outerDiameterMm",
+                    ));
+                }
+                positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
+            }
+            "nut" | "bolt-head" => {
+                direction(object, &path)?;
+                vector::<3>(object.get("center"), &format!("{path}.center"))?;
+                positive_number(
+                    object.get("acrossFlatsMm"),
+                    &format!("{path}.acrossFlatsMm"),
+                )?;
+                positive_number(object.get("thicknessMm"), &format!("{path}.thicknessMm"))?;
+                if object.contains_key("phaseRad") {
+                    finite_number(object.get("phaseRad"), &format!("{path}.phaseRad"))?;
+                }
+            }
+            _ => {
+                receipt.unsupported.push(serde_json::json!({
+                    "id": id,
+                    "status": "unsupported",
+                    "kind": &kind,
+                    "code": "unsupported-element-kind",
+                    "message": format!("element kind '{kind}' is not supported by viewer-3d")
+                }));
+                continue;
+            }
+        }
+        receipt.emitted.push(serde_json::json!({
+            "id": &id,
+            "status": "emitted",
+            "kind": &kind,
+            "renderedKind": &kind
+        }));
+        receipt.emitted.extend(nested_rows);
+        physical.insert(id, kind);
+    }
+    classify_operations(scene, &physical, &mut ids, &mut receipt)?;
+    classify_reference_systems(scene, &mut ids, &mut receipt)?;
+    Ok(receipt)
+}
+
+fn validate_mesh(object: &serde_json::Map<String, Value>, path: &str) -> Result<(), AwareError> {
+    let positions = object
+        .get("positions")
+        .and_then(Value::as_array)
+        .filter(|positions| positions.len() >= 9 && positions.len() % 3 == 0)
+        .ok_or_else(|| {
+            scene_error(
+                &format!("{path}.positions"),
+                "must contain complete xyz triples for at least one triangle",
+            )
+        })?;
+    for (index, value) in positions.iter().enumerate() {
+        finite_number(Some(value), &format!("{path}.positions[{index}]"))?;
+    }
+    let indices = object
+        .get("indices")
+        .and_then(Value::as_array)
+        .filter(|indices| !indices.is_empty() && indices.len() % 3 == 0)
+        .ok_or_else(|| {
+            scene_error(
+                &format!("{path}.indices"),
+                "must contain complete index triples",
+            )
+        })?;
+    let vertex_count = positions.len() / 3;
+    for (index, value) in indices.iter().enumerate() {
+        value
+            .as_u64()
+            .filter(|value| (*value as usize) < vertex_count)
+            .ok_or_else(|| {
+                scene_error(
+                    &format!("{path}.indices[{index}]"),
+                    "must reference an existing vertex",
+                )
+            })?;
+    }
+    Ok(())
+}
+
+fn relation_target<'a>(
+    object: &'a serde_json::Map<String, Value>,
+    path: &str,
+    field: &str,
+    physical: &HashMap<String, String>,
+    allowed: &[&str],
+) -> Result<&'a str, AwareError> {
+    let target = object
+        .get(field)
+        .and_then(Value::as_str)
+        .filter(|target| !target.is_empty())
+        .ok_or_else(|| scene_error(&format!("{path}.{field}"), "must be an element id"))?;
+    match physical.get(target).map(String::as_str) {
+        Some(kind) if allowed.contains(&kind) => Ok(target),
+        Some(kind) => Err(scene_error(
+            &format!("{path}.{field}"),
+            &format!("references incompatible element kind `{kind}`"),
+        )),
+        None => Err(scene_error(
+            &format!("{path}.{field}"),
+            &format!("references unknown element `{target}`"),
+        )),
+    }
+}
+
+fn classify_operations(
+    scene: &Value,
+    physical: &HashMap<String, String>,
+    ids: &mut HashSet<String>,
+    receipt: &mut SceneReceipt,
+) -> Result<(), AwareError> {
+    let mut claimed_bolt_components = HashSet::new();
+    for (index, operation) in object_array(scene, "operations")?.iter().enumerate() {
+        let path = format!("operations[{index}]");
+        let object = object_at(operation, &path)?;
+        let id = record_id(object, &path, ids)?;
+        let kind = object
+            .get("kind")
+            .and_then(Value::as_str)
+            .ok_or_else(|| scene_error(&format!("{path}.kind"), "must be a string"))?;
+
+        match kind {
+            "bolt-array" => {
+                let part_kinds = ["member", "line", "box", "plate"];
+                let part_to_bolt_to =
+                    relation_target(object, &path, "partToBoltTo", physical, &part_kinds)?;
+                let part_to_be_bolted =
+                    relation_target(object, &path, "partToBeBolted", physical, &part_kinds)?;
+                if part_to_bolt_to == part_to_be_bolted {
+                    return Err(scene_error(
+                        &path,
+                        "bolt-array participants must be distinct elements",
+                    ));
+                }
+                let frame = object
+                    .get("frame")
+                    .and_then(Value::as_object)
+                    .ok_or_else(|| scene_error(&format!("{path}.frame"), "must be an object"))?;
+                vector::<3>(frame.get("origin"), &format!("{path}.frame.origin"))?;
+                let u = vector::<3>(frame.get("uDir"), &format!("{path}.frame.uDir"))?;
+                let v = vector::<3>(frame.get("vDir"), &format!("{path}.frame.vDir"))?;
+                let normal = vector::<3>(frame.get("normal"), &format!("{path}.frame.normal"))?;
+                let (u, v, normal) = (normalized3(u), normalized3(v), normalized3(normal));
+                let (Some(u), Some(v), Some(normal)) = (u, v, normal) else {
+                    return Err(scene_error(
+                        &format!("{path}.frame"),
+                        "directions must be nonzero",
+                    ));
+                };
+                let cross = [
+                    u[1] * v[2] - u[2] * v[1],
+                    u[2] * v[0] - u[0] * v[2],
+                    u[0] * v[1] - u[1] * v[0],
+                ];
+                if dot3(u, v).abs() > 1.0e-6
+                    || dot3(normalized3(cross).unwrap(), normal) < 1.0 - 1.0e-6
+                {
+                    return Err(scene_error(
+                        &format!("{path}.frame"),
+                        "must be right-handed and orthonormal",
+                    ));
+                }
+                for field in ["uOffsetsMm", "vOffsetsMm"] {
+                    let values = object
+                        .get(field)
+                        .and_then(Value::as_array)
+                        .filter(|values| !values.is_empty())
+                        .ok_or_else(|| {
+                            scene_error(&format!("{path}.{field}"), "must be a non-empty array")
+                        })?;
+                    for (offset_index, value) in values.iter().enumerate() {
+                        finite_number(Some(value), &format!("{path}.{field}[{offset_index}]"))?;
+                    }
+                }
+                positive_number(object.get("diameterMm"), &format!("{path}.diameterMm"))?;
+                if object
+                    .get("standard")
+                    .and_then(Value::as_str)
+                    .is_none_or(|standard| standard.trim().is_empty())
+                {
+                    return Err(scene_error(
+                        &format!("{path}.standard"),
+                        "must be a non-empty string",
+                    ));
+                }
+                if object.contains_key("toleranceMm") {
+                    let tolerance =
+                        finite_number(object.get("toleranceMm"), &format!("{path}.toleranceMm"))?;
+                    if tolerance < 0.0 {
+                        return Err(scene_error(
+                            &format!("{path}.toleranceMm"),
+                            "must be nonnegative",
+                        ));
+                    }
+                }
+                match object.get("boltType").and_then(Value::as_str) {
+                    Some("shop" | "site") => {}
+                    _ => {
+                        return Err(scene_error(
+                            &format!("{path}.boltType"),
+                            "must be `shop` or `site`",
+                        ));
+                    }
+                }
+                let components = object
+                    .get("components")
+                    .and_then(Value::as_object)
+                    .ok_or_else(|| {
+                        scene_error(&format!("{path}.components"), "must be an object")
+                    })?;
+                for field in ["bolt", "nut", "washer"] {
+                    if components
+                        .get(field)
+                        .is_some_and(|value| !value.is_boolean())
+                    {
+                        return Err(scene_error(
+                            &format!("{path}.components.{field}"),
+                            "must be a boolean",
+                        ));
+                    }
+                }
+                if components.get("bolt").and_then(Value::as_bool) == Some(false) {
+                    return Err(scene_error(
+                        &format!("{path}.components.bolt"),
+                        "must be true when instances author shankId and headId",
+                    ));
+                }
+                receipt.emitted.push(serde_json::json!({
+                    "id": id, "status": "emitted", "kind": kind,
+                    "renderedKind": "relationship", "geometryDuplicated": false
+                }));
+            }
+            "weld" => {
+                let weld_kinds = ["member", "line", "box", "plate", "rod"];
+                relation_target(object, &path, "mainId", physical, &weld_kinds)?;
+                relation_target(object, &path, "secondaryId", physical, &weld_kinds)?;
+                if object.get("weldType").and_then(Value::as_str) != Some("fillet") {
+                    return Err(scene_error(&format!("{path}.weldType"), "must be `fillet`"));
+                }
+                positive_number(object.get("sizeMm"), &format!("{path}.sizeMm"))?;
+                for field in ["around", "shop"] {
+                    if !object.get(field).is_some_and(Value::is_boolean) {
+                        return Err(scene_error(&format!("{path}.{field}"), "must be a boolean"));
+                    }
+                }
+                let points = object
+                    .get("path")
+                    .and_then(Value::as_array)
+                    .filter(|points| points.len() >= 2)
+                    .ok_or_else(|| {
+                        scene_error(&format!("{path}.path"), "must have at least two points")
+                    })?;
+                for (point_index, point) in points.iter().enumerate() {
+                    vector::<3>(Some(point), &format!("{path}.path[{point_index}]"))?;
+                }
+                receipt.emitted.push(serde_json::json!({
+                    "id": id, "status": "emitted", "kind": kind,
+                    "renderedKind": "weld-path", "geometryDuplicated": false
+                }));
+            }
+            "boolean-cut" => {
+                relation_target(
+                    object,
+                    &path,
+                    "targetId",
+                    physical,
+                    &[
+                        "member",
+                        "line",
+                        "box",
+                        "plate",
+                        "rod",
+                        "bolt-shank",
+                        "washer",
+                        "nut",
+                        "bolt-head",
+                        "mesh",
+                    ],
+                )?;
+                let tool = object
+                    .get("tool")
+                    .and_then(Value::as_object)
+                    .ok_or_else(|| scene_error(&format!("{path}.tool"), "must be an object"))?;
+                if tool.get("kind").and_then(Value::as_str) != Some("cylinder") {
+                    return Err(scene_error(
+                        &format!("{path}.tool.kind"),
+                        "must be `cylinder`",
+                    ));
+                }
+                let tool_axis = tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
+                    scene_error(&format!("{path}.tool.axis"), "must be an object")
+                })?;
+                let from = vector::<3>(tool_axis.get("from"), &format!("{path}.tool.axis.from"))?;
+                let to = vector::<3>(tool_axis.get("to"), &format!("{path}.tool.axis.to"))?;
+                if from == to {
+                    return Err(scene_error(
+                        &format!("{path}.tool.axis"),
+                        "must have nonzero length",
+                    ));
+                }
+                positive_number(tool.get("diameterMm"), &format!("{path}.tool.diameterMm"))?;
+                receipt.unsupported.push(serde_json::json!({
+                    "id": id, "status": "unsupported", "kind": kind,
+                    "code": "exact-csg-not-available",
+                    "message": "viewer-3d does not approximate Boolean CSG"
+                }));
+            }
+            _ => {
+                receipt.unsupported.push(serde_json::json!({
+                    "id": id, "status": "unsupported", "kind": kind,
+                    "code": "unsupported-operation-kind",
+                    "message": format!("operation kind '{kind}' is not supported by viewer-3d")
+                }));
+                continue;
+            }
+        }
+
+        if kind != "bolt-array" {
+            continue;
+        }
+        let participant_a = object["partToBoltTo"].as_str().unwrap();
+        let participant_b = object["partToBeBolted"].as_str().unwrap();
+        let frame = object["frame"].as_object().unwrap();
+        let origin = vector::<3>(frame.get("origin"), &format!("{path}.frame.origin"))?;
+        let u = normalized3(vector::<3>(
+            frame.get("uDir"),
+            &format!("{path}.frame.uDir"),
+        )?)
+        .unwrap();
+        let v = normalized3(vector::<3>(
+            frame.get("vDir"),
+            &format!("{path}.frame.vDir"),
+        )?)
+        .unwrap();
+        let normal = normalized3(vector::<3>(
+            frame.get("normal"),
+            &format!("{path}.frame.normal"),
+        )?)
+        .unwrap();
+        let u_offsets = object["uOffsetsMm"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|value| value.as_f64().unwrap())
+            .collect::<Vec<_>>();
+        let v_offsets = object["vOffsetsMm"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .map(|value| value.as_f64().unwrap())
+            .collect::<Vec<_>>();
+        for (field, offsets) in [("uOffsetsMm", &u_offsets), ("vOffsetsMm", &v_offsets)] {
+            if offsets
+                .iter()
+                .enumerate()
+                .any(|(index, value)| offsets[..index].contains(value))
+            {
+                return Err(scene_error(
+                    &format!("{path}.{field}"),
+                    "must contain unique offsets",
+                ));
+            }
+        }
+        let diameter = object["diameterMm"].as_f64().unwrap();
+        let tolerance = object
+            .get("toleranceMm")
+            .and_then(Value::as_f64)
+            .unwrap_or(0.0);
+        let mut expected_points = u_offsets
+            .iter()
+            .flat_map(|u_offset| {
+                v_offsets.iter().map(move |v_offset| {
+                    [
+                        origin[0] + u[0] * u_offset + v[0] * v_offset,
+                        origin[1] + u[1] * u_offset + v[1] * v_offset,
+                        origin[2] + u[2] * u_offset + v[2] * v_offset,
+                    ]
+                })
+            })
+            .collect::<Vec<_>>();
+        let instances = object
+            .get("instances")
+            .and_then(Value::as_array)
+            .ok_or_else(|| scene_error(&format!("{path}.instances"), "must be an array"))?;
+        let expected = object["uOffsetsMm"].as_array().unwrap().len()
+            * object["vOffsetsMm"].as_array().unwrap().len();
+        if instances.len() != expected {
+            return Err(scene_error(
+                &format!("{path}.instances"),
+                "must match the Cartesian offset count",
+            ));
+        }
+        for (instance_index, instance) in instances.iter().enumerate() {
+            let instance_path = format!("{path}.instances[{instance_index}]");
+            let instance = object_at(instance, &instance_path)?;
+            let instance_id = record_id(instance, &instance_path, ids)?;
+            let point = vector::<3>(instance.get("point"), &format!("{instance_path}.point"))?;
+            let Some(point_index) = expected_points
+                .iter()
+                .position(|expected| distance3(*expected, point) <= 0.1)
+            else {
+                return Err(scene_error(
+                    &format!("{instance_path}.point"),
+                    "must uniquely match an authored Cartesian offset position",
+                ));
+            };
+            expected_points.remove(point_index);
+            for (field, expected_kind) in [("shankId", "bolt-shank"), ("headId", "bolt-head")] {
+                let child = instance.get(field).and_then(Value::as_str).ok_or_else(|| {
+                    scene_error(&format!("{instance_path}.{field}"), "must be an element id")
+                })?;
+                if physical.get(child).map(String::as_str) != Some(expected_kind) {
+                    return Err(scene_error(
+                        &format!("{instance_path}.{field}"),
+                        "references an incompatible or unknown element",
+                    ));
+                }
+                if !claimed_bolt_components.insert(child) {
+                    return Err(scene_error(
+                        &format!("{instance_path}.{field}"),
+                        "must not reuse a component already claimed by another bolt instance",
+                    ));
+                }
+                let child_element = scene_element(scene, child).unwrap();
+                if field == "shankId" {
+                    let (from, to) = axis(child_element, child)?;
+                    let direction =
+                        normalized3([to[0] - from[0], to[1] - from[1], to[2] - from[2]]).unwrap();
+                    let offset = [point[0] - from[0], point[1] - from[1], point[2] - from[2]];
+                    let child_diameter = positive_number(
+                        child_element.get("diameterMm"),
+                        &format!("{instance_path}.{field}.diameterMm"),
+                    )?;
+                    if (dot3(direction, normal).abs() - 1.0).abs() > 1.0e-6
+                        || length3(cross3(offset, direction)) > 0.1
+                        || (child_diameter - diameter).abs() > 0.1
+                    {
+                        return Err(scene_error(
+                            &format!("{instance_path}.{field}"),
+                            "shank axis and diameter must match the bolt instance",
+                        ));
+                    }
+                } else {
+                    let center = vector::<3>(
+                        child_element.get("center"),
+                        &format!("{instance_path}.{field}.center"),
+                    )?;
+                    let child_axis = normalized3(direction(child_element, child)?).unwrap();
+                    let offset = [
+                        center[0] - point[0],
+                        center[1] - point[1],
+                        center[2] - point[2],
+                    ];
+                    if (dot3(child_axis, normal).abs() - 1.0).abs() > 1.0e-6
+                        || length3(cross3(offset, normal)) > 0.1
+                    {
+                        return Err(scene_error(
+                            &format!("{instance_path}.{field}"),
+                            "must be centered and aligned on the bolt instance axis",
+                        ));
+                    }
+                }
+            }
+            for (field, expected_kind) in [("nutIds", "nut"), ("washerIds", "washer")] {
+                let children = instance
+                    .get(field)
+                    .and_then(Value::as_array)
+                    .ok_or_else(|| {
+                        scene_error(&format!("{instance_path}.{field}"), "must be an array")
+                    })?;
+                for (child_index, child) in children.iter().enumerate() {
+                    let child = child.as_str().ok_or_else(|| {
+                        scene_error(
+                            &format!("{instance_path}.{field}[{child_index}]"),
+                            "must be an element id",
+                        )
+                    })?;
+                    if physical.get(child).map(String::as_str) != Some(expected_kind) {
+                        return Err(scene_error(
+                            &format!("{instance_path}.{field}[{child_index}]"),
+                            "references an incompatible or unknown element",
+                        ));
+                    }
+                    if !claimed_bolt_components.insert(child) {
+                        return Err(scene_error(
+                            &format!("{instance_path}.{field}[{child_index}]"),
+                            "must not reuse a component already claimed by another bolt instance",
+                        ));
+                    }
+                    let child_element = scene_element(scene, child).unwrap();
+                    let center = vector::<3>(
+                        child_element.get("center"),
+                        &format!("{instance_path}.{field}[{child_index}].center"),
+                    )?;
+                    let child_axis = normalized3(direction(child_element, child)?).unwrap();
+                    let offset = [
+                        center[0] - point[0],
+                        center[1] - point[1],
+                        center[2] - point[2],
+                    ];
+                    if (dot3(child_axis, normal).abs() - 1.0).abs() > 1.0e-6
+                        || length3(cross3(offset, normal)) > 0.1
+                    {
+                        return Err(scene_error(
+                            &format!("{instance_path}.{field}[{child_index}]"),
+                            "must be centered and aligned on the bolt instance axis",
+                        ));
+                    }
+                }
+            }
+            receipt.emitted.push(serde_json::json!({
+                "id": instance_id, "status": "emitted", "kind": "bolt-instance",
+                "realizedBy": id, "renderedKind": "relationship", "geometryDuplicated": false
+            }));
+            let effects = instance
+                .get("holeEffects")
+                .and_then(Value::as_array)
+                .ok_or_else(|| {
+                    scene_error(&format!("{instance_path}.holeEffects"), "must be an array")
+                })?;
+            if effects.len() != 2 {
+                return Err(scene_error(
+                    &format!("{instance_path}.holeEffects"),
+                    "must contain exactly one effect per bolt participant",
+                ));
+            }
+            let mut effect_targets = HashSet::new();
+            for (effect_index, effect) in effects.iter().enumerate() {
+                let effect_path = format!("{instance_path}.holeEffects[{effect_index}]");
+                let effect = object_at(effect, &effect_path)?;
+                let effect_id = record_id(effect, &effect_path, ids)?;
+                let target = effect
+                    .get("targetId")
+                    .and_then(Value::as_str)
+                    .ok_or_else(|| {
+                        scene_error(&format!("{effect_path}.targetId"), "must be an element id")
+                    })?;
+                if ![participant_a, participant_b].contains(&target)
+                    || !effect_targets.insert(target)
+                {
+                    return Err(scene_error(
+                        &format!("{effect_path}.targetId"),
+                        "must uniquely reference a bolt participant",
+                    ));
+                }
+                let center = vector::<3>(effect.get("center"), &format!("{effect_path}.center"))?;
+                if distance3(center, point) > 0.1 {
+                    return Err(scene_error(
+                        &format!("{effect_path}.center"),
+                        "must match the bolt instance point",
+                    ));
+                }
+                let effect_axis = vector::<3>(effect.get("axis"), &format!("{effect_path}.axis"))?;
+                let Some(effect_axis) = normalized3(effect_axis) else {
+                    return Err(scene_error(
+                        &format!("{effect_path}.axis"),
+                        "must be nonzero",
+                    ));
+                };
+                if (dot3(effect_axis, normal).abs() - 1.0).abs() > 1.0e-6 {
+                    return Err(scene_error(
+                        &format!("{effect_path}.axis"),
+                        "must align with the bolt frame normal",
+                    ));
+                }
+                let effect_diameter = positive_number(
+                    effect.get("diameterMm"),
+                    &format!("{effect_path}.diameterMm"),
+                )?;
+                if (effect_diameter - (diameter + tolerance)).abs() > 0.1 {
+                    return Err(scene_error(
+                        &format!("{effect_path}.diameterMm"),
+                        "must equal bolt diameter plus tolerance",
+                    ));
+                }
+                receipt.emitted.push(serde_json::json!({
+                    "id": effect_id, "status": "emitted", "kind": "hole-effect",
+                    "realizedBy": id, "renderedKind": "relationship", "geometryDuplicated": false
+                }));
+            }
+            if effect_targets.len() != 2 {
+                return Err(scene_error(
+                    &format!("{instance_path}.holeEffects"),
+                    "must cover both bolt participants",
+                ));
+            }
+        }
+        if !expected_points.is_empty() {
+            return Err(scene_error(
+                &format!("{path}.instances"),
+                "must exhaust the authored Cartesian offset positions",
+            ));
+        }
+    }
+    Ok(())
+}
+
+fn classify_reference_systems(
+    scene: &Value,
+    ids: &mut HashSet<String>,
+    receipt: &mut SceneReceipt,
+) -> Result<(), AwareError> {
+    for (index, reference) in object_array(scene, "referenceSystems")?.iter().enumerate() {
+        let path = format!("referenceSystems[{index}]");
+        let object = object_at(reference, &path)?;
+        let id = record_id(object, &path, ids)?;
+        let kind = object
+            .get("kind")
+            .and_then(Value::as_str)
+            .ok_or_else(|| scene_error(&format!("{path}.kind"), "must be a string"))?;
+        if kind != "structural-grid" {
+            receipt.unsupported.push(serde_json::json!({
+                "id": id,
+                "status": "unsupported",
+                "kind": kind,
+                "code": "unsupported-reference-system-kind",
+                "message": format!("reference-system kind '{kind}' is not supported by viewer-3d")
+            }));
+            for (collection, child_kind) in [("axes", "grid-axis"), ("levels", "elevation-datum")] {
+                if let Some(children) = object.get(collection).and_then(Value::as_array) {
+                    for (child_index, child) in children.iter().enumerate() {
+                        let child_path = format!("{path}.{collection}[{child_index}]");
+                        let child = object_at(child, &child_path)?;
+                        let child_id = record_id(child, &child_path, ids)?;
+                        receipt.unsupported.push(serde_json::json!({
+                            "id": child_id,
+                            "status": "unsupported",
+                            "kind": child_kind,
+                            "code": "unsupported-parent",
+                            "parentId": id,
+                            "message": format!("parent reference-system kind '{kind}' is not supported")
+                        }));
+                    }
+                }
+            }
+            continue;
+        }
+        vector::<3>(object.get("origin"), &format!("{path}.origin"))?;
+        validate_grid_bounds(object, &path)?;
+        receipt.emitted.push(serde_json::json!({
+            "id": id,
+            "status": "emitted",
+            "kind": kind,
+            "renderedKind": "structural-grid"
+        }));
+        for collection in ["axes", "levels"] {
+            let records = object
+                .get(collection)
+                .and_then(Value::as_array)
+                .ok_or_else(|| scene_error(&format!("{path}.{collection}"), "must be an array"))?;
+            if collection == "levels" && records.is_empty() {
+                return Err(scene_error(
+                    &format!("{path}.{collection}"),
+                    "must contain at least one elevation datum",
+                ));
+            }
+            for (child_index, child) in records.iter().enumerate() {
+                let child_path = format!("{path}.{collection}[{child_index}]");
+                let child = object_at(child, &child_path)?;
+                let child_id = record_id(child, &child_path, ids)?;
+                if collection == "axes" {
+                    match child.get("direction").and_then(Value::as_str) {
+                        Some("x" | "y") => {}
+                        _ => {
+                            return Err(scene_error(
+                                &format!("{child_path}.direction"),
+                                "must be `x` or `y`",
+                            ));
+                        }
+                    }
+                    finite_number(child.get("offsetMm"), &format!("{child_path}.offsetMm"))?;
+                    for key in ["startMm", "endMm"] {
+                        if child.contains_key(key) {
+                            finite_number(child.get(key), &format!("{child_path}.{key}"))?;
+                        }
+                    }
+                } else {
+                    finite_number(
+                        child.get("elevationMm"),
+                        &format!("{child_path}.elevationMm"),
+                    )?;
+                }
+                if child.get("label").and_then(Value::as_str).is_none() {
+                    return Err(scene_error(
+                        &format!("{child_path}.label"),
+                        "must be a string",
+                    ));
+                }
+                receipt.emitted.push(serde_json::json!({
+                    "id": child_id,
+                    "status": "emitted",
+                    "kind": if collection == "axes" { "grid-axis" } else { "elevation-datum" },
+                    "parentId": id,
+                    "renderedKind": if collection == "axes" { "grid-line" } else { "level-crosshair" }
+                }));
+            }
+        }
+    }
+    Ok(())
+}
+
+fn validate_grid_bounds(
+    object: &serde_json::Map<String, Value>,
+    path: &str,
+) -> Result<(), AwareError> {
+    let bounds_path = format!("{path}.bounds");
+    let bounds = object_at(
+        object
+            .get("bounds")
+            .ok_or_else(|| scene_error(&bounds_path, "is required"))?,
+        &bounds_path,
+    )?;
+    let min_x = finite_number(bounds.get("minX"), &format!("{bounds_path}.minX"))?;
+    let max_x = finite_number(bounds.get("maxX"), &format!("{bounds_path}.maxX"))?;
+    let min_y = finite_number(bounds.get("minY"), &format!("{bounds_path}.minY"))?;
+    let max_y = finite_number(bounds.get("maxY"), &format!("{bounds_path}.maxY"))?;
+    if min_x >= max_x || min_y >= max_y {
+        return Err(scene_error(
+            &bounds_path,
+            "must have increasing min/max extents",
+        ));
+    }
+    Ok(())
+}
+
 pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError> {
     // The scene is the payload; require an object so the renderer has something to draw.
     let scene = match args.get("scene") {
@@ -630,6 +1860,9 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
             )));
         }
     };
+    // Validate and classify every record before producing any HTML or touching output-path.
+    // A malformed supported record therefore fails atomically instead of disappearing in JS.
+    let receipt = classify_scene(scene)?;
 
     // Serialize the scene and inject it into the renderer shell as a JS object-literal
     // expression. Neutralize EVERY `<` as a `<` escape that renders back
@@ -646,8 +1879,13 @@ pub fn viewer_3d_render(args: &Value, dry_run: bool) -> Result<Value, AwareError
     let html = TEMPLATE.replace("__SCENE_JSON__", &scene_json);
 
     let mut out = serde_json::Map::new();
+    out.insert("ok".into(), Value::Bool(true));
     out.insert("html".into(), Value::String(html.clone()));
     out.insert("bytes".into(), Value::from(html.len() as u64));
+    out.insert("emitted".into(), Value::Array(receipt.emitted));
+    out.insert("failed".into(), Value::Array(Vec::new()));
+    out.insert("unsupported".into(), Value::Array(receipt.unsupported));
+    out.insert("warnings".into(), Value::Array(receipt.warnings));
 
     if let Some(path) = args
         .get("output-path")
@@ -703,7 +1941,7 @@ mod tests {
                   "meta": { "profile": "UC 305x305x97" } }
             ]
         });
-        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let out = viewer_3d_render(&json!({ "scene": scene.clone() }), true).unwrap();
         let html = out["html"].as_str().unwrap();
         assert!(html.starts_with("<!doctype html>"));
         assert!(html.contains("import * as THREE from 'three'"));
@@ -732,6 +1970,267 @@ mod tests {
         assert!(html.contains("\"positions\"")); // its tessellation rode through
         assert!(html.contains("BufferGeometry")); // the renderer ships mesh support
         assert!(html.contains("setIndex"));
+    }
+
+    #[test]
+    fn renders_parametric_connection_solids_and_structural_references_with_receipts() {
+        let scene = json!({
+            "meta": { "name": "Connection and grid", "units": "mm", "up": "z" },
+            "elements": [
+                { "id": "BEAM-1", "kind": "member", "from": [-1000,0,1000], "to": [1000,0,1000] },
+                { "id": "PL-1", "kind": "plate", "frame": {
+                    "origin": [0,0,1000], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1]
+                  }, "outline": [[-200,-150],[200,-150],[200,150],[-200,150]], "thicknessMm": 20,
+                  "holes": [{"id":"H-1","center":[0,0],"diameterMm":24}] },
+                { "id": "ROD-1", "kind": "rod", "axis": {"from":[0,0,0],"to":[0,0,500]}, "diameterMm": 20 },
+                { "id": "SHANK-1", "kind": "bolt-shank", "axis": {"from":[500,0,900],"to":[500,0,1100]}, "diameterMm": 24 },
+                { "id": "W-1", "kind": "washer", "center":[500,0,910], "axis":[0,0,1],
+                  "outerDiameterMm":44,"innerDiameterMm":22,"thicknessMm":4 },
+                { "id": "N-1", "kind": "nut", "center":[500,0,930], "axis":[0,0,1],
+                  "acrossFlatsMm":32,"thicknessMm":18,"phaseRad":0 },
+                { "id": "HEAD-1", "kind": "bolt-head", "center":[500,0,890], "axis":[0,0,1],
+                  "acrossFlatsMm":36,"thicknessMm":14,"phaseRad":0.25 }
+            ],
+            "operations": [
+                {"id":"BA-1","kind":"bolt-array","partToBoltTo":"PL-1","partToBeBolted":"BEAM-1",
+                 "frame":{"origin":[500,0,1000],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                 "uOffsetsMm":[0],"vOffsetsMm":[0],"diameterMm":24,"standard":"A325N","toleranceMm":2,
+                 "boltType":"shop","components":{},
+                 "instances":[{"id":"BI-1","point":[500,0,1000],"shankId":"SHANK-1","headId":"HEAD-1",
+                   "nutIds":["N-1"],"washerIds":["W-1"],"holeEffects":[
+                     {"id":"HE-1","targetId":"PL-1","center":[500,0,1000],"axis":[0,0,1],"diameterMm":26},
+                     {"id":"HE-2","targetId":"BEAM-1","center":[500,0,1000],"axis":[0,0,-1],"diameterMm":26}
+                   ]}]},
+                {"id":"WELD-1","kind":"weld","mainId":"PL-1","secondaryId":"BEAM-1",
+                 "path":[[-200,0,1000],[200,0,1000]],"weldType":"fillet","sizeMm":6,"around":false,"shop":true},
+                {"id":"CUT-1","kind":"boolean-cut","targetId":"PL-1",
+                 "tool":{"kind":"cylinder","axis":{"from":[0,0,980],"to":[0,0,1020]},"diameterMm":16}}
+            ],
+            "referenceSystems": [{"id":"GRID-1","kind":"structural-grid","origin":[0,0,0],
+                "bounds":{"minX":-1000,"maxX":3000,"minY":-2000,"maxY":2000},
+                "axes":[{"id":"GA-X","direction":"x","offsetMm":0,"label":"1"},{"id":"GA-Y","direction":"y","offsetMm":0,"label":"A"}],
+                "levels":[{"id":"GL-1","elevationMm":3000,"label":"L1"}] }]
+        });
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        assert!(html.contains("function plateMesh"));
+        assert!(
+            html.contains("const n=u.clone().cross(v).normalize()"),
+            "framed geometry must use a right-handed basis after Z-up conversion"
+        );
+        assert!(
+            html.contains("shape.holes.push(path)"),
+            "plate voids use exact Shape holes"
+        );
+        assert!(html.contains("function annulusMesh"));
+        assert!(html.contains("e.acrossFlatsMm/Math.sqrt(3)"));
+        assert!(
+            html.contains("const sourceU=sourceSeed.cross(sourceN).normalize()"),
+            "oriented profiles must transform the deterministic source basis"
+        );
+        assert!(
+            html.contains("phaseRad||0)*(up==='z'?-1:1)"),
+            "hex phase must compensate for the reflective Z-up conversion"
+        );
+        assert!(html.contains("function addOperations"));
+        assert!(html.contains("const weld=new THREE.Line(geometry,material)"));
+        assert!(
+            html.contains("op.kind==='weld'&&Array.isArray(op.path)"),
+            "weld paths must contribute to scene bounds as well as rendering"
+        );
+        assert!(html.contains("function addReferenceSystems"));
+        assert!(
+            html.contains("const z=l.elevationMm"),
+            "level elevation is world Z"
+        );
+
+        let emitted = out["emitted"].as_array().unwrap();
+        for id in [
+            "PL-1", "H-1", "ROD-1", "SHANK-1", "W-1", "N-1", "HEAD-1", "BA-1", "BI-1", "HE-1",
+            "HE-2", "WELD-1", "GRID-1", "GA-X", "GA-Y", "GL-1",
+        ] {
+            assert!(
+                emitted.iter().any(|row| row["id"] == id),
+                "missing receipt for {id}"
+            );
+        }
+        assert!(out["failed"].as_array().unwrap().is_empty());
+        assert!(out["warnings"].as_array().unwrap().is_empty());
+        assert_eq!(out["unsupported"][0]["id"], "CUT-1");
+        assert_eq!(out["unsupported"][0]["code"], "exact-csg-not-available");
+        assert_eq!(out["unsupported"][0]["status"], "unsupported");
+        assert!(emitted.iter().all(|row| row["status"] == "emitted"));
+        assert!(
+            emitted
+                .iter()
+                .filter(|row| row["id"] == "BA-1")
+                .all(|row| row["geometryDuplicated"] == false)
+        );
+
+        let mut cut_fastener = scene.clone();
+        cut_fastener["operations"][2]["targetId"] = json!("SHANK-1");
+        let cut_output = viewer_3d_render(&json!({ "scene": cut_fastener }), true).unwrap();
+        assert_eq!(cut_output["unsupported"][0]["id"], "CUT-1");
+
+        let mut reused = scene.clone();
+        reused["operations"][0]["uOffsetsMm"] = json!([0, 100]);
+        let mut second = reused["operations"][0]["instances"][0].clone();
+        second["id"] = json!("BI-2");
+        second["point"] = json!([600, 0, 1000]);
+        reused["operations"][0]["instances"]
+            .as_array_mut()
+            .unwrap()
+            .push(second);
+        let error = viewer_3d_render(&json!({ "scene": reused }), true).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("must not reuse a component already claimed")
+        );
+
+        let mut reused_across_arrays = scene.clone();
+        let mut second_array = reused_across_arrays["operations"][0].clone();
+        second_array["id"] = json!("BA-2");
+        second_array["instances"][0]["id"] = json!("BI-2");
+        second_array["instances"][0]["holeEffects"][0]["id"] = json!("HE-3");
+        second_array["instances"][0]["holeEffects"][1]["id"] = json!("HE-4");
+        reused_across_arrays["operations"]
+            .as_array_mut()
+            .unwrap()
+            .push(second_array);
+        let error = viewer_3d_render(&json!({ "scene": reused_across_arrays }), true).unwrap_err();
+        assert!(
+            error
+                .to_string()
+                .contains("must not reuse a component already claimed")
+        );
+
+        let mut no_standard = scene.clone();
+        no_standard["operations"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("standard");
+        let error = viewer_3d_render(&json!({ "scene": no_standard }), true).unwrap_err();
+        assert!(error.to_string().contains("standard"));
+
+        let mut disabled = scene.clone();
+        disabled["operations"][0]["components"]["bolt"] = json!(false);
+        let error = viewer_3d_render(&json!({ "scene": disabled }), true).unwrap_err();
+        assert!(error.to_string().contains("components.bolt"));
+
+        let mut no_grid_label = scene.clone();
+        no_grid_label["referenceSystems"][0]["axes"][0]
+            .as_object_mut()
+            .unwrap()
+            .remove("label");
+        let error = viewer_3d_render(&json!({ "scene": no_grid_label }), true).unwrap_err();
+        assert!(error.to_string().contains("axes[0].label"));
+
+        let mut empty_levels = scene.clone();
+        empty_levels["referenceSystems"][0]["levels"] = json!([]);
+        let error = viewer_3d_render(&json!({ "scene": empty_levels }), true).unwrap_err();
+        assert!(error.to_string().contains("at least one elevation datum"));
+
+        let mut non_boolean = scene;
+        non_boolean["operations"][0]["components"]["washer"] = json!("yes");
+        let error = viewer_3d_render(&json!({ "scene": non_boolean }), true).unwrap_err();
+        assert!(error.to_string().contains("components.washer"));
+    }
+
+    #[test]
+    fn bolt_children_must_match_their_viewer_instance_geometry() {
+        let mut scene = json!({
+            "elements": [
+                {"id":"A","kind":"plate","frame":{"origin":[0,0,0],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                 "outline":[[-10,-10],[10,-10],[10,10],[-10,10]],"thicknessMm":5},
+                {"id":"B","kind":"member","from":[-100,0,0],"to":[100,0,0]},
+                {"id":"S","kind":"bolt-shank","axis":{"from":[50,0,-10],"to":[50,0,10]},"diameterMm":20},
+                {"id":"H","kind":"bolt-head","center":[0,0,12],"axis":[0,0,1],"acrossFlatsMm":30,"thicknessMm":8}
+            ],
+            "operations":[{
+                "id":"BA","kind":"bolt-array","partToBoltTo":"A","partToBeBolted":"B",
+                "frame":{"origin":[0,0,0],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+                "uOffsetsMm":[0],"vOffsetsMm":[0],"diameterMm":20,"standard":"A325N","toleranceMm":2,
+                "boltType":"shop","components":{"bolt":true,"nut":false,"washer":false},
+                "instances":[{"id":"I","point":[0,0,0],"shankId":"S","headId":"H",
+                    "nutIds":[],"washerIds":[],"holeEffects":[
+                        {"id":"HA","targetId":"A","center":[0,0,0],"axis":[0,0,1],"diameterMm":22},
+                        {"id":"HB","targetId":"B","center":[0,0,0],"axis":[0,0,1],"diameterMm":22}
+                    ]}]
+            }]
+        });
+
+        let error = viewer_3d_render(&json!({ "scene": scene.clone() }), true).unwrap_err();
+        assert!(error.to_string().contains("shank axis and diameter"));
+
+        scene["elements"][2]["axis"]["from"] = json!([0, 0, -10]);
+        scene["elements"][2]["axis"]["to"] = json!([0, 0, 10]);
+        scene["elements"][3]["center"] = json!([50, 0, 12]);
+        let error = viewer_3d_render(&json!({ "scene": scene }), true).unwrap_err();
+        assert!(error.to_string().contains("centered and aligned"));
+    }
+
+    #[test]
+    fn invalid_supported_geometry_fails_before_html_is_produced() {
+        let scene = json!({
+            "elements": [{ "id": "PL-1", "kind": "plate", "frame": {
+                "origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1]
+              }, "outline": [[-10,-10],[10,-10],[10,10],[-10,10]], "thicknessMm": 5,
+              "holes": [{"id":"H-1","center":[9,0],"diameterMm":4}] }]
+        });
+        let error = viewer_3d_render(&json!({ "scene": scene }), true).unwrap_err();
+        assert!(matches!(error, AwareError::Validation(_)));
+        assert!(error.to_string().contains("must lie wholly inside"));
+
+        let bowtie = json!({
+            "elements": [{ "id": "PL-1", "kind": "plate", "frame": {
+                "origin": [0,0,0], "uDir": [1,0,0], "vDir": [0,1,0], "normal": [0,0,1]
+              }, "outline": [[-10,-10],[10,10],[-10,10],[10,-10]], "thicknessMm": 5 }]
+        });
+        let error = viewer_3d_render(&json!({ "scene": bowtie }), true).unwrap_err();
+        assert!(error.to_string().contains("nonzero simple polygon"));
+    }
+
+    #[test]
+    fn explicit_null_scene_collections_are_rejected() {
+        for collection in ["elements", "operations", "referenceSystems"] {
+            let mut scene = json!({});
+            scene[collection] = Value::Null;
+            let error = viewer_3d_render(&json!({ "scene": scene }), true).unwrap_err();
+            assert!(
+                error
+                    .to_string()
+                    .contains(&format!("`{collection}` must be an array")),
+                "{error}"
+            );
+        }
+    }
+
+    #[test]
+    fn unknown_records_are_exhaustively_unsupported() {
+        let scene = json!({
+            "elements": [{"id":"E-X","kind":"future-solid"}],
+            "operations": [{"id":"O-X","kind":"future-operation"}],
+            "referenceSystems": [{"id":"R-X","kind":"future-reference",
+                "axes":[{"id":"RA-X"}], "levels":[{"id":"RL-X"}]}]
+        });
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let unsupported = out["unsupported"].as_array().unwrap();
+        assert_eq!(unsupported.len(), 5);
+        for id in ["E-X", "O-X", "R-X", "RA-X", "RL-X"] {
+            assert!(unsupported.iter().any(|row| row["id"] == id));
+        }
+        assert!(
+            out["html"]
+                .as_str()
+                .unwrap()
+                .contains("if(!['mesh','plate','rod','bolt-shank'"),
+            "unsupported records must be skipped by the generated viewer runtime"
+        );
+        assert_eq!(
+            unsupported.iter().find(|row| row["id"] == "RA-X").unwrap()["code"],
+            "unsupported-parent"
+        );
     }
 
     #[test]
