@@ -234,9 +234,18 @@ impl CliInvoker {
                         Some(id) => format!(
                             "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
                         ),
+                        // No downloadable bridge for this agent — steer by how the
+                        // manifest declared the executable: PATH advice is wrong for
+                        // path-valued binaries (Command::new keeps using the declared
+                        // path), and `aware build agent` never emits a binary.
+                        None if binary.contains('/') || binary.contains('\\') => format!(
+                            "\n  hint: no downloadable bridge for `{binary}`; restore the \
+                             executable at that path (or fix the agent manifest's \
+                             transport.cli.binary)"
+                        ),
                         None => format!(
-                            "\n  hint: no downloadable bridge for `{binary}`; provide the binary on \
-                             PATH or generate the agent's implementation with `aware build agent`"
+                            "\n  hint: no downloadable bridge for `{binary}`; the agent's \
+                             `transport.cli.binary` executable must be provided on PATH"
                         ),
                     }
                 } else {
