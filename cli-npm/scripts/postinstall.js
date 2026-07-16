@@ -69,9 +69,12 @@ function download(srcUrl, dest, depth = 0) {
       // Server 2016 / Win10 <1803 ship no inbox bsdtar — fall back to
       // Expand-Archive. Its silent half-extraction mode is defused by the
       // shim-target check below, which turns it into a loud failure (#287).
+      // $ErrorActionPreference='Stop' promotes Expand-Archive's non-terminating
+      // extraction errors to a non-zero exit, so a partial payload throws here
+      // instead of surfacing later.
       execFileSync('powershell', [
         '-NoProfile', '-Command',
-        `Expand-Archive -LiteralPath '${tmpFile}' -DestinationPath '${binariesDir}' -Force`,
+        `$ErrorActionPreference='Stop'; Expand-Archive -LiteralPath '${tmpFile}' -DestinationPath '${binariesDir}' -Force`,
       ], { stdio: 'inherit' });
     } else {
       const tar = process.platform === 'win32' ? winTar : 'tar';
@@ -103,7 +106,11 @@ function download(srcUrl, dest, depth = 0) {
           if (backup) fs.renameSync(backup, dest); // restore the old payload
           throw err;
         }
-        if (backup) fs.rmSync(backup, { recursive: true, force: true });
+        // The replacement already landed — a locked obsolete backup (AV handle)
+        // must not abort the remaining promotions.
+        if (backup) {
+          try { fs.rmSync(backup, { recursive: true, force: true }); } catch { /* best-effort */ }
+        }
       }
       fs.rmdirSync(extractedDir);
     }
@@ -113,7 +120,13 @@ function download(srcUrl, dest, depth = 0) {
     // install — fail loudly here instead of letting every later `aware` call
     // exit 1 in silence (#287). Also catches Expand-Archive's silent
     // half-extraction on the no-inbox-tar fallback path.
-    const required = [`aware${target.ext}`, `aware-sidecar${target.ext}`, 'aware-roslyn'];
+    const required = [
+      `aware${target.ext}`,
+      `aware-sidecar${target.ext}`,
+      // The roslyn HOST executable, not just its folder — Expand-Archive can
+      // create the folder and then fail on its contents.
+      path.join('aware-roslyn', `aware-roslyn${target.ext}`),
+    ];
     const missing = required.filter((f) => !fs.existsSync(path.join(binariesDir, f)));
     if (missing.length) {
       throw new Error(`extraction finished but ${missing.join(', ')} missing from ${binariesDir}`);

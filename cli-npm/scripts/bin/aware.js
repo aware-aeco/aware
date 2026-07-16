@@ -11,12 +11,22 @@ let binary = path.join(binariesDir, binaryName);
 if (!fs.existsSync(binary)) {
   // Rescue a partial install: postinstall ≤0.90.0 could leave the extracted
   // versioned folder unpromoted (#287) — run the binary from there. Pinned to
-  // this package's version so a leftover from another release never runs.
+  // this package's version so a leftover from another release never runs, and
+  // only a COMPLETE payload qualifies — the CLI resolves its sidecar/roslyn
+  // companions next to the executable, so a half-extracted folder would run
+  // but fail confusingly later.
+  const exeSuffix = process.platform === 'win32' ? '.exe' : '';
+  const complete = (dir) => [
+    binaryName,
+    `aware-sidecar${exeSuffix}`,
+    path.join('aware-roslyn', `aware-roslyn${exeSuffix}`),
+  ].every((f) => fs.existsSync(path.join(dir, f)));
   const candidate = fs.existsSync(binariesDir)
     ? fs.readdirSync(binariesDir)
         .filter((name) => name.startsWith(`aware-${PKG_VERSION}-`))
-        .map((name) => path.join(binariesDir, name, binaryName))
-        .find((p) => fs.existsSync(p))
+        .map((name) => path.join(binariesDir, name))
+        .filter(complete)
+        .map((dir) => path.join(dir, binaryName))[0]
     : undefined;
   if (candidate) {
     binary = candidate;
