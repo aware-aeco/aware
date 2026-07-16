@@ -5,8 +5,9 @@ description: |
   Utility agent that renders a generic 3D scene into a single-file interactive HTML
   document (Three.js via a pinned CDN — offline inlining planned) — orbit/zoom,
   click-to-inspect, a legend and side tables.
-  The portable 3D sink of AWARE compositions: hand it a domain-agnostic scene (elements as
-  lines/boxes/nodes + groups + grids + panels) and it renders it (no per-scenario code). A
+  The portable 3D sink of AWARE compositions: hand it a domain-agnostic scene (legacy
+  members plus exact plates/fasteners, structural reference systems, groups and panels) and
+  it renders it (no per-scenario code). A
   steel app maps members -> elements + a takeoff panel; a data app maps bars -> elements + a
   totals panel — the renderer itself stays generic.
 
@@ -40,18 +41,20 @@ commands:
     # (skipped under --dry-run / --simulate), so a preview never touches disk.
     description: |
       Render a generic 3D scene into a self-contained interactive HTML document. The scene is
-      domain-agnostic: `elements` are lines/boxes (a member `from`->`to`, optional
-      cross-section) or nodes (a point `at`); `groups` drive the legend + colour; `grids` place
-      labels; `panels` are generic side tables. The camera auto-fits the scene, so any scale
-      renders without tuning. No template needed.
+      domain-agnostic: `elements` include legacy members/meshes plus exact framed plates,
+      round rods and bolt shanks, annular washers, and hexagonal nuts/bolt heads. Plate holes
+      are rendered as real voids. `referenceSystems` render structural grid axes and elevation
+      datums; legacy `grids` labels remain supported. Operations are classified without
+      duplicating their physical child geometry. The camera auto-fits the scene. No template
+      needed.
     inputs:
       scene:
         type: object
         description: |
           The 3D scene to render (object). Shape:
-          `{ meta:{name,units,up}, groups:[{key,label,color}],
-             elements:[{id,group,kind:"line|box|node|mesh",from,to,at,positions,indices,section:{w,d},size,meta}],
-             grids:[{label,at}], panels:[{title,note,columns,rows}], camera:{eye,target} }`.
+          `{ meta:{name,units:"mm",up}, groups:[{key,label,color}], elements:[...],
+             operations:[...], referenceSystems:[...], grids:[{label,at}],
+             panels:[{title,note,columns,rows}], camera:{eye,target} }`.
           The producer owns all domain meaning; the renderer is generic. See `scene-schema.md`.
       output-path:
         type: string
@@ -61,6 +64,11 @@ commands:
       schema:
         html:        string    # canonical self-contained interactive HTML (a client renders this)
         bytes:       int       # length of the rendered HTML
+        ok:          bool      # true when every supported record validated before rendering
+        emitted:     array     # one identity row for every rendered/acknowledged supported id
+        failed:      array     # empty on success; invalid supported input fails the command atomically
+        unsupported: array     # explicit rows for every intentionally unsupported input id
+        warnings:    array     # geometry-preserving qualifications (empty for exact viewer geometry)
         output-path: string    # present only when an output-path was given (file written)
         path:        string    # alias of `output-path` (the written artifact location)
 

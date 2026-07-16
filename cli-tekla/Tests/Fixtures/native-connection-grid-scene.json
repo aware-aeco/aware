@@ -1,0 +1,50 @@
+{
+  "scene": {
+    "meta": {
+      "name": "AWARE native connection and grid verification",
+      "units": "mm",
+      "sourceId": "aware-live-native-connection-grid-v1",
+      "sceneHash": "live-verification-2026-v1"
+    },
+    "elements": [
+      { "id": "BEAM-1", "kind": "member", "role": "beam", "from": [50000, 0, 0], "to": [53000, 0, 0], "profile": "W14X22", "material": "A992" },
+      { "id": "PL-1", "kind": "plate", "frame": { "origin": [51000, 0, 0], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] }, "outline": [[-500, -300], [500, -300], [500, 300], [-500, 300]], "thicknessMm": 10, "material": "A36", "holes": [{ "id": "PL-H-INDEPENDENT", "center": [400, 200], "diameterMm": 18 }] },
+      { "id": "SHANK-1", "kind": "bolt-shank", "axis": { "from": [50900, -100, -30], "to": [50900, -100, 30] }, "diameterMm": 19.05 },
+      { "id": "HEAD-1", "kind": "bolt-head", "center": [50900, -100, 35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 10 },
+      { "id": "NUT-1", "kind": "nut", "center": [50900, -100, -35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 12 },
+      { "id": "WASHER-1", "kind": "washer", "center": [50900, -100, -25], "axis": [0, 0, 1], "outerDiameterMm": 36, "innerDiameterMm": 21, "thicknessMm": 3 },
+      { "id": "SHANK-2", "kind": "bolt-shank", "axis": { "from": [50900, 100, -30], "to": [50900, 100, 30] }, "diameterMm": 19.05 },
+      { "id": "HEAD-2", "kind": "bolt-head", "center": [50900, 100, 35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 10 },
+      { "id": "NUT-2", "kind": "nut", "center": [50900, 100, -35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 12 },
+      { "id": "WASHER-2", "kind": "washer", "center": [50900, 100, -25], "axis": [0, 0, 1], "outerDiameterMm": 36, "innerDiameterMm": 21, "thicknessMm": 3 },
+      { "id": "SHANK-3", "kind": "bolt-shank", "axis": { "from": [51100, -100, -30], "to": [51100, -100, 30] }, "diameterMm": 19.05 },
+      { "id": "HEAD-3", "kind": "bolt-head", "center": [51100, -100, 35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 10 },
+      { "id": "NUT-3", "kind": "nut", "center": [51100, -100, -35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 12 },
+      { "id": "WASHER-3", "kind": "washer", "center": [51100, -100, -25], "axis": [0, 0, 1], "outerDiameterMm": 36, "innerDiameterMm": 21, "thicknessMm": 3 },
+      { "id": "SHANK-4", "kind": "bolt-shank", "axis": { "from": [51100, 100, -30], "to": [51100, 100, 30] }, "diameterMm": 19.05 },
+      { "id": "HEAD-4", "kind": "bolt-head", "center": [51100, 100, 35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 10 },
+      { "id": "NUT-4", "kind": "nut", "center": [51100, 100, -35], "axis": [0, 0, 1], "acrossFlatsMm": 30, "thicknessMm": 12 },
+      { "id": "WASHER-4", "kind": "washer", "center": [51100, 100, -25], "axis": [0, 0, 1], "outerDiameterMm": 36, "innerDiameterMm": 21, "thicknessMm": 3 }
+    ],
+    "operations": [
+      {
+        "id": "BOLTS-1", "kind": "bolt-array", "partToBoltTo": "PL-1", "partToBeBolted": "BEAM-1",
+        "frame": { "origin": [51000, 0, 0], "uDir": [1, 0, 0], "vDir": [0, 1, 0], "normal": [0, 0, 1] },
+        "uOffsetsMm": [-100, 100], "vOffsetsMm": [-100, 100], "diameterMm": 19.05, "standard": "A325N", "grade": "A325", "toleranceMm": 2, "boltType": "shop", "threadInMaterial": false,
+        "components": { "bolt": true, "nut": true, "washer": true },
+        "instances": [
+          { "id": "BOLT-I1", "point": [50900, -100, 0], "shankId": "SHANK-1", "headId": "HEAD-1", "nutIds": ["NUT-1"], "washerIds": ["WASHER-1"], "holeEffects": [{ "id": "HOLE-I1-PL", "targetId": "PL-1", "center": [50900, -100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }, { "id": "HOLE-I1-BEAM", "targetId": "BEAM-1", "center": [50900, -100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }] },
+          { "id": "BOLT-I2", "point": [50900, 100, 0], "shankId": "SHANK-2", "headId": "HEAD-2", "nutIds": ["NUT-2"], "washerIds": ["WASHER-2"], "holeEffects": [{ "id": "HOLE-I2-PL", "targetId": "PL-1", "center": [50900, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }, { "id": "HOLE-I2-BEAM", "targetId": "BEAM-1", "center": [50900, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }] },
+          { "id": "BOLT-I3", "point": [51100, -100, 0], "shankId": "SHANK-3", "headId": "HEAD-3", "nutIds": ["NUT-3"], "washerIds": ["WASHER-3"], "holeEffects": [{ "id": "HOLE-I3-PL", "targetId": "PL-1", "center": [51100, -100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }, { "id": "HOLE-I3-BEAM", "targetId": "BEAM-1", "center": [51100, -100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }] },
+          { "id": "BOLT-I4", "point": [51100, 100, 0], "shankId": "SHANK-4", "headId": "HEAD-4", "nutIds": ["NUT-4"], "washerIds": ["WASHER-4"], "holeEffects": [{ "id": "HOLE-I4-PL", "targetId": "PL-1", "center": [51100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }, { "id": "HOLE-I4-BEAM", "targetId": "BEAM-1", "center": [51100, 100, 0], "axis": [0, 0, 1], "diameterMm": 21.05 }] }
+        ]
+      },
+      { "id": "WELD-1", "kind": "weld", "mainId": "BEAM-1", "secondaryId": "PL-1", "path": [[50500, -300, 0], [51500, -300, 0]], "weldType": "fillet", "sizeMm": 6, "around": false, "shop": true },
+      { "id": "COPE-1", "kind": "boolean-cut", "targetId": "BEAM-1", "tool": { "kind": "cylinder", "axis": { "from": [52600, 0, -300], "to": [52600, 0, 300] }, "diameterMm": 50 } }
+    ],
+    "referenceSystems": [
+      { "id": "GRID-1", "kind": "structural-grid", "name": "AWARE verification grid", "origin": [50000, 0, 0], "axes": [{ "id": "GRID-X-A", "direction": "x", "offsetMm": 0, "label": "A" }, { "id": "GRID-X-B", "direction": "x", "offsetMm": 3000, "label": "B" }, { "id": "GRID-Y-1", "direction": "y", "offsetMm": 0, "label": "1" }, { "id": "GRID-Y-2", "direction": "y", "offsetMm": 3000, "label": "2" }], "levels": [{ "id": "LEVEL-0", "elevationMm": 0, "label": "+0" }, { "id": "LEVEL-3000", "elevationMm": 3000, "label": "+3000" }], "bounds": { "minX": 0, "maxX": 6000, "minY": 0, "maxY": 3000, "minZ": 0, "maxZ": 3000 }, "isMagnetic": false }
+    ]
+  },
+  "output-path": ".tmp/native-connection-grid.html"
+}

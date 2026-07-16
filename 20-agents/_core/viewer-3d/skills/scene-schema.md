@@ -1,76 +1,133 @@
-# viewer-3d — the scene schema
+# viewer-3d — scene schema
 
-`viewer-3d.render` takes one input, `scene`: a **domain-agnostic** description of a 3D scene.
-The renderer knows nothing about any vertical — a producer (a steel app, a data app, …) maps
-its data into this shape.
+`viewer-3d.render` consumes a domain-neutral millimetre scene. Producers own domain meaning;
+the renderer owns exact visualization and an exhaustive identity receipt. `meta.units` may be
+omitted or must be `"mm"`. `meta.up` may be `"z"` (structural coordinates) or `"y"`.
+
+Every element, plate hole, operation, operation instance/effect, reference system, grid axis,
+and elevation datum has a non-empty stable `id`. IDs are globally unique. A malformed supported
+record rejects the command before HTML is created or an `output-path` is written. An unknown kind
+is returned in `unsupported`; it is never silently skipped.
+
+## Scene envelope
 
 ```jsonc
 {
-  "meta":   { "name": "string", "units": "mm|u|…", "up": "z|y" },
-
-  // legend + per-element colour, keyed by `group`
-  "groups": [ { "key": "column", "label": "Columns", "color": "#60a5fa",
-                "opacity": 0.25 } ],   // optional 0..1; <1 makes the group translucent
-
-  "elements": [
-    {
-      "id":   "COL-A1",                 // unique; shown on click
-      "group":"column",                 // → colour + legend (optional)
-      "kind": "line | box | node | mesh",
-      "from": [x,y,z], "to": [x,y,z],   // line/box: the member axis a→b
-      "at":   [x,y,z],                  // node: a point
-      "positions": [x,y,z, …],          // mesh: flat vertex coordinates (units of meta.units)
-      "indices":   [i,j,k, …],          // mesh: 0-based triangle vertex refs (triples)
-      "section": { "w": 310, "d": 310 },// optional cross-section (units of meta.units)
-      "size": 120,                      // optional node radius
-      "opacity": 0.3,                   // optional 0..1; overrides the group's opacity
-      "meta": { "profile": "UC 305x305x97", "length": "6.00 m" }  // arbitrary; shown on click
-    }
-  ],
-
-  "grids":  [ { "label": "A", "at": [x,y,z] } ],          // optional ground labels
-  "panels": [ { "title": "Takeoff", "note": "…",          // optional generic side tables
-                "columns": ["Section","No.","Length","Weight"],
-                "rows": [ ["UC 305x305x97", 10, "60.0 m", "5.81 t"] ] } ],
-  "camera": { "eye": [x,y,z], "target": [x,y,z] }         // optional; else auto-fit
+  "meta": { "name": "Connection", "units": "mm", "up": "z" },
+  "groups": [{ "key": "plate", "label": "Plates", "color": "#60a5fa", "opacity": 1 }],
+  "elements": [],
+  "operations": [],
+  "referenceSystems": [],
+  "grids": [{ "label": "legacy label", "at": [0,0,0] }],
+  "panels": [{ "title": "Takeoff", "note": "…", "columns": ["Part"], "rows": [["PL-1"]] }],
+  "camera": { "eye": [5000,5000,5000], "target": [0,0,0] }
 }
 ```
 
-## Rules
+`groups`, `grids`, `panels`, and `camera` retain their original behavior. Element `opacity`
+overrides group opacity. Coordinates stay in producer space; `up:"z"` only converts them to the
+Three.js screen-up convention.
 
-- **No domain knowledge in the renderer.** It draws `elements`, colours by `group`, lists
-  `groups` as a legend, renders `panels` as side tables, labels `grids`, and shows `meta` on
-  click. Domain smarts (e.g. steel profiles → tonnage) are computed by the **producer** and
-  passed as generic `groups` + `panels`.
-- **Coordinates are native** (`meta.units` is informational). `up:"z"` maps a structural Z to
-  screen-up; `up:"y"` is passthrough. The camera/grid/lights **auto-fit** the element bounding
-  box, so a 20 m building and a unitless bar chart both frame correctly with no tuning.
-- **`kind`:** `line`/`box` = an oriented bar `from`→`to` (optional `section` for thickness,
-  else a hairline relative to scene size); `node` = a sphere at `at` (optional `size`); `mesh` = a
-  tessellated triangle soup (`positions` flat xyz + `indices` 0-based triangles) for imported or
-  free-form geometry with no parametric section — rendered double-sided (winding-agnostic) and
-  written to IFC as an `IfcTriangulatedFaceSet` on an `IfcBuildingElementProxy`.
-- **`camera`** is honoured when present, else auto-fit.
-- **`opacity`** (0..1) on a `group` makes that whole group translucent; on an `element` it
-  overrides the group value. Use it to reveal elements embedded inside others — e.g. render
-  the concrete group at `opacity: 0.25` so the rebar inside shows through (no edge-cage hack).
+## Physical elements
 
-## Viewer controls (no schema needed — built into the renderer)
+Legacy primitives remain supported:
 
-The rendered page is interactive beyond orbit/zoom:
+```jsonc
+{ "id":"M1", "kind":"line|box|member", "from":[0,0,0], "to":[0,0,3000],
+  "section":{"w":300,"d":300}, "group":"member", "meta":{"profile":"W12X40"} }
+{ "id":"P1", "kind":"node", "at":[0,0,0], "size":100 }
+{ "id":"X1", "kind":"mesh", "positions":[0,0,0, 100,0,0, 0,100,0], "indices":[0,1,2] }
+```
 
-- **Navigation:** left-drag orbits, **middle-drag pans**, scroll (and ctrl+scroll) zooms.
-  **Home** fits the whole scene; **Alt+Z** zooms to the selected element.
-- **Named views:** a toolbar with Top / Front / Back / Left / Right / Iso buttons snaps the
-  camera to that orientation, framing the scene.
-- **Projection:** toggle **Persp** ↔ **Ortho** (orthographic is the CAD/elevation view).
-- **Display mode:** **Solid** / **Wire** (wireframe) / **X-ray** (translucent) — X-ray reveals
-  embedded elements globally without touching the scene.
-- **Interactive legend:** click a group row to hide/show it; double-click to isolate (solo) it.
+Connection solids use direct geometry rather than member cross-section hints:
 
-## Output
+```jsonc
+{ "id":"PL-1", "kind":"plate",
+  "frame":{"origin":[0,0,1000],"uDir":[1,0,0],"vDir":[0,1,0],"normal":[0,0,1]},
+  "outline":[[-200,-150],[200,-150],[200,150],[-200,150]],
+  "thicknessMm":20,
+  "holes":[{"id":"H-1","center":[0,0],"diameterMm":24}] }
 
-`{ html, bytes, output-path? }`. `html` is a self-contained interactive document (Three.js from
-a pinned CDN for v1; full-inline offline is a planned follow-on). It needs scripts enabled, so a
-client embeds it in a script-enabled surface or opens it in a browser — it is **not** a static
-no-scripts report.
+{ "id":"R-1", "kind":"rod|bolt-shank",
+  "axis":{"from":[0,0,0],"to":[0,0,500]}, "diameterMm":20 }
+
+{ "id":"W-1", "kind":"washer", "center":[0,0,510],
+  "axis":[0,0,1],
+  "outerDiameterMm":44, "innerDiameterMm":22, "thicknessMm":4 }
+
+{ "id":"N-1", "kind":"nut|bolt-head", "center":[0,0,530],
+  "axis":[0,0,1],
+  "acrossFlatsMm":32, "thicknessMm":18, "phaseRad":0 }
+```
+
+- A plate `origin` is its mid-plane frame origin. `outline` is a polygon in `(u,v)` and the
+  solid spans `±thicknessMm/2` along `normal`. `uDir`, `vDir`, and `normal` must form a finite,
+  nonzero, orthogonal right-handed frame.
+- Every circular plate hole must lie wholly inside the outline and must not overlap or touch
+  another hole. It becomes a real profile void, not a painted marker.
+- Rods and bolt shanks are exact cylinders along the full axis.
+- A washer is an exact annular prism centered at `center`, oriented by the nonzero direction
+  vector `axis`, and extruded to
+  `thicknessMm`.
+- A nut or bolt head is a regular hexagonal prism. For across-flats dimension `a`, its
+  circumradius is `a/sqrt(3)`; vertex zero is at `phaseRad` in the deterministic local axis basis.
+
+## Operations
+
+`operations` may contain `bolt-array`, `weld`, and `boolean-cut` records. The viewer consumes
+the physical child solids from `elements`; it never invents a second bolt, weld, or cut solid.
+Every `bolt-array` must name a non-empty catalog `standard`; this keeps viewer, IFC, and native
+Tekla materialization on one deterministic contract.
+`bolt-array` and `weld` are acknowledged as relationship rows with
+`geometryDuplicated:false`. Exact Boolean CSG is not implemented, so `boolean-cut` is explicitly
+returned in `unsupported` with code `exact-csg-not-available` rather than approximated.
+Bolt-array `instances[].id` and `instances[].holeEffects[].id` are also receipt identities.
+
+## Structural grids and elevation datums
+
+```jsonc
+{
+  "id":"GRID-1", "kind":"structural-grid", "origin":[1000,2000,0],
+  "bounds":{"minX":-1000,"maxX":5000,"minY":-2000,"maxY":3000},
+  "axes":[
+    {"id":"GX-1","direction":"x","offsetMm":0,"label":"1","startMm":-2000,"endMm":3000},
+    {"id":"GY-A","direction":"y","offsetMm":0,"label":"A"}
+  ],
+  "levels":[{"id":"L-1","elevationMm":3000,"label":"Level 1"}]
+}
+```
+
+`bounds` and axis offsets are local to `origin` in plan. A direction `"x"` axis is located at
+local X=`offsetMm` and runs along Y; direction `"y"` is located at local Y and runs along X.
+Optional `startMm`/`endMm` replace the matching bound. `elevationMm` is an absolute world Z datum.
+Each level renders as a labelled crosshair spanning the grid bounds. The legacy `grids[]` label
+array remains supported for old producers. A structural grid must contain at least one labelled
+level so every sink represents the same authored elevation set.
+
+## Output and receipts
+
+Successful output is:
+
+```jsonc
+{
+  "ok": true,
+  "html": "<!doctype html>…",
+  "bytes": 12345,
+  "emitted": [{"id":"PL-1","status":"emitted","kind":"plate","renderedKind":"plate"}],
+  "failed": [],
+  "unsupported": [{"id":"CUT-1","status":"unsupported","kind":"boolean-cut",
+    "code":"exact-csg-not-available","message":"viewer-3d does not approximate Boolean CSG"}],
+  "warnings": [],
+  "output-path": "optional/path.html",
+  "path": "optional/path.html"
+}
+```
+
+`emitted`, `failed`, `unsupported`, and `warnings` are always present on success. Every input
+identity appears exactly once in `emitted` or `unsupported`. Invalid supported input returns a
+validation error and no partial HTML. `output-path`/`path` are present only when requested; dry
+runs report the would-be path without writing it.
+
+The HTML uses a pinned Three.js CDN and therefore needs a script-enabled client surface. Camera
+fit, projection/display controls, selection, clipping, the ViewCube, group legend, and themed
+tooltips are built into the renderer.

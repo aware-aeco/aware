@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "updated-at": "2026-07-14T14:03:39.138857600+00:00",
+  "updated-at": "2026-07-15T19:44:09.344033600+00:00",
   "agents": {
     "acc-account-admin": {
       "display-name": "Autodesk Construction Cloud — Account Admin (raw)",
@@ -2558,7 +2558,7 @@
       ],
       "versions": {
         "0.1.0": {
-          "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc) —",
+          "description": "Utility agent that writes a generic 3D scene to a universal IFC4 file (STEP / .ifc).",
           "status": "available",
           "manifest-version": "0.1.0",
           "stateful": false,
@@ -2567,7 +2567,7 @@
           "commands": [
             {
               "name": "write",
-              "description": "Write a generic 3D scene to a universal IFC4 file (DesignTransferView). The scene is",
+              "description": "Write a generic 3D scene to a universal IFC4 file (DesignTransferView). Legacy members may carry",
               "lifecycle": "single",
               "category": "curated"
             }
@@ -5660,7 +5660,7 @@
             },
             {
               "name": "bake-scene",
-              "description": "Create native Tekla members from a generic 3D scene — a Beam per element",
+              "description": "Materialize a canonical millimetre scene as source-owned native Tekla objects.",
               "lifecycle": "single",
               "category": "curated",
               "mode": "write"

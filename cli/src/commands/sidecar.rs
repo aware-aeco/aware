@@ -275,6 +275,20 @@ pub fn managed_bridge_is_stale(binary: &str, install_dir: &std::path::Path, vers
         && installed_bridge_version(install_dir, b.binary).as_deref() != Some(version)
 }
 
+/// Whether `binary` is a known bridge whose managed copy and version marker
+/// both match this CLI. Unlike `managed_bridge_is_stale`, absence is false: a
+/// PATH-only legacy bridge cannot satisfy a command with a versioned contract.
+pub fn managed_bridge_is_current(
+    binary: &str,
+    install_dir: &std::path::Path,
+    version: &str,
+) -> bool {
+    BRIDGES
+        .iter()
+        .find(|bridge| bridge.binary == binary)
+        .is_some_and(|bridge| bridge_is_current(bridge, install_dir, version))
+}
+
 /// Print a bridge's post-install note, resolving `{dir}` to the (off-PATH)
 /// install directory so the host-registration command is actually runnable.
 fn print_note(bridge: &Bridge, install_dir: &std::path::Path) {
@@ -572,6 +586,19 @@ mod tests {
         assert!(!managed_bridge_is_stale("aware-tekla", dir, v));
         // Unknown binary → not stale.
         assert!(!managed_bridge_is_stale("ripgrep", dir, v));
+    }
+
+    #[test]
+    fn managed_bridge_is_current_requires_a_matching_managed_copy() {
+        let tmp = tempfile::tempdir().unwrap();
+        let dir = tmp.path();
+        let version = "0.43.0";
+        assert!(!managed_bridge_is_current("aware-tekla", dir, version));
+        std::fs::write(dir.join("aware-tekla.exe"), b"fake").unwrap();
+        assert!(!managed_bridge_is_current("aware-tekla", dir, version));
+        std::fs::write(version_marker_path(dir, "aware-tekla"), version).unwrap();
+        assert!(managed_bridge_is_current("aware-tekla", dir, version));
+        assert!(!managed_bridge_is_current("ripgrep", dir, version));
     }
 
     #[test]

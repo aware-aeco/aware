@@ -12,6 +12,8 @@
          exe project actually matches (the default would be the csproj name). -->
     <AssemblyName>AwareTekla.Tests</AssemblyName>
     <RootNamespace>AwareTekla.Tests</RootNamespace>
+    <PlatformTarget>x64</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
   <ItemGroup>

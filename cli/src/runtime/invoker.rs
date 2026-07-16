@@ -151,6 +151,15 @@ fn bridges_dir() -> std::path::PathBuf {
         .unwrap_or_default()
 }
 
+/// A bake receipt is only trustworthy when the CLI and its managed Tekla bridge
+/// ship the same scene/materialization contract. Other CLI transports retain the
+/// historical warn-and-try posture because their protocols are backwards
+/// compatible in practice; `tekla.bake-scene` is deliberately stricter.
+fn current_bridge_is_required(binary: &str, command: &str, current: bool) -> bool {
+    let binary = binary.strip_suffix(".exe").unwrap_or(binary);
+    !current && binary == "aware-tekla" && command == "bake-scene"
+}
+
 /// Production invoker: spawn the agent's CLI transport binary,
 /// talk JSON over stdin/stdout.
 pub struct CliInvoker {
@@ -183,11 +192,25 @@ impl CliInvoker {
         // protocol. We warn (rather than refuse) so compatible bridges keep working
         // and a CLI patch bump doesn't force a redownload; a truly incompatible
         // bridge will fail the run with a clear protocol error.
-        if crate::commands::sidecar::managed_bridge_is_stale(
+        let bridge_is_stale = crate::commands::sidecar::managed_bridge_is_stale(
             &binary,
             &bridges,
             env!("CARGO_PKG_VERSION"),
-        ) {
+        );
+        let bridge_is_current = crate::commands::sidecar::managed_bridge_is_current(
+            &binary,
+            &bridges,
+            env!("CARGO_PKG_VERSION"),
+        );
+        if current_bridge_is_required(&binary, command, bridge_is_current) {
+            let id = binary.strip_prefix("aware-").unwrap_or(&binary);
+            return Err(AwareError::Validation(format!(
+                "{agent}.{command} requires the managed {binary} bridge installed by aware {}; \
+                 run `aware sidecar install {id}` to refresh it before baking",
+                env!("CARGO_PKG_VERSION")
+            )));
+        }
+        if bridge_is_stale {
             let id = binary.strip_prefix("aware-").unwrap_or(&binary);
             eprintln!(
                 "aware: warning: {binary} was installed by a different aware version; \
@@ -251,10 +274,17 @@ impl AgentInvoker for CliInvoker {
             .await
             .map_err(|e| AwareError::Network(format!("wait: {e}")))?;
         if !output.status.success() {
+            let stdout = String::from_utf8_lossy(&output.stdout);
+            let stderr = String::from_utf8_lossy(&output.stderr);
+            let detail = if stdout.trim().is_empty() {
+                stderr.trim()
+            } else {
+                stdout.trim()
+            };
             return Err(AwareError::Network(format!(
                 "agent {agent}/{command} failed (exit {:?}): {}",
                 output.status.code(),
-                String::from_utf8_lossy(&output.stderr).trim()
+                detail
             )));
         }
         let body: Value = serde_json::from_slice(&output.stdout).map_err(|e| {
@@ -2189,6 +2219,27 @@ mod cli_invoker_tests {
         let tmp = tempfile::tempdir().unwrap();
         let p = resolve_cli_binary("ripgrep", tmp.path());
         assert_eq!(p, std::path::PathBuf::from("ripgrep"));
+    }
+
+    #[test]
+    fn current_managed_bridge_is_required_only_for_tekla_bake_scene() {
+        assert!(current_bridge_is_required(
+            "aware-tekla",
+            "bake-scene",
+            false
+        ));
+        assert!(current_bridge_is_required(
+            "aware-tekla.exe",
+            "bake-scene",
+            false
+        ));
+        assert!(!current_bridge_is_required("aware-tekla", "exec", false));
+        assert!(!current_bridge_is_required("aware-rhino", "exec", false));
+        assert!(!current_bridge_is_required(
+            "aware-tekla",
+            "bake-scene",
+            true
+        ));
     }
 
     #[tokio::test]
