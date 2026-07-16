@@ -3,16 +3,18 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
+const PKG_VERSION = require('../../package.json').version;
 const binaryName = process.platform === 'win32' ? 'aware.exe' : 'aware';
 const binariesDir = path.join(__dirname, '..', '..', 'binaries');
 let binary = path.join(binariesDir, binaryName);
 
 if (!fs.existsSync(binary)) {
   // Rescue a partial install: postinstall ≤0.90.0 could leave the extracted
-  // versioned folder unpromoted (#287) — run the binary from there.
+  // versioned folder unpromoted (#287) — run the binary from there. Pinned to
+  // this package's version so a leftover from another release never runs.
   const candidate = fs.existsSync(binariesDir)
     ? fs.readdirSync(binariesDir)
-        .filter((name) => name.startsWith('aware-'))
+        .filter((name) => name.startsWith(`aware-${PKG_VERSION}-`))
         .map((name) => path.join(binariesDir, name, binaryName))
         .find((p) => fs.existsSync(p))
     : undefined;

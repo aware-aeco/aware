@@ -85,20 +85,38 @@ function download(srcUrl, dest, depth = 0) {
     const extractedDir = path.join(binariesDir, `aware-${PKG_VERSION}-${target.rid}`);
     if (fs.existsSync(extractedDir)) {
       for (const file of fs.readdirSync(extractedDir)) {
+        const src = path.join(extractedDir, file);
         const dest = path.join(binariesDir, file);
-        // Overwrite-safe: a re-run over a partial install must not EPERM on rename.
-        fs.rmSync(dest, { recursive: true, force: true });
-        fs.renameSync(path.join(extractedDir, file), dest);
+        // renameSync replaces existing FILES atomically (MOVEFILE_REPLACE_EXISTING
+        // on Windows); only a directory dest (aware-roslyn) must be moved aside
+        // first. Keep it until the replacement lands so an interrupted repair
+        // can't destroy a working install (#287 review).
+        let backup = null;
+        if (fs.existsSync(dest) && fs.statSync(dest).isDirectory()) {
+          backup = `${dest}.old-${process.pid}`;
+          fs.rmSync(backup, { recursive: true, force: true });
+          fs.renameSync(dest, backup);
+        }
+        try {
+          fs.renameSync(src, dest);
+        } catch (err) {
+          if (backup) fs.renameSync(backup, dest); // restore the old payload
+          throw err;
+        }
+        if (backup) fs.rmSync(backup, { recursive: true, force: true });
       }
       fs.rmdirSync(extractedDir);
     }
 
-    // The shim resolves <binariesDir>/aware(.exe); anything else is a broken
+    // The shim resolves <binariesDir>/aware(.exe), and the CLI needs its
+    // sidecar + roslyn companions next to it. Anything missing is a broken
     // install — fail loudly here instead of letting every later `aware` call
-    // exit 1 in silence (#287).
-    const shimTarget = path.join(binariesDir, `aware${target.ext}`);
-    if (!fs.existsSync(shimTarget)) {
-      throw new Error(`extraction finished but ${shimTarget} is missing`);
+    // exit 1 in silence (#287). Also catches Expand-Archive's silent
+    // half-extraction on the no-inbox-tar fallback path.
+    const required = [`aware${target.ext}`, `aware-sidecar${target.ext}`, 'aware-roslyn'];
+    const missing = required.filter((f) => !fs.existsSync(path.join(binariesDir, f)));
+    if (missing.length) {
+      throw new Error(`extraction finished but ${missing.join(', ')} missing from ${binariesDir}`);
     }
 
     if (process.platform !== 'win32') {
