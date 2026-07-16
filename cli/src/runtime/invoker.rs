@@ -226,16 +226,18 @@ impl CliInvoker {
             .stderr(std::process::Stdio::piped())
             .spawn()
             .map_err(|e| {
-                // When a host bridge binary is missing, surface an actionable hint.
+                // When the binary is missing, surface an actionable hint — but only
+                // point at `aware sidecar install` for binaries that command actually
+                // knows, or the hint is a dead end (#276).
                 let hint = if e.kind() == std::io::ErrorKind::NotFound {
-                    // Strip the exe suffix on Windows to get the bare binary name.
-                    let bare = binary.strip_suffix(".exe").unwrap_or(&binary);
-                    if let Some(id) = bare.strip_prefix("aware-") {
-                        format!(
+                    match crate::commands::sidecar::bridge_id_for_binary(&binary) {
+                        Some(id) => format!(
                             "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
-                        )
-                    } else {
-                        String::new()
+                        ),
+                        None => format!(
+                            "\n  hint: no downloadable bridge for `{binary}`; provide the binary on \
+                             PATH or generate the agent's implementation with `aware build agent`"
+                        ),
                     }
                 } else {
                     String::new()
