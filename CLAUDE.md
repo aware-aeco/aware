@@ -1,6 +1,6 @@
 # AWARE — Project Instructions
 
-You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic substrate for AECO. The substrate is content-complete (manifesto, decalog, specs, <!--stat:agents_total-->76<!--/stat--> agents, <!--stat:skills-->3,341<!--/stat--> skills, <!--stat:apps-->7<!--/stat--> reference apps, <!--stat:meta_primitives-->11<!--/stat--> meta-primitives) and the `aware` CLI has shipped (v<!--stat:cli_version-->0.91.0<!--/stat-->). The current focus is the **`aware` CLI** — the runtime binary that executes everything the substrate describes.
+You are working on **AWARE** (`aware-aeco/aware`) — the open-source agentic substrate for AECO. The substrate is content-complete (manifesto, decalog, specs, <!--stat:agents_total-->76<!--/stat--> agents, <!--stat:skills-->3,341<!--/stat--> skills, <!--stat:apps-->7<!--/stat--> reference apps, <!--stat:meta_primitives-->11<!--/stat--> meta-primitives) and the `aware` CLI has shipped (v<!--stat:cli_version-->0.92.0<!--/stat-->). The current focus is the **`aware` CLI** — the runtime binary that executes everything the substrate describes.
 
 ## Read these first (in order)
 
