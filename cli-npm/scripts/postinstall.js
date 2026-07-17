@@ -2,7 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
+const { requiredFiles } = require('./payload');
 
 const PKG_VERSION = require('../package.json').version;
 const REPO = 'aware-aeco/aware';
@@ -61,20 +62,71 @@ function download(srcUrl, dest, depth = 0) {
     await download(url, tmpFile);
 
     console.log('[aware-npm] extracting...');
-    if (target.archive === 'zip') {
-      execSync(`powershell -NoProfile -Command "Expand-Archive -Path '${tmpFile}' -DestinationPath '${binariesDir}' -Force"`, { stdio: 'inherit' });
+    // bsdtar handles both .zip and .tar.gz, exits non-zero on real failures, and
+    // (unlike PS 5.1 Expand-Archive) never half-extracts silently (#287). Use the
+    // System32 copy on Windows — a GNU tar earlier on PATH (Git Bash) can't read zip.
+    const winTar = path.join(process.env.WINDIR || 'C:\\Windows', 'System32', 'tar.exe');
+    if (process.platform === 'win32' && !fs.existsSync(winTar)) {
+      // Server 2016 / Win10 <1803 ship no inbox bsdtar — fall back to
+      // Expand-Archive. Its silent half-extraction mode is defused by the
+      // shim-target check below, which turns it into a loud failure (#287).
+      // $ErrorActionPreference='Stop' promotes Expand-Archive's non-terminating
+      // extraction errors to a non-zero exit, so a partial payload throws here
+      // instead of surfacing later.
+      execFileSync('powershell', [
+        '-NoProfile', '-Command',
+        `$ErrorActionPreference='Stop'; Expand-Archive -LiteralPath '${tmpFile}' -DestinationPath '${binariesDir}' -Force`,
+      ], { stdio: 'inherit' });
     } else {
-      execSync(`tar -xzf "${tmpFile}" -C "${binariesDir}"`, { stdio: 'inherit' });
+      const tar = process.platform === 'win32' ? winTar : 'tar';
+      // Explicit -z for tar.gz: minimal POSIX tar builds don't autodetect gzip.
+      const flags = target.archive === 'zip' ? '-xf' : '-xzf';
+      execFileSync(tar, [flags, tmpFile, '-C', binariesDir], { stdio: 'inherit' });
     }
-    fs.unlinkSync(tmpFile);
+    // Cleanup is cosmetic — an AV scan holding the fresh archive must not abort
+    // an install that already extracted successfully (#287).
+    try { fs.unlinkSync(tmpFile); } catch { /* locked archive; leave it */ }
 
     // Promote binaries from <binariesDir>/aware-<version>-<rid>/ to <binariesDir>/
     const extractedDir = path.join(binariesDir, `aware-${PKG_VERSION}-${target.rid}`);
     if (fs.existsSync(extractedDir)) {
       for (const file of fs.readdirSync(extractedDir)) {
-        fs.renameSync(path.join(extractedDir, file), path.join(binariesDir, file));
+        const src = path.join(extractedDir, file);
+        const dest = path.join(binariesDir, file);
+        // renameSync replaces existing FILES atomically (MOVEFILE_REPLACE_EXISTING
+        // on Windows); only a directory dest (aware-roslyn) must be moved aside
+        // first. Keep it until the replacement lands so an interrupted repair
+        // can't destroy a working install (#287 review).
+        let backup = null;
+        if (fs.existsSync(dest) && fs.statSync(dest).isDirectory()) {
+          backup = `${dest}.old-${process.pid}`;
+          fs.rmSync(backup, { recursive: true, force: true });
+          fs.renameSync(dest, backup);
+        }
+        try {
+          fs.renameSync(src, dest);
+        } catch (err) {
+          if (backup) fs.renameSync(backup, dest); // restore the old payload
+          throw err;
+        }
+        // The replacement already landed — a locked obsolete backup (AV handle)
+        // must not abort the remaining promotions.
+        if (backup) {
+          try { fs.rmSync(backup, { recursive: true, force: true }); } catch { /* best-effort */ }
+        }
       }
       fs.rmdirSync(extractedDir);
+    }
+
+    // The shim resolves <binariesDir>/aware(.exe), and the CLI needs its
+    // sidecar + roslyn companions next to it. Anything missing is a broken
+    // install — fail loudly here instead of letting every later `aware` call
+    // exit 1 in silence (#287). Also catches Expand-Archive's silent
+    // half-extraction on the no-inbox-tar fallback path.
+    const required = requiredFiles(target.ext);
+    const missing = required.filter((f) => !fs.existsSync(path.join(binariesDir, f)));
+    if (missing.length) {
+      throw new Error(`extraction finished but ${missing.join(', ')} missing from ${binariesDir}`);
     }
 
     if (process.platform !== 'win32') {
