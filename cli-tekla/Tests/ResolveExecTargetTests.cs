@@ -142,6 +142,18 @@ public class ResolveExecTargetTests
     }
 
     [Fact]
+    public void ExplicitNullStdinPid_IsRejected()
+    {
+        // `"pid": null` is a PRESENT key (e.g. a dynamic target that resolved to null), not absent —
+        // it must error, not silently fall back to running against the sole host (#290 review).
+        var input = JsonNode.Parse("{\"pid\":null}");
+        var ok = Program.TryReadPid(input, new Program.ParsedArgs { Pid = 42 }, out var pid, out var error);
+        Assert.False(ok);
+        Assert.Null(pid);
+        Assert.Contains("null", error!);
+    }
+
+    [Fact]
     public void AbsentStdinPid_FallsBackToCliFlag()
     {
         var input = JsonNode.Parse("{\"code\":\"return 1;\"}");

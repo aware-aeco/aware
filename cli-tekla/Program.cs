@@ -1479,16 +1479,21 @@ internal static class Program
     internal static bool TryReadPid(JsonNode? input, ParsedArgs args, out int? pid, out string? error)
     {
         error = null;
-        var node = input?["pid"];
-        if (node is not null)
+        // Distinguish a PRESENT `pid` key from an absent one: `input["pid"]` returns null for BOTH a
+        // missing property and an explicit `"pid": null`, so check key presence. A present key must
+        // be a valid integer — null / string / float / out-of-range are caller errors, not "absent"
+        // (a dynamic target that resolved to null must fail, not silently write to the sole host).
+        if (input is JsonObject obj && obj.ContainsKey("pid"))
         {
-            if (node is JsonValue v && v.TryGetValue<int>(out var p))
+            if (obj["pid"] is JsonValue v && v.TryGetValue<int>(out var p))
             {
                 pid = p;
                 return true;
             }
             pid = null;
-            error = $"invalid `pid`: expected an integer, got {node.ToJsonString()}";
+            error = obj["pid"] is null
+                ? "invalid `pid`: expected an integer, got null"
+                : $"invalid `pid`: expected an integer, got {obj["pid"]!.ToJsonString()}";
             return false;
         }
         pid = args.Pid;
@@ -1640,6 +1645,7 @@ internal static class Program
                 probedReferences,
                 argsNode,
                 probedDir,
+                hostPid,
                 commitPolicy ?? CommitPolicyForVerb(verb));
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
@@ -1698,6 +1704,7 @@ internal static class Program
         IReadOnlyList<MetadataReference> teklaReferences,
         JsonObject? argsNode,
         string? teklaBinDir,
+        int? expectedPid,
         ScriptCommitPolicy commitPolicy)
     {
         JsonNode? result = null;
@@ -1707,7 +1714,7 @@ internal static class Program
             try
             {
                 result = SerializeResult(
-                    RunScript(code, teklaReferences, argsNode, teklaBinDir, commitPolicy));
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1735,6 +1742,7 @@ internal static class Program
         IReadOnlyList<MetadataReference> teklaReferences,
         JsonObject? argsNode,
         string? teklaBinDir,
+        int? expectedPid,
         ScriptCommitPolicy commitPolicy)
     {
         // Standard usings — enough for catalog-style snippets to stay
@@ -1792,6 +1800,21 @@ internal static class Program
         object? modelInstance = null;
         if (teklaBinDir is not null)
         {
+            // TOCTOU recheck (#290 review): the process set was snapshotted in ExecuteResolvedScript
+            // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which a second
+            // Tekla could start. new Model() would then attach to an instance our loaded DLLs may not
+            // match. Recheck as late as possible (here, on the STA thread, immediately before the
+            // connection) that the resolved instance is still the ONLY one live. This throws out to
+            // the exec receipt rather than risking the ambiguous connect.
+            if (expectedPid is int want)
+            {
+                var (rawNow, instNow) = DiscoverTeklas();
+                if (rawNow != 1 || instNow.Count != 1 || instNow[0].Pid != want)
+                    throw new InvalidOperationException(
+                        "the running Tekla instance set changed between host selection and connect "
+                        + "(a second instance started, or the target closed). Retry with exactly one "
+                        + "Tekla open.");
+            }
             try
             {
                 modelInstance = ConstructTeklaModel(teklaBinDir);
