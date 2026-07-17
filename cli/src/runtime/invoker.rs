@@ -226,16 +226,27 @@ impl CliInvoker {
             .stderr(std::process::Stdio::piped())
             .spawn()
             .map_err(|e| {
-                // When a host bridge binary is missing, surface an actionable hint.
+                // When the binary is missing, surface an actionable hint — but only
+                // point at `aware sidecar install` for binaries that command actually
+                // knows, or the hint is a dead end (#276).
                 let hint = if e.kind() == std::io::ErrorKind::NotFound {
-                    // Strip the exe suffix on Windows to get the bare binary name.
-                    let bare = binary.strip_suffix(".exe").unwrap_or(&binary);
-                    if let Some(id) = bare.strip_prefix("aware-") {
-                        format!(
+                    match crate::commands::sidecar::bridge_id_for_binary(&binary) {
+                        Some(id) => format!(
                             "\n  hint: run `aware sidecar install {id}` to download the bridge binary"
-                        )
-                    } else {
-                        String::new()
+                        ),
+                        // No downloadable bridge for this agent — steer by how the
+                        // manifest declared the executable: PATH advice is wrong for
+                        // path-valued binaries (Command::new keeps using the declared
+                        // path), and `aware build agent` never emits a binary.
+                        None if binary.contains('/') || binary.contains('\\') => format!(
+                            "\n  hint: no downloadable bridge for `{binary}`; restore the \
+                             executable at that path (or fix the agent manifest's \
+                             transport.cli.binary)"
+                        ),
+                        None => format!(
+                            "\n  hint: no downloadable bridge for `{binary}`; the agent's \
+                             `transport.cli.binary` executable must be provided on PATH"
+                        ),
                     }
                 } else {
                     String::new()

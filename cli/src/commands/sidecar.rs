@@ -353,6 +353,15 @@ pub fn find_bridge_by_binary(binary: &str, install_dir: &std::path::Path) -> Opt
     find_bridge(b, install_dir)
 }
 
+/// Map a `transport.cli.binary` name (e.g. `aware-tekla`, with or without the
+/// `.exe` suffix) to its downloadable bridge id, or `None` when the binary is
+/// not a managed bridge — so callers never suggest `aware sidecar install` for
+/// an id that command would reject (#276).
+pub fn bridge_id_for_binary(binary: &str) -> Option<&'static str> {
+    let bare = binary.strip_suffix(".exe").unwrap_or(binary);
+    BRIDGES.iter().find(|b| b.binary == bare).map(|b| b.id)
+}
+
 /// Find a bridge for RUNTIME resolution: the managed install dir first, then a
 /// `which`-style PATH lookup (so a legacy on-PATH bridge still spawns during the
 /// migration window).
@@ -509,6 +518,23 @@ mod tests {
         let err = lookup_bridge("autocad").unwrap_err();
         assert!(err.to_string().contains("autocad"));
         assert!(err.to_string().contains("tekla"));
+    }
+
+    #[test]
+    fn bridge_id_for_binary_maps_known_bridges() {
+        assert_eq!(bridge_id_for_binary("aware-tekla"), Some("tekla"));
+        assert_eq!(bridge_id_for_binary("aware-tekla.exe"), Some("tekla"));
+        assert_eq!(
+            bridge_id_for_binary("aware-connection-reader"),
+            Some("connection-reader")
+        );
+    }
+
+    #[test]
+    fn bridge_id_for_binary_rejects_non_bridge_binaries() {
+        // `aware-` prefixed but not in BRIDGES — the #276 dead-end case.
+        assert_eq!(bridge_id_for_binary("aware-ifc-inspector"), None);
+        assert_eq!(bridge_id_for_binary("web-ifc"), None);
     }
 
     #[test]

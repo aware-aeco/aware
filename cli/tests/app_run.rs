@@ -40,6 +40,68 @@ fn run_one_shot_app_with_no_installed_agents_fails_clearly() {
 }
 
 #[test]
+fn missing_non_bridge_cli_binary_does_not_suggest_sidecar_install() {
+    // #276: the "program not found" hint used to point every `aware-*` binary at
+    // `aware sidecar install <id>`, but that command rejects agents not in the
+    // BRIDGES table — a dead end. A non-bridge cli agent must get the
+    // build-or-PATH hint instead.
+    let tmp = tempfile::tempdir().unwrap();
+    let aware = tmp.path().join("aware");
+
+    let agent_dir = aware.join("agents/ifc-inspector");
+    std::fs::create_dir_all(&agent_dir).unwrap();
+    std::fs::write(
+        agent_dir.join("manifest.yaml"),
+        r#"agent: ifc-inspector
+version: 0.0.1
+description: x
+stateful: false
+license: MIT
+transport:
+  cli:
+    binary: aware-ifc-inspector
+commands:
+  inspect:
+    lifecycle: single
+    category: curated
+    mode: read
+    description: inspects an ifc
+    outputs:
+      type: single
+      schema:
+        summary: string
+"#,
+    )
+    .unwrap();
+
+    let app_dir = aware.join("apps/inspectapp");
+    std::fs::create_dir_all(&app_dir).unwrap();
+    std::fs::write(
+        app_dir.join("inspectapp.flo"),
+        r#"app: inspectapp
+version: 0.0.1
+description: x
+nodes:
+  - id: ins
+    agent: ifc-inspector
+    command: inspect
+connections: []
+requires: []
+"#,
+    )
+    .unwrap();
+
+    Command::cargo_bin("aware")
+        .unwrap()
+        .env("AWARE_HOME", &aware)
+        .args(["app", "run", "inspectapp"])
+        .assert()
+        .failure()
+        .stderr(predicate::str::contains("no downloadable bridge"))
+        .stderr(predicate::str::contains("sidecar install").not());
+}
+
+#[test]
 fn simulate_runs_app_end_to_end_without_host() {
     // The #103 scenario: an app whose read-mode node would reach for a host
     // sidecar that isn't installed. A real run fails ("program not found");
