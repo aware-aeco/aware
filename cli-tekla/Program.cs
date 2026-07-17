@@ -87,12 +87,21 @@ internal static class Program
         System.Threading.Interlocked.Exchange(ref _lastResortArmed, 1);
     }
 
-    internal static void DisarmLastResortReceipt()
-        => System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0);
+    // Claim the armed state. Exactly ONE claimant wins: either the normal
+    // completion path (returns true → emit the normal receipt) or a
+    // last-resort hook (normal path then gets false → its receipt is
+    // suppressed, because a fail receipt already went out and a second,
+    // contradictory one would corrupt the protocol).
+    internal static bool DisarmLastResortReceipt()
+        => System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0) == 1;
 
     internal static void EmitLastResortReceipt(string message, string stack)
     {
-        if (System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0) != 1) return;
+        if (!DisarmLastResortReceipt()) return;
+        // An ok:false receipt must never ride a success status
+        // (Environment.Exit(0) from vendor code); deliberate non-zero
+        // codes are preserved.
+        if (Environment.ExitCode == 0) Environment.ExitCode = 2;
         try
         {
             EmitExecFail(message, stack, _lastResortVerb, _lastResortHostVersion, _lastResortHostPid);
@@ -131,16 +140,9 @@ internal static class Program
                 ex?.StackTrace ?? "");
         };
         AppDomain.CurrentDomain.ProcessExit += (_, _) =>
-        {
-            // Environment.Exit(0) from vendor/script code would read as
-            // SUCCESS to the aware CLI despite the fail receipt — force a
-            // failing status, preserving a deliberate non-zero code.
-            if (_lastResortArmed == 1 && Environment.ExitCode == 0)
-                Environment.ExitCode = 2;
             EmitLastResortReceipt(
                 "sidecar exited during script execution (vendor code called exit?)",
                 "");
-        };
 
         try
         {
@@ -1556,7 +1558,9 @@ internal static class Program
                 argsNode,
                 probedDir,
                 commitPolicy ?? CommitPolicyForVerb(verb));
-            DisarmLastResortReceipt();
+            // Losing the disarm race means a last-resort hook already emitted
+            // a fail receipt (a background-thread fault) — ours is suppressed.
+            if (!DisarmLastResortReceipt()) return 2;
             if (ScriptResultReportsFailure(verb, resultNode))
             {
                 EmitExecResultFail(resultNode, verb, hostVersion, hostPid);
@@ -1567,7 +1571,7 @@ internal static class Program
         }
         catch (CompilationErrorException ce)
         {
-            DisarmLastResortReceipt();
+            if (!DisarmLastResortReceipt()) return 2;
             // Script failed to compile — surface diagnostics so the caller
             // (likely an AI) can re-draft.
             var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
@@ -1576,7 +1580,7 @@ internal static class Program
         }
         catch (Exception e)
         {
-            DisarmLastResortReceipt();
+            if (!DisarmLastResortReceipt()) return 2;
             var root = e;
             while (root is TargetInvocationException && root.InnerException is not null)
                 root = root.InnerException;
@@ -1660,7 +1664,21 @@ internal static class Program
             (System.Threading.SendOrPostCallback Callback, object? State)> _queue = new();
 
         public override void Post(System.Threading.SendOrPostCallback d, object? state)
-            => _queue.Add((d, state));
+        {
+            try
+            {
+                _queue.Add((d, state));
+            }
+            catch (InvalidOperationException)
+            {
+                // The pump already shut down (the script returned while an
+                // async-void straggler was still in flight). Run the
+                // continuation inline on the posting thread — it loses STA
+                // affinity, but the script has completed, and killing the
+                // sidecar over a straggler would be worse.
+                d(state);
+            }
+        }
 
         public void RunOnCurrentThread()
         {

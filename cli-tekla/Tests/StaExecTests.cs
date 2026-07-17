@@ -65,10 +65,36 @@ public class StaExecTests
     }
 
     [Fact]
+    public void Async_Void_Straggler_Does_Not_Kill_The_Process()
+    {
+        // A script can fire async-void work and return before its awaited
+        // continuation lands. The continuation then Posts to a pump that has
+        // already shut down — that Post must run inline, never throw (a throw
+        // here is an unhandled exception that kills the sidecar).
+        var result = Run(
+            "async void Fire() { await System.Threading.Tasks.Task.Delay(80); }\n" +
+            "Fire();\n" +
+            "return 42;");
+        Assert.Equal(42, result!.GetValue<int>());
+        // Keep the process alive long enough for the straggler to land; if
+        // Post threw, this test run would crash rather than fail an assert.
+        System.Threading.Thread.Sleep(300);
+    }
+
+    [Fact]
+    public void Disarm_Is_A_Single_Claim()
+    {
+        Program.ArmLastResortReceipt("exec", null, null);
+        Assert.True(Program.DisarmLastResortReceipt());   // first claimant wins
+        Assert.False(Program.DisarmLastResortReceipt());  // losers are told so
+    }
+
+    [Fact]
     public void LastResort_Receipt_Emits_Once_When_Armed_And_Never_When_Disarmed()
     {
         var sw = new StringWriter();
         var prior = Console.Out;
+        var priorExitCode = Environment.ExitCode;
         Console.SetOut(sw);
         try
         {
@@ -85,11 +111,17 @@ public class StaExecTests
             Assert.Contains("\"ok\":false", lines[0]);
             Assert.Contains("vendor exit", lines[0]);
             Assert.Contains("2026.0", lines[0]);
+
+            // A fired fallback also forces a failing status, and the normal
+            // path (a would-be second claimant) is told to suppress its receipt.
+            Assert.Equal(2, Environment.ExitCode);
+            Assert.False(Program.DisarmLastResortReceipt());
         }
         finally
         {
             Console.SetOut(prior);
             Program.DisarmLastResortReceipt();
+            Environment.ExitCode = priorExitCode; // don't fail the test host
         }
     }
 }
