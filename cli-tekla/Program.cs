@@ -2231,7 +2231,15 @@ internal static class Program
             WindowStyle     = ProcessWindowStyle.Maximized,
             UseShellExecute = true,
         };
-        var p = Process.Start(psi);
+        // Launch Tekla with the DEFAULT (dialog-enabled) error mode. A child
+        // captures the parent's process error mode at creation, so without this
+        // the user-facing TeklaStructures.exe would inherit the sidecar's
+        // headless SEM_NOGPFAULTERRORBOX and silently swallow its OWN startup /
+        // runtime error dialogs (#283 review). Restore ours right after.
+        var priorErrorMode = SetErrorMode(0);
+        Process? p;
+        try { p = Process.Start(psi); }
+        finally { SetErrorMode(priorErrorMode); }
         if (p == null)
         {
             Console.Error.WriteLine("aware-tekla: Process.Start returned null");
