@@ -287,11 +287,18 @@ impl AgentInvoker for CliInvoker {
         if !output.status.success() {
             let stdout = String::from_utf8_lossy(&output.stdout);
             let stderr = String::from_utf8_lossy(&output.stderr);
-            let detail = if stdout.trim().is_empty() {
+            let mut detail = if stdout.trim().is_empty() {
                 stderr.trim()
             } else {
                 stdout.trim()
             };
+            if detail.is_empty() {
+                // A sidecar that died with nothing on either pipe was killed
+                // before it could emit its receipt — a native/vendor failure
+                // inside the bridge, not a structured error (#283).
+                detail = "process terminated without emitting a receipt \
+                          (native/vendor failure in the bridge?)";
+            }
             return Err(AwareError::Network(format!(
                 "agent {agent}/{command} failed (exit {:?}): {}",
                 output.status.code(),

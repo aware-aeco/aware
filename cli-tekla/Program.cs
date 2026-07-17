@@ -63,8 +63,81 @@ internal static class Program
         w.Flush(); // the receipt must hit the pipe even if we exit right after
     }
 
+    // ── last-resort receipts (#283) ──────────────────────────────────────────
+    // Vendor/native code driven by an exec script can take this process down
+    // without unwinding managed frames (CatalogHandler on some Tekla setups
+    // terminated the sidecar outright). While a script is in flight these
+    // fields are "armed"; the AppDomain hooks wired in Main then emit a
+    // structured fail receipt as a last resort so the bridge protocol never
+    // just goes silent. Interlocked guarantees at most one such receipt
+    // (UnhandledException and ProcessExit can both fire on the way down).
+    // Hard kills (TerminateProcess, FailFast, stack overflow) remain
+    // unreportable from in-process — the aware CLI labels those
+    // "terminated without emitting a receipt".
+    static int _lastResortArmed; // 0 = disarmed, 1 = armed
+    static string _lastResortVerb = "exec";
+    static string? _lastResortHostVersion;
+    static int? _lastResortHostPid;
+
+    internal static void ArmLastResortReceipt(string verb, string? hostVersion, int? hostPid)
+    {
+        _lastResortVerb = verb;
+        _lastResortHostVersion = hostVersion;
+        _lastResortHostPid = hostPid;
+        System.Threading.Interlocked.Exchange(ref _lastResortArmed, 1);
+    }
+
+    // Claim the single receipt slot. Exactly ONE caller wins the exchange:
+    // either the normal completion path (true → it emits the ok/fail receipt)
+    // or a last-resort hook (then the normal path gets false and suppresses
+    // its own receipt). This is what guarantees the protocol carries exactly
+    // ONE receipt per invocation.
+    //
+    // The claim is taken BEFORE the winner writes its receipt, which leaves a
+    // sub-microsecond window: if the CLR is terminated by an async fault after
+    // the normal path claims but before EmitExecOk finishes the write, no
+    // receipt reaches the pipe. That is deliberate — the alternative
+    // (emit-then-claim) is strictly worse: a fault in ITS window appends a
+    // second, contradictory receipt, and two JSON objects on stdout make the
+    // CLI's whole-stdout parse fail even on a successful exec. The empty-pipe
+    // outcome is instead handled cleanly on the CLI side, which labels it
+    // "process terminated without emitting a receipt" (invoker.rs).
+    internal static bool TryClaimReceipt()
+        => System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0) == 1;
+
+    internal static void EmitLastResortReceipt(string message, string stack)
+    {
+        if (!TryClaimReceipt()) return;
+        // An ok:false receipt must never ride a success status
+        // (Environment.Exit(0) from vendor code); deliberate non-zero
+        // codes are preserved.
+        if (Environment.ExitCode == 0) Environment.ExitCode = 2;
+        try
+        {
+            EmitExecFail(message, stack, _lastResortVerb, _lastResortHostVersion, _lastResortHostPid);
+        }
+        catch { /* the process is dying; nothing safer to do */ }
+    }
+
+    [DllImport("kernel32.dll")]
+    static extern uint SetErrorMode(uint uMode);
+
+    // Suppress the Windows Error Reporting "Application Error" dialog and the
+    // critical-error handler popup (#290). aware-tekla is a HEADLESS sidecar
+    // spawned by the aware CLI — an unhandled CLR/native fault (a vendor crash,
+    // a wrong-PID Model connect) must die with a receipt or a non-zero exit,
+    // never block on a modal dialog that hangs the parent's wait_with_output().
+    const uint SEM_FAILCRITICALERRORS = 0x0001;
+    const uint SEM_NOGPFAULTERRORBOX = 0x0002;
+
     static int Main(string[] args)
     {
+        // First statement, before anything can fault: go headless. Combined
+        // with the last-resort receipt hooks below, a crash then produces a
+        // structured receipt (or the CLI's "terminated without a receipt"
+        // label) instead of a blocking WER dialog (#290, #283).
+        SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
+
         // Force UTF-8 on stdin/stdout — .NET Framework defaults to the
         // Windows OEM codepage which mangles em-dashes, smart quotes,
         // accented chars etc when JSON travels in either direction.
@@ -79,6 +152,24 @@ internal static class Program
         // recreates Console.Out) and BEFORE any Tekla/Roslyn interaction.
         _protocol = Console.Out;
         Console.SetOut(Console.Error);
+
+        // Last-resort receipt hooks (#283) — no-ops unless a script is in
+        // flight (see ArmLastResortReceipt). UnhandledException covers vendor
+        // exceptions on background threads and corrupted-state exceptions
+        // (access violations); ProcessExit covers vendor code calling exit.
+        AppDomain.CurrentDomain.UnhandledException += (_, ue) =>
+        {
+            var ex = ue.ExceptionObject as Exception;
+            EmitLastResortReceipt(
+                $"{ex?.GetType().Name ?? "UnhandledException"}: " +
+                $"{ex?.Message ?? "unknown non-CLR exception"} " +
+                "(vendor/native failure during script execution)",
+                ex?.StackTrace ?? "");
+        };
+        AppDomain.CurrentDomain.ProcessExit += (_, _) =>
+            EmitLastResortReceipt(
+                "sidecar exited during script execution (vendor code called exit?)",
+                "");
 
         try
         {
@@ -1483,15 +1574,20 @@ internal static class Program
         // JIT can't pre-resolve Tekla types before AssemblyResolve is wired.
         // (See skills/runtime-bridge-dotnet-framework.md for why this matters
         // for any code that touches Tekla types.)
+        // Armed: if vendor/native code kills the process mid-script, the
+        // AppDomain hooks in Main still emit a fail receipt (#283).
+        ArmLastResortReceipt(verb, hostVersion, hostPid);
         try
         {
-            var result = RunScript(
+            var resultNode = RunScriptOnStaThread(
                 code!,
                 probedReferences,
                 argsNode,
                 probedDir,
                 commitPolicy ?? CommitPolicyForVerb(verb));
-            var resultNode = SerializeResult(result);
+            // Losing the disarm race means a last-resort hook already emitted
+            // a fail receipt (a background-thread fault) — ours is suppressed.
+            if (!TryClaimReceipt()) return 2;
             if (ScriptResultReportsFailure(verb, resultNode))
             {
                 EmitExecResultFail(resultNode, verb, hostVersion, hostPid);
@@ -1502,6 +1598,7 @@ internal static class Program
         }
         catch (CompilationErrorException ce)
         {
+            if (!TryClaimReceipt()) return 2;
             // Script failed to compile — surface diagnostics so the caller
             // (likely an AI) can re-draft.
             var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
@@ -1510,6 +1607,7 @@ internal static class Program
         }
         catch (Exception e)
         {
+            if (!TryClaimReceipt()) return 2;
             var root = e;
             while (root is TargetInvocationException && root.InnerException is not null)
                 root = root.InnerException;
@@ -1517,6 +1615,58 @@ internal static class Program
                          verb, hostVersion, hostPid);
             return 2;
         }
+    }
+
+    // Run the Roslyn script on a dedicated STA thread. Tekla's Open API is
+    // written for STA standalone apps (the watch path already runs its loop
+    // STA + pumped, see RunWatchLoopOnStaThread); catalogue calls
+    // (CatalogHandler, #283) have terminated the whole process when driven
+    // from the default MTA main thread. Serialization happens ON the STA
+    // thread too — a lazy Tekla enumerable serialized after the join would
+    // call back into Tekla from the MTA caller.
+    //
+    // We deliberately do NOT install a single-threaded SynchronizationContext
+    // to keep top-level-`await` continuations on this STA thread. Doing so
+    // deadlocks any script that synchronously waits on context-capturing async
+    // work (`SomeAsync().Result`, `.Wait()`): the blocked STA thread is the
+    // only one that could pump the continuation it is waiting for. That hang is
+    // unbounded (the parent's wait_with_output has no timeout) — strictly worse
+    // than the alternative. So awaited continuations resume on the thread pool
+    // (RunAsync's default), and the rare `await …; model.Foo()` that then
+    // touches Tekla off-STA is caught by the last-resort receipt rather than
+    // hanging the bridge. Tekla's Open API is entirely synchronous, so real
+    // exec scripts almost never await at all.
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    internal static JsonNode? RunScriptOnStaThread(
+        string code,
+        IReadOnlyList<MetadataReference> teklaReferences,
+        JsonObject? argsNode,
+        string? teklaBinDir,
+        ScriptCommitPolicy commitPolicy)
+    {
+        JsonNode? result = null;
+        Exception? fault = null;
+        var t = new System.Threading.Thread(() =>
+        {
+            try
+            {
+                result = SerializeResult(
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, commitPolicy));
+            }
+            catch (Exception e) { fault = e; }
+        })
+        {
+            IsBackground = false,
+            Name = "aware-tekla-exec",
+        };
+        t.SetApartmentState(System.Threading.ApartmentState.STA);
+        t.Start();
+        t.Join();
+        if (fault is not null)
+            // Preserve the script's original stack trace — the exec receipt
+            // carries it so an AI caller can re-draft against the real frame.
+            System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(fault).Throw();
+        return result;
     }
 
     // The canonical scene materializer is shipped with the bridge but isolated in
@@ -1611,7 +1761,10 @@ internal static class Program
             options: options,
             globalsType: typeof(ExecGlobals));
 
-        // Compile + execute.
+        // Compile + execute. Top-level `await` continuations resume on the
+        // thread pool (no captured SynchronizationContext) — see
+        // RunScriptOnStaThread for why a single-threaded pump is NOT installed
+        // (it would deadlock sync-over-async scripts).
         var state = script.RunAsync(globals).GetAwaiter().GetResult();
         var returnValue = state.ReturnValue;
 
@@ -2019,7 +2172,15 @@ internal static class Program
             WindowStyle     = ProcessWindowStyle.Maximized,
             UseShellExecute = true,
         };
-        var p = Process.Start(psi);
+        // Launch Tekla with the DEFAULT (dialog-enabled) error mode. A child
+        // captures the parent's process error mode at creation, so without this
+        // the user-facing TeklaStructures.exe would inherit the sidecar's
+        // headless SEM_NOGPFAULTERRORBOX and silently swallow its OWN startup /
+        // runtime error dialogs (#283 review). Restore ours right after.
+        var priorErrorMode = SetErrorMode(0);
+        Process? p;
+        try { p = Process.Start(psi); }
+        finally { SetErrorMode(priorErrorMode); }
         if (p == null)
         {
             Console.Error.WriteLine("aware-tekla: Process.Start returned null");
