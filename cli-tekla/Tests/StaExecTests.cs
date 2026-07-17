@@ -20,6 +20,7 @@ public class StaExecTests
             Array.Empty<MetadataReference>(),
             argsNode: null,
             teklaBinDir: null,
+            expectedPid: null,
             Program.ScriptCommitPolicy.Automatic);
 
     [Fact]

@@ -1420,8 +1420,13 @@ internal static class Program
             EmitExecError("missing required field: code (the C# script to compile + run)");
             return 2;
         }
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "exec", null, null);
+            return 2;
+        }
 
-        return ExecuteResolvedScript("exec", code!, version, argsNode, ScriptCommitPolicy.Automatic);
+        return ExecuteResolvedScript("exec", code!, version, pid, argsNode, ScriptCommitPolicy.Automatic);
     }
 
     // ── bake-scene ─────────────────────────────────────────────────────────────
@@ -1450,16 +1455,50 @@ internal static class Program
             return 2;
         }
         string? version = input?["version"]?.GetValue<string>() ?? args.Version;
+        if (!TryReadPid(input, args, out var pid, out var pidError))
+        {
+            EmitExecFail(pidError!, "", "bake-scene", null, null);
+            return 2;
+        }
 
         // Hand the scene to the embedded bake script as the `args.scene` global.
         var argsNode = new JsonObject
         {
             ["scene"] = scene.DeepClone(),
         };
-        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, argsNode, ScriptCommitPolicy.ScriptOwned);
+        return ExecuteResolvedScript("bake-scene", BakeSceneCode, version, pid, argsNode, ScriptCommitPolicy.ScriptOwned);
     }
 
     internal static string TrimJsonBom(string input) => input.TrimStart('\uFEFF');
+
+    // Resolve the target PID for exec/bake: the stdin JSON `pid` (how floless.app passes it) takes
+    // precedence, falling back to the `--pid` CLI flag. A `pid` field that is PRESENT but not a valid
+    // integer is a caller error, not an absent pid — reject it (error out), because silently ignoring
+    // it would run against whatever single host is up despite the caller's assertion, which is unsafe
+    // for a write script (#290 review). Returns false + `error` on a malformed pid.
+    internal static bool TryReadPid(JsonNode? input, ParsedArgs args, out int? pid, out string? error)
+    {
+        error = null;
+        // Distinguish a PRESENT `pid` key from an absent one: `input["pid"]` returns null for BOTH a
+        // missing property and an explicit `"pid": null`, so check key presence. A present key must
+        // be a valid integer — null / string / float / out-of-range are caller errors, not "absent"
+        // (a dynamic target that resolved to null must fail, not silently write to the sole host).
+        if (input is JsonObject obj && obj.ContainsKey("pid"))
+        {
+            if (obj["pid"] is JsonValue v && v.TryGetValue<int>(out var p))
+            {
+                pid = p;
+                return true;
+            }
+            pid = null;
+            error = obj["pid"] is null
+                ? "invalid `pid`: expected an integer, got null"
+                : $"invalid `pid`: expected an integer, got {obj["pid"]!.ToJsonString()}";
+            return false;
+        }
+        pid = args.Pid;
+        return true;
+    }
 
     internal static string ComputeBakeMaterializationHash(JsonNode scene, string? version)
     {
@@ -1501,6 +1540,7 @@ internal static class Program
         string verb,
         string code,
         string? version,
+        int? pid,
         JsonObject? argsNode,
         ScriptCommitPolicy? commitPolicy = null)
     {
@@ -1516,19 +1556,40 @@ internal static class Program
         // requested one (#264) — otherwise a request for a non-running major can never connect
         // ("No live Tekla model …") even with a model open. The requested `version` is only a
         // fallback for the no-instance (smoke-test) path. `resolveVersion` carries the chosen
-        // version out of the try.
+        // version out.
         string? resolveVersion = version;
+        ExecTarget target;
         try
         {
-            var match = PickHostInstance(version, EnumerateRunningTeklas());
-            if (match is not null)
-            {
-                hostPid = match.Pid;
-                hostVersion = match.Version;
-                resolveVersion = match.Version;
-            }
+            var (rawCount, instances) = DiscoverTeklas();
+            target = ResolveExecTarget(pid, version, rawCount, instances);
         }
-        catch { /* enumeration failure is non-fatal; pid stays null, requested version stands */ }
+        catch (Exception e)
+        {
+            // Fail CLOSED: if we can't enumerate the running Tekla processes we cannot establish
+            // that exactly one is live, and proceeding to new Model() risks the ambiguous connection
+            // / CLR crash this guard exists to prevent (#290 review). Refuse with a receipt.
+            EmitExecFail($"could not enumerate Tekla instances: {e.Message}", "", verb, hostVersion, hostPid);
+            return 4;
+        }
+
+        switch (target.Kind)
+        {
+            case ExecTargetKind.Ambiguous:
+            case ExecTargetKind.NotRunning:
+                // Refuse before touching the Open API — a roulette connection with more than one
+                // instance live is what CLR-crashes the sidecar (#290). Exit 4 = ambiguous target.
+                EmitExecFail(target.Message, "", verb, hostVersion, hostPid);
+                return 4;
+            case ExecTargetKind.Resolved:
+                hostPid = target.Instance!.Pid;
+                hostVersion = target.Instance.Version;
+                resolveVersion = target.Instance.Version;
+                break;
+            case ExecTargetKind.NoHost:
+                // Smoke-test path: no live host, requested version drives DLL resolution.
+                break;
+        }
 
         if (string.Equals(verb, "bake-scene", StringComparison.Ordinal)
             && argsNode?["scene"] is JsonNode bakeScene)
@@ -1584,6 +1645,7 @@ internal static class Program
                 probedReferences,
                 argsNode,
                 probedDir,
+                hostPid,
                 commitPolicy ?? CommitPolicyForVerb(verb));
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
@@ -1642,6 +1704,7 @@ internal static class Program
         IReadOnlyList<MetadataReference> teklaReferences,
         JsonObject? argsNode,
         string? teklaBinDir,
+        int? expectedPid,
         ScriptCommitPolicy commitPolicy)
     {
         JsonNode? result = null;
@@ -1651,7 +1714,7 @@ internal static class Program
             try
             {
                 result = SerializeResult(
-                    RunScript(code, teklaReferences, argsNode, teklaBinDir, commitPolicy));
+                    RunScript(code, teklaReferences, argsNode, teklaBinDir, expectedPid, commitPolicy));
             }
             catch (Exception e) { fault = e; }
         })
@@ -1679,6 +1742,7 @@ internal static class Program
         IReadOnlyList<MetadataReference> teklaReferences,
         JsonObject? argsNode,
         string? teklaBinDir,
+        int? expectedPid,
         ScriptCommitPolicy commitPolicy)
     {
         // Standard usings — enough for catalog-style snippets to stay
@@ -1736,6 +1800,26 @@ internal static class Program
         object? modelInstance = null;
         if (teklaBinDir is not null)
         {
+            // TOCTOU recheck (#290 review): the process set was snapshotted in ExecuteResolvedScript
+            // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which the Tekla
+            // process set could change. new Model() would then attach to an instance our loaded DLLs
+            // may not match. Recheck as late as possible (here, on the STA thread, immediately before
+            // the connection). Only two resolutions reach here (Ambiguous/NotRunning returned early),
+            // so `expectedPid` fully identifies which invariant to reassert:
+            //   • Resolved → expectedPid set → the SAME single instance must still be the only one live
+            //   • NoHost   → expectedPid null → NO Tekla may have started (DLLs are the requested
+            //                version, not a running one — a host appearing could version-mismatch)
+            {
+                var (rawNow, instNow) = DiscoverTeklas();
+                bool stillValid = expectedPid is int want
+                    ? rawNow == 1 && instNow.Count == 1 && instNow[0].Pid == want
+                    : rawNow == 0;
+                if (!stillValid)
+                    throw new InvalidOperationException(
+                        "the running Tekla instance set changed between host selection and connect "
+                        + "(a Tekla instance started, or the target closed). Retry with exactly one "
+                        + "Tekla open (or none for a type-only smoke test).");
+            }
             try
             {
                 modelInstance = ConstructTeklaModel(teklaBinDir);
@@ -2314,10 +2398,38 @@ internal static class Program
         }
     }
 
-    static List<TeklaInstance> EnumerateRunningTeklas()
+    static List<TeklaInstance> EnumerateRunningTeklas() => DiscoverTeklas().instances;
+
+    // Enumerate once, returning BOTH the raw TeklaStructures.exe process count and the subset we
+    // could actually inspect (read a version from the exe path). The raw count is load-bearing for
+    // exec safety (#290): a process we couldn't inspect — MainModule unreadable because it runs at a
+    // different elevation, or an unrecognized custom install path — still exists, and new Model()
+    // could attach to it. exec therefore treats rawCount > inspected as unsafe rather than assuming
+    // the instances it happened to see are all of them.
+    internal static (int rawCount, List<TeklaInstance> instances) DiscoverTeklas()
     {
-        var result = new List<TeklaInstance>();
+        int mySession;
+        try { mySession = Process.GetCurrentProcess().SessionId; }
+        catch { mySession = -1; } // unknown → don't filter (count all), the safe default
+
+        // The Open API's remoting channel (a session-local memory-mapped file) only reaches Tekla
+        // instances in the SAME Windows session as this sidecar. On RDP / multi-user hosts,
+        // GetProcessesByName returns Tekla from EVERY session, so an unreachable other-session
+        // instance must not count toward ambiguity or be selectable (#290 review). Exclude only
+        // processes we can POSITIVELY place in a different session; an unreadable SessionId errs
+        // toward counting (a false ambiguous just asks the user to close others, whereas dropping a
+        // reachable instance would risk the wrong-model connect).
+        var reachable = new List<Process>();
         foreach (var p in Process.GetProcessesByName("TeklaStructures"))
+        {
+            bool differentSession;
+            try { differentSession = mySession >= 0 && p.SessionId != mySession; }
+            catch { differentSession = false; }
+            if (!differentSession) reachable.Add(p);
+        }
+
+        var instances = new List<TeklaInstance>();
+        foreach (var p in reachable)
         {
             try
             {
@@ -2328,27 +2440,90 @@ internal static class Program
                 var version = ExtractVersionFromPath(path);
                 if (version is null) continue;
 
-                result.Add(new TeklaInstance(p.Id, version, path));
+                instances.Add(new TeklaInstance(p.Id, version, path));
             }
             catch
             {
-                // Inaccessible process — skip silently.
+                // Inaccessible process — counted in rawCount, absent from instances.
             }
         }
-        return result;
+        return (reachable.Count, instances);
     }
 
-    // The running Tekla instance a live op will actually connect to, given the caller's requested
-    // version: prefer an exact version match, else the first running instance, else null (nothing
-    // running). The Open API is version-locked to whatever instance is open, so this instance's
-    // version — not the requested one — must drive DLL resolution (#264). Pure + internal so it is
-    // unit-tested without a live Tekla.
-    internal static TeklaInstance? PickHostInstance(string? requestedVersion, IReadOnlyList<TeklaInstance> instances)
+    internal enum ExecTargetKind
     {
-        TeklaInstance? match = null;
-        if (!string.IsNullOrEmpty(requestedVersion))
-            match = instances.FirstOrDefault(i => i.Version == requestedVersion);
-        return match ?? instances.FirstOrDefault();
+        NoHost,      // nothing running — smoke-test path (types resolve; live calls report disconnected)
+        Resolved,    // exactly one safe target to run against
+        Ambiguous,   // >1 live instance — the out-of-process Open API can't be bound to one; refuse
+        NotRunning,  // an explicit --pid named a target that isn't among the running instances
+    }
+
+    internal readonly struct ExecTarget
+    {
+        public ExecTargetKind Kind { get; }
+        public TeklaInstance? Instance { get; }
+        public string Message { get; }
+        public ExecTarget(ExecTargetKind kind, TeklaInstance? instance, string message)
+        {
+            Kind = kind;
+            Instance = instance;
+            Message = message;
+        }
+    }
+
+    // Decide which running Tekla an exec/bake will connect to — the fix for #290. The Open API's
+    // out-of-process `new Model()` cannot be bound to a chosen process: with more than one Tekla
+    // live it may attach to an instance OTHER than the one whose DLLs we loaded, and a version
+    // mismatch there hard-crashes the CLR without a receipt. Safety keys off the RAW process count
+    // (`rawProcessCount`), NOT the inspected `instances` list — a process we couldn't inspect still
+    // exists and new Model() could attach to it (#290 review). So:
+    //   • 0 processes                         → NoHost   (smoke-test; requested version drives DLLs)
+    //   • exactly 1 process, inspected        → Resolved (bind DLLs to ITS version, not the request — #264)
+    //   • >1 process, or any uninspected      → Ambiguous (refuse; --pid can't rescue it — there is no
+    //                                            per-PID API binding — so close all but one)
+    // An explicit --pid is honoured as an assertion, not a router: it must name the single running
+    // instance, else NotRunning. Pure + internal so it is unit-tested without a live Tekla.
+    internal static ExecTarget ResolveExecTarget(
+        int? pid, string? requestedVersion, int rawProcessCount, IReadOnlyList<TeklaInstance> instances)
+    {
+        // Nothing running. An explicit --pid asked for a live target, so say it isn't there rather
+        // than silently taking the smoke-test path.
+        if (rawProcessCount == 0)
+        {
+            return pid is int p0
+                ? new ExecTarget(ExecTargetKind.NotRunning, null,
+                    $"requested pid {p0} is not running; no Tekla is running.")
+                : new ExecTarget(ExecTargetKind.NoHost, null, "no running Tekla instance");
+        }
+
+        // Safe ONLY when there is exactly one Tekla process AND we could inspect it. Anything else —
+        // more than one process, or a process we couldn't read — is ambiguous, because new Model()
+        // may attach to a process other than the one we resolved.
+        bool safeSingle = rawProcessCount == 1 && instances.Count == 1;
+        if (!safeSingle)
+        {
+            string detail = instances.Count < rawProcessCount
+                ? $"{rawProcessCount} Tekla processes are running but {rawProcessCount - instances.Count} "
+                  + "could not be inspected (a different elevation, or an unrecognized install path)"
+                : $"{rawProcessCount} Tekla instances are running ("
+                  + string.Join(", ", instances.Select(i => $"pid {i.Pid} ({i.Version})")) + ")";
+            return new ExecTarget(ExecTargetKind.Ambiguous, null,
+                detail + ". aware-tekla exec/bake connect out-of-process via new Model(), which the "
+                + "Tekla Open API cannot bind to a specific instance — it may attach to the wrong one "
+                + "and crash (0xe0434352). Close all but one Tekla instance and retry.");
+        }
+
+        var only = instances[0];
+
+        // An explicit --pid names a live target; assert it rather than silently using a different one.
+        if (pid is int p && only.Pid != p)
+            return new ExecTarget(ExecTargetKind.NotRunning, null,
+                $"requested pid {p} is not running; the only live Tekla is pid {only.Pid} ({only.Version}).");
+
+        // Use the single running instance: its version drives DLL resolution even if a different
+        // version was requested (#264) — it is the only thing new Model() can attach to.
+        _ = requestedVersion;
+        return new ExecTarget(ExecTargetKind.Resolved, only, "");
     }
 
     internal static string? ExtractVersionFromPath(string path)

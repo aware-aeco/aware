@@ -226,6 +226,14 @@ commands:
           Tekla version. Used to discover {host_install} and load the
           matching Tekla.Structures.*.dll set per dll-probe-paths. Omit
           for primitive smoke tests that never touch Tekla types.
+      pid:
+        type: integer
+        required: false
+        description: |
+          Target Tekla PID (asserted, not routed). exec requires exactly one
+          live Tekla — the out-of-process Open API cannot be bound to a chosen
+          process (#290). With one instance live a mismatched `pid` is rejected;
+          with more than one, exec refuses regardless of `pid`. See exec.md.
       args:
         type: object
         required: false
@@ -283,6 +291,13 @@ commands:
         description: |
           Tekla version — selects the version-specific remoting channel (a wrong
           version silently finds no model). Use the running Tekla's version.
+      pid:
+        type: integer
+        required: false
+        description: |
+          Target Tekla PID (asserted, not routed). Like exec, bake-scene requires
+          exactly one live Tekla — the out-of-process Open API cannot be bound to
+          a chosen process (#290). Refused when more than one instance is live.
     outputs:
       type: single
       schema:
