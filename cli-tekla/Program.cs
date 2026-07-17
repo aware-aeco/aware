@@ -1801,19 +1801,24 @@ internal static class Program
         if (teklaBinDir is not null)
         {
             // TOCTOU recheck (#290 review): the process set was snapshotted in ExecuteResolvedScript
-            // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which a second
-            // Tekla could start. new Model() would then attach to an instance our loaded DLLs may not
-            // match. Recheck as late as possible (here, on the STA thread, immediately before the
-            // connection) that the resolved instance is still the ONLY one live. This throws out to
-            // the exec receipt rather than risking the ambiguous connect.
-            if (expectedPid is int want)
+            // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which the Tekla
+            // process set could change. new Model() would then attach to an instance our loaded DLLs
+            // may not match. Recheck as late as possible (here, on the STA thread, immediately before
+            // the connection). Only two resolutions reach here (Ambiguous/NotRunning returned early),
+            // so `expectedPid` fully identifies which invariant to reassert:
+            //   • Resolved → expectedPid set → the SAME single instance must still be the only one live
+            //   • NoHost   → expectedPid null → NO Tekla may have started (DLLs are the requested
+            //                version, not a running one — a host appearing could version-mismatch)
             {
                 var (rawNow, instNow) = DiscoverTeklas();
-                if (rawNow != 1 || instNow.Count != 1 || instNow[0].Pid != want)
+                bool stillValid = expectedPid is int want
+                    ? rawNow == 1 && instNow.Count == 1 && instNow[0].Pid == want
+                    : rawNow == 0;
+                if (!stillValid)
                     throw new InvalidOperationException(
                         "the running Tekla instance set changed between host selection and connect "
-                        + "(a second instance started, or the target closed). Retry with exactly one "
-                        + "Tekla open.");
+                        + "(a Tekla instance started, or the target closed). Retry with exactly one "
+                        + "Tekla open (or none for a type-only smoke test).");
             }
             try
             {
