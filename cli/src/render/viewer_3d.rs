@@ -1402,24 +1402,49 @@ fn classify_operations(
                     .get("tool")
                     .and_then(Value::as_object)
                     .ok_or_else(|| scene_error(&format!("{path}.tool"), "must be an object"))?;
-                if tool.get("kind").and_then(Value::as_str) != Some("cylinder") {
-                    return Err(scene_error(
-                        &format!("{path}.tool.kind"),
-                        "must be `cylinder`",
-                    ));
+                // Accept both finite tool kinds so a box cope passes validation (viewer-3d approximates no
+                // Boolean CSG for either, so both stay unsupported below — but neither aborts the scene).
+                match tool.get("kind").and_then(Value::as_str) {
+                    Some("cylinder") => {
+                        let tool_axis = tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
+                            scene_error(&format!("{path}.tool.axis"), "must be an object")
+                        })?;
+                        let from =
+                            vector::<3>(tool_axis.get("from"), &format!("{path}.tool.axis.from"))?;
+                        let to = vector::<3>(tool_axis.get("to"), &format!("{path}.tool.axis.to"))?;
+                        if from == to {
+                            return Err(scene_error(
+                                &format!("{path}.tool.axis"),
+                                "must have nonzero length",
+                            ));
+                        }
+                        positive_number(tool.get("diameterMm"), &format!("{path}.tool.diameterMm"))?;
+                    }
+                    Some("box") => {
+                        let frame = tool.get("frame").and_then(Value::as_object).ok_or_else(|| {
+                            scene_error(&format!("{path}.tool.frame"), "must be an object")
+                        })?;
+                        for axis in ["origin", "uDir", "vDir", "normal"] {
+                            vector::<3>(frame.get(axis), &format!("{path}.tool.frame.{axis}"))?;
+                        }
+                        let he = tool
+                            .get("halfExtents")
+                            .and_then(Value::as_array)
+                            .filter(|a| a.len() == 3)
+                            .ok_or_else(|| {
+                                scene_error(&format!("{path}.tool.halfExtents"), "must be three numbers")
+                            })?;
+                        for (i, h) in he.iter().enumerate() {
+                            positive_number(Some(h), &format!("{path}.tool.halfExtents[{i}]"))?;
+                        }
+                    }
+                    _ => {
+                        return Err(scene_error(
+                            &format!("{path}.tool.kind"),
+                            "must be `cylinder` or `box`",
+                        ));
+                    }
                 }
-                let tool_axis = tool.get("axis").and_then(Value::as_object).ok_or_else(|| {
-                    scene_error(&format!("{path}.tool.axis"), "must be an object")
-                })?;
-                let from = vector::<3>(tool_axis.get("from"), &format!("{path}.tool.axis.from"))?;
-                let to = vector::<3>(tool_axis.get("to"), &format!("{path}.tool.axis.to"))?;
-                if from == to {
-                    return Err(scene_error(
-                        &format!("{path}.tool.axis"),
-                        "must have nonzero length",
-                    ));
-                }
-                positive_number(tool.get("diameterMm"), &format!("{path}.tool.diameterMm"))?;
                 receipt.unsupported.push(serde_json::json!({
                     "id": id, "status": "unsupported", "kind": kind,
                     "code": "exact-csg-not-available",
