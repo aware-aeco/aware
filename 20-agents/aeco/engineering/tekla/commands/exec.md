@@ -18,7 +18,18 @@ The verb that closes the loop between the **catalog** (what types exist, what me
 |---|---|---|---|
 | `code` | string | **yes** | C# snippet. Optional trailing `return X;` makes the value bubble up as the receipt's `result` field. |
 | `version` | string | recommended | Target Tekla version (e.g. `"2026.0"`). Used to discover the install dir and load the matching `Tekla.Structures.*.dll` set. Omit only for primitive smoke tests that never reference Tekla types. |
+| `pid` | int | no | Explicit target Tekla PID (also the `--pid` CLI flag). Asserted, not routed — see **Host selection** below. |
 | `args` | object | no | Free-form input bag, exposed to the script as `IDictionary<string,object> args`. |
+
+## Host selection (one live instance)
+
+`exec`/`bake-scene` connect to Tekla out-of-process via `new Model()`, and the Tekla Open API **cannot bind that connection to a specific process**. So host selection is by count, not by choice (#290):
+
+- **0 running** → smoke-test path: the script compiles and can reference types, but live calls report `GetConnectionStatus() == false`.
+- **exactly 1 running** → runs against it. Its version drives DLL resolution even if a different `version` was requested (#264), since it is the only instance the API can attach to.
+- **more than 1 running** → **refused** with a structured `ok:false` receipt (exit code `4`), because the API might attach to a different instance than the one whose DLLs were loaded and hard-crash the CLR (`0xe0434352`). Close all but one Tekla and retry.
+
+`pid`/`version` are honoured as **assertions**: with one instance live, a `pid` that doesn't match it is rejected. They cannot select among multiple live instances — there is no per-PID binding out-of-process, so the multi-instance case always refuses regardless of `pid`.
 
 ### Pre-imported namespaces
 
@@ -106,6 +117,8 @@ This is the closest the Tekla Open API gets to ACID. If you need stronger guaran
 | Error shape | Cause | Recovery |
 |---|---|---|
 | `missing required field: code` | Stdin JSON didn't include `code`. | Add it. |
+| `N Tekla instances are running (...)` (exit 4) | More than one Tekla is open; the out-of-process API can't be bound to one (#290). | Close all but one Tekla instance and retry. |
+| `requested pid P is not running; ...` (exit 4) | An explicit `pid` named a target that isn't the single live instance. | Use the running instance's pid, or drop `pid`. |
 | `compile error: ...` | Script failed Roslyn compilation. | Re-draft. Diagnostics in `stack` field. |
 | `<ExceptionType>: <msg>` runtime | Script threw at runtime. | Inspect stack; common cases: Tekla connection lost mid-call, wrong namespace, type missing in catalog. |
 | `Model.CommitChanges() failed after script success` | Script ran fine but commit hit the Tekla DB. | Often means the model has un-saveable state (read-only model, sharing conflict). Inspect; do not retry blindly. |
