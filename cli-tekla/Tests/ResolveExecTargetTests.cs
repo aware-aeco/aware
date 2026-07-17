@@ -4,13 +4,12 @@ using Xunit;
 
 namespace AwareTekla.Tests;
 
-// #290: exec/bake connect out-of-process via `new Model()`, which the Tekla Open API cannot bind
-// to a chosen instance. With more than one Tekla live it may attach to a different instance than
-// the one whose DLLs were loaded — a version mismatch there hard-crashes the CLR (0xe0434352).
-// ResolveExecTarget is the pure selection that refuses that ambiguity. Safety keys off the RAW
-// process count, not just the instances we could inspect (a process we can't read still exists).
-// It also preserves the #264 single-instance behaviour (bind to the running version, not the
-// requested one). These lock in its behaviour without a live Tekla.
+// #290/#292 refined: exec/bake connect out-of-process via `new Model()`, which the Tekla Open API
+// binds by VERSION (the loaded Tekla.Structures.* major), not PID. So DIFFERENT majors run side by
+// side and a --version/--pid selector picks one deterministically; the irreducible ambiguity is only
+// two instances of the SAME major (identical DLLs) or an uninspectable process (unknown major). These
+// lock in ResolveExecTarget's selection without a live Tekla, and preserve the #264 single-instance
+// bind-to-running-version behaviour.
 public class ResolveExecTargetTests
 {
     static Program.TeklaInstance Inst(int pid, string version) =>
@@ -77,36 +76,71 @@ public class ResolveExecTargetTests
     }
 
     [Fact]
-    public void MultipleInstances_DifferentVersions_IsAmbiguous()
+    public void MultipleInstances_DifferentVersions_NoSelector_IsAmbiguous()
     {
-        // The exact #290 crash setup: 2025.0 + 2026.0 both open. Refuse rather than roulette-connect.
+        // 2025.0 + 2026.0 open with NO --version/--pid: we can't pick for the caller, but either is
+        // reachable — refuse and tell them to name one (different majors run side by side fine).
         var t = Resolve(null, null,
             new List<Program.TeklaInstance> { Inst(100, "2025.0"), Inst(200, "2026.0") });
         Assert.Equal(Program.ExecTargetKind.Ambiguous, t.Kind);
         Assert.Null(t.Instance);
-        Assert.Contains("2 Tekla instances", t.Message);
+        Assert.Contains("--version", t.Message);
         Assert.Contains("100", t.Message);
         Assert.Contains("200", t.Message);
     }
 
     [Fact]
+    public void MultipleInstances_VersionSelectsOneMajor_Resolves()
+    {
+        // The corrected behaviour: with 2025.0 + 2026.0 open, --version 2025.0 binds that major's DLLs,
+        // so new Model() connects to the 2025.0 instance. Resolve to it (don't refuse).
+        var t = Resolve(null, "2025.0",
+            new List<Program.TeklaInstance> { Inst(100, "2025.0"), Inst(200, "2026.0") });
+        Assert.Equal(Program.ExecTargetKind.Resolved, t.Kind);
+        Assert.Equal(100, t.Instance!.Pid);
+        Assert.Equal("2025.0", t.Instance.Version);
+    }
+
+    [Fact]
+    public void MultipleInstances_PidSelectsOneMajor_Resolves()
+    {
+        // --pid naming one of two DIFFERENT-major instances resolves to it (its major's DLLs bind).
+        var t = Resolve(200, null,
+            new List<Program.TeklaInstance> { Inst(100, "2025.0"), Inst(200, "2026.0") });
+        Assert.Equal(Program.ExecTargetKind.Resolved, t.Kind);
+        Assert.Equal(200, t.Instance!.Pid);
+        Assert.Equal("2026.0", t.Instance.Version);
+    }
+
+    [Fact]
     public void MultipleInstances_SameVersion_IsStillAmbiguous()
     {
-        // Even same-version instances are ambiguous: the API still binds to an unpredictable one, so
-        // a write could hit the wrong model. Refuse.
+        // Two instances of the SAME major have identical DLLs, so new Model() can't tell them apart —
+        // this is the irreducible ambiguity that still must refuse, even with --version.
         var t = Resolve(null, "2026.0",
+            new List<Program.TeklaInstance> { Inst(100, "2026.0"), Inst(200, "2026.0") });
+        Assert.Equal(Program.ExecTargetKind.Ambiguous, t.Kind);
+        Assert.Contains("2026.0", t.Message);
+    }
+
+    [Fact]
+    public void MultipleInstances_PidNamesSameMajorSibling_IsAmbiguous()
+    {
+        // --pid names one of two SAME-major instances: the version-bound API still can't distinguish
+        // the siblings, so refuse (the pid can't rescue same-major multiplicity).
+        var t = Resolve(100, null,
             new List<Program.TeklaInstance> { Inst(100, "2026.0"), Inst(200, "2026.0") });
         Assert.Equal(Program.ExecTargetKind.Ambiguous, t.Kind);
     }
 
     [Fact]
-    public void MultipleInstances_PidNamesOne_IsStillAmbiguous()
+    public void MultipleInstances_PidNotPresent_IsNotRunning()
     {
-        // --pid cannot rescue multi-instance: there is no per-PID binding out-of-process, so the API
-        // may still attach elsewhere. Refuse regardless of --pid.
-        var t = Resolve(200, null,
+        // --pid names a process that isn't among the running instances → NotRunning, not a silent pick.
+        var t = Resolve(999, null,
             new List<Program.TeklaInstance> { Inst(100, "2025.0"), Inst(200, "2026.0") });
-        Assert.Equal(Program.ExecTargetKind.Ambiguous, t.Kind);
+        Assert.Equal(Program.ExecTargetKind.NotRunning, t.Kind);
+        Assert.Contains("999", t.Message);
     }
 
     [Fact]
