@@ -82,11 +82,11 @@ public class StaExecTests
     }
 
     [Fact]
-    public void Disarm_Is_A_Single_Claim()
+    public void Receipt_Slot_Is_A_Single_Claim()
     {
         Program.ArmLastResortReceipt("exec", null, null);
-        Assert.True(Program.DisarmLastResortReceipt());   // first claimant wins
-        Assert.False(Program.DisarmLastResortReceipt());  // losers are told so
+        Assert.True(Program.TryClaimReceipt());   // first claimant wins
+        Assert.False(Program.TryClaimReceipt());  // losers are told so
     }
 
     [Fact]
@@ -115,12 +115,12 @@ public class StaExecTests
             // A fired fallback also forces a failing status, and the normal
             // path (a would-be second claimant) is told to suppress its receipt.
             Assert.Equal(2, Environment.ExitCode);
-            Assert.False(Program.DisarmLastResortReceipt());
+            Assert.False(Program.TryClaimReceipt());
         }
         finally
         {
             Console.SetOut(prior);
-            Program.DisarmLastResortReceipt();
+            Program.TryClaimReceipt();
             Environment.ExitCode = priorExitCode; // don't fail the test host
         }
     }

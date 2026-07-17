@@ -87,17 +87,27 @@ internal static class Program
         System.Threading.Interlocked.Exchange(ref _lastResortArmed, 1);
     }
 
-    // Claim the armed state. Exactly ONE claimant wins: either the normal
-    // completion path (returns true → emit the normal receipt) or a
-    // last-resort hook (normal path then gets false → its receipt is
-    // suppressed, because a fail receipt already went out and a second,
-    // contradictory one would corrupt the protocol).
-    internal static bool DisarmLastResortReceipt()
+    // Claim the single receipt slot. Exactly ONE caller wins the exchange:
+    // either the normal completion path (true → it emits the ok/fail receipt)
+    // or a last-resort hook (then the normal path gets false and suppresses
+    // its own receipt). This is what guarantees the protocol carries exactly
+    // ONE receipt per invocation.
+    //
+    // The claim is taken BEFORE the winner writes its receipt, which leaves a
+    // sub-microsecond window: if the CLR is terminated by an async fault after
+    // the normal path claims but before EmitExecOk finishes the write, no
+    // receipt reaches the pipe. That is deliberate — the alternative
+    // (emit-then-claim) is strictly worse: a fault in ITS window appends a
+    // second, contradictory receipt, and two JSON objects on stdout make the
+    // CLI's whole-stdout parse fail even on a successful exec. The empty-pipe
+    // outcome is instead handled cleanly on the CLI side, which labels it
+    // "process terminated without emitting a receipt" (invoker.rs).
+    internal static bool TryClaimReceipt()
         => System.Threading.Interlocked.Exchange(ref _lastResortArmed, 0) == 1;
 
     internal static void EmitLastResortReceipt(string message, string stack)
     {
-        if (!DisarmLastResortReceipt()) return;
+        if (!TryClaimReceipt()) return;
         // An ok:false receipt must never ride a success status
         // (Environment.Exit(0) from vendor code); deliberate non-zero
         // codes are preserved.
@@ -109,8 +119,25 @@ internal static class Program
         catch { /* the process is dying; nothing safer to do */ }
     }
 
+    [DllImport("kernel32.dll")]
+    static extern uint SetErrorMode(uint uMode);
+
+    // Suppress the Windows Error Reporting "Application Error" dialog and the
+    // critical-error handler popup (#290). aware-tekla is a HEADLESS sidecar
+    // spawned by the aware CLI — an unhandled CLR/native fault (a vendor crash,
+    // a wrong-PID Model connect) must die with a receipt or a non-zero exit,
+    // never block on a modal dialog that hangs the parent's wait_with_output().
+    const uint SEM_FAILCRITICALERRORS = 0x0001;
+    const uint SEM_NOGPFAULTERRORBOX = 0x0002;
+
     static int Main(string[] args)
     {
+        // First statement, before anything can fault: go headless. Combined
+        // with the last-resort receipt hooks below, a crash then produces a
+        // structured receipt (or the CLI's "terminated without a receipt"
+        // label) instead of a blocking WER dialog (#290, #283).
+        SetErrorMode(SEM_FAILCRITICALERRORS | SEM_NOGPFAULTERRORBOX);
+
         // Force UTF-8 on stdin/stdout — .NET Framework defaults to the
         // Windows OEM codepage which mangles em-dashes, smart quotes,
         // accented chars etc when JSON travels in either direction.
@@ -1560,7 +1587,7 @@ internal static class Program
                 commitPolicy ?? CommitPolicyForVerb(verb));
             // Losing the disarm race means a last-resort hook already emitted
             // a fail receipt (a background-thread fault) — ours is suppressed.
-            if (!DisarmLastResortReceipt()) return 2;
+            if (!TryClaimReceipt()) return 2;
             if (ScriptResultReportsFailure(verb, resultNode))
             {
                 EmitExecResultFail(resultNode, verb, hostVersion, hostPid);
@@ -1571,7 +1598,7 @@ internal static class Program
         }
         catch (CompilationErrorException ce)
         {
-            if (!DisarmLastResortReceipt()) return 2;
+            if (!TryClaimReceipt()) return 2;
             // Script failed to compile — surface diagnostics so the caller
             // (likely an AI) can re-draft.
             var diagnostics = string.Join("\n", ce.Diagnostics.Select(d => d.ToString()));
@@ -1580,7 +1607,7 @@ internal static class Program
         }
         catch (Exception e)
         {
-            if (!DisarmLastResortReceipt()) return 2;
+            if (!TryClaimReceipt()) return 2;
             var root = e;
             while (root is TargetInvocationException && root.InnerException is not null)
                 root = root.InnerException;
@@ -1676,7 +1703,21 @@ internal static class Program
                 // continuation inline on the posting thread — it loses STA
                 // affinity, but the script has completed, and killing the
                 // sidecar over a straggler would be worse.
-                d(state);
+                //
+                // Critically, this callback can be async-void's fault-rethrow
+                // path: invoking it may throw the straggler's own exception on
+                // this (thread-pool) thread, which would be unhandled and take
+                // the process down AFTER its receipt was already published.
+                // The exec is done and its receipt is out — a late
+                // fire-and-forget fault is a script-authoring bug, so swallow
+                // it to stderr rather than let it terminate the bridge (#283).
+                try { d(state); }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(
+                        "aware-tekla: ignored fault in fire-and-forget async work " +
+                        $"after exec returned: {ex.GetType().Name}: {ex.Message}");
+                }
             }
         }
 
