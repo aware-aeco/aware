@@ -2408,9 +2408,28 @@ internal static class Program
     // the instances it happened to see are all of them.
     internal static (int rawCount, List<TeklaInstance> instances) DiscoverTeklas()
     {
-        var procs = Process.GetProcessesByName("TeklaStructures");
+        int mySession;
+        try { mySession = Process.GetCurrentProcess().SessionId; }
+        catch { mySession = -1; } // unknown → don't filter (count all), the safe default
+
+        // The Open API's remoting channel (a session-local memory-mapped file) only reaches Tekla
+        // instances in the SAME Windows session as this sidecar. On RDP / multi-user hosts,
+        // GetProcessesByName returns Tekla from EVERY session, so an unreachable other-session
+        // instance must not count toward ambiguity or be selectable (#290 review). Exclude only
+        // processes we can POSITIVELY place in a different session; an unreadable SessionId errs
+        // toward counting (a false ambiguous just asks the user to close others, whereas dropping a
+        // reachable instance would risk the wrong-model connect).
+        var reachable = new List<Process>();
+        foreach (var p in Process.GetProcessesByName("TeklaStructures"))
+        {
+            bool differentSession;
+            try { differentSession = mySession >= 0 && p.SessionId != mySession; }
+            catch { differentSession = false; }
+            if (!differentSession) reachable.Add(p);
+        }
+
         var instances = new List<TeklaInstance>();
-        foreach (var p in procs)
+        foreach (var p in reachable)
         {
             try
             {
@@ -2428,7 +2447,7 @@ internal static class Program
                 // Inaccessible process — counted in rawCount, absent from instances.
             }
         }
-        return (procs.Length, instances);
+        return (reachable.Count, instances);
     }
 
     internal enum ExecTargetKind
