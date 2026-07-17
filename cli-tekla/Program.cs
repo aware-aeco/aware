@@ -1623,9 +1623,19 @@ internal static class Program
     // (CatalogHandler, #283) have terminated the whole process when driven
     // from the default MTA main thread. Serialization happens ON the STA
     // thread too — a lazy Tekla enumerable serialized after the join would
-    // call back into Tekla from the MTA caller. No Win32 message pump here —
-    // if a vendor call turns out to need one, pump the way the watch path
-    // does; awaited continuations stay on-thread via PumpUntilComplete.
+    // call back into Tekla from the MTA caller.
+    //
+    // We deliberately do NOT install a single-threaded SynchronizationContext
+    // to keep top-level-`await` continuations on this STA thread. Doing so
+    // deadlocks any script that synchronously waits on context-capturing async
+    // work (`SomeAsync().Result`, `.Wait()`): the blocked STA thread is the
+    // only one that could pump the continuation it is waiting for. That hang is
+    // unbounded (the parent's wait_with_output has no timeout) — strictly worse
+    // than the alternative. So awaited continuations resume on the thread pool
+    // (RunAsync's default), and the rare `await …; model.Foo()` that then
+    // touches Tekla off-STA is caught by the last-resort receipt rather than
+    // hanging the bridge. Tekla's Open API is entirely synchronous, so real
+    // exec scripts almost never await at all.
     [MethodImpl(MethodImplOptions.NoInlining)]
     internal static JsonNode? RunScriptOnStaThread(
         string code,
@@ -1657,77 +1667,6 @@ internal static class Program
             // carries it so an AI caller can re-draft against the real frame.
             System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(fault).Throw();
         return result;
-    }
-
-    // Keep awaited continuations of a top-level `await` on the calling (STA)
-    // thread — without a SynchronizationContext they resume on the MTA thread
-    // pool, reintroducing the vendor thread-affinity failures the STA thread
-    // exists to prevent (#283). The AsyncPump pattern: continuations post to
-    // a single-consumer queue pumped on the current thread until the script's
-    // task completes.
-    static T PumpUntilComplete<T>(Func<System.Threading.Tasks.Task<T>> start)
-    {
-        var prior = System.Threading.SynchronizationContext.Current;
-        var ctx = new SingleThreadSynchronizationContext();
-        System.Threading.SynchronizationContext.SetSynchronizationContext(ctx);
-        try
-        {
-            var task = start();
-            task.ContinueWith(
-                _ => ctx.Complete(),
-                System.Threading.Tasks.TaskScheduler.Default);
-            ctx.RunOnCurrentThread();
-            return task.GetAwaiter().GetResult();
-        }
-        finally
-        {
-            System.Threading.SynchronizationContext.SetSynchronizationContext(prior);
-        }
-    }
-
-    sealed class SingleThreadSynchronizationContext : System.Threading.SynchronizationContext
-    {
-        readonly System.Collections.Concurrent.BlockingCollection<
-            (System.Threading.SendOrPostCallback Callback, object? State)> _queue = new();
-
-        public override void Post(System.Threading.SendOrPostCallback d, object? state)
-        {
-            try
-            {
-                _queue.Add((d, state));
-            }
-            catch (InvalidOperationException)
-            {
-                // The pump already shut down (the script returned while an
-                // async-void straggler was still in flight). Run the
-                // continuation inline on the posting thread — it loses STA
-                // affinity, but the script has completed, and killing the
-                // sidecar over a straggler would be worse.
-                //
-                // Critically, this callback can be async-void's fault-rethrow
-                // path: invoking it may throw the straggler's own exception on
-                // this (thread-pool) thread, which would be unhandled and take
-                // the process down AFTER its receipt was already published.
-                // The exec is done and its receipt is out — a late
-                // fire-and-forget fault is a script-authoring bug, so swallow
-                // it to stderr rather than let it terminate the bridge (#283).
-                try { d(state); }
-                catch (Exception ex)
-                {
-                    Console.Error.WriteLine(
-                        "aware-tekla: ignored fault in fire-and-forget async work " +
-                        $"after exec returned: {ex.GetType().Name}: {ex.Message}");
-                }
-            }
-        }
-
-        public void RunOnCurrentThread()
-        {
-            foreach (var item in _queue.GetConsumingEnumerable())
-                item.Callback(item.State);
-        }
-
-        public void Complete() => _queue.CompleteAdding();
     }
 
     // The canonical scene materializer is shipped with the bridge but isolated in
@@ -1822,9 +1761,11 @@ internal static class Program
             options: options,
             globalsType: typeof(ExecGlobals));
 
-        // Compile + execute. PumpUntilComplete keeps the continuations of any
-        // top-level `await` on THIS (STA) thread instead of the MTA pool.
-        var state = PumpUntilComplete(() => script.RunAsync(globals));
+        // Compile + execute. Top-level `await` continuations resume on the
+        // thread pool (no captured SynchronizationContext) — see
+        // RunScriptOnStaThread for why a single-threaded pump is NOT installed
+        // (it would deadlock sync-over-async scripts).
+        var state = script.RunAsync(globals).GetAwaiter().GetResult();
         var returnValue = state.ReturnValue;
 
         // Tekla "transaction-commit" — flush changes to the database. We

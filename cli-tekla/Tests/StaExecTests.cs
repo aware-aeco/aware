@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text.Json.Nodes;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Scripting;
 using Xunit;
@@ -30,21 +31,43 @@ public class StaExecTests
     }
 
     [Fact]
-    public void Awaited_Continuation_Stays_On_Sta_Thread()
-    {
-        // Without a pumping SynchronizationContext the continuation of a
-        // top-level await resumes on the MTA thread pool — exactly the
-        // vendor-fatal shape the STA thread exists to prevent.
-        var apartment = Run(
-            "await System.Threading.Tasks.Task.Delay(25);\n" +
-            "return System.Threading.Thread.CurrentThread.GetApartmentState().ToString();");
-        Assert.Equal("STA", apartment!.GetValue<string>());
-    }
-
-    [Fact]
     public void Script_Return_Value_Marshals_Back()
     {
         Assert.Equal(3, Run("return 1 + 2;")!.GetValue<int>());
+    }
+
+    [Fact]
+    public void Top_Level_Await_Completes_And_Returns()
+    {
+        // A top-level await must run to completion and marshal its value back.
+        // (The continuation resumes on the thread pool — we deliberately do NOT
+        // install a single-threaded pump, which would deadlock sync-over-async;
+        // see RunScriptOnStaThread.)
+        Assert.Equal(7, Run(
+            "await System.Threading.Tasks.Task.Delay(20);\nreturn 7;")!.GetValue<int>());
+    }
+
+    [Fact]
+    public void Sync_Over_Async_Does_Not_Deadlock()
+    {
+        // The exact shape Codex flagged: a finite script that synchronously
+        // waits on context-capturing async work. A single-threaded pump would
+        // hang here forever (the STA thread blocks on .Result while being the
+        // only thread that could pump the continuation). A watchdog thread
+        // fails the test instead of hanging the whole run if it regresses.
+        JsonNode? result = null;
+        var done = new System.Threading.ManualResetEventSlim(false);
+        var worker = new System.Threading.Thread(() =>
+        {
+            result = Run(
+                "async System.Threading.Tasks.Task<int> F() " +
+                "{ await System.Threading.Tasks.Task.Delay(10); return 1; }\n" +
+                "return F().Result;");
+            done.Set();
+        }) { IsBackground = true };
+        worker.Start();
+        Assert.True(done.Wait(TimeSpan.FromSeconds(15)), "sync-over-async script deadlocked");
+        Assert.Equal(1, result!.GetValue<int>());
     }
 
     [Fact]
@@ -62,23 +85,6 @@ public class StaExecTests
     public void Bad_Code_Surfaces_Compilation_Error()
     {
         Assert.Throws<CompilationErrorException>(() => Run("this is not C#"));
-    }
-
-    [Fact]
-    public void Async_Void_Straggler_Does_Not_Kill_The_Process()
-    {
-        // A script can fire async-void work and return before its awaited
-        // continuation lands. The continuation then Posts to a pump that has
-        // already shut down — that Post must run inline, never throw (a throw
-        // here is an unhandled exception that kills the sidecar).
-        var result = Run(
-            "async void Fire() { await System.Threading.Tasks.Task.Delay(80); }\n" +
-            "Fire();\n" +
-            "return 42;");
-        Assert.Equal(42, result!.GetValue<int>());
-        // Keep the process alive long enough for the straggler to land; if
-        // Post threw, this test run would crash rather than fail an assert.
-        System.Threading.Thread.Sleep(300);
     }
 
     [Fact]
