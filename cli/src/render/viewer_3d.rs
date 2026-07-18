@@ -400,7 +400,11 @@ const GRADE_FAMILIES=[
 // shades correctly here with no change to the producer. `meta.material` is accepted as a
 // fallback only; reading meta alone would silently drop every canonical scene to `painted`.
 function familyOf(e){
-  const raw=((e&&e.material)||(e.meta&&e.meta.material)||'').toString().trim();
+  // Trim EACH candidate before choosing, matching the IFC writer's treatment of a
+  // trimmed-empty material as absent. A bare `||` would pick a whitespace-only canonical
+  // value (truthy) and only then trim it to nothing, skipping the fallback entirely.
+  const pick=v=>(v==null?'':String(v)).trim();
+  const raw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material);
   if(!raw) return 'painted';
   if(MATERIALS[raw.toLowerCase()]) return raw.toLowerCase();   // an explicit family name wins outright
   const up=raw.toUpperCase();
@@ -2097,12 +2101,21 @@ mod tests {
         });
         let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
         let html = out["html"].as_str().unwrap();
+        // Whitespace-stripped copy so the assertions below survive re-alignment of the source.
+        let compact: String = html.chars().filter(|c| !c.is_whitespace()).collect();
 
         // Resolution order: the canonical element field FIRST, meta only as a fallback. Reading
         // meta alone would silently drop every canonical scene to the `painted` default.
         assert!(
-            html.contains("(e&&e.material)||(e.meta&&e.meta.material)"),
+            compact.contains("constraw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material)"),
             "element-level `material` wins; `meta.material` is only a fallback"
+        );
+        // Each candidate is trimmed BEFORE the choice, matching the IFC writer's treatment of a
+        // trimmed-empty material as absent — otherwise `material: "   "` (truthy) would win and
+        // then trim to nothing, silently skipping a perfectly good `meta.material`.
+        assert!(
+            compact.contains("constpick=v=>(v==null?'':String(v)).trim()"),
+            "candidates are trimmed before the fallback decision"
         );
 
         // The mode itself, and the material carried through into the document.
@@ -2130,8 +2143,6 @@ mod tests {
         assert!(html.contains("const MATERIALS="), "material table");
         // Match the table ENTRY, not the bare word — the family names also occur in prose, so a
         // substring check would pass against a comment while the table itself was empty.
-        // Whitespace is stripped so the assertion survives re-alignment of the table.
-        let compact: String = html.chars().filter(|c| !c.is_whitespace()).collect();
         for family in [
             "painted",
             "steel",
