@@ -284,7 +284,7 @@ function syncShadows(want){
   // Applied every pass, not just on change: setEnvironment used to set these from the PREVIOUS flag,
   // so the first switch into `shadowed` reported shadows on and rendered none. A rebuild also makes
   // fresh lights, which would otherwise keep the default castShadow=false while the flag said true.
-  if(lightKey) lightKey.castShadow=want;
+  if(lightKey) lightKey.castShadow=want;      // the LIGHT casts; which MESHES cast is decided per-pass below
   if(shadowGround) shadowGround.visible=want;
   if(shadowsEnabled===want) return;
   // Only the recompile is gated: changing shadowMap.enabled alters the shader defines.
@@ -352,6 +352,10 @@ function applyDisplayMode(){
     else if(displayMode==='xray'){ mat.wireframe=false; mat.transparent=true; mat.opacity=Math.min(base,0.25); mat.depthWrite=false; }
     else { const op = real&&real.opacity!=null ? Math.min(base,real.opacity) : base;
       mat.wireframe=false; mat.opacity=op; mat.transparent=op<1; mat.depthWrite=true; }
+    // Casting is decided HERE, not once at build time, because it depends on the opacity this pass
+    // just set. three's shadow depth material has no notion of ordinary transparency, so glass and
+    // any translucent element would otherwise cast as solidly as steel.
+    mesh.castShadow = shadowsEnabled && mat.opacity >= 0.95;
     mat.needsUpdate=true;
   }
 }
@@ -605,6 +609,10 @@ function applyTriplanar(material,scaleMm){
 function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.group]||0xffffff;
   const op=typeof e.opacity==='number'?e.opacity:(typeof opacityOf[e.group]==='number'?opacityOf[e.group]:1);
   const mat=new THREE.MeshStandardMaterial({color:col,metalness:0.5,roughness:0.5,transparent:op<1, opacity:op,side:doubleSided?THREE.DoubleSide:THREE.FrontSide});
+  // Clipping is applied globally via renderer.clippingPlanes, but the shadow pass uses a depth
+  // material that ignores it unless the material opts in. Without this, a clip plane, clip box or
+  // work area removes geometry from the view while it keeps casting an impossible shadow.
+  mat.clipShadows=true;
   const fam=familyOf(e);
   // Patch ONCE at creation rather than toggling with the mode: both replaced chunks are guarded by
   // USE_MAP/USE_ROUGHNESSMAP, so with no maps bound the patched shader matches the stock one — and
@@ -711,7 +719,7 @@ function renderScene(S){
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
       orientMember(mesh, dir); }
-    mesh.castShadow=true; mesh.receiveShadow=true;   // steel shadows onto steel, not just onto the ground
+           mesh.receiveShadow=true;   // steel catches shadow from steel, not just from the ground; casting is decided per-pass in applyDisplayMode
     mesh.userData=e; content.add(mesh); pickable.push(mesh);
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
