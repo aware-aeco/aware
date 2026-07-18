@@ -14,8 +14,10 @@
 //! static `html-report`, it does not render inside a no-scripts sandbox.
 //!
 //! Display modes: `solid` / `wire` / `xray` / `realistic`. **Realistic** shades each element from
-//! its `meta.material` — a semantic material the producer supplies (a family name like
-//! `"concrete"`, or an alloy grade like `"A992"`/`"A240 316"`) — against a generated
+//! its element-level `material` — the same field the IFC writer resolves, so a scene authored for
+//! export shades correctly with no producer change (`meta.material` is accepted as a fallback).
+//! The value is semantic: a family name like `"concrete"`, or an alloy grade like
+//! `"A992"`/`"A240 316"`. It is shaded against a generated
 //! image-based light. The grade→family→appearance mapping is the RENDERER's, not the scene's, so
 //! the look can improve without re-baking a scene; unknown or plain-carbon values fall back to
 //! `painted`, which keeps the element's group colour so the legend stays readable.
@@ -393,8 +395,12 @@ const GRADE_FAMILIES=[
   ['asphalt',    /ASPHALT|BITUMEN|TARMAC/],
   ['glass',      /GLASS|GLAZING/],
 ];
+// `material` is an ELEMENT-level field in the shared scene contract — the same one the IFC
+// writer resolves (`resolve_material` reads `el.material`), so a scene authored for IFC export
+// shades correctly here with no change to the producer. `meta.material` is accepted as a
+// fallback only; reading meta alone would silently drop every canonical scene to `painted`.
 function familyOf(e){
-  const raw=((e.meta&&e.meta.material)||'').toString().trim();
+  const raw=((e&&e.material)||(e.meta&&e.meta.material)||'').toString().trim();
   if(!raw) return 'painted';
   if(MATERIALS[raw.toLowerCase()]) return raw.toLowerCase();   // an explicit family name wins outright
   const up=raw.toUpperCase();
@@ -2082,13 +2088,22 @@ mod tests {
             "meta": { "name": "Mixed", "units": "mm", "up": "z" },
             "groups": [ { "key": "W16X26", "label": "Beams", "color": "#60a5fa" } ],
             "elements": [
+                // Element-level `material` is the canonical field — the same one the IFC writer
+                // resolves. A scene authored for export must shade correctly with no change.
                 { "id": "B1", "group": "W16X26", "kind": "box",
                   "from": [0,0,0], "to": [3000,0,0], "section": { "w": 140, "d": 400 },
-                  "meta": { "profile": "W16X26", "material": "A992" } }
+                  "material": "A992", "meta": { "profile": "W16X26" } }
             ]
         });
         let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
         let html = out["html"].as_str().unwrap();
+
+        // Resolution order: the canonical element field FIRST, meta only as a fallback. Reading
+        // meta alone would silently drop every canonical scene to the `painted` default.
+        assert!(
+            html.contains("(e&&e.material)||(e.meta&&e.meta.material)"),
+            "element-level `material` wins; `meta.material` is only a fallback"
+        );
 
         // The mode itself, and the material carried through into the document.
         assert!(
