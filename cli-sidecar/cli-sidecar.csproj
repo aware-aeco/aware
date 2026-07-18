@@ -61,7 +61,10 @@
       NoWarn list. We invoke AngleSharp only from inside Extractors/<vendor>/* and
       we never serialize AngleSharp types ourselves.
     -->
-    <PackageReference Include="AngleSharp" Version="1.1.2" />
+    <!-- 1.5.0 is the first release without GHSA-pgww-w46g-26qg (mXSS via an annotation-xml
+         integration-point bypass). NuGet audit runs as an error, so anything below it fails
+         restore outright. -->
+    <PackageReference Include="AngleSharp" Version="1.5.2" />
     <!--
       JsonSchema.Net: Draft 2020-12 JSON Schema validator (Greg Dennis). Already used
       by the Generator tests (Ingest/Generator/Tests/Tests.csproj at version 7.2.3);
