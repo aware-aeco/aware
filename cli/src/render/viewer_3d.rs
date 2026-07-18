@@ -242,6 +242,7 @@ function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes 
 // well under 300ms on real hardware; every later switch is free). Deliberately NOT pre-generated
 // at load: a viewer that never leaves Solid should not pay for it.
 let envRT=null, envFailed=false;
+let lightHemi=null, lightKey=null, lightFill=null;   // dimmed in Realistic; the environment lights it
 // Returns whether the environment is actually LIVE. If PMREM fails (lost context, a driver
 // without the float targets it needs) we must NOT go on to apply metalness=1 — with nothing to
 // reflect, that renders every metal element BLACK, which is far worse than not switching at all.
@@ -256,8 +257,16 @@ function setEnvironment(on){
   }
   const live = on && !!envRT;
   scene.environment = live ? envRT.texture : null;
+  // An environment map IS a light source. The rig above was tuned for a scene with NO environment, so
+  // leaving it at full strength while the env is on lights everything about twice over — which is why
+  // mid-grey paint clipped to white. The hemisphere goes nearly to zero (the env supplies
+  // omnidirectional light, and better, since it has direction and so shows form) and the
+  // directionals drop to a shaping role.
+  if(lightHemi) lightHemi.intensity = live ? 0.08 : 0.95;
+  if(lightKey) lightKey.intensity = live ? 0.55 : 1.3;
+  if(lightFill) lightFill.intensity = live ? 0.18 : 0.5;
   renderer.toneMapping = live ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
-  renderer.toneMappingExposure = live ? 1.05 : 1;
+  renderer.toneMappingExposure = live ? 1.15 : 1;
   return live;
 }
 // solid → honour each material's base opacity; wire → wireframe; xray → translucent, no depth
@@ -271,7 +280,19 @@ function applyDisplayMode(){
     // Reset the appearance on EVERY pass so a mode switch is symmetric — leaving Realistic must
     // restore the flat shading exactly, not strand the last family's metalness on the mesh.
     mat.metalness = real ? real.metalness : 0.5;
-    mat.roughness = real ? real.roughness : 0.5;
+    // A metal has NO diffuse term — the environment IS its brightness — and RoomEnvironment is a dim
+    // little box, so an unlifted metalness=1 surface reads darker than the matte paint beside it.
+    // Lift the metals; leave dielectrics (concrete, timber, paint) alone or they blow out. Done per
+    // material, not via scene.environmentIntensity, which does not exist in the pinned three r160.
+    mat.envMapIntensity = real ? (1 + real.metalness * 1.6) : 1;
+    // Surface detail only in Realistic — Solid/Wire/X-ray stay flat, which is what keeps them
+    // readable as working views. Binding a map changes the shader defines, so needsUpdate matters.
+    const tex = real ? surfaceFor(u.family) : null;
+    // With a map bound the roughness is ENTIRELY in the texture (absolute values), so the scalar must
+    // be 1 or three multiplies it in twice. Without one, fall back to the declared/base scalar.
+    mat.roughness = tex ? 1 : (real ? real.roughness : 0.5);
+    const wantMap = tex ? tex.map : null;
+    if(mat.map !== wantMap){ mat.map = wantMap; mat.roughnessMap = tex ? tex.roughnessMap : null; mat.needsUpdate = true; }
     // `.set` NOT `.setHex`: a group colour arrives from the scene as a CSS string ("#60a5fa")
     // while the family colours here are numeric literals — setHex takes only a number, so a
     // string silently becomes NaN and the element renders black.
@@ -370,7 +391,11 @@ function applyFrame(mesh,F){ const M=new THREE.Matrix4().makeBasis(F.u,F.v,F.n);
 // keeps the element's group colour, because most fabricated steel really is painted and it means
 // switching to Realistic does not flatten every member to one grey and destroy the profile legend.
 const MATERIALS={
-  painted:   {metalness:0.0, roughness:0.55},                  // no colour → keeps the group colour
+  // Painted steel gets a REAL paint colour — shop-primer grey — NOT the element's group colour.
+  // Keeping the group hue here was the first design and it was wrong: it put hot-pink beams in a view
+  // whose whole purpose is to look real, giving neither a usable legend nor a believable model.
+  // Colour-by-group is what Solid is for; Realistic is for showing someone the building.
+  painted:   {metalness:0.0, roughness:0.62, color:0x8f949b},
   steel:     {metalness:1.0, roughness:0.45, color:0x8a8f98},  // bare / mill finish
   galvanised:{metalness:0.85,roughness:0.62, color:0xb8bfc6},  // spangled zinc — rougher on purpose
   stainless: {metalness:1.0, roughness:0.18, color:0xc7ccd1},
@@ -411,10 +436,130 @@ function familyOf(e){
   for(const [fam,re] of GRADE_FAMILIES) if(re.test(up)) return fam;
   return 'painted';
 }
+// ---- procedural surface detail (Realistic mode) ----
+// Aggregate, grain and spangle are GENERATED on a canvas, never loaded as images. A shared 3D link is
+// one self-contained HTML document capped at a few MB, and a single 1K albedo+normal pair is 1-2 MB,
+// so ten families of bitmaps could never fit. Generating them also keeps this document byte-identical
+// for an identical scene: the CODE is fixed, only the pixels are made at runtime. Every generator
+// draws from a SEEDED prng — never Math.random — so a family's surface never changes between runs.
+// Kept in step with floless's web/steel-materials.js, which is the reference implementation.
+function mulberry32(seed){ let a=seed>>>0; return ()=>{ a=(a+0x6d2b79f5)>>>0;
+  let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
+// Separate X and Y lattice counts. Directional finishes (grain, brushing) come from a COARSER lattice
+// on one axis, never from resampling a square field with a squashed index: that reads only the first
+// few rows and then jumps back to row 0 at the tile edge, which with RepeatWrapping is a hard seam
+// every tile. Anisotropy in the lattice stays periodic on both axes by construction.
+function noiseField(size,cellsX,cellsY,seed){ const r=mulberry32(seed), g=new Float32Array(cellsX*cellsY);
+  for(let i=0;i<g.length;i++) g[i]=r();
+  const at=(x,y)=>g[(((y%cellsY)+cellsY)%cellsY)*cellsX+(((x%cellsX)+cellsX)%cellsX)];
+  const sm=t=>t*t*(3-2*t), out=new Float32Array(size*size), sx=cellsX/size, sy=cellsY/size;
+  for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+    const fx=x*sx, fy=y*sy, x0=Math.floor(fx), y0=Math.floor(fy), tx=sm(fx-x0), ty=sm(fy-y0);
+    const a=at(x0,y0), b=at(x0+1,y0), c=at(x0,y0+1), d=at(x0+1,y0+1);
+    out[y*size+x]=(a+(b-a)*tx)*(1-ty)+(c+(d-c)*tx)*ty; }
+  return out; }
+// Starts at a FINE lattice deliberately: a coarse first octave makes big soft blobs, and a blob
+// stretched over a 3 m column by the triplanar projection reads as a smear or a stain, not material.
+function fbm(size,seed,aniso,baseCells,octaves){ const out=new Float32Array(size*size);
+  let amp=1, cells=baseCells||16, norm=0;
+  // aniso > 1 stretches the pattern along Y by giving that axis proportionally fewer cells.
+  for(let o=0;o<(octaves||5);o++){ const n=noiseField(size,cells,Math.max(1,Math.round(cells/(aniso||1))),seed+o*977);
+    for(let i=0;i<out.length;i++) out[i]+=n[i]*amp;
+    norm+=amp; amp*=0.5; cells*=2; }
+  for(let i=0;i<out.length;i++) out[i]/=norm;
+  return out; }
+// Detail lives mostly in ROUGHNESS, not albedo. That split is the whole trick: varying diffuse colour
+// by more than a few percent is exactly what dirt and water staining look like, whereas varying how a
+// surface scatters light is what actually separates cast concrete from brushed stainless.
+const SURFACES={
+  concrete:  (n,r)=>[0.955+n*0.09+(n>0.88?0.04:0), 0.16-n*0.20+(r()<0.003?0.14:0)],
+  timber:    n=>[0.90+n*0.19, 0.08-n*0.14],   // grain genuinely IS a colour difference
+  galvanised:n=>[0.965+(n>0.55?0.05:0)+n*0.03, 0.20-(n>0.55?0.16:0)],
+  stainless: n=>[0.978+n*0.04, 0.09-n*0.11],  // a brushed finish is not a colour change
+  aluminium: n=>[0.978+n*0.04, 0.10-n*0.12],
+  weathering:n=>[0.88+n*0.22, 0.08-n*0.13],
+  // Orange peel. Subtle in ALBEDO — paint is a uniform colour and mottling it reads as dirt — but
+  // real variation in ROUGHNESS, so the sheen shifts across the face. Without that a light paint has
+  // nothing to catch the environment and blows out to flat white.
+  painted:   n=>[0.982+n*0.034, 0.12-n*0.19],
+  steel:     n=>[0.968+n*0.055, 0.08-n*0.11],
+  asphalt:   (n,r)=>[0.91+n*0.14+(r()<0.015?0.06:0), 0.07-n*0.09],
+  glass:     null,
+};
+// Directional grain / brushing. Keep MILD: the Y cell count is baseCells/aniso, so a large value
+// drives it toward 1, and a single cell is constant along Y — the surface degenerates into regular
+// vertical ribbing that reads as corrugated sheet, not a brushed finish.
+const STRETCH={timber:5, stainless:6, aluminium:6};
+// Base lattice per family: how FINE the dominant detail is. The first octave carries full amplitude,
+// so this number — not the octave count — decides what a surface actually looks like. Brushing and
+// aggregate need to be dense: a 16-cell lattice across a 180 mm tile gives ~11 mm stripes, which at
+// member scale reads as ribbing rather than a finish.
+const BASE_CELLS={stainless:56, aluminium:56, timber:22, concrete:26, galvanised:22, asphalt:24, painted:34};
+const TILE_MM={concrete:600, asphalt:500, timber:900, weathering:700, galvanised:260,
+  stainless:180, aluminium:180, painted:420, steel:400};
+const texByFamily=new Map();
+function surfaceFor(family){
+  if(!family||!SURFACES[family]) return null;
+  if(!texByFamily.has(family)){
+    const size=256, paint=SURFACES[family];
+    // The map encodes ABSOLUTE roughness around this family's declared value, so it needs it here.
+    const spec=MATERIALS[family], baseRough=spec?spec.roughness:0.5;
+    let seed=0; for(let i=0;i<family.length;i++) seed=(seed*31+family.charCodeAt(i))>>>0;
+    const field=fbm(size,seed,STRETCH[family]||1,BASE_CELLS[family]||16), r=mulberry32(seed^0x9e3779b9);
+    const ac=document.createElement('canvas'), rc=document.createElement('canvas');
+    ac.width=ac.height=rc.width=rc.height=size;
+    const ai=ac.getContext('2d').createImageData(size,size), ri=rc.getContext('2d').createImageData(size,size);
+    for(let y=0;y<size;y++)for(let x=0;x<size;x++){
+      const n=field[y*size+x], v=paint(n,r), i=(y*size+x)*4;
+      const L=Math.max(0,Math.min(255,Math.round(v[0]*255)));
+      ai.data[i]=ai.data[i+1]=ai.data[i+2]=L; ai.data[i+3]=255;
+      // ABSOLUTE roughness, not a delta around 0.5: three MULTIPLIES roughness by this channel, so a
+      // map centred on 0.5 silently halves every declared roughness (concrete 0.92 → ~0.46, twice as
+      // glossy as specified). applyDisplayMode sets material.roughness = 1 so the multiply is an
+      // identity and what is written here is exactly the roughness used. (Read from GREEN.)
+      const R=Math.max(0,Math.min(255,Math.round((baseRough+v[1])*255)));
+      ri.data[i]=ri.data[i+1]=ri.data[i+2]=R; ri.data[i+3]=255; }
+    ac.getContext('2d').putImageData(ai,0,0); rc.getContext('2d').putImageData(ri,0,0);
+    const mk=(cv,srgb)=>{ const t=new THREE.CanvasTexture(cv); t.wrapS=t.wrapT=THREE.RepeatWrapping;
+      if(srgb) t.colorSpace=THREE.SRGBColorSpace; t.anisotropy=4; return t; };
+    // Albedo is colour data (sRGB); roughness is linear — tagging it sRGB washes the detail out.
+    texByFamily.set(family,{map:mk(ac,true), roughnessMap:mk(rc,false)});
+  }
+  return texByFamily.get(family); }
+// Project the maps from world XYZ, blended by the normal, instead of through the mesh UVs. An
+// extruded member's UVs are millimetre-scale and differ between its cap faces and its side walls, so
+// any single repeat value stretches somewhere — badly on a coped end. Triplanar sidesteps UVs, which
+// is the only thing that reads correctly at architectural scale.
+function applyTriplanar(material,scaleMm){
+  material.onBeforeCompile=(shader)=>{
+    shader.uniforms.uTriScale={value:1/Math.max(1,scaleMm)};
+    shader.vertexShader=shader.vertexShader
+      .replace('#include <common>','#include <common>\nvarying vec3 vTriPos;\nvarying vec3 vTriNrm;')
+      .replace('#include <worldpos_vertex>','#include <worldpos_vertex>\n  vTriPos=(modelMatrix*vec4(transformed,1.0)).xyz;\n  vTriNrm=mat3(modelMatrix)*objectNormal;');
+    const helper='\nvarying vec3 vTriPos;\nvarying vec3 vTriNrm;\nuniform float uTriScale;\n'
+      +'vec4 triplanar(sampler2D tex, vec3 p, vec3 n){\n'
+      +'  vec3 b=pow(abs(normalize(n)),vec3(4.0));\n'   // 4th power keeps faces crisp near corners
+      +'  b/=max(b.x+b.y+b.z,1e-4);\n'
+      +'  return texture2D(tex,p.yz)*b.x+texture2D(tex,p.xz)*b.y+texture2D(tex,p.xy)*b.z;\n}';
+    shader.fragmentShader=shader.fragmentShader
+      .replace('#include <common>','#include <common>'+helper)
+      .replace('#include <map_fragment>','\n#ifdef USE_MAP\n  diffuseColor*=triplanar(map,vTriPos*uTriScale,vTriNrm);\n#endif')
+      .replace('#include <roughnessmap_fragment>','\nfloat roughnessFactor=roughness;\n#ifdef USE_ROUGHNESSMAP\n  roughnessFactor*=triplanar(roughnessMap,vTriPos*uTriScale,vTriNrm).g;\n#endif');
+  };
+  // Three caches programs by this key; without a distinct one a patched and an unpatched material
+  // with otherwise identical parameters would silently share the WRONG compiled program.
+  material.customProgramCacheKey=()=>'triplanar:'+scaleMm;
+  material.needsUpdate=true; }
+
 function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.group]||0xffffff;
   const op=typeof e.opacity==='number'?e.opacity:(typeof opacityOf[e.group]==='number'?opacityOf[e.group]:1);
   const mat=new THREE.MeshStandardMaterial({color:col,metalness:0.5,roughness:0.5,transparent:op<1, opacity:op,side:doubleSided?THREE.DoubleSide:THREE.FrontSide});
-  mat.userData={baseOpacity:op, baseColor:col, family:familyOf(e)}; return mat; }
+  const fam=familyOf(e);
+  // Patch ONCE at creation rather than toggling with the mode: both replaced chunks are guarded by
+  // USE_MAP/USE_ROUGHNESSMAP, so with no maps bound the patched shader matches the stock one — and
+  // Solid never pays a program recompile on switch.
+  if(TILE_MM[fam]) applyTriplanar(mat,TILE_MM[fam]);
+  mat.userData={baseOpacity:op, baseColor:col, family:fam}; return mat; }
 function cylinderBetween(a,b,r,mat,segments){ const d=b.clone().sub(a), len=d.length();
   const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,segments||32,1,false),mat);
   mesh.position.copy(a).add(b).multiplyScalar(0.5); mesh.quaternion.setFromUnitVectors(_YA,d.normalize()); return mesh; }
@@ -467,9 +612,12 @@ function renderScene(S){
   const size=box.getSize(new THREE.Vector3()), center=box.getCenter(new THREE.Vector3());
   maxDim=Math.max(size.x,size.y,size.z)||1; sceneBox=box.clone(); const thick=maxDim*0.006;
 
-  content.add(new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95));
-  const key=new THREE.DirectionalLight(0xffffff,1.3); key.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(key);
-  const fill=new THREE.DirectionalLight(0x88aaff,0.5); fill.position.copy(center).add(new THREE.Vector3(-maxDim,maxDim*0.7,-maxDim)); content.add(fill);
+  // Kept on module scope so Realistic can dim them: an environment map is itself a light source, and
+  // leaving this rig at full strength on top of it lights the scene roughly twice over.
+  lightHemi=new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95); content.add(lightHemi);
+  lightKey=new THREE.DirectionalLight(0xffffff,1.3); lightKey.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(lightKey);
+  lightFill=new THREE.DirectionalLight(0x88aaff,0.5); lightFill.position.copy(center).add(new THREE.Vector3(-maxDim,maxDim*0.7,-maxDim)); content.add(lightFill);
+  applyDisplayMode();   // a rebuild makes new lights — re-apply so Realistic's dimming is not lost
   const grid=new THREE.GridHelper(maxDim*1.9, 24, 0x1e293b, 0x131c2e); grid.position.set(center.x, box.min.y, center.z); content.add(grid);
 
   const upY=new THREE.Vector3(0,1,0);
@@ -2165,8 +2313,34 @@ mod tests {
             "a grade names the alloy, so it needs mapping to an appearance family"
         );
         assert!(
-            compact.contains("mat.userData={baseOpacity:op,baseColor:col,family:familyOf(e)}"),
+            compact.contains("mat.userData={baseOpacity:op,baseColor:col,family:fam}"),
             "the base colour is retained so leaving Realistic restores the group colour"
+        );
+        // Surface detail: generated procedurally (never fetched) and projected from world space,
+        // because an extruded member's UVs are millimetre-scale and inconsistent across its faces.
+        assert!(
+            html.contains("function applyTriplanar") && html.contains("vec4 triplanar(sampler2D"),
+            "maps are projected triplanarly, not sampled through the mesh UVs"
+        );
+        assert!(
+            html.contains("function surfaceFor") && html.contains("const SURFACES="),
+            "surface detail is generated in-browser, so it costs the document no bytes"
+        );
+        assert!(
+            // The CALL form, not the bare name — the comment explaining the rule ships in the
+            // document too, and would match a looser check.
+            !html.contains("Math.random(") && html.contains("function mulberry32"),
+            "generated surfaces must be seeded, or the document stops being reproducible"
+        );
+        // Metal has no diffuse term, so an unlifted metalness=1 surface reads darker than the matte
+        // paint beside it. Must be per-material: scene.environmentIntensity is three r163+, and the
+        // pinned CDN version here is r160.
+        // Per-material on purpose: scene.environmentIntensity is three r163+ and the CDN version is
+        // pinned to r160. Asserted positively only — a "must not contain" check here matches the
+        // comment that explains the rule, which also ships in the document.
+        assert!(
+            html.contains("mat.envMapIntensity"),
+            "metals are lifted per-material so they don't read darker than the paint beside them"
         );
         // Regression guard: group colours arrive as CSS strings ("#60a5fa") but the family
         // colours are numeric literals. `setHex` accepts only a number, so restoring a group
