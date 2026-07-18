@@ -242,6 +242,7 @@ function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes 
 // well under 300ms on real hardware; every later switch is free). Deliberately NOT pre-generated
 // at load: a viewer that never leaves Solid should not pay for it.
 let envRT=null, envFailed=false;
+let lightHemi=null, lightKey=null, lightFill=null;   // dimmed in Realistic; the environment lights it
 // Returns whether the environment is actually LIVE. If PMREM fails (lost context, a driver
 // without the float targets it needs) we must NOT go on to apply metalness=1 — with nothing to
 // reflect, that renders every metal element BLACK, which is far worse than not switching at all.
@@ -256,6 +257,14 @@ function setEnvironment(on){
   }
   const live = on && !!envRT;
   scene.environment = live ? envRT.texture : null;
+  // An environment map IS a light source. The rig above was tuned for a scene with NO environment, so
+  // leaving it at full strength while the env is on lights everything about twice over — which is why
+  // mid-grey paint clipped to white. The hemisphere goes nearly to zero (the env supplies
+  // omnidirectional light, and better, since it has direction and so shows form) and the
+  // directionals drop to a shaping role.
+  if(lightHemi) lightHemi.intensity = live ? 0.08 : 0.95;
+  if(lightKey) lightKey.intensity = live ? 0.55 : 1.3;
+  if(lightFill) lightFill.intensity = live ? 0.18 : 0.5;
   renderer.toneMapping = live ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
   renderer.toneMappingExposure = live ? 1.15 : 1;
   return live;
@@ -386,7 +395,7 @@ const MATERIALS={
   // Keeping the group hue here was the first design and it was wrong: it put hot-pink beams in a view
   // whose whole purpose is to look real, giving neither a usable legend nor a believable model.
   // Colour-by-group is what Solid is for; Realistic is for showing someone the building.
-  painted:   {metalness:0.0, roughness:0.55, color:0xa9aeb4},
+  painted:   {metalness:0.0, roughness:0.62, color:0x8f949b},
   steel:     {metalness:1.0, roughness:0.45, color:0x8a8f98},  // bare / mill finish
   galvanised:{metalness:0.85,roughness:0.62, color:0xb8bfc6},  // spangled zinc — rougher on purpose
   stainless: {metalness:1.0, roughness:0.18, color:0xc7ccd1},
@@ -451,8 +460,8 @@ function noiseField(size,cellsX,cellsY,seed){ const r=mulberry32(seed), g=new Fl
   return out; }
 // Starts at a FINE lattice deliberately: a coarse first octave makes big soft blobs, and a blob
 // stretched over a 3 m column by the triplanar projection reads as a smear or a stain, not material.
-function fbm(size,seed,aniso,octaves){ const out=new Float32Array(size*size);
-  let amp=1, cells=16, norm=0;
+function fbm(size,seed,aniso,baseCells,octaves){ const out=new Float32Array(size*size);
+  let amp=1, cells=baseCells||16, norm=0;
   // aniso > 1 stretches the pattern along Y by giving that axis proportionally fewer cells.
   for(let o=0;o<(octaves||5);o++){ const n=noiseField(size,cells,Math.max(1,Math.round(cells/(aniso||1))),seed+o*977);
     for(let i=0;i<out.length;i++) out[i]+=n[i]*amp;
@@ -469,14 +478,25 @@ const SURFACES={
   stainless: n=>[0.978+n*0.04, 0.09-n*0.11],  // a brushed finish is not a colour change
   aluminium: n=>[0.978+n*0.04, 0.10-n*0.12],
   weathering:n=>[0.88+n*0.22, 0.08-n*0.13],
-  painted:   n=>[0.986+n*0.026, 0.05-n*0.07], // orange peel — stops paint reading as flat plastic
+  // Orange peel. Subtle in ALBEDO — paint is a uniform colour and mottling it reads as dirt — but
+  // real variation in ROUGHNESS, so the sheen shifts across the face. Without that a light paint has
+  // nothing to catch the environment and blows out to flat white.
+  painted:   n=>[0.982+n*0.034, 0.12-n*0.19],
   steel:     n=>[0.968+n*0.055, 0.08-n*0.11],
   asphalt:   (n,r)=>[0.91+n*0.14+(r()<0.015?0.06:0), 0.07-n*0.09],
   glass:     null,
 };
-const STRETCH={timber:9, stainless:14, aluminium:14};   // directional grain / brushing
+// Directional grain / brushing. Keep MILD: the Y cell count is baseCells/aniso, so a large value
+// drives it toward 1, and a single cell is constant along Y — the surface degenerates into regular
+// vertical ribbing that reads as corrugated sheet, not a brushed finish.
+const STRETCH={timber:5, stainless:6, aluminium:6};
+// Base lattice per family: how FINE the dominant detail is. The first octave carries full amplitude,
+// so this number — not the octave count — decides what a surface actually looks like. Brushing and
+// aggregate need to be dense: a 16-cell lattice across a 180 mm tile gives ~11 mm stripes, which at
+// member scale reads as ribbing rather than a finish.
+const BASE_CELLS={stainless:56, aluminium:56, timber:22, concrete:26, galvanised:22, asphalt:24, painted:34};
 const TILE_MM={concrete:600, asphalt:500, timber:900, weathering:700, galvanised:260,
-  stainless:180, aluminium:180, painted:800, steel:400};
+  stainless:180, aluminium:180, painted:420, steel:400};
 const texByFamily=new Map();
 function surfaceFor(family){
   if(!family||!SURFACES[family]) return null;
@@ -485,7 +505,7 @@ function surfaceFor(family){
     // The map encodes ABSOLUTE roughness around this family's declared value, so it needs it here.
     const spec=MATERIALS[family], baseRough=spec?spec.roughness:0.5;
     let seed=0; for(let i=0;i<family.length;i++) seed=(seed*31+family.charCodeAt(i))>>>0;
-    const field=fbm(size,seed,STRETCH[family]||1), r=mulberry32(seed^0x9e3779b9);
+    const field=fbm(size,seed,STRETCH[family]||1,BASE_CELLS[family]||16), r=mulberry32(seed^0x9e3779b9);
     const ac=document.createElement('canvas'), rc=document.createElement('canvas');
     ac.width=ac.height=rc.width=rc.height=size;
     const ai=ac.getContext('2d').createImageData(size,size), ri=rc.getContext('2d').createImageData(size,size);
@@ -592,9 +612,12 @@ function renderScene(S){
   const size=box.getSize(new THREE.Vector3()), center=box.getCenter(new THREE.Vector3());
   maxDim=Math.max(size.x,size.y,size.z)||1; sceneBox=box.clone(); const thick=maxDim*0.006;
 
-  content.add(new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95));
-  const key=new THREE.DirectionalLight(0xffffff,1.3); key.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(key);
-  const fill=new THREE.DirectionalLight(0x88aaff,0.5); fill.position.copy(center).add(new THREE.Vector3(-maxDim,maxDim*0.7,-maxDim)); content.add(fill);
+  // Kept on module scope so Realistic can dim them: an environment map is itself a light source, and
+  // leaving this rig at full strength on top of it lights the scene roughly twice over.
+  lightHemi=new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95); content.add(lightHemi);
+  lightKey=new THREE.DirectionalLight(0xffffff,1.3); lightKey.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(lightKey);
+  lightFill=new THREE.DirectionalLight(0x88aaff,0.5); lightFill.position.copy(center).add(new THREE.Vector3(-maxDim,maxDim*0.7,-maxDim)); content.add(lightFill);
+  applyDisplayMode();   // a rebuild makes new lights — re-apply so Realistic's dimming is not lost
   const grid=new THREE.GridHelper(maxDim*1.9, 24, 0x1e293b, 0x131c2e); grid.position.set(center.x, box.min.y, center.z); content.add(grid);
 
   const upY=new THREE.Vector3(0,1,0);
