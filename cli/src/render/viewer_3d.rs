@@ -13,6 +13,15 @@
 //! a client embeds it in a script-enabled surface (or opens it in a browser) — unlike the
 //! static `html-report`, it does not render inside a no-scripts sandbox.
 //!
+//! Display modes: `solid` / `wire` / `xray` / `realistic`. **Realistic** shades each element from
+//! its element-level `material` — the same field the IFC writer resolves, so a scene authored for
+//! export shades correctly with no producer change (`meta.material` is accepted as a fallback).
+//! The value is semantic: a family name like `"concrete"`, or an alloy grade like
+//! `"A992"`/`"A240 316"`. It is shaded against a generated
+//! image-based light. The grade→family→appearance mapping is the RENDERER's, not the scene's, so
+//! the look can improve without re-baking a scene; unknown or plain-carbon values fall back to
+//! `painted`, which keeps the element's group colour so the legend stays readable.
+//!
 //! Determinism: identical `scene` input → identical HTML bytes (no clock, no environment).
 //! Three.js loads from a pinned CDN for v1; full-inline (offline) is a planned follow-on.
 
@@ -85,7 +94,7 @@ const TEMPLATE: &str = r##"<!doctype html>
   <div class="tb-sep"></div>
   <!-- Display mode -->
   <div class="tb-grp" id="modes">
-    <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button><button data-mode="wire" data-tip="Wireframe — edges only">Wire</button><button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button>
+    <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button><button data-mode="wire" data-tip="Wireframe — edges only">Wire</button><button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button><button data-mode="realistic" data-tip="Realistic — true construction materials (steel, concrete, timber…)">Realistic</button>
   </div>
   <div class="tb-sep"></div>
   <!-- Section: clip planes/boxes + work area -->
@@ -134,6 +143,7 @@ const TEMPLATE: &str = r##"<!doctype html>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const SCENE = __SCENE_JSON__;
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e;};
@@ -222,13 +232,54 @@ function setProjection(mode){
   controls.update(); activate('#proj button','data-proj',mode);
 }
 function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes button','data-mode',m); }
-// solid → honour each material's base opacity; wire → wireframe; xray → translucent, no depth write.
+// Realistic metal is nothing but reflections: against the default light rig, with nothing to
+// reflect, metalness=1 renders BLACK. So the mode generates an image-based light in the browser
+// (RoomEnvironment → PMREM) and switches on filmic tone mapping. Built lazily on first use and
+// cached; cleared with the mode so Solid/Wire/X-ray look exactly as they always did. Generated
+// from fixed code — no asset fetch, no clock, no randomness — so the DOCUMENT stays byte-identical
+// for an identical scene (the determinism guarantee is about the HTML, not the pixels).
+// Generated once on first use and cached (measured ~1.9s on a software rasterizer with no GPU,
+// well under 300ms on real hardware; every later switch is free). Deliberately NOT pre-generated
+// at load: a viewer that never leaves Solid should not pay for it.
+let envRT=null, envFailed=false;
+// Returns whether the environment is actually LIVE. If PMREM fails (lost context, a driver
+// without the float targets it needs) we must NOT go on to apply metalness=1 — with nothing to
+// reflect, that renders every metal element BLACK, which is far worse than not switching at all.
+// Reporting false makes applyDisplayMode keep the flat shading, so the failure degrades instead
+// of producing a broken-looking model.
+function setEnvironment(on){
+  if(on&&!envRT&&!envFailed){
+    try{ const pmrem=new THREE.PMREMGenerator(renderer);
+      envRT=pmrem.fromScene(new RoomEnvironment(), 0.04); pmrem.dispose(); }
+    catch(err){ envFailed=true;
+      if(window.__viewerPost) window.__viewerPost('viewer-error','realistic materials unavailable: '+err); }
+  }
+  const live = on && !!envRT;
+  scene.environment = live ? envRT.texture : null;
+  renderer.toneMapping = live ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
+  renderer.toneMappingExposure = live ? 1.05 : 1;
+  return live;
+}
+// solid → honour each material's base opacity; wire → wireframe; xray → translucent, no depth
+// write; realistic → per-family PBR (MATERIALS) lit by the generated environment.
 function applyDisplayMode(){
+  // Gate the PBR pass on the environment being LIVE, not merely on the mode being selected.
+  const realistic=setEnvironment(displayMode==='realistic');
   for(const mesh of pickable){ const mat=mesh.material; if(!mat) continue;
-    const base=(mat.userData&&mat.userData.baseOpacity!=null)?mat.userData.baseOpacity:1;
+    const u=mat.userData||{}, base=(u.baseOpacity!=null)?u.baseOpacity:1;
+    const real=realistic ? (MATERIALS[u.family]||MATERIALS.painted) : null;
+    // Reset the appearance on EVERY pass so a mode switch is symmetric — leaving Realistic must
+    // restore the flat shading exactly, not strand the last family's metalness on the mesh.
+    mat.metalness = real ? real.metalness : 0.5;
+    mat.roughness = real ? real.roughness : 0.5;
+    // `.set` NOT `.setHex`: a group colour arrives from the scene as a CSS string ("#60a5fa")
+    // while the family colours here are numeric literals — setHex takes only a number, so a
+    // string silently becomes NaN and the element renders black.
+    if(u.baseColor!=null) mat.color.set(real&&real.color!=null ? real.color : u.baseColor);
     if(displayMode==='wire'){ mat.wireframe=true; mat.transparent=false; mat.opacity=1; mat.depthWrite=true; }
     else if(displayMode==='xray'){ mat.wireframe=false; mat.transparent=true; mat.opacity=Math.min(base,0.25); mat.depthWrite=false; }
-    else { mat.wireframe=false; mat.opacity=base; mat.transparent=base<1; mat.depthWrite=true; }
+    else { const op = real&&real.opacity!=null ? Math.min(base,real.opacity) : base;
+      mat.wireframe=false; mat.opacity=op; mat.transparent=op<1; mat.depthWrite=true; }
     mat.needsUpdate=true;
   }
 }
@@ -312,10 +363,58 @@ function frameOf(e,up){ const f=e.frame||{}, o=conv(f.origin,up), u=conv(f.uDir,
   // carry that reflection, so rebuild the render normal from the converted in-plane axes.
   const n=u.clone().cross(v).normalize(); return {o,u,v,n}; }
 function applyFrame(mesh,F){ const M=new THREE.Matrix4().makeBasis(F.u,F.v,F.n); mesh.quaternion.setFromRotationMatrix(M); mesh.position.copy(F.o); }
+// ---- Realistic materials (the "realistic" display mode) ----
+// The scene carries a SEMANTIC material per element (`meta.material` — "A992", "concrete",
+// "galvanised"); the family→appearance mapping is deliberately the RENDERER's, so the look can
+// improve without re-baking a single scene. `painted` deliberately has no colour of its own: it
+// keeps the element's group colour, because most fabricated steel really is painted and it means
+// switching to Realistic does not flatten every member to one grey and destroy the profile legend.
+const MATERIALS={
+  painted:   {metalness:0.0, roughness:0.55},                  // no colour → keeps the group colour
+  steel:     {metalness:1.0, roughness:0.45, color:0x8a8f98},  // bare / mill finish
+  galvanised:{metalness:0.85,roughness:0.62, color:0xb8bfc6},  // spangled zinc — rougher on purpose
+  stainless: {metalness:1.0, roughness:0.18, color:0xc7ccd1},
+  weathering:{metalness:0.55,roughness:0.75, color:0x7a4a32},  // COR-TEN
+  aluminium: {metalness:1.0, roughness:0.30, color:0xd6d9dc},
+  concrete:  {metalness:0.0, roughness:0.92, color:0xa8a49c},
+  timber:    {metalness:0.0, roughness:0.70, color:0xb0854a},
+  asphalt:   {metalness:0.0, roughness:0.95, color:0x2e3033},
+  glass:     {metalness:0.0, roughness:0.05, color:0xcfe3ee, opacity:0.28},
+};
+// A grade names the ALLOY, not the finish, so it only decides the look where the alloy IS the
+// look. Plain carbon (A36/A992/A572/A709/A500/A501) matches nothing here and falls through to
+// `painted` — the finish is genuinely unknown, and painted is both the common case on site and
+// the one that preserves the legend colour.
+const GRADE_FAMILIES=[
+  ['stainless',  /STAINLESS|INOX|A240|\b(304|316|321|410)\b/],
+  ['weathering', /WEATHERING|COR-?TEN|A588|A847/],
+  ['aluminium',  /ALUMINI?UM|\bALUM\b|\b(6061|6063|5052)\b/],
+  ['galvanised', /GALVANI[SZ]ED|\bHDG\b|A123|A153|\bG90\b/],
+  ['concrete',   /CONCRETE/],
+  ['timber',     /TIMBER|WOOD|GLULAM|\bLVL\b/],
+  ['asphalt',    /ASPHALT|BITUMEN|TARMAC/],
+  ['glass',      /GLASS|GLAZING/],
+];
+// `material` is an ELEMENT-level field in the shared scene contract — the same one the IFC
+// writer resolves (`resolve_material` reads `el.material`), so a scene authored for IFC export
+// shades correctly here with no change to the producer. `meta.material` is accepted as a
+// fallback only; reading meta alone would silently drop every canonical scene to `painted`.
+function familyOf(e){
+  // Trim EACH candidate before choosing, matching the IFC writer's treatment of a
+  // trimmed-empty material as absent. A bare `||` would pick a whitespace-only canonical
+  // value (truthy) and only then trim it to nothing, skipping the fallback entirely.
+  const pick=v=>(v==null?'':String(v)).trim();
+  const raw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material);
+  if(!raw) return 'painted';
+  if(MATERIALS[raw.toLowerCase()]) return raw.toLowerCase();   // an explicit family name wins outright
+  const up=raw.toUpperCase();
+  for(const [fam,re] of GRADE_FAMILIES) if(re.test(up)) return fam;
+  return 'painted';
+}
 function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.group]||0xffffff;
   const op=typeof e.opacity==='number'?e.opacity:(typeof opacityOf[e.group]==='number'?opacityOf[e.group]:1);
   const mat=new THREE.MeshStandardMaterial({color:col,metalness:0.5,roughness:0.5,transparent:op<1, opacity:op,side:doubleSided?THREE.DoubleSide:THREE.FrontSide});
-  mat.userData={baseOpacity:op}; return mat; }
+  mat.userData={baseOpacity:op, baseColor:col, family:familyOf(e)}; return mat; }
 function cylinderBetween(a,b,r,mat,segments){ const d=b.clone().sub(a), len=d.length();
   const mesh=new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,segments||32,1,false),mat);
   mesh.position.copy(a).add(b).multiplyScalar(0.5); mesh.quaternion.setFromUnitVectors(_YA,d.normalize()); return mesh; }
@@ -664,6 +763,12 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   projection:()=>camera.isOrthographicCamera?'ortho':'persp', mode:()=>displayMode,
   hidden:()=>[...groupHidden], solo:()=>soloGroup, visibleCount:()=>pickable.filter(m=>m.visible).length,
   selectionCount:()=>selection.length, cubeFaces:()=>CUBE_FACES.map(f=>f.view),
+  // Realistic-mode state. `envOn` is the load-bearing one: metal with no environment renders
+  // black, so "the mode switched" is not evidence on its own — the environment must be live.
+  envOn:()=>scene.environment!==null&&renderer.toneMapping===THREE.ACESFilmicToneMapping,
+  materialOf:(id)=>{ const m=pickable.find(p=>p.userData&&p.userData.id===id); if(!m) return null;
+    return {family:m.material.userData.family, metalness:m.material.metalness,
+      roughness:m.material.roughness, color:'#'+m.material.color.getHexString()}; },
   camDir:()=>camera.position.clone().sub(controls.target).normalize().toArray(),
   selectInRect:(x0,y0,x1,y1)=>{ setSelection(meshesInRect(x0,y0,x1,y1)); return selection.length; },
   setView:applyView, setProjection, setDisplayMode, toggleGroup, frameAll:()=>frameBox(sceneBox),
@@ -1978,6 +2083,125 @@ mod tests {
     }
 
     #[test]
+    fn ships_realistic_material_mode() {
+        // The "realistic" display mode shades each element from its semantic `meta.material`.
+        // Metal is nothing but reflections, so the mode is only truthful if it ALSO ships an
+        // environment to reflect — without one, metalness=1 renders black. Assert the whole
+        // chain is wired, not just the button.
+        let scene = json!({
+            "meta": { "name": "Mixed", "units": "mm", "up": "z" },
+            "groups": [ { "key": "W16X26", "label": "Beams", "color": "#60a5fa" } ],
+            "elements": [
+                // Element-level `material` is the canonical field — the same one the IFC writer
+                // resolves. A scene authored for export must shade correctly with no change.
+                { "id": "B1", "group": "W16X26", "kind": "box",
+                  "from": [0,0,0], "to": [3000,0,0], "section": { "w": 140, "d": 400 },
+                  "material": "A992", "meta": { "profile": "W16X26" } }
+            ]
+        });
+        let out = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        let html = out["html"].as_str().unwrap();
+        // Whitespace-stripped copy so the assertions below survive re-alignment of the source.
+        let compact: String = html.chars().filter(|c| !c.is_whitespace()).collect();
+
+        // Resolution order: the canonical element field FIRST, meta only as a fallback. Reading
+        // meta alone would silently drop every canonical scene to the `painted` default.
+        assert!(
+            compact.contains("constraw=pick(e&&e.material)||pick(e&&e.meta&&e.meta.material)"),
+            "element-level `material` wins; `meta.material` is only a fallback"
+        );
+        // Each candidate is trimmed BEFORE the choice, matching the IFC writer's treatment of a
+        // trimmed-empty material as absent — otherwise `material: "   "` (truthy) would win and
+        // then trim to nothing, silently skipping a perfectly good `meta.material`.
+        assert!(
+            compact.contains("constpick=v=>(v==null?'':String(v)).trim()"),
+            "candidates are trimmed before the fallback decision"
+        );
+
+        // The mode itself, and the material carried through into the document.
+        assert!(
+            html.contains("data-mode=\"realistic\""),
+            "realistic mode button"
+        );
+        assert!(
+            html.contains("\"material\""),
+            "meta.material rides into the scene"
+        );
+
+        // The generated image-based light + filmic tone mapping. RoomEnvironment/PMREM are
+        // generated in-browser from fixed code, so no external asset is fetched.
+        assert!(
+            html.contains("RoomEnvironment") && html.contains("PMREMGenerator"),
+            "realistic mode generates an environment to reflect"
+        );
+        assert!(
+            html.contains("ACESFilmicToneMapping") && html.contains("function setEnvironment"),
+            "filmic tone mapping is toggled with the mode"
+        );
+
+        // The per-family appearance table + the grade→family fallback chain.
+        assert!(html.contains("const MATERIALS="), "material table");
+        // Match the table ENTRY, not the bare word — the family names also occur in prose, so a
+        // substring check would pass against a comment while the table itself was empty.
+        for family in [
+            "painted",
+            "steel",
+            "galvanised",
+            "stainless",
+            "weathering",
+            "aluminium",
+            "concrete",
+            "timber",
+            "asphalt",
+            "glass",
+        ] {
+            assert!(
+                compact.contains(&format!("{family}:{{metalness:")),
+                "material family `{family}` has an entry in the table"
+            );
+        }
+        assert!(
+            html.contains("const GRADE_FAMILIES=") && html.contains("function familyOf"),
+            "a grade names the alloy, so it needs mapping to an appearance family"
+        );
+        assert!(
+            compact.contains("mat.userData={baseOpacity:op,baseColor:col,family:familyOf(e)}"),
+            "the base colour is retained so leaving Realistic restores the group colour"
+        );
+        // Regression guard: group colours arrive as CSS strings ("#60a5fa") but the family
+        // colours are numeric literals. `setHex` accepts only a number, so restoring a group
+        // colour through it yields NaN and renders the element BLACK — which is what shipped
+        // in the first cut of this mode and was caught only by driving it in a real browser.
+        assert!(
+            !html.contains("mat.color.setHex("),
+            "restore the base colour with .set (string-or-number), never .setHex"
+        );
+    }
+
+    #[test]
+    fn renders_identical_bytes_for_identical_scene() {
+        // The determinism guarantee in this module's header (no clock, no environment) is what
+        // lets a rendered document be cached, diffed and hosted. Nothing asserted it until now.
+        let scene = json!({
+            "meta": { "name": "Determinism", "units": "mm", "up": "z" },
+            "groups": [ { "key": "g", "label": "G", "color": "#60a5fa" } ],
+            "elements": [
+                { "id": "B1", "group": "g", "kind": "box",
+                  "from": [0,0,0], "to": [3000,0,0], "section": { "w": 140, "d": 400 },
+                  "meta": { "profile": "W16X26", "material": "A992" } }
+            ]
+        });
+        let first = viewer_3d_render(&json!({ "scene": scene.clone() }), true).unwrap();
+        let second = viewer_3d_render(&json!({ "scene": scene }), true).unwrap();
+        assert_eq!(
+            first["html"].as_str().unwrap(),
+            second["html"].as_str().unwrap(),
+            "identical scene input must produce identical HTML bytes"
+        );
+        assert_eq!(first["bytes"], second["bytes"]);
+    }
+
+    #[test]
     fn renders_a_tessellated_mesh_element() {
         // A kind:"mesh" element (imported connection geometry) rides through as positions+indices,
         // and the renderer ships the BufferGeometry path that draws it.
@@ -2278,8 +2502,13 @@ mod tests {
             !html.contains("data-view="),
             "named-view toolbar buttons removed — the ViewCube replaces them"
         );
-        // Display modes: solid / wireframe / x-ray.
-        assert!(html.contains("data-mode=\"wire\"") && html.contains("data-mode=\"xray\""));
+        // Display modes: solid / wireframe / x-ray / realistic.
+        assert!(
+            html.contains("data-mode=\"wire\"")
+                && html.contains("data-mode=\"xray\"")
+                && html.contains("data-mode=\"realistic\""),
+            "all four display modes are offered"
+        );
         assert!(html.contains("function applyDisplayMode"));
         // Interactive legend (hide / solo) + per-group opacity from the schema.
         assert!(html.contains("function toggleGroup") && html.contains("function soloToggle"));
