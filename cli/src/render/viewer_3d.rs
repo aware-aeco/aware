@@ -271,7 +271,6 @@ function applyDisplayMode(){
     // Reset the appearance on EVERY pass so a mode switch is symmetric — leaving Realistic must
     // restore the flat shading exactly, not strand the last family's metalness on the mesh.
     mat.metalness = real ? real.metalness : 0.5;
-    mat.roughness = real ? real.roughness : 0.5;
     // A metal has NO diffuse term — the environment IS its brightness — and RoomEnvironment is a dim
     // little box, so an unlifted metalness=1 surface reads darker than the matte paint beside it.
     // Lift the metals; leave dielectrics (concrete, timber, paint) alone or they blow out. Done per
@@ -280,6 +279,9 @@ function applyDisplayMode(){
     // Surface detail only in Realistic — Solid/Wire/X-ray stay flat, which is what keeps them
     // readable as working views. Binding a map changes the shader defines, so needsUpdate matters.
     const tex = real ? surfaceFor(u.family) : null;
+    // With a map bound the roughness is ENTIRELY in the texture (absolute values), so the scalar must
+    // be 1 or three multiplies it in twice. Without one, fall back to the declared/base scalar.
+    mat.roughness = tex ? 1 : (real ? real.roughness : 0.5);
     const wantMap = tex ? tex.map : null;
     if(mat.map !== wantMap){ mat.map = wantMap; mat.roughnessMap = tex ? tex.roughnessMap : null; mat.needsUpdate = true; }
     // `.set` NOT `.setHex`: a group colour arrives from the scene as a CSS string ("#60a5fa")
@@ -434,20 +436,25 @@ function familyOf(e){
 // Kept in step with floless's web/steel-materials.js, which is the reference implementation.
 function mulberry32(seed){ let a=seed>>>0; return ()=>{ a=(a+0x6d2b79f5)>>>0;
   let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
-function noiseField(size,cells,seed){ const r=mulberry32(seed), g=new Float32Array(cells*cells);
+// Separate X and Y lattice counts. Directional finishes (grain, brushing) come from a COARSER lattice
+// on one axis, never from resampling a square field with a squashed index: that reads only the first
+// few rows and then jumps back to row 0 at the tile edge, which with RepeatWrapping is a hard seam
+// every tile. Anisotropy in the lattice stays periodic on both axes by construction.
+function noiseField(size,cellsX,cellsY,seed){ const r=mulberry32(seed), g=new Float32Array(cellsX*cellsY);
   for(let i=0;i<g.length;i++) g[i]=r();
-  const at=(x,y)=>g[((y%cells)+cells)%cells*cells+(((x%cells)+cells)%cells)];
-  const sm=t=>t*t*(3-2*t), out=new Float32Array(size*size), s=cells/size;
+  const at=(x,y)=>g[(((y%cellsY)+cellsY)%cellsY)*cellsX+(((x%cellsX)+cellsX)%cellsX)];
+  const sm=t=>t*t*(3-2*t), out=new Float32Array(size*size), sx=cellsX/size, sy=cellsY/size;
   for(let y=0;y<size;y++)for(let x=0;x<size;x++){
-    const fx=x*s, fy=y*s, x0=Math.floor(fx), y0=Math.floor(fy), tx=sm(fx-x0), ty=sm(fy-y0);
+    const fx=x*sx, fy=y*sy, x0=Math.floor(fx), y0=Math.floor(fy), tx=sm(fx-x0), ty=sm(fy-y0);
     const a=at(x0,y0), b=at(x0+1,y0), c=at(x0,y0+1), d=at(x0+1,y0+1);
     out[y*size+x]=(a+(b-a)*tx)*(1-ty)+(c+(d-c)*tx)*ty; }
   return out; }
 // Starts at a FINE lattice deliberately: a coarse first octave makes big soft blobs, and a blob
 // stretched over a 3 m column by the triplanar projection reads as a smear or a stain, not material.
-function fbm(size,seed,octaves){ const out=new Float32Array(size*size);
+function fbm(size,seed,aniso,octaves){ const out=new Float32Array(size*size);
   let amp=1, cells=16, norm=0;
-  for(let o=0;o<(octaves||5);o++){ const n=noiseField(size,cells,seed+o*977);
+  // aniso > 1 stretches the pattern along Y by giving that axis proportionally fewer cells.
+  for(let o=0;o<(octaves||5);o++){ const n=noiseField(size,cells,Math.max(1,Math.round(cells/(aniso||1))),seed+o*977);
     for(let i=0;i<out.length;i++) out[i]+=n[i]*amp;
     norm+=amp; amp*=0.5; cells*=2; }
   for(let i=0;i<out.length;i++) out[i]/=norm;
@@ -474,17 +481,23 @@ const texByFamily=new Map();
 function surfaceFor(family){
   if(!family||!SURFACES[family]) return null;
   if(!texByFamily.has(family)){
-    const size=256, stretch=STRETCH[family]||1, paint=SURFACES[family];
+    const size=256, paint=SURFACES[family];
+    // The map encodes ABSOLUTE roughness around this family's declared value, so it needs it here.
+    const spec=MATERIALS[family], baseRough=spec?spec.roughness:0.5;
     let seed=0; for(let i=0;i<family.length;i++) seed=(seed*31+family.charCodeAt(i))>>>0;
-    const field=fbm(size,seed), r=mulberry32(seed^0x9e3779b9);
+    const field=fbm(size,seed,STRETCH[family]||1), r=mulberry32(seed^0x9e3779b9);
     const ac=document.createElement('canvas'), rc=document.createElement('canvas');
     ac.width=ac.height=rc.width=rc.height=size;
     const ai=ac.getContext('2d').createImageData(size,size), ri=rc.getContext('2d').createImageData(size,size);
     for(let y=0;y<size;y++)for(let x=0;x<size;x++){
-      const sy=stretch>1?Math.floor(y/stretch)%size:y, n=field[sy*size+x], v=paint(n,r), i=(y*size+x)*4;
+      const n=field[y*size+x], v=paint(n,r), i=(y*size+x)*4;
       const L=Math.max(0,Math.min(255,Math.round(v[0]*255)));
       ai.data[i]=ai.data[i+1]=ai.data[i+2]=L; ai.data[i+3]=255;
-      const R=Math.max(0,Math.min(255,Math.round((0.5+v[1])*255)));   // roughnessMap reads GREEN
+      // ABSOLUTE roughness, not a delta around 0.5: three MULTIPLIES roughness by this channel, so a
+      // map centred on 0.5 silently halves every declared roughness (concrete 0.92 → ~0.46, twice as
+      // glossy as specified). applyDisplayMode sets material.roughness = 1 so the multiply is an
+      // identity and what is written here is exactly the roughness used. (Read from GREEN.)
+      const R=Math.max(0,Math.min(255,Math.round((baseRough+v[1])*255)));
       ri.data[i]=ri.data[i+1]=ri.data[i+2]=R; ri.data[i+3]=255; }
     ac.getContext('2d').putImageData(ai,0,0); rc.getContext('2d').putImageData(ri,0,0);
     const mk=(cv,srgb)=>{ const t=new THREE.CanvasTexture(cv); t.wrapS=t.wrapT=THREE.RepeatWrapping;
