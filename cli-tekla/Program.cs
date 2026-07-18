@@ -1802,23 +1802,33 @@ internal static class Program
         {
             // TOCTOU recheck (#290 review): the process set was snapshotted in ExecuteResolvedScript
             // BEFORE DLL probing, bake hashing, and STA thread startup — a window in which the Tekla
-            // process set could change. new Model() would then attach to an instance our loaded DLLs
-            // may not match. Recheck as late as possible (here, on the STA thread, immediately before
-            // the connection). Only two resolutions reach here (Ambiguous/NotRunning returned early),
-            // so `expectedPid` fully identifies which invariant to reassert:
-            //   • Resolved → expectedPid set → the SAME single instance must still be the only one live
-            //   • NoHost   → expectedPid null → NO Tekla may have started (DLLs are the requested
-            //                version, not a running one — a host appearing could version-mismatch)
+            // process set could change. Recheck as late as possible (here, on the STA thread, immediately
+            // before the connection). The Open API binds new Model() by VERSION, so the invariant to
+            // reassert is per-major, not global:
+            //   • Resolved → the target PID must still be live, every process inspectable, and the
+            //                target's MAJOR must still have exactly one instance (a same-major sibling
+            //                appearing is what new Model() could misattach to; other majors are fine)
+            //   • NoHost   → NO Tekla may have started (DLLs are the requested version, not a running
+            //                one — a host appearing could version-mismatch)
             {
                 var (rawNow, instNow) = DiscoverTeklas();
-                bool stillValid = expectedPid is int want
-                    ? rawNow == 1 && instNow.Count == 1 && instNow[0].Pid == want
-                    : rawNow == 0;
+                bool stillValid;
+                if (expectedPid is int want)
+                {
+                    var match = instNow.Where(i => i.Pid == want).ToList();
+                    stillValid = match.Count == 1
+                        && rawNow == instNow.Count
+                        && instNow.Count(i => i.Version == match[0].Version) == 1;
+                }
+                else
+                {
+                    stillValid = rawNow == 0;
+                }
                 if (!stillValid)
                     throw new InvalidOperationException(
                         "the running Tekla instance set changed between host selection and connect "
-                        + "(a Tekla instance started, or the target closed). Retry with exactly one "
-                        + "Tekla open (or none for a type-only smoke test).");
+                        + "(the target closed, or another instance of its version started). Retry with "
+                        + "exactly one instance of the target Tekla version open (other versions are fine).");
             }
             try
             {
@@ -2471,18 +2481,20 @@ internal static class Program
         }
     }
 
-    // Decide which running Tekla an exec/bake will connect to — the fix for #290. The Open API's
-    // out-of-process `new Model()` cannot be bound to a chosen process: with more than one Tekla
-    // live it may attach to an instance OTHER than the one whose DLLs we loaded, and a version
-    // mismatch there hard-crashes the CLR without a receipt. Safety keys off the RAW process count
-    // (`rawProcessCount`), NOT the inspected `instances` list — a process we couldn't inspect still
-    // exists and new Model() could attach to it (#290 review). So:
+    // Decide which running Tekla an exec/bake will connect to (refines #290/#292). The Open API's
+    // out-of-process `new Model()` binds by VERSION, not PID: loading a major's Tekla.Structures.*
+    // assemblies connects to THAT major's instance (#264). So different majors run side by side and
+    // are disambiguable by a --version/--pid selector; the only irreducible ambiguity is two instances
+    // of the SAME major (identical DLLs — new Model() can't tell them apart), or a process we couldn't
+    // inspect (unknown major — could collide with the target). So:
     //   • 0 processes                         → NoHost   (smoke-test; requested version drives DLLs)
-    //   • exactly 1 process, inspected        → Resolved (bind DLLs to ITS version, not the request — #264)
-    //   • >1 process, or any uninspected      → Ambiguous (refuse; --pid can't rescue it — there is no
-    //                                            per-PID API binding — so close all but one)
-    // An explicit --pid is honoured as an assertion, not a router: it must name the single running
-    // instance, else NotRunning. Pure + internal so it is unit-tested without a live Tekla.
+    //   • any uninspected process             → Ambiguous (unknown major could collide — close all but one)
+    //   • exactly 1 inspected instance        → Resolved (bind DLLs to ITS version — #264)
+    //   • >1 of the selected major            → Ambiguous (version-bound API can't pick one same-major sibling)
+    //   • >1 major, no --version/--pid         → Ambiguous (name one; different majors are fine side by side)
+    //   • a selector picks one unique major   → Resolved
+    // An explicit --pid/--version is honoured as the router. Pure + internal so it is unit-tested
+    // without a live Tekla.
     internal static ExecTarget ResolveExecTarget(
         int? pid, string? requestedVersion, int rawProcessCount, IReadOnlyList<TeklaInstance> instances)
     {
@@ -2496,34 +2508,79 @@ internal static class Program
                 : new ExecTarget(ExecTargetKind.NoHost, null, "no running Tekla instance");
         }
 
-        // Safe ONLY when there is exactly one Tekla process AND we could inspect it. Anything else —
-        // more than one process, or a process we couldn't read — is ambiguous, because new Model()
-        // may attach to a process other than the one we resolved.
-        bool safeSingle = rawProcessCount == 1 && instances.Count == 1;
-        if (!safeSingle)
+        // An UNINSPECTABLE process is still genuinely unsafe: we can't read its version, so it could be
+        // the SAME major as our target, and new Model() (which binds by version, not PID) could attach to
+        // it. Keep refusing whenever any process couldn't be inspected. (#290 review.)
+        if (instances.Count < rawProcessCount)
         {
-            string detail = instances.Count < rawProcessCount
-                ? $"{rawProcessCount} Tekla processes are running but {rawProcessCount - instances.Count} "
-                  + "could not be inspected (a different elevation, or an unrecognized install path)"
-                : $"{rawProcessCount} Tekla instances are running ("
-                  + string.Join(", ", instances.Select(i => $"pid {i.Pid} ({i.Version})")) + ")";
             return new ExecTarget(ExecTargetKind.Ambiguous, null,
-                detail + ". aware-tekla exec/bake connect out-of-process via new Model(), which the "
-                + "Tekla Open API cannot bind to a specific instance — it may attach to the wrong one "
-                + "and crash (0xe0434352). Close all but one Tekla instance and retry.");
+                $"{rawProcessCount} Tekla processes are running but {rawProcessCount - instances.Count} "
+                + "could not be inspected (a different elevation, or an unrecognized install path). "
+                + "aware-tekla can't prove which one new Model() would attach to — close all but one and retry.");
         }
 
-        var only = instances[0];
+        // Exactly one inspected instance: bind to it. Its version drives DLL resolution even if a
+        // different version was requested (#264) — the requested version is only a fallback. An explicit
+        // --pid is still asserted (it must name the single running instance).
+        if (instances.Count == 1)
+        {
+            var single = instances[0];
+            if (pid is int pOnly && single.Pid != pOnly)
+                return new ExecTarget(ExecTargetKind.NotRunning, null,
+                    $"requested pid {pOnly} is not running; the only live Tekla is pid {single.Pid} ({single.Version}).");
+            return new ExecTarget(ExecTargetKind.Resolved, single, "");
+        }
 
-        // An explicit --pid names a live target; assert it rather than silently using a different one.
-        if (pid is int p && only.Pid != p)
-            return new ExecTarget(ExecTargetKind.NotRunning, null,
-                $"requested pid {p} is not running; the only live Tekla is pid {only.Pid} ({only.Version}).");
+        // The Open API is VERSION-LOCKED: loading a major's Tekla.Structures.* assemblies makes new Model()
+        // connect to THAT major's running instance (#264). So DIFFERENT majors are disambiguable — the only
+        // irreducible ambiguity is two instances of the SAME major (their DLLs are identical, so new Model()
+        // can't tell them apart). Resolve to a single instance whenever a --pid or --version selects one
+        // major uniquely; refuse only on same-major multiplicity. (Corrects #290/#292's blanket refusal.)
+        List<TeklaInstance> candidates;
+        if (pid is int p)
+        {
+            candidates = instances.Where(i => i.Pid == p).ToList();
+            if (candidates.Count == 0)
+                return new ExecTarget(ExecTargetKind.NotRunning, null,
+                    $"requested pid {p} is not among the running Tekla instances ("
+                    + string.Join(", ", instances.Select(i => $"pid {i.Pid} ({i.Version})")) + ").");
+        }
+        else if (!string.IsNullOrEmpty(requestedVersion))
+        {
+            candidates = instances.Where(i => i.Version == requestedVersion).ToList();
+            if (candidates.Count == 0)
+                return new ExecTarget(ExecTargetKind.NotRunning, null,
+                    $"no running Tekla {requestedVersion} (running: "
+                    + string.Join(", ", instances.Select(i => $"pid {i.Pid} ({i.Version})")) + ").");
+        }
+        else
+        {
+            candidates = instances.ToList();
+        }
 
-        // Use the single running instance: its version drives DLL resolution even if a different
-        // version was requested (#264) — it is the only thing new Model() can attach to.
-        _ = requestedVersion;
-        return new ExecTarget(ExecTargetKind.Resolved, only, "");
+        var target = candidates[0];
+        // Same-major multiplicity is the real ambiguity: >1 instance of the target's major means new Model()
+        // (version-bound, not PID-bound) could attach to either. Refuse and say which major to thin out.
+        int sameMajor = instances.Count(i => i.Version == target.Version);
+        if (sameMajor > 1)
+        {
+            return new ExecTarget(ExecTargetKind.Ambiguous, null,
+                $"{sameMajor} instances of Tekla {target.Version} are running ("
+                + string.Join(", ", instances.Where(i => i.Version == target.Version).Select(i => $"pid {i.Pid}")) + "). "
+                + "The Open API binds new Model() by version, so it can't choose between same-version instances — "
+                + $"close all but one Tekla {target.Version} instance and retry.");
+        }
+        // Multiple DIFFERENT majors with no selector: we can't pick for the caller, but any single one is
+        // reachable — tell them to name it. (A pid/version selector above would have resolved it.)
+        if (candidates.Count > 1)
+        {
+            return new ExecTarget(ExecTargetKind.Ambiguous, null,
+                $"{instances.Count} Tekla instances of different majors are running ("
+                + string.Join(", ", instances.Select(i => $"pid {i.Pid} ({i.Version})")) + "). "
+                + "Pass --version <X.Y> or --pid <N> to pick one — different majors run side by side fine.");
+        }
+
+        return new ExecTarget(ExecTargetKind.Resolved, target, "");
     }
 
     internal static string? ExtractVersionFromPath(string path)

@@ -13,6 +13,25 @@ public sealed class CommitPolicyTests
     }
 
     [Fact]
+    public void BakeScript_ParsesWithNoSyntaxErrors()
+    {
+        // The bake script is a raw string compiled by Roslyn only at bake time — a syntax slip (e.g. a
+        // `//` comment swallowing the rest of a dense one-liner) otherwise surfaces ONLY on a live Tekla.
+        // Parse it here as a C# script so brace/syntax errors fail the build instead. Parsing is
+        // syntax-only, so it needs no Tekla assemblies.
+        var tree = Microsoft.CodeAnalysis.CSharp.CSharpSyntaxTree.ParseText(
+            BakeSceneScript.Code,
+            new Microsoft.CodeAnalysis.CSharp.CSharpParseOptions(
+                kind: Microsoft.CodeAnalysis.SourceCodeKind.Script));
+        var errors = new System.Collections.Generic.List<string>();
+        foreach (var d in tree.GetDiagnostics())
+            if (d.Severity == Microsoft.CodeAnalysis.DiagnosticSeverity.Error)
+                errors.Add(d.ToString());
+        Assert.True(errors.Count == 0,
+            "BakeSceneScript.Code has syntax errors:\n" + string.Join("\n", errors));
+    }
+
+    [Fact]
     public void ExecRetainsAutomaticCommitPolicy()
     {
         Assert.Equal(
