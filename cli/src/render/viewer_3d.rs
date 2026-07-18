@@ -67,7 +67,10 @@ const TEMPLATE: &str = r##"<!doctype html>
   /* A dropdown hides the active item until opened, so the state has to show twice: the trigger takes
      the current mode's name, and the item itself takes a ✓. Mirrors the steel editor's mode menu. */
   #toolbar #modes button,#toolbar #proj button{text-align:left;padding-right:26px;position:relative}
-  #toolbar #modes button.on::after,#toolbar #proj button.on::after{content:'✓';position:absolute;right:9px;color:var(--brand)}
+  #toolbar #modes button.on::after,#toolbar #proj button.on::after{content:'✓';position:absolute;right:9px;color:var(--accent)}
+  /* `.menu button` below strips the accent background that `button.on` sets, which would leave the
+     active item's near-black text on a dark menu. Menu items get their own readable active state. */
+  #toolbar .menu button.on{background:rgba(96,165,250,.16);color:var(--text);border-color:transparent;font-weight:600}
   /* min-width holds the longest label so relabelling the trigger cannot jitter the rest of the bar. */
   #toolbar #modeBtn{min-width:7.6em;text-align:center}
   #toolbar #projBtn{min-width:5.6em;text-align:center}
@@ -278,7 +281,13 @@ let lightHemi=null, lightKey=null, lightFill=null, shadowGround=null;
 // when the value actually flips, rather than on every applyDisplayMode pass.
 let shadowsEnabled=false;
 function syncShadows(want){
+  // Applied every pass, not just on change: setEnvironment used to set these from the PREVIOUS flag,
+  // so the first switch into `shadowed` reported shadows on and rendered none. A rebuild also makes
+  // fresh lights, which would otherwise keep the default castShadow=false while the flag said true.
+  if(lightKey) lightKey.castShadow=want;
+  if(shadowGround) shadowGround.visible=want;
   if(shadowsEnabled===want) return;
+  // Only the recompile is gated: changing shadowMap.enabled alters the shader defines.
   shadowsEnabled=want;
   renderer.shadowMap.enabled=want;
   for(const m of pickable) if(m.material) m.material.needsUpdate=true;
@@ -302,10 +311,6 @@ function setEnvironment(on){
   // mid-grey paint clipped to white. The hemisphere goes nearly to zero (the env supplies
   // omnidirectional light, and better, since it has direction and so shows form) and the
   // directionals drop to a shaping role.
-  // Only Realistic casts: shadows against the flat Solid rig would read as noise, and Wire/X-ray
-  // have no solid surfaces to receive them.
-  if(lightKey) lightKey.castShadow = shadowsEnabled;
-  if(shadowGround) shadowGround.visible = shadowsEnabled;
   if(lightHemi) lightHemi.intensity = live ? 0.08 : 0.95;
   if(lightKey) lightKey.intensity = live ? 0.55 : 1.3;
   if(lightFill) lightFill.intensity = live ? 0.18 : 0.5;
