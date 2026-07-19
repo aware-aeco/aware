@@ -383,13 +383,9 @@ function applyDisplayMode(){
     // just set. three's shadow depth material has no notion of ordinary transparency, so glass and
     // any translucent element would otherwise cast as solidly as steel.
     mesh.castShadow = shadowsEnabled && mat.opacity >= 0.95;
-    // clipShadows alone is not enough: in r160 it only honours planes on material.clippingPlanes,
-    // while every active plane here lives on renderer.clippingPlanes, which the shadow pass clears.
-    // Mirroring them onto the material is what actually stops sectioned-away geometry casting.
-    const gp = renderer.clippingPlanes;
-    mat.clippingPlanes = (shadowsEnabled && gp && gp.length) ? gp : null;
     mat.needsUpdate=true;
   }
+  syncClipMirror();   // shadows just turned on or off — the mirror follows
 }
 function applyGroupVisibility(){
   for(const m of pickable){ const k=m.userData&&m.userData.group;
@@ -845,7 +841,16 @@ function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
   new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
 function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
-  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; }
+  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
+// Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
+// ones are cleared there. applyClips REPLACES the array rather than mutating it, so that reference
+// has to be re-pointed on every clip change: a stale one leaves the model visibly clipped after the
+// clip was cleared, and leaves the shadow pass cutting against the previous set after a new one.
+function syncClipMirror(){
+  const gp=renderer.clippingPlanes;
+  const use=(shadowsEnabled && gp && gp.length) ? gp : null;
+  for(const m of pickable) if(m.material) m.material.clippingPlanes=use;
+}
 function meshBox(meshes){ const b=new THREE.Box3(); for(const m of meshes){ if(m.visible) b.expandByObject(m); } return b; } // real mesh bounds incl. section width (sceneBox is centreline-only)
 function selBox(pad){ let box=meshBox(selection); if(box.isEmpty()) box=meshBox(pickable); if(box.isEmpty()) return null;
   return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }
