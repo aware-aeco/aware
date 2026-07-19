@@ -64,6 +64,16 @@ const TEMPLATE: &str = r##"<!doctype html>
   #toolbar .tb-menu{position:relative}
   #toolbar .tb-menu>.menu{position:absolute;top:calc(100% + 6px);left:0;min-width:172px;background:rgba(15,23,42,.97);border:1px solid var(--border-2);border-radius:8px;padding:5px;display:none;flex-direction:column;gap:2px;box-shadow:0 12px 32px rgba(0,0,0,.55);z-index:7}
   #toolbar .tb-menu.open>.menu{display:flex}
+  /* A dropdown hides the active item until opened, so the state has to show twice: the trigger takes
+     the current mode's name, and the item itself takes a ✓. Mirrors the steel editor's mode menu. */
+  #toolbar #modes button,#toolbar #proj button{text-align:left;padding-right:26px;position:relative}
+  #toolbar #modes button.on::after,#toolbar #proj button.on::after{content:'✓';position:absolute;right:9px;color:var(--accent)}
+  /* `.menu button` below strips the accent background that `button.on` sets, which would leave the
+     active item's near-black text on a dark menu. Menu items get their own readable active state. */
+  #toolbar .menu button.on{background:rgba(96,165,250,.16);color:var(--text);border-color:transparent;font-weight:600}
+  /* min-width holds the longest label so relabelling the trigger cannot jitter the rest of the bar. */
+  #toolbar #modeBtn{min-width:7.6em;text-align:center}
+  #toolbar #projBtn{min-width:5.6em;text-align:center}
   #toolbar .menu button{width:100%;text-align:left;background:transparent;border:1px solid transparent;border-radius:6px;padding:6px 9px}
   #toolbar .menu button:hover{background:rgba(51,65,85,.85);border-color:transparent}
   #toolbar .menu button.danger:hover{background:rgba(127,29,29,.55)}
@@ -87,14 +97,25 @@ const TEMPLATE: &str = r##"<!doctype html>
 <div id="topbar" class="panel"><div class="brand"><b>AWARE</b> · viewer-3d</div><div class="sub" id="sceneName">—</div></div>
 <div id="toolbar" class="panel">
   <!-- Camera: projection + fit -->
-  <div class="tb-grp" id="proj">
-    <button data-proj="persp" class="on" data-tip="Perspective view — natural depth">Persp</button><button data-proj="ortho" data-tip="Orthographic — true scale, no perspective">Ortho</button>
+  <div class="tb-menu" id="projMenu">
+    <button id="projBtn" data-tip="Projection — perspective or orthographic">Persp ▾</button>
+    <div class="menu" role="menu" id="proj">
+      <button data-proj="persp" class="on" data-tip="Perspective view — natural depth">Persp</button>
+      <button data-proj="ortho" data-tip="Orthographic — true scale, no perspective">Ortho</button>
+    </div>
   </div>
   <button id="fit" data-tip="Fit all to view (Home)">Fit</button>
   <div class="tb-sep"></div>
   <!-- Display mode -->
-  <div class="tb-grp" id="modes">
-    <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button><button data-mode="wire" data-tip="Wireframe — edges only">Wire</button><button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button><button data-mode="realistic" data-tip="Realistic — true construction materials (steel, concrete, timber…)">Realistic</button>
+  <div class="tb-menu" id="modeMenu">
+    <button id="modeBtn" data-tip="Display mode — solid, wireframe, see-through (X-ray) or realistic materials">Solid ▾</button>
+    <div class="menu" role="menu" id="modes">
+      <button data-mode="solid" class="on" data-tip="Solid shaded model">Solid</button>
+      <button data-mode="wire" data-tip="Wireframe — edges only">Wire</button>
+      <button data-mode="xray" data-tip="See-through — reveal hidden parts">X-ray</button>
+      <button data-mode="realistic" data-tip="Realistic — true construction materials (steel, concrete, timber…)">Realistic</button>
+      <button data-mode="shadowed" data-tip="Realistic with cast shadows — more depth, at a cost to frame rate">Shadowed</button>
+    </div>
   </div>
   <div class="tb-sep"></div>
   <!-- Section: clip planes/boxes + work area -->
@@ -155,6 +176,10 @@ const orthoCam=new THREE.OrthographicCamera(-1,1,1,-1,0.01,1e7);
 let camera=perspCam;
 const renderer=new THREE.WebGLRenderer({antialias:true}); renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
 renderer.localClippingEnabled=true; // enable clip planes/boxes + the work area (Tekla-style sectioning) — driven via renderer.clippingPlanes (applyClips)
+// Shadows compile in unconditionally, but only the Realistic mode's key light actually casts (see
+// applyDisplayMode). Toggling shadowMap.enabled at runtime would force every material to recompile
+// on each mode switch; leaving it on and toggling castShadow costs nothing when nothing casts.
+renderer.shadowMap.enabled=false; renderer.shadowMap.type=THREE.PCFSoftShadowMap;   // switched on only by the `shadowed` mode
 document.getElementById('app').appendChild(renderer.domElement);
 const controls=new OrbitControls(camera, renderer.domElement);
 // CAD feel (parity with floless steel-3d-view): rotate/pan stop dead on release — NO post-release
@@ -230,8 +255,14 @@ function setProjection(mode){
   controls.object=camera; camera.up.set(0,1,0); camera.position.copy(pos); camera.lookAt(target);
   if(camera.isOrthographicCamera){ orthoCam.zoom=1; reframeOrtho(); } else camera.updateProjectionMatrix();
   controls.update(); activate('#proj button','data-proj',mode);
+  const pb=document.getElementById('projBtn');
+  if(pb) pb.textContent=(mode==='ortho'?'Ortho':'Persp')+' ▾';
 }
-function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes button','data-mode',m); }
+function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes button','data-mode',m);
+  // The trigger carries the label because the menu is closed most of the time. min-width above holds
+  // the longest one ("Realistic ▾") so switching modes cannot jitter the rest of the toolbar.
+  const b=document.getElementById('modeBtn');
+  if(b) b.textContent=(m==='wire'?'Wire':m==='xray'?'X-ray':m==='realistic'?'Realistic':m==='shadowed'?'Shadowed':'Solid')+' ▾'; }
 // Realistic metal is nothing but reflections: against the default light rig, with nothing to
 // reflect, metalness=1 renders BLACK. So the mode generates an image-based light in the browser
 // (RoomEnvironment → PMREM) and switches on filmic tone mapping. Built lazily on first use and
@@ -242,7 +273,52 @@ function setDisplayMode(m){ displayMode=m; applyDisplayMode(); activate('#modes 
 // well under 300ms on real hardware; every later switch is free). Deliberately NOT pre-generated
 // at load: a viewer that never leaves Solid should not pay for it.
 let envRT=null, envFailed=false;
-let lightHemi=null, lightKey=null, lightFill=null;   // dimmed in Realistic; the environment lights it
+let lightHemi=null, lightKey=null, lightFill=null, shadowGround=null;
+// Shadows are a VARIANT of Realistic, not an orthogonal toggle: they need its environment and its
+// solid surfaces to mean anything, and they cost real frame time — so `shadowed` is its own mode and
+// plain `realistic` stays the cheap default. Tracked here only to avoid recompiling every material on
+// each mode switch: changing shadowMap.enabled alters the shader defines, so it must be done once,
+// when the value actually flips, rather than on every applyDisplayMode pass.
+let shadowsEnabled=false;
+
+// Sized from the COMPLETED meshes, not from maxDim: the scene bounds are centrelines, and omit node
+// `size` and member section extents, so geometry can extend well past them. A frustum built from the
+// centrelines then clips most or all of the shadows — a single node with size 100 in a scene whose
+// maxDim is 1 loses them outright.
+function sizeShadowRig(){
+  if(!lightKey) return;
+  const rb=new THREE.Box3();
+  for(const m of pickable) rb.expandByObject(m);
+  if(rb.isEmpty()) return;
+  const c=rb.getCenter(new THREE.Vector3()), sz=rb.getSize(new THREE.Vector3());
+  const span=Math.max(sz.x,sz.y,sz.z)||1;
+  lightKey.shadow.mapSize.set(2048,2048);
+  const sc=lightKey.shadow.camera, r=span*1.2;
+  sc.left=-r; sc.right=r; sc.top=r; sc.bottom=-r; sc.near=span*0.02; sc.far=span*10; sc.updateProjectionMatrix();
+  // Steel is thin, so acne and peter-panning are both easy to hit; a span-scaled normalBias handles
+  // the thin-web case a constant one cannot.
+  lightKey.shadow.bias=-0.0004; lightKey.shadow.normalBias=Math.max(span*0.0015,1);
+  lightKey.position.copy(c).add(new THREE.Vector3(span,span*1.5,span*0.6));
+  lightKey.target.position.copy(c); content.add(lightKey.target);
+  if(shadowGround){ content.remove(shadowGround); shadowGround.geometry.dispose(); shadowGround.material.dispose(); }
+  // ShadowMaterial catches the shadow while staying invisible, so the background shows through
+  // everywhere the shadow is not.
+  shadowGround=new THREE.Mesh(new THREE.PlaneGeometry(span*4,span*4), new THREE.ShadowMaterial({opacity:0.42}));
+  shadowGround.rotation.x=-Math.PI/2; shadowGround.position.set(c.x, rb.min.y, c.z);
+  shadowGround.receiveShadow=true; shadowGround.visible=shadowsEnabled; content.add(shadowGround);
+}
+function syncShadows(want){
+  // Applied every pass, not just on change: setEnvironment used to set these from the PREVIOUS flag,
+  // so the first switch into `shadowed` reported shadows on and rendered none. A rebuild also makes
+  // fresh lights, which would otherwise keep the default castShadow=false while the flag said true.
+  if(lightKey) lightKey.castShadow=want;      // the LIGHT casts; which MESHES cast is decided per-pass below
+  if(shadowGround) shadowGround.visible=want;
+  if(shadowsEnabled===want) return;
+  // Only the recompile is gated: changing shadowMap.enabled alters the shader defines.
+  shadowsEnabled=want;
+  renderer.shadowMap.enabled=want;
+  for(const m of pickable) if(m.material) m.material.needsUpdate=true;
+}   // dimmed in Realistic; the environment lights it
 // Returns whether the environment is actually LIVE. If PMREM fails (lost context, a driver
 // without the float targets it needs) we must NOT go on to apply metalness=1 — with nothing to
 // reflect, that renders every metal element BLACK, which is far worse than not switching at all.
@@ -273,7 +349,9 @@ function setEnvironment(on){
 // write; realistic → per-family PBR (MATERIALS) lit by the generated environment.
 function applyDisplayMode(){
   // Gate the PBR pass on the environment being LIVE, not merely on the mode being selected.
-  const realistic=setEnvironment(displayMode==='realistic');
+  // Both realistic modes get the environment and the material table; only `shadowed` also casts.
+  const realistic=setEnvironment(displayMode==='realistic'||displayMode==='shadowed');
+  syncShadows(realistic && displayMode==='shadowed');
   for(const mesh of pickable){ const mat=mesh.material; if(!mat) continue;
     const u=mat.userData||{}, base=(u.baseOpacity!=null)?u.baseOpacity:1;
     const real=realistic ? (MATERIALS[u.family]||MATERIALS.painted) : null;
@@ -301,8 +379,13 @@ function applyDisplayMode(){
     else if(displayMode==='xray'){ mat.wireframe=false; mat.transparent=true; mat.opacity=Math.min(base,0.25); mat.depthWrite=false; }
     else { const op = real&&real.opacity!=null ? Math.min(base,real.opacity) : base;
       mat.wireframe=false; mat.opacity=op; mat.transparent=op<1; mat.depthWrite=true; }
+    // Casting is decided HERE, not once at build time, because it depends on the opacity this pass
+    // just set. three's shadow depth material has no notion of ordinary transparency, so glass and
+    // any translucent element would otherwise cast as solidly as steel.
+    mesh.castShadow = shadowsEnabled && mat.opacity >= 0.95;
     mat.needsUpdate=true;
   }
+  syncClipMirror();   // shadows just turned on or off — the mirror follows
 }
 function applyGroupVisibility(){
   for(const m of pickable){ const k=m.userData&&m.userData.group;
@@ -554,6 +637,10 @@ function applyTriplanar(material,scaleMm){
 function solidMaterial(e,colorOf,opacityOf,doubleSided){ const col=colorOf[e.group]||0xffffff;
   const op=typeof e.opacity==='number'?e.opacity:(typeof opacityOf[e.group]==='number'?opacityOf[e.group]:1);
   const mat=new THREE.MeshStandardMaterial({color:col,metalness:0.5,roughness:0.5,transparent:op<1, opacity:op,side:doubleSided?THREE.DoubleSide:THREE.FrontSide});
+  // Clipping is applied globally via renderer.clippingPlanes, but the shadow pass uses a depth
+  // material that ignores it unless the material opts in. Without this, a clip plane, clip box or
+  // work area removes geometry from the view while it keeps casting an impossible shadow.
+  mat.clipShadows=true;
   const fam=familyOf(e);
   // Patch ONCE at creation rather than toggling with the mode: both replaced chunks are guarded by
   // USE_MAP/USE_ROUGHNESSMAP, so with no maps bound the patched shader matches the stock one — and
@@ -617,7 +704,6 @@ function renderScene(S){
   lightHemi=new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95); content.add(lightHemi);
   lightKey=new THREE.DirectionalLight(0xffffff,1.3); lightKey.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(lightKey);
   lightFill=new THREE.DirectionalLight(0x88aaff,0.5); lightFill.position.copy(center).add(new THREE.Vector3(-maxDim,maxDim*0.7,-maxDim)); content.add(lightFill);
-  applyDisplayMode();   // a rebuild makes new lights — re-apply so Realistic's dimming is not lost
   const grid=new THREE.GridHelper(maxDim*1.9, 24, 0x1e293b, 0x131c2e); grid.position.set(center.x, box.min.y, center.z); content.add(grid);
 
   const upY=new THREE.Vector3(0,1,0);
@@ -645,11 +731,14 @@ function renderScene(S){
       const w=(e.section&&e.section.w)||thick, d=(e.section&&e.section.d)||thick;
       mesh=new THREE.Mesh(profileGeom(e,w,d,len), mat); mesh.position.copy(a).add(b).multiplyScalar(0.5);
       orientMember(mesh, dir); }
+           mesh.receiveShadow=true;   // steel catches shadow from steel, not just from the ground; casting is decided per-pass in applyDisplayMode
     mesh.userData=e; content.add(mesh); pickable.push(mesh);
   }
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
   addReferenceSystems(S,up);
   addOperations(S,up);
+  sizeShadowRig();      // needs the finished meshes: the scene bounds are centrelines, not extents
+  applyDisplayMode();   // a rebuild makes new lights and materials — re-apply the current mode
 
   if(S.camera&&Array.isArray(S.camera.eye)&&Array.isArray(S.camera.target)){
     const eye=conv(S.camera.eye,up), tgt=conv(S.camera.target,up);
@@ -752,7 +841,16 @@ function boxToPlanes(b){ return [
   new THREE.Plane(new THREE.Vector3(0,-1,0), b.max.y), new THREE.Plane(new THREE.Vector3(0,1,0), -b.min.y),
   new THREE.Plane(new THREE.Vector3(0,0,-1), b.max.z), new THREE.Plane(new THREE.Vector3(0,0,1), -b.min.z) ]; }
 function applyClips(){ const active=clips.flatMap(c=>c.planes); if(workArea) active.push(...workArea.planes);
-  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; }
+  renderer.clippingPlanes=active.length?active:EMPTY_CLIPS; syncClipMirror(); }
+// Materials keep their OWN reference to the clip planes for the shadow pass, since renderer-global
+// ones are cleared there. applyClips REPLACES the array rather than mutating it, so that reference
+// has to be re-pointed on every clip change: a stale one leaves the model visibly clipped after the
+// clip was cleared, and leaves the shadow pass cutting against the previous set after a new one.
+function syncClipMirror(){
+  const gp=renderer.clippingPlanes;
+  const use=(shadowsEnabled && gp && gp.length) ? gp : null;
+  for(const m of pickable) if(m.material) m.material.clippingPlanes=use;
+}
 function meshBox(meshes){ const b=new THREE.Box3(); for(const m of meshes){ if(m.visible) b.expandByObject(m); } return b; } // real mesh bounds incl. section width (sceneBox is centreline-only)
 function selBox(pad){ let box=meshBox(selection); if(box.isEmpty()) box=meshBox(pickable); if(box.isEmpty()) return null;
   return box.expandByScalar(pad==null?Math.max(maxDim*0.04,1):pad); }
@@ -806,8 +904,11 @@ addEventListener('keydown',e=>{
 });
 
 // Toolbar wiring (named views now live on the ViewCube — see below — not duplicate buttons).
-document.querySelectorAll('#proj button').forEach(b=>b.addEventListener('click',()=>setProjection(b.dataset.proj)));
-document.querySelectorAll('#modes button').forEach(b=>b.addEventListener('click',()=>setDisplayMode(b.dataset.mode)));
+document.getElementById('projBtn').addEventListener('click', e=>{ e.stopPropagation(); toggleMenu('projMenu'); });
+document.querySelectorAll('#proj [data-proj]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus(); setProjection(b.dataset.proj); }));
+document.getElementById('modeBtn').addEventListener('click', e=>{ e.stopPropagation(); toggleMenu('modeMenu'); });
+document.querySelectorAll('#modes [data-mode]').forEach(b=>b.addEventListener('click', e=>{ e.stopPropagation(); closeMenus(); setDisplayMode(b.dataset.mode); }));
+
 document.getElementById('fit').addEventListener('click',()=>frameBox(sceneBox));
 
 // ---- Section dropdowns (Clip / Work area) ----
@@ -914,6 +1015,7 @@ window.__viewer3d={ count:()=>pickable.length, name:()=>(SCENE.meta&&SCENE.meta.
   // Realistic-mode state. `envOn` is the load-bearing one: metal with no environment renders
   // black, so "the mode switched" is not evidence on its own — the environment must be live.
   envOn:()=>scene.environment!==null&&renderer.toneMapping===THREE.ACESFilmicToneMapping,
+  shadowsOn:()=>shadowsEnabled,
   materialOf:(id)=>{ const m=pickable.find(p=>p.userData&&p.userData.id===id); if(!m) return null;
     return {family:m.material.userData.family, metalness:m.material.metalness,
       roughness:m.material.roughness, color:'#'+m.material.color.getHexString()}; },
@@ -2341,6 +2443,24 @@ mod tests {
         assert!(
             html.contains("mat.envMapIntensity"),
             "metals are lifted per-material so they don't read darker than the paint beside them"
+        );
+        // Shadows are opt-in and OFF by default — they cost real frame time on a large frame, and
+        // Realistic reads well enough without them. Asserted because a default flipped back to true
+        // would be an easy, silent regression to make and a hard one to notice.
+        // Shadows are a VARIANT of Realistic (`shadowed`), not an orthogonal toggle: they need its
+        // environment and solid surfaces to mean anything. Plain `realistic` stays the cheap default,
+        // which is an easy thing to regress silently and a hard one to notice.
+        assert!(
+            html.contains("data-mode=\"shadowed\""),
+            "shadows are their own display mode, not a cross-cutting toggle"
+        );
+        assert!(
+            compact.contains("renderer.shadowMap.enabled=false"),
+            "shadow mapping starts disabled, so the default mode costs nothing rather than merely hiding shadows"
+        );
+        assert!(
+            compact.contains("syncShadows(realistic&&displayMode==='shadowed')"),
+            "only the shadowed mode casts, and only once the environment is actually live"
         );
         // Regression guard: group colours arrive as CSS strings ("#60a5fa") but the family
         // colours are numeric literals. `setHex` accepts only a number, so restoring a group
