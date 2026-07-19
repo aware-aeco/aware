@@ -280,6 +280,33 @@ let lightHemi=null, lightKey=null, lightFill=null, shadowGround=null;
 // each mode switch: changing shadowMap.enabled alters the shader defines, so it must be done once,
 // when the value actually flips, rather than on every applyDisplayMode pass.
 let shadowsEnabled=false;
+
+// Sized from the COMPLETED meshes, not from maxDim: the scene bounds are centrelines, and omit node
+// `size` and member section extents, so geometry can extend well past them. A frustum built from the
+// centrelines then clips most or all of the shadows — a single node with size 100 in a scene whose
+// maxDim is 1 loses them outright.
+function sizeShadowRig(){
+  if(!lightKey) return;
+  const rb=new THREE.Box3();
+  for(const m of pickable) rb.expandByObject(m);
+  if(rb.isEmpty()) return;
+  const c=rb.getCenter(new THREE.Vector3()), sz=rb.getSize(new THREE.Vector3());
+  const span=Math.max(sz.x,sz.y,sz.z)||1;
+  lightKey.shadow.mapSize.set(2048,2048);
+  const sc=lightKey.shadow.camera, r=span*1.2;
+  sc.left=-r; sc.right=r; sc.top=r; sc.bottom=-r; sc.near=span*0.02; sc.far=span*10; sc.updateProjectionMatrix();
+  // Steel is thin, so acne and peter-panning are both easy to hit; a span-scaled normalBias handles
+  // the thin-web case a constant one cannot.
+  lightKey.shadow.bias=-0.0004; lightKey.shadow.normalBias=Math.max(span*0.0015,1);
+  lightKey.position.copy(c).add(new THREE.Vector3(span,span*1.5,span*0.6));
+  lightKey.target.position.copy(c); content.add(lightKey.target);
+  if(shadowGround){ content.remove(shadowGround); shadowGround.geometry.dispose(); shadowGround.material.dispose(); }
+  // ShadowMaterial catches the shadow while staying invisible, so the background shows through
+  // everywhere the shadow is not.
+  shadowGround=new THREE.Mesh(new THREE.PlaneGeometry(span*4,span*4), new THREE.ShadowMaterial({opacity:0.42}));
+  shadowGround.rotation.x=-Math.PI/2; shadowGround.position.set(c.x, rb.min.y, c.z);
+  shadowGround.receiveShadow=true; shadowGround.visible=shadowsEnabled; content.add(shadowGround);
+}
 function syncShadows(want){
   // Applied every pass, not just on change: setEnvironment used to set these from the PREVIOUS flag,
   // so the first switch into `shadowed` reported shadows on and rendered none. A rebuild also makes
@@ -356,6 +383,11 @@ function applyDisplayMode(){
     // just set. three's shadow depth material has no notion of ordinary transparency, so glass and
     // any translucent element would otherwise cast as solidly as steel.
     mesh.castShadow = shadowsEnabled && mat.opacity >= 0.95;
+    // clipShadows alone is not enough: in r160 it only honours planes on material.clippingPlanes,
+    // while every active plane here lives on renderer.clippingPlanes, which the shadow pass clears.
+    // Mirroring them onto the material is what actually stops sectioned-away geometry casting.
+    const gp = renderer.clippingPlanes;
+    mat.clippingPlanes = (shadowsEnabled && gp && gp.length) ? gp : null;
     mat.needsUpdate=true;
   }
 }
@@ -676,22 +708,6 @@ function renderScene(S){
   lightHemi=new THREE.HemisphereLight(0x9fc5ff,0x0a0f1a,0.95); content.add(lightHemi);
   lightKey=new THREE.DirectionalLight(0xffffff,1.3); lightKey.position.copy(center).add(new THREE.Vector3(maxDim,maxDim*1.5,maxDim*0.6)); content.add(lightKey);
   lightFill=new THREE.DirectionalLight(0x88aaff,0.5); lightFill.position.copy(center).add(new THREE.Vector3(-maxDim,maxDim*0.7,-maxDim)); content.add(lightFill);
-  // A single material reads flat without shadows: nothing marks where a column meets a slab or a
-  // beam lands on a column, so the frame loses its depth. The shadow camera is sized from the scene
-  // bounds, since a fixed frustum either clips a large model or wastes resolution on a small one.
-  lightKey.shadow.mapSize.set(2048,2048);
-  const sc=lightKey.shadow.camera, r=maxDim*1.15;
-  sc.left=-r; sc.right=r; sc.top=r; sc.bottom=-r; sc.near=maxDim*0.02; sc.far=maxDim*8; sc.updateProjectionMatrix();
-  // Steel is thin, so acne and peter-panning are both easy to hit. normalBias scaled to the model
-  // handles the thin-web case that a constant bias cannot.
-  lightKey.shadow.bias=-0.0004; lightKey.shadow.normalBias=Math.max(maxDim*0.0015,1);
-  lightKey.target.position.copy(center); content.add(lightKey.target);
-  // A ShadowMaterial plane catches the ground shadow while staying invisible itself, so the dark
-  // background shows through everywhere the shadow is not.
-  shadowGround=new THREE.Mesh(new THREE.PlaneGeometry(maxDim*4,maxDim*4), new THREE.ShadowMaterial({opacity:0.42}));
-  shadowGround.rotation.x=-Math.PI/2; shadowGround.position.set(center.x, box.min.y, center.z);
-  shadowGround.receiveShadow=true; content.add(shadowGround);
-  applyDisplayMode();   // a rebuild makes new lights — re-apply so Realistic's dimming is not lost
   const grid=new THREE.GridHelper(maxDim*1.9, 24, 0x1e293b, 0x131c2e); grid.position.set(center.x, box.min.y, center.z); content.add(grid);
 
   const upY=new THREE.Vector3(0,1,0);
@@ -725,6 +741,8 @@ function renderScene(S){
   for(const g of (S.grids||[])) if(g&&Array.isArray(g.at)) content.add(makeLabel(g.label, conv(g.at,up), maxDim));
   addReferenceSystems(S,up);
   addOperations(S,up);
+  sizeShadowRig();      // needs the finished meshes: the scene bounds are centrelines, not extents
+  applyDisplayMode();   // a rebuild makes new lights and materials — re-apply the current mode
 
   if(S.camera&&Array.isArray(S.camera.eye)&&Array.isArray(S.camera.target)){
     const eye=conv(S.camera.eye,up), tgt=conv(S.camera.target,up);
